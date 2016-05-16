@@ -25,7 +25,7 @@ public class TicketOrderInfo {
     private String termpay;
     private String remark;
     private String ispickup;
-    
+    private String companyaddress;
 
     public String getIssuedate() {
         return issuedate;
@@ -121,6 +121,14 @@ public class TicketOrderInfo {
 
     public void setIspickup(String ispickup) {
         this.ispickup = ispickup;
+    }
+
+    public String getCompanyaddress() {
+        return companyaddress;
+    }
+
+    public void setCompanyaddress(String companyaddress) {
+        this.companyaddress = companyaddress;
     }
 
 }

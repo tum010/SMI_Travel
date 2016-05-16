@@ -5,8 +5,11 @@
  */
 package com.smi.travel.datalayer.view.dao.impl;
 
+import com.smi.travel.datalayer.entity.MRunningCode;
 import com.smi.travel.datalayer.view.dao.CollectionNirvanaDao;
 import com.smi.travel.datalayer.view.entity.CollectionNirvana;
+import com.smi.travel.model.nirvana.SsDataexch;
+import com.smi.travel.model.nirvana.SsDataexchTr;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -15,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -103,6 +107,26 @@ public class CollectionNirvanaImpl implements CollectionNirvanaDao{
                                 .addScalar("pay_by",Hibernate.STRING)
                                 .addScalar("itf_status",Hibernate.STRING)
                                 .addScalar("rowid",Hibernate.STRING)
+
+                                .addScalar("trancode",Hibernate.STRING)
+                                .addScalar("prefix",Hibernate.STRING)
+                                .addScalar("docno",Hibernate.STRING)
+                                .addScalar("refvoucher",Hibernate.STRING)
+                                .addScalar("year",Hibernate.STRING)
+                                .addScalar("period",Hibernate.STRING)
+                                .addScalar("arcur",Hibernate.STRING)
+                                .addScalar("recur",Hibernate.STRING)
+                                .addScalar("homerate",Hibernate.STRING)
+                                .addScalar("foreignrate",Hibernate.STRING)
+                                .addScalar("bankamt",Hibernate.BIG_DECIMAL)
+                                .addScalar("note",Hibernate.STRING)
+                                .addScalar("is_void",Hibernate.STRING)
+                                .addScalar("chequeno",Hibernate.STRING)
+                                .addScalar("chequedate",Hibernate.DATE)
+                                .addScalar("comid",Hibernate.STRING)
+                                .addScalar("invname",Hibernate.STRING)
+                                .addScalar("transdate",Hibernate.DATE)
+                                .addScalar("bankid",Hibernate.STRING)
                                 .list();
 
         List data = new ArrayList();
@@ -204,6 +228,26 @@ public class CollectionNirvanaImpl implements CollectionNirvanaDao{
             
             collectionNirvana.setStatus(util.ConvertString(CN[22]));
             collectionNirvana.setRowid(util.ConvertString(CN[23]));
+            
+            collectionNirvana.setTrancode(util.ConvertString(CN[24]));
+            collectionNirvana.setPrefix(util.ConvertString(CN[25]));
+            collectionNirvana.setDocno(util.ConvertString(CN[256]));
+            collectionNirvana.setRefvoucher(util.ConvertString(CN[27]));
+            collectionNirvana.setYear(util.ConvertString(CN[28]));
+            collectionNirvana.setPeriod(util.ConvertString(CN[29]));
+            collectionNirvana.setArcur(util.ConvertString(CN[30]));
+            collectionNirvana.setRecur(util.ConvertString(CN[31]));
+            collectionNirvana.setHomerate(util.ConvertString(CN[32]));
+            collectionNirvana.setForeignrate(util.ConvertString(CN[33]));
+            collectionNirvana.setBankamt((BigDecimal) CN[34]);
+            collectionNirvana.setNote(util.ConvertString(CN[35]));
+            collectionNirvana.setIs_void(util.ConvertString(CN[36]));
+            collectionNirvana.setChequeno(util.ConvertString(CN[37]));
+            collectionNirvana.setChequedate(util.convertStringToDate(util.ConvertString(CN[38])));
+            collectionNirvana.setComid(util.ConvertString(CN[39]));
+            collectionNirvana.setInvname(util.ConvertString(CN[40]));
+            collectionNirvana.setTransdate(util.convertStringToDate(util.ConvertString(CN[41])));
+            collectionNirvana.setBankid(util.ConvertString(CN[42]));
             collectionNirvanaList.add(collectionNirvana);
         }
         
@@ -278,15 +322,142 @@ public class CollectionNirvanaImpl implements CollectionNirvanaDao{
     @Override
     public String MappingCollectionNirvana(List<CollectionNirvana> cnData) {
         String result = "fail";
-        SimpleDateFormat sf = new SimpleDateFormat("DD/MM/YYYY");
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd.HHmmss");
+        SimpleDateFormat sf = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd.HHmmss", Locale.US);
         UtilityFunction util = new UtilityFunction();
         List<CollectionNirvana> cnDataList = this.SearchCollectionNirvanaFromRowId(cnData);
-//        List<SsDataexch> ssDataexchList = new ArrayList<SsDataexch>();
+        List<SsDataexch> ssDataexchList = new ArrayList<SsDataexch>();
         for(int i=0; i<cnDataList.size(); i++){
+            CollectionNirvana co = cnDataList.get(i);
+            String colNirvanaNo = gennarateColNirvanaNo("CL");
+            Date date = new Date();
+            //Data ss_dataexch2 For Header , Receipt Voucher
+            SsDataexch ssDataexchTemp = new SsDataexch();
+            ssDataexchTemp.setDataCd("240030");            
+            ssDataexchTemp.setDataNo(colNirvanaNo);
+            ssDataexchTemp.setEntSysCd("SMI");           
+            ssDataexchTemp.setEntSysDate(sdf.format(date));
+            ssDataexchTemp.setRcvStaCd("1");
+            ssDataexchTemp.setRcvSysDate("00000000.000000");
+            ssDataexchTemp.setRcvComment("");
+            
+            //DataArea
+            ssDataexchTemp.setDataArea(setDataArea(co));
+            
+//            List<SsDataexchTr> ssDataexchTrList = setApNirvanaDetail(apNirvana,apNirvanaNo);
+//            ssDataexchTemp.setSsDataexchTrList(ssDataexchTrList);
             
         }
         return "";
+    }
+    private String setDataArea(CollectionNirvana col){
+        SimpleDateFormat sf = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd.HHmmss", Locale.US);
+        UtilityFunction util = new UtilityFunction();
+        String dataArea = "";
+        
+        String companyId = (col.getComid()!= null && !"".equalsIgnoreCase(col.getComid()) ? col.getComid() : "");
+        dataArea += util.generateDataAreaNirvana(companyId,21);
+
+        String tranCode = (col.getTrancode() != null && !"".equalsIgnoreCase(col.getTrancode()) ? col.getTrancode() : "");
+        dataArea += util.generateDataAreaNirvana(tranCode,2);
+        
+        String prefix = (col.getPrefix()!= null && !"".equalsIgnoreCase(col.getPrefix()) ? col.getPrefix() : "");
+        dataArea += util.generateDataAreaNirvana(prefix,6);
+
+        String docno = (col.getDocno()!= null && !"".equalsIgnoreCase(col.getDocno()) ? col.getDocno() : "");
+        dataArea += util.generateDataAreaNirvana(docno,9);
+
+        String refvoucher = (col.getRefvoucher()!= null && !"".equalsIgnoreCase(col.getRefvoucher()) ? col.getRefvoucher() : "");
+        dataArea += util.generateDataAreaNirvana(refvoucher,21);
+
+        String invto = (col.getInvto()!= null && !"".equalsIgnoreCase(col.getInvto()) ? col.getInvto() : "");
+        dataArea += util.generateDataAreaNirvana(invto,21);
+
+        String name = (col.getInvname() != null && !"".equalsIgnoreCase(col.getInvname()) ? col.getInvname() : "");
+        dataArea += util.generateDataAreaNirvana(name,101);
+        
+        String year = (col.getYear() != null ? String.valueOf(col.getYear()) : "");
+        dataArea += util.generateDataAreaNirvana(year,4);
+
+        String period = (col.getPeriod() != null ? String.valueOf(col.getPeriod()) : "");
+        dataArea += util.generateDataAreaNirvana(period,2);
+        
+        String bankid = (col.getBankid() != null ? String.valueOf(col.getBankid()) : "");
+        dataArea += util.generateDataAreaNirvana(bankid,6);
+        
+        String transdate = (col.getTransdate()!= null && !"".equalsIgnoreCase(String.valueOf(col.getTransdate())) ? sf.format(col.getTransdate()) : "");
+        dataArea += util.generateDataAreaNirvana(transdate,10);
+        
+        String arcur = (col.getArcur() != null && !"".equalsIgnoreCase(col.getArcur()) ? col.getArcur() : "");
+        dataArea += util.generateDataAreaNirvana(arcur,6);
+        
+        String recur = (col.getRecur()!= null && !"".equalsIgnoreCase(col.getRecur()) ? col.getRecur() : "");
+        dataArea += util.generateDataAreaNirvana(recur,6);
+        
+        String homeRate = (col.getHomerate()!= null ? String.valueOf(col.getHomerate()) : "0.000000");
+        dataArea += util.generateDataAreaNirvana(homeRate,20);
+
+        String foreignRate = (col.getForeignrate() != null ? String.valueOf(col.getForeignrate()) : "0.000000");
+        dataArea += util.generateDataAreaNirvana(foreignRate,20);
+
+        String bankamt = (col.getBankamt() != null ? String.valueOf(col.getBankamt()) : "0.00");
+        dataArea += util.generateDataAreaNirvana(bankamt,30);
+        
+        String note = (col.getNote() != null && !"".equalsIgnoreCase(col.getNote()) ? col.getNote() : "");
+        dataArea += util.generateDataAreaNirvana(note,150);
+        
+        String isVoid = (col.getIs_void()!= null && !"".equalsIgnoreCase(col.getIs_void()) ? col.getIs_void() : "");
+        dataArea += util.generateDataAreaNirvana(isVoid,1);
+        
+        String intReceiptNo = (col.getDocno()!= null && !"".equalsIgnoreCase(col.getDocno()) ? col.getDocno() : "");
+        dataArea += util.generateDataAreaNirvana(intReceiptNo,21);
+        
+        String chequeno = (col.getChequeno()!= null && !"".equalsIgnoreCase(col.getDocno()) ? col.getDocno() : "");
+        dataArea += util.generateDataAreaNirvana(chequeno,11);
+
+        String chequedate = (col.getChequedate()!= null && !"".equalsIgnoreCase(String.valueOf(col.getChequedate())) ? sf.format(col.getChequedate()) : "");
+        dataArea += util.generateDataAreaNirvana(chequedate,10);
+       
+        String customerbankid = "";
+        dataArea += util.generateDataAreaNirvana(customerbankid,6);
+        
+        String customerbankbranch = "";
+        dataArea += util.generateDataAreaNirvana(customerbankbranch,61);
+        
+        String cust_taxid = "";
+        dataArea += util.generateDataAreaNirvana(cust_taxid,21);
+        
+        String cust_branch = "";
+        dataArea += util.generateDataAreaNirvana(cust_branch,6);
+        
+        String company_branch = "";
+        dataArea += util.generateDataAreaNirvana(company_branch,6);
+        
+        return dataArea;
+    }
+    private String gennarateColNirvanaNo(String type){
+        String hql = "from MRunningCode run where run.type =  :type";
+        Session session = this.sessionFactory.openSession();
+        List<MRunningCode> list = session.createQuery(hql).setParameter("type", type).list();
+        if (list.isEmpty()) {
+            return null;
+        }
+        
+        String code = String.valueOf(list.get(0).getRunning()+1);
+        for(int i=code.length();i<6;i++){
+            code = "0"+code;
+        }
+        
+        Query query = session.createQuery("update MRunningCode run set run.running = :running" +
+    				" where run.type = :type");
+        query.setParameter("running", list.get(0).getRunning()+1);
+        query.setParameter("type", type);
+        int result = query.executeUpdate();
+        
+        session.close();
+        this.sessionFactory.close();
+        return code;
     }
     
     private List<CollectionNirvana> SearchCollectionNirvanaFromRowId(List<CollectionNirvana> cnList) {
@@ -325,6 +496,25 @@ public class CollectionNirvanaImpl implements CollectionNirvanaDao{
                 .addScalar("pay_by",Hibernate.STRING)
                 .addScalar("itf_status",Hibernate.STRING)
                 .addScalar("rowid",Hibernate.STRING)
+                .addScalar("trancode",Hibernate.STRING)
+                .addScalar("prefix",Hibernate.STRING)
+                .addScalar("docno",Hibernate.STRING)
+                .addScalar("refvoucher",Hibernate.STRING)
+                .addScalar("year",Hibernate.STRING)
+                .addScalar("period",Hibernate.STRING)
+                .addScalar("arcur",Hibernate.STRING)
+                .addScalar("recur",Hibernate.STRING)
+                .addScalar("homerate",Hibernate.STRING)
+                .addScalar("foreignrate",Hibernate.STRING)
+                .addScalar("bankamt",Hibernate.BIG_DECIMAL)
+                .addScalar("note",Hibernate.STRING)
+                .addScalar("is_void",Hibernate.STRING)
+                .addScalar("chequeno",Hibernate.STRING)
+                .addScalar("chequedate",Hibernate.DATE)
+                .addScalar("comid",Hibernate.STRING)
+                .addScalar("invname",Hibernate.STRING)
+                .addScalar("transdate",Hibernate.DATE)
+                .addScalar("bankid",Hibernate.STRING)
                 .list();
         
          List data = new ArrayList();
@@ -411,6 +601,25 @@ public class CollectionNirvanaImpl implements CollectionNirvanaDao{
             collectionNirvana.setTotalamountdiff(totalamountdiff);
             collectionNirvana.setStatus(util.ConvertString(CN[22]));
             collectionNirvana.setRowid(util.ConvertString(CN[23]));
+            collectionNirvana.setTrancode(util.ConvertString(CN[24]));
+            collectionNirvana.setPrefix(util.ConvertString(CN[25]));
+            collectionNirvana.setDocno(util.ConvertString(CN[256]));
+            collectionNirvana.setRefvoucher(util.ConvertString(CN[27]));
+            collectionNirvana.setYear(util.ConvertString(CN[28]));
+            collectionNirvana.setPeriod(util.ConvertString(CN[29]));
+            collectionNirvana.setArcur(util.ConvertString(CN[30]));
+            collectionNirvana.setRecur(util.ConvertString(CN[31]));
+            collectionNirvana.setHomerate(util.ConvertString(CN[32]));
+            collectionNirvana.setForeignrate(util.ConvertString(CN[33]));
+            collectionNirvana.setBankamt((BigDecimal) CN[34]);
+            collectionNirvana.setNote(util.ConvertString(CN[35]));
+            collectionNirvana.setIs_void(util.ConvertString(CN[36]));
+            collectionNirvana.setChequeno(util.ConvertString(CN[37]));
+            collectionNirvana.setChequedate(util.convertStringToDate(util.ConvertString(CN[38])));
+            collectionNirvana.setComid(util.ConvertString(CN[39]));
+            collectionNirvana.setInvname(util.ConvertString(CN[40]));
+            collectionNirvana.setTransdate(util.convertStringToDate(util.ConvertString(CN[41])));
+            collectionNirvana.setBankid(util.ConvertString(CN[42]));
             collectionNirvanaList.add(collectionNirvana);
         }
         

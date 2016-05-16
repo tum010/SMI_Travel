@@ -63,11 +63,11 @@ public class CollectionMonitorController extends SMITravelController {
             }
            if(listCo != null){
 //             String isExport = arMonitorService.ExportARFileInterface(listAr,arMonitorService.GetPartFileExport());
-               String result = "success";
-//             String result = arMonitorService.MappingARNirvana(listAr);
+//               String result = "success";
+               String result = collectionNirvanaService.MappingCollectionNirvana(listCo);
                if("success".equals(result)){
-                   String isUpdate = collectionNirvanaService.UpdateStatusCollection(listCo);
-                   request.setAttribute("update", isUpdate);
+//                   String isUpdate = collectionNirvanaService.UpdateStatusCollection(listCo);
+                   request.setAttribute("update", result);
                }               
                listCo = collectionNirvanaService.getCollectionNirvanaFromFilter(department, type, status, from, to, invno, "");
                request.setAttribute(CollectionList, listCo);

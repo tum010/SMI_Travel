@@ -21,7 +21,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -60,12 +59,12 @@ public class MainMigrate {
     private static final String sqlCurrency = " SELECT * FROM TRAVOX3.CURRENCY ";
     private static final String sqlCountry = " SELECT * FROM TRAVOX3.COUNTRY ";
     private static final String sqlCity = " SELECT * FROM TRAVOX3.CITY ";
-    private static final String sqlCustomer = " SELECT * FROM \"TRAVOX3\".\"CUSTOMER\" where  FIRST_NAME is not null and length(code) = 8 ";
-    private static final String sqlAR = " SELECT CASE WHEN (agt.code IS NULL) THEN 'DUMMY' ELSE agt.code END AS CODE, inv.inv_name, INV.INV_NO, TO_CHAR (inv.inv_date, 'DD-MM-YYYY') AS inv_date FROM \"TRAVOX3\".\"AC_INVOICE\" inv INNER JOIN \"TRAVOX3\".AC_INVOICE_DETAIL invd ON INVD.AC_INVOICE_ID = INV.\"ID\" LEFT JOIN ( SELECT NAME, MIN (code) AS code FROM \"TRAVOX3\".AGENT GROUP BY NAME ) agt ON agt. NAME = inv.INV_NAME WHERE TO_CHAR (inv.inv_date, 'MMYYYY') IN ('112015','122015','012016', '022016', '032016') ORDER BY  inv.inv_date , inv.inv_no " ;
+    private static final String sqlCustomer = " SELECT * FROM \"TRAVOX3\".\"CUSTOMER\" WHERE FIRST_NAME IS NOT NULL AND LENGTH (code) = 8 AND code IN ( '10000001', '¹0000001', '10000003', '¹0000003', '10000004', '¹0000004', '10000005', '¹0000005', '10000006', '¹0000006', '¹0000007', '10000007', '¹0000008', '10000008', '¹0000009', '10000009', '10000010', '¹0000010', '¹0000011', '10000011', '10000012', '¹0000012', '10000013', '¹0000013', '¹0000014', '10000014', '¹0000015', '10000015', '¹0000016', '10000016', '¹0000017', '10000017', '¹0000018', '10000018', '¹0000019', '10000019', '¹0000020', '10000020', '30000001', '³0000001', '30000002', '³0000002', '30000003', '³0000003', '30000004', '³0000004', 'A0000001', 'Â0000001', 'Ã0000001', 'Ä0000001', 'Á0000001', 'å0000001', 'à0000001', 'À0000001', 'ª0000001', 'Å0000001', 'A0000002', 'Â0000002', 'á0000002', 'Ã0000002', 'ä0000002', 'Ä0000002', 'Á0000002', 'à0000002', 'ª0000002', 'Å0000002', 'À0000002', 'A0000003', 'Â0000003', 'Ã0000003', 'ä0000003', 'Ä0000003', 'á0000003', 'Å0000003', 'ª0000003', 'Á0000003', 'à0000003', 'À0000003', 'A0000004', 'Â0000004', 'Ã0000004', 'ä0000004', 'Ä0000004', 'ª0000004', 'á0000004', 'Å0000004', 'Á0000004', 'à0000004', 'A0000005', 'Â0000005', 'Ã0000005', 'ä0000005', 'ª0000005', 'Å0000005', 'Ä0000005', 'á0000005', 'Á0000005', 'A0000006', 'Â0000006', 'Ã0000006', 'ä0000006', 'Å0000006', 'ª0000006', 'A0000007', 'Â0000007', 'Ã0000007', 'Å0000007', 'ª0000007', 'A0000008', 'Â0000008', 'Ã0000008', 'Å0000008', 'A0000009', 'Â0000009', 'Ã0000009', 'Å0000009', 'A0000010', 'Â0000010', 'Ã0000010', 'A0000011', 'Â0000011', 'Ã0000011', 'A0000012', 'Â0000012', 'Ã0000012', 'A0000013', 'Â0000013', 'Ã0000013', 'A0000014', 'ã0000014', 'Ã0000014', 'Â0000014', 'A0000015', 'ã0000015', 'Ã0000015', 'â0000015', 'Â0000015', 'A0000016', 'ã0000016', 'Ã0000016', 'C0000001', 'ç0000001', 'Ç0000001', 'C0000002', 'Ç0000002', 'C0000003', 'Ç0000003', 'C0000004', 'Ç0000004', 'C0000005', 'Ç0000005', 'C0000006', 'Ç0000006', 'C0000007', 'Ç0000007', 'C0000008', 'Ç0000008', 'C0000009', 'Ç0000009', 'C0000010', 'Ç0000010', 'C0000011', 'Ç0000011', 'C0000012', 'Ç0000012', 'E0000001', 'É0000001', 'Ë0000001', 'Ê0000001', 'È0000001', 'E0000002', 'É0000002', 'Ë0000002', 'Ê0000002', 'È0000002', 'E0000003', 'É0000003', 'Ë0000003', 'Ê0000003', 'È0000003', 'E0000004', 'É0000004', 'Ë0000004', 'Ê0000004', 'è0000004', 'È0000004', 'E0000005', 'Ë0000005', 'É0000005', 'Ê0000005', 'È0000005', 'E0000006', 'Ë0000006', 'É0000006', 'Ê0000006', 'È0000006', 'E0000007', 'Ë0000007', 'é0000007', 'Ê0000007', 'E0000008', 'Ë0000008', 'Ê0000008', 'E0000009', 'Ë0000009', 'Ê0000009', 'E0000010', 'Ë0000010', 'Ê0000010', 'E0000011', 'Ë0000011', 'Ê0000011', 'E0000012', 'Ë0000012', 'Ê0000012', 'E0000013', 'Ë0000013', 'Ê0000013', 'E0000014', 'Ë0000014', 'Ê0000014', 'E0000015', 'Ë0000015', 'Ê0000015', 'E0000016', 'Ë0000016', 'Ê0000016', 'E0000017', 'Ë0000017', 'Ê0000017', 'E0000018', 'Ë0000018', 'Ê0000018', 'E0000019', 'Ë0000019', 'Ê0000019', 'E0000020', 'Ë0000020', 'Ê0000020', 'E0000021', 'Ë0000021', 'I0000001', 'Í0000001', 'Ï0000001', 'ì0000001', 'I0000002', 'Í0000002', 'Ï0000002', 'I0000003', 'Í0000003', 'I0000004', 'Í0000004', 'I0000005', 'Í0000005', 'I0000006', 'Í0000006', 'I0000007', 'Í0000007', 'I0000008', 'í0000008', 'Í0000008', 'I0000009', 'Í0000009', 'I0000010', 'Í0000010', 'I0000011', 'Í0000011', 'I0000012', 'Í0000012', 'I0000013', 'Í0000013', 'I0000014', 'Í0000014', 'N0000001', 'Ñ0000001', 'N0000002', 'Ñ0000002', 'N0000003', 'Ñ0000003', 'O0000001', 'º0000001', 'Ò0000001', 'Õ0000001', 'O0000002', 'Ò0000002', 'Õ0000002', 'º0000002', 'O0000003', 'Ò0000003', 'º0000003', 'O0000004', 'Ò0000004', 'º0000004', 'O0000005', 'Ò0000005', 'º0000005', 'O0000006', 'Ò0000006', 'O0000007', 'Ò0000007', 'O0000008', 'Ò0000008', 'O0000009', 'Ò0000009', 'O0000010', 'Ò0000010', 'O0000011', 'Ò0000011', 'O0000012', 'Ò0000012', 'O0000013', 'Ò0000013', 'O0000014', 'Ò0000014', 'O0000015', 'Ò0000015', 'O0000016', 'Ò0000016', 'O0000017', 'Ò0000017', 'O0000018', 'Ò0000018', 'O0000019', 'Ò0000019', 'O0000020', 'Ò0000020', 'O0000021', 'Ò0000021', 'O0000022', 'Ò0000022', 'O0000023', 'Ò0000023', 'O0000024', 'Ò0000024', 'O0000025', 'Ò0000025', 'O0000026', 'Ò0000026', 'O0000027', 'Ò0000027' ) ";
+    private static final String sqlAR = " SELECT CASE WHEN (agt.code IS NULL) THEN 'DUMMY' ELSE agt.code END AS CODE, inv.inv_name, INV.INV_NO, TO_CHAR (inv.inv_date, 'DD-MM-YYYY') AS inv_date FROM \"TRAVOX3\".\"AC_INVOICE\" inv INNER JOIN \"TRAVOX3\".AC_INVOICE_DETAIL invd ON INVD.AC_INVOICE_ID = INV.\"ID\" LEFT JOIN ( SELECT NAME, MIN (code) AS code FROM \"TRAVOX3\".AGENT GROUP BY NAME ) agt ON agt. NAME = inv.INV_NAME WHERE TO_CHAR (inv.inv_date, 'MMYYYY') IN ('042016') ORDER BY  inv.inv_date , inv.inv_no " ;
     private static final String sqlAP = " SELECT payd. ID AS payid, (pay.PAY_NO) AS PAY_NO, (PAY.INVOICE_SUP) AS AP_CODE, ap. NAME AS NAME, TO_CHAR (pay.pay_DATE, 'DD-MM-YYYY') AS pay_date, (PAY.REF_DEPARTMENT) AS DEPARTMENT, CASE WHEN pay.VAT_TYPE = 'X' THEN 'TEMP' WHEN pay.VAT_TYPE = 'V' THEN 'VAT' ELSE 'NO VAT' END AS vattype FROM travox3.AC_PAYMENT pay INNER JOIN travox3.AC_PAYMENT_DETAIL payd ON payd.AC_PAYMENT_ID = pay. ID INNER JOIN ACCSMI3.AP_CODE ap ON ap.code = pay.INVOICE_SUP WHERE TO_CHAR (pay.pay_DATE, 'MMYYYY') IN ( '112015','122015','012016', '022016', '032016') ORDER BY pay.pay_DATE , PAY.PAY_NO ";
     private static final String sqlInv1 = " SELECT inv3. ID AS ID, INV3.inv_no AS invno, INV3.\"NAME\" AS NAME, TO_CHAR (INV3.INV_DATE, 'DD-MM-YYYY') AS invdate, SUM (invd3.price) AS grand_total, SUM (invd3.price) - SUM ( ROUND ( INVD3.price - INVD3.price * 100 / (100 + INV3.vat), 2 )) AS grand_total_gross, SUM ( ROUND ( INVD3.price - INVD3.price * 100 / (100 + INV3.vat), 2 )) AS grand_total_vat, MIN (INVD3.CUR) AS cur, 'INBOUND' AS department, '1' AS acc_no FROM \"INBOUND\".\"INVOICE3\" inv3 INNER JOIN INBOUND.INVOICE3_DETAIL invd3 ON inv3. ID = invd3.INVOICE3_ID LEFT JOIN ( SELECT NAME, MIN (code) AS code FROM \"TRAVOX3\".AGENT GROUP BY NAME ) agt ON agt. NAME = inv3. NAME WHERE \"TO_CHAR\" (inv3.INV_DATE, 'MMYYYY') IN ('102015', '112015', '122015', '012016', '022016', '032016' ) GROUP BY inv3. ID, INV3.inv_no, INV3.\"NAME\", INV3.INV_DATE ORDER BY INV3. ID  ";
     private static final String sqlInv2 = " SELECT inv2. ID AS ID, INV2.inv_no AS invno, INV2.\"NAME\" AS NAME, TO_CHAR (INV2.INV_DATE, 'DD-MM-YYYY') AS invdate, SUM (invd2.price) AS grand_total, SUM (invd2.price) AS grand_total_gross, 0 AS grand_total_vat, MIN (INVD2.CUR) AS cur, 'INBOUND' AS department, '2' AS acc_no FROM \"INBOUND\".\"INVOICE2\" inv2 INNER JOIN INBOUND.INVOICE2_DETAIL invd2 ON inv2. ID = invd2.INVOICE2_ID LEFT JOIN ( SELECT NAME, MIN (code) AS code FROM \"TRAVOX3\".AGENT GROUP BY NAME ) agt ON agt. NAME = inv2. NAME WHERE \"TO_CHAR\" (inv2.INV_DATE, 'MMYYYY') IN ('102015', '112015', '122015', '012016', '022016', '032016' ) GROUP BY inv2. ID, INV2.inv_no, INV2.\"NAME\", INV2.INV_DATE ORDER BY INV2. ID ";
-    private static final String sqlTravoxProduction = " SELECT gj.gj_no AS gj, '' AS PAY_NO, ( SELECT ap. NAME FROM ACCTSMI3.ap_code ap WHERE ap.code = ( SELECT MIN (GJD1.code_ap) FROM ACCTSMI3.GENERAL_JOURNAL_DETAIL1 GJD1 WHERE GJD1.general_journal1_ID = gj. ID AND GJD1.code_ap IS NOT NULL GROUP BY gj. ID )) AS NAME, ( SELECT MIN (GJD1.code_ap) FROM ACCTSMI3.GENERAL_JOURNAL_DETAIL1 GJD1 WHERE GJD1.general_journal1_ID = gj. ID AND GJD1.code_ap IS NOT NULL GROUP BY gj. ID ) AS AP_CODE, gj.ref_doc_no AS REFDOC, TO_CHAR ( gj.SYSTEM_DATE, 'DD-MM-YYYY' ) AS system_date, TO_CHAR (gj.DUE_DATE, 'DD-MM-YYYY') AS due_date, '' AS INVOICE_NUM, GJ.DESCRIPTION AS Main_Description, CASE WHEN act.code IS NULL THEN act1.code ELSE act.code END AS code, CASE WHEN act.code IS NULL THEN act1.detail ELSE act.detail END AS type_product, GJD.DESCRIPTION AS description, ( SELECT SUM ( CASE WHEN GJD1.ACCT_CODE_ID = - 30 OR GJD1.ACCT_CODE_ID = 157 THEN 0 ELSE NVL (GJD1.cr_amount, 0) END ) FROM ACCTSMI3.GENERAL_JOURNAL_DETAIL1 GJD1 WHERE GJD1.general_journal1_ID = gj. ID GROUP BY gj. ID ) AS TOTAL_AMOUNT, GJD.ACCT_CODE_ID, ( SELECT SUM (NVL(GJD1.dr_amount, 0)) FROM ACCTSMI3.GENERAL_JOURNAL_DETAIL1 GJD1 WHERE GJD1.general_journal1_ID = gj. ID AND GJD1.acct_code_id = - 10 GROUP BY gj. ID ) AS TOTAL_VAT, 'THB' AS cur, CASE WHEN gjd.cr_amount IS NULL THEN gjd.dr_amount ELSE gjd.cr_amount * - 1 END AS amount, CASE WHEN GJD.department = 'I' THEN 'Inbound' WHEN GJD.department = 'O' THEN 'Outbound' WHEN GJD.department = 'W' THEN 'Wendy' ELSE '' END AS DEPARTMENT, SUBSTR (gj.gj_no, 0, 1) AS acc_no, TO_CHAR (gj.book_DATE, 'DD-MM-YYYY') AS EXPENSE_DATE, gv.voucher_no AS voucher_no, gvd.amount AS voucher_amount FROM ACCTSMI3.GENERAL_JOURNAL1 gj INNER JOIN ACCTSMI3.GENERAL_JOURNAL_DETAIL1 GJD ON gj. ID = gjd.general_journal1_ID LEFT JOIN ACCTSMI3.ap_code ap ON ap.code = gjd.code_AP LEFT JOIN ACCTSMI3.ACCT_CODE act ON act. ID = gjd.acct_code_id LEFT JOIN ACCTSMI3.ACCT_CODE act1 ON act1. ID = gjd.ap_acct_code_id LEFT JOIN ACCTSMI3.GENERAL_VOUCHER_DETAIL gvd ON gvd.general_journal_id = gj. ID LEFT JOIN ACCTSMI3.GENERAL_VOUCHER gv ON gv. ID = gvd.general_voucher_id WHERE TO_CHAR (gj.book_DATE, 'MMYYYY') IN ( '102015', '112015', '122015', '012016', '022016', '032016' ) AND ( gj.book_type1 = 1 OR gj.book_type1 = 2 ) AND gj.book_type = 'E' ORDER BY gj.GJ_NO, gj.book_DATE ASC ";
+    private static final String sqlTravoxProduction = " SELECT gj.gj_no AS gj, '' AS PAY_NO, ( SELECT ap. NAME FROM ACCTSMI3.ap_code ap WHERE ap.code = ( SELECT MIN (GJD1.code_ap) FROM ACCTSMI3.GENERAL_JOURNAL_DETAIL1 GJD1 WHERE GJD1.general_journal1_ID = gj. ID AND GJD1.code_ap IS NOT NULL GROUP BY gj. ID )) AS NAME, ( SELECT MIN (GJD1.code_ap) FROM ACCTSMI3.GENERAL_JOURNAL_DETAIL1 GJD1 WHERE GJD1.general_journal1_ID = gj. ID AND GJD1.code_ap IS NOT NULL GROUP BY gj. ID ) AS AP_CODE, gj.ref_doc_no AS REFDOC, TO_CHAR ( gj.SYSTEM_DATE, 'DD-MM-YYYY' ) AS system_date, TO_CHAR (gj.DUE_DATE, 'DD-MM-YYYY') AS due_date, '' AS INVOICE_NUM, GJ.DESCRIPTION AS Main_Description, CASE WHEN act.code IS NULL THEN act1.code ELSE act.code END AS code, CASE WHEN act.code IS NULL THEN act1.detail ELSE act.detail END AS type_product, act.code AS code11, act1.code AS code22, GJD.DESCRIPTION AS description, ( SELECT SUM ( CASE WHEN SUBSTR (act2.code, 0, 2) = '21' OR act3.code = '22021' THEN NVL (GJD1.cr_amount, 0) ELSE 0 END ) FROM ACCTSMI3.GENERAL_JOURNAL_DETAIL1 GJD1 LEFT JOIN ACCTSMI3.ACCT_CODE act2 ON act2. ID = GJD1.ap_acct_code_id LEFT JOIN ACCTSMI3.ACCT_CODE act3 ON act3. ID = GJD1.acct_code_id WHERE GJD1.general_journal1_ID = gj. ID GROUP BY gj. ID ) AS TOTAL_AMOUNT, GJD.ACCT_CODE_ID, ( SELECT SUM (NVL(GJD1.dr_amount, 0)) FROM ACCTSMI3.GENERAL_JOURNAL_DETAIL1 GJD1 WHERE GJD1.general_journal1_ID = gj. ID AND GJD1.acct_code_id = - 10 GROUP BY gj. ID ) AS TOTAL_VAT, 'THB' AS cur, CASE WHEN gjd.cr_amount IS NULL THEN gjd.dr_amount ELSE gjd.cr_amount * - 1 END AS amount, CASE WHEN GJD.department = 'I' THEN 'Inbound' WHEN GJD.department = 'O' THEN 'Outbound' WHEN GJD.department = 'W' THEN 'Wendy' ELSE '' END AS DEPARTMENT, SUBSTR (gj.gj_no, 0, 1) AS acc_no, TO_CHAR (gj.book_DATE, 'DD-MM-YYYY') AS EXPENSE_DATE, gv.voucher_no AS voucher_no, gvd.amount AS voucher_amount FROM ACCTSMI3.GENERAL_JOURNAL1 gj INNER JOIN ACCTSMI3.GENERAL_JOURNAL_DETAIL1 GJD ON gj. ID = gjd.general_journal1_ID LEFT JOIN ACCTSMI3.ap_code ap ON ap.code = gjd.code_AP LEFT JOIN ACCTSMI3.ACCT_CODE act ON act. ID = gjd.acct_code_id LEFT JOIN ACCTSMI3.ACCT_CODE act1 ON act1. ID = gjd.ap_acct_code_id LEFT JOIN ACCTSMI3.GENERAL_VOUCHER_DETAIL gvd ON gvd.general_journal_id = gj. ID LEFT JOIN ACCTSMI3.GENERAL_VOUCHER gv ON gv. ID = gvd.general_voucher_id WHERE TO_CHAR (gj.book_DATE, 'MMYYYY') IN ( '042016' ) AND ( gj.book_type1 = 1 OR gj.book_type1 = 2 ) AND gj.book_type = 'E' ORDER BY gj.GJ_NO, gj.book_DATE ASC ";
     private static final String sqlDaytourExpense = " SELECT * FROM `daytour_expense` ";
     public static void main(String[] args) {
         Connection connect = null;
@@ -86,12 +85,12 @@ public class MainMigrate {
 //                getProduct(s, stmt);
 //                getHotel(s, stmt);
 //                getCustomer(s, stmt);
-//                getARData(s,stmt);
+                getARData(s,stmt);
 //                getAPData(s,stmt);
 //                getDeptorInvoiceData(s, stmt);
 //                getInvoiceData(s, stmt);
-                getTravoxData(s, stmt);
-                getDaytourExpense(s, stmt);
+//                getTravoxData(s, stmt);
+//                getDaytourExpense(s, stmt);
             } else {
                 System.out.println("Database Connect Failed.");
             }
@@ -1230,7 +1229,6 @@ public class MainMigrate {
         UtilityFunction util = new UtilityFunction();
         try {
             ResultSet rs = s.executeQuery(sqlCustomer);
-            System.out.println(" Customer ");
             while (rs.next()) {       
                 String code = rs.getString("CODE") == null ? "" : rs.getString("CODE");
                 String initialname = rs.getString("INITIAL_NAME") == null ? "" : new String(rs.getString("INITIAL_NAME").getBytes("ISO8859_1"),"TIS-620");
@@ -1265,6 +1263,7 @@ public class MainMigrate {
                 }else if("-48".equalsIgnoreCase(initialname)){
                     initial = "6";
                 }
+//                System.out.println(" code ::: " + code);
                 MInitialname mInitialname = new MInitialname();
                 mInitialname.setId(initial);
                 migrateModel.setInitialname(mInitialname);
@@ -1311,27 +1310,36 @@ public class MainMigrate {
             
             System.out.println(" customer size :: "+ list.size());
             for(int i = 0 ; i< list.size() ; i ++){ 
-                sql = " INSERT INTO `customer` ( `code`, `initial_name`, `first_name`, `last_name`, `nationality`, `birth_date`, `sex`, `address`, `tel`, `email`, `passport_no`, `remark`, `personal_id`, `phone`, `first_name_japan`, `last_name_japan` ) "
-                    + " VALUES ('"+list.get(i).getCode().replaceAll("'", "''")+"',"
-                    + list.get(i).getInitialname().getId() +",'"
-                    + list.get(i).getFirstName().replaceAll("'", "''").replaceAll("\\\\"," ").replaceAll("/","\\\\/")+"','"
-                    + list.get(i).getLastName().replaceAll("'", "''").replaceAll("\\\\"," ").replaceAll("/", "\\\\/")+"','"
-                    + list.get(i).getNationality().replaceAll("'", "''").replaceAll("\\\\"," ").replaceAll("/","\\\\/") +"',"
-                    + list.get(i).getBirthDate()+",'"
-                    + list.get(i).getSex().replaceAll("'", "''").replaceAll("\\\\"," ").replaceAll("/","\\\\/") +"','"
-                    + list.get(i).getPostalAddress().replaceAll("'", "''").replaceAll("\\\\"," ").replaceAll("/","\\\\/") +"','"
-                    + list.get(i).getPostalTel().replaceAll("'", "''").replaceAll("\\\\"," ").replaceAll("/","\\\\/") +"','"
-                    + list.get(i).getPostalEmail().replaceAll("'", "''").replaceAll("\\\\"," ").replaceAll("/","\\\\/") +"','"
-                    + list.get(i).getPassportNo().replaceAll("'", "''").replaceAll("\\\\"," ").replaceAll("/","\\\\/") +"','"
-                    + list.get(i).getWarning().replaceAll("'", "''").replaceAll("\\\\"," ").replaceAll("/","\\\\/") +"','"
-                    + list.get(i).getCitizenNo().replaceAll("'", "''").replaceAll("\\\\"," ").replaceAll("/","\\\\/") +"','"
-                    + list.get(i).getMobileNo().replaceAll("'", "''").replaceAll("\\\\"," ").replaceAll("/","\\\\/") +"','"
-                    + list.get(i).getFirstNameJapan().replaceAll("'", "''").replaceAll("\\\\"," ").replaceAll("/","\\\\/") +"','"
-                    + list.get(i).getLastNameJapan().replaceAll("'", "''").replaceAll("\\\\"," ").replaceAll("/","\\\\/") +"' ) ";
+//                sql = " INSERT INTO `customer` ( `code`, `initial_name`, `first_name`, `last_name`, `nationality`, `birth_date`, `sex`, `address`, `tel`, `email`, `passport_no`, `remark`, `personal_id`, `phone`, `first_name_japan`, `last_name_japan` ) "
+//                    + " VALUES ('"+list.get(i).getCode().replaceAll("'", "''")+"',"
+//                    + list.get(i).getInitialname().getId() +",'"
+//                    + list.get(i).getFirstName().replaceAll("'", "''").replaceAll("\\\\"," ").replaceAll("/","\\\\/")+"','"
+//                    + list.get(i).getLastName().replaceAll("'", "''").replaceAll("\\\\"," ").replaceAll("/", "\\\\/")+"','"
+//                    + list.get(i).getNationality().replaceAll("'", "''").replaceAll("\\\\"," ").replaceAll("/","\\\\/") +"',"
+//                    + list.get(i).getBirthDate()+",'"
+//                    + list.get(i).getSex().replaceAll("'", "''").replaceAll("\\\\"," ").replaceAll("/","\\\\/") +"','"
+//                    + list.get(i).getPostalAddress().replaceAll("'", "''").replaceAll("\\\\"," ").replaceAll("/","\\\\/") +"','"
+//                    + list.get(i).getPostalTel().replaceAll("'", "''").replaceAll("\\\\"," ").replaceAll("/","\\\\/") +"','"
+//                    + list.get(i).getPostalEmail().replaceAll("'", "''").replaceAll("\\\\"," ").replaceAll("/","\\\\/") +"','"
+//                    + list.get(i).getPassportNo().replaceAll("'", "''").replaceAll("\\\\"," ").replaceAll("/","\\\\/") +"','"
+//                    + list.get(i).getWarning().replaceAll("'", "''").replaceAll("\\\\"," ").replaceAll("/","\\\\/") +"','"
+//                    + list.get(i).getCitizenNo().replaceAll("'", "''").replaceAll("\\\\"," ").replaceAll("/","\\\\/") +"','"
+//                    + list.get(i).getMobileNo().replaceAll("'", "''").replaceAll("\\\\"," ").replaceAll("/","\\\\/") +"','"
+//                    + list.get(i).getFirstNameJapan().replaceAll("'", "''").replaceAll("\\\\"," ").replaceAll("/","\\\\/") +"','"
+//                    + list.get(i).getLastNameJapan().replaceAll("'", "''").replaceAll("\\\\"," ").replaceAll("/","\\\\/") +"' ) ";
                 try {
-                    stm.executeUpdate(sql);
+                    String sqlselect = " SELECT id FROM `customer` where code = '"+list.get(i).getCode()+"' and first_name = '"+list.get(i).getFirstName()+"' and last_name = '"+list.get(i).getLastName()+"' ";
+                    String id = "";
+                    ResultSet rs2 = stm.executeQuery(sqlselect);
+                    while (rs2.next()){
+                        id = rs2.getString("ID") == null ? "" : new String(rs2.getString("ID").getBytes("ISO8859_1"),"TIS-620");
+                    }
+                    String sqlupdate = " UPDATE `customer` SET code = '"+new String(list.get(i).getCode().getBytes("ISO8859_1"),"TIS-620")+"' WHERE id = '"+id+"'  ";
+                    stm.executeUpdate(sqlupdate);
+//                    stm.executeUpdate(sql);
                 } catch (SQLException ex) {
-                    System.out.println(" sql ::: " +sql);
+                    Logger.getLogger(MainMigrate.class.getName()).log(Level.SEVERE, null, ex);
+                }catch (UnsupportedEncodingException ex) {
                     Logger.getLogger(MainMigrate.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }

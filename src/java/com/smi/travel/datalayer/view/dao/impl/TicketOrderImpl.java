@@ -70,6 +70,7 @@ public class TicketOrderImpl implements TicketOrderDao{
                 .addScalar("prepare_by", Hibernate.STRING) 
                 .addScalar("issue_by", Hibernate.STRING)  
                 .addScalar("pickup", Hibernate.STRING)
+                .addScalar("company_address", Hibernate.STRING)
                 .list();
          int check =1;
          List info = new ArrayList();
@@ -108,6 +109,7 @@ public class TicketOrderImpl implements TicketOrderDao{
                 ticketOrderInfo.setCost(util.ConvertString(cost));
                 ticketOrderInfo.setCosttax(util.ConvertString(costtax));
                 ticketOrderInfo.setIspickup(!"".equalsIgnoreCase(String.valueOf(util.ConvertString(B[15]))) ? util.ConvertString(B[15]) : "");
+                ticketOrderInfo.setCompanyaddress(!"".equalsIgnoreCase(String.valueOf(util.ConvertString(B[16]))) ? util.ConvertString(B[16]) : "");
                 info.add(ticketOrderInfo);
             }
             check++;                        

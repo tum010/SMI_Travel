@@ -34,6 +34,8 @@ public class BookingView {
     private String payBy;
     private String accId;
     private Date transferDate;
+    private String tourCode;
+    private Date tourDate;
     
     public BookingView(){
         
@@ -197,6 +199,22 @@ public class BookingView {
 
     public void setTransferDate(Date transferDate) {
         this.transferDate = transferDate;
+    }
+
+    public String getTourCode() {
+        return tourCode;
+    }
+
+    public void setTourCode(String tourCode) {
+        this.tourCode = tourCode;
+    }
+
+    public Date getTourDate() {
+        return tourDate;
+    }
+
+    public void setTourDate(Date tourDate) {
+        this.tourDate = tourDate;
     }
       
 }

@@ -26,11 +26,11 @@
 <input type="hidden" value="${noDataOther}" id="noDataOther">
 <section class="content-header" >
     <h1>
-        Operation - Day Tours Operation Others 
+        Operation - Others 
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-book"></i> Operation</a></li>          
-        <li class="active"><a href="#">Day Tours Operation Other</a></li>
+        <li class="active"><a href="#">Others</a></li>
     </ol>
 </section>
 <div class ="container"  style="padding-top: 15px;" ng-app=""> 

@@ -65,7 +65,13 @@
         </property>
         <property name="transferDate" type="date">
             <column name="transfer_date" />
-        </property>       
+        </property>
+        <property name="tourDate" type="date">
+            <column name="tour_date" />
+        </property>   
+        <property name="tourCode" type="string">
+            <column name="tour_code" />
+        </property>         
     </class>
         
 </hibernate-mapping>

@@ -61,12 +61,21 @@ public class LandBookingImpl implements LandBookingDao{
         String query = "from Product p where p.MProductType.id = 2";
         Session session = this.sessionFactory.openSession();
         List<Product> ProductList = session.createQuery(query).list();
+        List<Product> ProductLists = new LinkedList<Product>();
         if (ProductList.isEmpty()) {
             return null;
-        }
+        }else{
+            for(int i=0 ; i<ProductList.size();i++){
+                Product pro = ProductList.get(i);
+                pro.setCode(ProductList.get(i).getCode() == null ? null : ProductList.get(i).getCode().replaceAll("'", "\\\\\'"));
+                pro.setName(ProductList.get(i).getName() == null ? null : ProductList.get(i).getName().replaceAll("'", "\\\\\'"));
+                pro.setDescription(ProductList.get(i).getDescription() == null ? null : ProductList.get(i).getDescription().replaceAll("'", "\\\\\'"));
+                ProductLists.add(pro);
+            }
+        } 
         session.close();
         this.sessionFactory.close();
-        return ProductList;
+        return ProductLists;
     }
 
     @Override

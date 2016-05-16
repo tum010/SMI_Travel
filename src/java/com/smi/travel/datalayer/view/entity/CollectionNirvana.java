@@ -38,7 +38,6 @@ public class CollectionNirvana {
     private String to;
     private String no;
     private String headerdepartment;
-//    private String status;
     private BigDecimal cash;
     private BigDecimal chq;
     private BigDecimal credit;
@@ -51,6 +50,27 @@ public class CollectionNirvana {
     private BigDecimal totalamountvoid;
     private BigDecimal totalamountinvoice;
     private BigDecimal totalamountdiff;
+    
+    private String trancode;
+    private String prefix;
+    private String docno;
+    private String refvoucher;
+    private String year;
+    private String period;
+    private String arcur;
+    private String recur;
+    private String homerate;
+    private String foreignrate;
+    private BigDecimal bankamt;
+    private String note;
+    private String is_void;
+    private String chequeno;
+    private Date chequedate;
+    private String comid;
+    
+    private String invname;
+    private Date transdate;
+    private String bankid;
     
     public String getInvno() {
         return invno;
@@ -330,6 +350,158 @@ public class CollectionNirvana {
 
     public void setRowid(String rowid) {
         this.rowid = rowid;
+    }
+
+    public String getTrancode() {
+        return trancode;
+    }
+
+    public void setTrancode(String trancode) {
+        this.trancode = trancode;
+    }
+
+    public String getPrefix() {
+        return prefix;
+    }
+
+    public void setPrefix(String prefix) {
+        this.prefix = prefix;
+    }
+
+    public String getDocno() {
+        return docno;
+    }
+
+    public void setDocno(String docno) {
+        this.docno = docno;
+    }
+
+    public String getRefvoucher() {
+        return refvoucher;
+    }
+
+    public void setRefvoucher(String refvoucher) {
+        this.refvoucher = refvoucher;
+    }
+
+    public String getYear() {
+        return year;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
+    }
+
+    public String getPeriod() {
+        return period;
+    }
+
+    public void setPeriod(String period) {
+        this.period = period;
+    }
+
+    public String getArcur() {
+        return arcur;
+    }
+
+    public void setArcur(String arcur) {
+        this.arcur = arcur;
+    }
+
+    public String getRecur() {
+        return recur;
+    }
+
+    public void setRecur(String recur) {
+        this.recur = recur;
+    }
+
+    public String getHomerate() {
+        return homerate;
+    }
+
+    public void setHomerate(String homerate) {
+        this.homerate = homerate;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public String getIs_void() {
+        return is_void;
+    }
+
+    public void setIs_void(String is_void) {
+        this.is_void = is_void;
+    }
+
+    public String getChequeno() {
+        return chequeno;
+    }
+
+    public void setChequeno(String chequeno) {
+        this.chequeno = chequeno;
+    }
+
+    public BigDecimal getBankamt() {
+        return bankamt;
+    }
+
+    public void setBankamt(BigDecimal bankamt) {
+        this.bankamt = bankamt;
+    }
+
+    public String getForeignrate() {
+        return foreignrate;
+    }
+
+    public void setForeignrate(String foreignrate) {
+        this.foreignrate = foreignrate;
+    }
+
+    public String getComid() {
+        return comid;
+    }
+
+    public void setComid(String comid) {
+        this.comid = comid;
+    }
+
+    public String getInvname() {
+        return invname;
+    }
+
+    public void setInvname(String invname) {
+        this.invname = invname;
+    }
+
+    public String getBankid() {
+        return bankid;
+    }
+
+    public void setBankid(String bankid) {
+        this.bankid = bankid;
+    }
+
+    public Date getChequedate() {
+        return chequedate;
+    }
+
+    public void setChequedate(Date chequedate) {
+        this.chequedate = chequedate;
+    }
+
+    public Date getTransdate() {
+        return transdate;
+    }
+
+    public void setTransdate(Date transdate) {
+        this.transdate = transdate;
     }
     
     

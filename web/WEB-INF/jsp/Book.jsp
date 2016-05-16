@@ -39,7 +39,7 @@
                 <div id="textAlertDivNotCancel"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <strong>Cannot Cancel Booking!</strong> 
-            </div>
+                </div>
                 <div class="col-md-2">
                     <div class="form-group">
                         <label for="Country">Ref. No</label>
@@ -81,7 +81,7 @@
                 </div>
                 <div class="col-md-2">
                     <div class="form-group">
-                        <label for="Bookdate">Booking Date</label>
+                        <label for="Bookdate">Create Date</label>
                         <div class=' col-sm-12 input-group date' id='effectivefromClass'>
                             <c:set var="bookDate" value="${Bookdate}" />
                             <fmt:parseDate value="${bookDate}" var="bookDate" pattern="yyyy-MM-dd" />
@@ -113,12 +113,12 @@
                         </select>
                     </div>
                 </div>
-                            
+
                 <div class="col-md-2">
                     <div class="form-group">
                         <a data-toggle="collapse" href="#collapseExample${advanced.search}" aria-expanded="false" aria-controls="collapseExample${advanced.search}">
-                        <span id="SpanEdit${advanced.search}">Advanced Search</span>
-                        <!--<span id="SpanEdit${advanced.search}" class="glyphicon glyphicon-list-alt"></span>-->
+                            <span id="SpanEdit${advanced.search}">Advanced Search</span>
+                            <!--<span id="SpanEdit${advanced.search}" class="glyphicon glyphicon-list-alt"></span>-->
                         </a>
                     </div>
                 </div>
@@ -206,7 +206,7 @@
                         </div>    
                     </div>
                 </div>
-                 
+
                 <div class="row-fluid">
                     <div class="form-actions pull-right" style="padding-top: 20px;" >
                         <button type="button" id="acs" onclick="searchAction()" class="btn btn-primary"><span class="fa fa-search"></span> Search</button>           
@@ -234,21 +234,23 @@
                         <th style="width: 15%">Leader</th>
                             <c:choose>
                                 <c:when test="${userdepartment  == 1}">
-                                <th>PNR</th>
-                                <th style="width: 15%">Depart Date</th>
+                                <th style="width: 8%">PNR</th>
+                                <th style="width: 8%">Depart Date</th>
                                 </c:when>
                                 <c:when test="${userdepartment  == 4}">
                                 <th style="width: 10%">Hotel</th>
-                                <th style="width: 7%">Check in Date</th>
+                                <th style="width: 8%">Check in Date</th>
                                 </c:when> 
                                 <c:otherwise>
-                                <th>PNR</th>
-                                <th style="width: 15%">Depart Date</th>
-                                <th style="width: 10%">Hotel</th>
-                                <th style="width: 15%">Check in Date</th>
+                                <th style="width: 8%">PNR</th>
+                                <th style="width: 8%">Depart Date</th>
+                                <th style="width: 15%">Hotel</th>
+                                <th style="width: 8%">Check in Date</th>
                                 </c:otherwise>
                             </c:choose>
-                        <th style="width: 14%">Create Date</th>
+                        <th style="width: 10%">Tour Code</th>
+                        <th style="width: 8%">Tour Date</th>
+                        <th style="width: 8%">Create Date</th>
                         <th style="width: 5%">By</th>
                         <th style="width: 6%">Action</th>
                     </tr>
@@ -264,47 +266,50 @@
                             <c:set var="colourStatusFirstrow" value="background-color: #FFD3D3" />
                             <c:set var="statusicon" value="glyphicon-remove deleteicon" />
                         </c:if>
-                <tr ${colourStatus}>
+                        <tr ${colourStatus}>
                             <td ${colourStatus}><center><c:out value="${refno1}-${refno2}" /></center></td>
                     <td><center><c:out value="${table.agentCode}" /></center></td>
                     <td><c:out value="${table.leaderName}" /> </td>
                     <c:choose>
                         <c:when test="${userdepartment == 1}">
                             <td><center><c:out value="${table.pnr}" /></center></td>
-                            <fmt:formatDate value="${table.firstDepartDate}" var="firstDepartDate" pattern="dd-MM-yyyy" />
+                                <fmt:formatDate value="${table.firstDepartDate}" var="firstDepartDate" pattern="dd-MM-yyyy" />
                             <td class="text-center" ><center><c:out value="${firstDepartDate}" /></center></td>  
-                        </c:when>
-                        <c:when test="${userdepartment  == 4}">
+                            </c:when>
+                            <c:when test="${userdepartment  == 4}">
                             <td><c:out value="${table.hotelName}" /></td>
                             <fmt:formatDate value="${table.firstCheckinDate}" var="firstCheckinDate" pattern="dd-MM-yyyy" />
                             <td class="text-center"><center><c:out value="${firstCheckinDate}" /></center></td>  
-                        </c:when> 
-                        <c:otherwise>
+                            </c:when> 
+                            <c:otherwise>
                             <td><center><c:out value="${table.pnr}" /></center></td>
-                            <fmt:formatDate value="${table.firstDepartDate}" var="firstDepartDate" pattern="dd-MM-yyyy" />
+                                <fmt:formatDate value="${table.firstDepartDate}" var="firstDepartDate" pattern="dd-MM-yyyy" />
                             <td class="text-center" ><center><c:out value="${firstDepartDate}" /></center></td>  
                             <td><c:out value="${table.hotelName}" /></td>
                             <fmt:formatDate value="${table.firstCheckinDate}" var="firstCheckinDate" pattern="dd-MM-yyyy" />
                             <td class="text-center" ><center><c:out value="${firstCheckinDate}" /></center></td>  
-                        </c:otherwise>
-                    </c:choose>                   
+                            </c:otherwise>
+                        </c:choose>                   
+                    <td class="text-left" >${table.tourCode}</td>  
+                    <fmt:formatDate value="${table.tourDate}" var="tourDate" pattern="dd-MM-yyyy" />
+                    <td class="text-center" ><center><c:out value="${tourDate}" /></center></td>     
                     <fmt:formatDate value="${table.createDate}" var="createDate" pattern="dd-MM-yyyy" />
                     <td class="text-center" ><center><c:out value="${createDate}" /></center></td>  
                     <td><center><c:out value="${table.createBy}" /></center></td> 
-                  
                     <td>
-                        <center>
-                            <a href="BookDetail.smi?referenceNo=${table.refno}&action=edit"><span class="glyphicon glyphicon-th-list"></span></a>
-                            <span onclick="getSummaryBook('${table.refno}'); getSummaryTel('${table.tel}','${table.remark}','${table.email}');" class="glyphicon glyphicon glyphicon-list-alt"></span>
-                            <c:if test="${table.statusId == 3}">
-                                <span class="glyphicon glyphicon-plus addicon"   onclick="enableBook('${table.refno}');" data-toggle="modal"></span>
-                            </c:if>
-                            <c:if test="${table.statusId == 1}">
-                                <span class="glyphicon glyphicon-remove deleteicon"   onclick="cancelBook('${table.refno}');" data-toggle="modal"></span>
-                            </c:if>        
-                        </center>
+                    <center>
+                        <a href="BookDetail.smi?referenceNo=${table.refno}&action=edit"><span class="glyphicon glyphicon-th-list"></span></a>
+                        <span onclick="getSummaryBook('${table.refno}');
+                                    getSummaryTel('${table.tel}', '${table.remark}', '${table.email}');" class="glyphicon glyphicon glyphicon-list-alt"></span>
+                        <c:if test="${table.statusId == 3}">
+                            <span class="glyphicon glyphicon-plus addicon"   onclick="enableBook('${table.refno}');" data-toggle="modal"></span>
+                        </c:if>
+                        <c:if test="${table.statusId == 1}">
+                            <span class="glyphicon glyphicon-remove deleteicon"   onclick="cancelBook('${table.refno}');" data-toggle="modal"></span>
+                        </c:if>        
+                    </center>
                     </td>           
-                </tr>  
+                    </tr>  
                 </c:forEach>
                 </tbody>
             </table>      
@@ -312,51 +317,51 @@
 
 
     </div>
-    
-    <div class="row" style="padding-top: 10px">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Summary</h3>
-                    </div>
-                    <div class="panel-body">
-                        
-                        <div class="col-md-12">
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    <label for="telNo">Tel</label>
-                                    <input type="text" readonly="" class="form-control" maxlength="20" id="telNo" name="telNo" >
-                                </div>
-                            </div>
-                             <div class="col-md-2 ">
-                                <div class="form-group">
-                                    <label for="remark">Email</label>
-                                    <input type="text" readonly="" class="form-control" maxlength="50" id="email" name="email" >
-                                </div>
-                            </div>
-                            <div class="col-md-2 ">
-                                <div class="form-group">
-                                    <label for="remark">Remark</label>
-                                    <input type="text" readonly="" class="form-control" maxlength="50" id="remark" name="remark" >
-                                </div>
-                            </div>
-                            
-                        </div>
 
-                        <table  class="display" id="TableBookSummary">
-                            <thead>
-                                <tr class="datatable-header">
-                                    <th>Date</th>
-                                    <th>type</th>
-                                    <th>Description</th>
-                                    <th>Date tour</th>
-                                    <th>Amount</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table> 
+    <div class="row" style="padding-top: 10px">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Summary</h3>
+            </div>
+            <div class="panel-body">
+
+                <div class="col-md-12">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="telNo">Tel</label>
+                            <input type="text" readonly="" class="form-control" maxlength="20" id="telNo" name="telNo" >
+                        </div>
                     </div>
+                    <div class="col-md-2 ">
+                        <div class="form-group">
+                            <label for="remark">Email</label>
+                            <input type="text" readonly="" class="form-control" maxlength="50" id="email" name="email" >
+                        </div>
+                    </div>
+                    <div class="col-md-2 ">
+                        <div class="form-group">
+                            <label for="remark">Remark</label>
+                            <input type="text" readonly="" class="form-control" maxlength="50" id="remark" name="remark" >
+                        </div>
+                    </div>
+
                 </div>
+
+                <table  class="display" id="TableBookSummary">
+                    <thead>
+                        <tr class="datatable-header">
+                            <th>Date</th>
+                            <th>type</th>
+                            <th>Description</th>
+                            <th>Date tour</th>
+                            <th>Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table> 
+            </div>
+        </div>
     </div>
 
 </div>
@@ -685,7 +690,7 @@
                 <h4 class="modal-title"  id="Titlemodel">Booking</h4>
             </div>
             <div class="modal-body" id="enableBookMsg">
-                
+
             </div>
             <div class="modal-footer">
                 <button type="button" onclick="enable()" class="btn btn-success">Enable</button>
@@ -703,7 +708,7 @@
                 <h4 class="modal-title"  id="Titlemodel">Booking</h4>
             </div>
             <div class="modal-body" id="cancelBookMsg">
-                
+
             </div>
             <div class="modal-footer">               
                 <button type="button" onclick="cancel()" class="btn btn-danger">Cancel</button>
@@ -715,7 +720,7 @@
 
 <!--Script-->
 <script type="text/javascript" charset="utf-8">
-    $(document).ready(function() {
+    $(document).ready(function () {
 //        if($("#Bookdate").val() !== ''){
 //            var date = $("#Bookdate").val();
 //            $("#Bookdate").val(convertFormatDate(date));
@@ -728,18 +733,18 @@
 //            var date = $("#transferDateTo").val();
 //            $("#transferDateTo").val(convertFormatDate(date));
 //        }
-        
+
         var table = $('#BookList').dataTable({bJQueryUI: true,
             "sPaginationType": "full_numbers",
             "bAutoWidth": false,
             "bFilter": false,
-            "aaSorting": [[ 0, "desc" ]]
+            "aaSorting": [[0, "desc"]]
         });
- 
+
 //        $("#btnNew").appendTo("#example_filter label").show();
         $(".moneyformat").mask('000,000,000,000.00', {reverse: true});
-    
-        $('#BookList tbody').on('click', 'tr', function() {
+
+        $('#BookList tbody').on('click', 'tr', function () {
             if ($(this).hasClass('row_selected')) {
                 $(this).removeClass('row_selected');
                 $('#hdGridSelected').val('');
@@ -753,92 +758,92 @@
         $('.dataTables_length label').remove();
 
         $('.date').datetimepicker();
-        $('.spandate').click(function() {
+        $('.spandate').click(function () {
             var position = $(this).offset();
             console.log("positon :" + position.top);
             $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
 
         });
-        
+
         var result = $('#result').val();
         if (result === "fail") {
             $('#textAlertDivNotCancel').show();
-        } 
-        
+        }
+
     });
 
-    $('#myTab a').click(function(e) {
+    $('#myTab a').click(function (e) {
         e.preventDefault()
         $(this).tab('show')
     });
-    
+
     function setformat() {
-        $('#TableBookSummary tr td.moneyformat').each(function() {
+        $('#TableBookSummary tr td.moneyformat').each(function () {
             var innerHTML = $(this).html();
 //            if($(this).html() !== ''){
 //               $(this).html(numberWithCommas($(this).html())); 
 //            }         
         });
-        
-        $('#TableBookSummary tr td.dateformat').each(function() {
+
+        $('#TableBookSummary tr td.dateformat').each(function () {
             var innerHTML = $(this).html();
-            if($(this).html() !== ''){
-               $(this).html(convertFormatDate(($(this).html()))); 
-            }            
-        });
-        
-        $('#TableBookSummary tr td.datetourformat').each(function() {
-            var innerHTML = $(this).html();
-            if($(this).html() !== ''){
+            if ($(this).html() !== '') {
                 $(this).html(convertFormatDate(($(this).html())));
-            }           
+            }
+        });
+
+        $('#TableBookSummary tr td.datetourformat').each(function () {
+            var innerHTML = $(this).html();
+            if ($(this).html() !== '') {
+                $(this).html(convertFormatDate(($(this).html())));
+            }
         });
     }
-            
-    function getSummaryTel(tel,remark,email){
-        document.getElementById('telNo').value=tel;
-        document.getElementById('remark').value=remark;
-        document.getElementById('email').value=email;
+
+    function getSummaryTel(tel, remark, email) {
+        document.getElementById('telNo').value = tel;
+        document.getElementById('remark').value = remark;
+        document.getElementById('email').value = email;
     }
-    
+
     $("#AirTicket").load("WebContent/Book/AirTicket.jsp");
     $("#Hotel").load("WebContent/Book/Hotel.jsp");
     $("#Passenger").load("WebContent/Book/Passenger.jsp");
     $("#History").load("WebContent/Book/History.jsp");
     $("#Billable").load("WebContent/Book/Billable.jsp");
-    
-    function bankTrasferField(){
+
+    function bankTrasferField() {
         var payBy = document.getElementById("payBy").value;
-        if(payBy === '4'){
-            $('#bankTransfer').removeAttr('disabled');           
+        if (payBy === '4') {
+            $('#bankTransfer').removeAttr('disabled');
         } else {
             $('#bankTransfer').attr('disabled', 'disabled');
-            $('[name=bankTransfer] option').filter(function() { 
+            $('[name=bankTransfer] option').filter(function () {
                 return ($(this).val() === '');
-            }).prop('selected', true);      
+            }).prop('selected', true);
         }
     }
-    
-    function cancelBook(refno){
-        document.getElementById("cancelBookMsg").innerHTML = "Are you sure to cancel ref no '"+refno+"' ?";
+
+    function cancelBook(refno) {
+        document.getElementById("cancelBookMsg").innerHTML = "Are you sure to cancel ref no '" + refno + "' ?";
         $("#refNoEdit").val(refno);
         $("#CancelBook").modal("show");
     }
-    
-    function cancel(){
-         var action = document.getElementById('action');
+
+    function cancel() {
+        var action = document.getElementById('action');
         action.value = 'cancelBook';
         document.getElementById('BookSearch').submit();
     }
-    
-    function enableBook(refno){
-        document.getElementById("enableBookMsg").innerHTML = "Are you sure to enable ref no '"+refno+"' ?";
+
+    function enableBook(refno) {
+        document.getElementById("enableBookMsg").innerHTML = "Are you sure to enable ref no '" + refno + "' ?";
         $("#refNoEdit").val(refno);
         $("#EnableBook").modal("show");
     }
-    
-    function enable(){
-         var action = document.getElementById('action');
+
+    function enable() {
+        var action = document.getElementById('action');
         action.value = 'enableBook';
         document.getElementById('BookSearch').submit();
     }

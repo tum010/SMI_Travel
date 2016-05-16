@@ -68,7 +68,7 @@ public class DaytourImpl implements DaytourDao{
             query = query.replaceAll("where", " ");
         }
         System.out.println("query : " + query);
-        query = query +" order by t.name";
+        query = query +" order by t.code ";
         Session session = this.sessionFactory.openSession();
         List<Daytour> list = session.createQuery(query).list();
 

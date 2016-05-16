@@ -307,13 +307,20 @@ public class StockImpl implements StockDao{
     @Override
     public List<Product> getListStockProduct() {
         Session session = this.sessionFactory.openSession();
-        List<Product> productList = session.createQuery(SELECT_STOCK_PRODUCT)
-                .list();
+        List<Product> productList = session.createQuery(SELECT_STOCK_PRODUCT).list();
+        List<Product> productLists = new LinkedList<Product>();
         if (productList.isEmpty()) {
             return null;
-        }
-
-        return productList;
+        }else{
+            for(int i=0 ; i<productList.size();i++){
+                Product pro = productList.get(i);
+                pro.setCode(productList.get(i).getCode() == null ? null : productList.get(i).getCode().replaceAll("'", "\\\\\'"));
+                pro.setName(productList.get(i).getName() == null ? null : productList.get(i).getName().replaceAll("'", "\\\\\'"));
+                pro.setDescription(productList.get(i).getDescription() == null ? null : productList.get(i).getDescription().replaceAll("'", "\\\\\'"));
+                productLists.add(pro);
+            }
+        } 
+        return productLists;
     }
 
     @Override

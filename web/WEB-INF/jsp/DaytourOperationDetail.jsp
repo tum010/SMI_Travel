@@ -1411,7 +1411,7 @@
                         <c:forEach var="table" items="${dayTourList}" varStatus="dayStatus">
                             <tr class="packet">
                                 <td class="hidden">${table.tourDate}</td>
-                                <td class="pack-date"><fmt:formatDate value="${table.tourDate}" var="tourDate" pattern="yyyy-MM-dd" />${tourDate}</td>
+                                <td class="pack-date"><fmt:formatDate value="${table.tourDate}" var="tourDate" pattern="dd-MM-yyyy" />${tourDate}</td>
                                 <td>${table.daytour.code}</td>
                                 <td class="text-center" >
                                     <a href="DaytourOperationDetail.smi?action=edit&tourID=${table.daytour.id}&tourDate=${table.tourDate}">
