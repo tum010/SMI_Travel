@@ -391,7 +391,7 @@ public class BillableImpl implements BillableDao {
                 
                 //get Depart date and flight
                 
-                DepartDateAndFlight += "                     "+new SimpleDateFormat("ddMMMyyyy", new Locale("us", "us")).format(flightDetail.getDepartDate()) + "/"+flightDetail.getFlightNo() +"\n";
+                DepartDateAndFlight += "                     "+new SimpleDateFormat("ddMMMyyyy", new Locale("us", "us")).format(flightDetail.getDepartDate()) + " / "+flightDetail.getFlightNo() +"\n";
                 
                 //PRICE
                 if(flightDetail.getAdPrice() != null){
@@ -473,13 +473,13 @@ public class BillableImpl implements BillableDao {
                 }
                 if(isgroup == 1){
                     //FOR  {INITNAME} {LAST NAME}/{FIRST NAME}        {PRICE} + {TAX}(PAX)
-                    description += "FOR" +"               " + Initname +" "+passenger.getFirstName() +"/"+passenger.getLastName() +"<P>"+ utility.setFormatMoney(price) +" + "+utility.setFormatMoney(tax)+" ("+passengerList.size()+")</P>\n";
+                    description += "FOR" +"               " + Initname +" "+passenger.getFirstName() +" / "+passenger.getLastName() +"<P>"+ utility.setFormatMoney(price) +" + "+utility.setFormatMoney(tax)+" ("+passengerList.size()+")</P>\n";
                     ticketno+= "                   "+"  TICKET NO. "+ passenger.getSeries1() +" - "+passenger.getSeries2()+" - "+passenger.getSeries3()+"\n\n";
                     //Break Loop
                     p +=  passengerList.size(); 
                 }else{
                     //FOR  {INITNAME} {LAST NAME}/{FIRST NAME}        {PRICE} + {TAX}
-                    description += "FOR" +"               " + Initname +" "+passenger.getFirstName() +"/"+passenger.getLastName() +"<P>"+ utility.setFormatMoney(price) +" + "+utility.setFormatMoney(tax)+"</P>\n";
+                    description += "FOR" +"               " + Initname +" "+passenger.getFirstName() +" / "+passenger.getLastName() +"<P>"+ utility.setFormatMoney(price) +" + "+utility.setFormatMoney(tax)+"</P>\n";
                     ticketno+= "                   "+"  TICKET NO. "+ passenger.getSeries1() +" - "+passenger.getSeries2()+" - "+passenger.getSeries3()+"\n\n";
                 }
                 description += ticketno;
