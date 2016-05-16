@@ -391,7 +391,7 @@ public class BillableImpl implements BillableDao {
                 
                 //get Depart date and flight
                 
-                DepartDateAndFlight += "                     "+new SimpleDateFormat("ddMMMyyyy", new Locale("us", "us")).format(flightDetail.getDepartDate()) + "/"+flightDetail.getFlightNo() +"\n";
+                DepartDateAndFlight += "                     "+new SimpleDateFormat("ddMMMyyyy", new Locale("us", "us")).format(flightDetail.getDepartDate()) + " / "+flightDetail.getFlightNo() +"\n";
                 
                 //PRICE
                 if(flightDetail.getAdPrice() != null){
@@ -473,13 +473,13 @@ public class BillableImpl implements BillableDao {
                 }
                 if(isgroup == 1){
                     //FOR  {INITNAME} {LAST NAME}/{FIRST NAME}        {PRICE} + {TAX}(PAX)
-                    description += "FOR" +"               " + Initname +" "+passenger.getFirstName() +"/"+passenger.getLastName() +"<P>"+ utility.setFormatMoney(price) +" + "+utility.setFormatMoney(tax)+" ("+passengerList.size()+")</P>\n";
+                    description += "FOR" +"               " + Initname +" "+passenger.getFirstName() +" / "+passenger.getLastName() +"<P>"+ utility.setFormatMoney(price) +" + "+utility.setFormatMoney(tax)+" ("+passengerList.size()+")</P>\n";
                     ticketno+= "                   "+"  TICKET NO. "+ passenger.getSeries1() +" - "+passenger.getSeries2()+" - "+passenger.getSeries3()+"\n\n";
                     //Break Loop
                     p +=  passengerList.size(); 
                 }else{
                     //FOR  {INITNAME} {LAST NAME}/{FIRST NAME}        {PRICE} + {TAX}
-                    description += "FOR" +"               " + Initname +" "+passenger.getFirstName() +"/"+passenger.getLastName() +"<P>"+ utility.setFormatMoney(price) +" + "+utility.setFormatMoney(tax)+"</P>\n";
+                    description += "FOR" +"               " + Initname +" "+passenger.getFirstName() +" / "+passenger.getLastName() +"<P>"+ utility.setFormatMoney(price) +" + "+utility.setFormatMoney(tax)+"</P>\n";
                     ticketno+= "                   "+"  TICKET NO. "+ passenger.getSeries1() +" - "+passenger.getSeries2()+" - "+passenger.getSeries3()+"\n\n";
                 }
                 description += ticketno;
@@ -551,7 +551,11 @@ public class BillableImpl implements BillableDao {
                     String newDate = dateArr[2] +"/" + dateArr[1] + "/" + dateArr[0];
                     description += "  ("+newDate +")\n";
                 }else{
-                     description += "\n";
+                    boolean haveNewLine = ((list.get(i).getAdCost() != null && (new BigDecimal(BigInteger.ZERO)).compareTo(list.get(i).getAdCost()) != 0)
+                            || list.get(i).getChCost() != null && (new BigDecimal(BigInteger.ZERO)).compareTo(list.get(i).getChCost()) != 0
+                            || list.get(i).getInCost() != null &&(new BigDecimal(BigInteger.ZERO)).compareTo(list.get(i).getInCost())  != 0
+                            ? true : false);
+                     description += (haveNewLine ? "\n" : "");
                 }
                 String amount = "";
                 if(list.get(i).getAdCost() != null && (new BigDecimal(BigInteger.ZERO)).compareTo(list.get(i).getAdCost()) != 0 ){ // Adult Cost
@@ -813,9 +817,9 @@ public class BillableImpl implements BillableDao {
                 
                 int day = getDifferenceDays(list.get(i).getCheckin(), list.get(i).getCheckout()); // Day 
                 if( day != 0){
-                   description += "  :  "+day +" NST";
+                   description += "  :  "+day +" NTS";
                 }else{
-                     description += "0 NST";
+                     description += "0 NTS";
                 }
                 if(format == 1){
                     if(list.get(i).getMaster().getCustomer().getMInitialname() != null){ // prename
