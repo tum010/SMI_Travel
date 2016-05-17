@@ -80,6 +80,8 @@ public class BookingPnrImpl implements BookingPnrDao {
         int result = 0;
         boolean updateFilenameFlag = false;
         List<BookingFlight> newflighta = new ArrayList<BookingFlight>();
+        List<BookingPassenger> newpassengera = new ArrayList<BookingPassenger>();
+        
         try {
             System.out.println("update pnr");
             Set listNewAirlines = bPnr.getBookingAirlines();
@@ -97,7 +99,7 @@ public class BookingPnrImpl implements BookingPnrDao {
   
                 List<BookingAirline> currentAir = new ArrayList<BookingAirline>(currentBookingPnr.getBookingAirlines());
                 
-                
+                //set currentflight
                 List<BookingFlight> currentflight = new ArrayList<BookingFlight>();
                 for(int i =0;i<currentAir.size();i++){
                     List<BookingFlight> tempflight = new ArrayList<BookingFlight>(currentAir.get(i).getBookingFlights()); 
@@ -109,14 +111,38 @@ public class BookingPnrImpl implements BookingPnrDao {
                     System.out.println("Old Flight : "+currentflight.get(k).getFlightNo());
                 }
                 
-                List<BookingFlight> newflight = new ArrayList<BookingFlight>(newAirline.getBookingFlights());
+                //set current passenger
+                List<BookingPassenger> currentpassenger = new ArrayList<BookingPassenger>();
+                for(int i =0;i<currentAir.size();i++){
+                    List<BookingPassenger> temppassenger = new ArrayList<BookingPassenger>(currentAir.get(i).getBookingPassengers()); 
+                    for(int j =0;j<temppassenger.size();j++){
+                        currentpassenger.add(temppassenger.get(j));
+                    }
+                }
+                for(int k =0;k<currentpassenger.size();k++){
+                    System.out.println("Old Passenger : "+currentpassenger.get(k).getTicketnoS1()+currentpassenger.get(k).getTicketnoS2()+currentpassenger.get(k).getTicketnoS3());
+                }
                 
+                List<BookingFlight> newflight = new ArrayList<BookingFlight>(newAirline.getBookingFlights());
+                List<BookingPassenger> newPassenger = new ArrayList<BookingPassenger>(newAirline.getBookingPassengers());
+                int isAirlinelap = 1;
+                int isPassengerlap = 1;
                 if (!isExistAirline(newAirline, listCurrentAirlines)) {
                     System.out.println("not isExistAirline");
                     currentBookingPnr.getBookingAirlines().add(newAirline);
                     newAirline.setBookingPnr(currentBookingPnr);
                     updateFilenameFlag = true;
-                }else {
+                    isAirlinelap = 0;
+                }else if (!isExistPassenger(newAirline, listCurrentAirlines)) {
+                    System.out.println("Air Code" + newAirline.getAirlineCode());
+                    System.out.println("Add more passengers!");
+                    addPassengersInAirline(newAirline, listCurrentAirlines);
+                    updateFlightsInAirline(newAirline, listCurrentAirlines);
+                    updateFilenameFlag = true;
+                    isPassengerlap =0 ;
+                }
+                
+                if(isAirlinelap==1) {
                     BookingAirline airline = new BookingAirline();
                     System.out.println("isExistAirline");
                     updateFilenameFlag = true;
@@ -149,16 +175,28 @@ public class BookingPnrImpl implements BookingPnrDao {
                         }
                        
                     }
+                    if(isPassengerlap == 1){
+                        for(int j=0;j<newPassenger.size();j++){
+                            boolean islap = false;
+                            newPassenger.get(j).setBookingAirline(airline);
+                            for(int k=0;k<currentpassenger.size();k++){
+                                String ticket =  currentpassenger.get(k).getTicketnoS1() + currentpassenger.get(k).getTicketnoS2()+currentpassenger.get(k).getTicketnoS3();
+                                String ticketnew =  newPassenger.get(j).getTicketnoS1() + newPassenger.get(j).getTicketnoS2()+newPassenger.get(j).getTicketnoS3();
+                                if(ticket.equalsIgnoreCase(ticketnew)){
+                                    islap = true;
+                                    k += currentflight.size();
+                                }
+                            } 
+                            if(!islap){
+                                System.out.println("add passenger not lap : "+newPassenger.get(j).getTicketnoS1()+newPassenger.get(j).getTicketnoS2()+newPassenger.get(j).getTicketnoS3());
+                                newpassengera.add(newPassenger.get(j));
+                            }
+                        }
+                    }
+                    
                     
                    
                 }  
-                if (!isExistPassenger(newAirline, listCurrentAirlines)) {
-                    System.out.println("Air Code" + newAirline.getAirlineCode());
-                    System.out.println("Add more passengers!");
-                    addPassengersInAirline(newAirline, listCurrentAirlines);
-                    updateFlightsInAirline(newAirline, listCurrentAirlines);
-                    updateFilenameFlag = true;
-                }
 
             }
 
@@ -171,8 +209,11 @@ public class BookingPnrImpl implements BookingPnrDao {
             session.close();
         
             for(int i=0;i<newflighta.size();i++){
-                insertBookingFlight(newflighta.get(i));
-                
+                insertBookingFlight(newflighta.get(i));            
+            }
+            
+            for(int i=0;i<newpassengera.size();i++){
+                insertBookingPassenger(newpassengera.get(i));            
             }
             
             result = 1;
@@ -190,6 +231,22 @@ public class BookingPnrImpl implements BookingPnrDao {
             Session session = this.sessionFactory.openSession();
             transaction = session.beginTransaction();
             session.save(flight);
+            transaction.commit();
+            session.close();
+            result = 1;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            result = 0;
+        }
+        return result;
+    }
+    
+    private int insertBookingPassenger(BookingPassenger passenger) {
+        int result = 0;
+        try {
+            Session session = this.sessionFactory.openSession();
+            transaction = session.beginTransaction();
+            session.save(passenger);
             transaction.commit();
             session.close();
             result = 1;

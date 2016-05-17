@@ -770,6 +770,7 @@ function calculateProfitReady(){
 }
 
 function calculateProfit(e){
+    
     var row = $(e).parent().parent().attr("row");
     
     var receive = replaceAll(",","",$("#receive"+row).val());
@@ -785,7 +786,9 @@ function calculateProfit(e){
     }
     
     var paytemp = parseFloat(pay);
+    
     if(paytemp > receivetemp){
+       
         var receiveField = document.getElementById('receive'+row);
         receiveField.style.borderColor = "Red";
         var payField = document.getElementById('pay'+row);
@@ -800,6 +803,7 @@ function calculateProfit(e){
 //        $("#pay"+row).attr("placeholder", "0.00");
         
     }else{
+        
         var receiveField = document.getElementById('receive'+row);
         receiveField.style.borderColor = "";
         var payField = document.getElementById('pay'+row);
@@ -831,9 +835,11 @@ function calculateProfit(e){
             var valuereceive = tempreceive.value;
             var valuepay = temppay.value;
             if(valuereceive !== '' && valuepay !== ''){
-                valuereceive = valuereceive.replace(/,/g,"");
-                valuepay = valuepay.replace(/,/g,"");
+                valuereceive = parseFloat(valuereceive.replace(/,/g,""));
+                valuepay = parseFloat(valuepay.replace(/,/g,""));
+               
                 if(valuepay > valuereceive){
+                   
                     checksave = true;
                 }
             }
@@ -841,6 +847,7 @@ function calculateProfit(e){
     }
     
     if(checksave){
+     
         $("#buttonSave").addClass("disabled");
         $("#ButtonSaveAndNew").addClass("disabled");
         $("#buttonPrint").addClass("disabled");
