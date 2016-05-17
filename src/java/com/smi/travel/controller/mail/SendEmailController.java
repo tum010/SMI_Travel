@@ -74,6 +74,7 @@ public class SendEmailController extends SMITravelController {
         String showleader = request.getParameter("showleader");
         String reportFile = request.getParameter("file");
         String sign = request.getParameter("sign");
+        String isTemp = request.getParameter("isTemp");
         String jasperFileName = "";
         String pdfFileName = "";
         String optionsend = request.getParameter("optionsend");
@@ -95,7 +96,7 @@ public class SendEmailController extends SMITravelController {
 
         if ((recipientAddress != null) && (!"".equalsIgnoreCase(recipientAddress))) {
             if (InvoiceReport.equalsIgnoreCase(name)) {
-                data = reportservice.getInvoice(reportid,bankid,showstaff,showleader,sign,user.getName());
+                data = reportservice.getInvoice(reportid,bankid,showstaff,showleader,sign,user.getName(),"0");
                 JRDataSource dataSource = new JRBeanCollectionDataSource(data);
                 jasperFileName = "InvoiceEmail.jasper";
                 pdfFileName = "invoice.pdf";
@@ -106,7 +107,7 @@ public class SendEmailController extends SMITravelController {
                 }
             }
             if (ReceiptEmail.equalsIgnoreCase(name)) {
-                data = reportservice.getReceiptEmail(reportid,option,sign,user.getName());
+                data = reportservice.getReceiptEmail(reportid,option,sign,user.getName(),isTemp);
                 JRDataSource dataSource = new JRBeanCollectionDataSource(data);
                 jasperFileName = "ReceiptEmail.jasper";
                 pdfFileName = "receipt.pdf";
@@ -139,7 +140,7 @@ public class SendEmailController extends SMITravelController {
                 }
              }
             if (InvoiceInboundRevenueEmail.equalsIgnoreCase(name)) {
-                data = reportservice.getInvoice(reportid,bankid,showstaff,showleader,sign,user.getName());
+                data = reportservice.getInvoice(reportid,bankid,showstaff,showleader,sign,user.getName(),"0");
                 JRDataSource dataSource = new JRBeanCollectionDataSource(data);
                 jasperFileName = "InvoiceInboundRevenueEmail.jasper";
                 pdfFileName = "InvoiceInboundRevenueEmail.pdf";
@@ -150,7 +151,7 @@ public class SendEmailController extends SMITravelController {
                 }
             }
             if (InvoiceInboundPerformaEmail.equalsIgnoreCase(name)) {
-                data = reportservice.getInvoice(reportid,bankid,showstaff,showleader,sign,user.getName());
+                data = reportservice.getInvoice(reportid,bankid,showstaff,showleader,sign,user.getName(),"0");
                 JRDataSource dataSource = new JRBeanCollectionDataSource(data);
                 jasperFileName = "InvoiceInboundEmail.jasper";
                 pdfFileName = "InvoiceInboundProformaEmail.pdf";
@@ -161,7 +162,7 @@ public class SendEmailController extends SMITravelController {
                 }
             }
             if (InvoiceTempEmail.equalsIgnoreCase(name)) {
-                data = reportservice.getInvoice(reportid,bankid,showstaff,showleader,sign,user.getName());
+                data = reportservice.getInvoice(reportid,bankid,showstaff,showleader,sign,user.getName(),"1");
                 JRDataSource dataSource = new JRBeanCollectionDataSource(data);
                 jasperFileName = "InvoiceTempEmail.jasper";
                 pdfFileName = "InvoiceTempEmail.pdf";

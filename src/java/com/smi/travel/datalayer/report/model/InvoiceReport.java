@@ -53,6 +53,7 @@ public class InvoiceReport {
     private String printby;
     private String currencytotal;
     private String isHide;
+    private String isTemp;
 
     public String getCurrencytotal() {
         return currencytotal;
@@ -391,6 +392,14 @@ public class InvoiceReport {
 
     public void setIsHide(String isHide) {
         this.isHide = isHide;
+    }
+
+    public String getIsTemp() {
+        return isTemp;
+    }
+
+    public void setIsTemp(String isTemp) {
+        this.isTemp = isTemp;
     }
     
 }

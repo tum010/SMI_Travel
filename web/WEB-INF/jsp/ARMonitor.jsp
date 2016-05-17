@@ -271,7 +271,7 @@
                                 <td>${ar_nirvana.salesaccount1}</td>
                                 <td align="right" class="money">${ar_nirvana.salesamt}</td>
                                 <td align="right" class="money">${ar_nirvana.vatamt}</td>
-                                <td align="right" class="money">${ar_nirvana.aramt}</td>
+                                <td align="right" class="money">${ar_nirvana.arhmamt}</td>
                                 <td align="center">${ar_nirvana.currencyid}</td>
                                 <td align="center">${ar_nirvana.status}</td>
                             </tr>

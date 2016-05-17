@@ -2119,14 +2119,15 @@
         var receiveNo = document.getElementById('receiveNo').value;
         var optionPrint = document.getElementById('optionPrint').value;
         var SelectSign =  document.getElementById('SelectSign').value;
+        var isTemp = ('${page}' === 'WT' || '${page}' === 'OT' || '${page}' === 'IT' ? '1' : '0');
         if (receiveId == "") {
             alert("please save before print");
         } else if (printtype == 0) {
             alert('please select option print');
         } else if (printtype == 1) {
-            window.open("report.smi?name=ReceiptReport&receiveId=" + receiveId + "&receiveNo=" + receiveNo + "&optionPrint=" + optionPrint + "&sign=" + SelectSign);
+            window.open("report.smi?name=ReceiptReport&receiveId=" + receiveId + "&receiveNo=" + receiveNo + "&optionPrint=" + optionPrint + "&sign=" + SelectSign + "&isTemp=" + isTemp);
         } else if (printtype == 2) {
-            window.open("report.smi?name=ReceiptEmail&receiveId=" + receiveId + "&receiveNo=" + receiveNo + "&optionPrint=" + optionPrint + "&sign=" + SelectSign);
+            window.open("report.smi?name=ReceiptEmail&receiveId=" + receiveId + "&receiveNo=" + receiveNo + "&optionPrint=" + optionPrint + "&sign=" + SelectSign + "&isTemp=" + isTemp);
         }
     }
 
@@ -2211,7 +2212,8 @@
         $('#SendEmailReceiptModal').modal('hide');
         var optionSend = document.getElementById('optionSend').value;
         var receiveId = document.getElementById('receiveId').value;
-        window.open("SendMail.smi?reportname=ReceiptEmail&reportid=" + receiveId + "&optionsend=" + optionSend);
+        var isTemp = ('${page}' === 'WT' || '${page}' === 'OT' || '${page}' === 'IT' ? '1' : '0');
+        window.open("SendMail.smi?reportname=ReceiptEmail&reportid=" + receiveId + "&optionsend=" + optionSend + "&isTemp=" + isTemp);
     }
 
     function AddRowProduct(row) {

@@ -32,7 +32,7 @@ public class InvoiceImpl implements InvoiceReportDao{
     private static final String GET_INVOICE_FROMID = "FROM InvoiceDetail invD where invD.invoice.id = :invId";
 
     @Override
-    public List getInvoice(String InvoiceId,String BankId,String showStaff,String showLeader,String sign,String printBy) {
+    public List getInvoice(String InvoiceId,String BankId,String showStaff,String showLeader,String sign,String printBy,String isTemp) {
         Session session = this.sessionFactory.openSession();
         System.out.println("Sign : " + sign + "Print By : " + printBy);
         UtilityFunction util = new UtilityFunction();  
@@ -107,6 +107,7 @@ public class InvoiceImpl implements InvoiceReportDao{
             invoice.setAccno2(Accno2);
             invoice.setAcctype(accType);
             invoice.setPrintby(printBy);
+            invoice.setIsTemp(isTemp);
             invoice.setCurrency(util.ConvertString(B[17]));
             invoice.setRefno(util.ConvertString(B[20]) != null && !"".equals(util.ConvertString(B[20])) ? util.ConvertString(B[20]) : "");
             vat = ((Integer) (B[21] != null && (Integer) B[21] != 0 ? (Integer)B[21] : vat));
