@@ -457,80 +457,88 @@ function setGuideName(name,no){
     
     if(no === 'ready'){
         var MDname = document.getElementById("MDname").value;
-        if(MDname === 'tour'){
+        if(MDname === 'checking wendy' || MDname === 'tour'){
             var name1 = document.getElementById('InputGuideName1').value;
             var name2 = document.getElementById('InputGuideName2').value;             
             var guideName = document.getElementById('guideName').value;
-        }
-        $('#InvoiceSupGuideBill')
-            .find('option')
-            .remove()
-            .end()
-            .append('<option value="">---------</option>')
-            .val('')
-        ;
-        if(name1 !== ''){
-            $('#InvoiceSupGuideBill').append($('<option>', {
-                value: name1,
-                text: name1
-            }));
-        }
-        if(name2 !== ''){
-            $('#InvoiceSupGuideBill').append($('<option>', {
-                value: name2,
-                text: name2
-            }));
-        }    
         
-        if(guideName !== ""){           
-            if(name1 === guideName){
-                $('[name=InvoiceSupGuideBill] option').filter(function() { 
-                    return ($(this).text() === name1);
-                }).prop('selected', true);
-            } else if(name2 === guideName){
-                $('[name=InvoiceSupGuideBill] option').filter(function() { 
-                    return ($(this).text() === name2);
-                }).prop('selected', true);
-            } else {
-                $('[name=InvoiceSupGuideBill] option').filter(function() { 
-                    return ($(this).text() === '');
-                }).prop('selected', true);
-                document.getElementById('textAlertDivGuideName').style.display = 'block';
-                document.getElementById('textAlertDivGuideName').innerHTML = 'Guide Bill is not match. Invoice sup is "' +guideName+ '".!!!';
-            }          
-        }
-        var MDname = document.getElementById("MDname");
-        if((MDname.value === 'tour')){
-            $('#InvoiceSupGuideBillShow')
+            $('#InvoiceSupGuideBill')
                 .find('option')
                 .remove()
                 .end()
                 .append('<option value="">---------</option>')
                 .val('')
-            ;       
-            $('#InvoiceSupGuideBillShow').append($('<option>', {
-                value: name1,
-                text: name1
-            }));
-            $('#InvoiceSupGuideBillShow').append($('<option>', {
-                value: name2,
-                text: name2
-            }));
+            ;
+            if(name1 !== ''){
+                $('#InvoiceSupGuideBill').append($('<option>', {
+                    value: name1,
+                    text: name1
+                }));
+            }
+            if(name2 !== ''){
+                $('#InvoiceSupGuideBill').append($('<option>', {
+                    value: name2,
+                    text: name2
+                }));
+            }    
+
             if(guideName !== ""){           
                 if(name1 === guideName){
-                    $('[name=InvoiceSupGuideBillShow] option').filter(function() { 
+                    $('[name=InvoiceSupGuideBill] option').filter(function() { 
                         return ($(this).text() === name1);
                     }).prop('selected', true);
                 } else if(name2 === guideName){
-                    $('[name=InvoiceSupGuideBillShow] option').filter(function() { 
+                    $('[name=InvoiceSupGuideBill] option').filter(function() { 
                         return ($(this).text() === name2);
                     }).prop('selected', true);
                 } else {
-                    $('[name=InvoiceSupGuideBillShow] option').filter(function() { 
+                    $('[name=InvoiceSupGuideBill] option').filter(function() { 
                         return ($(this).text() === '');
-                    }).prop('selected', true);                   
+                    }).prop('selected', true);
+                    document.getElementById('textAlertDivGuideName').style.display = 'block';
+                    document.getElementById('textAlertDivGuideName').innerHTML = 'Guide Bill is not match. Invoice sup is "' +guideName+ '".!!!';
                 }          
-            }        
+            }
+            var MDname = document.getElementById("MDname");
+            if((MDname.value === 'tour')){
+                $('#InvoiceSupGuideBillShow')
+                    .find('option')
+                    .remove()
+                    .end()
+                    .append('<option value="">---------</option>')
+                    .val('')
+                ;
+                if($("#InputGuideName1").val() !== ''){
+                    $('#InvoiceSupGuideBillShow').append($('<option>', {
+                        value: name1,
+                        text: name1
+                    }));
+                }   
+                if($("#InputGuideName2").val() !== ''){
+                    $('#InvoiceSupGuideBillShow').append($('<option>', {
+                        value: name2,
+                        text: name2
+                    }));
+                }
+                if(guideName !== ""){           
+                    if(name1 === guideName){
+                        $('[name=InvoiceSupGuideBillShow] option').filter(function() { 
+                            return ($(this).text() === name1);
+                        }).prop('selected', true);
+                    } else if(name2 === guideName){
+                        $('[name=InvoiceSupGuideBillShow] option').filter(function() { 
+                            return ($(this).text() === name2);
+                        }).prop('selected', true);
+                    } else {
+                        $('[name=InvoiceSupGuideBillShow] option').filter(function() { 
+                            return ($(this).text() === '');
+                        }).prop('selected', true);                   
+                    }          
+                }        
+            }
+        
+        } else if(MDname === 'tour'){
+            
         }
     }
     
@@ -714,15 +722,15 @@ function calculateGuideBill(){
                 nodes[i].disabled = false;
             }
         }
-    }    
+    }  
     var MDname = document.getElementById("MDname").value;
-    if(MDname === 'tour'){
-        document.getElementById('InputGuideBill').value = formatNumber(guideBillTotal);
-        document.getElementById('AmountGuideBill').value = formatNumber(guideBillTotal);  
-        document.getElementById('InputTotal').value = formatNumber(total);
+    if(MDname === 'tour' || MDname === 'checking wendy'){
+        document.getElementById('InputGuideBill').value = (guideBillTotal);
+        document.getElementById('AmountGuideBill').value = (guideBillTotal);  
+        document.getElementById('InputTotal').value = (total);
         var check = document.getElementById('ConfirmGuideBill').checked;
         if(check){
-            document.getElementById('AmountGuideBill').value = formatNumber(guideBillTotal);
+            document.getElementById('AmountGuideBill').value = (guideBillTotal);
         }
     }
 }
@@ -738,7 +746,7 @@ function confirmCheckboxGuideBill(){
             var checkAmount = document.getElementById('AmountGuideBillDefault');
             if(checkAmount.value !== ''){
                 var amountDefault = parseFloat(document.getElementById('AmountGuideBillDefault').value);
-                document.getElementById('AmountGuideBill').value = formatNumber(amountDefault);
+                document.getElementById('AmountGuideBill').value = (amountDefault);
             } else {
                 document.getElementById('AmountGuideBill').value = '';
             }       

@@ -875,6 +875,19 @@
                                                            });
                                                        </script>
                                                    </td>
+                                                    <td class="text-center hidden">
+                                                        <input type="hidden" value="${expen.priceType}" id="expenPriceTypeHiden${i.count}">
+                                                        <input  type="radio" value="S" id="expenTypeS${i.count}" 
+                                                               name="expenPriceType${i.count}" ${expen.priceType.equals("S") ? 'checked' : ''} onclick="calculateGuideBill()">&nbsp;&nbsp;S&nbsp;&nbsp;&nbsp;
+                                                        <input  type="radio" value="G" id="expenTypeG${i.count}"
+                                                                name="expenPriceType${i.count}" ${expen.priceType.equals("G") ? 'checked' : ''} onclick="calculateGuideBill()" >&nbsp;&nbsp;G
+                                                        <script>
+                                                            $(document).ready(function () {  
+                                                                var status = $("#expenPriceTypeHiden${i.count}").val();
+                                                                $("input[name=expenPriceType${i.count}][value=" + status + "]").attr('checked', 'checked');
+                                                            });
+                                                        </script>
+                                                    </td>
                                                     <td class="text-center">${expen.priceType}</td>
 
                                                 </tr>
@@ -890,13 +903,13 @@
                                             <label class="control-label">Guide&nbsp;bill</label>
                                         </div>
                                         <div class="col-xs-5">
-                                            <input id="InputGuideBill" name="InputGuideBill" class="form-control money" readonly="" value="${guideBill}">
+                                            <input id="InputGuideBill" name="InputGuideBill" class="form-control decimal" readonly="" value="${guideBill}">
                                         </div>
                                         <div class="col-xs-1 text-right">
                                             <label class="control-label">Total</label>
                                         </div>
                                         <div class="col-xs-5">
-                                            <input id="InputTotal" name="InputTotal" class="form-control money" readonly="" value="${total}">
+                                            <input id="InputTotal" name="InputTotal" class="form-control decimal" readonly="" value="${total}">
                                         </div>
                                     </div>
                                     <div class="col-xs-12 form-group"><hr/></div>
@@ -923,10 +936,10 @@
                                             </div>
                                             <div class="col-xs-1" style="width: 250px">
                                                 <input class="form-control" type="hidden" id="guideName" name="guideName" value="${requestScope['guideName']}" readonly="">
-                                                <select id="InvoiceSupGuideBillShow" name="InvoiceSupGuideBillShow" class="form-control" onchange="setGuideName('','check')" disabled="">
+<!--                                                <select id="InvoiceSupGuideBillShow" name="InvoiceSupGuideBillShow" class="form-control" onchange="setGuideName('','check')" >
                                                     <option id="" value="">---------</option>
-                                                </select>
-                                                <select id="InvoiceSupGuideBill" name="InvoiceSupGuideBill" class="form-control hidden" onchange="setGuideName('','check')">
+                                                </select>-->
+                                                <select id="InvoiceSupGuideBill" name="InvoiceSupGuideBill" class="form-control " onchange="setGuideName('','check')" disabled="">
                                                     <option id="" value="">---------</option>
                                                 </select>
                                             </div>
@@ -992,7 +1005,7 @@
                                                 <label class="control-label">Amount</label>
                                             </div>
                                             <div class="col-xs-1" style="width: 250px">
-                                                <input class="form-control money" type="text" id="AmountGuideBill" name="AmountGuideBill" value="${paymentWendyDetailList.amount}" readonly="">
+                                                <input class="form-control decimal" type="text" id="AmountGuideBill" name="AmountGuideBill" value="${paymentWendyDetailList.amount}" readonly="">
                                                 <input class="form-control numerical" type="hidden" id="AmountGuideBillDefault" name="AmountGuideBillDefault" value="${paymentWendyDetailList.amount}" readonly="">
                                             </div>
                                             <div class="col-xs-1 hidden" style="padding: 0px 0px 20px 30px">
@@ -1105,13 +1118,13 @@
                                             <label class="control-label">Guide&nbsp;bill</label>
                                         </div>
                                         <div class="col-xs-5">
-                                            <input id="InputGuideBill" name="InputGuideBill" class="form-control money" readonly="" value="${guideBill}">
+                                            <input id="InputGuideBill" name="InputGuideBill" class="form-control decimal" readonly="" value="${guideBill}">
                                         </div>
                                         <div class="col-xs-1 text-right">
                                             <label class="control-label">Total</label>
                                         </div>
                                         <div class="col-xs-5">
-                                            <input id="InputTotal" name="InputTotal" class="form-control money" readonly="" value="${total}">
+                                            <input id="InputTotal" name="InputTotal" class="form-control decimal" readonly="" value="${total}">
                                         </div>
                                     </div>
                                     <div class="col-xs-12 form-group" style="margin-top: -10px;"><hr/></div>
@@ -1138,7 +1151,10 @@
                                             </div>
                                             <div class="col-xs-1" style="width: 250px">
                                                 <input class="form-control" type="hidden" id="guideName" name="guideName" value="${requestScope['guideName']}" readonly="">
-                                                <select id="InvoiceSupGuideBill" name="InvoiceSupGuideBill" class="form-control" onchange="setGuideName('','check')" disabled="">
+                                                <select id="InvoiceSupGuideBillShow" name="InvoiceSupGuideBillShow" class="form-control hidden" onchange="setGuideName('','check')" >
+                                                    <option id="" value="">---------</option>
+                                                </select>
+                                                <select id="InvoiceSupGuideBill" name="InvoiceSupGuideBill" class="form-control " onchange="setGuideName('','check')" disabled="">
                                                     <option id="" value="">---------</option>
                                                 </select>
                                             </div>
@@ -1184,7 +1200,7 @@
                                                 <label class="control-label">Amount</label>
                                             </div>
                                             <div class="col-xs-1" style="width: 250px">
-                                                <input class="form-control money" type="text" id="AmountGuideBill" name="AmountGuideBill" value="${paymentWendyDetailList.amount}" readonly="">
+                                                <input class="form-control decimal" type="text" id="AmountGuideBill" name="AmountGuideBill" value="${paymentWendyDetailList.amount}" readonly="">
                                                 <input class="form-control numerical" type="hidden" id="AmountGuideBillDefault" name="AmountGuideBillDefault" value="${paymentWendyDetailList.amount}" readonly="">
                                             </div>
                                             <div class="col-xs-1 hidden" style="padding: 0px 0px 20px 30px">
