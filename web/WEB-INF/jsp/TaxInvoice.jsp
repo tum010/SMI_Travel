@@ -306,24 +306,24 @@
                         </div>
                         <div class="col-md-2 form-group">
                             <div class='input-group date' id='InputDatePicker'>
-                            <c:if test='${taxInvoice.taxInvDate != null}'>
-                                <c:set var="invToDate" value="${requestScope['invToDate']}" />
-                                <fmt:parseDate value="${invToDate}" var="invToDate" pattern="yyyy-MM-dd" />
-                                <fmt:formatDate value="${invToDate}" var="invToDate" pattern="dd-MM-yyyy" />
-                                <input id="InvToDate" name="InvToDate"  type="text" 
-                                       class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${invToDate}">
-                                <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
+                            <c:choose>
+                                <c:when test='${taxInvoice.taxInvDate != null}'>
+                                    <fmt:formatDate value="${taxInvoice.taxInvDate }" var="invToDate" pattern="dd-MM-yyyy" />
+                                    <input id="InvToDate" name="InvToDate"  type="text" 
+                                           class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${invToDate}">
+                                    <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
 
-                            </c:if>
-                            <c:if test='${taxInvoice.taxInvDate == null}'>
-                                <c:set var="defaultInvToDate" value="${requestScope['defaultInvToDate']}" />
-                                <fmt:parseDate value="${defaultInvToDate}" var="defaultInvToDate" pattern="yyyy-MM-dd" />
-                                <fmt:formatDate value="${defaultInvToDate}" var="defaultInvToDate" pattern="dd-MM-yyyy" />
-                                <input id="InvToDate" name="InvToDate"  type="text" 
-                                   class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${defaultInvToDate}">
-                                <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
+                                </c:when>
+                                <c:otherwise>
+                                    <c:set var="defaultInvToDate" value="${requestScope['defaultInvToDate']}" />
+                                    <fmt:parseDate value="${defaultInvToDate}" var="defaultInvToDate" pattern="yyyy-MM-dd" />
+                                    <fmt:formatDate value="${defaultInvToDate}" var="defaultInvToDate" pattern="dd-MM-yyyy" />
+                                    <input id="InvToDate" name="InvToDate"  type="text" 
+                                       class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${defaultInvToDate}">
+                                    <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
 
-                            </c:if>                             
+                                </c:otherwise>
+                            </c:choose>
                             </div>               
                         </div>
                     </div>    

@@ -115,6 +115,16 @@ $(document).ready(function () {
         });
 
         $('#PriceTable tbody').append(clone);
+        $(".decimal").inputmask({
+            alias: "decimal",
+            integerDigits: 8,
+            groupSeparator: ',',
+            autoGroup: true,
+            digits: 2,
+            allowMinus: false,
+            digitsOptional: false,
+            placeholder: "0"
+        });
     }
 
     function addRowExpenseTable() {
@@ -129,6 +139,16 @@ $(document).ready(function () {
             $('#counterExpense').val(countExpense+1);
         });
         $('#ExpenseTable tbody').append(clone);
+        $(".decimal").inputmask({
+            alias: "decimal",
+            integerDigits: 8,
+            groupSeparator: ',',
+            autoGroup: true,
+            digits: 2,
+            allowMinus: false,
+            digitsOptional: false,
+            placeholder: "0"
+        });
     }
 
     

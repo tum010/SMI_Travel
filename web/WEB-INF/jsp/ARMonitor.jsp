@@ -128,9 +128,9 @@
                         </c:forEach>
                     </select>
                 </div>
-            </div><br><br>
-            <div class="col-xs-12"></div>
-            <div class="col-xs-12" style="margin-top: -20px"> <!--Row 2 -->
+            </div>
+            <div class="col-xs-12"><br></div>
+            <div class="col-xs-12" style="margin-top: -13px"> <!--Row 2 -->
                 <div class="col-xs-1 text-left" style="width: 120px">
                     <label class="control-label" for="">From<font style="color: red">*</font></lable>
                 </div>
