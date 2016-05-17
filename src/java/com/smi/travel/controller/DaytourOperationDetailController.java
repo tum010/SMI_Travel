@@ -202,6 +202,7 @@ public class DaytourOperationDetailController extends SMITravelController {
         String remark = request.getParameter("TextareaRemark");
         String guide1Id = request.getParameter("SelectGuideCode1");
         String guide2Id = request.getParameter("SelectGuideCode2");
+        System.out.println("===== SelectGuideCode2 =====" +guide2Id);
 
         TourOperationDesc tourOperationDesc = daytourOperationService.getTouroperation(tourID, tourDate);
         if (tourOperationDesc == null) {
@@ -216,14 +217,14 @@ public class DaytourOperationDetailController extends SMITravelController {
         SystemUser guide1 = new SystemUser();
         SystemUser guide2 = new SystemUser();
         
-        if(!"".equalsIgnoreCase(guide1Id)){
+//        if(!"".equalsIgnoreCase(guide1Id)){
             guide1.setId(guide1Id);
-            tourOperationDesc.setStaffByGuide1(guide1);
-        }
-        if(!"".equalsIgnoreCase(guide2Id)){
+            tourOperationDesc.setStaffByGuide1(!"".equalsIgnoreCase(guide1.getId()) ? guide1 : null);
+//        }
+//        if(!"".equalsIgnoreCase(guide2Id)){
             guide2.setId(guide2Id);
-            tourOperationDesc.setStaffByGuide2(guide2);
-        }
+            tourOperationDesc.setStaffByGuide2(!"".equalsIgnoreCase(guide2.getId()) ? guide2 : null);
+//        }
         
         
         UtilityFunction util = new UtilityFunction();

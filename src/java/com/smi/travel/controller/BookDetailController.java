@@ -237,11 +237,11 @@ public class BookDetailController extends SMITravelController {
             MBookingstatus bookingstatus = utilservice.getMBookingstatusFromName(status);
             dbMaster.setMBookingstatus(bookingstatus);
             //set package id
-            if((packagecode != null)&&(!"".equalsIgnoreCase(packagecode))){
+//            if((packagecode != null)&&(!"".equalsIgnoreCase(packagecode))){
                 PackageTour pack = new PackageTour();
                 pack.setId(packagecode);
-                dbMaster.setPackageTour(pack);                
-            }
+                dbMaster.setPackageTour(!"".equalsIgnoreCase(pack.getId()) ? pack : null);                
+//            }
             HistoryBooking historyBooking = new HistoryBooking();
             historyBooking.setHistoryDate(new Date());
             historyBooking.setAction("UPDATE BOOKING");
@@ -316,11 +316,11 @@ public class BookDetailController extends SMITravelController {
                 MBookingstatus bookingstatus = utilservice.getMBookingstatusFromName(status);
                 newMaster.setMBookingstatus(bookingstatus);
                 //set package id
-                if((packagecode != null)&&(!"".equalsIgnoreCase(packagecode))){
+//                if((packagecode != null)&&(!"".equalsIgnoreCase(packagecode))){
                     PackageTour pack = new PackageTour();
                     pack.setId(packagecode);
-                    newMaster.setPackageTour(pack);                
-                }
+                    newMaster.setPackageTour(!"".equalsIgnoreCase(pack.getId()) ? pack : null);                
+//                }
                 HistoryBooking historyBooking = new HistoryBooking();
                 historyBooking.setHistoryDate(new Date());
                 historyBooking.setAction("CREATE NEW BOOKING");
