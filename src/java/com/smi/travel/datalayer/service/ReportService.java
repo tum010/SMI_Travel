@@ -216,12 +216,12 @@ public class ReportService {
         return agentCommissiondao.getAgentReportInfo(datefrom, dateto, user,agentid);
     }
     
-    public List getReceiptEmail(String receiptId,int option,String sign,String printby){
-        return receiptDao.getReceipt(receiptId,option,sign,printby);
+    public List getReceiptEmail(String receiptId,int option,String sign,String printby,String isTemp){
+        return receiptDao.getReceipt(receiptId,option,sign,printby,isTemp);
     }
     
-     public List getReceipt(String receiptId,int option,String sign,String printby){
-        return receiptDao.getReceipt(receiptId,option,sign,printby);
+     public List getReceipt(String receiptId,int option,String sign,String printby,String isTemp){
+        return receiptDao.getReceipt(receiptId,option,sign,printby,isTemp);
     }
      
     public List getReceiptSummary(String dateFrom,String dateTo,String departmentRec,String recType,String status,String username){
@@ -246,8 +246,8 @@ public class ReportService {
         return taxInvoiceDao.getTaxInvoice(taxInvId,option,sign,printby);
     }
     
-    public List getInvoice(String InvoiceId,String BankId,String showStaff,String showLeader,String sign,String printBy){
-        return invoicedao.getInvoice(InvoiceId, BankId,showStaff,showLeader,sign,printBy);
+    public List getInvoice(String InvoiceId,String BankId,String showStaff,String showLeader,String sign,String printBy,String isTemp){
+        return invoicedao.getInvoice(InvoiceId, BankId,showStaff,showLeader,sign,printBy,isTemp);
     }
     
     public List getCreditNoteReport(String Cnid){

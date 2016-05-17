@@ -28,7 +28,7 @@ public class ReceiptImpl implements ReceiptDao{
     private UtilityFunction utilityFunction;
     
     @Override
-    public List getReceipt(String receiptId,int option,String sign,String printby) {
+    public List getReceipt(String receiptId,int option,String sign,String printby,String isTemp) {
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
         List<Object[]> QueryList =  session.createSQLQuery("SELECT * FROM `receipt_view` where `receipt_view`.id =  "+receiptId)
@@ -74,6 +74,7 @@ public class ReceiptImpl implements ReceiptDao{
         ReceiptView receiptViewTemp  = new ReceiptView();
         for(Object[] T : QueryList){
             ReceiptView receiptView = new ReceiptView();
+            receiptView.setIsTemp(isTemp);
             receiptView.setId((("null".equals(String.valueOf(T[0])) ? "" : String.valueOf(T[0]))));
             receiptView.setRecto((("null".equals(String.valueOf(T[1])) ? "" : String.valueOf(T[1]))));
             receiptView.setRecadd((("null".equals(String.valueOf(T[2])) ? "" : String.valueOf(T[2]))));

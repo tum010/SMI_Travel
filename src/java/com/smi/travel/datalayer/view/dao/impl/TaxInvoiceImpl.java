@@ -129,6 +129,9 @@ public class TaxInvoiceImpl implements TaxInvoiceReportDao{
             String textmoney = (utilityFunction.convert(Integer.parseInt(part1)));
             String textmoneypoint = (utilityFunction.changPoint(String.valueOf(part2)));
             String totalWord = textmoney + curamount + textmoneypoint;
+            if("".equalsIgnoreCase(textmoneypoint.trim())){
+                totalWord = textmoney +curamount+" ONLY";
+            }
             System.out.println(" totalWord " + totalWord);
             taxInvoiceView.setTextamount(totalWord.substring(0,1).toUpperCase() + totalWord.substring(1));
             

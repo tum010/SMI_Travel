@@ -186,7 +186,7 @@
 				<textElement>
 					<font fontName="Tahoma" size="10" isBold="true" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
-				<text><![CDATA[Tax ID NO.]]></text>
+				<text><![CDATA[Tax.ID NO]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="438" y="87" width="13" height="17" uuid="24ec1754-1802-40c0-a929-0cd678d869d5"/>
