@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PaymentTourHotelSummary" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="68d5fb0e-7818-49f5-b9ad-b3cb6139fbd7">
-	<property name="ireport.zoom" value="3.221020000000009"/>
-	<property name="ireport.x" value="928"/>
-	<property name="ireport.y" value="374"/>
+	<property name="ireport.zoom" value="1.818181818181823"/>
+	<property name="ireport.x" value="269"/>
+	<property name="ireport.y" value="70"/>
 	<field name="paydatefrom" class="java.lang.String"/>
 	<field name="paydateto" class="java.lang.String"/>
 	<field name="pvtypeheader" class="java.lang.String"/>
@@ -570,9 +570,7 @@
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<textField pattern="#,##0.00">
-				<reportElement x="386" y="18" width="124" height="16" uuid="e4eba114-cd8c-4e78-aa57-08f65038a395">
-					<printWhenExpression><![CDATA[!"0.00".equals($V{totaljpy}) && !"0".equals($V{totaljpy}) ]]></printWhenExpression>
-				</reportElement>
+				<reportElement x="386" y="18" width="124" height="16" uuid="e4eba114-cd8c-4e78-aa57-08f65038a395"/>
 				<textElement textAlignment="Right">
 					<font fontName="Tahoma" size="10" isBold="true"/>
 				</textElement>
