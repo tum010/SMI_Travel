@@ -272,6 +272,10 @@ function setEnvironment() {
     calculateGrossTotal();
     calculateGrandTotal();
     calculateVatTotal();
+    
+    calculateTotalCom('',0);
+    calculateTotalWht('',0);
+    calculateTotalPayment();
 }
 
 function formatNumber(num) {
@@ -1422,6 +1426,7 @@ function checkVatAll() {
 }
 
 function editPaymentDetail(row) {
+    $("#rowCommEdit").val(row);
     if (row !== $("#rowDetail").val()) {
         $("#rowDetail").val(row);
         $("#realExRate").val(($("#realExRate" + row).val() !== '' ? formatNumberFourDecimal(parseFloat(($("#realExRate" + row).val()).replace(/,/g, ""))) : ''));
@@ -1432,7 +1437,6 @@ function editPaymentDetail(row) {
         $("#wht").val(($("#wht" + row).val() !== '' ? (parseFloat(($("#wht" + row).val()).replace(/,/g, ""))) : ''));
         $("#vatRecCom").val(($("#vatRecCom" + row).val() !== '' ? (parseFloat(($("#vatRecCom" + row).val()).replace(/,/g, ""))) : ''));
         $("#comm").val(($("#comm" + row).val() !== '' ? (parseFloat(($("#comm" + row).val()).replace(/,/g, ""))) : ''));
-
         $('#isWht').prop('checked', ($("#isWht" + row).val() === '1' ? true : false));
         $('#isComVat').prop('checked', ($("#isComVat" + row).val() === '1' ? true : false));
 
@@ -1509,6 +1513,7 @@ function calculateWhtAmount(newWht) {
         }
         var whtAmount = money * (wht / 100);
         $("#whtAmount").val(formatNumber(whtAmount));
+        calculateTotalWht(formatNumber(whtAmount),row);
         $("#wht").val(wht);
         if ($("#whtTemp" + row).val() === '') {
             $("#whtTemp" + row).val(parseFloat($("#mWht").val()));
@@ -1518,16 +1523,18 @@ function calculateWhtAmount(newWht) {
     } else {
         $("#wht").val('');
         $("#whtAmount").val('');
+        calculateTotalWht(formatNumber(0),row);
         $("#isNewWht" + row).val('0');
     }
 }
 
 function calculateVatRecComAmount() {
+    var row = $("#rowDetail").val();
+    var rowCommEdit = $("#rowCommEdit").val();
     if ($("#isComVat").is(':checked')) {
-        var row = $("#rowDetail").val();
         var vatRecCom = ($("#vatRecCom" + row).val() === '' ? parseFloat($("#mVat").val()) : parseFloat($("#vatRecCom" + row).val()));
         var comm = ($("#comm").val() !== '' ? parseFloat(($("#comm").val()).replace(/,/g, "")) : 0.00);
-        var vatRecComAmount = comm * (vatRecCom / 100);
+        var vatRecComAmount = comm * ( (100-vatRecCom) / 100);
         $("#vatRecComAmount").val(formatNumber(vatRecComAmount));
         $("#vatRecCom").val(vatRecCom);
         if ($("#vatRecComTemp" + row).val() === '') {
@@ -1535,12 +1542,13 @@ function calculateVatRecComAmount() {
         } else {
             $("#vatRecComTemp" + row).val(parseFloat($("#mVat").val()));
         }
+        calculateTotalCom(formatNumber(comm),rowCommEdit);
     } else {
         $("#vatRecCom").val('');
         $("#vatRecComAmount").val('');
+        calculateTotalCom(formatNumber(0),rowCommEdit);
     }
 }
-
 function showSearchStock() {
     if ($("#searchStock1").hasClass("hidden")) {
         $("#searchRefNo1").addClass("hidden");
@@ -1866,4 +1874,63 @@ function editDescription(row){
 function printPaymentOutboundReport(optionReport){
     var paymentOutboundId = $("#payId").val();
     window.open("report.smi?name=PaymentOutboundReport&paymentOutboundId=" + paymentOutboundId +"&optionReport="+optionReport);
+}
+
+function calculateTotalCom(commtemp,row) {
+    var count = parseInt(document.getElementById('countPaymentDetail').value);
+    var totalComm = 0;
+    for(var i = 1 ; i < count-1 ; i ++){
+        if(row != i){
+            var comm = replaceAll(",","",$('#comm'+i).val()); 
+            if (comm === ''){
+                comm = 0;
+            }
+            totalComm += parseFloat(comm);
+        }else if(row == i){
+            var comm = commtemp; 
+            if (comm === ''){
+                comm = 0;
+            }
+            totalComm += parseFloat(comm);
+        }
+    }
+    document.getElementById('totalComm').value = formatNumber(totalComm);
+}
+
+function calculateTotalWht(whttemp,row) {
+    var count = parseInt(document.getElementById('countPaymentDetail').value);
+    var whtAmount = 0;
+    for(var i = 1 ; i < count-1 ; i ++){
+        if(row != i){
+            var wht = replaceAll(",","",$('#whtAmount'+i).val()); 
+            if (wht === ""){
+                wht = 0;
+            }
+            whtAmount += parseFloat(wht);
+        }else if(row == i){
+            var wht = whttemp; 
+            if (wht === ''){
+                wht = 0;
+            }
+            whtAmount += parseFloat(wht);
+        }
+    }
+    document.getElementById('totalWht').value = formatNumber(whtAmount);
+}
+
+function replaceAll(find, replace, str) {
+    return str.replace(new RegExp(find, 'g'), replace);
+}
+
+function calculateTotalPayment() {
+    var count = parseInt(document.getElementById('countPaymentDetail').value);
+    var totalPayment = 0;
+//    for(var i = 1 ; i < count-1 ; i ++){
+//        var wht = replaceAll(",","",$('#whtAmount'+i).val()); 
+//        if (wht === ""){
+//            wht = 0;
+//        }
+//        totalPayment += parseFloat(wht);
+//    }
+    document.getElementById('totalPayment').value = formatNumber(totalPayment);
 }

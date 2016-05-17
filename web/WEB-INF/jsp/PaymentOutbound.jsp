@@ -641,7 +641,8 @@
                         <label class="control-label">Comm</lable>
                     </div>
                     <div class="col-xs-1 text-right" style="width: 200px;">
-                        <input type="text" class="form-control decimal" id="comm" name="comm" value=""/>
+                        <input type="hidden" class="form-control text-right" id="rowCommEdit" name="rowCommEdit" value=""/>
+                        <input type="text" class="form-control decimal" id="comm" name="comm" value="" />
                     </div>                       
                 </div>
                 <div class="row" style="padding-left: 25px; padding-top: 10px;">
@@ -656,46 +657,75 @@
             <div class="panel-body"  style="padding-right: 0px;margin-top: -10px">                                               
                 <div class="row" >
                     <div class="col-md-12 " style="padding-right: 0px;margin-top: 0px">
-                        <div class="col-sm-6">
+                        <div class="col-sm-5">
                             <div class="col-md-1 text-right" style="width:70px;padding-right: 0px;padding-left: 0px;">
                                 <label class="control-label">Detail</lable>
                             </div>
-                            <div class="col-md-1 text-left" style="width: 350px">
+                            <div class="col-md-1 text-left" style="width: 300px">
                                 <textarea rows="3" cols="255" class="form-control" id="detail" name="detail" maxlength="255" data-bv-field="detail">${paymentOutbound.detail}</textarea>
                             </div>
                         </div>
-                        <div class="col-sm-6">
-                            <div class="col-md-5 text-right" style="width: 195px">
+                        <div class="col-sm-7">
+                            <div class="col-md-1 text-right" style="width: 115px">
+                                <label class="control-label">Total Comm</lable>
+                            </div>
+                            <div class="col-md-1 text-right" style="width: 160px">
+                                <input name="totalComm" id="totalComm" type="text" class="form-control text-right" value="" readonly=""/>
+                            </div>
+                            <div class="col-md-1 text-right" style="width: 115px">
                                 <label class="control-label">Gross Total</lable>
                             </div>
-                            <div class="col-md-3 text-right" style="width: 210px;padding-left:0px;padding-right: 0px;">
+                            <div class="col-md-1 text-right" style="width: 160px">
                                 <input name="grossTotal" id="grossTotal" type="text" class="form-control text-right" value="" readonly=""/>
                             </div>
                         </div>
-                        <div class="col-sm-6">
-                            <div class="col-md-5 text-right" style="width: 195px;margin-top: 5px ">
+                            <div class="col-sm-7" style="margin-top: 5px">
+                            <div class="col-md-1 text-right" style="width: 115px">
+                                <label class="control-label">Total WHT</lable>
+                            </div>
+                            <div class="col-md-1 text-right" style="width: 160px">
+                                <input name="totalWht" id="totalWht" type="text" class="form-control text-right" value="" readonly=""/>
+                            </div>
+                            <div class="col-md-1 text-right" style="width: 115px">
                                 <label class="control-label">Vat Total</lable>
                             </div>
-                            <div class="col-md-3 text-right" style="width: 210px;padding-left:0px;padding-right: 0px;margin-top: 5px">
+                            <div class="col-md-1 text-right" style="width: 160px">
                                 <input name="vatTotal" id="vatTotal" type="text" class="form-control text-right" value="" readonly=""/>
                             </div>
-                        </div>                       
+                        </div>    
                     </div>                     
                 </div><!--End row 5-->   
                 <div class="row" >
-                    <div class="col-md-12 form-group" style="margin-top:-10px;margin-bottom: -10px">
-                        <div class="col-sm-12">
+                    <div class="col-md-12 form-group" >
+                        <div class="col-sm-12" style="margin-top: 4px">
+                           <div class="col-md-1 text-right" style="width:544px">
+                                <label class="control-label">Total Payment</lable>
+                            </div>
+                            <div class="col-md-1 text-right" style="width: 160px">
+                                <input name="totalPayment" id="totalPayment" type="text" class="form-control text-right" value="" readonly=""/>
+                            </div>
+                            <div class="col-md-1 text-right" style="width: 115px">
+                                <label class="control-label">Grand Total</lable>
+                            </div>
+                            <div class="col-md-1 text-right" style="width: 160px">
+                                <input name="grandTotal" id="grandTotal" type="text" class="form-control text-right" value="" readonly=""/>
+                            </div>
+                        </div>
+                    </div>  
+                    
+                    
+<!--                        <div class="col-sm-12">
                             <div class="col-md-9 text-right" style="width: 703px;padding-top: 15px">
                                 <label class="control-label">Grand Total</lable>
                             </div>
                             <div class="col-md-3 text-right" style="width: 218px;padding-left:7px;padding-right: 0px;padding-top: 15px">
                                 <input name="grandTotal" id="grandTotal" type="text" class="form-control text-right" value="" readonly=""/>
                             </div>
-                        </div>
+                        </div>-->
                     </div>
                 </div>    
             </div>
-        </div>
+        <!--</div>-->
                             
         <div class="panel panel-default outboundborder" style="margin-top: -12px">
             <div class="panel-heading">

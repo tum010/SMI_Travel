@@ -1501,7 +1501,7 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
                 }
                 String billtype = paymentOutboundDetailView.get(i).getBookDetailType() == null? "" : paymentOutboundDetailView.get(i).getBookDetailType();
 
-                String query = "SELECT * FROM `payment_outbound_inv_summary` where refitem = '"+refitem+"' and billtype = '"+billtype+"' " ;
+                String query = " SELECT * FROM `payment_outbound_inv_summary` where refitem = '"+refitem+"' and billtype = '"+billtype+"' " ;
     //            System.out.println(" query " + query);
                 List<Object[]> queryList = session.createSQLQuery(query)
                     .addScalar("billdesc_id", Hibernate.STRING)
@@ -1511,7 +1511,8 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
                     .addScalar("invdate", Hibernate.STRING)
                     .addScalar("gross", Hibernate.STRING)
                     .addScalar("amount", Hibernate.STRING)
-                    .addScalar("vat", Hibernate.STRING)         
+                    .addScalar("vat", Hibernate.STRING) 
+                    .addScalar("detail", Hibernate.STRING)     
                     .list();  
 
                 for (Object[] B : queryList) {            
@@ -1524,7 +1525,7 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
                     poisv.setGross(B[5] != null ? util.ConvertString(B[5]) : "0.00");
                     poisv.setAmount(B[6] != null ? util.ConvertString(B[6]) : "0.00");
                     poisv.setVat(B[7] != null ? util.ConvertString(B[7]) : "");
-                    poisv.setDetail("");
+                    poisv.setDetail(B[8] != null ? util.ConvertString(B[8]) : "");
                     poisvList.add(poisv);
                 }
             }      
