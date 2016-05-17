@@ -46,6 +46,9 @@
         <property name="clientCharge" type="big_decimal">
             <column name="client_charge" precision="10" />
         </property>
+        <property name="airlineCharge" type="big_decimal">
+            <column name="airline_charge" precision="10" />
+        </property>
         <bag name="paymentAirticketRefunds" table="payment_airticket_refund" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="refund_detail_id" />

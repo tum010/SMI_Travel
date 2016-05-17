@@ -227,13 +227,14 @@ public class RefundController extends SMITravelController {
     }
     
     private RefundAirticket getRefundFromPage(HttpServletRequest request,String airbookingid){
+            UtilityFunction util = new UtilityFunction();
             String refundticketid = request.getParameter("refundid");
             String refundcodePage = request.getParameter("refundBy");
             String refundno = request.getParameter("refundNo");
             String receivecodePage = request.getParameter("receiveBy");
             String receivenamePage = request.getParameter("receiveByName");
-            String refunddatePage = request.getParameter("refundDate");
-            String receivedatePage = request.getParameter("receiveDate");
+            String refunddatePage = util.covertStringDateToFormatYMD(request.getParameter("refundDate"));
+            String receivedatePage = util.covertStringDateToFormatYMD(request.getParameter("receiveDate"));
             String addressPage = request.getParameter("address");
             String cancelDetailPage = request.getParameter("cancelDetail");
             String chargePage = request.getParameter("charge");
@@ -364,9 +365,9 @@ public class RefundController extends SMITravelController {
                 //pay customer
                 if(chargeadd != null && !"".equals(chargeadd)){
                     BigDecimal chargeInt =  new BigDecimal(chargeadd.replaceAll(",", ""));
-                    refundAirticketDetail.setReceiveAirline(chargeInt);
+                    refundAirticketDetail.setAirlineCharge(chargeInt);
                 }else{
-                    refundAirticketDetail.setReceiveAirline(new BigDecimal(0.0));
+                    refundAirticketDetail.setAirlineCharge(new BigDecimal(0.0));
                 }
                 
                 //pay customer
@@ -418,9 +419,9 @@ public class RefundController extends SMITravelController {
                 //change
                 if(charge != null && !"".equals(charge)){
                     BigDecimal chargeInt =  new BigDecimal(charge.replaceAll(",", ""));
-                    refundAirticketDetail.setReceiveAirline(chargeInt);
+                    refundAirticketDetail.setAirlineCharge(chargeInt);
                 }else{
-                    refundAirticketDetail.setReceiveAirline(new BigDecimal(0.0));
+                    refundAirticketDetail.setAirlineCharge(new BigDecimal(0.0));
                 }
                 
                 if(clientcharge != null && !"".equals(clientcharge)){

@@ -27,14 +27,15 @@ public class RefundAirticketDetail {
      private Integer refundCharge;
      private String ticketNo;
      private BigDecimal clientCharge;
-     
+     private BigDecimal airlineCharge;
+     private BigDecimal totalCharge;
      private List paymentAirticketRefunds = new LinkedList<PaymentAirticketRefund>();
      private Map<String, Object> ticketFareAirline;
 
     public RefundAirticketDetail() {
     }
 
-    public RefundAirticketDetail(RefundAirticket refundAirticket,AirticketPassenger airticketPassenger, String sectorRefund, BigDecimal receiveAirline, BigDecimal payCustomer, BigDecimal agentComission,BigDecimal airComission,BigDecimal profit,Date expenseDate,Date receiveDate, List paymentAirticketRefunds) {
+    public RefundAirticketDetail(RefundAirticket refundAirticket,AirticketPassenger airticketPassenger, String sectorRefund, BigDecimal receiveAirline, BigDecimal payCustomer, BigDecimal agentComission,BigDecimal airComission,BigDecimal profit,Date expenseDate,Date receiveDate, List paymentAirticketRefunds, BigDecimal airlineCharge) {
        this.refundAirticket = refundAirticket;
        this.airticketPassenger = airticketPassenger;
        this.sectorRefund = sectorRefund;
@@ -45,6 +46,7 @@ public class RefundAirticketDetail {
        this.receiveDate = receiveDate;
        this.profit = profit;
        this.expenseDate = expenseDate;
+       this.airlineCharge = airlineCharge;
        this.paymentAirticketRefunds = paymentAirticketRefunds;
     }
    
@@ -184,6 +186,22 @@ public class RefundAirticketDetail {
 
     public void setClientCharge(BigDecimal clientCharge) {
         this.clientCharge = clientCharge;
+    }
+
+    public BigDecimal getAirlineCharge() {
+        return airlineCharge;
+    }
+
+    public void setAirlineCharge(BigDecimal airlineCharge) {
+        this.airlineCharge = airlineCharge;
+    }
+
+    public BigDecimal getTotalCharge() {
+        return totalCharge;
+    }
+
+    public void setTotalCharge(BigDecimal totalCharge) {
+        this.totalCharge = totalCharge;
     }
 
 }

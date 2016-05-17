@@ -855,13 +855,14 @@ public class AJAXBean extends AbstractBean implements
                 }
             }
         } else if (REFUNDAIRLINE.equalsIgnoreCase(servletName)) {
+            UtilityFunction util = new UtilityFunction();
             if ("getTicketFare".equalsIgnoreCase(type)) {
                 String ticketNo = map.get("ticketNo").toString();
                 HashMap<String, Object> ticketFare = ticketFareAirlineDao.getDetailTicketFareAirline(ticketNo);
                 if (ticketFare != null) {
                     SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
                     DecimalFormat df = new DecimalFormat("###,##0.00");
-                    ticketFare.put("TicketDate", sdf.format(ticketFare.get("TicketDate")));
+                    ticketFare.put("TicketDate", sdf.format(util.convertStringToDate(String.valueOf(ticketFare.get("TicketDate")))));
                     String total = ticketFare.get("Total").toString();
                     ticketFare.put("Total", df.format(Double.valueOf(total) * 1.00));
                     JSONObject obj = new JSONObject(ticketFare);

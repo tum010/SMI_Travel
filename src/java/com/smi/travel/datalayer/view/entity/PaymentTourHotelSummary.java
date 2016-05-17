@@ -26,7 +26,8 @@ public class PaymentTourHotelSummary {
     private String amount;
     private String cur;
     private String status;
-
+    private String description;
+    
     public String getPaydatefrom() {
         return paydatefrom;
     }
@@ -145,5 +146,13 @@ public class PaymentTourHotelSummary {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

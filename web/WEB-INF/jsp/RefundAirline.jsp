@@ -190,10 +190,10 @@
                                 <tr class="datatable-header" >
                                     <th>Ticket Date</th>
                                     <th>Sector issue</th>
-                                    <th>Total</th>
+                                    <th>Sale Price</th>
                                     <th>Department</th>
                                     <th colspan="2">Passenger</th>
-                                    <th>Cus Charge</th>
+                                    <th>Total Charge</th>
                                     <th >Receive Date</th>
                                 </tr>
                             </thead>
@@ -231,6 +231,9 @@
                                 </td>       
 
                                 <td rowspan='2' class="text-center">
+                                    <a id="ButtonEdit${varRefundAirline.count}" class="carousel" data-toggle="collapse" data-parent="#accordion" data-target="#charge${varRefundAirline.count}" onclick="hideCollapse(this)" aria-expanded="true" aria-controls="collapseExample">
+                                        <span id="SpanEdit${varRefundAirline.count}" class="glyphicon glyphicon-edit editicon"></span>
+                                    </a>
                                     <a id="ButtonRemove${varRefundAirline.count}" data-toggle="modal" data-target="#DeleteRefundAirline" onclick="setDeletRow(this)">
                                         <i id="IRemove${varRefundAirline.count}" class="glyphicon glyphicon-remove deleteicon"></i>
                                     </a>
@@ -243,7 +246,11 @@
                                     <td style="text-align:center"><fmt:formatNumber type="number" maxFractionDigits="3" minFractionDigits="2" value="${detail.ticketFareAirline['Total']}"/></td>
                                     <td ><span id="department">${detail.ticketFareAirline["Dept"]}</span></td>       
                                     <td colspan='2'><span id="passsenger" name="passsenger">${detail.ticketFareAirline["Passenger"]}</span></td>
-                                    <td style="text-align:center"> <input id="clientCharge${index}" name="clientCharge${index}" colName="clientCharge" type="text" class="form-control text-right decimal" style="text-align: right" value="${detail.clientCharge}"></td>
+                                    <td style="text-align:center" > 
+                                        <input id="airlineCharge${index}" name="airlineCharge${index}" colName="airlineCharge" type="text" class="form-control text-right decimal hidden"  style="text-align: right" value="${detail.airlineCharge}">
+                                        <input id="clientCharge${index}" name="clientCharge${index}" colName="clientCharge" type="text" class="form-control text-right decimal hidden"  style="text-align: right" value="${detail.clientCharge}">
+                                        <input id="totalCharge${index}" name="totalCharge${index}" colName="totalCharge" type="text" class="form-control text-right decimal" readonly="" style="text-align: right" value="${detail.clientCharge + detail.airlineCharge}">
+                                    </td>
                                     <td> 
                                         <div class="input-group daydatepicker" id="daydatepicker-0" style="padding-left: 0px">
                                             <c:set var="receiveDate" value="${detail.receiveDate}" />
@@ -259,8 +266,49 @@
                             </tbody>
                         </table>      
                     </div>
-                </div>        
-
+                </div>
+                <c:forEach var="detail" items="${refundAirline.refundAirticketDetails}" varStatus="i">
+                    <div class="collapse" id="charge${i.count}" style="margin-top:10px ">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Refund Detail</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="col-sm-12">
+                                    <label class="col-sm-2 control-label text-right">Airline Charge</label>
+                                    <div class="col-sm-3">
+                                        <input id="airlineCharge-${i.count}" name="airlineCharge-${i.count}" class="form-control text-right decimal" value="${detail.airlineCharge}" readonly="" type="text" maxlength="10"  />
+                                    </div>
+                                    <label class="col-sm-2 control-label text-right">Client Charge</label>
+                                    <div class="col-sm-3">
+                                        <input id="clientCharge-${i.count}" name="clientCharge-${i.count}" class="form-control text-right decimal" value="${detail.clientCharge}" readonly="" type="text" maxlength="10" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </c:forEach>
+                <%--<c:otherwise>--%>
+                    <div class="collapse" id="charge" style="margin-top:10px ">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Refund Detail</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="col-sm-12">
+                                    <label class="col-sm-2 control-label text-right">Airline Charge</label>
+                                    <div class="col-sm-3">
+                                        <input id="airlineCharge-" name="airlineCharge-" class="form-control text-right decimal" value="" readonly=""  type="text" maxlength="10"  />
+                                    </div>
+                                    <label class="col-sm-2 control-label text-right">Client Charge</label>
+                                    <div class="col-sm-3">
+                                        <input id="clientCharge-" name="clientCharge-" class="form-control text-right decimal" value="" readonly="" type="text" maxlength="10" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <%--</c:otherwise>--%>    
                 <div class="col-xs-12 text-center" style="padding-top: 10px">
                     <!--<div class="col-md-2 text-right ">-->
                     <button type="button" id="buttonPrint" name="buttonPrint" onclick="window.open('report.smi?name=RefundAirReport&refundId=${refundAirline.id}')" class="btn btn-default">
@@ -468,6 +516,9 @@
             </div>
         </td>
         <td rowspan='2' class="text-center">
+            <a id="ButtonEdit" class="carousel" data-toggle="collapse" data-parent="#accordion" data-target="#charge" onclick="setEditRow(this)" aria-expanded="true" aria-controls="collapseExample">
+                <span id="SpanEdit" class="glyphicon glyphicon-edit editicon"></span>
+            </a>
             <a id="ButtonRemove${varRefundAirline.count}" data-toggle="modal" data-target="#DeleteRefundAirline" onclick="setDeletRow(this)">
                 <i id="IRemove${varRefundAirline.count}" class="glyphicon glyphicon-remove deleteicon"></i>
             </a>
@@ -479,7 +530,11 @@
             <td style="text-align:center"><span id="total" colName="total"></span></td>
             <td ><span id="department" colName="department"></span></td>       
             <td colspan='2'><span id="passsenger" colName="passsenger"></span></td>
-            <td style="text-align:center"> <input id="clientCharge" name="clientCharge" colName="clientCharge"  type="text" class="form-control text-right decimal"></td>
+            <td style="text-align:center"> 
+                <input id="airlineCharge" name="airlineCharge" colName="airlineCharge"  type="text" class="form-control text-right decimal hidden" >
+                <input id="clientCharge" name="clientCharge" colName="clientCharge"  type="text" class="form-control text-right decimal hidden" >
+                <input id="totalCharge" name="totalCharge" colName="totalCharge"  type="text" class="form-control text-right decimal" readonly="">
+            </td>
             <td> 
                 <div class="input-group daydatepicker" id="daydatepicker-0" style="padding-left: 0px">
                     <input style="width: 100%" type="text" class="form-control" id="receivedate" name="receivedate" colName="receivedate" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY">
@@ -493,6 +548,7 @@
 <!--Script-->       
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function () {
+        $("div").find($('.collapse')).collapse('hide');
         $('.datemask').mask('00-00-0000');
         var statusrefund = $("#status").val();
         var ticNoTemp = $("#ticketNo1").val();

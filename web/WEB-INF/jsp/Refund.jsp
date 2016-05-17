@@ -156,7 +156,7 @@
                                                 <td class="hidden"><input type="text" id="airticketrefundid${status.count}" name="airticketrefundid${status.count}" value="${table.airticketrefundid}" /></td>
                                                 <td><c:out value="${table.refundno}" /></td>
                                                 <td><c:out value="${table.refundby}" /></td>
-                                                <td><c:out value="${table.refunddate}" /></td>
+                                                <td><fmt:formatDate value="${table.refunddate}" var="refunddate" pattern="dd-MM-yyyy" />${refunddate}</td>
                                                 <td><c:out value="${table.receiveby}" /></td>
                                                 <td class="text-right "><c:out value="${table.change}" /></td>
                                                 <td class="text-right "><c:out value="${table.clientcharge}" /></td>
@@ -221,7 +221,9 @@
                                         <div class="col-lg-4">
                                             <div class="form-group">
                                                 <div class='input-group date' id='datetimepicker3'>
-                                                    <input type='text' class="form-control" name="refundDate" id="refundDate" data-date-format="YYYY-MM-DD" value="${table1.refunddate}"  placeholder="YYYY-MM-DD"/>
+                                                    <fmt:parseDate value="${table1.refunddate}" var="refunddate" pattern="yyyy-MM-dd" />
+                                                    <fmt:formatDate value="${refunddate}" var="inputRefunddate" pattern="dd-MM-yyyy" />
+                                                    <input type='text' class="form-control datemask" name="refundDate" id="refundDate" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${inputRefunddate}"/>
                                                     <span class="input-group-addon">
                                                         <span class="glyphicon glyphicon-calendar"></span>
                                                     </span>
@@ -269,13 +271,17 @@
                                             <div class="form-group" id="receivedatepanel">
                                                 <div class='input-group date' id='datetimepicker4'>
                                                     <c:if test="${table1.receivedate == null}"> 
-                                                        <input type='text' class="form-control datemask" name="receiveDate" id="receiveDate" data-date-format="YYYY-MM-DD" value="${create}"  placeholder="YYYY-MM-DD"/>
+                                                        <fmt:parseDate value="${create}" var="creates" pattern="yyyy-MM-dd" />
+                                                        <fmt:formatDate value="${creates}" var="createdate" pattern="dd-MM-yyyy" />
+                                                        <input type='text' class="form-control datemask" name="receiveDate" id="receiveDate"  value="${createdate}" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" />
                                                         <span class="input-group-addon">
                                                             <span class="glyphicon glyphicon-calendar"></span>
                                                         </span>
                                                     </c:if>
                                                     <c:if test="${table1.receivedate != null}"> 
-                                                        <input type='text' class="form-control datemask" name="receiveDate" id="receiveDate" data-date-format="YYYY-MM-DD" value="${table1.receivedate}"  placeholder="YYYY-MM-DD"/>
+                                                        <fmt:parseDate value="${table1.receivedate}" var="receivedate" pattern="yyyy-MM-dd" />
+                                                        <fmt:formatDate value="${receivedate}" var="receivedates" pattern="dd-MM-yyyy" />
+                                                        <input type='text' class="form-control datemask" name="receiveDate" id="receiveDate" value="${receivedates}"  data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY"/>
                                                         <span class="input-group-addon">
                                                             <span class="glyphicon glyphicon-calendar"></span></span>
                                                     </c:if>
@@ -1011,7 +1017,7 @@ for(var i = 0; i < rad.length; i++) {
             $("#RefundTicketDetailAdd").removeClass("hidden");
         }
         
-        $('.datemask').mask('0000-00-00');
+        $('.datemask').mask('00-00-0000');
         $('.date').datetimepicker();
         
 //        validateRefundForm(); 

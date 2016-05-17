@@ -169,8 +169,9 @@ public class RefundAirlineController extends SMITravelController {
                     String receivedate = uf.covertStringDateToFormatYMD(request.getParameter("receivedate" + i));
                     String checkCharge = request.getParameter("checkCharge" + i);
                     String ticketNo = request.getParameter("ticketNo" + i);
-                    String clientCharge = request.getParameter("clientCharge" + i);
-                    
+                    String totalCharge = request.getParameter("totalCharge" + i);
+                    String airlineCharge = request.getParameter("airlineCharge-" + i);
+                    String clientCharge = request.getParameter("clientCharge-" + i);
                     detail.setTicketNo(ticketNo);
                     System.out.println(" checkCharge " + checkCharge);
                     if("1".equalsIgnoreCase(checkCharge)){
@@ -197,6 +198,12 @@ public class RefundAirlineController extends SMITravelController {
                     }
                     if (agentCom != null && !"".equals(agentCom)) {
                         detail.setAgentComission(new BigDecimal(df.parse(agentCom).toString()));
+                    }
+                    if (totalCharge != null && !"".equals(totalCharge)) {
+                        detail.setTotalCharge(new BigDecimal(df.parse(totalCharge).toString()));
+                    }
+                    if (airlineCharge != null && !"".equals(airlineCharge)) {
+                        detail.setAirlineCharge(new BigDecimal(df.parse(airlineCharge).toString()));
                     }
                     if (clientCharge != null && !"".equals(clientCharge)) {
                         detail.setClientCharge(new BigDecimal(df.parse(clientCharge).toString()));

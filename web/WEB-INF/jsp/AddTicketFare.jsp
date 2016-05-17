@@ -374,7 +374,7 @@
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="diffVat" name="diffVat" type="text" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" onkeypress="return isNumberKey(event)" value="${ticketFare.diffVat}">
+                                    <input id="diffVat" name="diffVat" type="text" class="form-control " style="text-align: right" onkeyup="insertCommas(this)" onkeypress="return isNumberKey(event)" value="${ticketFare.diffVat}">
                                     <span class="input-group-addon" id="caldiffvat"><span class=" glyphicon glyphicon-info-sign"></span></span>
                                 </div>
                             </div>
@@ -589,8 +589,9 @@
                             <input type="hidden" name="ticketFareFlag" id="ticketFareFlag" value="${requestScope['ticketFareFlag']}">
                             <input type="hidden" name="flightDetailFlag" id="flightDetailFlag" value="${requestScope['flightDetailFlag']}">
                             <input type="hidden" name="optionSave" id="optionSave" value="${requestScope['optionSave']}">
-                            <button type="submit" id="ButtonSave" name="ButtonSave" onclick="saveAction(0)" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
-                            <button type="submit" id="ButtonSaveAndNew" name="ButtonSaveAndNew" onclick="saveAction(1)" class="btn btn-success"><i class="fa fa-save"></i> Save & New</button>
+                            <button type="submit" id="ButtonSave" name="ButtonSave" onclick="saveAction(0)" class="btn btn-success"><i class="fa fa-save"></i> Save </button>
+                            <button type="submit" id="ButtonSaveAndNew" name="ButtonSaveAndNew" onclick="saveAction(1)" class="btn btn-success"><i class="fa fa-save"></i> Save & New </button>
+                            <button type="submit" id="ButtonNew" name="ButtonNew" class="btn btn-primary"><i class="fa fa-plus-circle"></i> New </button>
                         </div>
                     </div>
                 </div>
@@ -842,9 +843,9 @@
                             <th class="hidden">ID</th>
                             <th>User</th>
                             <th>Name</th>
-                            <th class="hidden">Address</th>
+<!--                            <th class="hidden">Address</th>
                             <th class="hidden">Tel</th>
-                            <th class="hidden">Fax</th>
+                            <th class="hidden">Fax</th>-->
                         </tr>
                     </thead>
                     <tbody>
@@ -856,13 +857,13 @@
                             <td class="agent-id hidden">${a.id}</td>
                             <td class="agent-user">${a.code}</td>
                             <td class="agent-name">${a.name}</td>
-                            <td class="agent-addr hidden">${a.address}</td>
+<!--                            <td class="agent-addr hidden">${a.address}</td>
                             <td class="agent-tel hidden">${a.tel}</td>
-                            <td class="agent-fax hidden">${a.fax}</td>
+                            <td class="agent-fax hidden">${a.fax}</td>-->
                         </tr>
                         <script>
                             agent.push({id: "${a.id}", code: "${a.code}", name: "${a.name}", 
-                                        address: "${a.address}", tel: "${a.tel}", fax: "${a.fax}"});
+                                        address: "${a.name}", tel: "${a.tel}", fax: "${a.fax}"});
                         </script>
                     </c:forEach>
                     </tbody>
@@ -1025,12 +1026,12 @@
         setFormatCurrency();
         
         $( ".numerical" ).on('input', function() { 
-            var value=$(this).val().replace(/[^0-9.,]*/g, '');
-            value=value.replace(/\.{2,}/g, '.');
-            value=value.replace(/\.,/g, ',');
-            value=value.replace(/\,\./g, ',');
-            value=value.replace(/\,{2,}/g, ',');
-            value=value.replace(/\.[0-9]+\./g, '.');
+            var value= $(this).val().replace(/[^0-9.,]*/g, '');
+            value = value.replace(/\.{2,}/g, '.');
+            value = value.replace(/\.,/g, ',');
+            value = value.replace(/\,\./g, ',');
+            value = value.replace(/\,{2,}/g, ',');
+            value = value.replace(/\.[0-9]+\./g, '.');
             $(this).val(value)
         });
         
@@ -1138,16 +1139,17 @@
 
             var vat = parseFloat(diffVat); 
             var tax = parseFloat(Mvat);
+            
             if(diffVat < 0) {
-    //          Little Comm =  (Diff vat * -1)
-                var littlecomm = (vat * (-1)) ;
-                document.getElementById("litterCommission").value = formatNumber(littlecomm);
-                document.getElementById("litterDate").value = document.getElementById("invoiceDate").value ;
-            }else if(diffVat > 0){
-    //          Over Comm  =  (Diff vat ) *(100/(100+wh))
-                var overcomm = (vat) * (100/(100+tax));
+        //      Over Comm  =  (Diff vat * -1)
+                var overcomm = (vat * (-1)) ;
                 document.getElementById("overCommission").value = formatNumber(overcomm);
                 document.getElementById("overDate").value = document.getElementById("invoiceDate").value ;
+            }else if(diffVat > 0){
+        //      Little Comm = (Diff vat ) *(100/(100+wh))
+                var littlecomm = (vat) * (100/(100+tax));
+                document.getElementById("litterCommission").value = formatNumber(littlecomm);
+                document.getElementById("litterDate").value = document.getElementById("invoiceDate").value ;    
             }
         });
             
@@ -1156,6 +1158,7 @@
             setDataCurrency();
             calculateVat();
             setDataCurrency();
+            calculateSalePrice();
         });
         
         $("#ticketFare").focusout(function(){
@@ -1198,6 +1201,7 @@
         $("#agentCommission").focusout(function(){
             setFormatCurrency();
             setDataCurrency();
+            calculateSalePrice();
         });
         $("#ticketCommission").focusout(function(){
             setFormatCurrency();
@@ -1212,7 +1216,7 @@
         
         
         setDataCurrency();
-        
+        calculateSalePrice();
         if($('#optionSave').val() == "1"){
             clearData();
             $("#ticketNo").val("");
@@ -1499,11 +1503,9 @@ function setDataCurrency(){
 
 function isNumberKey(evt){
     var charCode = (evt.which) ? evt.which : evt.keyCode;
-
-    if (charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57)){
+    if (charCode != 45 && charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57)){
        return false;
     }
-    
     return true;
 }
 
@@ -1838,6 +1840,7 @@ function setTicketFareDetail(ticket,refno,invno){
     }
 }
 function clearData(){
+    
 //    $("#ticketNo").val("");
     $("#ticketType").val("");
     $("#ticketRouting").val("");
@@ -1873,6 +1876,7 @@ function clearData(){
     $("#invoiceId").val("");
     $("#invoiceDetailTableId").val("");
     $("#isTempTicket").val("");
+    
     $('#FlightDeailTable').dataTable().fnClearTable();
     $('#FlightDeailTable').dataTable().fnDestroy();
     $("#FlightDeailTable tbody").empty();
@@ -1889,7 +1893,33 @@ function clearData(){
     $('#ReceiptDetailTable').dataTable().fnDestroy();
     $("#ReceiptDetailTable tbody").empty();
     
+    
+    $("#invoiceNo").val("");
+    $("#invoiceDate").val("");
+    $("#invoiceCredit").val("");
+    $("#owner").val("");
+    $("#routing").val("");
+    $("#ticketNo").val("");
+    $("#dueDate").val("");
+    $("#airlineCharge").val("");
+    $("#isWaitPay").val("0");
+     document.getElementById("isWaitPay").checked = false;
     $("#flightPanel").addClass('hidden');
+}
+
+function calculateSalePrice(){
+    var invoiceAmount = replaceAll(",","",$('#invoiceAmount').val()); 
+    if (invoiceAmount == ""){
+        invoiceAmount = 0;
+    }
+    var agentCommission = replaceAll(",","",$('#agentCommission').val()); 
+    if (agentCommission == ""){
+        agentCommission = 0;
+    }
+    var inv = parseFloat(invoiceAmount); 
+    var agentcom = parseFloat(agentCommission);
+    var sale = inv - agentcom;
+    document.getElementById("salePrice").value = formatNumber(sale);
 }
 function calculateVat() {
 //Diff Vat = Inv Amount - Fare - Tax - Ins (ค่า Diff vat สามารถติดลบได้)
@@ -1902,7 +1932,7 @@ function calculateVat() {
         getMAirlineAgent(aircode);
     }
     
-    if(ticketType == "A" || ticketType == "B" || ticketType == "TI"){
+    if(ticketType == "B" || ticketType == "TI"){
         var invAmount = replaceAll(",","",$('#invoiceAmount').val()); 
         if (invAmount == ""){
             invAmount = 0;
@@ -1931,9 +1961,9 @@ function calculateVat() {
        var tax = parseFloat(tickettax);
        var ins = parseFloat(ticketins);
        var ticketComm = parseFloat(ticketCommission);
-       var diffvat = inv - fare - tax - ins - ticketComm;
+       var diffvat = inv - fare - tax - ticketComm;
        document.getElementById("diffVat").value = formatNumber(diffvat);
-    } else if(ticketType == "D" || ticketType == "TD"){
+    } else if(ticketType == "D" || ticketType == "TD" || ticketType == "A"){
         var invAmount = replaceAll(",","",$('#invoiceAmount').val()); 
         if (invAmount == ""){
             invAmount = 0;
@@ -1946,10 +1976,16 @@ function calculateVat() {
         if (ticketins == ""){
             ticketins = 0;
         }
+      
+        var tickettax = replaceAll(",","",$('#ticketTax').val()); 
+        if (tickettax == ""){
+            tickettax = 0;
+        }
+        var tax = parseFloat(tickettax);
         var inv = parseFloat(invAmount); 
         var fare = parseFloat(ticketfare);
         var ins = parseFloat(ticketins);
-        var diffvat = inv - fare - ins;
+        var diffvat = inv - fare - tax;
         document.getElementById("diffVat").value = formatNumber(diffvat);
     }
 }
@@ -1962,21 +1998,23 @@ function formatNumber(num) {
 }
 
 function insertCommas(nField){
-    if (/^0/.test(nField.value)){
-        nField.value = nField.value.substring(0,1);
-    }
-    if (Number(nField.value.replace(/,/g,""))){
-        var tmp = nField.value.replace(/,/g,"");
-        tmp = tmp.toString().split('').reverse().join('').replace(/(\d{3})/g,'$1,').split('').reverse().join('').replace(/^,/,'');
-        if (/\./g.test(tmp)){
-            tmp = tmp.split(".");
-            tmp[1] = tmp[1].replace(/\,/g,"").replace(/ /,"");
-            nField.value = tmp[0]+"."+tmp[1]
+    if(nField.value !== '-'){
+        if (/^0/.test(nField.value)){
+            nField.value = nField.value.substring(0,1);
+        }
+        if (Number(nField.value.replace(/,/g,""))){
+            var tmp = nField.value.replace(/,/g,"");
+            tmp = tmp.toString().split('').reverse().join('').replace(/(\d{3})/g,'$1,').split('').reverse().join('').replace(/^,/,'');
+            if (/\./g.test(tmp)){
+                tmp = tmp.split(".");
+                tmp[1] = tmp[1].replace(/\,/g,"").replace(/ /,"");
+                nField.value = tmp[0]+"."+tmp[1]
+            }else{
+                nField.value = tmp.replace(/ /,"");
+            } 
         }else{
-            nField.value = tmp.replace(/ /,"");
-        } 
-    }else{
-        nField.value = nField.value.replace(/[^\d\,\.]/g,"").replace(/ /,"");
+            nField.value = nField.value.replace(/[^\d\,\.]/g,"").replace(/ /,"");
+        }
     }
 }
 

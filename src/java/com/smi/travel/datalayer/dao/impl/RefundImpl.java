@@ -255,8 +255,8 @@ public class RefundImpl implements RefundDao{
                 BigDecimal sumClientCharge = new BigDecimal(BigInteger.ZERO);
                 DecimalFormat df = new DecimalFormat("#,##0.00");
                 for (int j = 0; j < rRefundAirticketDetail.size(); j++) {
-                    if(rRefundAirticketDetail.get(j).getReceiveAirline() != null ){
-                        sumCharge = sumCharge.add(rRefundAirticketDetail.get(j).getReceiveAirline());
+                    if(rRefundAirticketDetail.get(j).getAirlineCharge() != null ){
+                        sumCharge = sumCharge.add(rRefundAirticketDetail.get(j).getAirlineCharge());
                     }else{
                         sumCharge = sumCharge.add(new BigDecimal(BigInteger.ZERO));
                     }
@@ -293,8 +293,8 @@ public class RefundImpl implements RefundDao{
                         refundTicketDetail.setSectorRefund(rRefundAirticketDetail.get(j).getSectorRefund());
 
                         //Charge
-                        if(rRefundAirticketDetail.get(j).getReceiveAirline() != null ){
-                            refundTicketDetail.setCharge(df.format(rRefundAirticketDetail.get(j).getReceiveAirline()));
+                        if(rRefundAirticketDetail.get(j).getAirlineCharge() != null ){
+                            refundTicketDetail.setCharge(df.format(rRefundAirticketDetail.get(j).getAirlineCharge()));
                         }else{
                             refundTicketDetail.setCharge("");
                         }

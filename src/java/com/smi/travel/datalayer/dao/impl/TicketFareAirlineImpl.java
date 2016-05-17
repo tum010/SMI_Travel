@@ -796,6 +796,7 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         
         String queryrefundby = "from TicketFareAirline ticket where ticket.ticketNo = :ticketno";
         List<TicketFareAirline> ticketFareAirlines = session.createQuery(queryrefundby).setParameter("ticketno", TicketNo).list();
+        BigDecimal saleprice = new BigDecimal(BigInteger.ZERO);
         String agentId = "";
         String invTo = "";
         String invName = "";
@@ -803,6 +804,8 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
             System.out.println(" ticketFareInvoices isEmpty ");
         }else{
             if(ticketFareAirlines.get(0) != null){
+                TicketFareAirline tfa = ticketFareAirlines.get(0);
+                saleprice = saleprice.add(tfa.getSalePrice());
                 agentId =  String.valueOf(ticketFareAirlines.get(0).getAgentId());
                 Agent agent = new Agent();
                 String queryagent = "from Agent a where a.id= :agentid";
@@ -867,7 +870,8 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         result.put("TicketDate", sdf.format(ticketFare.getAirticketAirline().getTicketDate()));
         result.put("Dept", BookingType.equalsIgnoreCase("O")? "Outbound":"Wendy");
         result.put("Passenger", Initialname+" " + ticketFare.getLastName() +" "+ticketFare.getFirstName());
-        result.put("Total", price.add(ticketFare.getTicketTax()));
+//        result.put("Total", price.add(ticketFare.getTicketTax()));
+        result.put("Total", saleprice);
         result.put("Sector", rounting);
         result.put("InvTo", invTo);
         result.put("InvName", invName);

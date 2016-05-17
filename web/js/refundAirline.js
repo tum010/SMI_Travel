@@ -295,7 +295,7 @@ function addRowRefundAirlineList() {
                         var param = 'action=' + 'text' +
                                 '&servletName=' + servletName +
                                 '&servicesName=' + servicesName +
-                                '&type=getTicketFare' +
+                                '&type='+'getTicketFare' +
                                 '&ticketNo=' + this.value;
                         var row = parseInt($(this).parent().parent().attr("row"));
                         try {
@@ -374,6 +374,17 @@ function setDeletRow(el) {
     $("#delCode").text('are you sure delete ?');
     deleteRowNo = $(el).parent().parent().attr("row");
 }
+function hideCollapse(el) {
+    $("div").find($('.collapse')).collapse('hide');
+}
+
+function setEditRow(el) {
+    $("div").find($('.collapse')).collapse('hide');
+//    var row = $(el).parent().parent().attr("row");
+    $("#charge").collapse('show');
+    
+}
+
 
 function deleteRowRefundAirlineList() {
     $("#alertSuccess").hide();
