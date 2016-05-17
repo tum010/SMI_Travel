@@ -680,12 +680,12 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
             String customerName = (arNirvana.getCustomername() != null && !"".equalsIgnoreCase(arNirvana.getCustomername()) ? arNirvana.getCustomername() : "");
             dataArea += util.generateDataAreaNirvana(customerName,100);
             
-            String chargeCustomerId = "";
-            dataArea += util.generateDataAreaNirvana(customerId,21);
+            String chargeCustomerId = (arNirvana.getCustomerid() != null && !"".equalsIgnoreCase(arNirvana.getCustomerid()) ? arNirvana.getCustomerid() : "");
+            dataArea += util.generateDataAreaNirvana(chargeCustomerId,21);
             
             String divisionId = (arNirvana.getDivisionid() != null && !"".equalsIgnoreCase(arNirvana.getDivisionid()) ? arNirvana.getDivisionid() : "");
             dataArea += util.generateDataAreaNirvana(divisionId,21);
-            System.out.println("==== divisionId ==== : "+divisionId);
+
             String projectId = "00";
             dataArea += util.generateDataAreaNirvana(projectId,21);
             
@@ -694,9 +694,11 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
             
             String transDate = (arNirvana.getTransdate() != null && !"".equalsIgnoreCase(String.valueOf(arNirvana.getTransdate())) ? sf.format(arNirvana.getTransdate()) : "");
             dataArea += util.generateDataAreaNirvana(transDate,10);
+            System.out.println("===== TransDate ===== : "+transDate);
             
             String dueDate = (arNirvana.getDuedate() != null && !"".equalsIgnoreCase(String.valueOf(arNirvana.getDuedate())) ? sf.format(arNirvana.getDuedate()) : "");
             dataArea += util.generateDataAreaNirvana(dueDate,10);
+            System.out.println("===== DueDate ===== : "+dueDate);
             
             String salesmanId = (arNirvana.getSalesmanid() != null && !"".equalsIgnoreCase(arNirvana.getSalesmanid()) ? arNirvana.getSalesmanid() : "");
             dataArea += util.generateDataAreaNirvana(salesmanId,6);
@@ -769,13 +771,13 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
             dataArea += util.generateDataAreaNirvana(exReference,21);
             
             String companyBranch = (arNirvana.getCompany_branch()!= null ? String.valueOf(arNirvana.getCompany_branch()) : "0");
-            dataArea += util.generateDataAreaNirvana(companyBranch,6);
+            dataArea += util.generateDataAreaNirvana("000000",6);
             
             String custTaxId = (arNirvana.getCust_taxid() != null && !"".equalsIgnoreCase(arNirvana.getCust_taxid()) ? arNirvana.getCust_taxid(): "");
             dataArea += util.generateDataAreaNirvana(custTaxId,21);
             
             String cusBranch = (arNirvana.getCust_branch()!= null ? String.valueOf(arNirvana.getCust_branch()) : "0");
-            dataArea += util.generateDataAreaNirvana(cusBranch,6);
+            dataArea += util.generateDataAreaNirvana("000000",6);
             
             String service = (arNirvana.getService()!= null && !"".equalsIgnoreCase(arNirvana.getService()) ? arNirvana.getService(): "");
             dataArea += util.generateDataAreaNirvana(service,1);
@@ -879,6 +881,7 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
            
         }
         
+        System.out.println("===== SsDataexchTr =====");
         List<SsDataexchTr> ssdtrList = new ArrayList<SsDataexchTr>();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd.HHmmss", Locale.US);
         int count = 1;
@@ -891,15 +894,15 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
             ssdtr.setDataSeq(String.valueOf(count));
             ssdtr.setEntSysCd("SMI");
             ssdtr.setEntSysDate(sdf.format(new Date()));
-            ssdtr.setEntDataNo(datano);
-            ssdtr.setEntComment("");
-            ssdtr.setRcvSysCd("NIRVANA");
-            ssdtr.setRcvStaCd("1");
-            ssdtr.setCvSysDate("00000000.000000");
+//            ssdtr.setEntDataNo(datano);
+//            ssdtr.setEntComment("");
+//            ssdtr.setRcvSysCd("NIRVANA");
+//            ssdtr.setRcvStaCd("1");
+//            ssdtr.setCvSysDate("00000000.000000");
             ssdtr.setRcvComment("");
-            ssdtr.setTraNesCd("1");
-            ssdtr.setTraStaCd("1");
-            ssdtr.setTraSysDate("00000000.000000");
+//            ssdtr.setTraNesCd("1");
+//            ssdtr.setTraStaCd("1");
+//            ssdtr.setTraSysDate("00000000.000000");
             
             if(!"".equalsIgnoreCase(arNirvanaSaleDetail.getSalesaccount())){
                 dataArea +=  util.generateDataAreaNirvana(arNirvanaSaleDetail.getSalesaccount(),21);
@@ -912,7 +915,11 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
                 count += 1;
                 
                 ssdtrList.add(ssdtr);
-            }    
+            }
+            
+            System.out.println("===== DataSeq ===== : " +ssdtr.getDataSeq());
+            System.out.println("===== DataNo ===== : " +ssdtr.getDataNo());
+            System.out.println("===== DataArea ===== : " +ssdtr.getDataArea());
                                              
         }            
             
