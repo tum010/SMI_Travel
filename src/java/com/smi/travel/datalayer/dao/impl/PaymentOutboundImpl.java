@@ -629,6 +629,8 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
                 .addScalar("qtyroom", Hibernate.STRING)
                 .addScalar("qtynight", Hibernate.STRING)
                 .addScalar("qtyttl", Hibernate.STRING)
+                .addScalar("payinvdate", Hibernate.STRING)
+                .addScalar("beforevat", Hibernate.STRING)
                 .list();
             
             SimpleDateFormat dateformat = new SimpleDateFormat();
@@ -700,7 +702,8 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
             sum.setQtyroom(!"null".equalsIgnoreCase(String.valueOf(B[45])) ? util.ConvertString(B[45]) : "");
             sum.setQtynight(!"null".equalsIgnoreCase(String.valueOf(B[46])) ? util.ConvertString(B[46]) : "");
             sum.setQtyttl(!"null".equalsIgnoreCase(String.valueOf(B[47])) ? util.ConvertString(B[47]) : "");
-
+            sum.setPayinvdate(util.convertStringToDateFormat(String.valueOf(B[48])));
+            sum.setBeforevat(!"null".equalsIgnoreCase(String.valueOf(B[49])) ? util.ConvertString(B[49]) : "0.00");
             if ((invSupCode != null) && (!"".equalsIgnoreCase(invSupCode)) && (util.ConvertString(B[21]) != null) && (!"".equalsIgnoreCase(util.ConvertString(B[21])))) {
                 sum.setHeaderinvoicesupcode(util.ConvertString(B[21]));
             }

@@ -1808,11 +1808,11 @@ public class OutboundProductSummary extends AbstractExcelView  {
             cell083.setCellStyle(styleHeader);
             sheet.autoSizeColumn(32);
         HSSFCell cell084 = row6.createCell(37);
-            cell084.setCellValue("PAY");
+            cell084.setCellValue("REAL");
             cell084.setCellStyle(styleHeader);
             sheet.autoSizeColumn(37);
         HSSFCell cell85 = row6.createCell(38);
-            cell85.setCellValue("REAL");
+            cell85.setCellValue("PAY");
             cell85.setCellStyle(styleHeader);
             sheet.autoSizeColumn(38);
         HSSFCell cell86 = row6.createCell(39);
@@ -1904,7 +1904,7 @@ public class OutboundProductSummary extends AbstractExcelView  {
                 celldata20.setCellValue("".equalsIgnoreCase(String.valueOf(data.getQtyttl())) ? 0 : (new BigDecimal(data.getQtyttl())).doubleValue());
                 celldata20.setCellStyle(styleDetailTableCenter); 
             HSSFCell celldata21 = row.createCell(21);
-                celldata21.setCellValue("".equalsIgnoreCase(String.valueOf(data.getBeforevat())) ? 0 : (new BigDecimal(data.getBeforevat())).doubleValue());
+                celldata21.setCellValue("".equalsIgnoreCase(String.valueOf(data.getBeforevat())) || data.getBeforevat() == null  ? 0 : (new BigDecimal(data.getBeforevat())).doubleValue());
                 celldata21.setCellStyle(styleAlignRightBorderAllNumber); 
             HSSFCell celldata22 = row.createCell(22);
                 celldata22.setCellValue("".equalsIgnoreCase(String.valueOf(data.getPrice())) ? 0 : (new BigDecimal(data.getPrice())).doubleValue());
@@ -1932,7 +1932,7 @@ public class OutboundProductSummary extends AbstractExcelView  {
                 celldata29.setCellValue("".equalsIgnoreCase(String.valueOf(data.getAmount())) ? 0 : (new BigDecimal(data.getAmount())).doubleValue());
                 celldata29.setCellStyle(styleAlignRightBorderAllNumber);
             HSSFCell celldata30 = row.createCell(30);
-                celldata30.setCellValue(String.valueOf(data.getCurprice()));
+                celldata30.setCellValue(String.valueOf(data.getPaycur()));
                 celldata30.setCellStyle(styleDetailTableCenter);    
             HSSFCell celldata31 = row.createCell(31);
                 celldata31.setCellValue("".equalsIgnoreCase(String.valueOf(data.getRealrate())) ? 0 : (new BigDecimal(data.getRealrate())).doubleValue());
@@ -1953,10 +1953,10 @@ public class OutboundProductSummary extends AbstractExcelView  {
                 celldata36.setCellValue("".equalsIgnoreCase(String.valueOf(data.getWht())) ? 0 : (new BigDecimal(data.getWht())).doubleValue());
                 celldata36.setCellStyle(styleAlignRightBorderAllNumber); 
             HSSFCell celldata37 = row.createCell(37);
-                celldata37.setCellValue("".equalsIgnoreCase(String.valueOf(data.getGrosspay())) ? 0 : (new BigDecimal(data.getGrosspay())).doubleValue());
+                celldata37.setCellValue("".equalsIgnoreCase(String.valueOf(data.getGrossreal())) ? 0 : (new BigDecimal(data.getGrossreal())).doubleValue());
                 celldata37.setCellStyle(styleAlignRightBorderAllNumber);    
             HSSFCell celldata38 = row.createCell(38);
-                celldata38.setCellValue("".equalsIgnoreCase(String.valueOf(data.getGrossreal())) ? 0 : (new BigDecimal(data.getGrossreal())).doubleValue());
+                celldata38.setCellValue("".equalsIgnoreCase(String.valueOf(data.getGrosspay())) ? 0 : (new BigDecimal(data.getGrosspay())).doubleValue());
                 celldata38.setCellStyle(styleAlignRightBorderAllNumber);    
             HSSFCell celldata39 = row.createCell(39);
                 celldata39.setCellValue(String.valueOf(data.getPaycomdate().trim()));
@@ -1978,12 +1978,121 @@ public class OutboundProductSummary extends AbstractExcelView  {
                 celldata44.setCellStyle(styleAlignLeftBorderAll);                
             HSSFCell celldata45 = row.createCell(45);
                 celldata45.setCellValue(String.valueOf(data.getReceiptdate()));
-                celldata45.setCellStyle(styleAlignLeftBorderAll);                 
+                celldata45.setCellStyle(styleAlignLeftBorderAll);   
+                
+            if(i == (listPaymentSummary.size()-1)){
+                row = sheet.createRow(count + i + 1);
+                 for(int k=0;k<46;k++){
+                    HSSFCellStyle styleSum = wb.createCellStyle();
+                    styleSum.setAlignment(styleSum.ALIGN_RIGHT);
+                    styleSum.setBorderTop(HSSFCellStyle.BORDER_THIN);
+                    styleSum.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+                    HSSFCell cellSum = row.createCell(k);                   
+                    if(k == 0){
+                        styleSum.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+                    }
+                    if(k == 45){
+                        styleSum.setBorderRight(HSSFCellStyle.BORDER_THIN);
+                    }
+                    cellSum.setCellStyle(styleSum);
+                }
+                HSSFCellStyle styleSum = wb.createCellStyle();
+                styleSum.setFont(excelFunction.getTotalDetailBoldFont(wb.createFont()));
+                styleSum.setAlignment(styleSum.ALIGN_RIGHT);
+                styleSum.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+                styleSum.setBorderRight(HSSFCellStyle.BORDER_THIN);
+                styleSum.setBorderTop(HSSFCellStyle.BORDER_THIN);
+                styleSum.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+                styleSum.setDataFormat(currency.getFormat("#,##0.00"));
+                
+                HSSFCellStyle styleSumCenter = wb.createCellStyle();
+                styleSumCenter.setFont(excelFunction.getTotalDetailBoldFont(wb.createFont()));
+                styleSumCenter.setAlignment(styleSum.ALIGN_CENTER);
+                styleSumCenter.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+                styleSumCenter.setBorderRight(HSSFCellStyle.BORDER_THIN);
+                styleSumCenter.setBorderTop(HSSFCellStyle.BORDER_THIN);
+                styleSumCenter.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+                styleSumCenter.setDataFormat(currency.getFormat("#,##0"));
+                
+                String sumAd = "SUM(H" + 10+":H"+(count + i + 1)+")";
+                String sumCh = "SUM(I" + 10+":I"+(count + i + 1)+")";
+                String sumIn = "SUM(J" + 10+":J"+(count + i + 1)+")";
+                String sumRoom = "SUM(S" + 10+":S"+(count + i + 1)+")";
+                String sumNight = "SUM(T" + 10+":T"+(count + i + 1)+")";
+                String sumTtl = "SUM(U" + 10+":U"+(count + i + 1)+")";
+                String sumBeforeVat = "SUM(V" + 10+":V"+(count + i + 1)+")";
+                String sumPrice = "SUM(W" + 10+":W"+(count + i + 1)+")";
+                String sumAmount = "SUM(AD" + 10+":AD"+(count + i + 1)+")";
+                String sumLocalR = "SUM(AH" + 10+":AH"+(count + i + 1)+")";
+                String sumLocalP = "SUM(AI" + 10+":AI"+(count + i + 1)+")";
+                String sumVat = "SUM(AJ" + 10+":AJ"+(count + i + 1)+")";
+                String sumWht = "SUM(AK" + 10+":AK"+(count + i + 1)+")";
+                String sumGrossReal = "SUM(AL" + 10+":AL"+(count + i + 1)+")";
+                String sumGrossPay = "SUM(AM" + 10+":AM"+(count + i + 1)+")";
+                String sumPaycomCom = "SUM(AQ" + 10+":AQ"+(count + i + 1)+")";
+                String sumProfitBalance = "SUM(AR" + 10+":AR"+(count + i + 1)+")";
+                
+                HSSFCell cell5Sum = row.createCell(6);
+                    cell5Sum.setCellValue("Total");
+                    cell5Sum.setCellStyle(styleSumCenter);
+                HSSFCell cell7Sum = row.createCell(7);
+                    cell7Sum.setCellFormula(sumAd);
+                    cell7Sum.setCellStyle(styleSumCenter);
+                HSSFCell cell8Sum = row.createCell(8);
+                    cell8Sum.setCellFormula(sumCh);
+                    cell8Sum.setCellStyle(styleSumCenter);
+                HSSFCell cell9Sum = row.createCell(9);
+                    cell9Sum.setCellFormula(sumIn);
+                    cell9Sum.setCellStyle(styleSumCenter);
+                HSSFCell cell18Sum = row.createCell(18);
+                    cell18Sum.setCellFormula(sumRoom);
+                    cell18Sum.setCellStyle(styleSumCenter);
+                HSSFCell cell19Sum = row.createCell(19);
+                    cell19Sum.setCellFormula(sumNight);
+                    cell19Sum.setCellStyle(styleSumCenter);
+                HSSFCell cell20Sum = row.createCell(20);
+                    cell20Sum.setCellFormula(sumTtl);
+                    cell20Sum.setCellStyle(styleSumCenter);  
+                HSSFCell cell21Sum = row.createCell(21);
+                    cell21Sum.setCellFormula(sumBeforeVat);
+                    cell21Sum.setCellStyle(styleSum);  
+                HSSFCell cell22Sum = row.createCell(22);
+                    cell22Sum.setCellFormula(sumPrice);
+                    cell22Sum.setCellStyle(styleSum); 
+                HSSFCell cell29Sum = row.createCell(29);
+                    cell29Sum.setCellFormula(sumAmount);
+                    cell29Sum.setCellStyle(styleSum);    
+                HSSFCell cell33Sum = row.createCell(33);
+                    cell33Sum.setCellFormula(sumLocalR);
+                    cell33Sum.setCellStyle(styleSum);
+                HSSFCell cell34Sum = row.createCell(34);
+                    cell34Sum.setCellFormula(sumLocalP);
+                    cell34Sum.setCellStyle(styleSum);    
+                HSSFCell cell35Sum = row.createCell(35);
+                    cell35Sum.setCellFormula(sumVat);
+                    cell35Sum.setCellStyle(styleSum); 
+                HSSFCell cell36Sum = row.createCell(36);
+                    cell36Sum.setCellFormula(sumWht);
+                    cell36Sum.setCellStyle(styleSum);
+                HSSFCell cell37Sum = row.createCell(37);
+                    cell37Sum.setCellFormula(sumGrossReal);
+                    cell37Sum.setCellStyle(styleSum); 
+                HSSFCell cell38Sum = row.createCell(38);
+                    cell38Sum.setCellFormula(sumGrossPay);
+                    cell38Sum.setCellStyle(styleSum);    
+                HSSFCell cell42Sum = row.createCell(42);
+                    cell42Sum.setCellFormula(sumPaycomCom);
+                    cell42Sum.setCellStyle(styleSum); 
+                HSSFCell cell43Sum = row.createCell(43);
+                    cell43Sum.setCellFormula(sumProfitBalance);
+                    cell43Sum.setCellStyle(styleSum); 
+             }
         }
+        sheet.setColumnWidth(2, 256*20);
         sheet.setColumnWidth(3, 256*15);
         sheet.setColumnWidth(4, 256*15);
         sheet.setColumnWidth(5, 256*30);
-        sheet.setColumnWidth(7, 256*15);
+        sheet.setColumnWidth(6, 256*15);
         sheet.setColumnWidth(10, 256*15);
         sheet.setColumnWidth(11, 256*15);
         sheet.setColumnWidth(12, 256*15);

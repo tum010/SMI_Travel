@@ -57,4 +57,13 @@ public class UtilityExcelFunction {
 
         return font;
     }
+    
+    public HSSFFont getTotalDetailBoldFont(HSSFFont font) {
+
+        font.setFontHeightInPoints((short) 10);
+        font.setFontName("Arial");
+        font.setBoldweight(font.BOLDWEIGHT_BOLD);
+
+        return font;
+    }
 }
