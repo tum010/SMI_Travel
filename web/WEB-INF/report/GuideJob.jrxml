@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="GuideJob" language="groovy" pageWidth="648" pageHeight="792" columnWidth="648" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="afe86f30-4ddb-453a-8429-dac3373d85ce">
 	<property name="ireport.zoom" value="2.9282000000000186"/>
-	<property name="ireport.x" value="115"/>
-	<property name="ireport.y" value="967"/>
+	<property name="ireport.x" value="863"/>
+	<property name="ireport.y" value="295"/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<field name="guide" class="java.lang.String"/>
 	<field name="driver" class="java.lang.String"/>
@@ -151,14 +151,14 @@
 				<textFieldExpression><![CDATA[$F{drivertel}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="465" y="126" width="100" height="22" uuid="8b38019a-96ac-4812-b497-ab016b1df4a1"/>
+				<reportElement x="465" y="131" width="100" height="22" uuid="8b38019a-96ac-4812-b497-ab016b1df4a1"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="12" isBold="false" pdfFontName="resource/fonts/Tahoma.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{code}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="465" y="149" width="100" height="22" uuid="73a9d062-bd01-4974-aa0d-5264cd73f77f"/>
+				<reportElement x="465" y="153" width="100" height="22" uuid="73a9d062-bd01-4974-aa0d-5264cd73f77f"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="12" isBold="false" pdfFontName="resource/fonts/Tahoma.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>

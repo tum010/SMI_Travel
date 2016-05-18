@@ -355,7 +355,7 @@
                                 </c:if>
                             </td>
                             <td>
-                                <input type="text" id="exrate-${Counter.count}" name="exrate-${Counter.count}" value="${b.exRate}" class="form-control text-right decimalexrate"  maxlength="7" />
+                                <input type="text" id="exrate-${Counter.count}" name="exrate-${Counter.count}" value="${b.exRate}" class="form-control text-right decimalexrate" />
                             </td>
                             <td>      
                                
