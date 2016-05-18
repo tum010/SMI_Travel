@@ -17,6 +17,7 @@ import com.smi.travel.datalayer.dao.PaymentOutboundDao;
 import com.smi.travel.datalayer.dao.PaymentWendytourDao;
 import com.smi.travel.datalayer.dao.ReceiveTableDao;
 import com.smi.travel.datalayer.dao.SummaryTicketAdjustCostAndIncomeDao;
+import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.view.dao.APNirvanaDao;
 import com.smi.travel.datalayer.view.dao.ARNirvanaDao;
 import com.smi.travel.datalayer.view.dao.AgentCommissionReportDao;
@@ -216,12 +217,16 @@ public class ReportService {
         return agentCommissiondao.getAgentReportInfo(datefrom, dateto, user,agentid);
     }
     
-    public List getReceiptEmail(String receiptId,int option,String sign,String printby,String isTemp){
-        return receiptDao.getReceipt(receiptId,option,sign,printby,isTemp);
+    public List getReceiptEmail(String receiptId,int option,String sign,String printby){
+        return receiptDao.getReceipt(receiptId,option,sign,printby);
     }
     
-     public List getReceipt(String receiptId,int option,String sign,String printby,String isTemp){
-        return receiptDao.getReceipt(receiptId,option,sign,printby,isTemp);
+    public List getReceipt(String receiptId,int option,String sign,String printby){
+        return receiptDao.getReceipt(receiptId,option,sign,printby);
+    }
+    
+    public List getReceiptTemp(String receiptId, int option, String sign, String printby) {
+        return receiptDao.getReceiptTemp(receiptId,option,sign,printby);
     }
      
     public List getReceiptSummary(String dateFrom,String dateTo,String departmentRec,String recType,String status,String username){
@@ -852,5 +857,5 @@ public class ReportService {
 
     public List getPaymentOutboundReport(String paymentOutboundId, String optionReport) {
         return paymentOutboundDao.getPaymentOutboundReport(paymentOutboundId,optionReport);
-    }
+    }    
 }

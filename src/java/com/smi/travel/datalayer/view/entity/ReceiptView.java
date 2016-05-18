@@ -76,7 +76,6 @@ public class ReceiptView {
     private String status;
     private String taxidno;
     private String branch;
-    private String isTemp;
     
     public String getId() {
         return id;
@@ -533,16 +532,5 @@ public class ReceiptView {
     public void setBranch(String branch) {
         this.branch = branch;
     }
-
-    public String getIsTemp() {
-        return isTemp;
-    }
-
-    public void setIsTemp(String isTemp) {
-        this.isTemp = isTemp;
-    }
-
-
-   
-
+    
 }

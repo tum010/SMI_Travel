@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReceiptEmail" language="groovy" pageWidth="595" pageHeight="421" columnWidth="525" leftMargin="42" rightMargin="28" topMargin="42" bottomMargin="28" uuid="0038deea-02d3-4a9f-8925-fb54dc3fc533">
-	<property name="ireport.zoom" value="2.923075650000015"/>
-	<property name="ireport.x" value="166"/>
-	<property name="ireport.y" value="327"/>
+	<property name="ireport.zoom" value="1.3636363636363704"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="101"/>
 	<field name="recto" class="java.lang.String"/>
 	<field name="recadd" class="java.lang.String"/>
 	<field name="tel" class="java.lang.String"/>
@@ -182,7 +182,7 @@
 			</staticText>
 			<staticText>
 				<reportElement x="5" y="134" width="62" height="15" uuid="9ec5db4f-8e78-4d29-aa7b-c18030a0ae0d">
-					<printWhenExpression><![CDATA[!("").equalsIgnoreCase($F{taxidno}) && $F{taxidno} != null && "0".equalsIgnoreCase($F{isTemp})]]></printWhenExpression>
+					<printWhenExpression><![CDATA[!("").equalsIgnoreCase($F{taxidno}) && $F{taxidno} != null]]></printWhenExpression>
 				</reportElement>
 				<textElement verticalAlignment="Top">
 					<font fontName="Tahoma" size="10" isBold="true" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
@@ -191,7 +191,7 @@
 			</staticText>
 			<staticText>
 				<reportElement x="180" y="134" width="39" height="15" uuid="b5aba02e-89bd-43d1-81dc-e9c3e4a22e46">
-					<printWhenExpression><![CDATA[!("").equalsIgnoreCase($F{taxidno}) && $F{taxidno} != null && "0".equalsIgnoreCase($F{isTemp})]]></printWhenExpression>
+					<printWhenExpression><![CDATA[!("").equalsIgnoreCase($F{taxidno}) && $F{taxidno} != null]]></printWhenExpression>
 				</reportElement>
 				<textElement verticalAlignment="Top">
 					<font fontName="Tahoma" size="10" isBold="true" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
@@ -235,7 +235,7 @@
 			</staticText>
 			<staticText>
 				<reportElement x="61" y="134" width="13" height="15" uuid="8d6ff44a-383f-4752-81ef-957c7cb45b51">
-					<printWhenExpression><![CDATA[!("").equalsIgnoreCase($F{taxidno}) && $F{taxidno} != null && "0".equalsIgnoreCase($F{isTemp})]]></printWhenExpression>
+					<printWhenExpression><![CDATA[!("").equalsIgnoreCase($F{taxidno}) && $F{taxidno} != null]]></printWhenExpression>
 				</reportElement>
 				<textElement verticalAlignment="Top">
 					<font fontName="Tahoma" size="10" isBold="true" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
@@ -265,7 +265,7 @@
 			</staticText>
 			<textField>
 				<reportElement x="231" y="133" width="111" height="15" uuid="9a740e42-3e87-4517-b8f5-43530c07babd">
-					<printWhenExpression><![CDATA[!("").equalsIgnoreCase($F{taxidno}) && $F{taxidno} != null && "0".equalsIgnoreCase($F{isTemp})]]></printWhenExpression>
+					<printWhenExpression><![CDATA[!("").equalsIgnoreCase($F{taxidno}) && $F{taxidno} != null]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Left" verticalAlignment="Top">
 					<font fontName="Cordia New" size="12" isBold="false" pdfFontName="resource/fonts/Cordia.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
@@ -274,7 +274,7 @@
 			</textField>
 			<textField>
 				<reportElement x="69" y="133" width="106" height="15" uuid="d14ff6ed-44d4-402a-b697-70d04b0734c8">
-					<printWhenExpression><![CDATA[!("").equalsIgnoreCase($F{taxidno}) && $F{taxidno} != null && "0".equalsIgnoreCase($F{isTemp})]]></printWhenExpression>
+					<printWhenExpression><![CDATA[!("").equalsIgnoreCase($F{taxidno}) && $F{taxidno} != nul]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Left" verticalAlignment="Top">
 					<font fontName="Cordia New" size="12" isBold="false" pdfFontName="resource/fonts/Cordia.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
@@ -319,7 +319,7 @@
 			</textField>
 			<staticText>
 				<reportElement x="221" y="134" width="13" height="15" uuid="28c14a3a-d079-417c-b6a7-467d35102fee">
-					<printWhenExpression><![CDATA[!("").equalsIgnoreCase($F{taxidno}) && $F{taxidno} != null && "0".equalsIgnoreCase($F{isTemp})]]></printWhenExpression>
+					<printWhenExpression><![CDATA[!("").equalsIgnoreCase($F{taxidno}) && $F{taxidno} != null]]></printWhenExpression>
 				</reportElement>
 				<textElement verticalAlignment="Top">
 					<font fontName="Tahoma" size="10" isBold="true" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>

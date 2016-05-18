@@ -1407,11 +1407,11 @@
                         </select>
                     </div>
                 </div>
-                <div class="row" style="margin-top: 5px">
+                <div class="row" style="margin-top: 5px" id="chooseSign">
                     <div class="col-xs-1" style="width: 280px">
                         <label class="text-right">Sign<font style="color: red"></font></label>                                    
                     </div>
-                    <div class="col-xs-1" style="width: 200px" >
+                    <div class="col-xs-1" style="width: 200px">
                         <select name="SelectSign" id="SelectSign" class="form-control" style="height:34px">
                             <option value="">--Sign--</option>
                             <option value="benjaporn">Benjaporn</option>
@@ -1523,16 +1523,18 @@
                 <h4 class="modal-title"  id="Titlemodel">Send Email</h4>
             </div>
             <div class="modal-body" id="sendEmailReceiptModal" >
-                <div class="col-xs-1" style="width: 500px">
+                <div class="col-xs-1" style="width: 280px">
                     <label class="text-right">select option for send email receipt<font style="color: red">*</font></label>                                    
                 </div>
-                <div class="text-center" style="width: 250px" >
+                <div class="col-xs-1 text-center" style="width: 230px" >
                     <select name="optionSend" id="optionSend" class="form-control" style="height:34px">
                         <option value="1" >Not Show Description</option>
                         <option value="2" >Show Description</option>
                         <option value="3" >Print Format Package Tour</option>
                     </select>
                 </div>
+                <br>
+                <br>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" onclick="confirmSendEmailReceipt()">
@@ -1996,6 +1998,12 @@
             $("#operationMessage").text("User " + username + " is using information. Do you want to continue ?");
             $("#operationModal").modal("show");
         }
+        
+        //Check isTemp
+        var isTemp = ('${page}' === 'WT' || '${page}' === 'OT' || '${page}' === 'IT' ? true : false);
+        if(isTemp){
+            $("#chooseSign").addClass("hidden");
+        }
     });
 
 //    function setFormatCurrencyDetail(){
@@ -2118,16 +2126,18 @@
         var receiveId = document.getElementById('receiveId').value;
         var receiveNo = document.getElementById('receiveNo').value;
         var optionPrint = document.getElementById('optionPrint').value;
-        var SelectSign =  document.getElementById('SelectSign').value;
-        var isTemp = ('${page}' === 'WT' || '${page}' === 'OT' || '${page}' === 'IT' ? '1' : '0');
+        var SelectSign =  document.getElementById('SelectSign').value;        
+        
         if (receiveId == "") {
             alert("please save before print");
         } else if (printtype == 0) {
             alert('please select option print');
         } else if (printtype == 1) {
-            window.open("report.smi?name=ReceiptReport&receiveId=" + receiveId + "&receiveNo=" + receiveNo + "&optionPrint=" + optionPrint + "&sign=" + SelectSign + "&isTemp=" + isTemp);
+            var reportName = ('${page}' === 'WT' || '${page}' === 'OT' || '${page}' === 'IT' ? "ReceiptTempReport" : "ReceiptReport");
+            window.open("report.smi?name=" + reportName + "&receiveId=" + receiveId + "&receiveNo=" + receiveNo + "&optionPrint=" + optionPrint + "&sign=" + SelectSign);
         } else if (printtype == 2) {
-            window.open("report.smi?name=ReceiptEmail&receiveId=" + receiveId + "&receiveNo=" + receiveNo + "&optionPrint=" + optionPrint + "&sign=" + SelectSign + "&isTemp=" + isTemp);
+            var reportName = ('${page}' === 'WT' || '${page}' === 'OT' || '${page}' === 'IT' ? "ReceiptTempReport" : "ReceiptEmail");
+            window.open("report.smi?name=" + reportName + "&receiveId=" + receiveId + "&receiveNo=" + receiveNo + "&optionPrint=" + optionPrint + "&sign=" + SelectSign);
         }
     }
 
@@ -2212,8 +2222,8 @@
         $('#SendEmailReceiptModal').modal('hide');
         var optionSend = document.getElementById('optionSend').value;
         var receiveId = document.getElementById('receiveId').value;
-        var isTemp = ('${page}' === 'WT' || '${page}' === 'OT' || '${page}' === 'IT' ? '1' : '0');
-        window.open("SendMail.smi?reportname=ReceiptEmail&reportid=" + receiveId + "&optionsend=" + optionSend + "&isTemp=" + isTemp);
+        var reportName = ('${page}' === 'WT' || '${page}' === 'OT' || '${page}' === 'IT' ? 'ReceiptTempReport' : 'ReceiptEmail');
+        window.open("SendMail.smi?reportname=" + reportName + "&reportid=" + receiveId + "&optionsend=" + optionSend);
     }
 
     function AddRowProduct(row) {

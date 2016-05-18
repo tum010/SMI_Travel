@@ -6,6 +6,7 @@
 
 package com.smi.travel.datalayer.view.dao;
 
+import com.smi.travel.datalayer.entity.SystemUser;
 import java.util.List;
 
 /**
@@ -13,6 +14,7 @@ import java.util.List;
  * @author chonnasith
  */
 public interface ReceiptDao {
-    public List getReceipt(String receiptId,int option,String sign,String printby,String isTemp);
+    public List getReceipt(String receiptId,int option,String sign,String printby);
     public List getReceiptSummary(String dateFrom,String dateTo,String departmentRec,String recType,String status,String username);
+    public List getReceiptTemp(String receiptId, int option, String sign, String printby);
 }
