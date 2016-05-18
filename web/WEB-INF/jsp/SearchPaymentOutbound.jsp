@@ -1,5 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<script type="text/javascript" src="js/SearchPaymentOutbound.js"></script> 
+<!--<script type="text/javascript" src="js/SearchPaymentOutbound.js"></script>--> 
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -48,11 +48,9 @@
             <div class="col-xs-1 text-right" style="width:150px;padding-right: 0px;padding-left: 0px;">
                 <label class="control-label">Pay Date From<font style="color: red;">*</font></lable>
             </div>
-            <div class="col-md-2 form-group text-left" >
-                <div class='input-group date fromDate' id="fromDateDiv">
+            <div class="col-md-2 form-group text-left" id="fromdatepanel">
+                <div class='input-group date fromdate' id="DateFrom">
                     <c:set var="fromDate" value="${requestScope['fromDate']}" />
-                    <%--<fmt:parseDate value="${fromDate}" var="fromDate" pattern="yyyy-MM-dd" />--%>
-                    <%--<fmt:formatDate value="${fromDate}" var="fromDate" pattern="dd-MM-yyyy" />--%>
                     <input name="fromDate" id="fromDate" type="text" class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${fromDate}" />
                     <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                 </div>
@@ -60,11 +58,9 @@
             <div class="col-xs-1 text-right" style="width:150px;padding-right: 0px;padding-left: 0px;">
                 <label class="control-label">To<font style="color: red;">*</font></lable>
             </div>
-            <div class="col-md-2 form-group text-left" >
-                <div class='input-group date todate' id="toDateDiv">
+            <div class="col-md-2 form-group text-left" id="todatepanel">
+                <div class='input-group date todate' id="DateTo">
                     <c:set var="toDate" value="${requestScope['toDate']}" />
-                    <%--<fmt:parseDate value="${toDate}" var="toDate" pattern="yyyy-MM-dd" />--%>
-                    <%--<fmt:formatDate value="${toDate}" var="toDate" pattern="dd-MM-yyyy" />--%>
                     <input name="toDate" id="toDate" type="text" class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${toDate}" />
                     <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                 </div>
@@ -80,8 +76,8 @@
             <div class="col-xs-1 text-right" style="width:150px;padding-right: 0px;padding-left: 0px;margin-top:-10px;">
                 <label class="control-label">Due Date From<font style="color: red;"></font></lable>
             </div>
-            <div class="col-md-2 form-group text-left" style="margin-top:-10px;">
-                <div class='input-group date duedatefrom' id="dueDateFromDiv">
+            <div class="col-md-2 form-group text-left" style="margin-top:-10px;" id="duefromdatepanel">
+                <div class='input-group date duefromdate' id="DateFromDue">
                     <c:set var="dueDateFrom" value="${requestScope['dueDateFrom']}" />
                     <%--<fmt:parseDate value="${dueDateFrom}" var="dueDateFrom" pattern="yyyy-MM-dd" />--%>
                     <%--<fmt:formatDate value="${dueDateFrom}" var="dueDateFrom" pattern="dd-MM-yyyy" />--%>
@@ -92,8 +88,8 @@
             <div class="col-xs-1 text-right" style="width:150px;padding-right: 0px;padding-left: 0px;margin-top:-10px;">
                 <label class="control-label">To<font style="color: red;"></font></lable>
             </div>
-            <div class="col-md-2 form-group text-left" style="margin-top:-10px;">
-                <div class='input-group date duedateto' id="dueDateToDiv">
+            <div class="col-md-2 form-group text-left" style="margin-top:-10px;" id="duetodatepanel">
+                <div class='input-group date duetodate' id='DateToDue'>
                     <c:set var="dueDateTo" value="${requestScope['dueDateTo']}" />
                     <%--<fmt:parseDate value="${dueDateTo}" var="dueDateTo" pattern="yyyy-MM-dd" />--%>
                     <%--<fmt:formatDate value="${dueDateTo}" var="dueDateTo" pattern="dd-MM-yyyy" />--%>
@@ -142,7 +138,7 @@
         </div><!-- End Row 3-->
         <div class="row" style="padding-left: 775px;margin-top:-10px;">
             <div class="col-xs-1 text-left" style="width: 100px;margin-top:-10px;">
-                <button type="submit"  id="btnSearch"  name="btnSearch" onclick="" class="btn btn-primary btn-primary ">
+                <button type="button"  id="btnSearch"  name="btnSearch" onclick="searchPaymentOutbound()" class="btn btn-primary btn-primary ">
                     <span id="SpanSearch" class="glyphicon glyphicon-print fa fa-search"></span> Search
                 </button>   
             </div>
@@ -412,65 +408,77 @@ $(document).ready(function () {
     });
         
     //validate date
-    $('#fromDateDiv').datetimepicker().on('dp.change', function (e) {
-        $('#searchPaymentOutboundForm').bootstrapValidator('revalidateField', 'fromDate');
-    });
-    $('#toDateDiv').datetimepicker().on('dp.change', function (e) {
-        $('#searchPaymentOutboundForm').bootstrapValidator('revalidateField', 'toDate');
-    });
+//    $('#fromDateDiv').datetimepicker().on('dp.change', function (e) {
+//        $('#searchPaymentOutboundForm').bootstrapValidator('revalidateField', 'fromDate');
+//    });
+//    $('#toDateDiv').datetimepicker().on('dp.change', function (e) {
+//        $('#searchPaymentOutboundForm').bootstrapValidator('revalidateField', 'toDate');
+//    });
 
-    $("#searchPaymentOutboundForm").bootstrapValidator({
-        framework: 'bootstrap',
-    //  container: 'tooltip',
-        feedbackIcons: {
-            valid: 'uk-icon-check',
-            invalid: 'uk-icon-times',
-            validating: 'uk-icon-refresh'
-        },
-        fields: {
-            fromDate: {
-                trigger: 'focus keyup change',
-                validators: {
-                    notEmpty: {
-                        message: 'The Date From is required'
-                    },
-                    date: {
-                        format: 'DD-MM-YYYY',
-                        max: 'toDate',
-                        message: 'The Date From is not a valid'
-                    }
-                }
-            },
-            toDate: {
-                trigger: 'focus keyup change',
-                validators: {
-                    notEmpty: {
-                        message: 'The Date From is required'
-                    },
-                    date: {
-                        format: 'DD-MM-YYYY',
-                        min: 'fromDate',
-                        message: 'The Date To is not a valid'
-                    }
-                }
-            }
-        }
-    }).on('success.field.fv', function (e, data) {
-        if (data.field === 'fromDate' && data.fv.isValidField('toDate') === false) {
-            data.fv.revalidateField('toDate');
-        }
-        if (data.field === 'toDate' && data.fv.isValidField('fromDate') === false) {
-            data.fv.revalidateField('fromDate');
-        }
-    });
+//    $("#searchPaymentOutboundForm").bootstrapValidator({
+//        framework: 'bootstrap',
+//    //  container: 'tooltip',
+//        feedbackIcons: {
+//            valid: 'uk-icon-check',
+//            invalid: 'uk-icon-times',
+//            validating: 'uk-icon-refresh'
+//        },
+//        fields: {
+//            fromDate: {
+//                trigger: 'focus keyup change',
+//                validators: {
+//                    notEmpty: {
+//                        message: 'The Date From is required'
+//                    },
+//                    date: {
+//                        format: 'DD-MM-YYYY',
+//                        max: 'toDate',
+//                        message: 'The Date From is not a valid'
+//                    }
+//                }
+//            },
+//            toDate: {
+//                trigger: 'focus keyup change',
+//                validators: {
+//                    notEmpty: {
+//                        message: 'The Date From is required'
+//                    },
+//                    date: {
+//                        format: 'DD-MM-YYYY',
+//                        min: 'fromDate',
+//                        message: 'The Date To is not a valid'
+//                    }
+//                }
+//            }
+//        }
+//    }).on('success.field.fv', function (e, data) {
+//        if (data.field === 'fromDate' && data.fv.isValidField('toDate') === false) {
+//            data.fv.revalidateField('toDate');
+//        }
+//        if (data.field === 'toDate' && data.fv.isValidField('fromDate') === false) {
+//            data.fv.revalidateField('fromDate');
+//        }
+//    });
     
-    $('.fromdate').datetimepicker().change(function(){                          
-        checkFromDateField();
-    });
-    $('.todate').datetimepicker().change(function(){                          
-        checkToDateField();
-    });
-    
+//    $('.fromdate').datetimepicker().change(function(){                          
+//        checkFromDateField();
+//    });
+//    $('.todate').datetimepicker().change(function(){                          
+//        checkToDateField();
+//    });
+     $('.fromdate').datetimepicker().change(function(){                          
+            checkFromDateField();
+        });
+        $('.todate').datetimepicker().change(function(){                          
+            checkToDateField();
+        });
+        $('.duefromdate').datetimepicker().change(function(){                          
+            checkDueDateFromField();
+        });
+        $('.duetodate').datetimepicker().change(function(){                          
+            checkDueDateToField();
+        });
+        
     var result = $('#result').val();
     if (result === "success") {
         $('#textAlertDivDelete').show();
@@ -504,65 +512,65 @@ $(document).ready(function () {
         }    
     }
     
-    function checkFromDateField(){
-        var inputFromDate = document.getElementById("fromDate");
-        if(inputFromDate.value === ''){          
-            $('#searchPaymentOutboundForm').bootstrapValidator('revalidateField', 'fromDate');
-            $("#btnPrint").addClass("disabled");         
-        } else {
-            $("#btnPrint").removeClass("disabled");
-            checkDateValue("from","");
-        }      
-    }
+//    function checkFromDateField(){
+//        var inputFromDate = document.getElementById("fromDate");
+//        if(inputFromDate.value === ''){          
+//            $('#searchPaymentOutboundForm').bootstrapValidator('revalidateField', 'fromDate');
+//            $("#btnPrint").addClass("disabled");         
+//        } else {
+//            $("#btnPrint").removeClass("disabled");
+//            checkDateValue("from","");
+//        }      
+//    }
+//    
+//    function checkToDateField(){
+//        var InputToDate = document.getElementById("toDate");
+//        if(InputToDate.value === ''){
+//            $('#searchPaymentOutboundForm').bootstrapValidator('revalidateField', 'toDate');
+//            $("#btnPrint").addClass("disabled");  
+//        }else{
+//            $("#btnPrint").removeClass("disabled");
+//            checkDateValue("to","");
+//        }               
+//    }
     
-    function checkToDateField(){
-        var InputToDate = document.getElementById("toDate");
-        if(InputToDate.value === ''){
-            $('#searchPaymentOutboundForm').bootstrapValidator('revalidateField', 'toDate');
-            $("#btnPrint").addClass("disabled");  
-        }else{
-            $("#btnPrint").removeClass("disabled");
-            checkDateValue("to","");
-        }               
-    }
+//    function checkDateValue(date){
+//        var inputFromDate = document.getElementById("fromDate");
+//        var InputToDate = document.getElementById("toDate");
+//        if((inputFromDate.value !== '') && (InputToDate.value !== '')){
+//            var fromDate = (inputFromDate.value).split('-');
+//            var toDate = (InputToDate.value).split('-');
+//            if((parseInt(fromDate[2])) > (parseInt(toDate[2]))){
+//                validateDate(date,"over");
+//            }else if(((parseInt(fromDate[2])) >= (parseInt(toDate[2]))) && ((parseInt(fromDate[1])) > (parseInt(toDate[1])))){
+//                validateDate(date,"over");
+//            }else if(((parseInt(fromDate[2])) >= (parseInt(toDate[2]))) && ((parseInt(fromDate[1])) >= (parseInt(toDate[1]))) && (parseInt(fromDate[0])) > (parseInt(toDate[0]))){
+//                validateDate(date,"over");
+//            }else{
+//                $('#searchPaymentOutboundForm').bootstrapValidator('revalidateField', 'fromDate');
+//                $('#searchPaymentOutboundForm').bootstrapValidator('revalidateField', 'toDate');
+//            }          
+//        }
+//    }
     
-    function checkDateValue(date){
-        var inputFromDate = document.getElementById("fromDate");
-        var InputToDate = document.getElementById("toDate");
-        if((inputFromDate.value !== '') && (InputToDate.value !== '')){
-            var fromDate = (inputFromDate.value).split('-');
-            var toDate = (InputToDate.value).split('-');
-            if((parseInt(fromDate[2])) > (parseInt(toDate[2]))){
-                validateDate(date,"over");
-            }else if(((parseInt(fromDate[2])) >= (parseInt(toDate[2]))) && ((parseInt(fromDate[1])) > (parseInt(toDate[1])))){
-                validateDate(date,"over");
-            }else if(((parseInt(fromDate[2])) >= (parseInt(toDate[2]))) && ((parseInt(fromDate[1])) >= (parseInt(toDate[1]))) && (parseInt(fromDate[0])) > (parseInt(toDate[0]))){
-                validateDate(date,"over");
-            }else{
-                $('#searchPaymentOutboundForm').bootstrapValidator('revalidateField', 'fromDate');
-                $('#searchPaymentOutboundForm').bootstrapValidator('revalidateField', 'toDate');
-            }          
-        }
-    }
-    
-    function validateDate(date,option){
-        if(option === 'over'){
-            if(date === 'from'){
-                $('#searchPaymentOutboundForm').bootstrapValidator('revalidateField', 'fromDate');
-                $('#searchPaymentOutboundForm').bootstrapValidator('revalidateField', 'toDate');
-            }
-            if(date === 'to'){
-                $('#searchPaymentOutboundForm').bootstrapValidator('revalidateField', 'fromDate');
-                $('#searchPaymentOutboundForm').bootstrapValidator('revalidateField', 'toDate');
-            }           
-            $("#btnPrint").addClass("disabled");
-        } else {
-            $('#searchPaymentOutboundForm').bootstrapValidator('revalidateField', 'fromDate');
-            $('#searchPaymentOutboundForm').bootstrapValidator('revalidateField', 'toDate');
-            $("#btnPrint").addClass("disabled");
-        }
-    }
-    
+//    function validateDate(date,option){
+//        if(option === 'over'){
+//            if(date === 'from'){
+//                $('#searchPaymentOutboundForm').bootstrapValidator('revalidateField', 'fromDate');
+//                $('#searchPaymentOutboundForm').bootstrapValidator('revalidateField', 'toDate');
+//            }
+//            if(date === 'to'){
+//                $('#searchPaymentOutboundForm').bootstrapValidator('revalidateField', 'fromDate');
+//                $('#searchPaymentOutboundForm').bootstrapValidator('revalidateField', 'toDate');
+//            }           
+//            $("#btnPrint").addClass("disabled");
+//        } else {
+//            $('#searchPaymentOutboundForm').bootstrapValidator('revalidateField', 'fromDate');
+//            $('#searchPaymentOutboundForm').bootstrapValidator('revalidateField', 'toDate');
+//            $("#btnPrint").addClass("disabled");
+//        }
+//    }
+//    
     function editPaymentOutbound(paymentId,payNo){
         window.location = ("PaymentOutbound.smi?action=edit&payId="+paymentId+"&payNo="+payNo);
     }
@@ -611,4 +619,182 @@ $(document).ready(function () {
             window.open('PaymentStock.smi?action=searchPayNo&payNo='+payStockNoList[0]);
         }
     }
+    
+    function checkFromDateField(){
+        var InputToDate = document.getElementById("toDate");
+        var inputFromDate = document.getElementById("fromDate");
+        if(InputToDate.value === '' && inputFromDate.value === ''){
+            $("#fromdatepanel").removeClass("has-error");
+            $("#todatepanel").removeClass("has-error");
+            $("#btnSearch").removeClass("disabled");
+        }else if(inputFromDate.value === '' || InputToDate.value === ''){        
+            $("#fromdatepanel").removeClass("has-success");
+            $("#todatepanel").removeClass("has-success");
+            $("#fromdatepanel").addClass("has-error");
+            $("#todatepanel").addClass("has-error");
+            $("#btnSearch").addClass("disabled");
+        } else {
+            $("#fromdatepanel").removeClass("has-error");
+            $("#todatepanel").removeClass("has-error");
+            $("#duefromdatepanel").removeClass("has-error");
+            $("#duetodatepanel").removeClass("has-error");
+            $("#fromdatepanel").addClass("has-success");
+            $("#todatepanel").addClass("has-success");
+            $("#btnSearch").removeClass("disabled");
+            checkDateValue("from","");
+        }
+    }
+    
+    function checkToDateField(){
+        var InputToDate = document.getElementById("toDate");
+        var inputFromDate = document.getElementById("fromDate");
+        if(InputToDate.value === '' && inputFromDate.value === ''){
+            $("#fromdatepanel").removeClass("has-error");
+            $("#todatepanel").removeClass("has-error");
+            $("#btnSearch").removeClass("disabled");
+        }else if(inputFromDate.value === '' || InputToDate.value === ''){ 
+            $("#fromdatepanel").removeClass("has-success");
+            $("#todatepanel").removeClass("has-success");
+            $("#fromdatepanel").addClass("has-error");
+            $("#todatepanel").addClass("has-error");
+            $("#btnSearch").addClass("disabled");
+        }else{
+            $("#fromdatepanel").removeClass("has-error");
+            $("#todatepanel").removeClass("has-error");
+            $("#duefromdatepanel").removeClass("has-error");
+            $("#duetodatepanel").removeClass("has-error");
+            $("#fromdatepanel").addClass("has-success");
+            $("#todatepanel").addClass("has-success");
+            $("#btnSearch").removeClass("disabled");
+            checkDateValue("to","");
+        }       
+    }
+    
+    function checkDueDateFromField(){
+        var dueToDate = document.getElementById("dueDateTo");
+        var dueToFrom = document.getElementById("dueDateFrom");
+        if(dueToFrom.value === '' && dueToDate.value === ''){
+            $("#duefromdatepanel").removeClass("has-error");
+            $("#duetodatepanel").removeClass("has-error");
+            $("#btnSearch").removeClass("disabled");
+        }else if(dueToFrom.value === '' || dueToDate.value === ''){        
+            $("#duefromdatepanel").removeClass("has-success");
+            $("#duetodatepanel").removeClass("has-success");  
+            $("#duefromdatepanel").addClass("has-error");
+            $("#duetodatepanel").addClass("has-error");  
+            $("#btnSearch").addClass("disabled");
+        } else {
+            $("#fromdatepanel").removeClass("has-error");
+            $("#todatepanel").removeClass("has-error");
+            $("#duefromdatepanel").removeClass("has-error");
+            $("#duetodatepanel").removeClass("has-error");
+            $("#duefromdatepanel").addClass("has-success");
+            $("#duetodatepanel").addClass("has-success");
+            $("#btnSearch").removeClass("disabled");
+            checkDateValue("duefrom","");
+        }    
+    }
+    
+    function checkDueDateToField(){
+        var dueToDate = document.getElementById("dueDateTo");
+        var dueToFrom = document.getElementById("dueDateFrom");
+        if(dueToFrom.value === '' && dueToDate.value === ''){
+            $("#duefromdatepanel").removeClass("has-error");
+            $("#duetodatepanel").removeClass("has-error");
+            $("#btnSearch").removeClass("disabled");
+        }else if(dueToFrom.value === '' || dueToDate.value === ''){ 
+            $("#duefromdatepanel").removeClass("has-success");
+            $("#duetodatepanel").removeClass("has-success");  
+            $("#duefromdatepanel").addClass("has-error");
+            $("#duetodatepanel").addClass("has-error"); 
+            $("#btnSearch").addClass("disabled");
+        }else{
+            $("#fromdatepanel").removeClass("has-error");
+            $("#todatepanel").removeClass("has-error");
+            $("#duefromdatepanel").removeClass("has-error");
+            $("#duetodatepanel").removeClass("has-error");
+            $("#duefromdatepanel").addClass("has-success");
+            $("#duetodatepanel").addClass("has-success");
+            $("#btnSearch").removeClass("disabled");
+            checkDateValue("dueto","");
+        }       
+    }
+    
+    function checkDateValue(date){
+        var inputFromDate = "";
+        var InputToDate = "";
+        if((date === 'from') || (date === 'to')){
+            inputFromDate = document.getElementById("fromDate");
+            InputToDate = document.getElementById("toDate");
+        } else {
+            inputFromDate = document.getElementById("dueDateFrom");
+            InputToDate = document.getElementById("dueDateTo");
+        }
+        
+        if((inputFromDate.value !== '') && (InputToDate.value !== '')){
+            var fromDate = (convertFormatDate(inputFromDate.value)).split('-');
+            var toDate = (convertFormatDate(InputToDate.value)).split('-');
+            if((parseInt(fromDate[0])) > (parseInt(toDate[0]))){
+                validateDate(date,"over");
+            }
+            if(((parseInt(fromDate[0])) >= (parseInt(toDate[0]))) && ((parseInt(fromDate[1])) > (parseInt(toDate[1])))){
+                validateDate(date,"over");
+            }
+            if(((parseInt(fromDate[0])) >= (parseInt(toDate[0]))) && ((parseInt(fromDate[1])) >= (parseInt(toDate[1]))) && (parseInt(fromDate[2])) > (parseInt(toDate[2]))){
+                validateDate(date,"over");
+            }          
+        }
+    }
+    
+    function validateDate(date,option){
+        if(option === 'over'){
+            if(date === 'from'){
+                $("#fromdatepanel").removeClass("has-success");
+                $("#fromdatepanel").addClass("has-error");                                 
+            }
+            if(date === 'to'){
+                $("#todatepanel").removeClass("has-success");
+                $("#todatepanel").addClass("has-error");
+            }
+            if(date === 'duefrom'){
+                $("#duefromdatepanel").removeClass("has-success");
+                $("#duefromdatepanel").addClass("has-error");
+            }
+            if(date === 'dueto'){
+                $("#duetodatepanel").removeClass("has-success"); 
+                $("#duetodatepanel").addClass("has-error");
+            }       
+            $("#btnSearch").addClass("disabled");
+        } else {
+            $("#fromdatepanel").removeClass("has-success");
+            $("#todatepanel").removeClass("has-success");
+            $("#duefromdatepanel").removeClass("has-success");
+            $("#duetodatepanel").removeClass("has-success"); 
+            $("#fromdatepanel").addClass("has-error");
+            $("#todatepanel").addClass("has-error");
+//            $("#duefromdatepanel").addClass("has-error");
+//            $("#duetodatepanel").addClass("has-error");
+            $("#btnSearch").addClass("disabled");
+        }
+    }
+    
+    function searchPaymentOutbound(){
+        var fromDate = document.getElementById('fromDate').value;
+        var toDate = document.getElementById('toDate').value;
+        var dueDateFrom = document.getElementById('dueDateFrom').value;
+        var dueDateTo = document.getElementById('dueDateTo').value;
+        var payno = document.getElementById('payNo').value;
+        if(payno !== ''){
+                $("#searchPaymentOutboundForm").submit();
+        }else{
+            if((fromDate !== '') && (toDate !== '')){
+                $("#searchPaymentOutboundForm").submit();
+            }else{
+                validateDate();  
+            }
+        }
+    }
+
+
+
 </script>
