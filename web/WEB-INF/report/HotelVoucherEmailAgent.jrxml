@@ -502,7 +502,7 @@ FROM
 				<textFieldExpression><![CDATA[$F{room4}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="85" y="306" width="228" height="20" uuid="0fae2386-1d0c-49d0-b506-d7a45c4b7a67"/>
+				<reportElement x="85" y="306" width="270" height="20" uuid="0fae2386-1d0c-49d0-b506-d7a45c4b7a67"/>
 				<textElement>
 					<font fontName="Tahoma" size="10" pdfFontName="resource/fonts/Tahoma.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
