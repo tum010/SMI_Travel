@@ -116,6 +116,7 @@ public class HotelBookingImpl implements HotelBookingDao {
             hotelBooking.setDeadline(hotel.getDeadline());
             hotelBooking.setCurCost(hotel.getCurCost());
             hotelBooking.setCurAmount(hotel.getCurAmount());
+            hotelBooking.setSupplier(hotel.getSupplier());
             session.update(hotelBooking);
 
             for (HotelPassenger hotelPassenger : new ArrayList<HotelPassenger>(hotel.getHotelPassengers())) {

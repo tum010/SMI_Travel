@@ -306,6 +306,14 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row form-group">
+                            <div class="col-sm-12" style="margin-top: -10px;">
+                                <label class="col-sm-1 control-label text-right"  style="margin-left: 45px;">OK By</label>
+                                <div class="col-sm-4" style="width: 56.5%;">
+                                    <input id="reconfirm" name="reconfirm" class="form-control" value="${hotelBooking.reconfirm}" maxlength="100">
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                 </div>

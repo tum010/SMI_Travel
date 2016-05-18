@@ -66,7 +66,7 @@ public class HotelVoucherImpl   implements  HotelVoucherDao{
 
         for (Object[] B : QueryHotelList) {
             voucher.setRefno(util.ConvertString(B[0]));
-            voucher.setCode(util.ConvertString(B[1]));
+            voucher.setCode(B[1] == null ? "" : util.ConvertString(B[1]));
             voucher.setName(util.ConvertString(B[2]));
             voucher.setAddress(util.ConvertString(B[3]));
             voucher.setTel(util.ConvertString(B[4]));

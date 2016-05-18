@@ -384,7 +384,7 @@ public class HotelDetailController extends SMITravelController {
             hotelRequest.setCost(costDecimal);
             hotelRequest.setPrice(priceDecimal);
 
-            if (StringUtils.isNotEmpty(hotelRequest.getCategory())) {
+            if (StringUtils.isNotEmpty(hotelRequest.getCategory()) || StringUtils.isNotEmpty(hotelRequest.getDescription())) {
                 if (hotelRequest.getId() == null) {
                     hotelBooking.getHotelRequests().add(hotelRequest);
                     hotelRequest.setHotelBooking(hotelBooking);
