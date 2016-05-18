@@ -36,6 +36,7 @@ public class SendEmailController extends SMITravelController {
     private static final Logger LOG = Logger.getLogger(SendEmailController.class.getName());
     private static final String InvoiceReport = "Invoice";
     private static final String ReceiptEmail = "ReceiptEmail";
+    private static final String ReceiptTempReport = "ReceiptTempReport";
     private static final String TaxInvoiceEmail = "TaxInvoiceEmail";
     private static final String CreditNote = "CreditNote";
     private ModelAndView ModelMail = new ModelAndView("SendMail");
@@ -107,9 +108,20 @@ public class SendEmailController extends SMITravelController {
                 }
             }
             if (ReceiptEmail.equalsIgnoreCase(name)) {
-                data = reportservice.getReceiptEmail(reportid,option,sign,user.getName(),isTemp);
+                data = reportservice.getReceiptEmail(reportid,option,sign,user.getName());
                 JRDataSource dataSource = new JRBeanCollectionDataSource(data);
                 jasperFileName = "ReceiptEmail.jasper";
+                pdfFileName = "receipt.pdf";
+                pathAttachfile = path[0] + "\\" + username;
+                System.out.println("path : " + path[0] + username);
+                if (checkDirectory(path[0] + username)) {
+                    result = reportservice.printreport(jasperFileName, username + "\\" + pdfFileName, dataSource);
+                }
+            }
+            if (ReceiptTempReport.equalsIgnoreCase(name)) {
+                data = reportservice.getReceiptTemp(reportid,option,sign,user.getName());
+                JRDataSource dataSource = new JRBeanCollectionDataSource(data);
+                jasperFileName = "ReceiptTempReport.jasper";
                 pdfFileName = "receipt.pdf";
                 pathAttachfile = path[0] + "\\" + username;
                 System.out.println("path : " + path[0] + username);

@@ -73,6 +73,7 @@ public class ReportController extends SMITravelController {
     private static final String OtherVouncherEmail = "otherVouncherEmail";
     private static final String ReceiptEmail = "ReceiptEmail";
     private static final String ReceiptReport = "ReceiptReport";
+    private static final String ReceiptTempReport = "ReceiptTempReport";
     private static final String ReceiptSummaryReport = "ReceiptSummaryReport";
     private static final String ReceiveList = "ReceiveList";
     private static final String InvoiceEmail = "InvoiceEmail";
@@ -275,11 +276,11 @@ public class ReportController extends SMITravelController {
             String nameSurname = (!"".equalsIgnoreCase(user.getName()) && user.getName() != null ? user.getName() : "");
             data = reportservice.getDaytourOperationOtherReport(otherId, passengerId, refNo, status, nameSurname);
         } else if (ReceiptEmail.equalsIgnoreCase(name)) {
-            String isTemp = request.getParameter("isTemp");
-            data = reportservice.getReceiptEmail(receiveId,option,sign,user.getRole().getName(),isTemp);
+            data = reportservice.getReceiptEmail(receiveId,option,sign,user.getRole().getName());
         } else if (ReceiptReport.equalsIgnoreCase(name)) {
-            String isTemp = request.getParameter("isTemp");
-            data = reportservice.getReceipt(receiveId,option,sign,user.getRole().getName(),isTemp);
+            data = reportservice.getReceipt(receiveId,option,sign,user.getRole().getName());
+        } else if (ReceiptTempReport.equalsIgnoreCase(name)) {
+            data = reportservice.getReceiptTemp(receiveId,option,sign,user.getRole().getName());
         } else if (ReceiptSummaryReport.equalsIgnoreCase(name)) {
             data = reportservice.getReceiptSummary(dateFrom,dateTo,departmentRec,recType,status,user.getUsername()+"-"+user.getRole().getName());
         } else if (ReceiveList.equalsIgnoreCase(name)) {

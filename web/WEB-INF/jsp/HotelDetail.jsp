@@ -593,7 +593,7 @@
                             <td class="hotel-id hidden">${hotel.id}</td>
                             <td class="hotel-code">${hotel.code}</td>
                             <td class="hotel-name">${hotel.name}</td>
-                            <td class="hotel-country">${hotel.MCountry.name}</td>
+                            <td class="hotel-country"><c:out value="${fn:toUpperCase(hotel.MCountry.name)}"/></td>
                         </tr>
                         <script>
                             hotel.push({id: "${hotel.id}", code: "${hotel.code}", name: "${hotel.name}", country: "${hotel.MCountry.name}"});

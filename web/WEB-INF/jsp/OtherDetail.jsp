@@ -634,7 +634,8 @@
                             "bPaginate": true,
                             "bInfo": false,
                             "bLengthChange": false,
-                            "iDisplayLength": 10
+                            "iDisplayLength": 10,
+                            "aaSorting": [[ 1, "asc" ]]
                         });
                         
 //                        var otdate = $('#otherdate').val();
@@ -769,7 +770,8 @@
                             "bPaginate": true,
                             "bInfo": false,
                             "bLengthChange": false,
-                            "iDisplayLength": 10
+                            "iDisplayLength": 10,
+                            "aaSorting": [[ 1, "asc" ]]
                         });
                        
                         $('#AgentTable tbody').on('click', 'tr', function() {

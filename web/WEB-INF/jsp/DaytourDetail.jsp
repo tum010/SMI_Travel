@@ -541,7 +541,8 @@
                         "bPaginate": true,
                         "bInfo": false,
                         "bLengthChange": false,
-                        "iDisplayLength": 10
+                        "iDisplayLength": 10,
+                        "aaSorting": [[ 1, "asc" ]]
                     });
                     $('#tourTable tbody').on('click', 'tr', function () {
                         if ($(this).hasClass('row_selected')) {

@@ -112,7 +112,8 @@
                     "bPaginate": true,
                     "bInfo": false,
                     "bLengthChange": false,
-                    "iDisplayLength": 10
+                    "iDisplayLength": 10,
+                    "aaSorting": [[ 1, "asc" ]]
                 });
 
 /*
@@ -135,7 +136,8 @@
                     "bPaginate": true,
                     "bInfo": false,
                     "bLengthChange": false,
-                    "iDisplayLength": 10
+                    "iDisplayLength": 10,
+                    "aaSorting": [[ 1, "asc" ]]
                 });
 /*
                 $('#AgentTable tbody').on('mouseover', 'tr', function() {

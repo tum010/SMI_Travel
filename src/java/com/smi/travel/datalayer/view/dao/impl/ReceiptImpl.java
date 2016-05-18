@@ -28,7 +28,7 @@ public class ReceiptImpl implements ReceiptDao{
     private UtilityFunction utilityFunction;
     
     @Override
-    public List getReceipt(String receiptId,int option,String sign,String printby,String isTemp) {
+    public List getReceipt(String receiptId,int option,String sign,String printby) {
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
         List<Object[]> QueryList =  session.createSQLQuery("SELECT * FROM `receipt_view` where `receipt_view`.id =  "+receiptId)
@@ -74,7 +74,6 @@ public class ReceiptImpl implements ReceiptDao{
         ReceiptView receiptViewTemp  = new ReceiptView();
         for(Object[] T : QueryList){
             ReceiptView receiptView = new ReceiptView();
-            receiptView.setIsTemp(isTemp);
             receiptView.setId((("null".equals(String.valueOf(T[0])) ? "" : String.valueOf(T[0]))));
             receiptView.setRecto((("null".equals(String.valueOf(T[1])) ? "" : String.valueOf(T[1]))));
             receiptView.setRecadd((("null".equals(String.valueOf(T[2])) ? "" : String.valueOf(T[2]))));
@@ -382,7 +381,168 @@ public class ReceiptImpl implements ReceiptDao{
         return result;
     }
     
-    
+    @Override
+    public List getReceiptTemp(String receiptId, int option, String sign, String printby) {
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();
+        List<Object[]> QueryList =  session.createSQLQuery("SELECT * FROM `receipt_view` where `receipt_view`.id =  "+receiptId)
+                .addScalar("id",Hibernate.STRING)
+                .addScalar("recto",Hibernate.STRING)
+                .addScalar("recadd",Hibernate.STRING)
+                .addScalar("tel",Hibernate.STRING)
+                .addScalar("fax",Hibernate.STRING)
+                .addScalar("recno",Hibernate.STRING)
+                .addScalar("recdate",Hibernate.STRING)
+                .addScalar("paidby",Hibernate.STRING)
+                .addScalar("description",Hibernate.STRING)
+                .addScalar("non_description",Hibernate.STRING)
+                .addScalar("invdesc",Hibernate.STRING)
+                .addScalar("amount",Hibernate.STRING)
+                .addScalar("totalamount",Hibernate.STRING)
+                .addScalar("cash",Hibernate.STRING)
+                .addScalar("cashflag",Hibernate.STRING)
+                .addScalar("transfer",Hibernate.STRING)
+                .addScalar("transferflag",Hibernate.STRING)
+                .addScalar("tax",Hibernate.STRING)
+                .addScalar("taxflag",Hibernate.STRING)
+                .addScalar("chqbank",Hibernate.STRING)
+                .addScalar("chqno",Hibernate.STRING)
+                .addScalar("chqdate",Hibernate.STRING)
+                .addScalar("chqvalue",Hibernate.STRING)
+                .addScalar("chqflag",Hibernate.STRING)
+                .addScalar("credit",Hibernate.STRING)
+                .addScalar("creditflag",Hibernate.STRING)
+                .addScalar("chqbank2",Hibernate.STRING)
+                .addScalar("chqno2",Hibernate.STRING)
+                .addScalar("chqdate2",Hibernate.STRING)
+                .addScalar("chqvalue2",Hibernate.STRING)
+                .addScalar("chqflag2",Hibernate.STRING)
+                .addScalar("currency",Hibernate.STRING)
+                .addScalar("tax_no",Hibernate.STRING)
+                .addScalar("branch",Hibernate.STRING)
+                .list();
+        
+        List data = new ArrayList();
+        String invdescTemp = "";
+        SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+        ReceiptView receiptViewTemp  = new ReceiptView();
+        for(Object[] T : QueryList){
+            ReceiptView receiptView = new ReceiptView();
+            receiptView.setId((("null".equals(String.valueOf(T[0])) ? "" : String.valueOf(T[0]))));
+            receiptView.setRecto((("null".equals(String.valueOf(T[1])) ? "" : String.valueOf(T[1]))));
+            receiptView.setRecadd((("null".equals(String.valueOf(T[2])) ? "" : String.valueOf(T[2]))));
+            receiptView.setTel((("null".equals(String.valueOf(T[3])) ? "" : String.valueOf(T[3]))));
+            receiptView.setFax((("null".equals(String.valueOf(T[4])) ? "" : String.valueOf(T[4]))));
+            receiptView.setRecno((("null".equals(String.valueOf(T[5])) ? "" : String.valueOf(T[5]))));
+            receiptView.setRecdate((("null".equals(String.valueOf(T[6])) ? "" : String.valueOf(sf.format(util.convertStringToDate(String.valueOf(T[6])))))));
+            receiptView.setPaidby((("null".equals(String.valueOf(T[7]))? "" : String.valueOf(T[7]))));
+            receiptView.setDescription((("null".equals(String.valueOf(T[8])) ? "" : String.valueOf(T[8]))));
+            receiptView.setNondescription((("null".equals(String.valueOf(T[9])) ? "" : String.valueOf(T[9]))));
+            receiptView.setInvdesc((("null".equals(String.valueOf(T[10])) ? "" : String.valueOf(T[10]))));
+            receiptView.setAmount((("0.00".equals(String.valueOf(T[11])) ? "" : String.valueOf(T[11]))));
+            receiptView.setTotalamount((("0.00".equals(String.valueOf(T[12]))? "" : String.valueOf(T[12]))));
+            receiptView.setCash((("0.00".equals(String.valueOf(T[13])) ? "" : String.valueOf(T[13]))));
+            receiptView.setCashflag((("0.00".equals(String.valueOf(T[14])) ? "" : String.valueOf(T[14]))));
+            receiptView.setTransfer((("0.00".equals(String.valueOf(T[15]))? "" : String.valueOf(T[15]))));
+            receiptView.setTransferflag((("0.00".equals(String.valueOf(T[16])) ? "" : String.valueOf(T[16]))));
+            receiptView.setTax((("0.00".equals(String.valueOf(T[17])) ? "" : String.valueOf(T[17]))));
+            receiptView.setTaxflag((("0.00".equals(String.valueOf(T[18])) ? "" : String.valueOf(T[18]))));
+            receiptView.setChqbank((("null".equals(String.valueOf(T[19])) ? "" : String.valueOf(T[19]))));
+            receiptView.setChqno((("null".equals(String.valueOf(T[20])) ? "" : String.valueOf(T[20]))));
+            receiptView.setChqdate((("null".equals(String.valueOf(T[21])) ? "" : String.valueOf(sf.format(util.convertStringToDate(String.valueOf(T[21])))))));
+            receiptView.setChqvalue((("0.00".equals(String.valueOf(T[22])) ? "" : String.valueOf(T[22]))));
+            receiptView.setChqbankflag((("0.00".equals(String.valueOf(T[23]))? "" : String.valueOf(T[23]))));
+            receiptView.setCredit((("null".equals(String.valueOf(T[24])) ? "" : String.valueOf(T[24]))));
+            receiptView.setCreditflag((("0.00".equals(String.valueOf(T[25])) ? "" : String.valueOf(T[25]))));
+            receiptView.setChqbank2((("null".equals(String.valueOf(T[26])) ? "" : String.valueOf(T[26]))));
+            receiptView.setChqno2((("null".equals(String.valueOf(T[27])) ? "" : String.valueOf(T[27]))));
+            receiptView.setChqdate2((("null".equals(String.valueOf(T[28])) ? "" : String.valueOf(sf.format(util.convertStringToDate(String.valueOf(T[28])))))));
+            receiptView.setChqvalue2((("0.00".equals(String.valueOf(T[29])) ? "" : String.valueOf(T[29]))));
+            receiptView.setChqbankflag2((("0.00".equals(String.valueOf(T[30]))? "" : String.valueOf(T[30]))));
+            receiptView.setTaxidno(T[32] != null ? String.valueOf(T[32]) : "");
+            receiptView.setBranch(T[33] != null ? String.valueOf(T[33]) : "");
+            if(sign != null){
+                if("".equals(sign)){
+                    receiptView.setSign("nosign");
+                    receiptView.setSignname(printby);
+                }else{
+                    receiptView.setSign(sign);
+                    String querySystemUser = "from SystemUser s where s.name like '%"+sign+"%'";
+                    List<SystemUser> systemUser = session.createQuery(querySystemUser).list();
+                    if(!systemUser.isEmpty()) {
+                        receiptView.setSignname(systemUser.get(0).getName());
+                    }        
+                    
+                }
+            }
+            String curtemp = "null".equals(String.valueOf(T[31])) ? "" : String.valueOf(T[31]);
+            System.err.println("receiptView cash " +receiptView.getCash());
+//            String total = (receiptView.getTotalamount()).replaceAll("\\.", ",");
+//            String[] totals = total.split(",");
+//            BigDecimal totalWord = new BigDecimal(BigInteger.ZERO);
+//            totalWord = new BigDecimal(String.valueOf(totals[0]));
+            String string = String.valueOf(receiptView.getTotalamount());
+            String[] parts = string.split("\\.");
+            String part1 = parts[0]; // number
+            String part2 = parts[1]; // point
+            String textmoney = (utilityFunction.convert(Integer.parseInt(part1)));
+            String textmoneypoint = (utilityFunction.changPoint(String.valueOf(part2)));
+            String currency = "";
+            if("JPY".equalsIgnoreCase(curtemp)){
+                currency = " YEN";
+            }else if("THB".equalsIgnoreCase(curtemp)){
+                currency = " BAHT";
+            }else if("USD".equalsIgnoreCase(curtemp)){
+                currency = " DOLLAR";
+            }
+            String totalWord = textmoney + currency + textmoneypoint;
+            if("".equalsIgnoreCase(textmoneypoint.trim())){
+                totalWord = textmoney +currency+" ONLY";
+            }
+            System.out.println(" totalWord " + totalWord);
+            receiptView.setTextmoney(totalWord.substring(0,1).toUpperCase() + totalWord.substring(1));
+//            receiptView.setTextmoney(textmoney.substring(0,1).toUpperCase() + textmoney.substring(1));
+
+            if(option == 1){
+                receiptView.setDescription(receiptView.getNondescription());
+                System.out.println(" receiptView.getDes " +receiptView.getDescription());
+                data.add(receiptView);
+            }else if(option == 2 ){
+                receiptView.setInvdesc("");
+                System.out.println(" receiptView.getDes " +receiptView.getDescription());
+                data.add(receiptView);
+            }
+            else if(option == 3 ){
+                receiptView.setAmount(receiptView.getTotalamount());
+                invdescTemp += receiptView.getInvdesc() + ",";
+                receiptViewTemp = receiptView;
+            }
+            
+           
+        }
+        if(option == 3){
+            System.out.println(" invdesc " + invdescTemp);
+            String[] invdescs = invdescTemp.split(",");
+            String invdesc = invdescTemp;
+            for (int j=0;j<invdescs.length;j++){
+                for (int k=j+1;k<invdescs.length;k++){
+                    if (k!=j && invdescs[k].equals(invdescs[j])){
+                        invdesc = invdescs[k];
+                    }
+                }
+            }
+            receiptViewTemp.setDescription("TOUR" + " " + invdesc);
+            receiptViewTemp.setInvdesc("");
+            data.add(receiptViewTemp);
+        }
+        
+        if(data.isEmpty()) {
+            return null;
+        }
+        
+        session.close();
+        return data;
+    }
     
     public SessionFactory getSessionFactory() {
         return sessionFactory;
@@ -399,6 +559,5 @@ public class ReceiptImpl implements ReceiptDao{
     public void setUtilityFunction(UtilityFunction utilityFunction) {
         this.utilityFunction = utilityFunction;
     }
-
 
 }
