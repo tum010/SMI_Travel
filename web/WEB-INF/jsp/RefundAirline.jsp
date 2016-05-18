@@ -556,11 +556,11 @@
         
         if(statusrefund === '0') {
             if(ticNo === '217'){
-                document.getElementById("refundAgentId").value = '1010593';
+                document.getElementById("refundAgentId").value = '1013389';
                 document.getElementById("refundAgentCode").value = '200076';
                 document.getElementById("refundAgentName").value = 'บริษัท การบินไทย จำกัด ( มหาชน) บมจ. 422 (00003)';
             }else{
-                document.getElementById("refundAgentId").value = '1011133';
+                document.getElementById("refundAgentId").value = '1013623';
                 document.getElementById("refundAgentCode").value = 'I0037';
                 document.getElementById("refundAgentName").value = 'IATA';
             }
