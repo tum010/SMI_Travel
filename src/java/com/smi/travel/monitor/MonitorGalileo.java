@@ -342,16 +342,41 @@ public class MonitorGalileo extends MonitorScheduler {
             System.out.println("line-> " + line);
             String passengerName = getField("passenger name", line).trim();
             String passengerType = getField("passenger type", line);
+            System.out.println("Passenger Name-> " + passengerName);
+            System.out.println("Passenger Type-> " + passengerType);
             if (StringUtils.isEmpty(passengerType)
                     || (!("ADT".equalsIgnoreCase(passengerType))
                     && !("CHD".equalsIgnoreCase(passengerType))
-                    && !("INF".equalsIgnoreCase(passengerType)))) {
+                    && !("INF".equalsIgnoreCase(passengerType))
+                    && (passengerType.indexOf("A") == -1)
+                    && (passengerType.indexOf("C") == -1)
+                    && (passengerType.indexOf("I") == -1))) {
                 passengerType = "NON";
+            }
+            String[][] passengerTypeList = {{"A","ADT"},{"C","CHD"},{"I","INF"}};
+            for(int i = 0; i < passengerTypeList.length; i++){
+                if(passengerType.indexOf(passengerTypeList[i][0]) != -1){
+                    passengerType = passengerTypeList[i][1];
+                    i = passengerTypeList.length;
+                }
             }
             String[] splitName = passengerName.split("/");
             String lastName = splitName[0];
             String firstName = splitName[1].substring(0, splitName[1].length() - 2);
-            String initial = splitName[1].substring(splitName[1].length() - 2);
+            
+            String[] initialList = {"MR","MS","MISS","MRS"};
+            String initialTemp = splitName[1].substring(splitName[1].length() - 4);
+            String initial = "";
+            for(int i = 0; i < initialList.length; i++){
+                if(initialTemp.indexOf(initialList[i]) != -1){
+                    initial = initialList[i];
+                    i = initialList.length;
+                }
+            }
+//            String initial = splitName[1].substring(splitName[1].length() - 2);
+            System.out.println("Last Name-> " + lastName);
+            System.out.println("First Name-> " + firstName);
+            System.out.println("Initial-> " + initial);
 
             String ticketSerial2 = getField("ticket serial2", line);
             String ticketSerial3 = getField("ticket serial3", line);
@@ -371,7 +396,7 @@ public class MonitorGalileo extends MonitorScheduler {
             bp = new BookingPassenger();
             bp.setFirstName(firstName);
             bp.setLastName(lastName);
-            bp.setInitialName(initial);
+            bp.setInitialName(initial);          
             bp.setPassengerType(passengerType);
             bp.setTicketType(ticketType);
             bp.setTicketnoS1(ticketNoS1);
@@ -391,15 +416,15 @@ public class MonitorGalileo extends MonitorScheduler {
                 costRefIndex++;
                 //Update cost,price,tax according to passengertype
                 BookingFlight bf = this.getMostEarlyFlight(bAir.getBookingPnr());
-                if ("ADT".equalsIgnoreCase(passengerType)) {
+                if ("ADT".equalsIgnoreCase(passengerType) || (passengerType.indexOf("A") != -1)) {
                     bf.setAdCost(cost);
                     bf.setAdPrice(price);
                     bf.setAdTax(tax);
-                } else if ("CHD".equalsIgnoreCase(passengerType)) {
+                } else if ("CHD".equalsIgnoreCase(passengerType) || (passengerType.indexOf("C") != -1)) {
                     bf.setChCost(cost);
                     bf.setChPrice(price);
                     bf.setChTax(tax);
-                } else if ("INF".equalsIgnoreCase(passengerType)) {
+                } else if ("INF".equalsIgnoreCase(passengerType) || (passengerType.indexOf("I") != -1)) {
                     bf.setInCost(cost);
                     bf.setInPrice(price);
                     bf.setInTax(tax);
