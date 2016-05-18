@@ -551,8 +551,11 @@ public class BillableController extends SMITravelController {
                     Double d = exrate.doubleValue();
                     BigDecimal bds = new BigDecimal(d).setScale(4, RoundingMode.HALF_EVEN);
                     d = bds.doubleValue();
-                    bd.setExRate(bds);
+                    bd.setExRate(exrate);
                     System.out.println(" bd.getExRate() " + bd.getExRate());
+                
+                }else{
+                    bd.setExRate(null);
                 }
                 bd.setBillDate(billDate);
                 return;
@@ -665,9 +668,8 @@ public class BillableController extends SMITravelController {
             if(billableDescTemp.getIsBill() == 0 && !"".equalsIgnoreCase(billableDescTemp.getCurrency())){
                 List<MExchangeRate> listMExchange = mExchangeRateService.searchExchangeRate(todayDate, todayDate, billableDescTemp.getCurrency());
                 billableDescTemp.setExRate(listMExchange != null && listMExchange.size() > 0 ? listMExchange.get(0).getExrate() : BigDecimal.ZERO);
-            } else {
-                billableDescTemp.setExRate(BigDecimal.ZERO);
-            }           
+            
+            }       
         }
 
     }
