@@ -142,6 +142,7 @@ public class InvoiceSummaryImpl implements InvoiceSummaryDao{
                 .addScalar("to", Hibernate.STRING)
                 .addScalar("profit", Hibernate.DOUBLE)
                 .addScalar("amountlocal", Hibernate.DOUBLE)
+                .addScalar("cost", Hibernate.DOUBLE)
                 .list();
         int count = 1;
         SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
@@ -202,7 +203,7 @@ public class InvoiceSummaryImpl implements InvoiceSummaryDao{
             if(!"".equals(fromData) && fromData != null){
                 String dayy[] = fromData.split("-");
 //                System.out.println("Date From : " + fromData);
-                String date = ""+dayy[2]+"-"+dayy[1]+"-"+dayy[0];
+                String date = ""+dayy[0]+"-"+dayy[1]+"-"+dayy[2];
                 try {
 
                     Date dateBefore = df.parse(date);
@@ -214,7 +215,7 @@ public class InvoiceSummaryImpl implements InvoiceSummaryDao{
             if(!"".equals(toDate) && toDate != null){
                 String dayy[] = toDate.split("-");
 //                System.out.println("Date From : " + toDate);
-                String date = ""+dayy[2]+"-"+dayy[1]+"-"+dayy[0];
+                String date = ""+dayy[0]+"-"+dayy[1]+"-"+dayy[2];
                 try {
 
                     Date dateBefore = df.parse(date);

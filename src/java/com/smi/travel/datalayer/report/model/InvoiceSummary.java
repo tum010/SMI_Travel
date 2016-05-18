@@ -35,6 +35,7 @@ public class InvoiceSummary {
     private String systemdate;
     private Double profit;
     private Double amountlocal;
+    private Double costlocal;
 
     public void setHeadertype(String headertype) {
         this.headertype = headertype;
@@ -270,6 +271,14 @@ public class InvoiceSummary {
 
     public void setAmountlocal(Double amountlocal) {
         this.amountlocal = amountlocal;
+    }
+
+    public Double getCostlocal() {
+        return costlocal;
+    }
+
+    public void setCostlocal(Double costlocal) {
+        this.costlocal = costlocal;
     }
     
     
