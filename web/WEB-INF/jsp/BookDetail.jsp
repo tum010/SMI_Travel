@@ -182,8 +182,7 @@
                                 <div class="col-sm-2" style="margin-left: -7px"> 
                                     <input type="text" class="form-control"  id="firstname" name="firstname" 
                                            value="${detail.customer.firstName}" readonly=""
-                                           data-bv-notempty="true"
-                                           data-bv-notempty-message="The name is required">
+                                          >
                                 </div>
                                 <div class=""> 
                                 </div>
