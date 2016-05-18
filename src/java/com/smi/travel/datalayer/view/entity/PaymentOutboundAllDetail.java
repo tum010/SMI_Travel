@@ -67,7 +67,10 @@ public class PaymentOutboundAllDetail {
     private String qtyroom;
     private String qtynight;
     private String qtyttl;
-
+    
+    private String beforevat;
+    private String payinvdate;
+    
     public String getSystemdate() {
         return systemdate;
     }
@@ -515,6 +518,23 @@ public class PaymentOutboundAllDetail {
     public void setQtyttl(String qtyttl) {
         this.qtyttl = qtyttl;
     }
-    
+
+    public String getBeforevat() {
+        return beforevat;
+    }
+
+    public void setBeforevat(String beforevat) {
+        this.beforevat = beforevat;
+    }
+
+    public String getPayinvdate() {
+        return payinvdate;
+    }
+
+    public void setPayinvdate(String payinvdate) {
+        this.payinvdate = payinvdate;
+    }
+
+
   
 }
