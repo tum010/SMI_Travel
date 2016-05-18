@@ -1808,11 +1808,11 @@ public class OutboundProductSummary extends AbstractExcelView  {
             cell083.setCellStyle(styleHeader);
             sheet.autoSizeColumn(32);
         HSSFCell cell084 = row6.createCell(37);
-            cell084.setCellValue("PAY");
+            cell084.setCellValue("REAL");
             cell084.setCellStyle(styleHeader);
             sheet.autoSizeColumn(37);
         HSSFCell cell85 = row6.createCell(38);
-            cell85.setCellValue("REAL");
+            cell85.setCellValue("PAY");
             cell85.setCellStyle(styleHeader);
             sheet.autoSizeColumn(38);
         HSSFCell cell86 = row6.createCell(39);
@@ -1932,7 +1932,7 @@ public class OutboundProductSummary extends AbstractExcelView  {
                 celldata29.setCellValue("".equalsIgnoreCase(String.valueOf(data.getAmount())) ? 0 : (new BigDecimal(data.getAmount())).doubleValue());
                 celldata29.setCellStyle(styleAlignRightBorderAllNumber);
             HSSFCell celldata30 = row.createCell(30);
-                celldata30.setCellValue(String.valueOf(data.getCurprice()));
+                celldata30.setCellValue(String.valueOf(data.getPaycur()));
                 celldata30.setCellStyle(styleDetailTableCenter);    
             HSSFCell celldata31 = row.createCell(31);
                 celldata31.setCellValue("".equalsIgnoreCase(String.valueOf(data.getRealrate())) ? 0 : (new BigDecimal(data.getRealrate())).doubleValue());
@@ -1953,10 +1953,10 @@ public class OutboundProductSummary extends AbstractExcelView  {
                 celldata36.setCellValue("".equalsIgnoreCase(String.valueOf(data.getWht())) ? 0 : (new BigDecimal(data.getWht())).doubleValue());
                 celldata36.setCellStyle(styleAlignRightBorderAllNumber); 
             HSSFCell celldata37 = row.createCell(37);
-                celldata37.setCellValue("".equalsIgnoreCase(String.valueOf(data.getGrosspay())) ? 0 : (new BigDecimal(data.getGrosspay())).doubleValue());
+                celldata37.setCellValue("".equalsIgnoreCase(String.valueOf(data.getGrossreal())) ? 0 : (new BigDecimal(data.getGrossreal())).doubleValue());
                 celldata37.setCellStyle(styleAlignRightBorderAllNumber);    
             HSSFCell celldata38 = row.createCell(38);
-                celldata38.setCellValue("".equalsIgnoreCase(String.valueOf(data.getGrossreal())) ? 0 : (new BigDecimal(data.getGrossreal())).doubleValue());
+                celldata38.setCellValue("".equalsIgnoreCase(String.valueOf(data.getGrosspay())) ? 0 : (new BigDecimal(data.getGrosspay())).doubleValue());
                 celldata38.setCellStyle(styleAlignRightBorderAllNumber);    
             HSSFCell celldata39 = row.createCell(39);
                 celldata39.setCellValue(String.valueOf(data.getPaycomdate().trim()));
@@ -2027,8 +2027,8 @@ public class OutboundProductSummary extends AbstractExcelView  {
                 String sumLocalP = "SUM(AI" + 10+":AI"+(count + i + 1)+")";
                 String sumVat = "SUM(AJ" + 10+":AJ"+(count + i + 1)+")";
                 String sumWht = "SUM(AK" + 10+":AK"+(count + i + 1)+")";
-                String sumGrossPay = "SUM(AL" + 10+":AL"+(count + i + 1)+")";
-                String sumGrossReal = "SUM(AM" + 10+":AM"+(count + i + 1)+")";
+                String sumGrossReal = "SUM(AL" + 10+":AL"+(count + i + 1)+")";
+                String sumGrossPay = "SUM(AM" + 10+":AM"+(count + i + 1)+")";
                 String sumPaycomCom = "SUM(AQ" + 10+":AQ"+(count + i + 1)+")";
                 String sumProfitBalance = "SUM(AR" + 10+":AR"+(count + i + 1)+")";
                 
@@ -2075,10 +2075,10 @@ public class OutboundProductSummary extends AbstractExcelView  {
                     cell36Sum.setCellFormula(sumWht);
                     cell36Sum.setCellStyle(styleSum);
                 HSSFCell cell37Sum = row.createCell(37);
-                    cell37Sum.setCellFormula(sumGrossPay);
+                    cell37Sum.setCellFormula(sumGrossReal);
                     cell37Sum.setCellStyle(styleSum); 
                 HSSFCell cell38Sum = row.createCell(38);
-                    cell38Sum.setCellFormula(sumGrossReal);
+                    cell38Sum.setCellFormula(sumGrossPay);
                     cell38Sum.setCellStyle(styleSum);    
                 HSSFCell cell42Sum = row.createCell(42);
                     cell42Sum.setCellFormula(sumPaycomCom);
