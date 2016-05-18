@@ -331,7 +331,7 @@
                     <div class="form-group">
                         <label for="Tel" class="col-sm-3 control-label" >Telephone</label>
                         <div class="col-sm-8">   
-                            <input type="text" class="form-control" maxlength="30" id="Tel" name="Tel" data-bv-digits="true"> 
+                            <input type="text" class="form-control" maxlength="30" id="Tel" name="Tel" > 
                         </div>
                     </div>
                     <div class="form-group">
