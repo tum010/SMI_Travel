@@ -75,7 +75,7 @@
                         </div>
                         <div class="col-xs-1"  style="width: 170px">
                             <div class='input-group date'>
-                                <c:set var="refundDate" value="${refundAirline.refundDate}" />
+                                <c:set var="refundDate" value="${requestScope['refundAirlineRefundDate']}" />
                                 <fmt:parseDate value="${refundDate}" var="refundDate" pattern="yyyy-MM-dd" />
                                 <fmt:formatDate value="${refundDate}" var="refundDate" pattern="dd-MM-yyyy" />
                                 <input id="inputRefundDate" name="refundDate"  type="text" 
@@ -147,7 +147,7 @@
                         </div>
                         <div class="col-xs-1"  style="width: 170px">
                             <div class='input-group date'>
-                                <c:set var="receiveDate" value="${refundAirline.receiveDate}" />
+                                <c:set var="receiveDate" value="${requestScope['refundAirlineReceiveDate']}" />
                                 <fmt:parseDate value="${receiveDate}" var="receiveDate" pattern="yyyy-MM-dd" />
                                 <fmt:formatDate value="${receiveDate}" var="receiveDate" pattern="dd-MM-yyyy" />
                                 <input id="inputReceiveDate" name="receiveDate"  type="text" 
