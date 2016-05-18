@@ -366,18 +366,18 @@
                                 <th style="width: 2%">No</th>
                                 <th style="width: 5%">Ref No</th>
                                 <th style="width: 6%">Create Date</th>
-                                <th style="width: 11%">Agent</th>
-                                <th style="width: 11%">Leader</th>
+                                <th style="width: 7%">Agent</th>
+                                <th style="width: 10%">Leader</th>
                                 <th style="width: 3%">Pax</th>
-                                <th style="width: 3%">Tour Code</th>
-                                <th style="width: 7%">Tour Name</th>
+                                <th style="width: 10%">Tour Code</th>
+                                <th style="width: 7%" class="hidden">Tour Name</th>
                                 <th style="width: 6%">Tour Date</th>
-                                <th style="width: 9%">Pickup</th>
-                                <th style="width: 3%">Time</th>
+                                <th style="width: 15%">Pickup</th>
+                                <th style="width: 4%">Time</th>
                                 <th style="width: 2%">Ad</th>
                                 <th style="width: 2%">Ch</th>
                                 <th style="width: 2%">Inf</th>
-                                <th style="width: 5%">Remark</th>
+                                <th style="width: 15%">Remark</th>
                                 <th style="width: 4%">Action</th>   
                             </tr>
                         </thead>
@@ -394,15 +394,15 @@
                                 <td align="left">${daytour.agent}</td>
                                 <td align="left">${daytour.leader}</td>
                                 <td align="center">${daytour.pax}</td>
-                                <td align="center">${daytour.tourcode}</td>
-                                <td align="left">${daytour.tourname}</td>
+                                <td align="left">${daytour.tourcode}</td>
+                                <td align="left" class="hidden">${daytour.tourname}</td>
                                 <td align="center">${daytour.tourdate}</td>
                                 <td align="left">${daytour.pickup}</td>
                                 <td align="center">${daytour.time}</td>
                                 <td align="center">${daytour.adult}</td>
                                 <td align="center">${daytour.child}</td>
                                 <td align="center">${daytour.infant}</td>
-                                <td align="center">${daytour.remark}</td>
+                                <td align="left">${daytour.remark}</td>
                                 <td align="center" rowspan="2">
                                     <a href="#" onclick="" data-toggle="modal" data-target="">
                                         <span id="editSpan1" class="glyphicon glyphicon-th-list" onclick="viewBooking('${requestScope['search_type']}','${daytour.refno}','${daytour.id}')"></span>
@@ -413,7 +413,7 @@
                                 <td colspan="2" align="right" bgcolor="${colorTrHead}"><b>Invoice</b></td>
                                 <td colspan="5">${daytour.invoice}</td>
                                 <td colspan="1" align="right" bgcolor="${colorTrHead}"><b>Receipt</b></td>
-                                <td colspan="7">${daytour.receipt}</td>
+                                <td colspan="6">${daytour.receipt}</td>
                             </tr>
                             </c:forEach>
                         </tbody>
