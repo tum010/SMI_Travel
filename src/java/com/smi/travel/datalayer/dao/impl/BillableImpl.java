@@ -551,16 +551,16 @@ public class BillableImpl implements BillableDao {
                     String newDate = dateArr[2] +"/" + dateArr[1] + "/" + dateArr[0];
                     description += "  ("+newDate +")\n";
                 }else{
-                    boolean haveNewLine = ((list.get(i).getAdCost() != null && (new BigDecimal(BigInteger.ZERO)).compareTo(list.get(i).getAdCost()) != 0)
-                            || list.get(i).getChCost() != null && (new BigDecimal(BigInteger.ZERO)).compareTo(list.get(i).getChCost()) != 0
-                            || list.get(i).getInCost() != null &&(new BigDecimal(BigInteger.ZERO)).compareTo(list.get(i).getInCost())  != 0
+                    boolean haveNewLine = ((list.get(i).getAdPrice()!= null && (new BigDecimal(BigInteger.ZERO)).compareTo(list.get(i).getAdPrice()) != 0)
+                            || list.get(i).getChPrice()!= null && (new BigDecimal(BigInteger.ZERO)).compareTo(list.get(i).getChPrice()) != 0
+                            || list.get(i).getInPrice()!= null &&(new BigDecimal(BigInteger.ZERO)).compareTo(list.get(i).getInPrice())  != 0
                             ? true : false);
                      description += (haveNewLine ? "\n" : "");
                 }
                 String amount = "";
-                if(list.get(i).getAdCost() != null && (new BigDecimal(BigInteger.ZERO)).compareTo(list.get(i).getAdCost()) != 0 ){ // Adult Cost
+                if(list.get(i).getAdPrice()!= null && (new BigDecimal(BigInteger.ZERO)).compareTo(list.get(i).getAdPrice()) != 0 ){ // Adult Cost
                     if(list.get(i).getAdQty() != null && list.get(i).getAdQty() != 0){ // Adult Qty
-                        amount += "("+list.get(i).getAdCost() +" x ";
+                        amount += "("+list.get(i).getAdPrice()+" x ";
                         amount += ""+list.get(i).getAdQty() +") ";
                     }else{
                         amount += "";
@@ -568,9 +568,9 @@ public class BillableImpl implements BillableDao {
                 }else{
                      amount += " ";
                 }
-                if(list.get(i).getChCost() != null && (new BigDecimal(BigInteger.ZERO)).compareTo(list.get(i).getChCost()) != 0){ // Children Cost
+                if(list.get(i).getChPrice()!= null && (new BigDecimal(BigInteger.ZERO)).compareTo(list.get(i).getChPrice()) != 0){ // Children Cost
                     if(list.get(i).getChQty()!= null && list.get(i).getChQty() != 0){ // Children Qty
-                        amount += " ("+list.get(i).getChCost() +" x ";
+                        amount += " ("+list.get(i).getChPrice()+" x ";
                         amount += ""+list.get(i).getChQty() +")";
                     }else{
                         amount += "";
@@ -578,9 +578,9 @@ public class BillableImpl implements BillableDao {
                 }else{
                      amount += "";
                 }
-                if(list.get(i).getInCost() != null &&(new BigDecimal(BigInteger.ZERO)).compareTo(list.get(i).getInCost())  != 0){ // Infant Cost
+                if(list.get(i).getInPrice()!= null &&(new BigDecimal(BigInteger.ZERO)).compareTo(list.get(i).getInPrice())  != 0){ // Infant Cost
                     if(list.get(i).getInQty()!= null && list.get(i).getInQty() != 0){ // Infant Qty
-                        amount += "  ("+list.get(i).getInCost() +" x ";
+                        amount += "  ("+list.get(i).getInPrice()+" x ";
                         amount += ""+list.get(i).getInQty() +")";
                     }else{
                         amount += "";
