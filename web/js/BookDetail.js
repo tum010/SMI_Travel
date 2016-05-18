@@ -380,7 +380,8 @@ $(document).ready(function () {
         "bPaginate": true,
         "bInfo": false,
         "bLengthChange": false,
-        "iDisplayLength": 10
+        "iDisplayLength": 10,
+        "aaSorting": [[ 1, "asc" ]]
     });
     $('#AgentTable tbody').on('click', 'tr', function () {
         $(this).addClass('row_selected').siblings().removeClass('row_selected');
@@ -397,7 +398,8 @@ $(document).ready(function () {
         "bPaginate": true,
         "bInfo": false,
         "bLengthChange": false,
-        "iDisplayLength": 10
+        "iDisplayLength": 10,
+         "aaSorting": [[ 1, "asc" ]]
     });
     $('#FamilyLeaderTable tbody').on('click', 'tr', function () {
         $(this).addClass('row_selected').siblings().removeClass('row_selected');

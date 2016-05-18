@@ -142,7 +142,8 @@ $(document).ready(function () {
         "bPaginate": true,
         "bInfo": false,
         "bLengthChange": false,
-        "iDisplayLength": 10
+        "iDisplayLength": 10,
+        "aaSorting": [[ 1, "asc" ]]
     });
 
 });

@@ -404,12 +404,13 @@ $(document).ready(function () {
     // PASSENGER TABLE
     $('#CustomerTable').dataTable({bJQueryUI: true,
         "sPaginationType": "full_numbers",
-                        "bAutoWidth": false,
-                        "bFilter": false,
-                        "bPaginate": true,
-                        "bInfo": false,
-                        "bLengthChange": false,
-                        "iDisplayLength": 10
+        "bAutoWidth": false,
+        "bFilter": false,
+        "bPaginate": true,
+        "bInfo": false,
+        "bLengthChange": false,
+        "iDisplayLength": 10,
+        "aaSorting": [[ 1, "asc" ]]
     });
     $('#CustomerTable tbody').on('click', 'tr', function () {
         $(this).addClass('row_selected').siblings().removeClass('row_selected');
