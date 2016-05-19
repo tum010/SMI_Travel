@@ -446,10 +446,17 @@ public class MonitorAmadeus extends MonitorScheduler {
                 BigDecimal price = new BigDecimal(BigInteger.ZERO);
                 if (isInternationalTicket(ticketType)) {
                     String costS = getField("cost").trim();
-                    
+                    String costS2 = getField("cost2").trim();
+                    System.out.println("Internal");
+                    System.out.println("CostS : "+costS);
+                    System.out.println("CostS2 : "+costS2);
                     // No cost line. Set to ticket_fare.
                     if (("0".equalsIgnoreCase(costS))||("0.00".equalsIgnoreCase(costS))) {
-                        costS = ticket_fare;
+                        if((!"0".equalsIgnoreCase(costS2))||(!"0.00".equalsIgnoreCase(costS2))){
+                            costS = costS2;
+                        }else{
+                            costS = ticket_fare;
+                        }
                     }
                     cost = util.convertStringToBigDecimal(costS);
                     System.out.println("cost [" + cost +"]");
