@@ -421,7 +421,7 @@ public class OtherDetailController extends SMITravelController {
         request.setAttribute("memo", memo);
         request.setAttribute("createby", createby);
         request.setAttribute("createdate", createdate);       
-        request.setAttribute(PRODUCTLIST, OtherService.getListMasterProduct());
+        request.setAttribute(PRODUCTLIST, OtherService.getListMasterProductWithBookType(BookType));
         request.setAttribute(AGENTLIST, utilservice.getListAgent());
         List<MCurrency> mCurrency = utilservice.getListMCurrency();
         request.setAttribute(CurrencyList, mCurrency);

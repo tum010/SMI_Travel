@@ -24,5 +24,6 @@ public interface ProductDao {
     public int updateProduct(Product product);
     public int DeleteProduct(Product product);
     public List<ProductPriceDetail> getListProductPriceDetail();
+    public List<Product> getListMasterProductWithBookType(String bookType);
     
 }

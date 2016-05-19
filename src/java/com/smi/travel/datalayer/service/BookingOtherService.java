@@ -123,6 +123,10 @@ public class BookingOtherService {
     public void setSystemUser(SystemUserDao systemUser) {
         this.systemUser = systemUser;
     }
+
+    public List<Product> getListMasterProductWithBookType(String bookType){
+        return productDao.getListMasterProductWithBookType(bookType);
+    }
     
     
 }

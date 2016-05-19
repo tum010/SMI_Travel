@@ -28,6 +28,7 @@
 <input type="hidden" value="${master.id}" id="master-id">
 <c:set var="enableVat" value="" />
 <c:set var="checkVat" value="checked" />
+<c:set var="hiddenPrintBtn" value="" />
 <c:if test="${booktype == 'i'}">
     <c:set var="enableVat" value="disabled" />
     <c:set var="checkVat" value="" />
@@ -35,6 +36,7 @@
 <c:if test="${booktype == 'o'}">
     <c:set var="enableVat" value="disabled" />
     <c:set var="checkVat" value="" />
+    <c:set var="hiddenPrintBtn" value="hidden" />
 </c:if>
 <c:set var="lockUnlockBooking" value="${requestScope['LockUnlockBooking']}" />
 <c:set var="enableSave" value="${requestScope['EnableSave']}" />
@@ -413,14 +415,14 @@
                                 <c:set var="disabled" value="disabled"/>
                             </c:if>
                             <div class="col-xs-2">
-                                <select name="voucher" id="voucher"  class="form-control" style="width: 160px; height: 34px" ${disabled}>
+                                <select name="voucher" id="voucher"  class="form-control ${hiddenPrintBtn}" style="width: 160px; height: 34px" ${disabled}>
                                     <option value="">--Select Type--</option>
                                     <option value="OtherVouncher">Other Voucher</option>
                                     <option value="OtherVoucherEmail">Other Voucher Email</option>
                                 </select>
                             </div>
                             <div class="col-xs-1">
-                                <button type="button" class="btn btn-default duplicate" onclick="printOther()" ${disabled}><span class="glyphicon glyphicon-print"></span> Print </button>
+                                <button type="button" class="btn btn-default duplicate ${hiddenPrintBtn}" onclick="printOther()" ${disabled}><span class="glyphicon glyphicon-print"></span> Print </button>
                             </div>
                             <div class="col-xs-1">
                                 <c:choose>
@@ -459,19 +461,19 @@
                     <div class="form-group col-md-1" style="width: 200px">
                         <label class="col-sm-3 control-label">Adult</label>
                         <div class="col-sm-1" style="width: 100px">
-                            <input type="text" class="form-control decimal text-right" id="adTicket" name="adTicket" value="0">  
+                            <input type="text" class="form-control decimalticket text-right" id="adTicket" name="adTicket" value="0">  
                         </div>
                     </div>
                     <div class="form-group col-md-1" style="width: 200px">
                         <label class="col-sm-3 control-label">Child</label>
                         <div class="col-sm-1" style="width: 100px">
-                            <input type="text" class="form-control decimal text-right" id="chTicket" name="chTicket" value="0">  
+                            <input type="text" class="form-control decimalticket text-right" id="chTicket" name="chTicket" value="0">  
                         </div>
                     </div>    
                     <div class="form-group col-md-1" style="width: 200px">
                         <label class="col-sm-3 control-label">Infant</label>
                         <div class="col-sm-1" style="width: 100px">
-                            <input type="text" class="form-control decimal text-right" id="infTicket" name="infTicket" value="0">  
+                            <input type="text" class="form-control decimalticket text-right" id="infTicket" name="infTicket" value="0">  
                         </div>
                     </div>
                     <div class="form-group col-md-1" style="width: 200px">
@@ -758,6 +760,17 @@
                             groupSeparator: ',',
                             autoGroup: true,
                             digits: 2,
+                            allowMinus: false,
+                            digitsOptional: false,
+                            placeholder: "0"
+                        });
+                        
+                        $(".decimalticket").inputmask({
+                            alias: "decimal",
+                            integerDigits: 3,
+                            groupSeparator: ',',
+                            autoGroup: true,
+                            digits: 0,
                             allowMinus: false,
                             digitsOptional: false,
                             placeholder: "0"

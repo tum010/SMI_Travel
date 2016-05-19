@@ -205,6 +205,27 @@ public class ProductImpl implements ProductDao {
         }
         return product;
     }
+    
+    @Override
+    public List<Product> getListMasterProductWithBookType(String bookType) {
+        String query = "from Product p where p.department = :bookType";
+        Session session = this.sessionFactory.openSession();
+        bookType = ("I".equalsIgnoreCase(bookType) ? "W" : bookType);
+        List<Product> ProductList = session.createQuery(query).setParameter("bookType", bookType).list();
+        List<Product> ProductLists = new LinkedList<Product>();
+        if (ProductList.isEmpty()) {
+            return null;
+        }else{
+            for(int i=0 ; i<ProductList.size();i++){
+                Product pro = ProductList.get(i);
+                pro.setCode(ProductList.get(i).getCode() == null ? null : ProductList.get(i).getCode().replaceAll("'", "\\\\\'"));
+                pro.setName(ProductList.get(i).getName() == null ? null : ProductList.get(i).getName().replaceAll("'", "\\\\\'"));
+                pro.setDescription(ProductList.get(i).getDescription() == null ? null : ProductList.get(i).getDescription().replaceAll("'", "\\\\\'"));
+                ProductLists.add(pro);
+            }
+        }   
+        return ProductLists;
+    }
 
     public SessionFactory getSessionFactory() {
         return sessionFactory;
@@ -213,8 +234,5 @@ public class ProductImpl implements ProductDao {
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
-
-    
-
     
 }

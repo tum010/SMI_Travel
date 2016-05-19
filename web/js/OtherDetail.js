@@ -19,7 +19,7 @@ function setupproductvalue(id, code, name, booktype) {
     document.getElementById('product_code').focus();
 
     var product_code = document.getElementById('product_code').value;
-    var otherdate = document.getElementById('otherdate').value;
+    var otherdate = (document.getElementById('otherdate').value !== '' ? document.getElementById('otherdate').value : setTodayDate());
 
     if ((product_code !== '') && (otherdate !== '')) {
         getvalueProduct('product', booktype);
@@ -212,15 +212,35 @@ $(document).ready(function() {
             data.bv.disableSubmitButtons(false);
         }
     });
-
-
+    
+    
 });
 
+function setTodayDate(){
+    var itemId = $("#itemid").val();
+    if(itemId === ''){
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth()+1; 
+        var yyyy = today.getFullYear();
+
+        if(dd<10) {
+            dd='0'+dd
+        } 
+
+        if(mm<10) {
+            mm='0'+mm
+        } 
+
+        today = mm+'-'+dd+'-'+yyyy;
+        return today;
+    }
+}
 
 function getvalueProduct(order, booktype) {
     $("#btnCheckStock").addClass("disabled");
     var product_code = document.getElementById('product_code').value;
-    var otherdate = document.getElementById('otherdate').value;
+    var otherdate = (document.getElementById('otherdate').value !== '' ? document.getElementById('otherdate').value : setTodayDate());
     var todaydate = document.getElementById('todaydate').value;
     var checkdate = document.getElementById('checkdate').value;
     if ((product_code !== '') && (otherdate !== '')) {
@@ -228,7 +248,7 @@ function getvalueProduct(order, booktype) {
             var servletName = 'BookOtherServlet';
             var servicesName = 'AJAXBean';
             var productid = document.getElementById('product_id').value;
-            var otherdate = document.getElementById('otherdate').value;
+            var otherdate = (document.getElementById('otherdate').value !== '' ? document.getElementById('otherdate').value : setTodayDate());
             var param = 'action=' + 'text' +
                     '&servletName=' + servletName +
                     '&servicesName=' + servicesName +
@@ -282,7 +302,7 @@ function checkStock() {
     var servletName = 'BookOtherServlet';
     var servicesName = 'AJAXBean';
     var productid = document.getElementById('product_id').value;
-    var otherdate = document.getElementById('otherdate').value;
+    var otherdate = (document.getElementById('otherdate').value !== '' ? document.getElementById('otherdate').value : setTodayDate());
     var param = 'action=' + 'text' +
             '&servletName=' + servletName +
             '&servicesName=' + servicesName +
@@ -382,27 +402,27 @@ function CallAjax(param, booktype) {
                 var CH_PriceRP = CH_Price.replace(',', '');
                 var IN_CostRP = IN_Cost.replace(',', '');
                 var IN_PriceRP = IN_Price.replace(',', '');
-
+                
                 if (AD_CostRP === '' || AD_CostRP === 'null') {
-                    AD_CostRP = '0.00';
+                    AD_CostRP = '0';
                 }
                 if (AD_PriceRP === '' || AD_PriceRP === 'null') {
-                    AD_PriceRP = '0.00';
+                    AD_PriceRP = '0';
                 }
                 if (CH_CostRP === '' || CH_CostRP === 'null') {
-                    CH_CostRP = '0.00';
+                    CH_CostRP = '0';
                 }
                 if (CH_PriceRP === '' || CH_PriceRP === 'null') {
-                    CH_PriceRP = '0.00';
+                    CH_PriceRP = '0';
                 }
                 if (IN_CostRP === '' || IN_CostRP === 'null') {
-                    IN_CostRP = '0.00';
+                    IN_CostRP = '0';
                 }
                 if (IN_PriceRP === '' || IN_PriceRP === 'null') {
-                    IN_PriceRP = '0.00';
+                    IN_PriceRP = '0';
                 }
                 if (booktype === 'i') {
-                    if ((AD_CostRP === '0.00') && (CH_CostRP === '0.00') && (IN_CostRP === '0.00') && (AD_PriceRP === '0.00') && (CH_PriceRP === '0.00') && (IN_PriceRP === '0.00')) {
+                    if ((AD_CostRP === '0') && (CH_CostRP === '0') && (IN_CostRP === '0') && (AD_PriceRP === '0') && (CH_PriceRP === '0') && (IN_PriceRP === '0')) {
                         setformatNumber('ad_cost', path[0]);
                         setformatNumber('ch_cost', path[1]);
                         setformatNumber('in_cost', path[2]);
@@ -411,8 +431,14 @@ function CallAjax(param, booktype) {
                         setformatNumber('in_price', path[5]);
                     } else if ((AD_CostRP === path[0]) && (CH_CostRP === path[1]) && (IN_CostRP === path[2]) && (AD_PriceRP === path[3]) && (CH_PriceRP === path[4]) && (IN_PriceRP === path[5])) {
                         
-                    } else if ((path[0] === '0.00') && (path[1] === '0.00') && (path[2] === '0.00') && (path[3] === '0.00') && (path[4] === '0.00') && (path[5] === '0.00')){
-                        
+                    } else if ((path[0] === '0') && (path[1] === '0') && (path[2] === '0') && (path[3] === '0') && (path[4] === '0') && (path[5] === '0')){
+                        document.getElementById('path0').value = path[0];
+                        document.getElementById('path1').value = path[1];
+                        document.getElementById('path2').value = path[2];
+                        document.getElementById('path3').value = path[3];
+                        document.getElementById('path4').value = path[4];
+                        document.getElementById('path5').value = path[5];
+                        $('#Confirm').modal('show');
                     } else {
                         document.getElementById('path0').value = path[0];
                         document.getElementById('path1').value = path[1];
@@ -425,7 +451,7 @@ function CallAjax(param, booktype) {
                 }
 
                 if (booktype === 'o') {
-                    if ((AD_CostRP === '0.00') && (CH_CostRP === '0.00') && (IN_CostRP === '0.00') && (AD_PriceRP === '0.00') && (CH_PriceRP === '0.00') && (IN_PriceRP === '0.00')) {
+                    if ((AD_CostRP === '0') && (CH_CostRP === '0') && (IN_CostRP === '0') && (AD_PriceRP === '0') && (CH_PriceRP === '0') && (IN_PriceRP === '0')) {
                         setformatNumber('ad_cost', path[0]);
                         setformatNumber('ch_cost', path[1]);
                         setformatNumber('in_cost', path[2]);
@@ -434,7 +460,14 @@ function CallAjax(param, booktype) {
                         setformatNumber('in_price', path[5]);
                     } else if ((AD_CostRP === path[0]) && (CH_CostRP === path[1]) && (IN_CostRP === path[2]) && (AD_PriceRP === path[3]) && (CH_PriceRP === path[4]) && (IN_PriceRP === path[5])) {
 
-                    } else if ((path[0] === '0.00') && (path[1] === '0.00') && (path[2] === '0.00') && (path[3] === '0.00') && (path[4] === '0.00') && (path[5] === '0.00')){
+                    } else if ((path[0] === '0') && (path[1] === '0') && (path[2] === '0') && (path[3] === '0') && (path[4] === '0') && (path[5] === '0')){
+                        document.getElementById('path0').value = path[0];
+                        document.getElementById('path1').value = path[1];
+                        document.getElementById('path2').value = path[2];
+                        document.getElementById('path3').value = path[3];
+                        document.getElementById('path4').value = path[4];
+                        document.getElementById('path5').value = path[5];
+                        $('#Confirm').modal('show');
                         
                     } else {
                         document.getElementById('path0').value = path[0];
