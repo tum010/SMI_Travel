@@ -291,8 +291,9 @@ public class OtherBookingImpl implements OtherBookingDao{
         try {       
             String queryDate = "from StockDetail sd where sd.stock.effectiveFrom <= '" + date + "' and sd.stock.effectiveTo >= '" + date + "' and sd.stock.product.id = " + Id + " and sd.stock.product.isStock = 1 and sd.MStockStatus.id = 1 order by sd.stock.effectiveFrom asc ";
             stockDetailList =  session.createQuery(queryDate).list();
-            if(stockDetailList.isEmpty()){                
-                return stockDetailList;
+            if(stockDetailList.isEmpty()){
+                queryDate = "from StockDetail sd where sd.stock.product.id = " + Id + " and sd.stock.product.isStock = 1 and sd.MStockStatus.id = 1 order by sd.stock.createDate asc ";
+                stockDetailList =  session.createQuery(queryDate).list();
             }
             return stockDetailList;                       
         } catch (Exception ex) {
@@ -339,7 +340,8 @@ public class OtherBookingImpl implements OtherBookingDao{
             String query = "from Stock s where s.effectiveFrom <= '" + date + "' and s.effectiveTo >= '" + date + "' and s.product.id = " + id + " and s.product.isStock = 1 order by s.effectiveFrom asc ";
             stockList = session.createQuery(query).list();
             if(stockList.isEmpty()){
-                return stockList;     
+                query = "from Stock s where s.product.id = " + id + " and s.product.isStock = 1 order by s.effectiveFrom asc ";
+                stockList = session.createQuery(query).list();     
             }    
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -922,6 +924,7 @@ public class OtherBookingImpl implements OtherBookingDao{
             int inf = 0;
             
             List<StockDetail> stockDetailList = getStockByDate(productId, date, session);
+            System.out.println("===== Stock Detail List Size ===== : " +stockDetailList.size());
             for(int i=0;i<stockDetailList.size();i++){
                 String typeName = stockDetailList.get(i).getTypeId().getName();
                 if("ADULT".equalsIgnoreCase(typeName)){

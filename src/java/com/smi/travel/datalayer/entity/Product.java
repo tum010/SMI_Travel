@@ -25,6 +25,7 @@ public class Product {
      private String instruction;
      private String isUpdate;
      private BigDecimal cost;
+     private String department;
      private Set productDetails = new HashSet(0);
      private List productComissions;
      
@@ -36,7 +37,7 @@ public class Product {
         this.code = code;
         this.name = name;
     }
-    public Product(MProductType MProductType, String code, String name, String description, String remark, Set productDetails,List productComissions, int isStock) {
+    public Product(MProductType MProductType, String code, String name, String description, String remark, Set productDetails,List productComissions, int isStock, String department) {
        this.MProductType = MProductType;
        this.code = code;
        this.name = name;
@@ -45,6 +46,7 @@ public class Product {
        this.isStock = isStock;
        this.productDetails = productDetails;
        this.productComissions = productComissions;
+       this.department = department;
     }
    
     public String getId() {
@@ -159,6 +161,14 @@ public class Product {
 
     public void setCost(BigDecimal cost) {
         this.cost = cost;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
     }
 }
 
