@@ -573,7 +573,7 @@ public class MonitorAmadeus extends MonitorScheduler {
     }
 
     protected String getField(String name) {
-
+        System.out.println("name length : "+ name);
         String val = null;
         try {
             MAmadeus ama = amadeusMap.get(name);
@@ -595,7 +595,13 @@ public class MonitorAmadeus extends MonitorScheduler {
                 line = foundLine.substring(ama.getSection().length());
                 String[] lines = line.split(NODE_SEPARATOR);
                 String foundNode = lines[node - 1];
-                val = foundNode.substring(ama.getStartlength() - 1, ama.getStartlength() - 1 + ama.getLength());
+                System.out.println("foundNode length : "+ foundNode.length());
+                if(foundNode.length() != 0){
+                    val = foundNode.substring(ama.getStartlength() - 1, ama.getStartlength() - 1 + ama.getLength());
+                }else{
+                    val= "";
+                }
+                
             }
             System.out.println("Key [" + name + "], Value [" + val + "]");
         } catch (NullPointerException ne) {
