@@ -549,12 +549,16 @@ public class TaxInvoiceController extends SMITravelController {
             String currencyAmount = request.getParameter("currencyAmount" + i);
             String gross = request.getParameter("gross" + i);
             String createDateDetail = request.getParameter("createDateDetail" + i);
+            String refAmount = request.getParameter("refAmount" + i);
+            String exRate = request.getParameter("exRate" + i);
             
             TaxInvoiceDetail taxInvoiceDetail = new TaxInvoiceDetail();
             MBilltype mBillType = new MBilltype();
             InvoiceDetail invoiceDetail = new InvoiceDetail();
             
-            if((product!="" && product!=null) || (refNo!="" && refNo!=null) || (description!="" && description!=null) || (cost!="" && cost!=null) || (currencyCost!="" && currencyCost!=null) || (amount!="" && amount!=null) || (currencyAmount!="" && currencyAmount!=null)){                               
+            if((product!="" && product!=null) || (refNo!="" && refNo!=null) || (description!="" && description!=null) || (cost!="" && cost!=null) 
+                    || (currencyCost!="" && currencyCost!=null) || (amount!="" && amount!=null) || (currencyAmount!="" && currencyAmount!=null)
+                    || (exRate!="" && exRate!=null)){                               
                 
                 if(taxDetailId!="" && taxDetailId!=null){              
                     newdate = util.convertStringToDate(createDateDetail);
@@ -665,6 +669,16 @@ public class TaxInvoiceController extends SMITravelController {
                 
                 if(currencyAmount!="" && currencyAmount!=null){
                     taxInvoiceDetail.setCurAmount(currencyAmount);
+                }
+                
+                if(exRate!="" && exRate!=null){
+                    BigDecimal exRateRe = new BigDecimal(exRate.replaceAll(",",""));
+                    taxInvoiceDetail.setExRate(exRateRe);
+                }
+                
+                if(refAmount!="" && refAmount!=null){
+                    BigDecimal refAmountRe = new BigDecimal(refAmount.replaceAll(",",""));
+                    taxInvoiceDetail.setRefAmount(refAmountRe);
                 }
                 
                 taxInvoiceDetail.setTaxInvoice(taxInvoice);

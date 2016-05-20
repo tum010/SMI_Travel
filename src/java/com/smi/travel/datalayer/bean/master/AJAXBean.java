@@ -17,6 +17,7 @@ import com.smi.travel.datalayer.dao.DaytourDao;
 import com.smi.travel.datalayer.dao.DefineVarDao;
 import com.smi.travel.datalayer.dao.InvoiceDao;
 import com.smi.travel.datalayer.dao.MAirportDao;
+import com.smi.travel.datalayer.dao.MExchangeRateDao;
 import com.smi.travel.datalayer.dao.MFilghtDao;
 import com.smi.travel.datalayer.dao.MasterDao;
 import com.smi.travel.datalayer.dao.OtherBookingDao;
@@ -46,6 +47,7 @@ import com.smi.travel.datalayer.entity.InvoiceDetail;
 import com.smi.travel.datalayer.entity.MAirport;
 import com.smi.travel.datalayer.entity.MBookingstatus;
 import com.smi.travel.datalayer.entity.MDefaultData;
+import com.smi.travel.datalayer.entity.MExchangeRate;
 import com.smi.travel.datalayer.entity.MFlightservice;
 import com.smi.travel.datalayer.entity.MInitialname;
 import com.smi.travel.datalayer.entity.Master;
@@ -161,6 +163,7 @@ public class AJAXBean extends AbstractBean implements
     private DefineVarDao defineVardao;
     private PaymentStockDao paymentStockDao;
     private CheckDuplicateUserDao checkDuplicateUserDao;
+    private MExchangeRateDao mExchangeRateDao;
     
     public AJAXBean(List queryList) {
         super(queryList);
@@ -226,6 +229,8 @@ public class AJAXBean extends AbstractBean implements
                     paymentStockDao = (PaymentStockDao) obj;
                 } else if (obj instanceof CheckDuplicateUserDao) {
                     checkDuplicateUserDao = (CheckDuplicateUserDao) obj;
+                } else if (obj instanceof MExchangeRateDao) {
+                    mExchangeRateDao = (MExchangeRateDao) obj;
                 }
             }
         }
@@ -1795,6 +1800,9 @@ public class AJAXBean extends AbstractBean implements
         
         String alertMessage = "";
         String alertMessageInvoiceAlready = "";
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+        String todayDate = sdf.format(date);
         for (int i = 0; i < billableDescs.size(); i++) {
             billableDescId = billableDescs.get(i).getId();
             String description = billableDescs.get(i).getDetail();
@@ -1810,7 +1818,13 @@ public class AJAXBean extends AbstractBean implements
             if(taxInvoiceList == null){
            
                 for(int j=0; j<invoiceDetailList.size(); j++){
-                    BigDecimal exrate = invoiceDetailList.get(j).getExRate();
+//                    BigDecimal exrate = invoiceDetailList.get(j).getExRate();
+                    BigDecimal exrate = new BigDecimal(BigInteger.ZERO);
+                    if(!"".equalsIgnoreCase(billableDescs.get(i).getCurrency()) && billableDescs.get(i).getCurrency() != null){
+                        List<MExchangeRate> listMExchange = mExchangeRateDao.searchExchangeRate(todayDate, todayDate, billableDescs.get(i).getCurrency());
+                        exrate = (listMExchange != null && listMExchange.size() > 0 ? listMExchange.get(0).getExrate() : BigDecimal.ZERO);
+                    }
+                    
                     curcost = (billableDescs.get(i).getCurCost() == null ? "" : billableDescs.get(i).getCurCost());
                     curamount = (billableDescs.get(i).getCurrency() == null ? "" : billableDescs.get(i).getCurrency());
                     BigDecimal profitTaxInvoice = new BigDecimal(BigInteger.ZERO);
@@ -1933,7 +1947,7 @@ public class AJAXBean extends AbstractBean implements
                                             + "<td class='text-right money3'>" + ("0".equalsIgnoreCase(String.valueOf(exrate)) ? "" : exrate) + "</td>"
                                             + "<td class='text-right money'>" + profit + "</td>"
                                             + "<td class='text-right money'>" + remain + "</td>"
-                                            + "<td><center><a href=\"#/ref\"><span onclick=\"AddRefNo('" + product + "','" + description + "','" + cost + "','" + curcost + "','" + remain + "','THB','" + invoiceDetailId + "','" + displaydescription + "','" + refNo + "')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
+                                            + "<td><center><a href=\"#/ref\"><span onclick=\"AddRefNo('" + product + "','" + description + "','" + cost + "','" + curcost + "','" + remain + "','THB','" + invoiceDetailId + "','" + displaydescription + "','" + refNo + "','" + exrate + "','" + amount + "')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
         //                                    + "<td><center><a href=\"#/ref\"><span onclick=\"AddRefNo('" + product + "','" + description + "','" + cost + "','" + curcost + "','" + remain + "','" + curamount + "','" + invoiceDetailId + "','" + displaydescription + "','" + refNo + "')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
                                             + "</tr>";
                                     html.append(newrow);

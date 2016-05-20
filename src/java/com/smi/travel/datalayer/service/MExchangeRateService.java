@@ -47,5 +47,9 @@ public class MExchangeRateService {
     public void setmExchangeRateDao(MExchangeRateDao mExchangeRateDao) {
         this.mExchangeRateDao = mExchangeRateDao;
     }
+
+//    public List<MExchangeRate> searchExchangeRateToday(String todayDate, String currency) {
+//        return mExchangeRateDao.searchExchangeRateToday(todayDate, currency);
+//    }
     
 }

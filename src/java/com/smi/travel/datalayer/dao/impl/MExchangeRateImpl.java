@@ -36,10 +36,10 @@ public class MExchangeRateImpl extends HibernateDaoSupport implements MExchangeR
         if ((from != null )&&(!"".equalsIgnoreCase(from))) {
             if ((to != null )&&(!"".equalsIgnoreCase(to))) {
                 if(AndQuery == 1){
-                     query += " and mg.exdate  BETWEEN  '" + from + "' AND '" + to + "' ";
+                     query += " and (mg.exdate  BETWEEN  '" + from + "' AND '" + to + "') ";
                 }else{
                     AndQuery = 1;
-                     query += " mg.exdate  BETWEEN  '" + from + "' AND '" + to + "' ";
+                     query += " (mg.exdate  BETWEEN  '" + from + "' AND '" + to + "') ";
                 }
             }
         }
@@ -190,6 +190,45 @@ public class MExchangeRateImpl extends HibernateDaoSupport implements MExchangeR
         }
         return list;
     }
+
+//    @Override
+//    public List<MExchangeRate> searchExchangeRateToday(String todayDate, String currency) {
+//        String query = "";
+//        int AndQuery = 0;
+//        
+//        if(todayDate == null  &&  currency == null ){
+//            query = " FROM MExchangeRate  mg " ; 
+//        }else{
+//            if("".equals(todayDate) && "".equals(currency)){
+//                query = " FROM MExchangeRate  mg " ; 
+//            }else{
+//                query = " FROM MExchangeRate  mg  where " ;
+//            }
+//        }
+//        if ((todayDate != null )&&(!"".equalsIgnoreCase(todayDate))) {
+//            if(AndQuery == 1){
+//                 query += " and mg.exdate  =  '" + todayDate + "' ";
+//            }else{
+//                AndQuery = 1;
+//                 query += " mg.exdate  =  '" + todayDate + "' ";
+//            }
+//        }
+//        if(currency != null && (!"".equalsIgnoreCase(currency))){
+//            if(AndQuery == 1){
+//                query += " and mg.currency = '" + currency + "'";
+//           }else{
+//               AndQuery = 1;
+//               query += " mg.currency = '" + currency + "'";
+//           }
+//        }
+//        query += " ORDER BY mg.exdate DESC ";
+//        System.out.println("query exchange: "+query );
+//        List<MExchangeRate> list = getHibernateTemplate().find(query);
+//        if(list.isEmpty()){
+//            return null;
+//        }
+//        return list;
+//    }
     
     
 }

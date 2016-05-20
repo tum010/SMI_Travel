@@ -666,8 +666,8 @@ public class BillableController extends SMITravelController {
             System.out.println("===== Is Bill ===== : "+billableDescTemp.getIsBill());
             System.out.println("===== Currency ===== : "+billableDescTemp.getCurrency());
             if(billableDescTemp.getIsBill() == 0 && !"".equalsIgnoreCase(billableDescTemp.getCurrency())){
-                List<MExchangeRate> listMExchange = mExchangeRateService.searchExchangeRate(todayDate, todayDate, billableDescTemp.getCurrency());
-                billableDescTemp.setExRate(listMExchange != null && listMExchange.size() > 0 ? listMExchange.get(0).getExrate() : BigDecimal.ZERO);
+                List<MExchangeRate> mExchangeRateList = mExchangeRateService.searchExchangeRate(todayDate, todayDate, billableDescTemp.getCurrency());
+                billableDescTemp.setExRate(mExchangeRateList != null ? mExchangeRateList.get(0).getExrate() : BigDecimal.ZERO);
             
             }       
         }

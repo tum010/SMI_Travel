@@ -20,6 +20,6 @@ public interface MExchangeRateDao {
     public String insertExchange(MExchangeRate mExchangeRate);
     public String updateExchange(MExchangeRate mExchangeRate);
     public String deleteExchange(MExchangeRate mExchangeRate);
-//    public 
+//    public List<MExchangeRate> searchExchangeRateToday(String todayDate, String currency);
     
 }

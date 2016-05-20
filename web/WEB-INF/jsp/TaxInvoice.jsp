@@ -60,11 +60,11 @@
 </section>
 <div class ="container"  style="padding-top: 15px;padding-left: 5px;" ng-app=""> 
     <!-- side bar -->
-    <div class="col-sm-2" style="border-right:  solid 1px #01C632;padding-top: 10px">
+    <div class="col-sm-1" style="border-right:  solid 1px #01C632;padding-top: 10px; padding-left: 0px; width: 140px;">
         <div ng-include="'WebContent/FinanceAndCashier/TaxInvoiceMainMenu.html'"></div>
     </div>
     <!--Content -->
-    <div class="col-sm-10">
+    <div class="col-sm-11" style="padding-right: 0px; width: 1120px;">
         <c:if test="${requestScope['result_text'] =='success'}">                                            
             <div id="textAlertDivSave"  style="" class="alert alert-success alert-dismissible" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -514,16 +514,17 @@
                                                 <tr class="datatable-header">
                                                     <th style="width: 1%" class="hidden">Id</th>
                                                     <th style="width: 10%" >Product</th>
-                                                    <th style="width: 10%" >Ref No</th>
-                                                    <th style="width: 19%">Description</th>
-                                                    <th style="width: 10%" >Cost</th>
+                                                    <th style="width: 8%" >Ref No</th>
+                                                    <th style="width: 17%">Description</th>
+                                                    <th style="width: 9%" >Cost</th>
                                                     <th style="width: 8%" >Cur</th>
                                                     <th style="width: 5%" onclick="checkVatAll()"><u>Is vat</u></th>
-                                                    <th style="width: 5%" >Vat</th>
-                                                    <th style="width: 10%" >Gross</th>
-                                                    <th style="width: 10%">Amount</th>
+                                                    <th style="width: 4%" >Vat</th>
+                                                    <th style="width: 9%" >Gross</th>
+                                                    <th style="width: 9%">Amount</th>
                                                     <th style="width: 8%">Cur</th>
-                                                    <th style="width: 4%">Action</th>
+                                                    <th style="width: 8%" class="${outbound}">Ex Rate</th>
+                                                    <th style="width: 4%">Act</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -535,6 +536,7 @@
                                                     <td class="hidden"><input class="form-control" type="text" id="invoiceDetailAmount${i.count}" name="invoiceDetailAmount${i.count}" value="${taxDetail.invoiceDetail.amountLocal}"></td>
                                                     <td class="hidden"><input class="form-control" type="text" id="isExport${i.count}" name="isExport${i.count}" value="${taxDetail.isExport}"></td>
                                                     <td class="hidden"><input class="form-control" type="text" id="isProfit${i.count}" name="isProfit${i.count}" value="${taxDetail.isProfit}"></td>
+                                                    <td class="hidden"><input class="form-control" type="text" id="refAmount${i.count}" name="refAmount${i.count}" value="${taxDetail.refAmount}"></td>
                                                     <c:set var="fromAjax" value=""/>
                                                     <c:choose>
                                                         <c:when test="${disabledFieldSearch == 1}">
@@ -606,6 +608,9 @@
                                                             <option  value="${currency.code}" ${select}>${currency.code}</option>
                                                         </c:forEach>
                                                         </select>        
+                                                    </td>
+                                                    <td class="${outbound}">
+                                                        <input class="form-control decimalexrate" style="text-align:right;" type="text" id="exRate${i.count}" name="exRate${i.count}" value="${taxDetail.exRate}">
                                                     </td>
                                                     <td class="text-center">
                                                         <a id="expenButtonRemove${i.count}" name="expenButtonRemove${i.count}" onclick="deleteTaxList('${taxDetail.id}','${i.count}')"  data-toggle="modal" data-target="#DeleteExpenModal">
@@ -1387,6 +1392,11 @@
             $("#operationModal").modal("show");
         }
         
+        var taxInvoiceTableLength = $('#TaxInvoiceTable tbody tr').length;
+        for (var j = 1; j <= (taxInvoiceTableLength - 1); j++) {
+            calculateAmountByExRate(j,'setEvent');
+        }
+        
     });
     
     function selectPrintType(){
@@ -1941,6 +1951,7 @@
             '<td class="hidden"><input class="form-control" type="text" id="isExport' + row + '" name="isExport' + row + '" value=""></td>' +
             '<td class="hidden"><input class="form-control" type="text" id="exportDate' + row + '" name="exportDate' + row + '" value=""></td>' +
             '<td class="hidden"><input class="form-control" type="text" id="isProfit' + row + '" name="isProfit' + row + '" value=""></td>' +
+            '<td class="hidden"><input class="form-control" type="text" id="refAmount' + row + '" name="refAmount' + row + '" value=""></td>' +
             '<td><select class="form-control" name="product' + row + '" id="product' + row + '" onchange="AddrowBySelect(\'' + row + '\');addManual(' + row + ');"><option  value="" >---------</option></select></td>' +
             '<td><input class="form-control" maxlength="6" type="text" id="refNo' + row + '" name="refNo' + row + '" value="" onfocusout="checkRefNo(\'' + row + '\');addManual(' + row + ')"></td>' +
             '<td><input class="form-control" type="text" maxlength="255" id="description' + row + '" name="description' + row + '" value="" onchange="addManual(' + row + ')"></td>' +
@@ -1952,6 +1963,7 @@
             '<td><input class="form-control decimal" style="text-align:right;" type="text" id="gross' + row + '" name="gross' + row + '" value="0.00" readonly=""></td>' +
             '<td><input class="form-control decimal" style="text-align:right;" type="text" id="amount' + row + '" name="amount' + row + '" value="" onfocusout="CalculateAmountTotal(\'' + row + '\')"></td>' +
             '<td><select class="form-control" name="currencyAmount' + row + '" id="currencyAmount' + row + '" onchange="AddrowBySelect(\'' + row + '\'); CalculateAmountTotal(\'\');"><option  value="" >---------</option></select></td>' +
+            '<td class="${outbound}"><input class="form-control decimalexrate" style="text-align:right;" type="text" id="exRate' + row + '" name="exRate' + row + '" value="" ></td>' +
             '<td>' + 
                 '<center>' +
                 '<a id="expenButtonRemove' + row + '" name="expenButtonRemove' + row + '" onclick="deleteTaxList(\'\',\'' + row + '\')"  data-toggle="modal" data-target="#DeleteExpenModal">' + 
@@ -1978,7 +1990,22 @@
             allowMinus: false,
             digitsOptional: false,
             placeholder: "0.00",
-        });       
+        });
+        $(".decimalexrate").inputmask({
+            alias: "decimal",
+            integerDigits: 6,
+            groupSeparator: ',',
+            autoGroup: true,
+            digits: 4,
+            allowMinus: false,
+            digitsOptional: false,
+            placeholder: "0.0000",
+        });
+        $("#exRate" + row).keyup(function(event) {
+            if (event.keyCode === 13) {
+                calculateAmountByExRate(row,exRate);
+            }
+        });
         $('#TaxInvoiceTable input:last').addClass('lastrow');
         $("#refNo"+row+",#description"+row+",#cost"+row+",#gross"+row+",#amount"+row).focus(function() {
             if($("#amount"+row).hasClass("lastrow")){
@@ -2022,14 +2049,14 @@
         }      
     }
     
-    function AddRefNo(product,description,cost,curcost,amount,curamount,id,displaydescription,refNo){
+    function AddRefNo(product,description,cost,curcost,amount,curamount,id,displaydescription,refNo,exRate,refAmount){
         var count = parseInt($("#countTaxInvoice").val());
         var row = parseInt(count)+1;
         var match = CheckInvoiceProduct(id,count);
         var isProfit = 1;
         console.log(match);
         if(match === 0){          
-            AddDataRowProduct(row,count,id,product,description,cost,curcost,amount,curamount,'1',refNo,isProfit,'','refNo');
+            AddDataRowProduct(row,count,id,product,description,cost,curcost,amount,curamount,'1',refNo,isProfit,'','refNo',exRate,refAmount);
         
         }else{
             $("#textAlertDivDuplicate").show();
@@ -2091,7 +2118,7 @@
         return match;
     }
     
-    function AddDataRowProduct(row,count,id,product,description,cost,curCost,amount,curAmount,isVat,refNo,isProfit,vat,fromAjax) {
+    function AddDataRowProduct(row,count,id,product,description,cost,curCost,amount,curAmount,isVat,refNo,isProfit,vat,fromAjax,exRate,refAmount) {
         $('#TaxInvoiceTable tr input:last').removeClass('lastrow');
         if (!row) {
             row = 1;
@@ -2136,6 +2163,7 @@
                 '<td class="hidden"><input class="form-control" type="text" id="exportDate' + count + '" name="exportDate' + count + '" value=""></td>' +
                 '<td class="hidden"><input class="form-control" type="text" id="isProfit' + count + '" name="isProfit' + count + '" value=""></td>' +
                 '<td class="hidden"><input class="form-control" type="text" id="fromAjax' + count + '" name="fromAjax' + count + '" value=""></td>' +
+                '<td class="hidden"><input class="form-control" type="text" id="refAmount' + count + '" name="refAmount' + count + '" value=""></td>' +
                 '<td><select class="form-control" name="product' + count + '" id="product' + count + '" onchange="AddrowBySelect(\'' + count + '\')"><option  value="" >---------</option></select></td>' +
                 '<td><input class="form-control" maxlength="6" type="text" id="refNo' + count + '" name="refNo' + count + '" value="" onfocusout="checkRefNo(\'' + count + '\')"></td>' +
                 '<td><input class="form-control" type="text" maxlength="255" id="description' + count + '" name="description' + count + '" value=""></td>' +
@@ -2145,8 +2173,9 @@
                 '<td align="center" id="vatShow' + count + '"></td>' +
                 '<td class="hidden"><input class="form-control" style="text-align:right;" type="text" id="vat' + count + '" name="vat' + count + '" readonly=""></td>' +
                 '<td><input class="form-control decimal" style="text-align:right;" type="text" id="gross' + count + '" name="gross' + count + '" value="0.00" readonly=""></td>' +
-                '<td><input class="form-control decimal" style="text-align:right;" type="text" id="amount' + count + '" name="amount' + count + '" value="" onfocusout="CalculateAmountTotal(\'' + row + '\')"></td>' +
+                '<td><input class="form-control decimal" style="text-align:right;" type="text" id="amount' + count + '" name="amount' + count + '" value="" onfocusout="CalculateAmountTotal(\'' + row + '\')"></td>' +               
                 '<td><select class="form-control" name="currencyAmount' + count + '" id="currencyAmount' + count + '" onchange="AddrowBySelect(\'' + count + '\'); CalculateAmountTotal(\'\');"><option  value="" >---------</option></select></td>' +
+                '<td><input class="form-control decimalexrate" style="text-align:right;" type="text" id="exRate' + count + '" name="exRate' + count + '" value="" ></td>' +
                 '<td>' + 
                     '<center>' +
                     '<a id="expenButtonRemove' + count + '" name="expenButtonRemove' + count + '" onclick="deleteTaxList(\'\',\'' + count + '\')"  data-toggle="modal" data-target="#DeleteExpenModal">' + 
@@ -2200,6 +2229,13 @@
 //            document.getElementById('vatShow'+count).innerHTML = vatData;
             $("#refNo" + count).val(refNo);
             $("#fromAjax" + count).val(fromAjax);
+            $("#refAmount" + count).val(refAmount);
+            $("#exRate" + count).val(exRate);
+            $("#exRate" + count).keyup(function(event) {
+                if (event.keyCode === 13) {
+                    calculateAmountByExRate(count,'exRate');
+                }
+            });
             row = count + 1;
             $('#TaxInvoiceTable input:last').addClass('lastrow');
             $("#refNo"+count+",#description"+count+",#cost"+count+",#gross"+count+",#amount"+count).focus(function() {
@@ -2218,6 +2254,16 @@
                 allowMinus: false,
                 digitsOptional: false,
                 placeholder: "0.00",
+            });
+            $(".decimalexrate").inputmask({
+                alias: "decimal",
+                integerDigits: 6,
+                groupSeparator: ',',
+                autoGroup: true,
+                digits: 4,
+                allowMinus: false,
+                digitsOptional: false,
+                placeholder: "0.0000",
             });
             $("#countTaxInvoice").val(row);
             CalculateAmountTotal();
@@ -2991,8 +3037,31 @@
         $("#delTaxInvoiceDetailModal").addClass("hidden");
     }
     
-     function addManual(row){
+    function addManual(row){
        document.getElementById('currencyAmount' + row).value = 'THB';
        document.getElementById('currencyCost' + row).value = 'THB';
+    }
+    
+    function calculateAmountByExRate(row,option){
+        if (option === 'exRate') {
+            var refAmount = $("#refAmount" + row).val();
+            if(refAmount !== ''){
+                refAmount = ($("#refAmount" + row).val() !== '' ? parseFloat(($("#refAmount" + row).val()).replace(/\,/g, '')) : 0);
+                var exRate = ($("#exRate" + row).val() !== '' ? parseFloat(($("#exRate" + row).val()).replace(/\,/g, '')) : 0);
+                var amount = refAmount * exRate;
+                $("#amount" + row).val((amount !== 0 ? amount : ''));
+                if ($('#isVat' + row).is(":checked")) {
+                    var vat = ($("#vat" + row).val() !== '' ? parseFloat($("#vat" + row).val()) : parseFloat($("#vatDefault").val()));
+                    var gross = (amount*100)/(100+vat);
+                    $("#gross" + row).val(gross);
+                }
+            }       
+        } else if (option === 'setEvent'){
+            $("#exRate" + row).keyup(function(event) {
+                if (event.keyCode === 13) {
+                    calculateAmountByExRate(row, 'exRate');
+                }
+            });
+        }
     }
 </script>
