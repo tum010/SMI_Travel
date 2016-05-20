@@ -307,7 +307,7 @@
                                         <td class="priceCategoryId hide"><input  type=hidden id="row-${loop.count}-pricecategoryid" name="row-${loop.count}-pricecategoryid" value="${item.MPricecategory.id}" >${item.MPricecategory.id}</td>
                                         <td class="priceCategoryName"><input  type=hidden  id="row-${loop.count}-pricecategoryname" name="row-${loop.count}-pricecategoryname" value="${item.MPricecategory.name}" >${item.MPricecategory.name}</td>
                                         <td class="tourCode hide">${item.daytourBooking.daytour.code}</td>
-                                        <td class="priceDetail"><input  type=hidden id="row-${loop.count}-pricedetail" name="row-${loop.count}-pricedetail" value="${item.detail}" >${item.detail}</td>
+                                        <td class="priceDetail"><input style="width: 100%;" type="text" id="row-${loop.count}-pricedetail" name="row-${loop.count}-pricedetail" value="${item.detail}" ></td>
                                         <td class="hide"><input type=hidden id="row-${loop.count}-priceDefault" name="row-${loop.count}-priceDefault" value="${item.price}" ></td>
                                         <td class="priceAmountDefault text-right"><fmt:formatNumber type="currency" pattern="#,##0.00;-#,##0.00" value="${item.price}" /></td>
                                         <td class="priceAmount text-right"><input type="text" class="form-control decimal otherprice" id="row-${loop.count}-priceamount" name="row-${loop.count}-priceamount" value="${item.price}" ></td>
@@ -1192,7 +1192,7 @@
                             '<td class="priceCategoryId hide"><input  type=hidden id="row-' + row + '-pricecategoryid" name="row-' + row + '-pricecategoryid" value="' + priceCategoryId + '" >' + priceCategoryId + '</td>' +
                             '<td class="priceCategoryName "><input  type=hidden id="row-' + row + '-pricecategoryname" name="row-' + row + '-pricecategoryname" value="' + priceCategoryName + '" >' + priceCategoryName + '</td>' +
                             '<td class="tourCode hide">' + tourCode + '</td>' +
-                            '<td class="priceDetail"><input  type=hidden id="row-' + row + '-pricedetail" name="row-' + row + '-pricedetail" value="' + priceDetail + '" >' + priceDetail + '</td>' +
+                            '<td class="priceDetail"><input style="width: 100%;" type="text" id="row-' + row + '-pricedetail" name="row-' + row + '-pricedetail" value="' + priceDetail + '" ></td>' +
                             '<td class="hide"><input type=hidden id="row-' + row + '-priceDefault" name="row-' + row + '-priceDefault" value="' + priceAmount + '" ></td>'+
                             '<td class="priceAmountDefault moneyprice text-right">'+ priceAmount + '</td>' + 
                             '<td class="priceAmount"><input class="form-control decimal otherprice text-right" type="text" id="row-' + row + '-priceamount" name="row-' + row + '-priceamount" value="' + priceAmount + '" ></td>' +
