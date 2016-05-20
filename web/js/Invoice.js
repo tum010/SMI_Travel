@@ -1032,7 +1032,11 @@ function CallAjaxDeleteBill(param, row) {
                     $("#BillDescription" + row).parent().parent().remove();
                     $('#textAlertInvoiceNotEmpty').hide();
                 } else if (msg === 'notDeleteReciptAndTax') {
-                    $('#textAlertInvoiceNotEmpty').show();
+                    $('#textAlertInvoiceNotEmptyReceiptAndTax').show();
+                } else if (msg === 'notDeleteTax') {
+                    $('#textAlertInvoiceNotEmptyTax').show();
+                } else if (msg === 'notDeleteRecipt') {
+                    $('#textAlertInvoiceNotEmptyReceipt').show();
                 }
                 $("#ajaxload").addClass("hidden");
                 CalculateGrandTotal('');
@@ -1344,9 +1348,9 @@ function CallAjaxSearchDescription(param, rowId, des, RefNo) {
             cache: false,
             data: param,
             success: function(msg) {
-                var strx = msg.split('|');
+                var strx = (msg !== 'null' ? msg.split('|') : []);
                 var array = [];
-                array = array.concat(strx);
+                array = array.concat(strx);               
                 setbillAndDescription(rowId, RefNo, array[1], array[0], des);
                 try {
                     $("#ajaxloadsearch").addClass("hidden");
@@ -1394,11 +1398,11 @@ function CallAjaxSearchDescriptionCancel(param, rowId, des, RefNo) {
 }
 
 function setbillAndDescription(row, ref, name, text, des) {
-    var bill = ref + " " + name + " " + des;
+    var bill = ref + " " + (name !== undefined ? name : '') + " " + des;
     $('#BillDescriptionTemp' + row).val(bill);
     $('#BillDescription' + row).val(bill);
-    $('#DescriptionInvoiceDetail' + row).html(text);
-    $("#DescriptionInvoiceDetailTextArea" + row).html(text);
+    $('#DescriptionInvoiceDetail' + row).html(text !== undefined ? text : '');
+    $("#DescriptionInvoiceDetailTextArea" + row).html(text !== undefined ? text : '');
 }
 
 function checkDuplicateInvoiceDetail(product, rowId) {
@@ -1863,4 +1867,11 @@ function callAjaxClearDuplicateUser(param) {
         alert(e);
         console.log('update duplicate user fail');
     }
+}
+
+function hideTextAlertDiv(){
+    $("#textAlertInvoiceNotEmptyReceiptAndTax").hide();
+    $("#textAlertInvoiceNotEmptyTax").hide();
+    $("#textAlertInvoiceNotEmptyReceipt").hide();
+    $("#textAlertDuplicate").hide();
 }

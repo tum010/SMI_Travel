@@ -36,14 +36,14 @@
         <script type="text/javascript" src="js/Utility.js"></script>
         
     </head>
-    <body>
+    <body onload="test()">
         <fmt:setLocale value="en_US" scope="session"/>
         <!--Header-->         
         <div class="page-section-header">          
             <tiles:insertAttribute name="header" />
         </div> 
         <!--Body-->
-        <div class="overlay" id="loading-test">
+        <div class="overlay" id="loading-background" style="position: fixed; height: 100%; width: 100%;">
         <div class="loading">
             <img id="loading-image" src="img/loadingBar.GIF" alt="Loading..." />
         </div>

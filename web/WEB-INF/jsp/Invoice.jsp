@@ -162,8 +162,8 @@
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <strong>Not have Invoice In Page!!</strong> 
             </div>
-            <div id="textAlertDuplicate"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <div id="textAlertDuplicate"  style="display:none;" class="alert alert-danger" role="alert">
+                <button type="button" class="close" aria-label="Close" onclick="hideTextAlertDiv()"><span aria-hidden="true">&times;</span></button>
                 <strong>Duplicate</strong> 
             </div>
             <div id="textAlertMoney"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
@@ -178,11 +178,19 @@
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <strong>Cannot void invoice. It use in receipt no </strong> 
             </div>
-            <div id="textAlertInvoiceNotEmpty"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <div id="textAlertInvoiceNotEmptyReceiptAndTax"  style="display:none;" class="alert alert-danger" role="alert">
+                <button type="button" class="close" aria-label="Close" onclick="hideTextAlertDiv()"><span aria-hidden="true">&times;</span></button>
+                <strong>Cannot delete invoice detail. It use in tax invoice and receipt.</strong> 
+            </div>
+            <div id="textAlertInvoiceNotEmptyTax"  style="display:none;" class="alert alert-danger " role="alert">
+                <button type="button" class="close" aria-label="Close" onclick="hideTextAlertDiv()"><span aria-hidden="true">&times;</span></button>
+                <strong>Cannot delete invoice detail. It use in tax invoice.</strong> 
+            </div> 
+            <div id="textAlertInvoiceNotEmptyReceipt"  style="display:none;" class="alert alert-danger" >
+                <button type="button" class="close" aria-label="Close" onclick="hideTextAlertDiv()"><span aria-hidden="true">&times;</span></button>
                 <strong>Cannot delete invoice detail. It use in receipt.</strong> 
-            </div>            
-
+            </div>
+            
             <form action="Invoice${page}.smi" method="post" id="InvoiceForm" role="form">
                 <div id="textAlertDisable"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>

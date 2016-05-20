@@ -247,16 +247,20 @@ public class InvoiceImpl implements InvoiceDao{
     public  synchronized String DeleteInvoiceDetail(String InvoiceDetailId) {
         String result = "";
         int checkReciptAndTaxInvoice = 0;
+        boolean isTaxInvoice = false;
+        boolean isReceipt = false;
         if("yesTaxinvoice".equals(checkTaxInvoiceDelete(InvoiceDetailId))){
-            checkReciptAndTaxInvoice++; 
+            checkReciptAndTaxInvoice++;
+            isTaxInvoice = true;
         }else{
-            checkReciptAndTaxInvoice = 0;
+            checkReciptAndTaxInvoice = (isTaxInvoice ? checkReciptAndTaxInvoice : 0);
         }
         // check Recipt
         if("yesReceipt".equals(checkReciptDelete(InvoiceDetailId))){
             checkReciptAndTaxInvoice++;
+            isReceipt = true;
         }else{
-            checkReciptAndTaxInvoice = 0;
+            checkReciptAndTaxInvoice = (isTaxInvoice ? checkReciptAndTaxInvoice : 0);
         }
         if(checkReciptAndTaxInvoice == 0){
             try {
@@ -275,7 +279,16 @@ public class InvoiceImpl implements InvoiceDao{
                 result = "fail";
             }
         }else{
-            result ="notDeleteReciptAndTax";
+            if(isTaxInvoice && isReceipt){
+                result = "notDeleteReciptAndTax";
+                
+            } else if(isTaxInvoice){
+                result = "notDeleteTax";
+                
+            } else if(isReceipt){
+                result = "notDeleteRecipt";
+                
+            }           
         }
         return result;
     }
