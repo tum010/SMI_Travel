@@ -40,7 +40,9 @@
         <property name="remark" type="string">
             <column name="remark" length="100" />
         </property>
-        
+        <property name="type" type="string">
+            <column name="type" length="1" />
+        </property>
         
         <bag name="billableDescs" table="billable_desc" inverse="true" lazy="true" fetch="select">
             <key>

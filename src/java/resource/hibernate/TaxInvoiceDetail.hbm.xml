@@ -61,5 +61,11 @@
         <property name="gross" type="big_decimal">
             <column name="gross" precision="12" />
         </property>
+		<property name="exRate" type="big_decimal">
+            <column name="ex_rate" precision="10" />
+        </property>
+        <property name="refAmount" type="big_decimal">
+            <column name="ref_amount" precision="10" />
+        </property>
     </class>
 </hibernate-mapping>
