@@ -154,6 +154,7 @@
                                 <div class="col-sm-10">
                                     <div class="input-group">
                                         <input type="hidden" id="billto"  name="billto" placeholder="test"  value="${billable.billTo}"/>
+                                        <input type="hidden" id="billtype"  name="billtype" value="${billable.type}"/>
                                         <input type="text" id="billtoVal"  name="billtoVal" 
                                                class="form-control" value="${billable.billTo}" 
                                                data-bv-notempty="true" data-bv-notempty-message="Bill to is required" >      
@@ -676,7 +677,7 @@
 //                        bill = [];
                     </script>
                     <c:forEach var="item" items="${customerAgentList}">
-                        <tr onclick="setBillValue('${item.billTo}', '${item.billName}', '${item.address}', '${item.term}', '${item.pay}');">                                
+                        <tr onclick="setBillValue('${item.billTo}', '${item.billName}', '${item.address}', '${item.term}', '${item.pay}', '${item.type}');">                                
                             <td class="item-billto">${item.billTo}</td>
                             <td class="item-name">${item.billName}</td>                                
                             <td class="item-address hidden">${item.address}</td>

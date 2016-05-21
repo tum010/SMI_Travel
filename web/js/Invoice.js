@@ -1270,8 +1270,9 @@ function setBillableInvoice(data) {
     var strx = data.split('//');
     var array = [];
     array = array.concat(strx);
+    var billType = array[8];
     $('#InvTo').val(array[0]);
-    $('#ARCode').val(array[0]);
+    $('#ARCode').val(billType === 'C' ? 'DUMMY' : array[0]);
     $('#InvToName').val(array[1]);
     $('#InvToAddress').val(array[2]);
     $('#TermPay').val(array[3]);

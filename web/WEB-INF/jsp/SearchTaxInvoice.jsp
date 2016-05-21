@@ -22,10 +22,10 @@
 <div class ="container"  style="padding-top: 15px;" ng-app="">
     <div class="row">
         <!-- side bar -->
-        <div class="col-sm-2" style="border-right:  solid 1px #01C632;padding-top: 10px">
+        <div class="col-sm-1" style="border-right:  solid 1px #01C632;padding-top: 10px; padding-left: 0px; width: 140px;">
             <div ng-include="'WebContent/FinanceAndCashier/TaxInvoiceMainMenu.html'"></div>
         </div>        
-        <div class="col-sm-10">
+        <div class="col-sm-11" style="padding-right: 0px; width: 1120px;">
 <!--            <div class="row" style="padding-left: 15px">  
                 <div class="col-sm-6 " style="padding-right: 15px">
                     <h4><b>Search Tax Invoice</b></h4>

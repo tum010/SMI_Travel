@@ -17,6 +17,7 @@ public class CustomerAgentInfo {
     private String address;
     private int term;
     private int pay;
+    private String type;
 
     public String getBillTo() {
         return billTo;
@@ -64,6 +65,14 @@ public class CustomerAgentInfo {
 
     public void setPay(int pay) {
         this.pay = pay;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
     
     

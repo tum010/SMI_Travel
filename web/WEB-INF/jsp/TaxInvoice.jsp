@@ -301,8 +301,8 @@
                                 <span id="SpanSearch" class="glyphicon glyphicon-print fa fa-search"></span> Search
                             </button>
                         </div>
-                        <div class="col-xs-1 text-right" style="width: 180px;">
-                            <label class="control-label" for="">Tax Invoice date<font style="color: red">*</font></lable>
+                        <div class="col-xs-1 text-right" style="width: 175px;">
+                            <label class="control-label" for="">Tax Invoice Date<font style="color: red">*</font></lable>
                         </div>
                         <div class="col-md-2 form-group">
                             <div class='input-group date' id='InputDatePicker'>
@@ -331,7 +331,7 @@
                         <div class="col-md-2 text-left">
                             <label class="control-label" for="">Tax Inv To<font style="color: red">*</font></lable>
                         </div>
-                        <div class="form-group col-xs-1 text-right" style="width: 265px">
+                        <div class="form-group col-xs-1 text-right" style="width: 280px">
                             <div class="input-group">
                                 <input type="text" class="form-control" id="TaxInvTo" name="TaxInvTo" maxlength="11" value="${taxInvoice.taxInvTo}" style="text-transform:uppercase"/>
                                 <span class="input-group-addon" id="TaxInvTo_Modal"  data-toggle="modal" data-target="#TaxInvToModal">
@@ -351,7 +351,7 @@
                         <div class="col-md-2 text-left">
                             <label class="control-label" for="">Name </lable>
                         </div>    
-                        <div class="col-md-1 form-group" style="width: 585px">
+                        <div class="col-md-1 form-group" style="width: 615px">
                             <input  type="text" maxlength="255" id="InvToName" name="InvToName" class="form-control" value="${taxInvoice.taxInvName}">
                         </div>  
                     </div>
@@ -359,7 +359,7 @@
                         <div class="col-md-2 text-left">
                             <label class="control-label" for="">Address<font style="color: red">*</font></lable>
                         </div>
-                        <div class="col-md-1 form-group" style="width: 585px">
+                        <div class="col-md-1 form-group" style="width: 615px">
                             <textarea maxlength="255" rows="3" cols="100" id="InvToAddress" name="InvToAddress" class="form-control" value="" >${taxInvoice.taxInvAddr}</textarea>
                         </div>
                     </div>
@@ -396,7 +396,7 @@
                         </a>                       
                     </div>                       
                     <div class="col-xs-12 " id="searchInvoiceNo1">
-                        <div class="col-xs-1 text-left" style="width: 160px;">
+                        <div class="col-xs-1 text-left" style="width: 175px;">
                             <label class="control-label text-right">Invoice No</label>
                         </div>
                         <div class="col-xs-2 form-group" id="invoicenopanel" style="width: 180px">
@@ -435,7 +435,7 @@
                         </table>        
                     </div>         
                     <div class="col-xs-12 hidden " id="searchRefNo1">
-                        <div class="col-xs-1 text-left" style="width: 160px;">
+                        <div class="col-xs-1 text-left" style="width: 175px;">
                             <label class="control-label text-right">Ref No</label>
                         </div>
                         <div class="col-xs-1 form-group" style="width: 180px" id="refnopanel">

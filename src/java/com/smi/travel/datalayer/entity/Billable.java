@@ -25,6 +25,7 @@ public class Billable {
      private Integer isPayYourself;
      private String remark;
      private MBank bankAccount;
+     private String type;
 
      private List billableDescs = new LinkedList<BillableDesc>();
              
@@ -147,6 +148,14 @@ public class Billable {
 
     public void setBankAccount(MBank bankAccount) {
         this.bankAccount = bankAccount;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
 

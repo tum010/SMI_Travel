@@ -95,6 +95,7 @@ public class BillableController extends SMITravelController {
         String passengerId = request.getParameter("passengerId");
         String payable = request.getParameter("payable");
         String billto = request.getParameter("billto");
+        String billtype = request.getParameter("billtype");
 //        String billdate = request.getParameter("billdate");
         String billname = request.getParameter("billname");
         String address = request.getParameter("address");
@@ -124,6 +125,7 @@ public class BillableController extends SMITravelController {
         billForm.setMaster(master);
         billForm.setPassenger(this.getPassengerById(master, passengerId));
         billForm.setBillTo(billto);
+        billForm.setType(billtype);
         billForm.setBillName(billname);
         billForm.setBillAddress(address);
         billForm.setMAccpay(accpay);
@@ -220,7 +222,7 @@ public class BillableController extends SMITravelController {
                 billable.setMaster(master);
                 billable.setPassenger(leader);
                 request.setAttribute(ACTION, "insert");
-            }
+            }           
             
             List<BillableDesc> billableDesc = billable.getBillableDescs();          
             
@@ -353,6 +355,11 @@ public class BillableController extends SMITravelController {
                 billable.setBillName(master.getAgent().getName());
                 billable.setMAccpay(master.getAgent().getMAccpay());
                 billable.setMAccterm(master.getAgent().getMAccterm());               
+            }
+            if(billable.getType() == null || "".equalsIgnoreCase(billable.getType())){
+                List<CustomerAgentInfo> customerAgentInfo = billableService.SearchListCustomerAgentInfo(billable.getBillTo());
+                billable.setType(!"".equalsIgnoreCase(customerAgentInfo.get(0).getType()) ? customerAgentInfo.get(0).getType() : "");
+                
             }
         }
     }

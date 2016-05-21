@@ -34,6 +34,8 @@ $(document).ready(function() {
         $(".ui-widget").css("top", position.top + 30);
         $(".ui-widget").css("left", position.left); 
         if($(this).val() === ""){
+            $("#billto").val("");
+            $("#billtype").val("");
             $("#billname").val("");
             $("#address").val("");
         }else{
@@ -84,7 +86,8 @@ function CallAjaxAuto(param){
      var billListId= [];
      var billListName= [];
      var billListAddress= [];
-     var billid , billname ,billaddr;
+     var billListType= [];
+     var billid , billname , billaddr , billtype;
      $("#billtoVal").autocomplete("destroy");
      try {
         $.ajax({
@@ -103,17 +106,20 @@ function CallAjaxAuto(param){
                         billid = billJson[i].id;
                         billname = billJson[i].name;
                         billaddr = billJson[i].address;
+                        billtype = billJson[i].type;
                         billArray.push(billid);
                         billArray.push(billname);
                         billListId.push(billid);
                         billListName.push(billname);
                         billListAddress.push(billaddr);
+                        billListType.push(billtype);
                     }                 
                      $("#dataload").addClass("hidden"); 
                 }
                 $("#billto").val(billid);
                 $("#billname").val(billname);
                 $("#address").val(billaddr);
+                $("#billtype").val(billtype);
                 
               
                 $("#billtoVal").autocomplete({
@@ -126,6 +132,7 @@ function CallAjaxAuto(param){
                                 $("#billtoVal").val(billListId[i]);
                                 $("#billname").val(billListName[i]);
                                 $("#address").val(billListAddress[i]);
+                                $("#billtype").val(billListType[i]);
                             }                 
                         }   
                     }
@@ -204,7 +211,7 @@ function CallAjax(param) {
 
 }
 
-function setBillValue(billto, billname, address, term, pay) {
+function setBillValue(billto, billname, address, term, pay, type) {
     $("#billtoVal").val(billto);
     $("#billname").val(billname);
     if (address == 'null') {
@@ -222,6 +229,11 @@ function setBillValue(billto, billname, address, term, pay) {
         $("#accpay").val("");
     } else {
         $("#accpay").val(pay);
+    }
+    if (type == 'null') {
+        $("#billtype").val("");
+    } else {
+        $("#billtype").val(type);
     }
 
     $("#BillToModal").modal('hide');

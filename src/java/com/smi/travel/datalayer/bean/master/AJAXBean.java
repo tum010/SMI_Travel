@@ -526,7 +526,7 @@ public class AJAXBean extends AbstractBean implements
 
                     for (int i = 0; i < data.size(); i++) {
                         CustomerAgentInfo row = data.get(i);
-                        tabledata += "<tr onclick=\"setBillValue('" + row.getBillTo() + "','" + ReplaceEnterKey(row.getBillName()) + "','" + ReplaceEnterKey(row.getAddress()) + "','" + row.getTerm() + "','" + row.getPay() + "');\">";
+                        tabledata += "<tr onclick=\"setBillValue('" + row.getBillTo() + "','" + ReplaceEnterKey(row.getBillName()) + "','" + ReplaceEnterKey(row.getAddress()) + "','" + row.getTerm() + "','" + row.getPay() + "','" + row.getType()+ "');\">";
                         tabledata += "<td class='item-billto'>" + row.getBillTo() + "</td>";
                         tabledata += "<td class='item-name'>" + ReplaceEnterKey(row.getBillName()) + "</td>";
                         tabledata += "<td class='item-address hidden'>" + ReplaceEnterKey(row.getAddress()) + "</td>";
@@ -2383,6 +2383,7 @@ public class AJAXBean extends AbstractBean implements
                 field.put("id", customer.getBillTo());
                 field.put("name", customer.getBillName());
                 field.put("address", customer.getAddress());
+                field.put("type", customer.getType());
                 record.add(field);
             }
         }    
@@ -2751,7 +2752,7 @@ public class AJAXBean extends AbstractBean implements
 
         result += bill.getMaster().getBookingType() + "||";
         result += bill.getBillTo() + "//" + bill.getBillName() + "//" + bill.getBillAddress() + "//" + term
-                + "//" + bill.getMaster().getStaff().getId() + "//" + bill.getMaster().getStaff().getName() + "//" + bill.getMaster().getStaff().getUsername() + "//" + dateDue + "//" + "||";
+                + "//" + bill.getMaster().getStaff().getId() + "//" + bill.getMaster().getStaff().getName() + "//" + bill.getMaster().getStaff().getUsername() + "//" + dateDue + "//" + bill.getType() + "//" + "||";
         List<BillableDesc> billdeescList = bill.getBillableDescs();
         int count = 0;
         NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US);

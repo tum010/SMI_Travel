@@ -27,13 +27,15 @@ public class CustomerAgentInfoImpl implements CustomerAgentInfoDao{
     public List<CustomerAgentInfo> getListCustomerAgentInfo() {
         Session session = this.sessionFactory.openSession();
         util = new UtilityFunction();
-        List<Object[]> QueryList =  session.createSQLQuery("SELECT * FROM `customer_agent_info` limit 500 ")
+        List<Object[]> QueryList =  session.createSQLQuery("SELECT * FROM `customer_agent_info` ")
                 .addScalar("bill_To",Hibernate.STRING)
                 .addScalar("bill_Name",Hibernate.STRING)
                 .addScalar("tel",Hibernate.STRING)
                 .addScalar("address",Hibernate.STRING)
                 .addScalar("term",Hibernate.INTEGER)
                 .addScalar("pay",Hibernate.INTEGER)
+                .addScalar("type",Hibernate.STRING)
+                .setMaxResults(100)
                 .list();
         
         List<CustomerAgentInfo> CustomerAgentInfoList =  new LinkedList<CustomerAgentInfo>();
@@ -50,6 +52,7 @@ public class CustomerAgentInfoImpl implements CustomerAgentInfoDao{
             if(B[5] != null){
                 CustomerAgent.setPay(util.ConvertInt(B[5]));
             }
+            CustomerAgent.setType(B[6] != null ? util.inputString(B[6]) : "");
             CustomerAgentInfoList.add(CustomerAgent);
         }
        
@@ -83,6 +86,7 @@ public class CustomerAgentInfoImpl implements CustomerAgentInfoDao{
                 .addScalar("address",Hibernate.STRING)
                 .addScalar("term",Hibernate.INTEGER)
                 .addScalar("pay",Hibernate.INTEGER)
+                .addScalar("type",Hibernate.STRING)
                 .list();
         
         List<CustomerAgentInfo> CustomerAgentInfoList =  new LinkedList<CustomerAgentInfo>();
@@ -98,6 +102,7 @@ public class CustomerAgentInfoImpl implements CustomerAgentInfoDao{
             if(B[5] != null){
                 CustomerAgent.setPay(B[5] != null ? util.ConvertInt(B[5]) : null);
             }
+            CustomerAgent.setType(B[6] != null ? util.inputString(B[6]) : "");
             CustomerAgentInfoList.add(CustomerAgent);
         }
        
@@ -121,6 +126,7 @@ public class CustomerAgentInfoImpl implements CustomerAgentInfoDao{
                 .addScalar("address",Hibernate.STRING)
                 .addScalar("term",Hibernate.INTEGER)
                 .addScalar("pay",Hibernate.INTEGER)
+                .addScalar("type",Hibernate.STRING)
                 .list();
         
         List<CustomerAgentInfo> CustomerAgentInfoList =  new LinkedList<CustomerAgentInfo>();
@@ -136,6 +142,7 @@ public class CustomerAgentInfoImpl implements CustomerAgentInfoDao{
             if(B[5] != null){
                 CustomerAgent.setPay(util.ConvertInt(B[5]));
             }
+            CustomerAgent.setType(B[6] != null ? util.inputString(B[6]) : "");
             CustomerAgentInfoList.add(CustomerAgent);
         }
        

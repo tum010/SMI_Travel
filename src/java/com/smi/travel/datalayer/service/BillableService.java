@@ -78,8 +78,9 @@ public class BillableService {
     public String printTicketOrder(String refNo) {
         return billableDao.printTicketOrder(refNo);
     }
-    
-    
-    
-    
+
+    public List<CustomerAgentInfo> SearchListCustomerAgentInfo(String billTo) {
+        return customerAgentInfodao.SearchListCustomerAgentInfo(billTo);
+    }
+            
 }
