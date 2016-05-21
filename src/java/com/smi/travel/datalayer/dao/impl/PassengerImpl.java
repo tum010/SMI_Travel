@@ -9,6 +9,7 @@ import com.smi.travel.datalayer.dao.PassengerDao;
 import com.smi.travel.datalayer.dao.impl.CustomerImpl;
 import com.smi.travel.datalayer.entity.Customer;
 import com.smi.travel.datalayer.entity.Passenger;
+import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -176,6 +177,27 @@ public class PassengerImpl implements PassengerDao {
         }
         return result;
 
+    }
+
+    @Override
+    public List<Passenger> checkPassenger(Passenger passenger) {
+        String query = "from Passenger pass where pass.customer.code = :code and pass.master.id = :masterId and pass.isLeader = 1 ";
+        List<Passenger> passengerList = new ArrayList<Passenger>();
+        Session session = this.sessionFactory.openSession();
+        try {
+            passengerList = session.createQuery(query)
+                    .setParameter("code", passenger.getCustomer().getCode())
+                    .setParameter("masterId", passenger.getMaster().getId())
+                    .list();
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            
+        } finally {
+            session.close();
+        }
+        
+        return passengerList;
     }
 
 }

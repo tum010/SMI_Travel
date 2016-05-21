@@ -381,12 +381,39 @@ $(document).ready(function () {
         var customer_passportno = $(this).find(".customer-passportno").text();
         var customer_japanfirstname = $(this).find(".customer-japanfirstname").text();
         var customer_japanlastname = $(this).find(".customer-japanlastname").text();
+        
+        var code = $("#existCode").val();
+        var subcode  = code.split("||");
+        for(var i = 0 ;i< subcode.length ; i++){
+            console.log("subcode["+i+"]="+subcode[i]);
+            if(customer_code == subcode[i] && customer_code !="" ){
+                alert("Profile Code  นี้ ถูกใช้ไปแล้ว");
+                $(this).val("");
+                $("#passengerId").val("");
+                $("#customerId").val("");
+                $("#MInitialname").val("");
+                $("#firstName").val("");
+                $("#lastName").val("");
+                $("input[name=sex]").prop('checked', false);
+                $("#address").val("");
+                $("#tel").val("");
+                $("#phone").val("");
+                $("#email").val("");
+                $("#remark").val("");
+                $("#Passport").val("");
+                $("#firstNameJapan").val("");
+                $("#lastNameJapan").val("");
+                return;
+            }
+        }
+        
         $("#customerId").val(customer_id);
         $("#MInitialname").val(customer_initialId);
         $("#passengerId").val(customer_code);
         $("#passengerIdVal").val(customer_code);
         $("#firstName").val(customer_firstname);
         $("#lastName").val(customer_lastname);
+        
         if(customer_sex !== ""){
             $("input[name=sex][value="+customer_sex+"]").prop('checked', true);
         }else{
@@ -453,41 +480,68 @@ function CallFilterAjax(param) {
             data: param,
             success: function (msg) {
                 try {
-                   
+
                     $('#CustomerTable').dataTable().fnClearTable();
                     $('#CustomerTable').dataTable().fnDestroy();
                     $("#CustomerTable tbody").empty().append(msg);
                     $("#CustomerTable tr").on('click', function () {
-                    var customer_id = $(this).find(".customer-id").text();
-                    var customer_code = $(this).find(".customer-code").text();
-                    var customer_initial = $(this).find(".customer-initial").text();
-                    var customer_initialId = $(this).find(".customer-initialId").text();
-                    var customer_firstname = $(this).find(".customer-firstname").text();
-        var customer_lastname = $(this).find(".customer-lastname").text();
-        var customer_sex = $(this).find(".customer-sex").text();
-        var customer_address = $(this).find(".customer-address").text();
-        var customer_tel = $(this).find(".customer-tel").text();
-        var customer_phone = $(this).find(".customer-phone").text();
-        var customer_postal = $(this).find(".customer-postal").text();
-        var customer_email = $(this).find(".customer-email").text();
-        var customer_remark = $(this).find(".customer-remark").text();
-        var customer_passportno = $(this).find(".customer-passportno").text();
-        var customer_japanfirstname = $(this).find(".customer-japanfirstname").text();
-        var customer_japanlastname = $(this).find(".customer-japanlastname").text();
-        $("#customerId").val(customer_id);
-        $("#MInitialname").val(customer_initialId);
-        $("#passengerId").val(customer_code);
-        $("#firstName").val(customer_firstname);
-        $("#lastName").val(customer_lastname);
-        $("#sex").val(customer_sex);
-        $("#address").val(customer_address);
-        $("#tel").val(customer_tel);
-        $("#phone").val(customer_phone);
-        $("#email").val(customer_email);
-        $("#remark").val(customer_remark);
-        $("#Passport").val(customer_passportno);
-        $("#CustomerModal").modal('hide');
-    });
+                        var customer_id = $(this).find(".customer-id").text();
+                        var customer_code = $(this).find(".customer-code").text();
+                        var customer_initial = $(this).find(".customer-initial").text();
+                        var customer_initialId = $(this).find(".customer-initialId").text();
+                        var customer_firstname = $(this).find(".customer-firstname").text();
+                        var customer_lastname = $(this).find(".customer-lastname").text();
+                        var customer_sex = $(this).find(".customer-sex").text();
+                        var customer_address = $(this).find(".customer-address").text();
+                        var customer_tel = $(this).find(".customer-tel").text();
+                        var customer_phone = $(this).find(".customer-phone").text();
+                        var customer_postal = $(this).find(".customer-postal").text();
+                        var customer_email = $(this).find(".customer-email").text();
+                        var customer_remark = $(this).find(".customer-remark").text();
+                        var customer_passportno = $(this).find(".customer-passportno").text();
+                        var customer_japanfirstname = $(this).find(".customer-japanfirstname").text();
+                        var customer_japanlastname = $(this).find(".customer-japanlastname").text();
+                        
+                        var code = $("#existCode").val();
+                        var subcode  = code.split("||");
+                        for(var i = 0 ;i< subcode.length ; i++){
+                            console.log("subcode["+i+"]="+subcode[i]);
+                            if(customer_code == subcode[i] && customer_code !="" ){
+                                alert("Profile Code  นี้ ถูกใช้ไปแล้ว");
+                                $(this).val("");
+                                $("#passengerId").val("");
+                                $("#customerId").val("");
+                                $("#MInitialname").val("");
+                                $("#firstName").val("");
+                                $("#lastName").val("");
+                                $("input[name=sex]").prop('checked', false);
+                                $("#address").val("");
+                                $("#tel").val("");
+                                $("#phone").val("");
+                                $("#email").val("");
+                                $("#remark").val("");
+                                $("#Passport").val("");
+                                $("#firstNameJapan").val("");
+                                $("#lastNameJapan").val("");
+                                return;
+                            }
+                        }
+                        
+                        $("#customerId").val(customer_id);
+                        $("#MInitialname").val(customer_initialId);
+                        $("#passengerId").val(customer_code);
+                        $("#firstName").val(customer_firstname);
+                        $("#lastName").val(customer_lastname);
+                        $("#sex").val(customer_sex);
+                        $("#address").val(customer_address);
+                        $("#tel").val(customer_tel);
+                        $("#phone").val(customer_phone);
+                        $("#email").val(customer_email);
+                        $("#remark").val(customer_remark);
+                        $("#Passport").val(customer_passportno);
+                        $("#CustomerModal").modal('hide');
+                    });
+                    
                     $('#CustomerTable').dataTable({bJQueryUI: true,
                         "sPaginationType": "full_numbers",
                         "bAutoWidth": false,

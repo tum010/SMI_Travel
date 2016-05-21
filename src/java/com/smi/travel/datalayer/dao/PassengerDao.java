@@ -6,6 +6,7 @@
 
 package com.smi.travel.datalayer.dao;
 
+import com.smi.travel.datalayer.entity.Customer;
 import com.smi.travel.datalayer.entity.Passenger;
 import java.util.List;
 
@@ -19,5 +20,6 @@ public interface PassengerDao {
     public String saveBookingPassenger(Passenger passenger,String cuscode);
     public String saveFamilyleader(Passenger passenger,String cuscode);    
     public int DeletePassenger(Passenger passenger);    
+    public List<Passenger> checkPassenger(Passenger passenger);
     
 }

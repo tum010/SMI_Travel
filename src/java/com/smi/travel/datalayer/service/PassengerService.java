@@ -29,6 +29,13 @@ public class PassengerService {
     
     public String saveBookingPassenger(Passenger passenger){
         String firstCharName = "";
+//        if((passenger.getCustomer() != null) && (passenger.getCustomer().getCode() != null) && (!"".equalsIgnoreCase(passenger.getCustomer().getCode()))){
+//            List<Passenger> passengerList = passengerdao.checkPassenger(passenger);
+//            if(!passengerList.isEmpty()){
+//                return "duplicate";
+//            }
+//        }       
+        
         if((passenger.getCustomer() != null) && (passenger.getCustomer().getFirstName() != null)){
             firstCharName =   passenger.getCustomer().getFirstName().substring(0, 1);
         }
