@@ -72,5 +72,9 @@
         <property name="otTax" type="big_decimal">
             <column name="ot_tax" precision="10" />
         </property>
+         <property name="flightOrder" type="java.lang.Integer">
+            <column name="flight_order" precision="10" />
+        </property>
+        
     </class>
 </hibernate-mapping>
