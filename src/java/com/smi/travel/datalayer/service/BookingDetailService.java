@@ -71,9 +71,12 @@ public class BookingDetailService {
         if(master.getCustomer() == null){
             System.out.println("customer null");
         }
-        if((master.getCustomer() != null) && (master.getCustomer().getFirstName() != null)){
+        if((master.getCustomer() != null) && (master.getCustomer().getFirstName() != null)&&(!"".equalsIgnoreCase(master.getCustomer().getFirstName()))){
             System.out.println("firstCharName :"+firstCharName);
             firstCharName =   master.getCustomer().getFirstName().substring(0, 1);
+        }else{
+            System.out.println("firstCharName :"+firstCharName);
+            firstCharName =   master.getCustomer().getLastName().substring(0, 1);
         }
         
         if((master.getCustomer() != null) &&(master.getCustomer().getId() == null)){
