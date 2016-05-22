@@ -127,7 +127,8 @@ public class SystemUserImpl implements SystemUserDao {
         if (check == 0) {
             query = query.replaceAll("where", " ");
         }
-        System.out.println("query : " + query);
+        System.out.println("query : " + query + "order by u.name");
+        query = query + " order by u.name";
       //  List<SystemUser> list = getHibernateTemplate().find(query);
         Session session = this.sessionFactory.openSession();
         List<SystemUser> list = session.createQuery(query).list();
