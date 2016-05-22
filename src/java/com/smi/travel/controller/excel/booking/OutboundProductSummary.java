@@ -1968,7 +1968,8 @@ public class OutboundProductSummary extends AbstractExcelView  {
                 celldata41.setCellValue(String.valueOf(data.getPaycompvno()));
                 celldata41.setCellStyle(styleAlignLeftBorderAll);                
             HSSFCell celldata42 = row.createCell(42);
-                celldata42.setCellValue("".equalsIgnoreCase(String.valueOf(data.getPaycommission())) ? 0 : (new BigDecimal(data.getPaycommission())).doubleValue());
+            System.out.println("data.getPaycommission() : "+data.getPaycommission());
+                celldata42.setCellValue("".equalsIgnoreCase(String.valueOf(data.getPaycommission())) ? 0 : (new BigDecimal(data.getPaycommission().replaceAll(",", ""))).doubleValue());
                 celldata42.setCellStyle(styleAlignRightBorderAllNumber);                
             HSSFCell celldata43 = row.createCell(43);
                 celldata43.setCellValue("".equalsIgnoreCase(String.valueOf(data.getBalanceprofit())) ? 0 : (new BigDecimal(data.getBalanceprofit())).doubleValue());
