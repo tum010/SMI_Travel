@@ -127,6 +127,8 @@ public class BookingPnrImpl implements BookingPnrDao {
                 List<BookingPassenger> newPassenger = new ArrayList<BookingPassenger>(newAirline.getBookingPassengers());
                 int isAirlinelap = 1;
                 int isPassengerlap = 1;
+                
+             
                 if (!isExistAirline(newAirline, listCurrentAirlines)) {
                     System.out.println("not isExistAirline");
                     currentBookingPnr.getBookingAirlines().add(newAirline);
@@ -141,6 +143,7 @@ public class BookingPnrImpl implements BookingPnrDao {
                     updateFilenameFlag = true;
                     isPassengerlap =0 ;
                 }
+              
                 
                 if(isAirlinelap==1) {
                     BookingAirline airline = new BookingAirline();
@@ -176,9 +179,33 @@ public class BookingPnrImpl implements BookingPnrDao {
                        
                     }
                     if(isPassengerlap == 1){
+                        System.out.println("add passenger");
+                        BookingAirline airlinePass = new BookingAirline();    
+                        List<BookingAirline> AirPasslist = new ArrayList<BookingAirline>(listCurrentAirlines);
+                    
+                        for(int i =0;i<AirPasslist.size();i++){
+                            System.out.println("AirPasslist ID:"+AirPasslist.get(i).getId() + "AirPasslist CODE:"+AirPasslist.get(i).getAirlineCode() );
+                            if(newAirline.getAirlineCode().equalsIgnoreCase(AirPasslist.get(i).getAirlineCode())){
+                                System.out.println("Airline ID : " +  AirPasslist.get(i).getId());
+                                Iterator<BookingFlight> iteratorFlight =  AirPasslist.get(i).getBookingFlights().iterator();
+                                while(iteratorFlight.hasNext()){
+                                    BookingFlight flight = iteratorFlight.next();
+                                    for(int j=0;j<newflight.size();j++){
+                                        if(newflight.get(j).getFlightNo().equalsIgnoreCase(flight.getFlightNo())){
+                                            System.out.println("get this Airline : "+ AirPasslist.get(i).getId());
+                                            airlinePass =  AirPasslist.get(i); 
+                                            break;
+                                        }
+                                    }
+                                }
+                                
+                            }
+                        }
+                        
+                        
                         for(int j=0;j<newPassenger.size();j++){
                             boolean islap = false;
-                            newPassenger.get(j).setBookingAirline(airline);
+                            newPassenger.get(j).setBookingAirline(airlinePass);
                             for(int k=0;k<currentpassenger.size();k++){
                                 String ticket =  currentpassenger.get(k).getTicketnoS1() + currentpassenger.get(k).getTicketnoS2()+currentpassenger.get(k).getTicketnoS3();
                                 String ticketnew =  newPassenger.get(j).getTicketnoS1() + newPassenger.get(j).getTicketnoS2()+newPassenger.get(j).getTicketnoS3();
@@ -193,8 +220,6 @@ public class BookingPnrImpl implements BookingPnrDao {
                             }
                         }
                     }
-                    
-                    
                    
                 }  
 
@@ -204,6 +229,21 @@ public class BookingPnrImpl implements BookingPnrDao {
                 String newFilename = currentBookingPnr.getFilename() + "," + bPnr.getFilename();
                 currentBookingPnr.setFilename(newFilename);
             }
+//            int dd = 0;
+//            
+//            Iterator<BookingAirline> airr =  currentBookingPnr.getBookingAirlines().iterator();
+//                
+//            while(airr.hasNext() && dd <= 20){
+//               BookingAirline ss = (BookingAirline)airr.next();
+//               Iterator<BookingPassenger> pp =  ss.getBookingPassengers().iterator();
+//           
+//                dd++;
+//               while(pp.hasNext() && dd <= 20){
+//                    BookingPassenger f = (BookingPassenger)pp.next();
+//                    System.out.println("air id : "+ss.getId()+"ticket : "+f.getTicketnoS3() + " air id :"+f.getBookingAirline().getId());
+//                    dd++;
+//                }   
+//            }
             session.save(currentBookingPnr);
             transaction.commit();
             session.close();
@@ -259,13 +299,40 @@ public class BookingPnrImpl implements BookingPnrDao {
 
     private boolean isExistAirline(BookingAirline newAirline, Set currentAirlineSet) {
         Iterator<BookingAirline> iteratorCurrentAirline = currentAirlineSet.iterator();
+       
         while (iteratorCurrentAirline.hasNext()) {
-
+            int isNew = 0;
             BookingAirline currentAirline = iteratorCurrentAirline.next();
-            if (currentAirline.getAlrlineName().equalsIgnoreCase(newAirline.getAlrlineName())) {
-                System.out.println("Duplicate airline " + currentAirline.getAlrlineName());
-                return true;
+            System.out.println(" airline code d " + currentAirline.getAirlineCode());
+            if (currentAirline.getAirlineCode().equalsIgnoreCase(newAirline.getAirlineCode())) {
+                System.out.println("Duplicate airline " + currentAirline.getAirlineCode());
+                Iterator<BookingFlight> iteratorCurrentFlight =  currentAirline.getBookingFlights().iterator();
+                
+                while (iteratorCurrentFlight.hasNext()) {
+                    BookingFlight currentFlight = iteratorCurrentFlight.next();
+                    System.out.println("currentFlight Order: "+currentFlight.getFlightOrder() +","+currentFlight.getFlightNo());
+                    Iterator<BookingFlight> iteratorNewFlight =  newAirline.getBookingFlights().iterator();
+                    
+                    while (iteratorNewFlight.hasNext()) {
+                        BookingFlight newFlight = iteratorNewFlight.next();
+                        System.out.println("newFlight Order: "+newFlight.getFlightOrder()+"||"+newFlight.getFlightNo());
+                        if(newFlight.getFlightOrder() == currentFlight.getFlightOrder()){
+                            System.out.println("lap order "+newFlight.getFlightOrder()+"||"+newFlight.getFlightNo() +" , "+currentFlight.getFlightOrder()+" || "+currentFlight.getFlightNo());
+                            isNew = 1;
+                            break;
+                        }
+                    }
+                   if(isNew == 1){break;}
+                }
+                
+                 if((isNew == 0)&&(!iteratorCurrentAirline.hasNext())){
+                        System.out.println("is new airline");
+                        return false;
+                 }
+                 return true;
+                
             }
+            
         }
         return false;
     }
@@ -280,10 +347,12 @@ public class BookingPnrImpl implements BookingPnrDao {
         Set<BookingAirline> bAirlines = currentAirlineSet;
         for (BookingAirline airline : bAirlines) {
             Set<BookingPassenger> passengers = airline.getBookingPassengers();
+            
             for (BookingPassenger passenger : passengers) {
+                
                 if (bp.getInitialName().equalsIgnoreCase(passenger.getInitialName())
                         && bp.getFirstName().equalsIgnoreCase(passenger.getFirstName())
-                        && bp.getLastName().equalsIgnoreCase(passenger.getLastName())) {
+                        && bp.getLastName().equalsIgnoreCase(passenger.getLastName())) {       
                     return true;
                 }
             }
@@ -294,15 +363,49 @@ public class BookingPnrImpl implements BookingPnrDao {
     private void addPassengersInAirline(BookingAirline newAirline, Set currentAirlineSet) {
 
         Set<BookingAirline> currentAirlines = currentAirlineSet;
-
+        int isLab = 0;
         for (BookingAirline currentAirline : currentAirlines) {
+            if(isLab == 0){
+            if (currentAirline.getAlrlineName().equalsIgnoreCase(newAirline.getAlrlineName())) {
+                 
+                Iterator<BookingFlight> iteratorCurrentFlight =  currentAirline.getBookingFlights().iterator();
+                System.out.println("check currentAirline.getAlrlineName() :" + currentAirline.getAlrlineName());
+                while (iteratorCurrentFlight.hasNext()) {
+                    BookingFlight currentFlight = iteratorCurrentFlight.next();
+                    System.out.println("currentFlight Order: "+currentFlight.getFlightOrder()+","+currentFlight.getFlightNo());   
+                    Iterator<BookingFlight> iteratorNewFlight =  newAirline.getBookingFlights().iterator();
+                    while (iteratorNewFlight.hasNext()) {
+                        BookingFlight newFlight = iteratorNewFlight.next();
+                        System.out.println("newFlight Order: "+newFlight.getFlightOrder()+","+newFlight.getFlightNo());
+                        ///////////////////////
+                        if(newFlight.getFlightNo().equalsIgnoreCase(currentFlight.getFlightNo())){ 
+                            isLab = 1;
+                            for (BookingPassenger passenger : (Set<BookingPassenger>) newAirline.getBookingPassengers()) {                            
+                                passenger.setBookingAirline(currentAirline);
+                                currentAirline.getBookingPassengers().add(passenger);
+                            }
+                            break;
+                        }
+                    }
+                    
+                   
+                }
+            }   
+            }
+        }
+        
+        if(isLab == 0){
+            for (BookingAirline currentAirline : currentAirlines) {
             if (currentAirline.getAlrlineName().equalsIgnoreCase(newAirline.getAlrlineName())) {
                 for (BookingPassenger passenger : (Set<BookingPassenger>) newAirline.getBookingPassengers()) {
                     passenger.setBookingAirline(currentAirline);
                 }
                 currentAirline.getBookingPassengers().addAll(newAirline.getBookingPassengers());
+                break;
+            }   
             }
         }
+        
     }
 
     private void updateFlightsInAirline(BookingAirline newAirline, Set currentAirlineSet) {
@@ -316,7 +419,7 @@ public class BookingPnrImpl implements BookingPnrDao {
                     updateFlightChild(newFlight, currentFlight);
                     updateFlightInfant(newFlight, currentFlight);
                 }
-                currentAirline.getBookingPassengers().addAll(newAirline.getBookingPassengers());
+//                currentAirline.getBookingPassengers().addAll(newAirline.getBookingPassengers());
             }
         }
     }
