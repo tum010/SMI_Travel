@@ -32,6 +32,7 @@ public class BookingFlight  {
     private BigDecimal otCost;
     private BigDecimal otPrice;
     private BigDecimal otTax;
+    private int flightOrder;
     
     public BookingFlight() {
     }
@@ -235,6 +236,18 @@ public class BookingFlight  {
     public void setOtTax(BigDecimal otTax) {
         this.otTax = otTax;
     }
+
+    public int getFlightOrder() {
+        return flightOrder;
+    }
+
+    public void setFlightOrder(int flightOrder) {
+        this.flightOrder = flightOrder;
+    }
+
+ 
+    
+    
     
 
 }
