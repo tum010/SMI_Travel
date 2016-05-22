@@ -274,6 +274,7 @@ public class MonitorAmadeus extends MonitorScheduler {
         MAmadeus flightNumber = amadeusMap.get("flight number");
 
         String ticketDateS = getField("ticket date");
+        String flightOrder = getField("flight order");
         String year = "20" + ticketDateS.substring(0, 2);
 
         //Check how many rows there is.
@@ -323,6 +324,7 @@ public class MonitorAmadeus extends MonitorScheduler {
             bf.setOtCost(new BigDecimal(BigInteger.ZERO));
             bf.setOtPrice(new BigDecimal(BigInteger.ZERO));
             bf.setOtTax(new BigDecimal(BigInteger.ZERO));
+            bf.setFlightOrder(new Integer(flightOrder));
             bAir.getBookingFlights().add(bf);
             bf.setBookingAirline(bAir);
         }
@@ -452,9 +454,11 @@ public class MonitorAmadeus extends MonitorScheduler {
                     System.out.println("CostS2 : "+costS2);
                     // No cost line. Set to ticket_fare.
                     if (("0".equalsIgnoreCase(costS))||("0.00".equalsIgnoreCase(costS))) {
-                        if((!"0".equalsIgnoreCase(costS2))||(!"0.00".equalsIgnoreCase(costS2))){
+                        if((!"0".equalsIgnoreCase(costS2))&&(!"0.00".equalsIgnoreCase(costS2))){
                             costS = costS2;
+                            System.out.println("case 1");
                         }else{
+                            System.out.println("case 2");
                             costS = ticket_fare;
                         }
                     }
@@ -573,7 +577,7 @@ public class MonitorAmadeus extends MonitorScheduler {
     }
 
     protected String getField(String name) {
-        System.out.println("name length : "+ name);
+       System.out.println("get Field name : "+ name);
         String val = null;
         try {
             MAmadeus ama = amadeusMap.get(name);
@@ -595,7 +599,7 @@ public class MonitorAmadeus extends MonitorScheduler {
                 line = foundLine.substring(ama.getSection().length());
                 String[] lines = line.split(NODE_SEPARATOR);
                 String foundNode = lines[node - 1];
-                System.out.println("foundNode length : "+ foundNode.length());
+                
                 if(foundNode.length() != 0){
                     val = foundNode.substring(ama.getStartlength() - 1, ama.getStartlength() - 1 + ama.getLength());
                 }else{
