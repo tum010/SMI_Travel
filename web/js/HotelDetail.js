@@ -30,6 +30,16 @@ $(document).ready(function () {
         digitsOptional: false,
         placeholder: "0.00",
     });
+    $(".decimaladditional").inputmask({
+        alias: "decimal",
+        integerDigits: 8,
+        groupSeparator: ',',
+        autoGroup: true,
+        digits: 2,
+        allowMinus: true,
+        digitsOptional: false,
+        placeholder: "0.00",
+    });
 });
 
 // ### DETAIL PANAL ### //
@@ -359,19 +369,19 @@ function AdditionAddRow(row) {
             '<tr>' +
             '<td><input id="row-request-' + row + '-category" name="row-request-' + row + '-category" type="text" class="form-control" maxlength="100"></td>' +
             '<td><input id="row-request-' + row + '-description" name="row-request-' + row + '-description" type="text" class="form-control" maxlength="100"></td>' +
-            '<td><input id="row-request-' + row + '-cost" name="row-request-' + row + '-cost" type="text" class="form-control decimal" maxlength="11"></td>' +
-            '<td><input id="row-request-' + row + '-price" name="row-request-' + row + '-price" type="text" class="form-control decimal" maxlength="11"></td>' +
+            '<td><input id="row-request-' + row + '-cost" name="row-request-' + row + '-cost" type="text" class="form-control decimaladditional" maxlength="11"></td>' +
+            '<td><input id="row-request-' + row + '-price" name="row-request-' + row + '-price" type="text" class="form-control decimaladditional" maxlength="11"></td>' +
             '<td class="text-center">' +
             '<a id="ButtonAdditonRemove'+row+'" class="newRemCF"><span id="SpanAdditionRemove'+row+'"  class="glyphicon glyphicon-remove deleteicon"></span></a></td>' +
             '</tr>'
             );
-    $(".decimal").inputmask({
+    $(".decimaladditional").inputmask({
 	alias: "decimal",
 	integerDigits: 8,
 	groupSeparator: ',',
 	autoGroup: true,
 	digits: 2,
-	allowMinus: false,
+	allowMinus: true,
 	digitsOptional: false,
 	placeholder: "0.00",
     });
