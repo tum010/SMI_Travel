@@ -58,6 +58,7 @@ public class TicketFareAirline {
      private BigDecimal wht;
      private Integer isTempTicket;
      private String otherAirAgent;
+     private Integer enablePvCode;
      private List paymentAirticketFares = new LinkedList<PaymentAirticketFare>();
      private List refundAirticketDetails = new LinkedList<RefundAirticketDetail>();
      private List ticketFareInvoices = new LinkedList<TicketFareInvoice>();
@@ -470,6 +471,14 @@ public class TicketFareAirline {
 
     public void setOtherAirAgent(String otherAirAgent) {
         this.otherAirAgent = otherAirAgent;
+    }
+
+    public Integer getEnablePvCode() {
+        return enablePvCode;
+    }
+
+    public void setEnablePvCode(Integer enablePvCode) {
+        this.enablePvCode = enablePvCode;
     }
 
     
