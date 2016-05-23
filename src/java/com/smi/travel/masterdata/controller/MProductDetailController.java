@@ -27,6 +27,7 @@ public class MProductDetailController extends SMITravelController {
     private static final String DataLap = "product_lap";
     private static final String DATALIST = "productPrice_list";
     private static final String OLDPRODUCT ="Oldproduct";
+    private static final String MDEPARTMENT ="mDepartment";
 
     private ProductService productService;
 
@@ -44,6 +45,7 @@ public class MProductDetailController extends SMITravelController {
         String isStock = request.getParameter("isStock");
         String operation = "";
         String stock = request.getParameter("stock");
+        String department = request.getParameter("department");
         
         System.out.println("action  :" + action);
         System.out.println("code ; "+code);
@@ -55,11 +57,14 @@ public class MProductDetailController extends SMITravelController {
         String resultValidate = "";
         SystemUser user = (SystemUser) session.getAttribute("USER");
         request.setAttribute("disableProductCode", "");
+        request.setAttribute(MDEPARTMENT, user.getMDepartment().getName());
+                
         ProductDetail Priceitem = new ProductDetail();
         Product productID = new Product();
         Product product = new Product();
         product.setCode((String.valueOf(code)).toUpperCase());
         product.setName((String.valueOf(name)).toUpperCase());
+        product.setDepartment(department);
         if (!"".equalsIgnoreCase(ProductTypeID)) {
             MProductType producttype = new MProductType();
             producttype.setId(ProductTypeID);
@@ -176,6 +181,7 @@ public class MProductDetailController extends SMITravelController {
             Product productDetail = productService.getProductFromID(request.getParameter("productid").toString());
             code = (String.valueOf(productDetail.getCode())).toUpperCase();
             name = (String.valueOf(productDetail.getName())).toUpperCase();
+            department = productDetail.getDepartment();
             if(description != null){
                 description = description.trim();
             }
@@ -211,6 +217,7 @@ public class MProductDetailController extends SMITravelController {
             Product productDetail = productService.getProductFromID(request.getParameter("ProductID").toString());
             code =  (String.valueOf(productDetail.getCode())).toUpperCase();
             name = (String.valueOf(productDetail.getName())).toUpperCase();
+            department = (productDetail.getDepartment());
             description = productDetail.getDescription();
             remark = productDetail.getRemark();
             isStock = String.valueOf(productDetail.getIsStock());
@@ -236,7 +243,8 @@ public class MProductDetailController extends SMITravelController {
         request.setAttribute("remark", remark);
         request.setAttribute("isStock", isStock);
         request.setAttribute("ProductID", ProductID);
-        request.setAttribute("stock", stock);        
+        request.setAttribute("stock", stock);
+        request.setAttribute("department", department);   
 
         return MProductDetail;
     }

@@ -35,6 +35,13 @@ $(document).ready(function() {
                         message: 'The product name contains illegal characters.'
                     }
                 }
+            },
+            department: {
+                validators: {
+                    notEmpty: {
+                        message: 'The department is required.'
+                    }
+                }
             }
 
         }

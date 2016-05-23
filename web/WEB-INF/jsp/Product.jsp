@@ -63,7 +63,7 @@
                     <div class="col-md-3 ">
                         <div class="form-group">
                             <label for="ProductCodeS">Code</label>
-                            <input type="text" class="form-control" maxlength="10" id="CodeS" name="code"  style="text-transform:uppercase" value="${requestScope['master']}">
+                            <input type="text" class="form-control" maxlength="10" id="CodeS" name="code"  style="text-transform:uppercase" value="${requestScope['code']}">
 
                         </div>
                     </div>
@@ -91,14 +91,36 @@
                             </select>
                         </div>
                     </div>
+                            
+                    <div class="col-md-1" style="width: 150px;">
+                        <div class="form-group">
+                            <label for="ProductNameS">Department</label>
+                            <select name="department" id="department"  class="form-control">
+                                <c:set var="selectW" value=""/>
+                                <c:set var="selectO" value=""/>
+                                <c:choose>
+                                    <c:when test="${requestScope['department'] == 'W'}">
+                                        <c:set var="selectW" value="selected"/>
+                                    </c:when>
+                                    <c:when test="${requestScope['department'] == 'O'}">
+                                        <c:set var="selectO" value="selected"/>
+                                    </c:when>
+                                </c:choose>
+                                <option value="" >--select--</option>
+                                <option value="W" ${selectW}>Wendy</option>
+                                <option value="O" ${selectO}>Outbound</option>
+                            </select>
+                        </div>
+                    </div>
 
-                    <div class="col-md-3">
+                    <div class="col-md-1">
                         <div  style="padding-top: 20px">   
                             <button type="button" id="acs" onclick="searchAction()"  class="btn btn-primary"><span class="fa fa-search"></span> Search</button>           
                             <input type="hidden" name="action" id="Action"/>
                             <input type="hidden" id="ProductID" name="productID" >
                         </div>
-                    </div>                   
+                    </div>
+                    
 
                 </form>
             </div>
@@ -108,7 +130,7 @@
                 <div class="col-md-6 ">
                     <h4><b>Product</b></h4>
                 </div>
-                <div class="col-md-6 " style="padding-left:  290px">
+                <div class="col-md-6 " style="padding-left:  460px;">
                     <a id="btnAdd" name="btnAdd" href="MProductDetail.smi" class="btn btn-success">
                         <span id="spanAdd" class="glyphicon glyphicon-plus"></span>Add
                     </a>

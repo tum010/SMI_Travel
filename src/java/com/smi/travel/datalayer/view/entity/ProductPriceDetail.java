@@ -32,6 +32,7 @@ public class ProductPriceDetail {
      private String updateBy;
      private String ProductTypeId;
      private String ProductTypeName;
+     private String ProductDepartment;
      
     public ProductPriceDetail(){
          
@@ -160,7 +161,13 @@ public class ProductPriceDetail {
     public void setInPrice(BigDecimal inPrice) {
         this.inPrice = inPrice;
     }
-     
-    
-     
+
+    public String getProductDepartment() {
+        return ProductDepartment;
+    }
+
+    public void setProductDepartment(String ProductDepartment) {
+        this.ProductDepartment = ProductDepartment;
+    }
+          
 }

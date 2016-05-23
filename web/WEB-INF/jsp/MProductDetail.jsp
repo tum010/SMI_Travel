@@ -13,7 +13,7 @@
 <c:set var="displayAddprice" value="" />
 <c:set var="displayTablePrice" value="" />
 <c:set var="disableProductCode" value="${requestScope['disableProductCode']}" />
-
+<c:set var="mDepartment" value="${requestScope['mDepartment']}" />
 
 <c:if test="${!empty requestScope['Oldproduct']}">
     <c:set var="displayAddprice" value="style='display:none;'" />
@@ -158,10 +158,10 @@
                                 </div>                               
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-2" style="width: 160px;">
                             <div class="form-group">
                                 <label class="col-sm-2 control-label" for="nameProduct">Stock</label>
-                                <div class="col-sm-1" style="width: 60px">
+                                <div class="col-sm-1" style="width: 130px">
                                     <c:set var="check" value="" />
                                         <c:if test="${requestScope['isStock'] == '1'}">
                                             <c:set var="check" value="checked" />
@@ -170,7 +170,39 @@
                                     <input class="form-control" type="hidden" id="stock" name="stock" value="${requestScope['stock']}">
                                 </div>            
                             </div>
-                        </div>    
+                        </div>
+                        <div class="col-md-3" style="width: 225px; padding-left: 0px; padding-right: 0px;">
+                            <div class="form-group">
+                                <label class="col-sm-6 control-label" for="nameDepartment">Department<font style="color : red;">*</font></label>
+                                <div class="col-sm-6" > 
+                                    <select name="department" id="department"  class="form-control">
+                                        <option value=""  >------------</option>
+                                        <c:set var="selectW" value="" />
+                                        <c:set var="selectO" value="" />
+                                        <c:choose>
+                                            <c:when test="${requestScope['department'] == '' || requestScope['department'] == null}">
+                                                <c:if test="${mDepartment != 'O'}">
+                                                    <c:set var="selectW" value="selected" />
+                                                </c:if> 
+                                                <c:if test="${mDepartment == 'O'}">
+                                                    <c:set var="selectO" value="selected" />
+                                                </c:if>  
+                                            </c:when>
+                                            <c:otherwise>
+                                                <c:if test="${requestScope['department'] == 'W'}">
+                                                    <c:set var="selectW" value="selected" />
+                                                </c:if> 
+                                                <c:if test="${requestScope['department'] == 'O'}">
+                                                    <c:set var="selectO" value="selected" />
+                                                </c:if>  
+                                            </c:otherwise>
+                                        </c:choose>                                                                             
+                                        <option value="W" ${selectW}>Wendy</option>                                                                    
+                                        <option value="O" ${selectO}>Outbound</option>                                           
+                                    </select>
+                                </div>                               
+                            </div>
+                        </div>
                     </div>
 
                     <div class="row">
