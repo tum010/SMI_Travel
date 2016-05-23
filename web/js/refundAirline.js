@@ -280,14 +280,14 @@ function addRowRefundAirlineList() {
                     var duplicate = false;
                     $("#alertFail").hide();
                     $("#alertSuccess").hide();
-                    $('#RefundAirlineTable tbody [colName="ticketNo"]').each(function () {
-                        if (ticketNoId !== this.id && ticketNo === this.value) {
-                            console.log(this.value);
-                            inputTicket.style.borderColor = "Red";
-                            duplicate = true;
-                            return;
-                        }
-                    });
+//                    $('#RefundAirlineTable tbody [colName="ticketNo"]').each(function () {
+//                        if (ticketNoId !== this.id && ticketNo === this.value) {
+//                            console.log(this.value);
+//                            inputTicket.style.borderColor = "Red";
+//                            duplicate = true;
+//                            return;
+//                        }
+//                    });
                     if (!duplicate) {
                         var url = 'AJAXServlet';
                         var servletName = 'RefundAirlineServlet';

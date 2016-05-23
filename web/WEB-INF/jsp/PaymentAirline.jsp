@@ -458,19 +458,19 @@
                         </div>        
                         <div class="col-xs-12 form-group" style="padding-top: 15px;margin-bottom: -10px">
                             <div class="col-xs-1 text-right"  style="width: 400px">
-                                <label class="control-label text-right">Total Amount Refund</label>
-                            </div>
-                            <div class="col-xs-1"  style="width: 170px">
-                                <div class="input-group">                                    
-                                    <input type="text" class="form-control money" id="totalAmountRefund" name="totalAmountRefund" readonly="" value="" />
-                                </div>
-                            </div>
-                            <div class="col-xs-1 text-right"  style="width: 250px">
-                                <label class="control-label text-right">Total Amount Refund Vat</label>
+                                <label class="control-label text-right">Total Commission Refund Vat</label>
                             </div>
                             <div class="col-xs-1"  style="width: 170px">
                                 <div class="input-group">                                    
                                     <input type="text" class="form-control money" id="totalAmountRefundVat" name="totalAmountRefundVat" readonly="" value="" />
+                                </div>
+                            </div>
+                            <div class="col-xs-1 text-right"  style="width: 250px">
+                                <label class="control-label text-right">Total Amount Refund</label>
+                            </div>
+                            <div class="col-xs-1"  style="width: 170px">
+                                <div class="input-group">  
+                                    <input type="text" class="form-control money" id="totalAmountRefund" name="totalAmountRefund" readonly="" value="" />
                                 </div>
                             </div>
                         </div>   
@@ -1841,10 +1841,8 @@ function calculateTotalPayment() {
     var payto = $("#paytoTemp").val();
 
     if(payto == 'A' || payto == ''){
-//      Total Payment = Total Amount - TotalComission - Total Refund + Total Amount Refund Vat - Credit Amount
-//      Total Payment = Total Amount - TotalComission - Total Refund + Total Amount Refund Vat – Sum(Credit Amount)  +Debit + With Tax
-//        var totalPayment = amountTotal - comTotal - refundTotal + refundVat - sumcreditAmount + debitAmount + withholdingTax;
-        var totalPayment = amountTotal - comTotal - refundTotal + refundVat - sumcreditAmount;
+//      Total Payment = Total Amount - TotalComission - Total Refund + Total Amount Refund Vat - Credit Amount + sumDebitAmount
+        var totalPayment = amountTotal - comTotal - refundTotal + refundVat - sumcreditAmount + debitAmount;
         document.getElementById("totalPayment").value = formatNumber(totalPayment);
     }else if (payto == 'C'){
         var refundTable = $("#RefundTicketTable tr").length;
@@ -1899,7 +1897,7 @@ function calculateTotalRefundVat() {
         } 
         document.getElementById("sumCommissionRefund").value = formatNumber(comTemp);
     }
-    var totalAmountRefund = replaceAll(",","",$('#totalAmountRefund').val()); 
+    var totalAmountRefund = replaceAll(",","",$('#sumCommissionRefund').val()); 
     if (totalAmountRefund == ""){
         totalAmountRefund = 0;
     }
@@ -1910,8 +1908,8 @@ function calculateTotalRefundVat() {
         vatValue = 0;
     }
     var vat = parseFloat(vatValue); 
-    
-    var totalRefundVat = ((vat * ttar)/ 100);
+//    ((vat * ttar)/ 100);
+    var totalRefundVat =  ttar * ((100+vat)/100) ;
     
     document.getElementById("totalAmountRefundVat").value = formatNumber(totalRefundVat);
     calculateWithodingTax();
@@ -2242,7 +2240,9 @@ function calculateWithodingTax(){
     var whtax = parseFloat(tax);
 //    var withholdingTax = ( (sumcomm + sumCommRefund ) * (whtax / 100));
    // alert((sumcomm * (100/(100 + vat))));
-    
+   alert(sumcomm);
+   alert(sumCommRefund);
+    alert(whtax);
     var withholdingTax = ( (sumcomm  - sumCommRefund ) * (whtax / 100));
     document.getElementById("withholdingTax").value = formatNumber(withholdingTax);
 }
