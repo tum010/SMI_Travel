@@ -69,7 +69,7 @@ public class OtherMonthlyImpl implements OtherMonthlyDao{
         if(check == 0){
             query = query.replaceAll("WHERE", " ");
         }
-        query += " GROUP BY pro.`code` ORDER BY pro.`code` ";
+        query += " GROUP BY pro.`code` having sum((ifnull((ot.ad_qty * ot.ad_price), 0) + ifnull((ot.ch_qty * ot.ch_price), 0) + ifnull((ot.in_qty * ot.in_price), 0)))  ORDER BY pro.`code` ";
         
         System.out.println(" query :::: " +query);
                
@@ -132,6 +132,9 @@ public class OtherMonthlyImpl implements OtherMonthlyDao{
         }
         if(check == 0){
             query = query.replaceAll("WHERE", " ");
+            query += query +" where totalsell <> 0 ";    
+        }else{
+            query += query +" and totalsell <> 0 ";
         }
         
         System.out.println(" query :::: " +query);
