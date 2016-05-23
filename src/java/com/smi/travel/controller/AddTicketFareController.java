@@ -191,6 +191,7 @@ public class AddTicketFareController extends SMITravelController {
 
             if(StringUtils.isNotEmpty(pvCode)){
                 ticketFareAirline.setPvCode(pvCode);
+                ticketFareAirline.setEnablePvCode(1);
             }
 
             if(StringUtils.isNotEmpty(ticketId)){
@@ -416,6 +417,7 @@ public class AddTicketFareController extends SMITravelController {
                     request.setAttribute(SAVERESULT, "save successful");
                 } else{
                     ticketFareAirline.setPvCode(result);
+                    ticketFareAirline.setEnablePvCode(1);
                     request.setAttribute(SAVERESULT, "save successful");
                 }
             }
@@ -759,6 +761,7 @@ public class AddTicketFareController extends SMITravelController {
                         request.setAttribute(TICKETBUY, TicketBy);
                         request.setAttribute(TICKETROUTING, TicketRouting);
                         request.setAttribute(ISSUEDATE, IssueDate);
+                        request.setAttribute(AGENTCOMMDATE, IssueDate);
                         request.setAttribute(DEPARTMENT, Department);
                         request.setAttribute(TICKETFAREFLAG,"notdummy");
                     }

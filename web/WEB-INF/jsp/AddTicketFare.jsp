@@ -268,10 +268,20 @@
                             </select>
                         </div>
                         <div class="col-xs-1 text-right" style="width: 150px">
+                            <div class="col-xs-1 text-right" style="width: 50px">
+                                <c:choose>
+                                    <c:when test="${ticketFare.enablePvCode == 0}">
+                                        <input type="checkbox" class="form-control" id="enablePvCode" name="enablePvCode" onclick="checkboxEnablePvCode(this)" value="1" checked/>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <input type="checkbox" class="form-control" id="enablePvCode" name="enablePvCode" onclick="checkboxEnablePvCode(this)" value="0"/>
+                                    </c:otherwise>
+                                </c:choose> 
+                            </div>
                             <label class="control-label text-right">PV Code</label>
                         </div>
                         <div class="col-xs-1" style="width: 200px">
-                            <input id="pvCode" name="pvCode" type="text" class="form-control" maxlength="20" value="${ticketFare.pvCode}" readonly="">
+                            <input id="pvCode" name="pvCode" type="text" class="form-control" maxlength="20" value="${ticketFare.pvCode}" disabled="disabled">
                         </div>
                         <div class="col-xs-1 text-right"  style="width: 150px">
                            <label class="control-label text-right">Due Date </label>
@@ -471,8 +481,11 @@
                                 <label class="control-label text-right">Inv Date </label>
                             </div>
                             <div class="col-xs-1"  style="width: 200px">
-                                <div class="input-group">                                    
-                                    <input id="invoiceDate" name="invoiceDate" type="text" class="form-control" readonly="" value="${requestScope['invoiceDate']}">
+                                <div class="input-group">            
+                                    <c:set var="invoiceDate" value="${requestScope['invoiceDate']}" />
+                                    <fmt:parseDate value="${invoiceDate}" var="invDate" pattern="yyyy-MM-dd" />
+                                    <fmt:formatDate value="${invDate}" var="invoiceDates" pattern="dd-MM-yyyy" />
+                                    <input id="invoiceDate" name="invoiceDate" type="text" class="form-control" readonly="" value="${invoiceDates}">
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 155px">
@@ -948,6 +961,7 @@
     setTicketDetailByInvTemp = [];
     setSelectTicketNoTemp = [];
     $(document).ready(function () {
+        $("#ticketNo").focus();
         $('.datemask').mask('00-00-0000');
         $("#flightPanel").addClass('hidden');
         if($('#flightDetailFlag').val() == "notdummy"){
@@ -976,6 +990,14 @@
 //            FilterTicketList($("#filtercus").val());
 //        }
 
+//        var pvcode = $("#pvCode").val();
+//        if(pvcode !== '') {
+//            document.getElementById("enablePvCode").value = "1";
+//            $("#pvCode").removeAttr("disabled");
+//        }else{
+//            document.getElementById("enablePvCode").value = "0";
+//            $("#pvCode").attr("disabled", "disabled");
+//        }
         
         $(".money").mask('000,000,000.00', {reverse: true});
         $('.date').datetimepicker();
@@ -2055,6 +2077,16 @@ function checkboxIsWaitPay(e) {
         document.getElementById("isWaitPay").value = "1";
     }else{
         document.getElementById("isWaitPay").value = "0";
+    }
+}
+
+function checkboxEnablePvCode(e) {
+    if(e.checked) {
+        document.getElementById("enablePvCode").value = "1";
+        $("#pvCode").removeAttr("disabled");
+    }else{
+        document.getElementById("enablePvCode").value = "0";
+        $("#pvCode").attr("disabled", "disabled");
     }
 }
 
