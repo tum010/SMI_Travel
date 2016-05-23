@@ -990,7 +990,7 @@
                     <div class="col-xs-1" style="width: 200px" >
                         <select name="optionPrint" id="optionPrint" class="form-control" style="height:34px">
                             <option value="1" >Not Show Description</option>
-                            <option value="2" >Show Description</option>
+                            <option value="2" selected="">Show Description</option>
                             <option value="3" >Print Format Package Tour</option>
                         </select>
                     </div>
@@ -1058,7 +1058,7 @@
                 <div class="col-xs-1" style="width: 200px" >
                     <select name="optionsend" id="optionsend" class="form-control" style="height:34px">
                         <option value="1" >Not Show Description</option>
-                        <option value="2" >Show Description</option>
+                        <option value="2" selected="">Show Description</option>
                         <option value="3" >Print Format Package Tour</option>
                     </select>
                 </div>

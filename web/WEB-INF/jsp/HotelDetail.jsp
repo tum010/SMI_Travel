@@ -400,8 +400,8 @@
                                     <td class="hidden"><input id="row-request-${additional.count}-id" name="row-request-${additional.count}-id" class="form-control" value="${re.id}"></td>
                                     <td><input id="row-request-${additional.count}-category" name="row-request-${additional.count}-category" class="form-control" value="${re.category}" maxlength="100"></td>
                                     <td><input id="row-request-${additional.count}-description" name="row-request-${additional.count}-description" class="form-control text-right " value="${re.description}" maxlength="100"></td>
-                                    <td><input id="row-request-${additional.count}-cost" name="row-request-${additional.count}-cost" class="form-control text-right decimal" value="${re.cost}" maxlength="11"></td>
-                                    <td><input id="row-request-${additional.count}-price" name="row-request-${additional.count}-price" class="form-control text-right decimal" value="${re.price}" maxlength="11"></td>
+                                    <td><input id="row-request-${additional.count}-cost" name="row-request-${additional.count}-cost" class="form-control text-right decimaladditional" value="${re.cost}" maxlength="11"></td>
+                                    <td><input id="row-request-${additional.count}-price" name="row-request-${additional.count}-price" class="form-control text-right decimaladditional" value="${re.price}" maxlength="11"></td>
                                     <td class="text-center">
                                         <c:if test="${lockUnlockBooking == 0}">
                                             <c:if test="${re.hotelBooking.isBill == 0}">
