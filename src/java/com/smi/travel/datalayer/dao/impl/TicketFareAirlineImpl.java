@@ -291,7 +291,7 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
                             }
                         }
                     }
-                }else if("D".equalsIgnoreCase(ticketType) && "217".equalsIgnoreCase(ticketnotemp)){
+                }else if("217".equalsIgnoreCase(ticketnotemp)){
                     ticketfare = ticketPassList.get(i).getTicketFare();
                     tickettax  = ticketPassList.get(i).getTicketTax();
                 }
