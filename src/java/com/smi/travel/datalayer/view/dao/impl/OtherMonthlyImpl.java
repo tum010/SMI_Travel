@@ -132,9 +132,9 @@ public class OtherMonthlyImpl implements OtherMonthlyDao{
         }
         if(check == 0){
             query = query.replaceAll("WHERE", " ");
-            query += query +" where totalsell <> 0 ";    
+            query  +=" where totalsell <> 0 ";    
         }else{
-            query += query +" and totalsell <> 0 ";
+            query  += " and totalsell <> 0 ";
         }
         
         System.out.println(" query :::: " +query);
