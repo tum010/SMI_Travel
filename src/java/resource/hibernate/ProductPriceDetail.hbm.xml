@@ -49,6 +49,9 @@
         <property name="ProductTypeName" type="string">
             <column name="product_type_name" />
         </property>
+        <property name="ProductDepartment" type="string">
+            <column name="product_department" />
+        </property>
     </class>
         
 </hibernate-mapping>
