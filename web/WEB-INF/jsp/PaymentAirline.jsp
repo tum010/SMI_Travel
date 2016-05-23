@@ -125,7 +125,7 @@
                                     <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                 </div>
                             </div>
-                            <div class="col-xs-1 text-right"  style="width: 155px">
+                            <div class="col-xs-1 text-right"  style="width: 165px">
                                 <label class="control-label text-right">Due Payment Date </label>
                             </div>
                             <div class="col-xs-1" style="width: 170px">
@@ -205,10 +205,17 @@
                                     </c:forEach>
                                 </select>
                             </div>
+                            <div class="col-xs-1 text-right"  style="width: 165px">
+                                <label class="control-label text-right"></label>
+                            </div>
+                            <div class="col-xs-1 text-left" style="width: 170px">
+                                <a href="#" data-toggle="modal" data-target="#AirCommissionDetailModal" onclick="getAirCommissionDetail()">
+                                    <span>Air Commission</span>
+                                </a>   
+                            </div>    
                         </div>
                     </div>
                 </div> 
-
                 <div class="panel panel-default" style="margin-top: -10px;">
                     <div class="panel-heading">
                         <h4 class="panel-title">Ticket Fare</h4>
@@ -856,6 +863,37 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div>
+<!--List Refno Modal-->
+<div class="modal fade" id="AirCommissionDetailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width: 50%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"  id="Titlemodel">Air Commission</h4>
+            </div>
+            <div class="modal-body">
+                <table class="display" id="ListAirCommisstionTable">
+                    <thead class="datatable-header">
+                        <tr>
+                            <th style="width:5%;">No</th>
+                            <th style="width:15%;">Airline</th>
+                            <th style="width:15%;">Commission</th>
+                            <th style="width:15%;">Is Use</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button id="ListRefnoModalOK" name="ListRefnoModalOK" type="button"  class="btn btn-success" data-dismiss="modal">OK</button>
+                <button id="ListRefnoModalClose" name="ListRefnoModalClose" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal-dialog -->
+
+
 <c:if test="${! empty requestScope['saveresult']}">
     <c:if test="${requestScope['saveresult'] =='save successful'}">        
         <script language="javascript">
@@ -967,6 +1005,9 @@ for(var i = 0; i < rad.length; i++) {
         document.getElementById('paytoTemp').value = this.value;
         calculateTotalPayment();
         calculateAmount();
+        calculateWithodingTax();
+        calculateTotalAmountRefund();
+        calculateTotalRefundVat();
     };
 }
 </script>     
@@ -1882,6 +1923,7 @@ function calculateTotalRefundVat() {
     var comTemp = parseFloat(0);
     var table = document.getElementById('RefundTicketTable');
     var tableLenght = $("#RefundTicketTable tr").length;
+    var payto = document.getElementById('paytoTemp').value;
     if(tableLenght > 1){
         for (var r = 1, n = table.rows.length; r < n; r++) {
             temp = table.rows[r].cells[4].innerHTML;
@@ -1896,6 +1938,7 @@ function calculateTotalRefundVat() {
 
         } 
         document.getElementById("sumCommissionRefund").value = formatNumber(comTemp);
+        
     }
     var totalAmountRefund = replaceAll(",","",$('#sumCommissionRefund').val()); 
     if (totalAmountRefund == ""){
@@ -1910,8 +1953,11 @@ function calculateTotalRefundVat() {
     var vat = parseFloat(vatValue); 
 //    ((vat * ttar)/ 100);
     var totalRefundVat =  ttar * ((100+vat)/100) ;
-    
-    document.getElementById("totalAmountRefundVat").value = formatNumber(totalRefundVat);
+    if(payto === 'A'){
+        document.getElementById("totalAmountRefundVat").value = formatNumber(totalRefundVat);
+    }else{
+        document.getElementById("totalAmountRefundVat").value = formatNumber(0);
+    }
     calculateWithodingTax();
     calculateTotalPayment();
     calculateAmount();
@@ -1980,20 +2026,37 @@ function calculateTotalAmountRefund(){
     var refundTemp = parseFloat(0);
     var table = document.getElementById('RefundTicketTable'); 
     var tableLenght = $("#RefundTicketTable tr").length;
+    var payto = document.getElementById('paytoTemp').value;
     if(tableLenght > 1){
-        for (var r = 1, n = table.rows.length; r < n; r++) {
-            temp = table.rows[r].cells[5].innerHTML;
-            temp = (temp.trim) ? temp.trim() : temp.replace(/^\s+/,'');
-            if(temp == '') {
-                temp = 0;
-            }
-            temp = replaceAll(",","",temp.toString());
-            var value = parseFloat(temp) ;
-            var refund = refundTemp + value ;
-            refundTemp = refund;
+        if(payto === 'A'){
+            for (var r = 1, n = table.rows.length; r < n; r++) {
+                temp = table.rows[r].cells[5].innerHTML;
+                temp = (temp.trim) ? temp.trim() : temp.replace(/^\s+/,'');
+                if(temp == '') {
+                    temp = 0;
+                }
+                temp = replaceAll(",","",temp.toString());
+                var value = parseFloat(temp) ;
+                var refund = refundTemp + value ;
+                refundTemp = refund;
 
+            }
+            document.getElementById("totalAmountRefund").value = formatNumber(refund);
+        }else{
+            for (var r = 1, n = table.rows.length; r < n; r++) {
+                temp = table.rows[r].cells[6].innerHTML;
+                temp = (temp.trim) ? temp.trim() : temp.replace(/^\s+/,'');
+                if(temp == '') {
+                    temp = 0;
+                }
+                temp = replaceAll(",","",temp.toString());
+                var value = parseFloat(temp) ;
+                var refund = refundTemp + value ;
+                refundTemp = refund;
+
+            }
+            document.getElementById("totalAmountRefund").value = formatNumber(refund);
         }
-        document.getElementById("totalAmountRefund").value = formatNumber(refund);
     }
     calculateWithodingTax();
     calculateTotalPayment();
@@ -2218,6 +2281,8 @@ function calculateTotalDebitAmount(){
 }
 
 function calculateWithodingTax(){
+    var payto = document.getElementById('paytoTemp').value;
+    
     var sumCommissionTicket = replaceAll(",","",$('#sumCommissionTicket').val()); 
     if (sumCommissionTicket == ""){
         sumCommissionTicket = 0;
@@ -2240,11 +2305,12 @@ function calculateWithodingTax(){
     var whtax = parseFloat(tax);
 //    var withholdingTax = ( (sumcomm + sumCommRefund ) * (whtax / 100));
    // alert((sumcomm * (100/(100 + vat))));
-   alert(sumcomm);
-   alert(sumCommRefund);
-    alert(whtax);
     var withholdingTax = ( (sumcomm  - sumCommRefund ) * (whtax / 100));
-    document.getElementById("withholdingTax").value = formatNumber(withholdingTax);
+    if(payto === 'A'){
+        document.getElementById("withholdingTax").value = formatNumber(withholdingTax);
+    }else{
+        document.getElementById("withholdingTax").value = formatNumber(0);
+    }
 }
 function deleteCreditList(id,Ccount) {
     document.getElementById('creditIdDelete').value = id;
@@ -2361,4 +2427,53 @@ function checkAirlineSelected(){
         $("#typeAirlineOther").attr("disabled", "disabled");
     }
 }
+
+function getAirCommissionDetail() {
+//    ListAirCommisstionTable
+    var paymentNoAir = $("#paymentNo").val();
+    var servletName = 'ReceiptServlet';
+    var servicesName = 'AJAXBean';
+    var param = 'action=' + 'text' +
+            '&servletName=' + servletName +
+            '&servicesName=' + servicesName +
+            '&paymentNo=' + paymentNoAir +
+            '&fromPaymentAirline=' + 'getAirCommissionDetail' +
+            '&type=' + 'searchPaymentNoAir';
+    CallAjaxSearchPaymentNoAir(param);
+}
+
+function CallAjaxSearchPaymentNoAir(param) {
+    var url = 'AJAXServlet';
+    try {
+        $.ajax({
+            type: "POST",
+            url: url,
+            cache: false,
+            data: param,
+            success: function (msg) {
+                try {
+                    if (msg == "null") {
+                        $('#ListAirCommisstionTable > tbody  > tr').each(function () {
+                            $(this).remove();
+                        });
+                        $("#ListAirCommisstionTable_wrapper").css("min-height", 100);
+                    } else {
+                        $('#ListAirCommisstionTable > tbody  > tr').each(function () {
+                            $(this).remove();
+                        });
+                        $("#ListAirCommisstionTable tbody").empty().append(msg);
+
+                        $("#ListAirCommisstionTable_wrapper").css("min-height", 100);
+                    }
+                } catch (e) {
+                    alert(e);
+                }
+
+            }, error: function (msg) {
+            }
+        });
+    } catch (e) {
+        alert(e);
+    }
+}	
 </script>

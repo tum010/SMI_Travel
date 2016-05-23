@@ -930,12 +930,17 @@ public class AJAXBean extends AbstractBean implements
                 }
             } else if ("searchPaymentNoAir".equalsIgnoreCase(type)) {
                 String paymentNoAir = map.get("paymentNo").toString();
+                String fromPaymentAirline = map.get("fromPaymentAirline").toString();
                 System.out.println(" paymentNoAir :::  " + paymentNoAir + "::: ");
+                int typetemp = 1;
+                if(!"".equalsIgnoreCase(fromPaymentAirline)){
+                    typetemp = 2;
+                }
                 List<TicketAircommissionView> ticketList = ticketAircommissionViewDao.getListTicketAircommissionView(paymentNoAir);
                 if (ticketList == null) {
                     result = "null";
                 } else {
-                    result = buildTicketAircommissionViewListHTML(ticketList);
+                    result = buildTicketAircommissionViewListHTML(ticketList , typetemp);
                 }
             } else if ("searchPaymentNoTour".equalsIgnoreCase(type)) {
                 String paymentNoTour = map.get("paymentNo").toString();
@@ -1457,7 +1462,7 @@ public class AJAXBean extends AbstractBean implements
     }
     
     
-    public String buildTicketAircommissionViewListHTML(List<TicketAircommissionView> ticketList) {
+    public String buildTicketAircommissionViewListHTML(List<TicketAircommissionView> ticketList , int type) {
         StringBuffer html = new StringBuffer();
         int No = 0;
 
@@ -1502,21 +1507,24 @@ public class AJAXBean extends AbstractBean implements
                         + "<td class='text-center'>" + No + "</td>"
                         + "<td>" + airline + "</td>"
                         + "<td class='money'>" + commission + "</td>"
-                        + "<td class='text-center'>" + isUse + "</td>"
-                        + "<td><center><span class='glyphicon glyphicon-plus disable'></span></center></td>"
-                        + "</tr>";
+                        + "<td class='text-center'>" + isUse + "</td>" ;
+                if(type == 1){
+                    newrow += "<td><center><span class='glyphicon glyphicon-plus disable'></span></center></td>" ;
+                }
+                newrow += "</tr>";
             } else if ("N".equals(isUse)) {
                 newrow += "<tr>"
                         + "<td class='text-center'>" + No + "</td>"
                         + "<td>" + airline + "</td>"
                         + "<td class='money'>" + commission + "</td>"
-                        + "<td class='text-center'>" + isUse + "</td>"
-                        + "<td><center><a href=\"#/com\"><span onclick=\"addProduct('" + product + "','" + description + "','','','1','" + vat + "','" + commission + "','" + currency + "','','','" + paymentId + "','" + airline + "','3','" + description + "','" + payNo + "','','" + receiveFrom + "','" + receiveName + "','" + receiveAddress + "','','')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
-                        + "</tr>";
+                        + "<td class='text-center'>" + isUse + "</td>" ;
+                if(type == 1){
+                    newrow += "<td><center><a href=\"#/com\"><span onclick=\"addProduct('" + product + "','" + description + "','','','1','" + vat + "','" + commission + "','" + currency + "','','','" + paymentId + "','" + airline + "','3','" + description + "','" + payNo + "','','" + receiveFrom + "','" + receiveName + "','" + receiveAddress + "','','')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>";
+                }
+                newrow += "</tr>";
             }
             html.append(newrow);
         }
-
         return html.toString();
     }
     

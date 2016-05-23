@@ -3275,6 +3275,7 @@
                     '&servletName=' + servletName +
                     '&servicesName=' + servicesName +
                     '&paymentNo=' + paymentNoAir +
+                    '&fromPaymentAirline=' + '' +
                     '&type=' + 'searchPaymentNoAir';
             CallAjaxSearchPaymentNoAir(param);
         }

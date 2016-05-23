@@ -665,7 +665,7 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
             String dataArea = "";
             String companyId = (arNirvana.getComid()!= null && !"".equalsIgnoreCase(arNirvana.getComid()) ? arNirvana.getComid() : "");;
             dataArea += util.generateDataAreaNirvana(companyId,21);
-            
+            System.out.println("===== companyId ===== : "+ companyId);
 //            String documentPrefix = (arNirvana.getPrefix() != null && !"".equalsIgnoreCase(arNirvana.getPrefix()) ? arNirvana.getPrefix() : "");
 //            dataArea += generateDataAreaARNirvana(documentPrefix.length(),6);
             
@@ -673,114 +673,145 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
             
             String intreference = (arNirvana.getIntreference() != null && !"".equalsIgnoreCase(arNirvana.getIntreference()) ? arNirvana.getIntreference() : "");
             dataArea += util.generateDataAreaNirvana(intreference,21);
+            System.out.println("===== intreference ===== : "+ intreference);
             
             String customerId = (arNirvana.getCustomerid() != null && !"".equalsIgnoreCase(arNirvana.getCustomerid()) ? arNirvana.getCustomerid() : "");
             dataArea += util.generateDataAreaNirvana(customerId,21);
+            System.out.println("===== customerId ===== : "+ customerId);
             
             String customerName = (arNirvana.getCustomername() != null && !"".equalsIgnoreCase(arNirvana.getCustomername()) ? arNirvana.getCustomername() : "");
             dataArea += util.generateDataAreaNirvana(customerName,100);
+            System.out.println("===== customerName ===== : "+ customerName);
             
             String chargeCustomerId = (arNirvana.getCustomerid() != null && !"".equalsIgnoreCase(arNirvana.getCustomerid()) ? arNirvana.getCustomerid() : "");
             dataArea += util.generateDataAreaNirvana(chargeCustomerId,21);
+            System.out.println("===== chargeCustomerId ===== : "+ chargeCustomerId);
             
             String divisionId = (arNirvana.getDivisionid() != null && !"".equalsIgnoreCase(arNirvana.getDivisionid()) ? arNirvana.getDivisionid() : "");
             dataArea += util.generateDataAreaNirvana(divisionId,21);
-
+            System.out.println("===== divisionId ===== : "+ divisionId);
+            
             String projectId = "00";
             dataArea += util.generateDataAreaNirvana(projectId,21);
             
             String transCode = (arNirvana.getTranscode() != null && !"".equalsIgnoreCase(arNirvana.getTranscode()) ? arNirvana.getTranscode() : "");
             dataArea += util.generateDataAreaNirvana(transCode,2);
+            System.out.println("===== transCode ===== : "+ transCode);
             
             String transDate = (arNirvana.getTransdate() != null && !"".equalsIgnoreCase(String.valueOf(arNirvana.getTransdate())) ? sf.format(arNirvana.getTransdate()) : "");
             dataArea += util.generateDataAreaNirvana(transDate,10);
-            System.out.println("===== TransDate ===== : "+transDate);
+            System.out.println("===== transDate ===== : "+transDate);
             
             String dueDate = (arNirvana.getDuedate() != null && !"".equalsIgnoreCase(String.valueOf(arNirvana.getDuedate())) ? sf.format(arNirvana.getDuedate()) : "");
             dataArea += util.generateDataAreaNirvana(dueDate,10);
-            System.out.println("===== DueDate ===== : "+dueDate);
+            System.out.println("===== dueDate ===== : "+ dueDate);
             
             String salesmanId = (arNirvana.getSalesmanid() != null && !"".equalsIgnoreCase(arNirvana.getSalesmanid()) ? arNirvana.getSalesmanid() : "");
             dataArea += util.generateDataAreaNirvana(salesmanId,6);
+            System.out.println("===== salesmanId ===== : "+ salesmanId);
             
             String vatFlag = (arNirvana.getVatflag()!= null && !"".equalsIgnoreCase(arNirvana.getVatflag()) ? arNirvana.getVatflag() : "");
             dataArea += util.generateDataAreaNirvana(vatFlag,1);
+            System.out.println("===== vatFlag ===== : "+ vatFlag);
             
             String vatId = (arNirvana.getVatid()!= null && !"".equalsIgnoreCase(arNirvana.getVatid()) ? arNirvana.getVatid() : "");
             dataArea += util.generateDataAreaNirvana(vatId,6);
+            System.out.println("===== vatId ===== : "+ vatId);
             
             String salesAmt = (arNirvana.getSalesamt()!= null ? String.valueOf(arNirvana.getSalesamt()) : "0.00");
             dataArea += util.generateDataAreaNirvana(salesAmt,20);
+            System.out.println("===== salesAmt ===== : "+ salesAmt);
             
             String salesHmAmt = (arNirvana.getSaleshmamt()!= null ? String.valueOf(arNirvana.getSaleshmamt()) : "0.00");
             dataArea += util.generateDataAreaNirvana(salesHmAmt,20);
+            System.out.println("===== salesHmAmt ===== : "+ salesHmAmt);
             
             String totBaseVatAmt = "0.00";
             dataArea += util.generateDataAreaNirvana(totBaseVatAmt,20);
+            System.out.println("===== totBaseVatAmt ===== : "+ totBaseVatAmt);
             
             String totBaseVatHmAmt = "0.00";
             dataArea += util.generateDataAreaNirvana(totBaseVatHmAmt,20);
+            System.out.println("===== totBaseVatHmAmt ===== : "+ totBaseVatHmAmt);
             
             String totVatAmt = (arNirvana.getVatamt()!= null ? String.valueOf(arNirvana.getVatamt()) : "0.00");
             dataArea += util.generateDataAreaNirvana(totVatAmt,20);
+            System.out.println("===== totVatAmt ===== : "+ totVatAmt);
             
             String totVatHmAmt = (arNirvana.getVathmamt()!= null ? String.valueOf(arNirvana.getVathmamt()) : "0.00");
-            dataArea += util.generateDataAreaNirvana(totVatHmAmt,20);
+            dataArea += util.generateDataAreaNirvana(totVatHmAmt,20); 
+            System.out.println("===== totVatHmAmt ===== : "+ totVatHmAmt);
             
             BigDecimal salesAmtTemp = (arNirvana.getSalesamt() != null ? arNirvana.getSalesamt() : new BigDecimal("0.00"));
             BigDecimal vatAmtTemp = (arNirvana.getVatamt()!= null ? arNirvana.getVatamt(): new BigDecimal("0.00"));
             String arAmt = String.valueOf(salesAmtTemp.add(vatAmtTemp));
             dataArea += util.generateDataAreaNirvana(arAmt,20);
+            System.out.println("===== arAmt ===== : "+ arAmt);
             
             BigDecimal salesHAmtTemp = (arNirvana.getSaleshmamt()!= null ? arNirvana.getSaleshmamt(): new BigDecimal("0.00"));
             BigDecimal vatHAmtTemp = (arNirvana.getVathmamt()!= null ? arNirvana.getVathmamt(): new BigDecimal("0.00"));
             String arHmAmt = String.valueOf(salesHAmtTemp.add(vatHAmtTemp));
             dataArea += util.generateDataAreaNirvana(arHmAmt,20);
+            System.out.println("===== arHmAmt ===== : "+ arHmAmt);
             
             String costAmt = "0.00";
             dataArea += util.generateDataAreaNirvana(costAmt,20);
+            System.out.println("===== costAmt ===== : "+ costAmt);
             
             String currencyId = (arNirvana.getCurrencyid()!= null && !"".equalsIgnoreCase(arNirvana.getCurrencyid()) ? arNirvana.getCurrencyid(): "");
             dataArea += util.generateDataAreaNirvana(currencyId,6);
+            System.out.println("===== currencyId ===== : "+ currencyId);
             
             String homeRate = (arNirvana.getHomerate() != null ? String.valueOf(arNirvana.getHomerate()) : "0.000000");
             dataArea += util.generateDataAreaNirvana(homeRate,18);
+            System.out.println("===== homeRate ===== : "+ homeRate);
             
             String foreignrate = (arNirvana.getForeignrate()!= null ? String.valueOf(arNirvana.getForeignrate()) : "0.000000");
             dataArea += util.generateDataAreaNirvana(foreignrate,18);
+            System.out.println("===== foreignrate ===== : "+ foreignrate);
             
             String cancelFlag = "N";
             dataArea += util.generateDataAreaNirvana(cancelFlag,1);
+            System.out.println("===== cancelFlag ===== : "+ cancelFlag);
             
             String cnReference = "";
             dataArea += util.generateDataAreaNirvana(cnReference,21);
+            System.out.println("===== cnReference ===== : "+ cnReference);
             
             String note = (arNirvana.getNote()!= null && !"".equalsIgnoreCase(arNirvana.getNote()) ? arNirvana.getNote(): "");
             dataArea += util.generateDataAreaNirvana(note,100);
+            System.out.println("===== note ===== : "+ note);
             
             String year = (arNirvana.getYear()!= null ? String.valueOf(arNirvana.getYear()) : "");
             dataArea += util.generateDataAreaNirvana(year,4);
+            System.out.println("===== year ===== : "+ year);
             
             String period = (arNirvana.getPeriod()!= null ? String.valueOf(arNirvana.getPeriod()) : "");
             dataArea += util.generateDataAreaNirvana(period,2);
+            System.out.println("===== period ===== : "+ period);
             
             String prepareBillingDate = "";
             dataArea += util.generateDataAreaNirvana(transDate,10);
+            System.out.println("===== prepareBillingDate ===== : "+ prepareBillingDate);
             
             String exReference = "";
             dataArea += util.generateDataAreaNirvana(exReference,21);
             
             String companyBranch = (arNirvana.getCompany_branch()!= null ? String.valueOf(arNirvana.getCompany_branch()) : "0");
             dataArea += util.generateDataAreaNirvana("000000",6);
+            System.out.println("===== companyBranch ===== : "+ companyBranch);
             
             String custTaxId = (arNirvana.getCust_taxid() != null && !"".equalsIgnoreCase(arNirvana.getCust_taxid()) ? arNirvana.getCust_taxid(): "");
             dataArea += util.generateDataAreaNirvana(custTaxId,21);
+            System.out.println("===== custTaxId ===== : "+ custTaxId);
             
             String cusBranch = (arNirvana.getCust_branch()!= null ? String.valueOf(arNirvana.getCust_branch()) : "0");
             dataArea += util.generateDataAreaNirvana("000000",6);
+            System.out.println("===== cusBranch ===== : "+ cusBranch);
             
             String service = (arNirvana.getService()!= null && !"".equalsIgnoreCase(arNirvana.getService()) ? arNirvana.getService(): "");
             dataArea += util.generateDataAreaNirvana(service,1);
+            System.out.println("===== service ===== : "+ service);
             
             ssDataexchTemp.setDataArea(dataArea);
             
@@ -911,6 +942,14 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
                 dataArea +=  util.generateDataAreaNirvana(arNirvanaSaleDetail.getSalesamt(),20);
                 dataArea +=  util.generateDataAreaNirvana(arNirvanaSaleDetail.getSaleshmamt(),20);
                 dataArea +=  util.generateDataAreaNirvana(arNirvanaSaleDetail.getDetail(),61);
+                
+                System.out.println(" arNirvanaSaleDetail.getSalesaccount() :: " + arNirvanaSaleDetail.getSalesaccount());
+                System.out.println(" arNirvanaSaleDetail.getSalesdivision() :: " + arNirvanaSaleDetail.getSalesdivision());
+                System.out.println(" arNirvanaSaleDetail.getSalesproject() :: " + arNirvanaSaleDetail.getSalesproject());
+                System.out.println(" arNirvanaSaleDetail.getSalesamt() :: " + arNirvanaSaleDetail.getSalesamt());
+                System.out.println(" arNirvanaSaleDetail.getSaleshmamt() :: " + arNirvanaSaleDetail.getSaleshmamt());
+                System.out.println(" arNirvanaSaleDetail.getDetail() :: " + arNirvanaSaleDetail.getDetail());
+                
                 ssdtr.setDataArea(dataArea);
                 count += 1;
                 
