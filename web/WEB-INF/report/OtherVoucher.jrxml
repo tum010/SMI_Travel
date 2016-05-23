@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="HotelVoucher" language="groovy" pageWidth="575" pageHeight="392" columnWidth="574" leftMargin="1" rightMargin="0" topMargin="0" bottomMargin="0" uuid="053f4d0e-4534-4ae9-bd3a-d9c39367ad2d">
-	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.zoom" value="2.1961500000000007"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="60"/>
+	<property name="ireport.y" value="450"/>
 	<queryString>
 		<![CDATA[SELECT
      *,
@@ -40,6 +40,8 @@ FROM
 	<field name="passenger5" class="java.lang.String"/>
 	<field name="passenger6" class="java.lang.String"/>
 	<field name="printby" class="java.lang.String"/>
+	<field name="passenger7" class="java.lang.String"/>
+	<field name="passenger8" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -246,14 +248,14 @@ FROM
 				</graphicElement>
 			</rectangle>
 			<textField>
-				<reportElement x="11" y="37" width="140" height="20" isPrintInFirstWholeBand="true" uuid="e8d93de2-2326-4893-88c8-16c491fcfc1e"/>
+				<reportElement x="11" y="35" width="140" height="20" isPrintInFirstWholeBand="true" uuid="e8d93de2-2326-4893-88c8-16c491fcfc1e"/>
 				<textElement>
 					<font fontName="Tahoma" size="10" pdfFontName="resource/fonts/Tahoma.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[($F{passenger2} != null ? $F{passenger2} : "")]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="11" y="54" width="140" height="20" isPrintInFirstWholeBand="true" uuid="443f3670-f1db-4d87-8c86-df84ce1493ff"/>
+				<reportElement x="11" y="50" width="140" height="20" isPrintInFirstWholeBand="true" uuid="443f3670-f1db-4d87-8c86-df84ce1493ff"/>
 				<textElement>
 					<font fontName="Tahoma" size="10" pdfFontName="resource/fonts/Tahoma.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
@@ -264,24 +266,24 @@ FROM
 				<textElement>
 					<font fontName="Tahoma" size="10" pdfFontName="resource/fonts/Tahoma.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($F{passenger4} != null ? $F{passenger4} : "")]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="151" y="37" width="140" height="20" isPrintInFirstWholeBand="true" uuid="0d3404b1-147e-48e1-9f2d-ea4ea4068cd4"/>
-				<textElement>
-					<font fontName="Tahoma" size="10" pdfFontName="resource/fonts/Tahoma.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
-				</textElement>
 				<textFieldExpression><![CDATA[($F{passenger5} != null ? $F{passenger5} : "")]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="151" y="54" width="140" height="20" isPrintInFirstWholeBand="true" uuid="81b5019e-95cb-47b5-a0d5-12445298605d"/>
+				<reportElement x="151" y="35" width="140" height="20" isPrintInFirstWholeBand="true" uuid="0d3404b1-147e-48e1-9f2d-ea4ea4068cd4"/>
 				<textElement>
 					<font fontName="Tahoma" size="10" pdfFontName="resource/fonts/Tahoma.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[($F{passenger6} != null ? $F{passenger6} : "")]]></textFieldExpression>
 			</textField>
+			<textField>
+				<reportElement x="151" y="50" width="140" height="20" isPrintInFirstWholeBand="true" uuid="81b5019e-95cb-47b5-a0d5-12445298605d"/>
+				<textElement>
+					<font fontName="Tahoma" size="10" pdfFontName="resource/fonts/Tahoma.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{passenger7} != null ? $F{passenger7} : "")]]></textFieldExpression>
+			</textField>
 			<staticText>
-				<reportElement x="11" y="124" width="277" height="20" uuid="88479bd8-0598-4ee3-9331-6d5d5f0d82cc"/>
+				<reportElement x="-46" y="124" width="277" height="20" uuid="88479bd8-0598-4ee3-9331-6d5d5f0d82cc"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="10" isBold="true" pdfFontName="resource/fonts/Tahoma.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
@@ -293,6 +295,20 @@ FROM
 					<font fontName="Tahoma" isBold="true" pdfFontName="resource/fonts/Tahoma.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{printby}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="11" y="64" width="140" height="20" isPrintInFirstWholeBand="true" uuid="feab41d7-9fc1-487e-9735-43635f29d7c6"/>
+				<textElement>
+					<font fontName="Tahoma" size="10" pdfFontName="resource/fonts/Tahoma.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{passenger4} != null ? $F{passenger4} : "")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="151" y="64" width="140" height="20" isPrintInFirstWholeBand="true" uuid="d01cc8d4-e2d3-4bc8-9e7f-600f337b3812"/>
+				<textElement>
+					<font fontName="Tahoma" size="10" pdfFontName="resource/fonts/Tahoma.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{passenger8} != null ? $F{passenger8} : "")]]></textFieldExpression>
 			</textField>
 		</band>
 	</columnFooter>
