@@ -165,42 +165,54 @@
 				<text><![CDATA[Paid By]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="10" y="95" width="50" height="13" uuid="cea6fa23-daa5-4eff-b949-236e12ee8e2d"/>
+				<reportElement x="10" y="95" width="50" height="13" uuid="cea6fa23-daa5-4eff-b949-236e12ee8e2d">
+					<printWhenExpression><![CDATA[!("").equalsIgnoreCase($F{taxidno}) && $F{taxidno} != null]]></printWhenExpression>
+				</reportElement>
 				<textElement>
 					<font fontName="Tahoma" size="8" isBold="true" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Tax.ID NO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="170" y="94" width="39" height="13" uuid="25d4b877-6f13-441b-ad08-97e57ecf0d4c"/>
+				<reportElement x="170" y="94" width="39" height="13" uuid="25d4b877-6f13-441b-ad08-97e57ecf0d4c">
+					<printWhenExpression><![CDATA[!("").equalsIgnoreCase($F{taxidno}) && $F{taxidno} != null]]></printWhenExpression>
+				</reportElement>
 				<textElement>
 					<font fontName="Tahoma" size="8" isBold="true" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Branch]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="60" y="95" width="13" height="10" uuid="9c133215-89f1-43f8-a703-3dc233c8cd1a"/>
+				<reportElement x="60" y="95" width="13" height="10" uuid="9c133215-89f1-43f8-a703-3dc233c8cd1a">
+					<printWhenExpression><![CDATA[!("").equalsIgnoreCase($F{taxidno}) && $F{taxidno} != null]]></printWhenExpression>
+				</reportElement>
 				<textElement>
 					<font fontName="Tahoma" size="8" isBold="true" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="209" y="94" width="13" height="10" uuid="4794d287-dcd7-4709-912c-377a39bdccf3"/>
+				<reportElement x="209" y="94" width="13" height="10" uuid="4794d287-dcd7-4709-912c-377a39bdccf3">
+					<printWhenExpression><![CDATA[!("").equalsIgnoreCase($F{taxidno}) && $F{taxidno} != null]]></printWhenExpression>
+				</reportElement>
 				<textElement>
 					<font fontName="Tahoma" size="8" isBold="true" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="73" y="92" width="97" height="14" uuid="a4545585-ed3a-4bbb-a3bb-1a44c91718bf"/>
+				<reportElement x="73" y="92" width="97" height="14" uuid="a4545585-ed3a-4bbb-a3bb-1a44c91718bf">
+					<printWhenExpression><![CDATA[!("").equalsIgnoreCase($F{taxidno}) && $F{taxidno} != null]]></printWhenExpression>
+				</reportElement>
 				<textElement textAlignment="Left" verticalAlignment="Top">
 					<font fontName="Cordia New" size="12" isBold="false" pdfFontName="resource/fonts/Cordia.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{taxidno}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="222" y="91" width="131" height="14" uuid="9de10de6-cc36-4de8-a974-4c488f222cd6"/>
+				<reportElement x="222" y="91" width="131" height="14" uuid="9de10de6-cc36-4de8-a974-4c488f222cd6">
+					<printWhenExpression><![CDATA[!("").equalsIgnoreCase($F{taxidno}) && $F{taxidno} != null]]></printWhenExpression>
+				</reportElement>
 				<textElement textAlignment="Left" verticalAlignment="Top">
 					<font fontName="Cordia New" size="12" isBold="false" pdfFontName="resource/fonts/Cordia.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>

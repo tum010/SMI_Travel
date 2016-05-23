@@ -26,7 +26,8 @@ public class ProductController extends SMITravelController {
         String code = request.getParameter("code");
         String name = request.getParameter("name");
         String ProductID = request.getParameter("productID"); 
-        String productTypeId = request.getParameter("type"); 
+        String productTypeId = request.getParameter("type");
+        String department = request.getParameter("department"); 
         int result = 1;
         Product product = new Product();
         product.setCode(code);
@@ -38,6 +39,7 @@ public class ProductController extends SMITravelController {
             productdetail.setName(name);
             productdetail.setId(ProductID);
             productdetail.setProductTypeId(productTypeId);
+            productdetail.setProductDepartment(department);
             List<ProductPriceDetail> PriceList = productService.getListProductPriceDetail(productdetail,2);
             request.setAttribute(DATALIST, PriceList);
         } else if ("delete".equalsIgnoreCase(action)) {
@@ -53,6 +55,7 @@ public class ProductController extends SMITravelController {
         request.setAttribute("code", code);
         request.setAttribute("name", name);
         request.setAttribute("productTypeId", productTypeId);
+        request.setAttribute("department", department);
         
         return Product;
     }

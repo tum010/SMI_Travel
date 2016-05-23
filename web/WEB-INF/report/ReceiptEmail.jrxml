@@ -37,7 +37,6 @@
 	<field name="signname" class="java.lang.String"/>
 	<field name="taxidno" class="java.lang.String"/>
 	<field name="branch" class="java.lang.String"/>
-	<field name="isTemp" class="java.lang.String"/>
 	<background>
 		<band height="275">
 			<image hAlign="Center" vAlign="Middle">

@@ -141,6 +141,8 @@ public class BillableController extends SMITravelController {
         String printTicketOrder = billableService.printTicketOrder(refNo);
         request.setAttribute("printTicketOrder", printTicketOrder);
         
+        System.out.println("===== Action ===== : "+action );
+        
         if ("add".equalsIgnoreCase(action)) {
             System.out.println("action add");
             request.setAttribute(ACTION, "insert");
@@ -345,8 +347,12 @@ public class BillableController extends SMITravelController {
     public void setDefaultBill(Master master, Billable billable) {
         if ((master.getBillables().isEmpty())) {
             if (master.getAgent().getCode().equalsIgnoreCase("WLK")) {
+                String initialName = (master.getCustomer().getMInitialname() != null ? master.getCustomer().getMInitialname().getName() : "");
+                String firstName = (master.getCustomer().getFirstName() != null && !"".equalsIgnoreCase(master.getCustomer().getFirstName()) ? master.getCustomer().getFirstName() : "");
+                String lastName = (master.getCustomer().getLastName()!= null && !"".equalsIgnoreCase(master.getCustomer().getLastName()) ? master.getCustomer().getLastName() : "");
+                String billName = initialName + " " + lastName + " " + firstName;
                 billable.setBillTo(master.getCustomer().getCode());
-                billable.setBillName(master.getCustomer().getFirstName() + " " + master.getCustomer().getLastName());
+                billable.setBillName(billName);
                 MAccpay cash = new MAccpay();
                 cash.setId("1");
                 billable.setMAccpay(cash);

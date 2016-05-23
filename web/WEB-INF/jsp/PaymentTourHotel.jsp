@@ -315,7 +315,7 @@
                 </div>
             </div>
             <div class="col-xs-1 text-right" style="padding-left:10px;padding-right:0px;width:155px;margin-top: -15px">
-                <label class="control-label">Currency</lable>
+                <label class="control-label">Currency<font style="color: red";>*</font></lable>
             </div>    
             <div class="col-xs-1 form-group text-left" style="padding-left:25px;width:175px;margin-top: -10px">
             <c:choose>
@@ -1177,6 +1177,13 @@
                                 message: 'Pay Date is required.'
                             }
                         }
+                    },
+                    InputCurrency: {
+                        validators: {
+                            notEmpty: {
+                                message: 'Currency is required.'
+                            }
+                        }
                     }
                 }
             });
@@ -1222,6 +1229,13 @@
                         validators: {
                             notEmpty: {
                                 message: 'Pay Date is required.'
+                            }
+                        }
+                    },
+                    InputCurrency: {
+                        validators: {
+                            notEmpty: {
+                                message: 'Currency is required.'
                             }
                         }
                     }
@@ -1839,6 +1853,7 @@
                 $('#PaymentTourHotelForm').bootstrapValidator('revalidateField', 'InputAPCode');
                 $('#PaymentTourHotelForm').bootstrapValidator('revalidateField', 'itemStatus');
                 $('#PaymentTourHotelForm').bootstrapValidator('revalidateField', 'InputPayDate');
+                $('#PaymentTourHotelForm').bootstrapValidator('revalidateField', 'InputCurrency');
                 return;
             }
             
@@ -1854,6 +1869,7 @@
                 $('#PaymentTourHotelForm').bootstrapValidator('revalidateField', 'itemStatus');
                 $('#PaymentTourHotelForm').bootstrapValidator('revalidateField', 'account');
                 $('#PaymentTourHotelForm').bootstrapValidator('revalidateField', 'InputPayDate');
+                $('#PaymentTourHotelForm').bootstrapValidator('revalidateField', 'InputCurrency');
                 return;
             }
         }

@@ -37,10 +37,12 @@ public class ProductPriceDetailImpl implements ProductPriceDetailDao{
             queryOperation = " Like ";
             Prefix_Subfix = "%";
         }
+        
         if ((productprice.getCode() != null) && (!"".equalsIgnoreCase(productprice.getCode()))) {
             query += " p.code " + queryOperation + " '" + Prefix_Subfix + productprice.getCode() + Prefix_Subfix + "'";
             check = 1;
         }
+        
         if ((productprice.getName() != null) && (!"".equalsIgnoreCase(productprice.getName()))) {
             if (check == 1) {
                 query += " and ";
@@ -54,6 +56,14 @@ public class ProductPriceDetailImpl implements ProductPriceDetailDao{
                 query += " and ";
             }
             query += " p.ProductTypeId = '"  + productprice.getProductTypeId()  + "'";
+            check = 1;
+        }
+        
+        if ((productprice.getProductDepartment()!= null) && (!"".equalsIgnoreCase(productprice.getProductDepartment()))) {
+            if (check == 1) {
+                query += " and ";
+            }
+            query += " p.ProductDepartment = '" + productprice.getProductDepartment() + "' ";
             check = 1;
         }
        
