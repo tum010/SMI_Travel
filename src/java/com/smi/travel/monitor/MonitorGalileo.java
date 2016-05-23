@@ -364,11 +364,13 @@ public class MonitorGalileo extends MonitorScheduler {
             String lastName = splitName[0];
             String firstName = splitName[1].substring(0, splitName[1].length() - 2);
             
-            String[] initialList = {"MR","MS","MISS","MRS"};
-            String initialTemp = splitName[1].substring(splitName[1].length() - 4);
+            String[] initialList = {"MR","MS","MISS","MRS"};           
             String initial = "";
             for(int i = 0; i < initialList.length; i++){
-                if(initialTemp.indexOf(initialList[i]) != -1){
+                String initialTemp = splitName[1].substring(splitName[1].length() - initialList[i].length());
+                System.out.println("===== Initial Temp ===== : "+initialTemp);
+                System.out.println("===== initialList["+i+"] ===== : "+initialList[i]);        
+                if(initialTemp.equalsIgnoreCase(initialList[i])){
                     initial = initialList[i];
                     i = initialList.length;
                 }
