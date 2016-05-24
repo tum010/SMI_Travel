@@ -125,7 +125,7 @@ public class InvoiceController extends SMITravelController {
         }     
         // List Agent feild Invoice To
         List<CustomerAgentInfo> listCustomerAgentInfo = new ArrayList<CustomerAgentInfo>();
-        listCustomerAgentInfo = utilityService.getListCustomerAgentInfo();
+//        listCustomerAgentInfo = utilityService.getListCustomerAgentInfo();
         if(listCustomerAgentInfo != null){
             request.setAttribute("listCustomerAgentInfo", listCustomerAgentInfo);
         }else{

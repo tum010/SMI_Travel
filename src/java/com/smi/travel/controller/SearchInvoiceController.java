@@ -45,7 +45,7 @@ public class SearchInvoiceController extends SMITravelController {
         }
         //List Agent
         List<CustomerAgentInfo> listCustomerAgentInfo = new ArrayList<CustomerAgentInfo>();
-        listCustomerAgentInfo = utilityService.getListCustomerAgentInfo();
+//        listCustomerAgentInfo = utilityService.getListCustomerAgentInfo();
         if(listCustomerAgentInfo != null){
             request.setAttribute("listAgent", listCustomerAgentInfo);
         }else{

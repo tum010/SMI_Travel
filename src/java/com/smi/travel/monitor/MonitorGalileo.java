@@ -360,18 +360,19 @@ public class MonitorGalileo extends MonitorScheduler {
                     i = passengerTypeList.length;
                 }
             }
-            String[] splitName = passengerName.split("/");
-            String lastName = splitName[0];
-            String firstName = splitName[1].substring(0, splitName[1].length() - 2);
             
+            String[] splitName = passengerName.split("/");                     
             String[] initialList = {"MR","MS","MISS","MRS"};           
             String initial = "";
+            String firstName = "";
+            String lastName = splitName[0];
             for(int i = 0; i < initialList.length; i++){
                 String initialTemp = splitName[1].substring(splitName[1].length() - initialList[i].length());
                 System.out.println("===== Initial Temp ===== : "+initialTemp);
                 System.out.println("===== initialList["+i+"] ===== : "+initialList[i]);        
                 if(initialTemp.equalsIgnoreCase(initialList[i])){
                     initial = initialList[i];
+                    firstName = splitName[1].substring(0, splitName[1].length() - initialList[i].length());
                     i = initialList.length;
                 }
             }

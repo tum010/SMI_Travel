@@ -72,8 +72,8 @@ public class TaxInvoiceController extends SMITravelController {
         request.setAttribute(PRODUCTLIST, billTypeList);
         List<MCurrency> currencyList = utilservice.getListMCurrency();
         request.setAttribute(CURRENCYLIST, currencyList);
-        List<CustomerAgentInfo> customerAgentList = utilservice.getListCustomerAgentInfo();
-        request.setAttribute(CUSTOMERAGENTLIST, customerAgentList);       
+//        List<CustomerAgentInfo> customerAgentList = utilservice.getListCustomerAgentInfo();
+//        request.setAttribute(CUSTOMERAGENTLIST, customerAgentList);       
         MDefaultData mDefaultData = utilservice.getMDefaultDataFromType("vat");
         String nameDefault = mDefaultData.getName();
         BigDecimal vatData = new BigDecimal(mDefaultData.getValue());

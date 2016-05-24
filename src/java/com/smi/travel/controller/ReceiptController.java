@@ -862,8 +862,8 @@ public class ReceiptController extends SMITravelController {
     }
     
     public void setResponseAttribute(HttpServletRequest request) {
-        List<CustomerAgentInfo> customerAgentInfo = utilityService.getListCustomerAgentInfo();
-        request.setAttribute(CUSTOMERAGENT, customerAgentInfo);
+//        List<CustomerAgentInfo> customerAgentInfo = utilityService.getListCustomerAgentInfo();
+//        request.setAttribute(CUSTOMERAGENT, customerAgentInfo);
         List<MBilltype> mBilltypes = utilityService.getListMBilltype();
         request.setAttribute(MBILLTYPELIST, mBilltypes); //receiveProduct
         MDefaultData mDefaultData = utilityService.getMDefaultDataFromType("vat");
