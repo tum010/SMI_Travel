@@ -6,6 +6,7 @@
 package com.smi.travel.datalayer.dao.impl;
 
 import com.smi.travel.datalayer.dao.BillableDao;
+import com.smi.travel.datalayer.entity.Agent;
 import com.smi.travel.datalayer.entity.AirticketAirline;
 import com.smi.travel.datalayer.entity.AirticketDesc;
 import com.smi.travel.datalayer.entity.AirticketFlight;
@@ -13,6 +14,7 @@ import com.smi.travel.datalayer.entity.AirticketPassenger;
 import com.smi.travel.datalayer.entity.AirticketPnr;
 import com.smi.travel.datalayer.entity.Billable;
 import com.smi.travel.datalayer.entity.BillableDesc;
+import com.smi.travel.datalayer.entity.Customer;
 import com.smi.travel.datalayer.entity.DaytourBooking;
 import com.smi.travel.datalayer.entity.HotelBooking;
 import com.smi.travel.datalayer.entity.HotelRoom;
@@ -25,6 +27,7 @@ import com.smi.travel.datalayer.entity.Master;
 import com.smi.travel.datalayer.entity.OtherBooking;
 import com.smi.travel.datalayer.entity.PaymentAirCredit;
 import com.smi.travel.datalayer.entity.ReceiptDetail;
+import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.entity.TaxInvoiceDetail;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
@@ -1270,5 +1273,41 @@ public class BillableImpl implements BillableDao {
         }
 
         return list.get(0);
+    }
+
+    @Override
+    public String searchBillableType(Master master) {
+        String type = "";
+        boolean check = true;
+        Session session = this.sessionFactory.openSession();
+        try {
+            if(master.getAgent().getCode().equalsIgnoreCase("WLK")){
+                type = "A";
+                check = false;
+            }
+            
+            List<Customer> customerList = session.createQuery("from Customer c where c.code = :code and c.lastName = :lastName ")
+                    .setParameter("code", master.getCustomer().getCode())
+                    .setParameter("lastName", master.getCustomer().getLastName())
+                    .list();
+            
+            if(!customerList.isEmpty() && check){
+                type = "C";
+                check = false;
+            }
+            
+            if(check){
+                type = "S";
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            
+        } finally {
+            session.close();
+            
+        }
+        
+        return type;
     }
 }
