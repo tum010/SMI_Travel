@@ -1281,7 +1281,7 @@ public class BillableImpl implements BillableDao {
         boolean check = true;
         Session session = this.sessionFactory.openSession();
         try {
-            if(master.getAgent().getCode().equalsIgnoreCase("WLK")){
+            if(!master.getAgent().getCode().equalsIgnoreCase("WLK")){
                 type = "A";
                 check = false;
             }
