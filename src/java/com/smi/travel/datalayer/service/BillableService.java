@@ -9,6 +9,7 @@ package com.smi.travel.datalayer.service;
 import com.smi.travel.datalayer.dao.BillableDao;
 import com.smi.travel.datalayer.entity.Billable;
 import com.smi.travel.datalayer.entity.BillableDesc;
+import com.smi.travel.datalayer.entity.Master;
 import com.smi.travel.datalayer.view.dao.BillableViewDao;
 import com.smi.travel.datalayer.view.dao.CustomerAgentInfoDao;
 import com.smi.travel.datalayer.view.entity.BillableView;
@@ -81,6 +82,10 @@ public class BillableService {
 
     public List<CustomerAgentInfo> SearchListCustomerAgentInfo(String billTo) {
         return customerAgentInfodao.SearchListCustomerAgentInfo(billTo);
+    }
+
+    public String searchBillableType(Master master) {
+        return billableDao.searchBillableType(master);
     }
             
 }

@@ -363,8 +363,9 @@ public class BillableController extends SMITravelController {
                 billable.setMAccterm(master.getAgent().getMAccterm());               
             }
             if(billable.getType() == null || "".equalsIgnoreCase(billable.getType())){
-                List<CustomerAgentInfo> customerAgentInfo = billableService.SearchListCustomerAgentInfo(billable.getBillTo());
-                billable.setType(!"".equalsIgnoreCase(customerAgentInfo.get(0).getType()) ? customerAgentInfo.get(0).getType() : "");
+//                List<CustomerAgentInfo> customerAgentInfo = billableService.SearchListCustomerAgentInfo(billable.getBillTo());
+//                billable.setType(!"".equalsIgnoreCase(customerAgentInfo.get(0).getType()) ? customerAgentInfo.get(0).getType() : "");
+                billable.setType(billableService.searchBillableType(master));
                 
             }
         }
@@ -373,8 +374,8 @@ public class BillableController extends SMITravelController {
     public void setResponseAttribute(HttpServletRequest request, String refNo) {
         System.out.println(" +++++++++++++++++++++++ setResponseAttribute +++++++++++++++++++++++++++++++++++++ ");
         int[] booksize = utilservice.getCountItemFromBooking(refNo);
-        List<CustomerAgentInfo> customerAgentInfo = billableService.getListCustomerAgentInfo();
-        request.setAttribute(CustomerAgent, customerAgentInfo);
+//        List<CustomerAgentInfo> customerAgentInfo = billableService.getListCustomerAgentInfo();
+//        request.setAttribute(CustomerAgent, customerAgentInfo);
         request.setAttribute(Bookiing_Size, booksize);
         List<MAccterm> mAcctermList = utilservice.getListMAccterm();
         request.setAttribute(MAcctermList, mAcctermList);

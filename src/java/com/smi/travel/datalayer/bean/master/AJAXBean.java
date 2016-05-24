@@ -343,11 +343,11 @@ public class AJAXBean extends AbstractBean implements
                 String productID = map.get("productid").toString();
                 String otherdate = (!"".equalsIgnoreCase(map.get("otherdate").toString()) && map.get("otherdate").toString() !=null ) ? new SimpleDateFormat("yyyy-MM-dd", new Locale("us", "us")).format(util.convertStringToDate(map.get("otherdate").toString())) : "" ;
                 if ("".equalsIgnoreCase(productID) || "".equalsIgnoreCase(otherdate)) {
-                    result = "0,0,0,0,0,0";
+                    result = "0.00,0.00,0.00,0.00,0.00,0.00";
                 } else {
                     ProductDetail product = productDetailDao.getValueFromProduct(productID, otherdate);
                     if (product == null) {
-                        result = "0,0,0,0,0,0";
+                        result = "0.00,0.00,0.00,0.00,0.00,0.00";
                     } else {
                         if(product.getAdCost() == null){
                             product.setAdCost(new BigDecimal(BigInteger.ZERO));
