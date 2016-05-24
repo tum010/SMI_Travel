@@ -91,7 +91,7 @@ public class BookController extends SMITravelController {
             System.out.println("result : "+result);
             bookinglist = workspaceService.getListBooking(refno,PassFirst,PassLast,user.getUsername(),departmentid,Bookdate,status,pnr,ticketNo,payBy,bankTransfer,transferDateFrom,transferDateTo);
         }else{
-            bookinglist = workspaceService.getListBooking(refno,PassFirst,PassLast,user.getUsername(),departmentid,Bookdate,status,pnr,ticketNo,payBy,bankTransfer,transferDateFrom,transferDateTo);
+            bookinglist = workspaceService.getListBooking(refno,PassFirst,PassLast,username,user.getMDepartment().getId(),Bookdate,status,pnr,ticketNo,payBy,bankTransfer,transferDateFrom,transferDateTo);
             //request.setAttribute("Bookdate", util.convertDateToString(thisDate));
             
         }
