@@ -27,6 +27,9 @@ public class LandVoucher {
     private String passenger3;
     private String passenger4;
     private String passenger5;
+    private String passenger6;
+    private String passenger7;
+    private String passenger8;
     private String category;
     private String description;
     private String Qty;
@@ -39,7 +42,6 @@ public class LandVoucher {
     private String Qty2;
     private String checkin;
     private String remark;
-    private String passenger6;
     private String systemdate;
     private String user;
     private String hotel_name;
@@ -52,6 +54,8 @@ public class LandVoucher {
         this.passenger4 = "";
         this.passenger5 = "";
         this.passenger6 = "";
+        this.passenger7 = "";
+        this.passenger8 = "";
         this.category = "";
         this.category1 = "";
         this.category2 = "";
@@ -330,6 +334,22 @@ public class LandVoucher {
 
     public String getHotel_name() {
         return hotel_name;
+    }
+
+    public String getPassenger7() {
+        return passenger7;
+    }
+
+    public void setPassenger7(String passenger7) {
+        this.passenger7 = passenger7;
+    }
+
+    public String getPassenger8() {
+        return passenger8;
+    }
+
+    public void setPassenger8(String passenger8) {
+        this.passenger8 = passenger8;
     }
 
     

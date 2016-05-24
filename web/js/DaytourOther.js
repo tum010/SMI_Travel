@@ -162,6 +162,9 @@ function printOtherVoucher(status) {
 //       checkDuplicate();  
 //    }
     var InputRefNo = document.getElementById("InputRefNo").value;
+    if(InputRefNo.indexOf('-') >= 0){
+        InputRefNo = InputRefNo.replace(/\-/g,'');
+    }
     var otherId = "";
     var countOther = parseInt($("#countOther").val());
     for(var i=1; i<=countOther; i++){

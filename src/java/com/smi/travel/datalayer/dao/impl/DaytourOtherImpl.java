@@ -212,6 +212,10 @@ public class DaytourOtherImpl implements DaytourOtherDao{
                         daytourOther.setPassenger5(passergerName);
                     }else if(j == 5){
                         daytourOther.setPassenger6(passergerName);
+                    }else if(j == 6){
+                        daytourOther.setPassenger7(passergerName);
+                    }else if(j == 7){
+                        daytourOther.setPassenger8(passergerName);
                     }
                 }
             }    

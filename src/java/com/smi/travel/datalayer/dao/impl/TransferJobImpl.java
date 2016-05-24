@@ -31,7 +31,7 @@ public class TransferJobImpl implements TransferJobDao {
     private SessionFactory sessionFactory;
     private Transaction transaction;
     private static final int MAX_JOB = 100;
-    private static final String FILTERTOUR_FROM_DATE_QUERY = "from DaytourBooking DB where DB.tourDate = :date GROUP BY DB.daytour.id ";
+    private static final String FILTERTOUR_FROM_DATE_QUERY = "from DaytourBooking DB where DB.tourDate = :date GROUP BY DB.daytour.code ";
     private static final String GET_JOB_QUERY = "from TransferJob tr where tr.transferDate >= :startdate and tr.transferDate <= :enddate";
     private static final String GET_LASTDOCNO_QUERY = "from TransferJob tr where tr.documentNo Like :docno Order by tr.id desc ";
     private static final String GET_DOCNOFROMID_QUERY = "from TransferJob tr where tr.documentNo = :docno";

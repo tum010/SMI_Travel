@@ -530,6 +530,7 @@ function CallFilterAjax(param) {
                         $("#customerId").val(customer_id);
                         $("#MInitialname").val(customer_initialId);
                         $("#passengerId").val(customer_code);
+                        $("#passengerIdVal").val(customer_code);
                         $("#firstName").val(customer_firstname);
                         $("#lastName").val(customer_lastname);
                         $("#sex").val(customer_sex);

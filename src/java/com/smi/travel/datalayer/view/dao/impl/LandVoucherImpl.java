@@ -112,6 +112,10 @@ public class LandVoucherImpl implements  LandVoucherDao{
                   voucher.setPassenger5(util.CheckNullString(passname));
               }else if(i == 5){
                   voucher.setPassenger6(util.CheckNullString(passname));
+              }else if(i == 6){
+                  voucher.setPassenger7(util.CheckNullString(passname));
+              }else if(i == 7){
+                  voucher.setPassenger8(util.CheckNullString(passname));
               }
          }
         session.close();
