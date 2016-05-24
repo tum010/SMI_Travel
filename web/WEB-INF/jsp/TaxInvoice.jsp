@@ -2175,7 +2175,7 @@
                 '<td><input class="form-control decimal" style="text-align:right;" type="text" id="gross' + count + '" name="gross' + count + '" value="0.00" readonly=""></td>' +
                 '<td><input class="form-control decimal" style="text-align:right;" type="text" id="amount' + count + '" name="amount' + count + '" value="" onfocusout="CalculateAmountTotal(\'' + row + '\')"></td>' +               
                 '<td><select class="form-control" name="currencyAmount' + count + '" id="currencyAmount' + count + '" onchange="AddrowBySelect(\'' + count + '\'); CalculateAmountTotal(\'\');"><option  value="" >---------</option></select></td>' +
-                '<td><input class="form-control decimalexrate" style="text-align:right;" type="text" id="exRate' + count + '" name="exRate' + count + '" value="" ></td>' +
+                '<td class="${outbound}"><input class="form-control decimalexrate" style="text-align:right;" type="text" id="exRate' + count + '" name="exRate' + count + '" value="" ></td>' +
                 '<td>' + 
                     '<center>' +
                     '<a id="expenButtonRemove' + count + '" name="expenButtonRemove' + count + '" onclick="deleteTaxList(\'\',\'' + count + '\')"  data-toggle="modal" data-target="#DeleteExpenModal">' + 
