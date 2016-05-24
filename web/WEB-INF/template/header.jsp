@@ -11,7 +11,7 @@
 
 <nav class="navbar " style="margin-bottom: -5px; height: 5px;" role="navigation">
 	<div class="navbar-header">
-		<a class="navbar-brand" style="padding: 0px" href="#"> <img
+		<a class="navbar-brand" style="padding: 0px" href="Book.smi"> <img
                         src="${pageContext.request.contextPath}/img/smilogo.jpg" style="width: 55px;height: 40px"/>
 		</a>
 	</div>
@@ -44,14 +44,14 @@
 <nav class="navbar navbar-inverse " role="navigation" id="menuTop">
 
 	<!-- Brand and toggle get grouped for better mobile display -->
-	<div class="navbar-header">
+<!--	<div class="navbar-header">
 		<button type="button" class="navbar-toggle" data-toggle="collapse"
 			data-target="#bs-example-navbar-collapse-1">
 			<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span>
 			<span class="icon-bar"></span> <span class="icon-bar"></span>
 		</button>
 		<a class="navbar-brand" href="" style="font-size: 14px;" >HOME</a>
-	</div>
+	</div>-->
 
 	<script type="text/javascript" charset="utf-8">
 		$(document).ready(
@@ -164,7 +164,7 @@
 	</script>
 
 	<!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="position: absolute; padding: 0px 0px 0px 140px;">
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="position: absolute; padding: 0px 0px 0px 50px;">
 		<ul class="nav navbar-nav" id="navtop">
 			<li class="dropdown"><a href="#" class="dropdown-header"
                             data-toggle="dropdown" style="height: 44px;"> <span
