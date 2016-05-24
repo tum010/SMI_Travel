@@ -523,8 +523,8 @@ public class InvoiceInboundController extends SMITravelController {
             request.getParameterMap();
             System.out.println("isvat : ["+i+"]"+isVat);
             
-            if(idDetail != null && !idDetail.equals("") || (amount != null && !amount.equals("")) || (gross != null && !gross.equals("")) || 
-                    (amountCurren!="" && amountCurren!=null) || (description!="" && description!=null)){  
+            if(idDetail != null && !idDetail.equals("") || (amount != null && !amount.equals("")) || (gross != null && !gross.equals("")) 
+                    || (description!="" && description!=null)){  
                                    
                 if(idDetail != null && !idDetail.equals("")){
                      invoiceDetail.setId(idDetail);

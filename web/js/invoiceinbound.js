@@ -754,6 +754,9 @@ function addRowInvoiceInboundDetail(row){
     '<td align="center" ><span  class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteDetailBillInbound(' + row + ',\'\')" data-toggle="modal" data-target="#DelDetailBill" >  </span></td>' +           
     '</tr>'
     );
+    $('[name=SelectCurrencyAmount' + row + '] option').filter(function() { 
+        return ($(this).text() === 'THB');
+    }).prop('selected', true);     
     $(".decimal").inputmask({
         alias: "decimal",
         integerDigits: 8,
