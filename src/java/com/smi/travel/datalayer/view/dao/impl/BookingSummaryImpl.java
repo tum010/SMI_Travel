@@ -196,6 +196,7 @@ public class BookingSummaryImpl implements BookingSummaryDao{
                 .addScalar("curcost", Hibernate.STRING)
                 .addScalar("Total_price", Hibernate.STRING)
                 .addScalar("curamount", Hibernate.STRING)
+                .addScalar("supplier", Hibernate.STRING)
                 .list();
         
         SimpleDateFormat dateformat = new SimpleDateFormat();
@@ -215,6 +216,7 @@ public class BookingSummaryImpl implements BookingSummaryDao{
             booksumdetail.setCurcost(B[5]== null ? "" :util.ConvertString(B[5]));
             booksumdetail.setTotalprice(B[6]== null ? "" :util.ConvertString(B[6]));
             booksumdetail.setCuramount(B[7]== null ? "" :util.ConvertString(B[7]));
+            booksumdetail.setSupplier(B[8]== null ? "" :util.ConvertString(B[8]));
             data.add(booksumdetail);
         }
         this.sessionFactory.close();
@@ -240,6 +242,7 @@ public class BookingSummaryImpl implements BookingSummaryDao{
                 .addScalar("cur_cost", Hibernate.STRING)
                 .addScalar("sell", Hibernate.STRING)
                 .addScalar("cur_amount", Hibernate.STRING)
+                .addScalar("remark", Hibernate.STRING)
                 .list();
         
         SimpleDateFormat dateformat = new SimpleDateFormat();
@@ -263,6 +266,7 @@ public class BookingSummaryImpl implements BookingSummaryDao{
             booksumdetail.setCurcost(B[7]== null ? "" :util.ConvertString(B[7]));
             booksumdetail.setSell(B[8]== null ? "" :util.ConvertString(B[8]));
             booksumdetail.setCuramount(B[9]== null ? "" :util.ConvertString(B[9]));
+            booksumdetail.setRemark(B[10]== null ? "" :util.ConvertString(B[10]));
             data.add(booksumdetail);
         }
         

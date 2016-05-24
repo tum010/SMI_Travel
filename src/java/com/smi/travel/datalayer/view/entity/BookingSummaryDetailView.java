@@ -35,7 +35,7 @@ public class BookingSummaryDetailView {
 //    private String curcost;
     private String totalprice;
 //    private String curamount;
-
+    private String supplier;
     //    OTHER 
     private String name;
     private String otherdatetime;
@@ -316,5 +316,13 @@ public class BookingSummaryDetailView {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public String getSupplier() {
+        return supplier;
+    }
+
+    public void setSupplier(String supplier) {
+        this.supplier = supplier;
     }
 }
