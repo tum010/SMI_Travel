@@ -506,7 +506,7 @@
                                             <input type="hidden" name="creditId${i.count}" id="creditId${i.count}" value="${table.id}">
                                             <td align="center">${i.count}</td>
                                             <td><input maxlength="255" id="creditNote${i.count}" name="creditNote${i.count}" type="text" class="form-control" value="${table.creditNote}"></td>
-                                            <td><input maxlength="10" id="creditAmount${i.count}"  name="creditAmount${i.count}"  type="text" class="form-control text-right"  value="${table.creditAmount}" onkeydown="calculateTotalCreditAmount()" onkeyup="insertCommas(this)"></td>
+                                            <td><input maxlength="10" id="creditAmount${i.count}"  name="creditAmount${i.count}"  type="text" class="form-control text-right"  value="${table.creditAmount}" onfocusout="calculateTotalCreditAmount()" onkeyup="insertCommas(this)"></td>
                                             <td> 
                                                 <center> 
                                                     <a class="remCF"><span id="SpanRemove${i.count}" onclick="deleteCreditList('${table.id}','${i.count}');" class="glyphicon glyphicon-remove deleteicon "></span></a>
@@ -556,7 +556,7 @@
                                             <input type="hidden" name="debitId${i.count}" id="debitId${i.count}" value="${table.id}">
                                             <td align="center">${i.count}</td>
                                             <td><input maxlength="255" id="debitNote${i.count}" name="debitNote${i.count}" type="text" class="form-control" value="${table.debitNote}"></td>
-                                            <td><input maxlength="10" id="debitAmount${i.count}"  name="debitAmount${i.count}"  type="text" class="form-control text-right"  value="${table.debitAmount}" onkeydown="calculateTotalDebitAmount()" onkeyup="insertCommas(this)"></td>
+                                            <td><input maxlength="10" id="debitAmount${i.count}"  name="debitAmount${i.count}"  type="text" class="form-control text-right"  value="${table.debitAmount}" onfocusout="calculateTotalDebitAmount()" onkeyup="insertCommas(this)"></td>
                                             <td> 
                                                 <center> 
                                                     <a class="remCF"><span id="SpanRemove${i.count}" onclick="deleteDebitList('${table.id}','${i.count}');" class="glyphicon glyphicon-remove deleteicon "></span></a>
@@ -2351,6 +2351,7 @@ function DeleteRowCredit(){
                     $(this).find('td:eq(0)').html(countrow) ;
                     countrow = countrow+1;
                 });
+                calculateTotalCreditAmount();
             },
             error: function () {
                 console.log("error");
@@ -2400,6 +2401,7 @@ function DeleteRowDebit(){
                     $(this).find('td:eq(0)').html(countrow) ; 
                     countrow = countrow+1;
                 });
+                calculateTotalDebitAmount();
             },
             error: function () {
                 console.log("error");
