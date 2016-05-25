@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TicketOrder_FlightSubreport" language="groovy" pageWidth="409" pageHeight="60" columnWidth="409" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="f2c6e0bd-cc8e-48db-bd65-4d52a2d51aa3">
-	<property name="ireport.zoom" value="2.420000000000002"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.zoom" value="4.7158953820000065"/>
+	<property name="ireport.x" value="179"/>
 	<property name="ireport.y" value="0"/>
 	<field name="flightNo" class="java.lang.String"/>
 	<field name="flightClass" class="java.lang.String"/>
@@ -59,13 +59,13 @@
 				</graphicElement>
 			</rectangle>
 			<rectangle>
-				<reportElement x="0" y="0" width="66" height="15" uuid="5fe1ffb0-b42b-421e-846c-3b6ea89da3ad"/>
+				<reportElement x="0" y="0" width="65" height="15" uuid="5fe1ffb0-b42b-421e-846c-3b6ea89da3ad"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</rectangle>
 			<rectangle>
-				<reportElement x="66" y="0" width="86" height="15" uuid="e6da4efd-524c-4fe0-85ae-19e7753141a9"/>
+				<reportElement x="65" y="0" width="87" height="15" uuid="e6da4efd-524c-4fe0-85ae-19e7753141a9"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
@@ -73,56 +73,56 @@
 			<staticText>
 				<reportElement positionType="Float" x="219" y="2" width="32" height="13" uuid="100e08c3-dada-4d18-a713-b91103a363fb"/>
 				<textElement textAlignment="Center">
-					<font isBold="false"/>
+					<font size="9" isBold="false"/>
 				</textElement>
 				<text><![CDATA[FROM]]></text>
 			</staticText>
 			<staticText>
 				<reportElement positionType="Float" x="251" y="2" width="40" height="13" uuid="c41b9ffb-547d-4058-bca6-62dafe5fdd8d"/>
 				<textElement textAlignment="Center">
-					<font isBold="false"/>
+					<font size="9" isBold="false"/>
 				</textElement>
 				<text><![CDATA[TO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" x="67" y="2" width="85" height="13" uuid="2e5f4bfa-f1dc-455b-8c3d-e77ddbe1cdc9"/>
+				<reportElement positionType="Float" x="65" y="2" width="87" height="13" uuid="2e5f4bfa-f1dc-455b-8c3d-e77ddbe1cdc9"/>
 				<textElement textAlignment="Center">
-					<font isBold="false"/>
+					<font size="9" isBold="false"/>
 				</textElement>
 				<text><![CDATA[CLASS (B.C)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" x="2" y="2" width="64" height="13" uuid="2030eb0b-6779-4e6f-b8fe-e20a5aef2624"/>
+				<reportElement positionType="Float" x="2" y="2" width="63" height="13" uuid="2030eb0b-6779-4e6f-b8fe-e20a5aef2624"/>
 				<textElement textAlignment="Center">
-					<font isBold="false"/>
+					<font size="9" isBold="false"/>
 				</textElement>
 				<text><![CDATA[FLIGHT NO.]]></text>
 			</staticText>
 			<staticText>
 				<reportElement positionType="Float" x="366" y="2" width="42" height="13" uuid="3012dce2-9d5b-4be7-b43c-a89ed48e2b7f"/>
 				<textElement textAlignment="Center">
-					<font isBold="false"/>
+					<font size="9" isBold="false"/>
 				</textElement>
 				<text><![CDATA[STATUS]]></text>
 			</staticText>
 			<staticText>
 				<reportElement positionType="Float" x="332" y="2" width="32" height="13" uuid="5ea98d05-a1eb-4356-bc48-572b4403de46"/>
 				<textElement textAlignment="Center">
-					<font isBold="false"/>
+					<font size="9" isBold="false"/>
 				</textElement>
 				<text><![CDATA[ARRV.]]></text>
 			</staticText>
 			<staticText>
 				<reportElement positionType="Float" x="293" y="2" width="39" height="13" uuid="48063d11-0970-4eb6-90e4-6c359893045d"/>
 				<textElement textAlignment="Center">
-					<font isBold="false"/>
+					<font size="9" isBold="false"/>
 				</textElement>
 				<text><![CDATA[DEPT.]]></text>
 			</staticText>
 			<staticText>
 				<reportElement positionType="Float" x="152" y="2" width="69" height="13" uuid="31047a8a-a041-4b0c-8555-58fffdb2e595"/>
 				<textElement textAlignment="Center">
-					<font isBold="false"/>
+					<font size="9" isBold="false"/>
 				</textElement>
 				<text><![CDATA[DATE]]></text>
 			</staticText>
@@ -131,13 +131,13 @@
 	<detail>
 		<band height="15" splitType="Stretch">
 			<rectangle>
-				<reportElement x="0" y="-1" width="66" height="15" uuid="9e173258-2adf-4dc3-a779-8a8d32a6a133"/>
+				<reportElement x="0" y="-1" width="65" height="15" uuid="9e173258-2adf-4dc3-a779-8a8d32a6a133"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</rectangle>
 			<rectangle>
-				<reportElement x="66" y="-1" width="86" height="15" uuid="20140e31-eedd-42b8-9d2b-86c4f98a80a9"/>
+				<reportElement x="65" y="-1" width="87" height="15" uuid="20140e31-eedd-42b8-9d2b-86c4f98a80a9"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
@@ -181,56 +181,56 @@
 			<textField>
 				<reportElement positionType="Float" x="1" y="0" width="64" height="14" uuid="681c2b6f-1f6e-4477-ba86-60abf85d981a"/>
 				<textElement textAlignment="Center" markup="html">
-					<font size="9" isBold="false"/>
+					<font size="8" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{flightNo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement positionType="Float" x="67" y="0" width="85" height="14" uuid="1eeac6c9-bc8b-4498-beb5-39135b7c5ef9"/>
+				<reportElement positionType="Float" x="66" y="0" width="86" height="14" uuid="1eeac6c9-bc8b-4498-beb5-39135b7c5ef9"/>
 				<textElement markup="html">
-					<font size="9" isBold="false"/>
+					<font size="8" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{flightClass}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement positionType="Float" x="152" y="0" width="67" height="14" uuid="21af4fb9-e107-4b30-b668-da07740302f6"/>
 				<textElement textAlignment="Center" markup="html">
-					<font size="9" isBold="false"/>
+					<font size="8" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{departdate}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement positionType="Float" x="220" y="0" width="31" height="14" uuid="718f273d-93dd-44ef-9c6b-5e19b5cebe8c"/>
 				<textElement textAlignment="Center" markup="html">
-					<font size="9" isBold="false"/>
+					<font size="8" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{from}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement positionType="Float" x="251" y="0" width="40" height="14" uuid="9f581294-0a3c-4829-99e3-162d99826ba6"/>
 				<textElement textAlignment="Center" markup="html">
-					<font size="9" isBold="false"/>
+					<font size="8" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{to}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement positionType="Float" x="291" y="0" width="41" height="14" uuid="d08209f1-0f1f-4bda-a46d-c8060185270a"/>
 				<textElement textAlignment="Center" markup="html">
-					<font size="9" isBold="false"/>
+					<font size="8" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{depttime}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement positionType="Float" x="333" y="0" width="33" height="14" uuid="cdde97e6-3b63-4388-9a1f-f66626733b77"/>
 				<textElement textAlignment="Center" markup="html">
-					<font size="9" isBold="false"/>
+					<font size="8" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{arrvtime}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement positionType="Float" x="366" y="0" width="40" height="14" uuid="a7ecdb27-8256-45a2-94f3-bddba575f576"/>
 				<textElement textAlignment="Center" markup="html">
-					<font size="9" isBold="false"/>
+					<font size="8" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{status}]]></textFieldExpression>
 			</textField>

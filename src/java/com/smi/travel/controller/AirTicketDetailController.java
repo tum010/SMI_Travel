@@ -289,6 +289,17 @@ public class AirTicketDetailController extends SMITravelController {
             request.setAttribute(Action, "update");
             List<String> checkPnr = bookingAirticketService.getListPnrFromRefno(referenceNo);
             request.setAttribute(CHECKPNR, checkPnr);
+            
+            Date issueDate = null; 
+            Set<AirticketAirline> airlines = airticketPnr.getAirticketAirlines();
+            for (AirticketAirline airline : airlines) {
+                issueDate = airline.getTicketDate();
+            }
+            AirticketBooking airBook = bookingAirticketService.getBookDetailAir(referenceNo);
+            if(airBook.getIssuedate() == null){
+                airBook.setIssuedate(issueDate == null ? airBook.getIssuedate() : issueDate);
+                bookingAirticketService.updateBookingAirTicket(airBook);
+            }
         }
 
         return AirTicketDetail;
