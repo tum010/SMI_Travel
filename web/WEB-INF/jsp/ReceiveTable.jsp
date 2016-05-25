@@ -218,8 +218,8 @@
                     <div class="panel-body">
                         <div class="tab-content" id="collapseExample" aria-expanded="false">
                         <div role="tabpanel" class="tab-pane hidden active" id="receive">
-                        <div class="row" style="padding-left: 0px">
-                            <div class="col-xs-12 " style="margin-top: -10px;">
+                        <div class="row" style="padding-left: 0px;">
+                            <!--<div class="col-xs-12 " style="margin-top: -10px;">-->
                                 <div class="col-xs-1 form-group" style="width: 135px">
                                     <label class="control-label text-left">Receive Date<font style="color: red">*</font></lable>        
                                 </div>
@@ -264,21 +264,21 @@
                                         </c:forEach>                                            
                                     </select>    
                                 </div>     
-                            </div>   
+                            <!--</div>-->   
                         </div><!-- End Row 1-->
                         <div class="row" style="padding-left: 0px">
-                            <div class="col-xs-12 " style="margin-top: -10px;">
-                                <div class="col-xs-1 form-group hidden">
+                            <!--<div class="col-xs-12 " style="margin-top: -10px;">-->
+                                <div class="col-xs-1 form-group hidden" style="margin-top: -10px;">
                                     <input name="receiveId" id="receiveId" type="hidden" class="form-control" value="${advanceReceive.id}" />
                                     <input name="receiveCreditId" id="receiveCreditId" type="hidden" class="form-control" value="" />
                                     <input name="receiveCreditRow" id="receiveCreditRow" type="hidden" class="form-control" value="" />
                                     <input name="department" id="department" type="hidden" class="form-control" value="${department}" />
                                     <input name="creditAmount" id="creditAmount" type="hidden" class="form-control" value="0" />
                                 </div>
-                                <div class="col-xs-1 form-group" style="width: 135px">
+                                <div class="col-xs-1 form-group" style="width: 135px; margin-top: -10px;">
                                     <label class="control-label text-left">Receive Name<font style="color: red">*</font></lable>        
                                 </div>
-                                <div class="col-xs-1 form-group hidden" style="width: 170px">
+                                <div class="col-xs-1 form-group hidden" style="width: 170px; margin-top: -10px;">
                                     <div class="input-group">                                 
                                         <input name="receiveCode" id="receiveCode" type="text" class="form-control" value="${advanceReceive.recTo}" />
                                         <span class="input-group-addon" id="receiveModal"  data-toggle="modal" data-target="#ReceiveModal">
@@ -286,7 +286,7 @@
                                         </span>
                                     </div>    
                                 </div>                                      
-                                <div class="col-xs-1 " style="width: 290px">
+                                <div class="col-xs-1 " style="width: 290px; margin-top: -10px;">
                                     <div class="col-xs-1" style="width: 250px; padding-left: 0px;">
                                         <input name="receiveName" id="receiveName" type="text" class="form-control" style="text-transform: uppercase;" value="${advanceReceive.recName}" maxlength="100"/>                                  
                                     </div>
@@ -294,73 +294,73 @@
                                         <i id="ajaxload" class="fa fa-spinner fa-spin hidden"></i>
                                     </div>
                                 </div>        
-                                <div class="col-xs-1 text-left" style="width: 100px">
+                                <div class="col-xs-1 text-left" style="width: 100px; margin-top: -10px;">
                                     <label class="control-label">AR Code</lable>        
                                 </div>
-                                <div class="col-xs-1" style="width: 200px">
+                                <div class="col-xs-1" style="width: 200px; margin-top: -10px;">
                                     <input name="receiveArCode" id="receiveArCode" type="text" class="form-control" value="${advanceReceive.arCode}" readonly="" maxlength="20"/>
                                 </div>                                                                
-                                <div class="col-xs-1 text-right" style="width: 170px">
+                                <div class="col-xs-1 text-right" style="width: 170px; margin-top: -10px;">
                                    <label class="control-label text-left">Receive Amount<font style="color: red">*</font></lable>        
                                 </div>                               
-                                <div class="col-xs-1 form-group" style="width: 200px">
+                                <div class="col-xs-1 form-group" style="width: 200px; margin-top: -10px;">
                                     <input name="receiveAmount" id="receiveAmount" type="text" class="form-control decimal" value="${advanceReceive.recAmount}"/>
                                 </div>
-                            </div>
+                            <!--</div>-->
                         </div><!-- End Row 2-->
                         <div class="row" style="padding-left: 0px">
-                            <div class="col-xs-12 " style="margin-top: -10px;">
-                                <div class="col-xs-1" style="width: 135px">
+                            <!--<div class="col-xs-12 " style="margin-top: -10px;">-->
+                                <div class="col-xs-1" style="width: 135px; margin-top: -10px;">
                                     <label class="control-label text-left">Description</lable>        
                                 </div>
-                                <div class="col-xs-1" style="width: 590px">
+                                <div class="col-xs-1" style="width: 590px; margin-top: -10px;">
                                     <textarea name="description" id="description" class="form-control" rows="3" maxlength="255">${advanceReceive.description}</textarea>
                                 </div>
-                                <div class="col-xs-1 text-right" style="width: 170px">
+                                <div class="col-xs-1 text-right" style="width: 170px; margin-top: -10px;">
                                     <label class="control-label ">Wht</lable>        
                                 </div>
-                                <div class="col-xs-1" style="width: 200px">
+                                <div class="col-xs-1" style="width: 200px; margin-top: -10px;">
                                     <input name="wht" id="wht" type="text" class="form-control decimal" value="${advanceReceive.wht}" />
                                 </div>
-                            </div>
+                            <!--</div>-->
                         </div><!-- End Row 3--><br>
                         <div class="row" style="padding-left: 0px">
-                            <div class="col-xs-12 " style="margin-top: -15px;">                                                                 
-                                <div class="col-xs-1" style="width: 135px">
+                            <!--<div class="col-xs-12 " style="margin-top: -15px;">-->                                                                 
+                                <div class="col-xs-1" style="width: 135px; margin-top: -15px;">
                                     <label class="control-label text-left">Cash Amount</lable>        
                                 </div>
-                                <div class="col-xs-1" style="width: 200px" id="cashAmountPanel">
+                                <div class="col-xs-1" style="width: 200px; margin-top: -15px;" id="cashAmountPanel">
                                     <input name="cashAmount" id="cashAmount" type="text" class="form-control decimal" value="${advanceReceive.cashAmount}" />
                                 </div>
                                 <div class="col-xs-1" style="width: 60px"></div>
-                                <div class="col-xs-1" style="width: 130px">
+                                <div class="col-xs-1" style="width: 130px; margin-top: -15px;">
                                     <label class="control-label text-left">Bank Amount</lable>        
                                 </div>
-                                <div class="col-xs-1" style="width: 200px" id="bankAmountPanel">
+                                <div class="col-xs-1" style="width: 200px; margin-top: -15px;" id="bankAmountPanel">
                                     <input name="bankAmount" id="bankAmount" type="text" class="form-control decimal" value="${advanceReceive.bankAmount}"/>
                                 </div>
                                 <div class="col-xs-1" style="width: 35px"></div>
-                                <div class="col-xs-1 text-right" style="width: 135px">
+                                <div class="col-xs-1 text-right" style="width: 135px; margin-top: -15px;">
                                     <label class="control-label">Chq Amount</lable>        
                                 </div>
-                                <div class="col-xs-1" style="width: 200px" id="chqAmountPanel">
+                                <div class="col-xs-1" style="width: 200px; margin-top: -15px;" id="chqAmountPanel">
                                     <input name="chqAmount" id="chqAmount" type="text" class="form-control decimal" value="${advanceReceive.chqAmount}"/>
                                 </div>
-                            </div>
+                            <!--</div>-->
                         </div><!-- End Row 4--><br>
                         <div class="row" style="padding-left: 0px">
-                            <div class="col-xs-12 " style="margin-top: -15px;">
-                                <div class="col-xs-1" style="width: 135px">
+                            <!--<div class="col-xs-12 " style="margin-top: -15px;">-->
+                                <div class="col-xs-1" style="width: 135px; margin-top: -15px;">
                                     <label class="control-label text-left">Chq Bank</lable>        
                                 </div>
-                                <div class="col-xs-1" style="width: 200px">
+                                <div class="col-xs-1" style="width: 200px; margin-top: -15px;">
                                     <input name="chqBank" id="chqBank" type="text" maxlength="50" class="form-control" value="${advanceReceive.chqBank}" />
                                 </div>
                                 <div class="col-xs-1" style="width: 60px"></div>
-                                <div class="col-xs-1" style="width: 130px">
+                                <div class="col-xs-1" style="width: 130px; margin-top: -15px;">
                                     <label class="control-label text-left">Chq Date</lable>        
                                 </div>
-                                <div class="col-xs-1" style="width: 200px">
+                                <div class="col-xs-1" style="width: 200px; margin-top: -15px;">
                                     <fmt:formatDate value="${advanceReceive.chqDate}" var="chqDate" pattern="dd-MM-yyyy" />
                                     <div class='input-group date'>
                                         <input name="chqDate" id="chqDate" type="text" class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${chqDate}" />
@@ -368,13 +368,13 @@
                                     </div>
                                 </div>
                                 <div class="col-xs-1" style="width: 55px"></div>
-                                <div class="col-xs-1 text-left" style="width: 115px">
+                                <div class="col-xs-1 text-left" style="width: 115px; margin-top: -15px;">
                                     <label class="control-label">Chq No</lable>        
                                 </div>
-                                <div class="col-xs-1" style="width: 200px">
+                                <div class="col-xs-1" style="width: 200px; margin-top: -15px;">
                                     <input name="chqNo" id="chqNo" type="text" maxlength="100" class="form-control" value="${advanceReceive.chqNo}" />
                                 </div>
-                            </div>
+                            <!--</div>-->
                         </div><!-- End Row 5-->
                         <div class="col-sm-12"><br></div>
                         <input type="hidden" name="countCredit" id="countCredit" class="form-control" value="${advanceReceiveCreditList.size()}"/>
