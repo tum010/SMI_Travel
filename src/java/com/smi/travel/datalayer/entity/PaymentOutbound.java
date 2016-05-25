@@ -2,6 +2,7 @@ package com.smi.travel.datalayer.entity;
 // Generated Nov 19, 2015 9:34:00 AM by Hibernate Tools 3.6.0
 
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -25,6 +26,11 @@ public class PaymentOutbound {
      private Date updateDate;
      private Date duePaymentDate;
      private Integer isPayCom;
+     private Integer isWhtCom;
+     private BigDecimal whtComAmt;
+     private BigDecimal whtCom;
+     private BigDecimal vatWhtCom;
+     private BigDecimal totalPayment;
      private List paymentOutboundDetails = new LinkedList<PaymentOutboundDetail>();
 
     public PaymentOutbound() {
@@ -147,6 +153,46 @@ public class PaymentOutbound {
 
     public void setIsPayCom(Integer isPayCom) {
         this.isPayCom = isPayCom;
+    }
+
+    public Integer getIsWhtCom() {
+        return isWhtCom;
+    }
+
+    public void setIsWhtCom(Integer isWhtCom) {
+        this.isWhtCom = isWhtCom;
+    }
+
+    public BigDecimal getWhtComAmt() {
+        return whtComAmt;
+    }
+
+    public void setWhtComAmt(BigDecimal whtComAmt) {
+        this.whtComAmt = whtComAmt;
+    }
+
+    public BigDecimal getWhtCom() {
+        return whtCom;
+    }
+
+    public void setWhtCom(BigDecimal whtCom) {
+        this.whtCom = whtCom;
+    }
+
+    public BigDecimal getVatWhtCom() {
+        return vatWhtCom;
+    }
+
+    public void setVatWhtCom(BigDecimal vatWhtCom) {
+        this.vatWhtCom = vatWhtCom;
+    }
+
+    public BigDecimal getTotalPayment() {
+        return totalPayment;
+    }
+
+    public void setTotalPayment(BigDecimal totalPayment) {
+        this.totalPayment = totalPayment;
     }
 
 }

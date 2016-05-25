@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TicketOrder_InfoSubreport" language="groovy" pageWidth="147" pageHeight="842" columnWidth="147" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="a85f3ef3-c07b-4461-b356-71d5e1347b45">
 	<property name="ireport.zoom" value="2.2000000000000033"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="241"/>
+	<property name="ireport.y" value="0"/>
 	<field name="issuedate" class="java.lang.String"/>
 	<field name="companyname" class="java.lang.String"/>
 	<field name="tel" class="java.lang.String"/>
@@ -281,7 +281,7 @@
 				<text><![CDATA[TAX]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="6" y="53" width="134" height="16" uuid="9c328cb3-900e-4615-99c4-0b185276415a">
+				<reportElement x="6" y="53" width="135" height="41" uuid="9c328cb3-900e-4615-99c4-0b185276415a">
 					<property name="local_mesure_unitheight" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
@@ -444,16 +444,6 @@
 				<reportElement x="80" y="33" width="10" height="6" uuid="78792c37-e3a2-400f-925b-b2d551026c25"/>
 				<imageExpression><![CDATA[("0".equals(String.valueOf($F{ispickup}))) ? "resource/images/checkmark.png" : "resource/images/uncheck.jpg"]]></imageExpression>
 			</image>
-			<textField>
-				<reportElement x="6" y="65" width="135" height="29" uuid="3564f77e-3276-4d0f-a954-b930b06564de">
-					<property name="local_mesure_unitheight" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-				</reportElement>
-				<textElement>
-					<font fontName="TH SarabunPSK" size="13" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{companyaddress}]]></textFieldExpression>
-			</textField>
 		</band>
 	</detail>
 </jasperReport>

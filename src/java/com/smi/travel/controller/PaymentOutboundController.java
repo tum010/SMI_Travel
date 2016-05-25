@@ -82,6 +82,12 @@ public class PaymentOutboundController extends SMITravelController {
         String isPayCom = request.getParameter("isPayCom");
         String countPaymentDetail = request.getParameter("countPaymentDetail");
         String resultRedirect = request.getParameter("resultRedirect");
+        String isWhtCom = request.getParameter("isWhtCom");
+        String whtComAmt = request.getParameter("whtComAmt");
+        String whtCom = request.getParameter("whtCom");
+        String vatWhtCom = request.getParameter("vatWhtCom");
+        String totalPayment = request.getParameter("totalPayment");
+        
         if(!"".equalsIgnoreCase(resultRedirect) && resultRedirect != null){
             request.setAttribute(RESULT, resultRedirect);
         }
@@ -114,6 +120,12 @@ public class PaymentOutboundController extends SMITravelController {
             paymentOutbound.setApCode(invSupApCode);
             paymentOutbound.setDetail(detail);
             paymentOutbound.setIsPayCom("1".equalsIgnoreCase(isPayCom) ? 1 : 0);
+            paymentOutbound.setIsWhtCom("1".equalsIgnoreCase(isWhtCom) ? 1 : 0);
+                        
+            paymentOutbound.setWhtComAmt(!"".equalsIgnoreCase(whtComAmt) && whtComAmt != null ? new BigDecimal(whtComAmt.replaceAll(",", "")) : null);
+            paymentOutbound.setWhtCom(!"".equalsIgnoreCase(whtCom) && whtCom != null ? new BigDecimal(whtCom.replaceAll(",", "")) : null);
+            paymentOutbound.setVatWhtCom(!"".equalsIgnoreCase(vatWhtCom) && vatWhtCom != null ? new BigDecimal(vatWhtCom.replaceAll(",", "")) : null);
+            paymentOutbound.setTotalPayment(!"".equalsIgnoreCase(totalPayment) && totalPayment != null ? new BigDecimal(totalPayment.replaceAll(",", "")) : null);           
             
             MItemstatus mItemstatus = new MItemstatus();
             mItemstatus.setId(status);

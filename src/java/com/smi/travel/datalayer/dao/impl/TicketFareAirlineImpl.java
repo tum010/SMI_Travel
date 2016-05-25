@@ -827,13 +827,14 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         }else{
             sizeData = String.valueOf(refundAirticketDetails.size());
         }
-        
+        String masterId = "";
         String BookingType = "";
         if(ticketFare.getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster() != null){
             if(! "null".equals(ticketFare.getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getBookingType())
                || ticketFare.getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getBookingType() != null){
                 BookingType = ticketFare.getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getBookingType();
             }
+            masterId = ticketFare.getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getId();
         }
         List<AirticketFlight> FlightList = new ArrayList<AirticketFlight>(ticketFare.getAirticketAirline().getAirticketFlights());
         String rounting = "";
@@ -854,11 +855,11 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
             if(ticketFare.getMPricecategory() != null){
                 String passType = ticketFare.getMPricecategory().getName();
                 if(passType.equalsIgnoreCase("ADULT")){
-                    price = price.add(FlightList.get(i).getAdPrice());
+                    price = price.add(FlightList.get(i).getAdPrice() == null ? new BigDecimal(0) : FlightList.get(i).getAdPrice());
                 }else if(passType.equalsIgnoreCase("CHILD")){
-                    price = price.add(FlightList.get(i).getChPrice());
+                    price = price.add(FlightList.get(i).getChPrice() == null ? new BigDecimal(0) : FlightList.get(i).getChPrice());
                 }else if(passType.equalsIgnoreCase("INFANT")){
-                    price = price.add(FlightList.get(i).getInPrice());
+                    price = price.add(FlightList.get(i).getInPrice() == null ? new BigDecimal(0) : FlightList.get(i).getInPrice());
                 }
             }
         }
@@ -876,6 +877,7 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         result.put("InvTo", invTo);
         result.put("InvName", invName);
         result.put("SizeData", sizeData);
+        result.put("MasterId", masterId);
         session.close();
         this.sessionFactory.close();
         return result;

@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated Nov 19, 2015 9:34:00 AM by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
-    <class name="com.smi.travel.datalayer.entity.PaymentOutbound" table="payment_outbound" catalog="smitravel">
+    <class name="com.smi.travel.datalayer.entity.PaymentOutbound" table="payment_outbound" catalog="smi_uat">
         <id name="id" type="string">
             <column name="id" />
             <generator class="identity" />
@@ -43,6 +43,21 @@
         <property name="isPayCom" type="java.lang.Integer">
             <column name="is_pay_com"/>
         </property>
+        <property name="isWhtCom" type="java.lang.Integer">
+            <column name="is_wht_com"/>
+        </property>
+        <property name="whtComAmt" type="big_decimal">
+            <column name="wht_com_amt" precision="10"/>
+        </property>
+        <property name="whtCom" type="big_decimal">
+            <column name="wht_com" precision="10"/>
+        </property>
+        <property name="vatWhtCom" type="big_decimal">
+            <column name="vat_wht_com" precision="10"/>
+        </property>
+        <property name="totalPayment" type="big_decimal">
+            <column name="total_payment" precision="10"/>
+        </property>   
         <bag name="paymentOutboundDetails" table="payment_outbound_detail" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="payment_id" />

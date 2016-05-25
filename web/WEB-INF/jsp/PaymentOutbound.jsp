@@ -602,7 +602,7 @@
                     <div class="col-xs-1 text-right" style="width: 110px;margin-top: -0px">
                         <label class="control-label">WHT</lable>
                     </div>
-                    <div class="col-xs-1 text-right" style="width: 50px; margin-top: -0px">
+                    <div class="col-xs-1 text-right" style="width: 50px; margin-top: 6px">
                         <input type="checkbox" id="isWht" name="isWht" value="1"/>
                     </div>
                     <div class="col-xs-1 text-right" style="width: 150px;margin-top: -0px">
@@ -625,7 +625,7 @@
                     <div class="col-xs-1 text-right" style="width: 110px;">
                         <label class="control-label">Com Vat</lable>
                     </div>
-                    <div class="col-xs-1 text-right" style="width: 50px; padding-top: 5px;">
+                    <div class="col-xs-1 text-right" style="width: 50px; padding-top: 6px;">
                         <input type="checkbox" id="isComVat" name="isComVat" value="1"/>
                     </div>
                     <div class="col-xs-1 text-right" style="width: 150px;">
@@ -698,11 +698,29 @@
                 <div class="row" >
                     <div class="col-md-12 form-group" >
                         <div class="col-sm-12" style="margin-top: 4px">
-                           <div class="col-md-1 text-right" style="width:544px">
+                            <div class="col-xs-1 text-left" style="width: 125px;margin-left: -40px">
+                                <label class="control-label">WHT For Com</lable>
+                            </div>
+                            <div class="col-xs-1 text-left" style="width: 10px; margin-left: -17px;margin-top : 6px">
+                                <c:if test="${paymentOutbound.isWhtCom == 1}">
+                                    <input type="checkbox" id="isWhtCom" checked name="isWhtCom" value="${paymentOutbound.isWhtCom}"/>
+                                </c:if>
+                                <c:if test="${paymentOutbound.isWhtCom == 0 || paymentOutbound.isWhtCom == '' }">
+                                    <input type="checkbox" id="isWhtCom" name="isWhtCom" value="${paymentOutbound.isWhtCom}"/>
+                                </c:if>
+                            </div>
+                            <div class="col-xs-1 text-right" style="width: 130px;margin-top: -0px">
+                                <input type="hidden" class="form-control text-right" id="vatWhtCom" name="vatWhtCom" value="${paymentOutbound.vatWhtCom}"/>
+                                <input type="text" class="form-control text-right" id="whtCom" name="whtCom" value="${paymentOutbound.whtCom}"/>
+                            </div>
+                            <div class="col-xs-1 text-right" style="width: 200px;margin-left: -10px">
+                                <input type="text" class="form-control text-right" id="whtComAmt" name="whtComAmt" value="${paymentOutbound.whtComAmt}" readonly=""/>
+                            </div>
+                           <div class="col-md-1 text-right" style="width:150px;margin-left: -25px">
                                 <label class="control-label">Total Payment</lable>
                             </div>
                             <div class="col-md-1 text-right" style="width: 160px">
-                                <input name="totalPayment" id="totalPayment" type="text" class="form-control text-right" value="" readonly=""/>
+                                <input name="totalPayment" id="totalPayment" type="text" class="form-control text-right" value="${paymentOutbound.totalPayment}" readonly=""/>
                             </div>
                             <div class="col-md-1 text-right" style="width: 115px">
                                 <label class="control-label">Grand Total</lable>
@@ -985,6 +1003,16 @@
 </select>
 <script type="text/javascript">
     $(document).ready(function () {
+        
+    $("#isWhtCom").click(function() {
+        calculateWhtComAmount('');
+    });
+    
+    $("#whtCom").focusout(function() {
+        calculateWhtComAmount(this.value);
+    });
+
+        
         $('#payDateCheck').datetimepicker().on('dp.change', function(e) {
             $('#PaymentOutboundForm').bootstrapValidator('revalidateField', 'payDate');
         });
@@ -1032,5 +1060,121 @@
             }
         });
     });
+    
+    
+function calculateWhtComAmount(newWhtCom) { 
+    if ($("#isWhtCom").is(':checked')) {
+        var whtCom = 0.00;
+        
+        if(newWhtCom === ''){
+            whtCom = ($("#whtCom").val() === '' ? parseFloat($("#mWht").val()) : parseFloat($("#whtCom").val())); 
+        }else{
+            whtCom =  parseFloat(newWhtCom) ;
+        }
+//        wht_com_amt =  Total Comm * (100 / (100+vat_wht_com)) * wht_com/100
+
+        var totalComm = replaceAll(",","",$('#totalComm').val()); 
+        if (totalComm === ""){
+            totalComm = 0;
+        }
+        totalComm = parseFloat(totalComm);
+        
+        var vatwhtcom = replaceAll(",","",$('#mVat').val()); 
+        if (vatwhtcom === ""){
+            vatwhtcom = 0;
+        }
+        vatwhtcom = parseFloat(vatwhtcom);
+        var whtcomamt = totalComm * (100 / (100+vatwhtcom)) * whtCom /100 ;
+        
+        document.getElementById('vatWhtCom').value = formatNumber(vatwhtcom);
+        document.getElementById('whtCom').value = formatNumber(whtCom);
+        document.getElementById('whtComAmt').value = formatNumber(whtcomamt);
+        $("#isWhtCom").val(($("#isWhtCom").is(':checked') ? '1' : '0'));
+        calculateTotalPayment();
+    }else{
+        document.getElementById('whtCom').value = '';
+        document.getElementById('whtComAmt').value = '';
+        document.getElementById('vatWhtCom').value = '';
+        calculateTotalPayment();
+        $("#isWhtCom").val(($("#isWhtCom").is(':checked') ? '1' : '0'));
+    }
+}
+function calculateTotalPayment() {
+//    Total Payment =  Grand Total - Total WHT - Total Com + wht_com_amt
+    
+    var grandtotaltemp = replaceAll(",","",$('#grandTotal').val()); 
+    if (grandtotaltemp === ""){
+        grandtotaltemp = 0;
+    }
+    var grandtotal = parseFloat(grandtotaltemp);
+    
+    var totalWhttemp = replaceAll(",","",$('#totalWht').val()); 
+    if (totalWhttemp === ""){
+        totalWhttemp = 0;
+    }
+    var totalWht = parseFloat(totalWhttemp);
+    
+    var totalComtemp = replaceAll(",","",$('#totalComm').val()); 
+    if (totalComtemp === ""){
+        totalComtemp = 0;
+    }
+    var totalCom = parseFloat(totalComtemp);
+    
+    var whtComAmttemp = replaceAll(",","",$('#whtComAmt').val()); 
+    if (whtComAmttemp === ""){
+        whtComAmttemp = 0;
+    }
+    var whtComAmt = parseFloat(whtComAmttemp);
+    
+    
+    var totalPayment = grandtotal - totalWht - totalCom + whtComAmt;
+
+    document.getElementById('totalPayment').value = formatNumber(totalPayment);
+}
+
+
+function calculateTotalCom(commtemp,row) {
+    var count = parseInt(document.getElementById('countPaymentDetail').value);
+    var totalComm = 0;
+    for(var i = 1 ; i < count-1 ; i ++){
+        if(row != i){
+            var comm = replaceAll(",","",$('#comm'+i).val()); 
+            if (comm === ''){
+                comm = 0;
+            }
+            totalComm += parseFloat(comm);
+        }else if(row == i){
+            var comm = replaceAll(",","",commtemp); 
+            if (comm === ''){
+                comm = 0;
+            }
+            totalComm += parseFloat(comm);
+        }
+    }
+    document.getElementById('totalComm').value = formatNumber(totalComm);
+    calculateTotalPayment();
+}
+
+function calculateTotalWht(whttemp,row) {
+    var count = parseInt(document.getElementById('countPaymentDetail').value);
+    var whtAmount = 0;
+    for(var i = 1 ; i < count-1 ; i ++){
+        if(row != i){
+            var wht = replaceAll(",","",$('#whtAmount'+i).val()); 
+            if (wht === ""){
+                wht = 0;
+            }
+            whtAmount += parseFloat(wht);
+        }else if(row == i){
+            var wht = replaceAll(",","",whttemp);
+            if (wht === ''){
+                wht = 0;
+            }
+            whtAmount += parseFloat(wht);
+        }
+    }
+    document.getElementById('totalWht').value = formatNumber(whtAmount);
+    calculateTotalPayment();
+}
 </script>    
 

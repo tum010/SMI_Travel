@@ -2113,7 +2113,7 @@ public class AJAXBean extends AbstractBean implements
                     displaydesTemp = billableDao.getDescriptionInvoiceDayTourFromRefId(refItemId);
                     if(displaydesTemp != null && !"".equalsIgnoreCase(displaydesTemp)){
                         String[] parts = displaydesTemp.split("\\|");
-                        displaydescription += parts[4] + " : " + parts[5] + " : " + parts[6];
+                        displaydescription += parts[4] + " : " + parts[6] ;
                         System.out.println("displaydescription" + displaydescription);
                     }
                 }else{
