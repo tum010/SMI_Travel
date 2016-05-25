@@ -1048,6 +1048,7 @@ function calculateGrandTotal() {
     }
     document.getElementById('grandTotal').value = formatNumber(grandTotal);
     calculateVatTotal();
+    calculateTotalPayment();
 }
 
 function addRefNo(refNo, type, description, billType, cost, curCost, sale, curSale, bookId) {
@@ -1475,7 +1476,6 @@ function savePaymentDetail() {
     $("#isComVat" + row).val(($("#isComVat").is(':checked') ? '1' : '0'));
     $("#description" + row).val(($("#paymentDescription").val()).replace(/\n/g, "<br>"));
     $("#comm" + row).val($("#comm").val());
-
     $("#rowDetail").val('');
     $("#realExRate").val('');
     $("#payExRate").val('');
@@ -1876,61 +1876,9 @@ function printPaymentOutboundReport(optionReport){
     window.open("report.smi?name=PaymentOutboundReport&paymentOutboundId=" + paymentOutboundId +"&optionReport="+optionReport);
 }
 
-function calculateTotalCom(commtemp,row) {
-    var count = parseInt(document.getElementById('countPaymentDetail').value);
-    var totalComm = 0;
-    for(var i = 1 ; i < count-1 ; i ++){
-        if(row != i){
-            var comm = replaceAll(",","",$('#comm'+i).val()); 
-            if (comm === ''){
-                comm = 0;
-            }
-            totalComm += parseFloat(comm);
-        }else if(row == i){
-            var comm = commtemp; 
-            if (comm === ''){
-                comm = 0;
-            }
-            totalComm += parseFloat(comm);
-        }
-    }
-    document.getElementById('totalComm').value = formatNumber(totalComm);
-}
-
-function calculateTotalWht(whttemp,row) {
-    var count = parseInt(document.getElementById('countPaymentDetail').value);
-    var whtAmount = 0;
-    for(var i = 1 ; i < count-1 ; i ++){
-        if(row != i){
-            var wht = replaceAll(",","",$('#whtAmount'+i).val()); 
-            if (wht === ""){
-                wht = 0;
-            }
-            whtAmount += parseFloat(wht);
-        }else if(row == i){
-            var wht = whttemp; 
-            if (wht === ''){
-                wht = 0;
-            }
-            whtAmount += parseFloat(wht);
-        }
-    }
-    document.getElementById('totalWht').value = formatNumber(whtAmount);
-}
 
 function replaceAll(find, replace, str) {
     return str.replace(new RegExp(find, 'g'), replace);
 }
 
-function calculateTotalPayment() {
-    var count = parseInt(document.getElementById('countPaymentDetail').value);
-    var totalPayment = 0;
-//    for(var i = 1 ; i < count-1 ; i ++){
-//        var wht = replaceAll(",","",$('#whtAmount'+i).val()); 
-//        if (wht === ""){
-//            wht = 0;
-//        }
-//        totalPayment += parseFloat(wht);
-//    }
-    document.getElementById('totalPayment').value = formatNumber(totalPayment);
-}
+
