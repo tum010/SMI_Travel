@@ -145,8 +145,13 @@ public class RefundAirlineController extends SMITravelController {
             airticket.setOtherReason(otherreason);
             
             Master master = new Master();
-            master.setId(!"".equalsIgnoreCase(masterid) ? masterid : null );
-            airticket.setMaster(master);
+            if(!"".equalsIgnoreCase(masterid)){
+                master.setId(masterid);
+                airticket.setMaster(master);
+            }else{
+                airticket.setMaster(null);
+            }
+            
             
             airticket.setId(refundId);
             airticket.setRefundNo(refundNo);
