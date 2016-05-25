@@ -3417,9 +3417,11 @@
 //        console.log("operationTable : " + operationTable);
 //        console.log("operationTableId : " + operationTable);
 //        console.log("operationUser : " + operationUser);
-        checkDuplicateUserActionDelete(operationTable, operationTableId, operationAction, operationUser,operationDate,'product');
-
-
+        if(id !== ''){
+            checkDuplicateUserActionDelete(operationTable, operationTableId, operationAction, operationUser,operationDate,'product');
+        }else{
+            DeleteRowProduct();
+        }
     }
 
     function DeleteRowProduct() {

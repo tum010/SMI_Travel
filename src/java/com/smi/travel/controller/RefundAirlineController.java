@@ -139,12 +139,13 @@ public class RefundAirlineController extends SMITravelController {
             System.out.println(" agentId " + agentId);
             System.out.println(" agentCode " + agentCode);
             System.out.println(" agenName " + agenName);
+            System.out.println(" masterid " + masterid);
             airticket.setOwnerBy(ownerby);
             airticket.setRefundType(refundtype);
             airticket.setOtherReason(otherreason);
             
             Master master = new Master();
-            master.setId(masterid);
+            master.setId(!"".equalsIgnoreCase(masterid) ? masterid : null );
             airticket.setMaster(master);
             
             airticket.setId(refundId);
