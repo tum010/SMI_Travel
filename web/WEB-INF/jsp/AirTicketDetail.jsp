@@ -320,7 +320,7 @@
                                                value="${flight.flightNo}" maxlength="10" 
                                                data-bv-notempty data-bv-notempty-message="The flight is required"/>
                                     </div>
-                                    <div class="col-sm-1 text-right"><strong>Airline</strong><strong style="color: red">*</strong></div>
+                                    <label class="col-sm-1 control-label text-right">Airline<strong style="color: red">*</strong></label>
                                     <div class="col-sm-2">
                                         <div class="form-group">
                                             <div class="input-group ">

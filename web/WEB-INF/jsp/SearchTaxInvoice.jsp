@@ -104,7 +104,7 @@
                 </div>                    
             </div>
             <div class="sm_row col-xs-12" style="padding-top: 5px">
-                <div class="col-xs-1" style="width: 665px"></div>
+                <div class="col-xs-1" style="width: 695px"></div>
                  <div class="col-md-2 text-right " style="padding: 0px 0px 0px 0px">
                     <button type="submit"  id="ButtonSearch"  name="ButtonSearch" onclick="" class="btn btn-primary btn-primary ">
                         <span id="SpanSearch" class="glyphicon glyphicon-print fa fa-search"></span> Search
