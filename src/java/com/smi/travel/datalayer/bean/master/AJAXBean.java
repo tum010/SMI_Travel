@@ -350,23 +350,25 @@ public class AJAXBean extends AbstractBean implements
                         result = "0.00,0.00,0.00,0.00,0.00,0.00";
                     } else {
                         if(product.getAdCost() == null){
-                            product.setAdCost(new BigDecimal(BigInteger.ZERO));
+                            product.setAdCost(new BigDecimal("0.00"));
                         }
                         if(product.getChCost() == null){
-                            product.setChCost(new BigDecimal(BigInteger.ZERO));
+                            product.setChCost(new BigDecimal("0.00"));
                         }
                         if(product.getInCost() == null){
-                            product.setInCost(new BigDecimal(BigInteger.ZERO));
+                            product.setInCost(new BigDecimal("0.00"));
                         }
                         if(product.getAdPrice() == null){
-                            product.setAdPrice(new BigDecimal(BigInteger.ZERO));
+                            product.setAdPrice(new BigDecimal("0.00"));
                         }
                         if(product.getChPrice() == null){
-                            product.setChPrice(new BigDecimal(BigInteger.ZERO));
+                            product.setChPrice(new BigDecimal("0.00"));
                         }
                         if(product.getInPrice() == null){
-                            product.setInPrice(new BigDecimal(BigInteger.ZERO));
+                            product.setInPrice(new BigDecimal("0.00"));
                         }
+                        System.out.println("===== new BigDecimal(\"0.00\") ===== : "+new BigDecimal("0.00"));
+                        System.out.println("===== new BigDecimal(BigInteger.ZERO) ===== : "+new BigDecimal(BigInteger.ZERO));
                         result = product.getAdCost() + "," + product.getChCost() + "," + product.getInCost() + ","
                                 + product.getAdPrice() + "," + product.getChPrice() + "," + product.getInPrice();
                     }

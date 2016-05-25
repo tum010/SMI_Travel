@@ -88,25 +88,25 @@ public class BookDetailController extends SMITravelController {
         List<Agent> agent = bookingDetailService.getListAgentForBookingDetail();
         request.setAttribute(Agent, agent);
         
-        String operationTableId = request.getParameter("operationTableIdBooking");
-        String operationUser = request.getParameter("operationUserBooking");
-        String checkDuplicateUser = "";
-        String clearDuplicateUser = "";
+//        String operationTableId = request.getParameter("operationTableIdBooking");
+//        String operationUser = request.getParameter("operationUserBooking");
+//        String checkDuplicateUser = "";
+//        String clearDuplicateUser = "";
         
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
-        CheckDuplicateUser checkDuplicateUserSession = (CheckDuplicateUser) session.getAttribute("checkDuplicateUser");
-        if(checkDuplicateUserSession != null){
-            operationTableId = checkDuplicateUserSession.getTableId();
-            operationUser = checkDuplicateUserSession.getOperationUser();
-            
-        }                  
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
+//        CheckDuplicateUser checkDuplicateUserSession = (CheckDuplicateUser) session.getAttribute("checkDuplicateUser");
+//        if(checkDuplicateUserSession != null){
+//            operationTableId = checkDuplicateUserSession.getTableId();
+//            operationUser = checkDuplicateUserSession.getOperationUser();
+//            
+//        }                  
         
         //Duplicate User
-        if("operationUpdate".equalsIgnoreCase(action)){
-            System.out.println("operationTableId : "+operationTableId);
-            checkDuplicateUser = checkDuplicateUser(request,response,session,operationTableId,3);
-            action = "edit";
-        }
+//        if("operationUpdate".equalsIgnoreCase(action)){
+//            System.out.println("operationTableId : "+operationTableId);
+//            checkDuplicateUser = checkDuplicateUser(request,response,session,operationTableId,3);
+//            action = "edit";
+//        }
         //**
         
         
@@ -120,8 +120,8 @@ public class BookDetailController extends SMITravelController {
         if ("new".equalsIgnoreCase(action)) {
             request.setAttribute(ACTION, "init");
             request.setAttribute(SelectedAgent, getAgentWLK());
-            checkDuplicateUserSession.setTableId("");
-            session.setAttribute("checkDuplicateUser", checkDuplicateUserSession);
+//            checkDuplicateUserSession.setTableId("");
+//            session.setAttribute("checkDuplicateUser", checkDuplicateUserSession);
             //request.setAttribute(SelectedAgent, bookingDetailService.getAgentByName("WLK"));
             request.setAttribute(Agent, agent);
         } else if ("addfamily".equalsIgnoreCase(action)) {
@@ -158,7 +158,7 @@ public class BookDetailController extends SMITravelController {
 //                    checkDuplicateUserService.updateOperationNull(cdu);
 //                }
 //            }
-            checkDuplicateUser = checkDuplicateUser(request,response,session,master.getId(),1);
+//            checkDuplicateUser = checkDuplicateUser(request,response,session,master.getId(),1);
             
             Agent selectedAgent = null;
 //            if(master != null){
@@ -198,12 +198,12 @@ public class BookDetailController extends SMITravelController {
             
             
              //Duplicate User
-            if(!"".equalsIgnoreCase(dbMaster.getId()) && dbMaster.getId() != null){
-                checkDuplicateUser = checkDuplicateUser(request,response,session,dbMaster.getId(),2);
-                if("fail".equalsIgnoreCase(checkDuplicateUser)){
-                    return new ModelAndView("redirect:BookDetail.smi?referenceNo=" + dbMaster.getReferenceNo() + "&action=edit");
-                }
-            }
+//            if(!"".equalsIgnoreCase(dbMaster.getId()) && dbMaster.getId() != null){
+//                checkDuplicateUser = checkDuplicateUser(request,response,session,dbMaster.getId(),2);
+//                if("fail".equalsIgnoreCase(checkDuplicateUser)){
+//                    return new ModelAndView("redirect:BookDetail.smi?referenceNo=" + dbMaster.getReferenceNo() + "&action=edit");
+//                }
+//            }
             
             dbMaster.setAgentRef(agentRef);
             Agent selectedAgent = null;
@@ -268,10 +268,10 @@ public class BookDetailController extends SMITravelController {
                 request.setAttribute(TransactionResult, "BookingDetail cannot be saved! Please see log.");
             }
             
-            if(!"1".equalsIgnoreCase(String.valueOf(result))){
-                //Duplicate User
-                checkDuplicateUser = checkDuplicateUser(request,response,session,dbMaster.getId(),1);
-            }
+//            if(!"1".equalsIgnoreCase(String.valueOf(result))){
+//                //Duplicate User
+//                checkDuplicateUser = checkDuplicateUser(request,response,session,dbMaster.getId(),1);
+//            }
             
             request.setAttribute(Detail, dbMaster);
             request.setAttribute(ACTION, "update");
