@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TicketOrder_FlightSubreport" language="groovy" pageWidth="409" pageHeight="60" columnWidth="409" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="f2c6e0bd-cc8e-48db-bd65-4d52a2d51aa3">
-	<property name="ireport.zoom" value="4.7158953820000065"/>
-	<property name="ireport.x" value="179"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TicketOrder_FlightSubreport" language="groovy" pageWidth="410" pageHeight="60" columnWidth="410" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="f2c6e0bd-cc8e-48db-bd65-4d52a2d51aa3">
+	<property name="ireport.zoom" value="5.187484920200007"/>
+	<property name="ireport.x" value="1167"/>
 	<property name="ireport.y" value="0"/>
 	<field name="flightNo" class="java.lang.String"/>
 	<field name="flightClass" class="java.lang.String"/>
@@ -47,7 +47,7 @@
 				</graphicElement>
 			</rectangle>
 			<rectangle>
-				<reportElement x="366" y="0" width="43" height="15" uuid="8c57d4fc-a3a0-4b89-ac9b-8f9953bb9296"/>
+				<reportElement x="366" y="0" width="44" height="15" uuid="8c57d4fc-a3a0-4b89-ac9b-8f9953bb9296"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
@@ -173,7 +173,7 @@
 				</graphicElement>
 			</rectangle>
 			<rectangle>
-				<reportElement x="366" y="-1" width="43" height="15" uuid="9b025d0b-9d88-48e8-9219-484656798e24"/>
+				<reportElement x="366" y="-1" width="44" height="15" uuid="9b025d0b-9d88-48e8-9219-484656798e24"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
