@@ -10,6 +10,7 @@ import com.smi.travel.datalayer.dao.AgentDao;
 import com.smi.travel.datalayer.entity.Agent;
 import com.smi.travel.util.UtilityFunction;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
@@ -70,6 +71,8 @@ public class AgentImpl implements AgentDao{
     @Override
     public int insertAgent(Agent agent) {
         int result = 0;
+        String agentCode = generateAgentCode(agent.getName());
+        agent.setCode(agentCode);
         try {
             Session session = this.sessionFactory.openSession();
             transaction = session.beginTransaction();
@@ -83,6 +86,34 @@ public class AgentImpl implements AgentDao{
             result = 0;
         }
         return result;
+    }
+    
+    private String generateAgentCode(String name) {
+        String agentCode = "";
+        String no = "";
+        Session session = this.sessionFactory.openSession();
+        List<String> listAgentCode = new LinkedList<String>();
+        String firstChar = name.substring(0, 1);
+        Query query = session.createSQLQuery("SELECT code FROM `agent` WHERE LENGTH(code) = 6 AND code LIKE '" + firstChar + "%' ORDER BY code DESC");
+        query.setMaxResults(1);
+        listAgentCode = query.list();   
+        
+        if (listAgentCode.isEmpty()) {
+            agentCode = firstChar + "00001";
+        } else {
+            agentCode = listAgentCode.get(0).substring(0, 1);
+            no = listAgentCode.get(0).substring(1);
+            int running = Integer.parseInt(no) + 1;
+            String temp = String.valueOf(running);
+            for (int i = temp.length(); i < 6; i++) {
+                temp = "0" + temp;
+            }
+            agentCode = agentCode + "" + temp;
+                
+        }
+        session.close();
+        this.sessionFactory.close();
+        return agentCode;
     }
 
     @Override
@@ -232,6 +263,5 @@ public class AgentImpl implements AgentDao{
 
         return agent;
     }
-
        
 }

@@ -22,12 +22,14 @@ public class CollectionView {
     private String remark;
     private String ocash;
     private String ochq;
-    private String ocredit;
+    private String ocredit;   
     private String obanktransfer;
+    private String ocashminus;
     private String icash;
     private String ichq;
     private String icredit;
     private String ibanktransfer;
+    private String icashminus;
     private String chq;
     private String cash;
     private String creditcard;
@@ -199,5 +201,21 @@ public class CollectionView {
 
     public void setBanktransfer(String banktransfer) {
         this.banktransfer = banktransfer;
+    }
+
+    public String getOcashminus() {
+        return ocashminus;
+    }
+
+    public void setOcashminus(String ocashminus) {
+        this.ocashminus = ocashminus;
+    }
+
+    public String getIcashminus() {
+        return icashminus;
+    }
+
+    public void setIcashminus(String icashminus) {
+        this.icashminus = icashminus;
     }
 }

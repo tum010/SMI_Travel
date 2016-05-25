@@ -38,21 +38,21 @@ public class AgentService {
     public String validateAgent(Agent Vagent, String operation){
         String validate = "";
         Agent agent = new Agent();
-        agent.setCode(Vagent.getCode());
-        List<Agent> list = agentDao.getListAgent(agent, 1);
-        if (list != null) {
-            if ("update".equalsIgnoreCase(operation)) {
-                if (!(list.get(0).getId().equalsIgnoreCase(Vagent.getId()))) {
-                    validate = "agent code already exist";
-                }
-            } else {
-                validate = "agent code already exist";
-            }
-
-        }
+//        agent.setCode(Vagent.getCode());
+//        List<Agent> list = agentDao.getListAgent(agent, 1);
+//        if (list != null) {
+//            if ("update".equalsIgnoreCase(operation)) {
+//                if (!(list.get(0).getId().equalsIgnoreCase(Vagent.getId()))) {
+//                    validate = "agent code already exist";
+//                }
+//            } else {
+//                validate = "agent code already exist";
+//            }
+//
+//        }
         agent.setName(Vagent.getName());
         agent.setCode(null);
-        list = agentDao.getListAgent(agent, 1);
+        List<Agent> list = agentDao.getListAgent(agent, 1);
         if (list != null) {
             if ("update".equalsIgnoreCase(operation)) {
                 if (!(list.get(0).getId().equalsIgnoreCase(Vagent.getId()))) {

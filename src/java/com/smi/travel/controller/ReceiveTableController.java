@@ -54,8 +54,8 @@ public class ReceiveTableController extends SMITravelController {
         }
         request.setAttribute(DEPARTMENT, receiveDepartment);
         
-        List<CustomerAgentInfo> customerAgentInfoList = getUtilservice().getListCustomerAgentInfo();
-        request.setAttribute(CUSTOMERAGENTINFOLIST, customerAgentInfoList);
+//        List<CustomerAgentInfo> customerAgentInfoList = getUtilservice().getListCustomerAgentInfo();
+//        request.setAttribute(CUSTOMERAGENTINFOLIST, customerAgentInfoList);
         List<MAccpay> mAccpayList = getUtilservice().getListMAccpay();
         request.setAttribute(MACCPAYLIST, mAccpayList);
         List<MCreditBank> mCreditBankList = getUtilservice().getListCreditBank();

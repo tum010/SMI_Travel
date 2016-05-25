@@ -544,11 +544,13 @@ public class ReceiveTableImpl implements ReceiveTableDao{
             receiptSummary.setOcash(advanceReceivePeriod.getCashAmount()!= null ? String.valueOf(advanceReceivePeriod.getCashAmount()) : "0.00");
             receiptSummary.setOchq(advanceReceivePeriod.getChqAmount()!= null ? String.valueOf(advanceReceivePeriod.getChqAmount()) : "0.00");
             receiptSummary.setOcredit(advanceReceivePeriod.getCreditAmount()!= null ? String.valueOf(advanceReceivePeriod.getCreditAmount()) : "0.00");
+            receiptSummary.setOcashminus(advanceReceivePeriod.getCashMinusAmount()!= null ? String.valueOf(advanceReceivePeriod.getCashMinusAmount()) : "0.00");
         }else{
             receiptSummary.setObanktransfer("0.00");
             receiptSummary.setOcash("0.00");
             receiptSummary.setOchq("0.00");
             receiptSummary.setOcredit("0.00");
+            receiptSummary.setOcashminus("0.00");
         }    
 //        for (Object[] A : QueryReceiptSummary){
 //            receiptSummary.setObanktransfer(A[0] != null ? util.ConvertString(A[0]) : "0.00");
@@ -570,6 +572,7 @@ public class ReceiveTableImpl implements ReceiveTableDao{
             receiveSummary.setIbanktransfer(B[1] != null ? util.ConvertString(B[1]) : "0.00");
             receiveSummary.setIchq(B[2] != null ? util.ConvertString(B[2]) : "0.00");
             receiveSummary.setIcredit(B[3] != null ? util.ConvertString(B[3]) : "0.00");
+            receiveSummary.setIcashminus("0.00");
         }
         
         List<Object[]> QueryReceiveView = session.createSQLQuery(queryReceiveView)
@@ -598,10 +601,12 @@ public class ReceiveTableImpl implements ReceiveTableDao{
             collectionView.setOchq(receiptSummary.getOchq());
             collectionView.setOcredit(receiptSummary.getOcredit());
             collectionView.setObanktransfer(receiptSummary.getObanktransfer());
+            collectionView.setOcashminus(receiptSummary.getOcashminus());
             collectionView.setIcash(receiveSummary.getIcash());
             collectionView.setIchq(receiveSummary.getIchq());
             collectionView.setIcredit(receiveSummary.getIcredit());
             collectionView.setIbanktransfer(receiveSummary.getIbanktransfer());
+            collectionView.setIcashminus(receiveSummary.getIcashminus());
             data.add(collectionView);
             i++;
         }

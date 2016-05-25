@@ -105,13 +105,13 @@ public class InvoiceInboundController extends SMITravelController {
             request.setAttribute("vat", null);
         }    
         // List Agent feild Invoice To
-        List<CustomerAgentInfo> listCustomerAgentInfo = new ArrayList<CustomerAgentInfo>();
-        listCustomerAgentInfo = utilityService.getListCustomerAgentInfo();
-        if(listCustomerAgentInfo != null){
-            request.setAttribute("listCustomerAgentInfo", listCustomerAgentInfo);
-        }else{
-            request.setAttribute("listCustomerAgentInfo", null);
-        } 
+//        List<CustomerAgentInfo> listCustomerAgentInfo = new ArrayList<CustomerAgentInfo>();
+//        listCustomerAgentInfo = utilityService.getListCustomerAgentInfo();
+//        if(listCustomerAgentInfo != null){
+//            request.setAttribute("listCustomerAgentInfo", listCustomerAgentInfo);
+//        }else{
+//            request.setAttribute("listCustomerAgentInfo", null);
+//        } 
         
         // Action 
         if("save".equals(action)){   

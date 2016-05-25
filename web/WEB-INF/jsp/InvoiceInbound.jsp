@@ -582,14 +582,14 @@
                     <div class="col-md-7">
                         <select id="selectPayment" name="selectPayment" class="form-control">
                             <option value="0">Not show</option>
-                            <option value="BBLINB">Payment Bank Siam commercial bank PCL</option>
+                            <option value="BBLINB" hidden="">Payment Bank Siam commercial bank PCL</option>
                             <c:set var="showBank" value="" />
                             <c:choose>
                                 <c:when test="${fn:contains(page , 'PM')}">
                                     <c:set var="showBank" value="hidden" />
                                 </c:when>                      
                             </c:choose> 
-                            <option value="BBL" ${showBank}>Payment Bank Bangkok bank PCL</option>
+                            <option value="BBLI" ${showBank}>Payment Bank Bangkok bank PCL</option>
                         </select>
                     </div>
                 </div>

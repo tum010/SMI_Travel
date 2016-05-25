@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CollectionReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" uuid="83a38d83-9900-4464-a418-cbdc9b5b02f2">
-	<property name="ireport.zoom" value="2.0"/>
-	<property name="ireport.x" value="389"/>
-	<property name="ireport.y" value="48"/>
+	<property name="ireport.zoom" value="1.366026910730141"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="109"/>
 	<field name="datefrom" class="java.lang.String"/>
 	<field name="dateto" class="java.lang.String"/>
 	<field name="department" class="java.lang.String"/>
@@ -24,6 +24,8 @@
 	<field name="cash" class="java.lang.String"/>
 	<field name="creditcard" class="java.lang.String"/>
 	<field name="banktransfer" class="java.lang.String"/>
+	<field name="ocashminus" class="java.lang.String"/>
+	<field name="icashminus" class="java.lang.String"/>
 	<variable name="totalAmountPage" class="java.math.BigDecimal" calculation="Sum">
 		<variableExpression><![CDATA[($F{totalamount} != null && !"null".equals($F{totalamount}) && $F{totalamount}.length() > 0) ? new BigDecimal($F{totalamount}) : "0.00"]]></variableExpression>
 	</variable>
@@ -125,7 +127,7 @@
 			</band>
 		</groupHeader>
 		<groupFooter>
-			<band height="191">
+			<band height="209">
 				<rectangle>
 					<reportElement positionType="Float" x="0" y="0" width="555" height="20" uuid="54fe9250-bf31-47d7-b644-f72566df37ec"/>
 					<graphicElement>
@@ -147,7 +149,7 @@
 					<textFieldExpression><![CDATA[$V{totalAmountPage}]]></textFieldExpression>
 				</textField>
 				<rectangle>
-					<reportElement positionType="Float" mode="Opaque" x="0" y="22" width="555" height="169" uuid="fada78ea-f2a4-4fc4-9f64-cc028c8ce52c"/>
+					<reportElement positionType="Float" mode="Opaque" x="0" y="22" width="555" height="187" uuid="fada78ea-f2a4-4fc4-9f64-cc028c8ce52c"/>
 					<graphicElement>
 						<pen lineWidth="0.25"/>
 					</graphicElement>
@@ -317,73 +319,73 @@
 					<textFieldExpression><![CDATA[($F{ibanktransfer} != null && !"null".equals($F{ibanktransfer}) && $F{ibanktransfer}.length() > 0 && !"".equalsIgnoreCase($F{ibanktransfer})) ? new BigDecimal($F{ibanktransfer}) : new BigDecimal("0.00")]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement positionType="Float" mode="Transparent" x="321" y="110" width="78" height="20" uuid="b0efe7ff-007c-41ba-8d0a-dc369408aadb"/>
+					<reportElement positionType="Float" mode="Transparent" x="321" y="128" width="78" height="20" uuid="b0efe7ff-007c-41ba-8d0a-dc369408aadb"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Tahoma" size="9" isBold="true" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 					</textElement>
 					<text><![CDATA[Grand Total]]></text>
 				</staticText>
 				<line>
-					<reportElement positionType="Float" x="1" y="134" width="553" height="1" uuid="ca2163f3-9a1d-4f27-96bc-e0b89dba55c0"/>
+					<reportElement positionType="Float" x="1" y="152" width="553" height="1" uuid="ca2163f3-9a1d-4f27-96bc-e0b89dba55c0"/>
 					<graphicElement>
 						<pen lineWidth="0.25"/>
 					</graphicElement>
 				</line>
 				<staticText>
-					<reportElement positionType="Float" x="3" y="135" width="60" height="20" uuid="e118dc49-2914-4b8b-b23c-433eba32af21"/>
+					<reportElement positionType="Float" x="3" y="153" width="60" height="20" uuid="e118dc49-2914-4b8b-b23c-433eba32af21"/>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
 						<font fontName="Tahoma" size="9" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 					</textElement>
 					<text><![CDATA[Prepare by]]></text>
 				</staticText>
 				<staticText>
-					<reportElement positionType="Float" x="10" y="162" width="53" height="20" uuid="1f683726-f9a3-4e7e-b8de-45bd95a076ed"/>
+					<reportElement positionType="Float" x="10" y="180" width="53" height="20" uuid="1f683726-f9a3-4e7e-b8de-45bd95a076ed"/>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
 						<font fontName="Tahoma" size="9" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 					</textElement>
 					<text><![CDATA[Check by]]></text>
 				</staticText>
 				<line>
-					<reportElement positionType="Float" x="69" y="148" width="178" height="1" uuid="c6bb3594-4e3e-4b04-9599-cbaa817b00c7"/>
+					<reportElement positionType="Float" x="69" y="166" width="178" height="1" uuid="c6bb3594-4e3e-4b04-9599-cbaa817b00c7"/>
 					<graphicElement>
 						<pen lineWidth="0.25"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement positionType="Float" x="69" y="176" width="178" height="1" uuid="d2ab4764-be58-482b-b200-78579ea68a09"/>
+					<reportElement positionType="Float" x="69" y="194" width="178" height="1" uuid="d2ab4764-be58-482b-b200-78579ea68a09"/>
 					<graphicElement>
 						<pen lineWidth="0.25"/>
 					</graphicElement>
 				</line>
 				<staticText>
-					<reportElement positionType="Float" x="69" y="149" width="177" height="14" uuid="23a86e0c-710f-4686-9098-b69acdbc1757"/>
+					<reportElement positionType="Float" x="69" y="167" width="177" height="14" uuid="23a86e0c-710f-4686-9098-b69acdbc1757"/>
 					<textElement textAlignment="Center">
 						<font fontName="Tahoma" size="9" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 					</textElement>
 					<text><![CDATA[(Cashier)]]></text>
 				</staticText>
 				<staticText>
-					<reportElement positionType="Float" x="69" y="177" width="177" height="14" uuid="d4715550-784c-4f4f-a552-4d59d19a9b02"/>
+					<reportElement positionType="Float" x="69" y="195" width="177" height="14" uuid="d4715550-784c-4f4f-a552-4d59d19a9b02"/>
 					<textElement textAlignment="Center">
 						<font fontName="Tahoma" size="9" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 					</textElement>
 					<text><![CDATA[(Accountant)]]></text>
 				</staticText>
 				<staticText>
-					<reportElement positionType="Float" x="297" y="163" width="66" height="20" uuid="8fab0f06-ecbb-42a0-897c-405fbb2b4125"/>
+					<reportElement positionType="Float" x="297" y="181" width="66" height="20" uuid="8fab0f06-ecbb-42a0-897c-405fbb2b4125"/>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
 						<font fontName="Tahoma" size="9" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 					</textElement>
 					<text><![CDATA[Approved by]]></text>
 				</staticText>
 				<line>
-					<reportElement positionType="Float" x="367" y="175" width="178" height="1" uuid="4e529f86-6ea0-4416-b059-079858dd0e25"/>
+					<reportElement positionType="Float" x="367" y="193" width="178" height="1" uuid="4e529f86-6ea0-4416-b059-079858dd0e25"/>
 					<graphicElement>
 						<pen lineWidth="0.25"/>
 					</graphicElement>
 				</line>
 				<staticText>
-					<reportElement positionType="Float" x="368" y="175" width="177" height="14" uuid="fa0b0d85-7451-4dad-aeca-675e0523279d"/>
+					<reportElement positionType="Float" x="368" y="193" width="177" height="14" uuid="fa0b0d85-7451-4dad-aeca-675e0523279d"/>
 					<textElement textAlignment="Center">
 						<font fontName="Tahoma" size="9" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 					</textElement>
@@ -418,11 +420,73 @@
 					<textFieldExpression><![CDATA[new BigDecimal($F{ocredit}).add(new BigDecimal($F{icredit}))]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00">
-					<reportElement positionType="Float" x="401" y="110" width="100" height="20" uuid="02bbf726-5b70-4583-8ed9-34ea8a67cf83"/>
+					<reportElement positionType="Float" x="401" y="128" width="100" height="20" uuid="02bbf726-5b70-4583-8ed9-34ea8a67cf83"/>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
 						<font fontName="Tahoma" size="9" isBold="true" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[new BigDecimal($F{ocash}).add(new BigDecimal($F{icash}).add(new BigDecimal($F{ochq}).add(new BigDecimal($F{ichq}).add(new BigDecimal($F{ocredit}).add(new BigDecimal($F{icredit}).add(new BigDecimal($F{obanktransfer}).add(new BigDecimal($F{ibanktransfer}))))))))]]></textFieldExpression>
+				</textField>
+				<rectangle radius="10">
+					<reportElement positionType="Float" x="44" y="107" width="470" height="20" uuid="d7d2bd7b-fae5-4848-a3da-f8d5108a573b">
+						<printWhenExpression><![CDATA[!"0.00".equals($F{ocashminus})]]></printWhenExpression>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</rectangle>
+				<staticText>
+					<reportElement positionType="Float" x="233" y="107" width="8" height="20" uuid="28ba8145-3499-4516-ab4f-5f87af2ccaa2">
+						<printWhenExpression><![CDATA[!"0.00".equals($F{ocashminus})]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Tahoma" size="9" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[-]]></text>
+				</staticText>
+				<staticText>
+					<reportElement positionType="Float" x="50" y="107" width="76" height="20" uuid="983a960c-19b9-45f4-b818-26a325d2b3af">
+						<printWhenExpression><![CDATA[!"0.00".equals($F{ocashminus})]]></printWhenExpression>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Tahoma" size="9" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[Cash (-)]]></text>
+				</staticText>
+				<textField pattern="#,##0.00">
+					<reportElement positionType="Float" x="246" y="107" width="100" height="20" uuid="d8fb382d-5851-4ffa-b5cb-b4f739183224">
+						<printWhenExpression><![CDATA[!"0.00".equals($F{ocashminus})]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Tahoma" size="9" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($F{icashminus} != null && !"null".equals($F{icashminus}) && $F{icashminus}.length() > 0 && !"".equalsIgnoreCase($F{icashminus})) ? new BigDecimal($F{icashminus}) : new BigDecimal("0.00")]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00">
+					<reportElement positionType="Float" x="401" y="107" width="100" height="20" uuid="ef2ee631-a715-4af9-8c57-cd9403595e39">
+						<printWhenExpression><![CDATA[!"0.00".equals($F{ocashminus})]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Tahoma" size="9" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new BigDecimal($F{ocashminus}).add(new BigDecimal($F{icashminus}))]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement positionType="Float" mode="Transparent" x="351" y="107" width="48" height="20" uuid="03570f03-59d1-44fe-b19d-3673de0c0c62">
+						<printWhenExpression><![CDATA[!"0.00".equals($F{ocashminus})]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Tahoma" size="9" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[Total]]></text>
+				</staticText>
+				<textField pattern="#,##0.00">
+					<reportElement positionType="Float" x="126" y="107" width="100" height="20" uuid="4cc195de-1305-47aa-ba8b-f9512e9af3b5">
+						<printWhenExpression><![CDATA[!"0.00".equals($F{ocashminus})]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Tahoma" size="9" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($F{ocashminus} != null && !"null".equals($F{ocashminus}) && $F{ocashminus}.length() > 0 && !"".equalsIgnoreCase($F{ocashminus})) ? new BigDecimal($F{ocashminus}) : new BigDecimal("0.00")]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupFooter>

@@ -998,6 +998,7 @@ public class AJAXBean extends AbstractBean implements
                 String department = map.get("department").toString();
                 String invType = "";
                 System.out.println("invoiceNo ::: " + invoiceNo);
+                System.out.println("department ::: " + department);
                 Invoice invoice = new Invoice();
                 invoice = invoicedao.searchInvoiceForTaxInvoice(invoiceNo, department);
                 if (invoice == null) {
@@ -1593,6 +1594,7 @@ public class AJAXBean extends AbstractBean implements
     }
     
     private String buildTaxInvoiceListHTML(Invoice invoice) {
+        System.out.println("===== buildTaxInvoiceListHTML =====");
         StringBuffer html = new StringBuffer();
         List<InvoiceDetail> invoiceDetaillList = new ArrayList<InvoiceDetail>(invoice.getInvoiceDetails());
         String receiveTaxInvTo = invoice.getInvTo();
@@ -1639,11 +1641,12 @@ public class AJAXBean extends AbstractBean implements
             invoiceDetail = invoiceDetaillList.get(i);
             invDetailId = invoiceDetail.getId();
             String isProfit = taxInvoiceDao.checkIsProfitForSearchInvoice(invDetailId);
-            String billableDescId = invoiceDetail.getBillableDesc().getId();
+            System.out.println("===== Is Profit ===== : "+isProfit);
+            String billableDescId = (invoiceDetail.getBillableDesc() != null ? invoiceDetail.getBillableDesc().getId() : "");
             description = (invoiceDetail.getDescription() != null && !"".equalsIgnoreCase(invoiceDetail.getDescription()) ? invoiceDetail.getDescription() : "");
             alertMessage += (!"".equalsIgnoreCase(alertMessage) ? "<br>" : "");
-            List<TaxInvoice> taxInvoiceList = taxInvoiceDao.checkRefNoAlready(billableDescId);
-            
+            List<TaxInvoice> taxInvoiceList = taxInvoiceDao.checkRefNoAlready(billableDescId);           
+            System.out.println("===== taxInvoiceList ===== : "+taxInvoiceList == null ? "null" : "not null");
             if("success".equalsIgnoreCase(isProfit) && taxInvoiceList == null){
                 BigDecimal costInvoice = new BigDecimal(0);
                 BigDecimal amountInvoice = new BigDecimal(0);           

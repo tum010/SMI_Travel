@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Invoice" language="groovy" pageWidth="595" pageHeight="842" columnWidth="560" leftMargin="15" rightMargin="20" topMargin="20" bottomMargin="20" uuid="59f0ec99-8109-4367-975c-dc17aad92f4d">
-	<property name="ireport.zoom" value="1.818181818181819"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Invoice" language="groovy" pageWidth="595" pageHeight="842" columnWidth="563" leftMargin="12" rightMargin="20" topMargin="40" bottomMargin="0" uuid="59f0ec99-8109-4367-975c-dc17aad92f4d">
+	<property name="ireport.zoom" value="3.221020000000011"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="240"/>
+	<property name="ireport.y" value="752"/>
 	<field name="invto" class="java.lang.String"/>
 	<field name="invno" class="java.lang.String"/>
 	<field name="invdate" class="java.lang.String"/>
@@ -40,27 +40,27 @@
 	<field name="isHide" class="java.lang.String"/>
 	<field name="isTemp" class="java.lang.String"/>
 	<background>
-		<band height="754">
+		<band height="802">
 			<line>
-				<reportElement x="339" y="208" width="1" height="411" uuid="f68d28eb-d2ff-4db6-9ac2-065408c2d969"/>
+				<reportElement x="339" y="213" width="1" height="406" uuid="f68d28eb-d2ff-4db6-9ac2-065408c2d969"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="32" y="208" width="1" height="410" uuid="a125a4e8-3cfa-464d-9054-544074273698"/>
+				<reportElement x="32" y="213" width="1" height="405" uuid="a125a4e8-3cfa-464d-9054-544074273698"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="412" y="208" width="1" height="410" uuid="05e9e5d6-94be-4ec9-8b58-a2da6b45b614"/>
+				<reportElement x="412" y="213" width="1" height="405" uuid="05e9e5d6-94be-4ec9-8b58-a2da6b45b614"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="477" y="209" width="1" height="410" uuid="a6f57b2e-d162-4982-8318-9b1e64113f3f"/>
+				<reportElement x="477" y="214" width="1" height="405" uuid="a6f57b2e-d162-4982-8318-9b1e64113f3f"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
@@ -90,14 +90,14 @@
 				<text><![CDATA[TO ]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="420" y="95" width="134" height="24" uuid="52850b2f-da4e-4a79-a376-d79e28e221cb"/>
+				<reportElement x="420" y="91" width="134" height="24" uuid="52850b2f-da4e-4a79-a376-d79e28e221cb"/>
 				<textElement>
 					<font fontName="Cordia New" size="16" pdfFontName="resource/fonts/Cordia.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{invno}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="420" y="139" width="135" height="39" uuid="2fd6f740-c5ef-493e-825b-b6da3cab3e10">
+				<reportElement x="420" y="141" width="135" height="39" uuid="2fd6f740-c5ef-493e-825b-b6da3cab3e10">
 					<printWhenExpression><![CDATA[$F{showstaff}.equalsIgnoreCase("1")]]></printWhenExpression>
 				</reportElement>
 				<textElement>
@@ -121,7 +121,7 @@
 				<textFieldExpression><![CDATA[$F{duedate}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="421" y="123" width="20" height="24" uuid="619d73fa-6ad4-4f30-bdfa-2683ef315d32"/>
+				<reportElement x="421" y="125" width="20" height="24" uuid="619d73fa-6ad4-4f30-bdfa-2683ef315d32"/>
 				<textElement>
 					<font fontName="Cordia New" size="16" pdfFontName="resource/fonts/Cordia.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
@@ -137,7 +137,7 @@
 				<text><![CDATA[C/O]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="421" y="170" width="133" height="20" uuid="95356f8d-551c-4d8a-9da6-bf640398d28c"/>
+				<reportElement x="421" y="171" width="133" height="20" uuid="95356f8d-551c-4d8a-9da6-bf640398d28c"/>
 				<textElement>
 					<font fontName="Cordia New" size="14" pdfFontName="resource/fonts/Cordia.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
@@ -237,37 +237,37 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="24" splitType="Stretch">
+		<band height="25" splitType="Stretch">
 			<textField isStretchWithOverflow="true" pattern="">
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="417" y="8" width="55" height="10" uuid="c09accca-c12d-4c03-a0cb-c0fb4cc7dfc8"/>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="417" y="14" width="55" height="10" uuid="c09accca-c12d-4c03-a0cb-c0fb4cc7dfc8"/>
 				<textElement textAlignment="Right" verticalAlignment="Top">
 					<font fontName="Tahoma" size="8" isBold="false" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[($F{vat} == null || "".equalsIgnoreCase($F{vat}))? "":$F{vat}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="0" width="32" height="20" uuid="4c5e01bc-f9aa-4b23-9060-b8e5780a0170"/>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="1" width="32" height="20" uuid="4c5e01bc-f9aa-4b23-9060-b8e5780a0170"/>
 				<textElement textAlignment="Center" verticalAlignment="Top">
 					<font fontName="Cordia New" size="12" pdfFontName="resource/fonts/Cordia.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00">
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="477" y="8" width="73" height="11" uuid="fc2ed8f8-3cbe-4bb5-99a0-87685883ae97"/>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="477" y="13" width="73" height="11" uuid="fc2ed8f8-3cbe-4bb5-99a0-87685883ae97"/>
 				<textElement textAlignment="Right" verticalAlignment="Top">
 					<font fontName="Tahoma" size="8" isBold="false" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{amount}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="">
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="340" y="8" width="69" height="10" uuid="3f5a42b4-9f38-42d2-bd3d-ba5e4eac98f5"/>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="340" y="14" width="69" height="10" uuid="3f5a42b4-9f38-42d2-bd3d-ba5e4eac98f5"/>
 				<textElement textAlignment="Right" verticalAlignment="Top">
 					<font fontName="Tahoma" size="8" isBold="false" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[($F{gross} == null || ".00".equalsIgnoreCase($F{gross}))? "":$F{gross}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Transparent" x="37" y="0" width="300" height="23" uuid="59dca7a0-fb9d-46da-a044-52d8de6f2220"/>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Transparent" x="37" y="1" width="300" height="24" uuid="59dca7a0-fb9d-46da-a044-52d8de6f2220"/>
 				<textElement markup="none">
 					<font fontName="Cordia New" size="12" isBold="true" isUnderline="false" pdfFontName="resource/fonts/Cordia.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 					<paragraph lineSpacing="Fixed" lineSpacingSize="7.0"/>
@@ -275,7 +275,7 @@
 				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Transparent" x="242" y="0" width="95" height="23" uuid="5622861f-79ee-4329-a52d-c994623463ed"/>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Transparent" x="242" y="1" width="95" height="23" uuid="5622861f-79ee-4329-a52d-c994623463ed"/>
 				<textElement textAlignment="Right" markup="none">
 					<font fontName="Cordia New" size="12" pdfFontName="resource/fonts/Cordia.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 					<paragraph lineSpacing="Fixed" lineSpacingSize="7.0"/>
@@ -433,7 +433,7 @@
 				</graphicElement>
 			</line>
 			<textField>
-				<reportElement x="8" y="72" width="276" height="12" uuid="0c6d68b3-8301-450d-81a0-ff495e804908"/>
+				<reportElement x="8" y="77" width="276" height="12" uuid="0c6d68b3-8301-450d-81a0-ff495e804908"/>
 				<textElement>
 					<font fontName="Tahoma" size="7" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>

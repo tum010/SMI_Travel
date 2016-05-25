@@ -42,7 +42,7 @@
                             <div class="form-group">
                                 <label class="col-sm-3   control-label" for="codeAgent">Code <font style="color: red">*</font></label>
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control" maxlength="15" ${disableAgentCode} id="agentcode" name="agentcode" style="text-transform:uppercase" value='${requestScope['agentcode']}' > 
+                                    <input type="text" class="form-control" maxlength="15" ${disableAgentCode} id="agentcode" name="agentcode" style="text-transform:uppercase" value='${requestScope['agentcode']}' readonly=""> 
                                     <input type="text" class="hidden" id="tempagentcode"  maxlength="10" name="tempagentcode"  value="${requestScope['agentcode']}" >
                                 </div>
                             </div>

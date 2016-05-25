@@ -84,6 +84,7 @@ $(document).ready(function() {
 //            $("#receiveCode").val("");
             $("#receiveName").val("");
             $("#receiveArCode").val("");
+            $("#ajaxload").addClass("hidden");
         } else {
             if (event.keyCode === 13) {
                 searchCustomerAgentAutoList(this.value);
@@ -360,9 +361,10 @@ function CallAjaxAuto(param) {
             cache: false,
             data: param,
             beforeSend: function() {
-//                  $("#dataload").removeClass("hidden");    
+                $("#ajaxload").removeClass("hidden");    
             },
             success: function(msg) {
+                $("#ajaxload").addClass("hidden");
                 var billJson = JSON.parse(msg);
                 for (var i in billJson) {
                     if (billJson.hasOwnProperty(i)) {
@@ -416,10 +418,11 @@ function CallAjaxAuto(param) {
 
             }, error: function(msg) {
                 console.log('auto ERROR');
-//                   $("#dataload").addClass("hidden");
+                $("#ajaxload").addClass("hidden");
             }
         });
     } catch (e) {
+        $("#ajaxload").addClass("hidden");
         alert(e);
     }
 }

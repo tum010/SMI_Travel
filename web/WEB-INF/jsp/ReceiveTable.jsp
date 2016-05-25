@@ -285,10 +285,13 @@
                                             <span class="glyphicon-search glyphicon"></span>
                                         </span>
                                     </div>    
-                                </div>
+                                </div>                                      
                                 <div class="col-xs-1 " style="width: 290px">
-                                    <div class="input-group" style="width: 270px">
-                                        <input name="receiveName" id="receiveName" type="text" class="form-control" style="text-transform: uppercase;" value="${advanceReceive.recName}" maxlength="100"/>                               
+                                    <div class="col-xs-1" style="width: 250px; padding-left: 0px;">
+                                        <input name="receiveName" id="receiveName" type="text" class="form-control" style="text-transform: uppercase;" value="${advanceReceive.recName}" maxlength="100"/>                                  
+                                    </div>
+                                    <div class="col-xs-1" style="width: 10px; padding-left: 0px; padding-right: 0px; padding-top: 5px;">
+                                        <i id="ajaxload" class="fa fa-spinner fa-spin hidden"></i>
                                     </div>
                                 </div>        
                                 <div class="col-xs-1 text-left" style="width: 100px">

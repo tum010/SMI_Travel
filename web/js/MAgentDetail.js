@@ -15,17 +15,6 @@ $(document).ready(function () {
             validating: 'uk-icon-refresh'
         },
         fields: {
-            agentcode: {
-                validators: {
-                    notEmpty: {
-                        message: 'The agent code is required'
-                    },
-                    regexp: {
-                        regexp: validatcode,
-                        message: 'The agent code contains illegal characters.'
-                    }
-                }
-            },
             agentname: {
                 validators: {
                     notEmpty: {

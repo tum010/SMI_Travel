@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="HotelVoucher" language="groovy" pageWidth="575" pageHeight="392" columnWidth="574" leftMargin="1" rightMargin="0" topMargin="0" bottomMargin="0" uuid="053f4d0e-4534-4ae9-bd3a-d9c39367ad2d">
 	<property name="ireport.zoom" value="2.1961500000000007"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="450"/>
+	<property name="ireport.y" value="491"/>
 	<queryString>
 		<![CDATA[SELECT
      *,
@@ -283,7 +283,7 @@ FROM
 				<textFieldExpression><![CDATA[($F{passenger7} != null ? $F{passenger7} : "")]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="-46" y="124" width="277" height="20" uuid="88479bd8-0598-4ee3-9331-6d5d5f0d82cc"/>
+				<reportElement x="11" y="124" width="277" height="20" uuid="88479bd8-0598-4ee3-9331-6d5d5f0d82cc"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="10" isBold="true" pdfFontName="resource/fonts/Tahoma.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
