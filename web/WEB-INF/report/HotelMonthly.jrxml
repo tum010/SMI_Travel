@@ -26,7 +26,7 @@
 	<variable name="totalprofit" class="java.math.BigDecimal" resetType="Group" resetGroup="HotelMonthly" calculation="Sum">
 		<variableExpression><![CDATA[$F{profit}]]></variableExpression>
 	</variable>
-	<group name="HotelMonthly">
+	<group name="HotelMonthly" keepTogether="true">
 		<groupExpression><![CDATA[$F{hotel}]]></groupExpression>
 		<groupHeader>
 			<band height="20">

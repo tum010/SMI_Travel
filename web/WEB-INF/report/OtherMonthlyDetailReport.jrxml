@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="OtherMonthlyDetailReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="1" bottomMargin="20" uuid="129b46e8-179f-4605-83bd-94a84a7f154c">
 	<property name="ireport.zoom" value="2.3579476910000117"/>
-	<property name="ireport.x" value="34"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<field name="code" class="java.lang.String"/>
 	<field name="name" class="java.lang.String"/>
@@ -12,14 +12,14 @@
 	<field name="infant" class="java.lang.String"/>
 	<field name="net" class="java.lang.String"/>
 	<field name="sell" class="java.lang.String"/>
-	<group name="Tour">
+	<group name="Tour" keepTogether="true">
 		<groupExpression><![CDATA[$F{code}]]></groupExpression>
 		<groupHeader>
 			<band height="38">
 				<staticText>
 					<reportElement x="19" y="-3" width="35" height="20" uuid="520efeec-8f38-4786-99f6-aaeffebb266e"/>
 					<textElement>
-						<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+						<font fontName="TH SarabunPSK" size="16" isBold="true"/>
 					</textElement>
 					<text><![CDATA[CODE :]]></text>
 				</staticText>
@@ -40,7 +40,7 @@
 				<textField>
 					<reportElement x="207" y="-3" width="223" height="20" uuid="c3139365-1260-4e4e-b10c-d03c3c214315"/>
 					<textElement verticalAlignment="Top">
-						<font fontName="TH SarabunPSK" size="14" isBold="false"/>
+						<font fontName="TH SarabunPSK" size="16" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
 				</textField>
@@ -67,14 +67,14 @@
 				<textField>
 					<reportElement x="56" y="-3" width="91" height="20" uuid="1cbe5774-39ca-4666-a1d2-952ddffd489f"/>
 					<textElement verticalAlignment="Top">
-						<font fontName="TH SarabunPSK" size="14" isBold="false"/>
+						<font fontName="TH SarabunPSK" size="16" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{code}]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement x="170" y="-3" width="35" height="20" uuid="1c63412e-5870-4bd4-8a9e-2632511c221d"/>
 					<textElement>
-						<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+						<font fontName="TH SarabunPSK" size="16" isBold="true"/>
 					</textElement>
 					<text><![CDATA[TOUR :]]></text>
 				</staticText>
