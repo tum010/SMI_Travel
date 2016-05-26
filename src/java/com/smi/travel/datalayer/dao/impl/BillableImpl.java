@@ -956,10 +956,14 @@ public class BillableImpl implements BillableDao {
         return text;
     }
     private  int getDifferenceDays(Date d1, Date d2) {
+        System.out.println("Day 1 : "+d1+" - Day 2 : "+d2);
         int daysdiff = 0;
         long diff = d2.getTime() - d1.getTime();
-        long diffDays = diff / (24 * 60 * 60 * 1000) + 1;
+        long diffDays = diff / (24 * 60 * 60 * 1000);
         daysdiff = (int) diffDays;
+        System.out.println("diff : "+diff);
+        System.out.println("diffDays : "+diffDays);
+        System.out.println("daysdiff : "+daysdiff);
         return daysdiff;
     }
 
