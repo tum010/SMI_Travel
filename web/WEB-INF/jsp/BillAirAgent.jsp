@@ -40,6 +40,22 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
+                                <label class="col-md-6 control-label text-right" >Report Type<font style="color: red">*</font></label>
+                                <div class="col-md-5">  
+                                    <div class="form-group" id="reporttypepanel">
+                                        <select name="reportType" id="reportType"  class="form-control" onchange="jsFunction(this.value);">
+                                            <option value=""  selected="selected">-- Select Type --</option>
+                                            <option value="1">PDF</option>
+                                            <option value="2">EXCEL</option>
+                                        </select>
+                                    </div>
+                                </div>   
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="form-group">
                                 <label class="col-md-6 control-label text-right" >Agent <font style="color: red">*</font></label>
                                 <div class="col-md-3 form-group" id="agentcodepanel">  
                                     <div class="input-group">
@@ -355,30 +371,12 @@
                         }
                 }
             },
-            refundFrom: {
+            reportType: {
                 trigger: 'focus keyup change',
                 validators: {
                     notEmpty: {
-                        message: 'Refund Date From is required'
-                    },
-                    date: {
-                        format: 'DD-MM-YYYY',
-                        max: 'refundTo:',
-                        message: 'Refund Date From is not a valid'
-                    }
-                }
-            },
-            refundTo: {
-                trigger: 'focus keyup change',
-                validators: {
-                    notEmpty: {
-                        message: 'Refund Date To is required'
-                    },
-                    date: {
-                        format: 'DD-MM-YYYY',
-                        min: 'refundFrom',
-                        message: 'Refund Date To is not a valid'
-                    }
+                            message: 'Select Report Type'
+                        }
                 }
             }
         }
@@ -413,7 +411,19 @@
         
         $("#refundfromdatepanel").addClass("has-error"); 
         $("#refundtodatepanel").addClass("has-error"); 
-        
+    }
+    
+    function jsFunction(value){
+        $('#BillAirAgent').bootstrapValidator('revalidateField', 'reportType');
+//        if(value == ""){
+//            $("#reporttypepanel").removeClass("has-success");
+//            $("#reporttypepanel").addClass("has-error");
+//            $("#printbutton").addClass("disabled");
+//        }else{
+//            $("#reporttypepanel").removeClass("has-error");
+//            $("#reporttypepanel").addClass("has-success");
+//            $("#printbutton").removeClass("disabled");
+//        }
     }
 </script>  
 <script type="text/javascript" src="js/BillAirAgent.js"></script> 
