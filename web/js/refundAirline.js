@@ -277,6 +277,8 @@ function addRowRefundAirlineList() {
                 var ticketNoId = this.id;
                 var keycode = (event.keyCode ? event.keyCode : event.which);
                 if (keycode == '13') {
+                    var rows = parseInt($(this).parent().parent().attr("row"));
+                    $("#ajaxload1-"+rows).removeClass("hidden");
                     var duplicate = false;
                     $("#alertFail").hide();
                     $("#alertSuccess").hide();
@@ -298,6 +300,7 @@ function addRowRefundAirlineList() {
                                 '&type='+'getTicketFare' +
                                 '&ticketNo=' + this.value;
                         var row = parseInt($(this).parent().parent().attr("row"));
+                        
                         try {
                             $.ajax({
                                 type: "POST",
@@ -343,15 +346,18 @@ function addRowRefundAirlineList() {
                                             });
                                         }
                                         inputTicket.style.removeProperty('border');
+                                        $("#ajaxload1-"+rows).addClass("hidden");
                                     } else {
                                         $("#alertTextFail").html("Ticket no " + ticketNo + " is not available.");
                                         $("#alertFail").show();
                                         $("#alertSuccess").hide();
+                                        $("#ajaxload1-"+rows).addClass("hidden");
                                     }
 
                                 }, error: function (msg) {
                                     console.log('auto ERROR');
                                     $("#dataload").addClass("hidden");
+                                    $("#ajaxload1-"+rows).addClass("hidden");
                                 }
                             });
                         } catch (e) {

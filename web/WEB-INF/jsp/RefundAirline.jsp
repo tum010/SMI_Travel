@@ -213,7 +213,9 @@
                                         </c:otherwise>
                                     </c:choose>    
                                 </td>
-                                <td style="text-align:center"> <input id="ticketNo${index}" name="ticketNo${index}" colName="ticketNo" type="text" class="form-control" value="${detail.ticketFareAirline["TicketNo"]}"></td>
+                                <td style="text-align:center"><input id="ticketNo${index}" name="ticketNo${index}" colName="ticketNo" type="text" class="form-control" value="${detail.ticketFareAirline["TicketNo"]}">
+                                <i id="ajaxload1-${index}"  class="fa fa-spinner fa-spin hidden"></i>
+                                </td>
                                 <td style="text-align:center"> <input id="refund${index}" name="refund${index}" colName="refund" type="text" class="form-control" value="${detail.sectorRefund}" onfocusout="checkRefund(this)"></td>
                                 <td style="text-align:center"> <input id="receive${index}" name="receive${index}" colName="receive" onfocusout="calculateProfit(this)" type="text" class="form-control text-right decimal" style="text-align: right" value="${detail.receiveAirline}"></td>
                                 <td style="text-align:center"> <input id="pay${index}" name="pay${index}" colName="pay" type="text" onfocusout="calculateProfit(this)" class="form-control text-right decimal" style="text-align: right" value="${detail.payCustomer}"></td>
@@ -502,7 +504,7 @@
         <input type="hidden" name="detailId" id="detailId" colName="detailId" value="">
         <input type="hidden" id="ticketId" name="ticketId" colName="ticketId" value="">
         <td rowspan='2'> <input id="checkCharge" name="checkCharge" colName="checkCharge" type="checkbox" class="form-control text-center" onclick="checkboxCharge(this)" value=""></td>
-        <td style="text-align:center"> <input id="ticketNo" name="ticketNo" colName="ticketNo" type="text" class="form-control" value=""></td>
+        <td style="text-align:center"> <input id="ticketNo" name="ticketNo" colName="ticketNo" type="text" class="form-control" value=""><span  id="ajaxload1-" colName="ajaxload1-" class="fa fa-spinner fa-spin hidden"></span></td>
         <td style="text-align:center"> <input id="refund" name="refund" colName="refund" type="text" maxlength="255" class="form-control" value="" onfocusout="checkRefund(this)"></td>
         <td style="text-align:center"> <input id="receive" name="receive" colName="receive" onfocusout="calculateProfit(this)" type="text" class="form-control text-right decimal" value=""></td>
         <td style="text-align:center"> <input id="pay" name="pay" type="text" colName="pay" onfocusout="calculateProfit(this)"  class="form-control text-right decimal"></td>
@@ -955,7 +957,6 @@
                 '</tr>'
                 );
         $("input[name=countRefund]").val(row);
-
     }
 
     function ConfirmDelete(rowType, itineraryid, Ccount) {
