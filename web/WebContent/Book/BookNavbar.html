@@ -153,10 +153,42 @@
     }
     
     //Operation Duplicate
-    function enableOperationDuplicate(){
-        var operationTableIdBooking = $("#operationTableIdBooking").val();
-        var refNo = ($("#nav-RefNo").val()).replace("-","");
-        window.location.href = "BookDetail.smi?action=operationUpdate&operationTableIdBooking="+operationTableIdBooking+"&referenceNo="+refNo;
+    function enableOperationDuplicate(){            
+        var operationDate = document.getElementById('operationDateBooking').value;
+        var operationUser = document.getElementById('operationUserBooking').value;
+        var operationTable = document.getElementById('operationTableBooking').value;
+        var operationTableId = document.getElementById('master-id').value;
+        var url = 'AJAXServlet';
+        var servletName = 'CheckDuplicateUserServlet';
+        var servicesName = 'AJAXBean';
+        var param = 'action=' + 'text' +
+                '&servletName=' + servletName +
+                '&servicesName=' + servicesName +
+                '&operationTable=' + operationTable +
+                '&operationTableId=' + operationTableId +
+                '&operationDate=' + operationDate +
+                '&operationUser=' + operationUser +
+                '&type=updateNewUser';
+        try {
+            $.ajax({
+                type: "POST",
+                url: url,
+                cache: false,
+                data: param,
+                success: function(msg) {
+                    if(msg === 'success'){
+                        var operationTableIdBooking = $("#operationTableIdBooking").val();
+                        var refNo = ($("#nav-RefNo").val()).replace("-","");                   
+                        window.location.href = "BookDetail.smi?action=edit&operationTableIdBooking="+operationTableIdBooking+"&referenceNo="+refNo;
+                    }
+                }, error: function(msg) {
+                    console.log('update duplicate user fail');
+                }
+            });
+        } catch (e) {
+            alert(e);
+            console.log('update duplicate user fail');
+        }
     }
 
     function disableOperationDuplicate(){

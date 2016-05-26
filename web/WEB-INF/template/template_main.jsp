@@ -100,7 +100,8 @@
                 }
                
                 //Check current page to set null          
-                if((!isBooking) && haveDuplicateUserData){
+//                if((!isBooking) && haveDuplicateUserData){
+                if((!isBooking)){
                     //for modal book
                     localStorage.setItem("duplicateUserCancel", null);                                     
                     updateOperationNull();  
@@ -112,7 +113,7 @@
             function updateOperationNull() {
                 var duplicateUser = localStorage.getItem("duplicateUser");
                 duplicateUser = JSON.parse(duplicateUser);    
-                
+
                 var operationAction = '';
                 if(duplicateUser !== null){
                     var operationTable = duplicateUser[0].operationTable;
@@ -127,7 +128,8 @@
                             '&operationTableId=' + operationTableId +
                             '&operationAction=' + operationAction +
                             '&operationUser=' + operationUser +
-                            '&type=updateOperationNull'
+                            '&type=updateOperationNull';
+
                     callAjaxClearDuplicateUser(param);
                 }
             }
