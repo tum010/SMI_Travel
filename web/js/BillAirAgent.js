@@ -219,7 +219,7 @@ function printBillAirAgent(){
     var refundFrom = convertFormatDates(document.getElementById("refundFrom").value);
     var refundTo = convertFormatDates(document.getElementById("refundTo").value);
     var departments = document.getElementById("department").value;
-    var salebyUsers = document.getElementById("salebyUser").value;
+    var salebyUsers = document.getElementById("salebyName").value;
     var termPays = document.getElementById("termPay").value;
     var paymentType = document.getElementById("paymentType").value;
     var vatTemp = document.getElementById("vatTemp").value;
