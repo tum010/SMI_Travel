@@ -733,14 +733,20 @@ public class AJAXBean extends AbstractBean implements
                 } else {
                     int[] bookStatus = masterdao.getBookStatusFromRefno(refNo);
                     if (bookStatus == null) {
-                        result = "0,0,0,0,0,0";
+                        result = "0,0,0,0,0,0//";
                     } else {
                         result = bookStatus[0] + ","
                                 + bookStatus[1] + ","
                                 + bookStatus[2] + ","
                                 + bookStatus[3] + ","
                                 + bookStatus[4] + ","
-                                + bookStatus[5];
+                                + bookStatus[5] + "//";
+                    }
+                    List<ReceiptDetail> receiptDetailList = masterdao.getReceiptDetailFromRefno(refNo);
+                    if(receiptDetailList.isEmpty()){
+                        result += "Normal";
+                    }else{
+                        result += "Finish";
                     }
                 }
                 System.out.println("result :" + result);

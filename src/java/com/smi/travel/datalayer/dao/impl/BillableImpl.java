@@ -816,6 +816,9 @@ public class BillableImpl implements BillableDao {
                     }else{
                          description += "";
                     }
+                    if(j < listRoom.size() - 1){
+                        description += "\n";
+                    }
                 }
                 
                 int day = getDifferenceDays(list.get(i).getCheckin(), list.get(i).getCheckout()); // Day 
@@ -958,14 +961,13 @@ public class BillableImpl implements BillableDao {
     private  int getDifferenceDays(Date d1, Date d2) {
         System.out.println("Day 1 : "+d1+" - Day 2 : "+d2);
         int daysdiff = 0;
-        int diff = d2.getDate() - d1.getDate();
+        long diff = d2.getTime() - d1.getTime();
         long diffDays = diff / (24 * 60 * 60 * 1000);
         daysdiff = (int) diffDays;
-        System.out.println("d2.getDate() - d1.getDate() : "+ (d2.getDate() - d1.getDate()));
-        System.out.println("diff : "+diff);
+        System.out.println("diff : "+diffDays);
         System.out.println("diffDays : "+diffDays);
         System.out.println("daysdiff : "+daysdiff);
-        return diff;
+        return daysdiff;
     }
 
     @Override

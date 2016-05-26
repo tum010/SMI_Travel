@@ -296,7 +296,8 @@ function CallAjax(param) {
             cache: false,
             data: param,
             success: function(msg) {
-                var path = msg.split(',');
+                var result = msg.split('//');
+                var path = result[0].split(',');
                 document.getElementById('SelectStatus').value = path[0];
                 document.getElementById('flagAir').value = path[1];
                 document.getElementById('flagHotel').value = path[2];
@@ -304,6 +305,9 @@ function CallAjax(param) {
                 document.getElementById('flagLand').value = path[4];
                 document.getElementById('flagOther').value = path[5];
                 setCheckboxFlag();
+                $('[name=SelectStatus] option').filter(function() { 
+                    return ($(this).text() === result[1]);
+                }).prop('selected', true);     
                 $("#ajaxload").addClass("hidden");
                 $("#ButtonSave").removeAttr("disabled");
             }, error: function(msg) {

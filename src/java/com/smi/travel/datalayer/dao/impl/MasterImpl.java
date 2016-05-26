@@ -12,6 +12,7 @@ import com.smi.travel.datalayer.entity.HistoryBooking;
 import com.smi.travel.datalayer.entity.MBookingstatus;
 import com.smi.travel.datalayer.entity.Master;
 import com.smi.travel.datalayer.entity.Passenger;
+import com.smi.travel.datalayer.entity.ReceiptDetail;
 import com.smi.travel.util.UtilityFunction;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -276,6 +277,19 @@ public class MasterImpl implements MasterDao{
         session.close();
         this.sessionFactory.close();
         return refno.replace("-","");    
+    }
+
+    @Override
+    public List<ReceiptDetail> getReceiptDetailFromRefno(String refNo) {
+        Session session = this.getSessionFactory().openSession();
+        String query = "from ReceiptDetail rd where rd.invoiceDetail.billableDesc.billable.master.referenceNo = :refNo ";
+        List<ReceiptDetail> receiptDetailList = session.createQuery(query)
+                .setParameter("refNo", refNo)
+                .list();
+
+        session.close();
+        this.getSessionFactory().close();
+        return receiptDetailList;
     }
 
 }

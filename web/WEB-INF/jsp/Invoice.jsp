@@ -1008,7 +1008,7 @@
                 <h4 class="modal-title"  id="Titlemodel">Delete Detail Billable </h4>
             </div>
             <div class="modal-body" id="DeleteDetailBillable">
-
+                Are you sure to delete detail billable ?
             </div>
             <div class="modal-footer">  
                 <button type="button" onclick="DeleteBill()" class="btn btn-danger" data-dismiss="modal">Delete</button>
