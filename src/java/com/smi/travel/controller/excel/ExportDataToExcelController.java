@@ -172,11 +172,11 @@ public class ExportDataToExcelController  extends SMITravelController{
             String refundTo = request.getParameter("refundTo");
             String departments = request.getParameter("department");
             String salebyUsers = request.getParameter("salebyUser");
-            String termPays = "";
+            String termPays = request.getParameter("termPay");
             String paymentTypes = request.getParameter("paymentType");
             String vatTemp = request.getParameter("vatTemp");
             String whtTemp = request.getParameter("whtTemp");
-            System.out.println("termPays : "+termPays);
+
             data = reportservice.getBillAirAgentReportSummary(agentCode, invoiceFromDates, InvoiceToDates, issueFroms, issueTos, refundFrom, refundTo, departments, salebyUsers, termPays, printby,paymentTypes,vatMDE,whtMDE);
             return new ModelAndView("BillAirAgentSummary",name,data).addObject(ReportName, name);
         }else if(CollectionReport.equalsIgnoreCase(name)){

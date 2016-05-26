@@ -130,11 +130,11 @@ $(document).ready(function() {
     
     //validate
     $('.date').datetimepicker();
-        $('.spandate').click(function() {
-            var position = $(this).offset();
-            console.log("positon :" + position.top);
-            $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
-        });
+    $('.spandate').click(function() {
+        var position = $(this).offset();
+        console.log("positon :" + position.top);
+        $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
+    });
 //        validateBillAirAgent();
     
 //            .on('success.field.fv', function (e, data) {
@@ -194,8 +194,10 @@ $(document).ready(function() {
     
     $('.refundfromdate').datetimepicker().change(function(){                          
         checkRefundFromDateField();
+        
     });
-    $('.refundtodate').datetimepicker().change(function(){                          
+    
+    $('.refundtodate').datetimepicker().change(function(){    
         checkRefundToDateField();
     });
 });
@@ -217,29 +219,48 @@ function printBillAirAgent(){
     var refundFrom = convertFormatDates(document.getElementById("refundFrom").value);
     var refundTo = convertFormatDates(document.getElementById("refundTo").value);
     var departments = document.getElementById("department").value;
-    var salebyUsers = document.getElementById("salebyUser").value;
+    var salebyUsers = document.getElementById("salebyName").value;
     var termPays = document.getElementById("termPay").value;
     var paymentType = document.getElementById("paymentType").value;
     var vatTemp = document.getElementById("vatTemp").value;
     var whtTemp = document.getElementById("whtTemp").value;
+    var reportType = document.getElementById("reportType").value;
+    
     console.log("Agent : " + agentCode);
-    if(agentCode !== '' && refundFrom !== '' && refundTo !== ''){
-        if((invoiceFrom !== '') && (invoiceTo !== '')){
-            window.open("Excel.smi?name=BillAirAgentSummary&agentCode=" + agentCode + "&invoiceFrom=" + invoiceFrom + "&invoiceTo=" + invoiceTo + "&issueFrom=" + issueFrom + "&issueTo=" + issueTo +  "&refundFrom=" + refundFrom + "&refundTo=" + refundTo + "&department=" + departments+ "&salebyUser=" + salebyUsers + "&termPay=" + termPays +"&paymentType="+paymentType+"&vatTemp="+vatTemp+"&whtTemp="+whtTemp);
-        }else if((issueFrom !== '') && (issueTo !== '')){
-            window.open("Excel.smi?name=BillAirAgentSummary&agentCode=" + agentCode + "&invoiceFrom=" + invoiceFrom + "&invoiceTo=" + invoiceTo + "&issueFrom=" + issueFrom + "&issueTo=" + issueTo +  "&refundFrom=" + refundFrom + "&refundTo=" + refundTo + "&department=" + departments+ "&salebyUser=" + salebyUsers + "&termPay=" + termPays+"&paymentType="+paymentType+"&vatTemp="+vatTemp+"&whtTemp="+whtTemp);
-        }else if((refundFrom !== '') && (refundFrom !== '')){
-            window.open("Excel.smi?name=BillAirAgentSummary&agentCode=" + agentCode + "&invoiceFrom=" + invoiceFrom + "&invoiceTo=" + invoiceTo + "&issueFrom=" + issueFrom + "&issueTo=" + issueTo + "&refundFrom=" + refundFrom + "&refundTo=" + refundTo + "&department=" + departments+ "&salebyUser=" + salebyUsers + "&termPay=" + termPays+"&paymentType="+paymentType+"&vatTemp="+vatTemp+"&whtTemp="+whtTemp);
-        }else {
-            validateDate();  
+    
+    if(reportType === ''){
+        jsFunction(reportType);
+    }else{
+        if(reportType !== '' && agentCode !== '' && refundFrom !== '' && refundTo !== ''){
+            if(reportType === '1'){
+                if((invoiceFrom !== '') && (invoiceTo !== '')){
+                    window.open("report.smi?name=BillAirAgentSummaryReport&agentCode=" + agentCode + "&invoiceFrom=" + invoiceFrom + "&invoiceTo=" + invoiceTo + "&issueFrom=" + issueFrom + "&issueTo=" + issueTo +  "&refundFrom=" + refundFrom + "&refundTo=" + refundTo + "&department=" + departments+ "&salebyUser=" + salebyUsers + "&termPay=" + termPays +"&paymentType="+paymentType+"&vatTemp="+vatTemp+"&whtTemp="+whtTemp);
+                }else if((issueFrom !== '') && (issueTo !== '')){
+                    window.open("report.smi?name=BillAirAgentSummaryReport&agentCode=" + agentCode + "&invoiceFrom=" + invoiceFrom + "&invoiceTo=" + invoiceTo + "&issueFrom=" + issueFrom + "&issueTo=" + issueTo +  "&refundFrom=" + refundFrom + "&refundTo=" + refundTo + "&department=" + departments+ "&salebyUser=" + salebyUsers + "&termPay=" + termPays+"&paymentType="+paymentType+"&vatTemp="+vatTemp+"&whtTemp="+whtTemp);
+                }else if((refundFrom !== '') && (refundFrom !== '')){
+                    window.open("report.smi?name=BillAirAgentSummaryReport&agentCode=" + agentCode + "&invoiceFrom=" + invoiceFrom + "&invoiceTo=" + invoiceTo + "&issueFrom=" + issueFrom + "&issueTo=" + issueTo + "&refundFrom=" + refundFrom + "&refundTo=" + refundTo + "&department=" + departments+ "&salebyUser=" + salebyUsers + "&termPay=" + termPays+"&paymentType="+paymentType+"&vatTemp="+vatTemp+"&whtTemp="+whtTemp);
+                }else {
+                    validateDate();  
+                }
+            }else if (reportType === '2'){
+                if((invoiceFrom !== '') && (invoiceTo !== '')){
+                    window.open("Excel.smi?name=BillAirAgentSummary&agentCode=" + agentCode + "&invoiceFrom=" + invoiceFrom + "&invoiceTo=" + invoiceTo + "&issueFrom=" + issueFrom + "&issueTo=" + issueTo +  "&refundFrom=" + refundFrom + "&refundTo=" + refundTo + "&department=" + departments+ "&salebyUser=" + salebyUsers + "&termPay=" + termPays +"&paymentType="+paymentType+"&vatTemp="+vatTemp+"&whtTemp="+whtTemp);
+                }else if((issueFrom !== '') && (issueTo !== '')){
+                    window.open("Excel.smi?name=BillAirAgentSummary&agentCode=" + agentCode + "&invoiceFrom=" + invoiceFrom + "&invoiceTo=" + invoiceTo + "&issueFrom=" + issueFrom + "&issueTo=" + issueTo +  "&refundFrom=" + refundFrom + "&refundTo=" + refundTo + "&department=" + departments+ "&salebyUser=" + salebyUsers + "&termPay=" + termPays+"&paymentType="+paymentType+"&vatTemp="+vatTemp+"&whtTemp="+whtTemp);
+                }else if((refundFrom !== '') && (refundFrom !== '')){
+                    window.open("Excel.smi?name=BillAirAgentSummary&agentCode=" + agentCode + "&invoiceFrom=" + invoiceFrom + "&invoiceTo=" + invoiceTo + "&issueFrom=" + issueFrom + "&issueTo=" + issueTo + "&refundFrom=" + refundFrom + "&refundTo=" + refundTo + "&department=" + departments+ "&salebyUser=" + salebyUsers + "&termPay=" + termPays+"&paymentType="+paymentType+"&vatTemp="+vatTemp+"&whtTemp="+whtTemp);
+                }else {
+                    validateDate();  
+                }
+            }
+        }else if(refundFrom === '' && refundTo === '' && agentCode !== ''){
+            validateRefundDate();
+        }else if(refundFrom !== '' && refundTo !== '' && agentCode === ''){
+            validateBillAirAgent();
+        } else {
+            validateBillAirAgent();
+            validateRefundDate();
         }
-    }else if(refundFrom === '' && refundTo === '' && agentCode !== ''){
-        validateRefundDate();
-    }else if(refundFrom !== '' && refundTo !== '' && agentCode === ''){
-        validateBillAirAgent();
-    } else {
-        validateBillAirAgent();
-        validateRefundDate();
     }
     
     

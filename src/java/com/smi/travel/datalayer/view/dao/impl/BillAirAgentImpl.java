@@ -217,7 +217,15 @@ public class BillAirAgentImpl implements BillAirAgentDao{
                  query += " invm.department  = '" + department + "' ";
             }
         }
-        
+        System.out.println(" salebyUser :: " + salebyUser);
+        if ((salebyUser != null )&&(!"".equalsIgnoreCase(salebyUser))) {
+            if(checkQuery == 1){
+                 query += " and invm.owner  = '" + salebyUser + "' ";
+            }else{
+                checkQuery = 1;
+                 query += " invm.owner  = '" + salebyUser + "' ";
+            }
+        }
            
         if ((refundFrom != null )&&(!"".equalsIgnoreCase(refundFrom))) {
             if ((refundTo != null )&&(!"".equalsIgnoreCase(refundTo))) {

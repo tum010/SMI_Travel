@@ -202,11 +202,10 @@ public class ReportController extends SMITravelController {
         String refundTo = request.getParameter("refundTo");
         String departments = request.getParameter("department");
         String salebyUsers = request.getParameter("salebyUser");
-        String termPays = "";
+        String termPays = request.getParameter("termPay");
         String paymentTypes = request.getParameter("paymentType");
         String vatTemp = request.getParameter("vatTemp");
         String whtTemp = request.getParameter("whtTemp");
-        
         Map model = new HashMap();
         List data = new ArrayList();
         int PrintMethod = 0; // 0 = bean 1 = pass parameter
