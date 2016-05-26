@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="OtherMonthlyListReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="1" bottomMargin="20" uuid="a50cc33b-72d0-4600-9043-4eca4bb29c82">
 	<property name="ireport.zoom" value="2.593742460100082"/>
-	<property name="ireport.x" value="52"/>
+	<property name="ireport.x" value="737"/>
 	<property name="ireport.y" value="0"/>
 	<field name="code" class="java.lang.String"/>
 	<field name="tour" class="java.lang.String"/>
@@ -476,46 +476,46 @@
 		</band>
 	</detail>
 	<lastPageFooter>
-		<band height="15">
+		<band height="16">
 			<textField pattern="#,##0">
-				<reportElement x="116" y="0" width="27" height="14" uuid="8bfd1cb7-e29f-4d8f-a151-af7a233c3b40"/>
+				<reportElement x="116" y="0" width="27" height="16" uuid="8bfd1cb7-e29f-4d8f-a151-af7a233c3b40"/>
 				<textElement textAlignment="Center">
-					<font fontName="TH SarabunPSK" size="12" isBold="true"/>
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{sumpaxad}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0" isBlankWhenNull="true">
-				<reportElement x="146" y="0" width="28" height="14" uuid="b1a26a07-db1a-467d-ac0d-d64d8f327848"/>
+				<reportElement x="146" y="0" width="28" height="16" uuid="b1a26a07-db1a-467d-ac0d-d64d8f327848"/>
 				<textElement textAlignment="Center">
-					<font fontName="TH SarabunPSK" size="12" isBold="true"/>
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{sumpaxch}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0">
-				<reportElement x="177" y="0" width="29" height="14" uuid="581cd39f-145e-491d-a5b5-502cb0776be5"/>
+				<reportElement x="177" y="0" width="29" height="16" uuid="581cd39f-145e-491d-a5b5-502cb0776be5"/>
 				<textElement textAlignment="Center">
-					<font fontName="TH SarabunPSK" size="12" isBold="true"/>
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{sumpaxinf}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00">
-				<reportElement x="307" y="1" width="46" height="14" uuid="0e13de52-5c09-4292-8ff1-70a8dc77d828"/>
+				<reportElement x="307" y="0" width="46" height="16" uuid="0e13de52-5c09-4292-8ff1-70a8dc77d828"/>
 				<textElement textAlignment="Right">
-					<font fontName="TH SarabunPSK" size="12" isBold="true"/>
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{sumtotalsell}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00">
-				<reportElement x="455" y="0" width="46" height="14" uuid="fb78c2ea-0c6e-48bf-91be-6ce432320dc8"/>
+				<reportElement x="455" y="0" width="46" height="16" uuid="fb78c2ea-0c6e-48bf-91be-6ce432320dc8"/>
 				<textElement textAlignment="Right">
-					<font fontName="TH SarabunPSK" size="12" isBold="true"/>
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{sumtotalnet}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00">
-				<reportElement x="504" y="0" width="48" height="14" uuid="d41b6a19-88e3-4d0d-b64e-270d650daccf"/>
+				<reportElement x="504" y="0" width="48" height="16" uuid="d41b6a19-88e3-4d0d-b64e-270d650daccf"/>
 				<textElement textAlignment="Right">
-					<font fontName="TH SarabunPSK" size="12" isBold="true"/>
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{sumbalance}]]></textFieldExpression>
 			</textField>

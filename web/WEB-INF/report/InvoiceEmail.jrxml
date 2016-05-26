@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="InvoiceEmail" language="groovy" pageWidth="595" pageHeight="843" columnWidth="522" leftMargin="45" rightMargin="28" topMargin="59" bottomMargin="56" uuid="573bfe06-de4f-4adc-b5b3-76cb68d89d08">
 	<property name="ireport.zoom" value="2.923075650000002"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="489"/>
 	<property name="ireport.y" value="835"/>
 	<field name="invto" class="java.lang.String"/>
 	<field name="invno" class="java.lang.String"/>
@@ -434,16 +434,7 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="26" splitType="Stretch">
-			<textField isStretchWithOverflow="true">
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Transparent" x="31" y="-3" width="286" height="29" uuid="72e266b6-b5ad-408e-9bcb-4dfe9f1f0cc9"/>
-				<box bottomPadding="5"/>
-				<textElement markup="none">
-					<font fontName="Cordia New" size="12" isBold="true" pdfFontName="resource/fonts/Cordia.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
-					<paragraph lineSpacing="Fixed" lineSpacingSize="7.0"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
-			</textField>
+		<band height="25" splitType="Stretch">
 			<textField isStretchWithOverflow="true" pattern="">
 				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="317" y="10" width="60" height="11" uuid="5844ba89-9d82-43b7-8104-f44a5c549885"/>
 				<textElement textAlignment="Right" verticalAlignment="Top">
@@ -476,9 +467,17 @@
 				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Transparent" x="229" y="0" width="88" height="20" uuid="5e45acc7-7e44-4a35-966e-bfd420f0020c"/>
 				<textElement textAlignment="Right" markup="none">
 					<font fontName="Cordia New" size="12" pdfFontName="resource/fonts/Cordia.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
-					<paragraph lineSpacing="Fixed" lineSpacingSize="5.0"/>
+					<paragraph lineSpacing="Fixed" lineSpacingSize="7.0"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{price}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Transparent" x="31" y="0" width="286" height="24" uuid="f22ff797-477a-4078-92c0-c32042dcdf3d"/>
+				<textElement markup="none">
+					<font fontName="Cordia New" size="12" isBold="true" isUnderline="false" pdfFontName="resource/fonts/Cordia.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<paragraph lineSpacing="Fixed" lineSpacingSize="7.0"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

@@ -160,11 +160,12 @@ public class OtherMonthlyImpl implements OtherMonthlyDao{
             OtherMonthlyView other = new OtherMonthlyView();
             other.setCode(B[0]== null ? "" :util.ConvertString(B[0]));
             other.setName(B[1]== null ? "" :util.ConvertString(B[1]));
-            other.setRefno(B[2]== null ? "" :util.ConvertString(B[2]));
+            String refNo = (B[2]== null ? "" : util.ConvertString(B[2]).substring(0, 2)+"-"+util.ConvertString(B[2]).substring(2, 6));
+            other.setRefno(refNo);
             if(B[3] != null){
                 otherdate = util.ConvertString(dateformat.format(util.convertStringToDate(util.ConvertString(B[3]))));
             }
-            other.setOtherdate(otherdate +" "+ util.ConvertString(B[4]));
+            other.setOtherdate(otherdate);
             other.setAdult(B[5]== null ? "" :util.ConvertString(B[5]));
             other.setChild(B[6]== null ? "" :util.ConvertString(B[6]));
             other.setInfant(B[7]== null ? "" :util.ConvertString(B[7]));
