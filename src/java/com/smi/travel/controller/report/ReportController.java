@@ -333,7 +333,7 @@ public class ReportController extends SMITravelController {
             data = reportservice.getHotelSummary(fromHotelSummary, toHotelSummary, departmentHotelSummary);
         }else if(HotelMonthlyTempReport.equalsIgnoreCase(name)){
             System.out.println("Detail is : " + detailHotelMonthly);
-            data = reportservice.getHotelMonthlyReport(fromHotelSummary, toHotelSummary, departmentHotelSummary,detailHotelMonthly,systemuser,getServletContext().getRealPath("/WEB-INF/report/"));         
+            data = reportservice.getHotelMonthlyReport(fromHotelSummary, toHotelSummary, departmentHotelSummary,detailHotelMonthly,user.getUsername()+"-"+user.getRole().getName(),getServletContext().getRealPath("/WEB-INF/report/"));         
             ((HotelMonthlyReport) data.get(0)).setSubReportDir(getServletContext().getRealPath("/WEB-INF/report/"));  
         }else if(HotelMonthlyDetailReport.equalsIgnoreCase(name)){
             System.out.println("Detail is : " + detailHotelMonthly);
