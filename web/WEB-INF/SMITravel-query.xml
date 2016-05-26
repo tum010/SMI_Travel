@@ -463,7 +463,7 @@
     
     <bean id="CheckDuplicateUserDao" class="com.smi.travel.datalayer.dao.impl.CheckDuplicateUserImpl">
           <property name="sessionFactory" ref="sessionFactory"></property>
-          <property name="ExpireTime" value="2" />
+          <property name="ExpireTime" value="240" />
     </bean>
     
     <!-- Component Bean -->
