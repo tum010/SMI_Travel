@@ -1831,9 +1831,8 @@ function calculateAmount() {
 
     var tax = parseFloat(withholding); 
     var pay = parseFloat(totalPay);
-    var sumdebitAmount = parseFloat(debit);
     
-    var amount = pay+sumdebitAmount+tax;
+    var amount = pay+tax;
     document.getElementById("amount").value = formatNumber(amount);
 }
 
