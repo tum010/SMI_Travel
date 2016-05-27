@@ -41,8 +41,8 @@ public class RefundAirlineController extends SMITravelController {
         List user = getUtilityService().getUserList();
         request.setAttribute("user", user);
         String refundByCode = "";
-        List customer = getUtilityService().getListCustomerAgentInfo();
-        request.setAttribute("cust", customer);
+//        List customer = getUtilityService().getListCustomerAgentInfo();
+//        request.setAttribute("cust", customer);
         if ("search".equalsIgnoreCase(action)) {
             try {
                 RefundAirticket refundAirticket = getRefundAirlineService().getRefundAirTicketFromRefundNo(refundNo);

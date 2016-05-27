@@ -435,6 +435,8 @@
                         <tr class="datatable-header">
                             <th>Code</th>
                             <th>Name</th>
+                            <th class="hidden">Address</th>
+                            <th class="hidden">Tel</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -444,7 +446,9 @@
                         <c:forEach var="item" items="${cust}">
                             <tr onclick="setBillValue('${item.billTo}', '${item.billName}', '${item.term}', '${item.pay}');">
                                 <td class="item-billto">${item.billTo}</td>
-                                <td class="item-name">${item.billName}</td>                                
+                                <td class="item-name">${item.billName}</td>
+                                <td class="item-address hidden" >${item.address}</td>
+                                <td class="item-tel hidden">${item.tel}</td>
                             </tr>
                             <script>
                                 customerRefund.push({id: "${item.billTo}", code: "${item.billTo}", name: "${item.billName}",

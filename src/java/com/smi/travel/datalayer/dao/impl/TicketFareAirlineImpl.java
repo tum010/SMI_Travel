@@ -263,7 +263,39 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
                 }
                 BigDecimal ticketfare = new BigDecimal(BigInteger.ZERO);
                 BigDecimal tickettax = new BigDecimal(BigInteger.ZERO);
-                if(("I".equalsIgnoreCase(ticketType) || "D".equalsIgnoreCase(ticketType)) &&  !"217".equalsIgnoreCase(ticketnotemp)){
+//                if(("I".equalsIgnoreCase(ticketType) || "D".equalsIgnoreCase(ticketType)) &&  !"217".equalsIgnoreCase(ticketnotemp) ){
+//                    if(airticketAirline.getAirticketFlights() != null){
+//                        List<AirticketFlight> flightList = new ArrayList<AirticketFlight>(airticketAirline.getAirticketFlights());
+//                        for(int j = 0 ; j < flightList.size() ; j++ ){
+//                            if("ADULT".equals(mpricecategoryname)){
+//                                if(flightList.get(j).getAdCost() != null){
+//                                   ticketfare = ticketfare.add(flightList.get(j).getAdCost());
+//                                }
+//                                if(flightList.get(j).getAdTaxCost() != null){
+//                                    tickettax = tickettax.add(flightList.get(j).getAdTaxCost());
+//                                }
+//                            }else if("CHILD".equals(mpricecategoryname)){
+//                                if(flightList.get(j).getChCost()!= null){
+//                                   ticketfare = ticketfare.add(flightList.get(j).getChCost());
+//                                }
+//                                if(flightList.get(j).getChTaxCost() != null){
+//                                    tickettax = tickettax.add(flightList.get(j).getChTaxCost());
+//                                }
+//                            }else if("INFANT".equals(mpricecategoryname)){
+//                                if(flightList.get(j).getInCost() != null){
+//                                   ticketfare = ticketfare.add(flightList.get(j).getInCost());
+//                                }
+//                                if(flightList.get(j).getInTaxCost() != null){
+//                                    tickettax = tickettax.add(flightList.get(j).getInTaxCost());
+//                                }
+//                            }
+//                        }
+//                    }
+//                }else 
+                if("D".equalsIgnoreCase(ticketType) && "217".equalsIgnoreCase(ticketnotemp)){
+                    ticketfare = ticketPassList.get(i).getTicketFare();
+                    tickettax  = ticketPassList.get(i).getTicketTax();
+                }else{
                     if(airticketAirline.getAirticketFlights() != null){
                         List<AirticketFlight> flightList = new ArrayList<AirticketFlight>(airticketAirline.getAirticketFlights());
                         for(int j = 0 ; j < flightList.size() ; j++ ){
@@ -290,12 +322,9 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
                                 }
                             }
                         }
-                    }
-                }else if("217".equalsIgnoreCase(ticketnotemp)){
-                    ticketfare = ticketPassList.get(i).getTicketFare();
-                    tickettax  = ticketPassList.get(i).getTicketTax();
+                    }               
                 }
-                
+               
                 result = ticketfare + "," 
                         + tickettax + "," 
                         + airticketAirline.getTicketDate() + "," 
