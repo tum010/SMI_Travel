@@ -140,6 +140,8 @@ public class ReceiptImpl implements ReceiptDao{
                 currency = " BAHT";
             }else if("USD".equalsIgnoreCase(curtemp)){
                 currency = " DOLLAR";
+            }else{
+                currency = curtemp;
             }
             String totalWord = textmoney + currency + textmoneypoint;
             if("".equalsIgnoreCase(textmoneypoint.trim())){
