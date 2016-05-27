@@ -604,7 +604,7 @@
 				<text><![CDATA[ต้นฉบับ]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="80" y="62" width="258" height="32" uuid="a6b4d6e5-94ab-4651-b350-9b1a3e1ebbfc"/>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="80" y="62" width="258" height="32" uuid="a6b4d6e5-94ab-4651-b350-9b1a3e1ebbfc"/>
 				<textElement textAlignment="Left">
 					<font fontName="Tahoma" size="10" isBold="true" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>

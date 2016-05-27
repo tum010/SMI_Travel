@@ -354,8 +354,8 @@ public class PaymentAirlineController extends SMITravelController {
                     paymentAirticket.setPaymentAirticketFares(new ArrayList<PaymentAirticketFare>());
                 }
                 for (int i = 1; i < Rows  ; i++) {
-                    String paymentAirFareId = request.getParameter("tableId" + i);
-                        System.out.println("tableId "+i+"::::"+ paymentAirFareId);
+                    String paymentAirFareId = request.getParameter("tableIdTemp" + i);
+                        System.out.println("tableIdTemp "+i+"::::"+ paymentAirFareId);
                         PaymentAirticketFare paymentAirticketFare = new PaymentAirticketFare();
                         TicketFareAirline ticketFareAirline = new TicketFareAirline();
                         //payment air id
@@ -451,8 +451,8 @@ public class PaymentAirlineController extends SMITravelController {
                     paymentAirticket.setPaymentAirticketFares(new ArrayList<PaymentAirticketFare>());
                 }
                 for (int i = 1; i < Rows  ; i++) {
-                    String paymentAirFareId = request.getParameter("tableId" + i);
-                    System.out.println("tableId "+i+"::::"+ paymentAirFareId);
+                    String paymentAirFareId = request.getParameter("tableIdTemp" + i);
+                    System.out.println("tableIdTemp "+i+"::::"+ paymentAirFareId);
                     if(paymentAirFareId != null){
                         
                         PaymentAirticketFare paymentAirticketFare = new PaymentAirticketFare();

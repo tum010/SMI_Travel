@@ -379,6 +379,42 @@
                                 </tbody>
                             </table>
                         </div>
+                        <div class="col-xs-12 hidden" style="margin-top: 4px;"  >
+                            <table class="display" id="TicketFareTableTemp" style="margin-top: -20px">
+                                <thead class="datatable-header">
+                                    <tr>
+                                        <th class="hidden">ticket</th>
+                                        <th style="width:5%;">Ref No</th>
+                                        <th style="width:15%;">Ticket No</th>
+                                        <th style="width:10%;">Department</th>
+                                        <th style="width:20%;">Fare</th>
+                                        <th style="width:10%;">Tax</th>
+                                        <th style="width:10%;">Insurance</th>
+                                        <th style="width:10%;">Commission</th>
+                                        <th style="width:10%;">Amount</th>
+                                        <th style="width:10%;">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <c:forEach var="table" items="${ticketFareList}" varStatus="dataStatus">
+                                        <tr>
+                                            <input type="hidden" name="countCount${dataStatus.count}" id="countCount${dataStatus.count}" value="${dataStatus.count}">
+                                            <input type="hidden" name="tableIdTemp${dataStatus.count}" id="tableIdTemp${dataStatus.count}" value="${table.id}">
+                                            <td class="hidden">${table.ticketNo}</td>
+                                            <td align="center"> <c:out value="${table.referenceNo}" /></td>
+                                            <td align="left"> <c:out value="${table.ticketNo}" /></td>
+                                            <td align="left"> <c:out value="${table.department}" /></td>
+                                            <td class="money">${table.fare}</td>
+                                            <td class="money">${table.tax}</td>
+                                            <td class="money">${table.ticketIns}</td>
+                                            <td class="money">${table.ticketCommission}</td>
+                                            <td class="money">${table.ticketFareAmount}</td>
+                                            <td></td>                                    
+                                        </tr>
+                                    </c:forEach>
+                                </tbody>
+                            </table>
+                        </div>           
                         <input type="hidden" class="form-control" id="counter" name="counter" value="${requestScope['ticketFareCount']}" />
                         
                         <div class="col-xs-12 form-group" style="margin-bottom:  -10px"> 
