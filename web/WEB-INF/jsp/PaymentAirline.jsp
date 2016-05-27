@@ -340,7 +340,7 @@
                             <table class="display" id="TicketFareTable" style="margin-top: -20px">
                                 <thead class="datatable-header">
                                     <tr>
-                                        <!--<th style="width:5%;">Id</th>-->
+                                        <th class="hidden">ticket</th>
                                         <th style="width:5%;">Ref No</th>
                                         <th style="width:15%;">Ticket No</th>
                                         <th style="width:10%;">Department</th>
@@ -357,6 +357,7 @@
                                         <tr>
                                             <input type="hidden" name="count${dataStatus.count}" id="count${dataStatus.count}" value="${dataStatus.count}">
                                             <input type="hidden" name="tableId${dataStatus.count}" id="tableId${dataStatus.count}" value="${table.id}">
+                                            <td class="hidden">${table.ticketNo}</td>
                                             <td align="center"> <c:out value="${table.referenceNo}" /></td>
                                             <td align="left"> <c:out value="${table.ticketNo}" /></td>
                                             <td align="left"> <c:out value="${table.department}" /></td>
@@ -1243,7 +1244,7 @@ for(var i = 0; i < rad.length; i++) {
             "sPaginationType": "full_numbers",
             "bAutoWidth": false,
             "bFilter": false,
-            "aaSorting": [[ 0, "desc" ]]
+            "aaSorting": [[ 0, "asc" ]]
         });
 
         $('.dataTables_length label').remove();
@@ -1976,7 +1977,7 @@ function calculateTotalCommission() {
     var tableLenght = $("#TicketFareTable tr").length;
     if(tableLenght > 1){
         for (var r = 1, n = tableTicket.rows.length; r < n; r++) {
-            temp = tableTicket.rows[r].cells[6].innerHTML;
+            temp = tableTicket.rows[r].cells[7].innerHTML;
             temp = (temp.trim) ? temp.trim() : temp.replace(/^\s+/,'');
             if(temp == '') {
                 temp = 0;
@@ -2002,7 +2003,7 @@ function calculateTotalAmount(){
     var tableLenght = $("#TicketFareTable tr").length;
     if(tableLenght > 1){
         for (var r = 1, n = tableTicket.rows.length; r < n; r++) {
-            temp = tableTicket.rows[r].cells[7].innerHTML;
+            temp = tableTicket.rows[r].cells[8].innerHTML;
             temp = (temp.trim) ? temp.trim() : temp.replace(/^\s+/,'');
             if(temp == '') {
                 temp = 0;
@@ -2147,7 +2148,7 @@ function getTicketNoFromTicketFare() {
     var ticeketList = "";
     var tableTicket = document.getElementById('TicketFareTable');
     for (var r = 1, n = tableTicket.rows.length; r < n; r++) {
-        temp = tableTicket.rows[r].cells[1].innerHTML;
+        temp = tableTicket.rows[r].cells[2].innerHTML;
         ticeketList += temp + ",";
     }
 

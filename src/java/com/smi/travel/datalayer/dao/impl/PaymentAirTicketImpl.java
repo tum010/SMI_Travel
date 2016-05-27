@@ -368,7 +368,7 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
             query = query.replaceAll("where", " ");
         }
         
-        query += " ORDER BY t.Master ASC";
+        query += " ORDER BY t.ticketNo asc , t.Master ASC";
         System.out.println("query : "+query );
         List<TicketFareAirline> listAirline =  session.createQuery(query).list();
         System.out.println("listAirline.size() "+listAirline.size());
@@ -383,10 +383,10 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
                 System.out.println(" invoiceSubCode " + invoiceSubCode);
                 String paymentAirFare = "from PaymentAirticketFare fare where fare.ticketFareAirline.id = :ticketfareId and fare.paymentAirticket.invoiceSup = :invoiceSup";
                 List<PaymentAirticketFare> paymentAirticketFares = session.createQuery(paymentAirFare).setParameter("ticketfareId", listAirline.get(i).getId()).setParameter("invoiceSup", invoiceSubCode).list();
-                System.out.println(" paymentAirticketFares .size "+ paymentAirticketFares.size());
+//                System.out.println(" paymentAirticketFares .size "+ paymentAirticketFares.size());
                 if(paymentAirticketFares.isEmpty()){
                     
-                    System.out.println(" paymentAirticketFares.isEmpty() ");
+//                    System.out.println(" paymentAirticketFares.isEmpty() ");
                     TicketFareView ticketFareView = new TicketFareView();
                     ticketFareView.setId(String.valueOf(listAirline.get(i).getId()));
                     ticketFareView.setType(String.valueOf(listAirline.get(i).getTicketType()));
