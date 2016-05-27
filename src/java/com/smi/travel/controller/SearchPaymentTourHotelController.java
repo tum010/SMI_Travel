@@ -58,11 +58,11 @@ public class SearchPaymentTourHotelController extends SMITravelController {
             PaymentWendy paymentWendyCheck = paymentTourHotelService.getPaymentWendyFromID(InputPayNo);
             List<PaymentDetailWendy> paymentDetailWendy = paymentWendyCheck.getPaymentDetailWendies();
             
-            if((paymentDetailWendy.size() != 0) || (paymentWendyCheck.getIsExport() != null)){
-                if(paymentWendyCheck.getIsExport() != null){
-                    result = "fail isExport";
-                } else {
+            if((paymentDetailWendy.size() != 0) && (paymentWendyCheck.getIsExport() != null) && (paymentWendyCheck.getIsExport() != 0)){
+                if(paymentWendyCheck.getIsExport() == 1){
                     result = "fail already used";
+                } else {
+                    result = "fail isExport";
                 }
                 paymentList = getPaymentTourHotelService().getListPayment(InputFromDate, InputToDate, selectPvType, InputInvoiceSupCode, selectStatus);
             } else {

@@ -131,7 +131,15 @@ public class PaymentWendytourImpl implements PaymentWendytourDao{
         try {
             Session session = this.sessionFactory.openSession();
             transaction = session.beginTransaction();
-            session.delete(payment);
+            String query = "from PaymentWendy p where p.id = :id";
+            List<PaymentWendy> List = session.createQuery(query).setParameter("id", payment.getId()).list();
+            if (List.isEmpty()) {
+                return "fail";
+            }
+            for(int i = 0 ; i < List.get(0).getPaymentDetailWendies().size() ; i++){
+                session.delete(List.get(0).getPaymentDetailWendies().get(i));    
+            }
+            session.delete(List.get(0));
             transaction.commit();
             session.close();
             this.sessionFactory.close();
