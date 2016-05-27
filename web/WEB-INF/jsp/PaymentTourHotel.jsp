@@ -1071,7 +1071,8 @@
             "bPaginate": true,
             "bInfo": false,
             "bLengthChange": false,
-            "iDisplayLength": 10
+            "iDisplayLength": 10,
+            "aaSorting": [[ 1, "asc" ]]
         });
             
         $('#SearchAPCodeTable').dataTable({bJQueryUI: true,
