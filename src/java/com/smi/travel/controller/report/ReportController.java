@@ -236,12 +236,12 @@ public class ReportController extends SMITravelController {
         } else if (StaffSummary.equalsIgnoreCase(name)) {
             data = reportservice.getStaffSummary(ticketfrom, tickettype, startdate, enddate, user.getName(), department);
         } else if (TicketSaleSummary.equalsIgnoreCase(name)) {
-            data = reportservice.getTicketSaleVolumn(ticketfrom, tickettype, startdate, enddate ,user.getRole().getName());
+            data = reportservice.getTicketSaleVolumn(ticketfrom, tickettype, startdate, enddate ,user.getName());
         } else if (TicketProfitSummary.equalsIgnoreCase(name)) {
-            data = reportservice.getTicketProfitVolumn(ticketfrom, tickettype, startdate, enddate,user.getRole().getName());
+            data = reportservice.getTicketProfitVolumn(ticketfrom, tickettype, startdate, enddate,user.getName());
         } else if (InvoiceSummary.equalsIgnoreCase(name)) {
             String subDepartment = request.getParameter("subDepartment");
-            data = reportservice.getInvoiceSummary(from, to, department, typeInvoice,agent,statusInvoice,user.getUsername()+"-"+user.getRole().getName(),subDepartment);
+            data = reportservice.getInvoiceSummary(from, to, department, typeInvoice,agent,statusInvoice,user.getUsername()+"-"+user.getName(),subDepartment);
         } else if (GuideJob.equalsIgnoreCase(name)) {
             data = reportservice.getGuildJobReport(tourDate, tourCode, user.getName());
         } else if (TransferJob.equalsIgnoreCase(name)) {
@@ -275,29 +275,29 @@ public class ReportController extends SMITravelController {
             String nameSurname = (!"".equalsIgnoreCase(user.getName()) && user.getName() != null ? user.getName() : "");
             data = reportservice.getDaytourOperationOtherReport(otherId, passengerId, refNo, status, nameSurname);
         } else if (ReceiptEmail.equalsIgnoreCase(name)) {
-            data = reportservice.getReceiptEmail(receiveId,option,sign,user.getRole().getName());
+            data = reportservice.getReceiptEmail(receiveId,option,sign,user.getName());
         } else if (ReceiptReport.equalsIgnoreCase(name)) {
-            data = reportservice.getReceipt(receiveId,option,sign,user.getRole().getName());
+            data = reportservice.getReceipt(receiveId,option,sign,user.getName());
         } else if (ReceiptTempReport.equalsIgnoreCase(name)) {
-            data = reportservice.getReceiptTemp(receiveId,option,sign,user.getRole().getName());
+            data = reportservice.getReceiptTemp(receiveId,option,sign,user.getName());
         } else if (ReceiptSummaryReport.equalsIgnoreCase(name)) {
-            data = reportservice.getReceiptSummary(dateFrom,dateTo,departmentRec,recType,status,user.getUsername()+"-"+user.getRole().getName());
+            data = reportservice.getReceiptSummary(dateFrom,dateTo,departmentRec,recType,status,user.getUsername()+"-"+user.getName());
         } else if (ReceiveList.equalsIgnoreCase(name)) {
             data = reportservice.getDaytourOtherReport(refno, status);
         } else if (InvoiceEmail.equalsIgnoreCase(name)) {
-            data = reportservice.getInvoice(invoiceid,bankid,showStaff,showLeader,sign,user.getRole().getName(),"0");
+            data = reportservice.getInvoice(invoiceid,bankid,showStaff,showLeader,sign,user.getName(),"0");
         } else if (InvoiceReport.equalsIgnoreCase(name)) {
-            data = reportservice.getInvoice(invoiceid,bankid,showStaff,showLeader,sign,user.getRole().getName(),"0");
+            data = reportservice.getInvoice(invoiceid,bankid,showStaff,showLeader,sign,user.getName(),"0");
         }else if (InvoiceTemp.equalsIgnoreCase(name)) {
-            data = reportservice.getInvoice(invoiceid,bankid,showStaff,showLeader,sign,user.getRole().getName(),"1");
+            data = reportservice.getInvoice(invoiceid,bankid,showStaff,showLeader,sign,user.getName(),"1");
         } else if (InvoiceTempEmail.equalsIgnoreCase(name)) {
-            data = reportservice.getInvoice(invoiceid,bankid,showStaff,showLeader,sign,user.getRole().getName(),"1");
+            data = reportservice.getInvoice(invoiceid,bankid,showStaff,showLeader,sign,user.getName(),"1");
         } else if (InvoiceTempReport.equalsIgnoreCase(name)) {
-            data = reportservice.getInvoice(invoiceid,bankid,showStaff,showLeader,sign,user.getRole().getName(),"1");
+            data = reportservice.getInvoice(invoiceid,bankid,showStaff,showLeader,sign,user.getName(),"1");
         } else if (TaxInvoiceReport.equalsIgnoreCase(name)) {
-            data = reportservice.getTaxInvoice(taxInvId, option,sign,user.getRole().getName());
+            data = reportservice.getTaxInvoice(taxInvId, option,sign,user.getName());
         } else if (TaxInvoiceEmailReport.equalsIgnoreCase(name)) {
-            data = reportservice.getTaxInvoiceEmail(taxInvId, option,sign,user.getRole().getName());
+            data = reportservice.getTaxInvoiceEmail(taxInvId, option,sign,user.getName());
         }else if(CreditNoteReport.equalsIgnoreCase(name)){
             data = reportservice.getCreditNoteReport(cnid);
         }else if(InvoiceMonthly.equalsIgnoreCase(name)){
@@ -320,19 +320,19 @@ public class ReportController extends SMITravelController {
         }else if(TaxInvoiceSummaryReport.equalsIgnoreCase(name)){
             data = reportservice.getTaxInvoiceSummaryReport(from, to, department, status, systemuser);
         }else if(CreditNoteSummaryReport.equalsIgnoreCase(name)){
-            data = reportservice.getCreditNoteSummaryReport(from, to, department, status, user.getUsername()+"-"+user.getRole().getName());
+            data = reportservice.getCreditNoteSummaryReport(from, to, department, status, user.getUsername()+"-"+user.getName());
         }else if(PaymentAirlineInfo.equalsIgnoreCase(name)){
             String payno = request.getParameter("payno");
             System.out.println(" payno " + payno);
-            data = reportservice.getPaymentAirlineReport(payno,user.getUsername()+"-"+user.getRole().getName());
+            data = reportservice.getPaymentAirlineReport(payno,user.getUsername()+"-"+user.getName());
             ((PaymentAirline) data.get(0)).setSubReportDir(getServletContext().getRealPath("/WEB-INF/report/"));
         }else if(PaymentTourHotelSummary.equalsIgnoreCase(name)){
-            data = reportservice.getPaymentTourHotelSummary(from, to, pvtype, status, invSupCode, user.getUsername()+"-"+user.getRole().getName());
+            data = reportservice.getPaymentTourHotelSummary(from, to, pvtype, status, invSupCode, user.getUsername()+"-"+user.getName());
         }else if(HotelSummary.equalsIgnoreCase(name)){
             data = reportservice.getHotelSummary(fromHotelSummary, toHotelSummary, departmentHotelSummary);
         }else if(HotelMonthlyTempReport.equalsIgnoreCase(name)){
             System.out.println("Detail is : " + detailHotelMonthly);
-            data = reportservice.getHotelMonthlyReport(fromHotelSummary, toHotelSummary, departmentHotelSummary,detailHotelMonthly,user.getUsername()+"-"+user.getRole().getName(),getServletContext().getRealPath("/WEB-INF/report/"));         
+            data = reportservice.getHotelMonthlyReport(fromHotelSummary, toHotelSummary, departmentHotelSummary,detailHotelMonthly,user.getUsername()+"-"+user.getName(),getServletContext().getRealPath("/WEB-INF/report/"));         
             ((HotelMonthlyReport) data.get(0)).setSubReportDir(getServletContext().getRealPath("/WEB-INF/report/"));  
         }else if(HotelMonthlyDetailReport.equalsIgnoreCase(name)){
             System.out.println("Detail is : " + detailHotelMonthly);
@@ -342,17 +342,17 @@ public class ReportController extends SMITravelController {
             String dateto = request.getParameter("todate");
 //            String department = request.getParameter("department");
             String detail = request.getParameter("detail");
-            data = reportservice.getOtherMonthlyReport(datefrom,dateto,department,detail,user.getRole().getName());
+            data = reportservice.getOtherMonthlyReport(datefrom,dateto,department,detail,user.getName());
             ((OtherMonthlyReport) data.get(0)).setSubReportDir(getServletContext().getRealPath("/WEB-INF/report/"));
         } else if(DailyTourReport.equalsIgnoreCase(name)){
             String detail = request.getParameter("detail");
-            data = reportservice.getDailyTourReport(from,to,department,detail,user.getUsername()+" - "+user.getRole().getName());
+            data = reportservice.getDailyTourReport(from,to,department,detail,user.getUsername()+" - "+user.getName());
             ((DailyTourReport) data.get(0)).setSubReportDir(getServletContext().getRealPath("/WEB-INF/report/"));
         }else if(PackageSummaryReport.equalsIgnoreCase(name)){
             String datefrom = request.getParameter("fromdate");
             String dateto = request.getParameter("todate");
             String detail = request.getParameter("detail");
-            data = reportservice.getPackageMonthlyReport(datefrom,dateto,department,detail,user.getRole().getName(),getServletContext().getRealPath("/WEB-INF/report/"));
+            data = reportservice.getPackageMonthlyReport(datefrom,dateto,department,detail,user.getName(),getServletContext().getRealPath("/WEB-INF/report/"));
             ((PackageMonthlyReport) data.get(0)).setSubReportDir(getServletContext().getRealPath("/WEB-INF/report/"));         
         }else if(BookingSummaryReport.equalsIgnoreCase(name)){
             data = reportservice.getBookingSummaryReport(refno);
@@ -370,7 +370,7 @@ public class ReportController extends SMITravelController {
             // set path for loading sub-report file
             ((OtherAgentCommission) data.get(0)).setSubReportDir(getServletContext().getRealPath("/WEB-INF/report/"));
         }else if(ConfirmSlipReport.equalsIgnoreCase(name)){
-            data = reportservice.getConfirmSlipHeaderReport(refno,user.getUsername()+"-"+user.getRole().getName());
+            data = reportservice.getConfirmSlipHeaderReport(refno,user.getUsername()+"-"+user.getName());
             ((ConfirmSlipHeaderReport) data.get(0)).setSubReportDir(getServletContext().getRealPath("/WEB-INF/report/"));
         }else if (BillAirAgentSummaryReport.equalsIgnoreCase(name)) {
             data = reportservice.getBillAirAgentReportPdf(agentCode, invoiceFromDates, InvoiceToDates, issueFroms, issueTos, refundFrom, refundTo, departments, salebyUsers, termPays,user.getUsername(),paymentTypes,vatTemp,whtTemp);
@@ -379,25 +379,25 @@ public class ReportController extends SMITravelController {
         }else if(OutboundStaffSummaryReport.equalsIgnoreCase(name)){
             String detail = request.getParameter("detail");
             String currency = request.getParameter("currency");
-            data = reportservice.getOutboundStaffSummaryReport(from,to,salebyUsers,currency,detail,user.getUsername()+"-"+user.getRole().getName());
+            data = reportservice.getOutboundStaffSummaryReport(from,to,salebyUsers,currency,detail,user.getUsername()+"-"+user.getName());
             ((OutboundStaffSummaryReport) data.get(0)).setSubReportDir(getServletContext().getRealPath("/WEB-INF/report/"));
         }else if(CollectionReport.equalsIgnoreCase(name)){
             String receiveDate = request.getParameter("receiveDate");
             String vatType = request.getParameter("vatType");
-            data = reportservice.getCollectionReport(receiveDate,vatType,department,user.getUsername()+"-"+user.getRole().getName());
+            data = reportservice.getCollectionReport(receiveDate,vatType,department,user.getUsername()+"-"+user.getName());
         }else if (InvoiceInboundPerformaEmail.equalsIgnoreCase(name)) {
-            data = reportservice.getInvoice(invoiceid,bankid,showStaff,showLeader,sign,user.getRole().getName(),"0");
+            data = reportservice.getInvoice(invoiceid,bankid,showStaff,showLeader,sign,user.getName(),"0");
         }else if (InvoiceInboundRevenueReport.equalsIgnoreCase(name)) {
-            data = reportservice.getInvoice(invoiceid,bankid,showStaff,showLeader,sign,user.getRole().getName(),"0");
+            data = reportservice.getInvoice(invoiceid,bankid,showStaff,showLeader,sign,user.getName(),"0");
         }else if (InvoiceInboundRevenueEmail.equalsIgnoreCase(name)) {
-            data = reportservice.getInvoice(invoiceid,bankid,showStaff,showLeader,sign,user.getRole().getName(),"0");
+            data = reportservice.getInvoice(invoiceid,bankid,showStaff,showLeader,sign,user.getName(),"0");
         }else if (InvoiceInboundPerformaReport.equalsIgnoreCase(name)) {
-            data = reportservice.getInvoice(invoiceid,bankid,showStaff,showLeader,sign,user.getRole().getName(),"0");
+            data = reportservice.getInvoice(invoiceid,bankid,showStaff,showLeader,sign,user.getName(),"0");
         }else if (RefundTicketSummaryReport.equalsIgnoreCase(name)) {
             String ticketFrom = request.getParameter("ticketFrom");
             String ticketTo = request.getParameter("ticketTo");
             String refundBy = request.getParameter("refundBy");
-            data = reportservice.getRefundTicketSummary(refundFrom,refundTo,ticketFrom,ticketTo,refundBy,user.getRole().getName());
+            data = reportservice.getRefundTicketSummary(refundFrom,refundTo,ticketFrom,ticketTo,refundBy,user.getName());
         }else if(RefundAirticketReport.equalsIgnoreCase(name)){
             data = reportservice.getRefundAirReport(refundId);
         }else if(Overdue.equals(name)){
@@ -411,14 +411,14 @@ public class ReportController extends SMITravelController {
             String view_over = request.getParameter("view");
             String clientcode_over = request.getParameter("clientcode");
             String clientname_over = request.getParameter("clientname");
-            data = reportservice.listOverdueSummary(clientcode_over, clientname_over, staffcode_over, staffname_over, vattype_over, from_over, to_over, department_over, group_over, view_over, user.getRole().getName());
+            data = reportservice.listOverdueSummary(clientcode_over, clientname_over, staffcode_over, staffname_over, vattype_over, from_over, to_over, department_over, group_over, view_over, user.getName());
         }else if(PaymentOutboundSummaryReport.equals(name)){
             String fromdate = request.getParameter("fromdate");
             String todate = request.getParameter("todate");
             String statusP = request.getParameter("status");
             String invSupCodeP = request.getParameter("invSupCode");
             String refnoP = request.getParameter("refno");         
-            data = reportservice.getPaymentOutboundSummaryReport(fromdate, todate,statusP,invSupCodeP, refnoP, user.getRole().getName());
+            data = reportservice.getPaymentOutboundSummaryReport(fromdate, todate,statusP,invSupCodeP, refnoP, user.getName());
         }else if(PaymentProfitLossSummary.equals(name)){
             String departFromDate = request.getParameter("departFromDate");
             String departToDate = request.getParameter("departToDate");

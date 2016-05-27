@@ -653,6 +653,7 @@
                             <button type="button" id="ButtonPrint" name="ButtonPrint" onclick="printReport()" class="btn btn-primary"><i class="fa fa-print"></i> Print</button>
                             <button type="submit" id="ButtonSave" name="ButtonSave" onclick="saveAction(0)" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
                             <button type="submit" id="ButtonSaveAndNew" name="ButtonSaveAndNew" onclick="saveAction(1)"class="btn btn-success"><i class="fa fa-save"></i> Save & New</button>
+                            <button type="button" id="ButtonNew" name="ButtonNew" onclick="clearNew()" class="btn btn-primary"><i class="fa fa-plus-circle"></i> New</button>
                         </div>
                     </div>
                 </div>           
@@ -2114,6 +2115,7 @@ function clearData(){
     $("#amount").val("");
     $("#totalPayment").val("");
     $("#invoiceSupName").val("");
+    $("#ticketType").val("");    
 }
 
 function validateSaveButton(){
@@ -2478,4 +2480,9 @@ function CallAjaxSearchPaymentNoAir(param) {
         alert(e);
     }
 }	
+
+function clearNew(){
+   $("#action").val("");
+   document.getElementById('PaymentAirlineForm').submit();
+}
 </script>

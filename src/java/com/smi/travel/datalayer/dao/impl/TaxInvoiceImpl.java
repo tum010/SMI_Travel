@@ -95,7 +95,7 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
         query.setMaxResults(1);
         list = query.list();
         if (list.isEmpty()) {
-            taxNo = df.format(taxInvDate) + "-" + "0001";
+            taxNo = "T-"+df.format(taxInvDate) + "-" + "0001";
         } else {
             taxNo = String.valueOf(list.get(0));
             if (!taxNo.equalsIgnoreCase("")) {
@@ -104,7 +104,7 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
                 for (int i = temp.length(); i < 4; i++) {
                     temp = "0" + temp;
                 }
-                taxNo = df.format(taxInvDate) + "-" + temp;
+                taxNo = "T-"+df.format(taxInvDate) + "-" + temp;
             }
         }
         session.close();

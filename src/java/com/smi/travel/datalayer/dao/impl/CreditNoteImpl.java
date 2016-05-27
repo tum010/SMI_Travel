@@ -225,7 +225,7 @@ public class CreditNoteImpl implements CreditNoteDao {
         query.setMaxResults(1);
         list = query.list();
         if (list.isEmpty()) {
-            cnNo = df.format(createDate) + "-" + "0001";
+            cnNo = "C-"+df.format(createDate) + "-" + "0001";
         } else {
             cnNo = String.valueOf(list.get(0));
             if (!cnNo.equalsIgnoreCase("")) {
@@ -234,7 +234,7 @@ public class CreditNoteImpl implements CreditNoteDao {
                 for (int i = temp.length(); i < 4; i++) {
                     temp = "0" + temp;
                 }
-                cnNo = df.format(createDate) + "-" + temp;
+                cnNo = "C-"+df.format(createDate) + "-" + temp;
             }
         }
         session.close();

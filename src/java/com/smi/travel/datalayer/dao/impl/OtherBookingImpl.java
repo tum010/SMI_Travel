@@ -47,7 +47,7 @@ public class OtherBookingImpl implements OtherBookingDao{
     private SessionFactory sessionFactory;
     private Transaction transaction;
     private UtilityFunction util;
-    private static final String GET_BOOKOTHER_QUERY = "from OtherBooking ot where ot.otherDate >= :startdate and ot.otherDate <= :enddate ";
+    private static final String GET_BOOKOTHER_QUERY = "from OtherBooking ot where ot.otherDate >= :startdate and ot.otherDate <= :enddate and ot.master.bookingType = 'I' ";
     private final  String GUIDECOM_SUMMARY_QUERY = "SELECT st.name , " +
                                                         "sum(ot.ad_qty + ot.ch_qty + ot.in_qty) as pax, " +
                                                         "sum(ifnull(ot.guide_commission,0)) AS commission , " +

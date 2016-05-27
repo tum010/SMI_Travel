@@ -170,7 +170,7 @@ import org.hibernate.Transaction;
         query.setMaxResults(1);
         list = query.list();
         if (list.isEmpty()) {
-            recNo = df.format(recDate) + "-" + "0001";
+            recNo = "R-"+df.format(recDate) + "-" + "0001";
         } else {
             recNo = String.valueOf(list.get(0));
             if (!recNo.equalsIgnoreCase("")) {
@@ -179,7 +179,7 @@ import org.hibernate.Transaction;
                 for (int i = temp.length(); i < 4; i++) {
                     temp = "0" + temp;
                 }
-                recNo = df.format(recDate) + "-" + temp;
+                recNo = "R-"+df.format(recDate) + "-" + temp;
             }
         }
         session.close();

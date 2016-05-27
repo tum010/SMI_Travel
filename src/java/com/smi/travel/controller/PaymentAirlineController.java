@@ -60,7 +60,6 @@ public class PaymentAirlineController extends SMITravelController {
     private static final String CREDITLIST = "creditList";
     private static final String SETCALCULATECREDIT = "setCalculateCredit";
     private static final String withholdingtax = "withholdingtax";
-    
     private static final String DEBITROWCOUNT = "debitRowCount";
     private static final String DEBITLIST = "debitList";
     private static final String SETCALCULATEDEBIT = "setCalculateDebit";
@@ -111,7 +110,10 @@ public class PaymentAirlineController extends SMITravelController {
         String duePaymentDate = util.covertStringDateToFormatYMD(request.getParameter("duePaymentDate"));
         String exportDate = util.covertStringDateToFormatYMD(request.getParameter("exportDate"));
         
-        
+        String saveandnewresult = request.getParameter("saveandnewresult");
+        if("savesuccessful".equalsIgnoreCase(saveandnewresult)){
+            request.setAttribute(SAVERESULT, "save successful");  
+        }
         System.out.println("  exportDate " + exportDate);
         System.out.println("  isExport " + isExport);
         request.setAttribute(CREDITROWCOUNT, "1");
@@ -681,10 +683,7 @@ public class PaymentAirlineController extends SMITravelController {
                 }
             }
             if("1".equals(optionSave)){
-                request.setAttribute(SETCALCULATETICKET,0);
-                request.setAttribute(SETCALCULATEREFUND,0);
-                request.setAttribute(SETCALCULATECREDIT,0);
-                request.setAttribute(SETCALCULATEDEBIT,0);
+                return new ModelAndView(new RedirectView("PaymentAirline.smi?saveandnewresult=savesuccessful", true));
             }
             request.setAttribute(OPTIONSAVE,optionSave); 
         }else if("deleteTicket".equalsIgnoreCase(action)) {
