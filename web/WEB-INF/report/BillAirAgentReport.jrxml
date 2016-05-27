@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="BillAirAgentReport" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="20" bottomMargin="20" uuid="393a39f3-0ae6-41dc-9a90-314f02d3eb19">
-	<property name="ireport.zoom" value="0.75"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.zoom" value="1.768460768250001"/>
+	<property name="ireport.x" value="683"/>
+	<property name="ireport.y" value="3"/>
 	<field name="agenthead" class="java.lang.String"/>
 	<field name="issuedatehead" class="java.lang.String"/>
 	<field name="invoicedatehead" class="java.lang.String"/>
@@ -19,105 +19,171 @@
 	</background>
 	<pageHeader>
 		<band height="126" splitType="Stretch">
-			<rectangle radius="7">
-				<reportElement x="10" y="0" width="820" height="121" backcolor="#CCFFCC" uuid="7ebbea5f-7bf5-43f4-bb8f-a63666befd29"/>
-			</rectangle>
 			<staticText>
-				<reportElement x="68" y="6" width="119" height="24" uuid="dc56d609-de78-458e-a38b-785cb3dcc605"/>
-				<textElement>
-					<font size="13"/>
+				<reportElement x="674" y="0" width="155" height="31" uuid="dc56d609-de78-458e-a38b-785cb3dcc605"/>
+				<textElement textAlignment="Right">
+					<font fontName="Tahoma" size="22" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Bill Air Agent]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="577" y="67" width="163" height="15" uuid="ec1c390a-63c2-480b-a89d-cbf13df74a28"/>
-				<textElement textAlignment="Right"/>
+				<reportElement x="741" y="67" width="70" height="15" uuid="ec1c390a-63c2-480b-a89d-cbf13df74a28"/>
+				<textElement textAlignment="Right">
+					<font fontName="Tahoma"/>
+				</textElement>
 				<textFieldExpression><![CDATA["Page : "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement x="740" y="67" width="39" height="15" uuid="82b423a2-cf60-4e5f-8346-3ce96def03ac"/>
+				<reportElement x="813" y="67" width="16" height="15" uuid="82b423a2-cf60-4e5f-8346-3ce96def03ac"/>
+				<textElement textAlignment="Right">
+					<font fontName="Tahoma"/>
+				</textElement>
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="600" y="37" width="72" height="15" uuid="e74b494d-f14f-4f9f-9de2-9c968a582b9e"/>
+				<reportElement x="672" y="37" width="60" height="15" uuid="e74b494d-f14f-4f9f-9de2-9c968a582b9e"/>
+				<textElement>
+					<font fontName="Tahoma"/>
+				</textElement>
 				<text><![CDATA[Print Date : ]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="672" y="52" width="107" height="15" uuid="cd058c1f-28c7-4131-b19d-06e7ad5a93d3"/>
-				<textElement textAlignment="Right"/>
+				<reportElement x="732" y="52" width="97" height="15" uuid="cd058c1f-28c7-4131-b19d-06e7ad5a93d3"/>
+				<textElement textAlignment="Right">
+					<font fontName="Tahoma"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{printby}]]></textFieldExpression>
 			</textField>
 			<textField pattern="">
-				<reportElement x="672" y="37" width="107" height="15" uuid="ef87de19-cf03-41e1-87c6-5de921720b1f"/>
+				<reportElement x="732" y="37" width="97" height="15" uuid="ef87de19-cf03-41e1-87c6-5de921720b1f"/>
 				<textElement textAlignment="Right">
-					<font size="10"/>
+					<font fontName="Tahoma" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{systemdate}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="600" y="52" width="72" height="15" uuid="d6f46e25-6520-4b53-bb0a-135188a90857"/>
-				<text><![CDATA[Print By : ]]></text>
+				<reportElement x="672" y="52" width="60" height="15" uuid="d6f46e25-6520-4b53-bb0a-135188a90857"/>
+				<textElement>
+					<font fontName="Tahoma"/>
+				</textElement>
+				<text><![CDATA[Print By    : ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="102" y="39" width="72" height="15" uuid="fc38c9e0-103d-4cdc-97b1-b8e75ed20ff2"/>
-				<textElement textAlignment="Right"/>
+				<reportElement x="423" y="38" width="85" height="15" uuid="fc38c9e0-103d-4cdc-97b1-b8e75ed20ff2"/>
+				<textElement textAlignment="Right">
+					<font fontName="Tahoma" isBold="true"/>
+				</textElement>
 				<text><![CDATA[Agent : ]]></text>
 			</staticText>
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement x="182" y="39" width="157" height="15" uuid="5cae3f2b-cdbb-4689-9598-a84ca04a9471"/>
+				<reportElement x="516" y="38" width="157" height="15" uuid="5cae3f2b-cdbb-4689-9598-a84ca04a9471"/>
 				<textElement>
-					<font size="10"/>
+					<font fontName="Tahoma" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{agenthead}]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement x="183" y="54" width="156" height="15" uuid="2c24073d-d72c-41dd-86d4-3d3110b06f55"/>
+				<reportElement x="517" y="53" width="156" height="15" uuid="2c24073d-d72c-41dd-86d4-3d3110b06f55"/>
 				<textElement>
-					<font size="10"/>
+					<font fontName="Tahoma" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{issuedatehead}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="102" y="54" width="72" height="15" uuid="be9ae6ec-3cbe-49fb-b593-016779e47484"/>
-				<textElement textAlignment="Right"/>
+				<reportElement x="423" y="53" width="85" height="15" uuid="be9ae6ec-3cbe-49fb-b593-016779e47484"/>
+				<textElement textAlignment="Right">
+					<font fontName="Tahoma" isBold="true"/>
+				</textElement>
 				<text><![CDATA[Issue Date : ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="102" y="69" width="72" height="15" uuid="3c06d375-116f-424e-b5a7-6ca67c40967f"/>
-				<textElement textAlignment="Right"/>
+				<reportElement x="423" y="68" width="85" height="15" uuid="3c06d375-116f-424e-b5a7-6ca67c40967f"/>
+				<textElement textAlignment="Right">
+					<font fontName="Tahoma" isBold="true"/>
+				</textElement>
 				<text><![CDATA[Invoice Date : ]]></text>
 			</staticText>
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement x="183" y="69" width="156" height="15" uuid="b0437322-bd68-4658-bdad-9696e3963db5"/>
+				<reportElement x="517" y="68" width="156" height="15" uuid="b0437322-bd68-4658-bdad-9696e3963db5"/>
 				<textElement>
-					<font size="10"/>
+					<font fontName="Tahoma" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{invoicedatehead}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="68" y="84" width="106" height="15" uuid="2037a2df-03b7-4a9e-be36-7f4cb9a57a43"/>
-				<textElement textAlignment="Right"/>
+				<reportElement x="389" y="83" width="119" height="15" uuid="2037a2df-03b7-4a9e-be36-7f4cb9a57a43"/>
+				<textElement textAlignment="Right">
+					<font fontName="Tahoma" isBold="true"/>
+				</textElement>
 				<text><![CDATA[Refund Payment Date : ]]></text>
 			</staticText>
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement x="183" y="84" width="156" height="15" uuid="af0eee9c-e60c-40bd-87db-6a84b7754c28"/>
+				<reportElement x="517" y="83" width="156" height="15" uuid="af0eee9c-e60c-40bd-87db-6a84b7754c28"/>
 				<textElement>
-					<font size="10"/>
+					<font fontName="Tahoma" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{paymenttypehead}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="102" y="99" width="72" height="15" uuid="b505afb9-bb04-422e-bbe3-b559972fa0d3"/>
-				<textElement textAlignment="Right"/>
+				<reportElement x="423" y="98" width="85" height="15" uuid="b505afb9-bb04-422e-bbe3-b559972fa0d3"/>
+				<textElement textAlignment="Right">
+					<font fontName="Tahoma" isBold="true"/>
+				</textElement>
 				<text><![CDATA[Payment Type : ]]></text>
 			</staticText>
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement x="183" y="99" width="156" height="15" uuid="c29923a3-4e78-40f7-891f-a78a3ef86616"/>
+				<reportElement x="517" y="98" width="156" height="15" uuid="c29923a3-4e78-40f7-891f-a78a3ef86616"/>
 				<textElement>
-					<font size="10"/>
+					<font fontName="Tahoma" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{refundpaymentdate}]]></textFieldExpression>
 			</textField>
+			<image>
+				<reportElement x="15" y="3" width="326" height="50" uuid="e4d632ca-f5be-434f-a175-33a6e1c2d4c0"/>
+				<imageExpression><![CDATA["resource/images/smi-logo.gif"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="107" y="46" width="210" height="14" uuid="10b79e31-809b-4416-a5db-d4e48f257e80"/>
+				<textElement>
+					<font fontName="Tahoma" size="10"/>
+				</textElement>
+				<text><![CDATA[Tel: +66(0)-2162201 Fax: +66(0)-216-2202]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="107" y="3" width="135" height="15" uuid="e94083bd-9bb7-4480-bc2f-03c24fd3d249"/>
+				<textElement>
+					<font fontName="Tahoma" size="10"/>
+				</textElement>
+				<text><![CDATA[S.M.I TRAVEL CO., LTD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="107" y="28" width="191" height="14" uuid="79ee3ee7-c587-4424-b7ad-6c59de2d7111"/>
+				<textElement>
+					<font fontName="Tahoma" size="10"/>
+				</textElement>
+				<text><![CDATA[Wangmai, Phatumwan, Bangkok 10330]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="107" y="16" width="290" height="24" uuid="bf5d718a-96c9-40ca-ad6e-9cbe03a14748"/>
+				<textElement>
+					<font fontName="Tahoma" size="10"/>
+				</textElement>
+				<text><![CDATA[9th Floor, Siam at Siam Hotel Building 865 Rama 1 Rd.,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="107" y="70" width="162" height="15" uuid="f63a9180-23f2-4d4c-a016-4472edd55ab7"/>
+				<textElement>
+					<font fontName="Tahoma" size="10"/>
+				</textElement>
+				<text><![CDATA[e-mail: yoyaku@wendytour.com]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="107" y="58" width="162" height="17" uuid="fc35e48d-3908-4356-afd5-5faece5db2fe"/>
+				<textElement>
+					<font fontName="Tahoma" size="10"/>
+				</textElement>
+				<text><![CDATA[http://www.wendytour.com]]></text>
+			</staticText>
 		</band>
 	</pageHeader>
 	<detail>
