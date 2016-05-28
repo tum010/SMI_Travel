@@ -657,12 +657,18 @@
                     </div>
                     <c:choose>
                         <c:when test="${(idRole  == 22) || (idRole == 1)}">
-                            <div class="col-xs-2 text-right" style="margin-top: -10px">
+                            <div class="col-xs-2 text-right" >
                                 <label class="control-label">Grand Total</lable>
                             </div>
                             <div class="col-md-2 form-group text-left">
                                 <input name="InputGrandTotal" style="text-align: right;" id="InputGrandTotal" type="text" class="form-control " value="" readonly=""/>            
-                            </div>         
+                            </div>
+                            <div class="col-xs-2 text-right" style="margin-top: -10px;">
+                                <label class="control-label">Comm Total</lable>
+                            </div>
+                            <div class="col-md-2 form-group text-left" style="margin-top: -10px;">
+                                <input name="commTotal" style="text-align: right;" id="commTotal" type="text" class="form-control " value="" readonly=""/>            
+                            </div> 
                         </c:when>
                         <c:when test="${idRole  == 19}">
                             <div class="col-xs-2 text-right" >
@@ -671,18 +677,24 @@
                             <div class="col-md-2 form-group text-left">
                                 <input name="InputGrossTotal" style="text-align: right;"  id="InputGrossTotal" type="text" class="form-control " value="" readonly=""/>            
                             </div>
-                            <div class="col-xs-2 text-right">
+                            <div class="col-xs-2 text-right" style="margin-top: -10px;">
                                 <label class="control-label">Vat Total</lable>
                             </div>
-                            <div class="col-md-2 form-group ">
+                            <div class="col-md-2 form-group " style="margin-top: -10px;">
                                 <input name="InputVatTotal" style="text-align: right;" id="InputVatTotal" type="text" class="form-control " value="" readonly=""/>            
                             </div>                           
-                            <div class="col-xs-9 text-right">
+                            <div class="col-xs-9 text-right" style="margin-top: -10px;">
                                 <label class="control-label">Grand Total</lable>
                             </div>
-                            <div class="col-md-2 form-group text-left">
+                            <div class="col-md-2 form-group text-left" style="margin-top: -10px;">
                                 <input name="InputGrandTotal" style="text-align: right;"  id="InputGrandTotal" type="text" class="form-control " value="" readonly=""/>            
-                            </div>  
+                            </div>
+                            <div class="col-xs-9 text-right" style="margin-top: -10px;">
+                                <label class="control-label">Comm Total</lable>
+                            </div>
+                            <div class="col-md-2 form-group text-left" style="margin-top: -10px;">
+                                <input name="commTotal" style="text-align: right;" id="commTotal" type="text" class="form-control " value="" readonly=""/>            
+                            </div> 
                         </c:when>
                     </c:choose>                                 
                 </div>
@@ -1285,6 +1297,10 @@
             CalculateGrossTotal('',$("#counter").val());
         });
         
+        $('#commTotal').ready(function () {
+            calculateComm('');
+        });
+        
         setEnvironment();
         
         var codeInvoiceSup = [];
@@ -1524,10 +1540,24 @@
     }
     
     function calculateComm(row){
-        var comm = document.getElementById('recCom'+row);
-        if(comm.value !== ''){
-//            document.getElementById('recCom'+row).value = formatNumber(parseFloat((comm.value).replace(/,/g,"")));
+//        var comm = document.getElementById('recCom'+row);
+        var commTotal = 0;
+        var count = parseInt(document.getElementById('counter').value);
+        for(var i=1;i<count+1;i++){
+            var comm = document.getElementById("recCom" + i);
+
+            if (comm !== null){
+                var value = comm.value;
+
+                if(value !== ''){
+                    value = value.replace(/,/g,"");
+                    var total = parseFloat(value);
+                    commTotal += total;
+
+                }
+            }    
         }
+        document.getElementById('commTotal').value = formatNumber(commTotal);
     }
     
     function CalculateGrandTotal(id){
