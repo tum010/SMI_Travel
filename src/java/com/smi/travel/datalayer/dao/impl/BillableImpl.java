@@ -17,6 +17,7 @@ import com.smi.travel.datalayer.entity.BillableDesc;
 import com.smi.travel.datalayer.entity.Customer;
 import com.smi.travel.datalayer.entity.DaytourBooking;
 import com.smi.travel.datalayer.entity.HotelBooking;
+import com.smi.travel.datalayer.entity.HotelRequest;
 import com.smi.travel.datalayer.entity.HotelRoom;
 import com.smi.travel.datalayer.entity.Invoice;
 import com.smi.travel.datalayer.entity.InvoiceDetail;
@@ -819,14 +820,40 @@ public class BillableImpl implements BillableDao {
                     if(j < listRoom.size() - 1){
                         description += "\n";
                     }
-                }
+                }                    
                 
                 int day = getDifferenceDays(list.get(i).getCheckin(), list.get(i).getCheckout()); // Day 
                 if( day != 0){
-                   description += " : " + day + " NTS";
+                   description += " : " + day + " NTS\n";
                 }else{
-                     description += "0 NTS";
+                     description += "0 NTS\n";
                 }
+                
+//                List<HotelRequest> listRequest = new LinkedList<HotelRequest>();
+//                listRequest = list.get(i).getHotelRequests();
+//                for (int j = 0; j < listRequest.size(); j++) {
+//                    if(listRequest.get(j).getCategory() != null){ // request catagory
+//                        description += "            : "+listRequest.get(j).getCategory() +"";
+//                    }else{
+//                         description += "            :";
+//                    }
+//                    if(listRequest.get(j).getDescription()!= null){ // request description
+//                        description += " "+listRequest.get(j).getDescription()+"";
+//                    }else{
+//                         description += "";
+//                    }
+//                    if( listRequest.get(j).getPrice() != null){ // request price
+//                        DecimalFormat myFormatter = new DecimalFormat("#,##0.00");
+//                        String output = myFormatter.format(listRequest.get(j).getPrice());
+//                        description += " "+ output +"";
+//                    }else{
+//                         description += "";
+//                    }                  
+//                    if(j < listRoom.size() - 1){
+//                        description += "\n";
+//                    }
+//                }  
+                
                 if(format == 1){
                     if(list.get(i).getMaster().getCustomer().getMInitialname() != null){ // prename
                         description += "|"+list.get(i).getMaster().getCustomer().getMInitialname().getName() +" ";

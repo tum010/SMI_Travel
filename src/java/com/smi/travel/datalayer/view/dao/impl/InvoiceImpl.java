@@ -5,6 +5,7 @@
  */
 
 package com.smi.travel.datalayer.view.dao.impl;
+import com.smi.travel.datalayer.entity.BillableDesc;
 import com.smi.travel.datalayer.entity.InvoiceDetail;
 import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.report.model.InvoiceMonthly;
@@ -12,6 +13,7 @@ import com.smi.travel.datalayer.report.model.InvoiceReport;
 import com.smi.travel.datalayer.view.dao.InvoiceReportDao;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -96,12 +98,16 @@ public class InvoiceImpl implements InvoiceReportDao{
                 .addScalar("remark", Hibernate.STRING)
                 .addScalar("refno", Hibernate.STRING)
                 .addScalar("vatpercent", Hibernate.INTEGER)
+                .addScalar("billable_desc_id", Hibernate.STRING)
                 .list();
         int count = 0;
         int vat = 0;
+        int itemNo = 1;
         for (Object[] B : QueryInvoiceList) {
+            boolean isVat = false;
             count++;
             InvoiceReport invoice = new InvoiceReport();
+            invoice.setItemno(String.valueOf(itemNo));
             invoice.setAccname(accName);
             invoice.setAccno1(Accno1);
             invoice.setAccno2(Accno2);
@@ -164,6 +170,7 @@ public class InvoiceImpl implements InvoiceReportDao{
                 invoice.setGross("0.00".equalsIgnoreCase(grossTemp) ? "0.00" : df.format(B[5]));
             }
             if(B[6] != null){
+                isVat = true;
                 String totalTemp = util.ConvertString(B[6]);
                 invoice.setVat("0.00".equalsIgnoreCase(totalTemp) ? "0.00" :  df.format(B[6]));
             }
@@ -227,8 +234,83 @@ public class InvoiceImpl implements InvoiceReportDao{
                     
                 }
             }
+            invoice.setGrossadd("");
+            invoice.setVatadd("");
+            invoice.setAmountadd("");
             
             data.add(invoice);
+            itemNo += 1;
+            
+            String billableDescId = (B[22] != null ? util.ConvertString(B[22]) : "");
+            if(!"".equalsIgnoreCase(billableDescId)){
+                List<InvoiceReport> invoiceReportAdditionalList = getInvoiceReportAdditional(billableDescId,vat,isVat,session);
+                
+                if(!invoiceReportAdditionalList.isEmpty()){
+                    System.out.println("===== invoiceReportAdditionalList =====");
+                    for(InvoiceReport invoiceReportAdditional : invoiceReportAdditionalList){
+                        InvoiceReport invoiceReportTemp = new InvoiceReport();
+                        invoiceReportTemp.setDescription(invoiceReportAdditional.getDescription());                      
+                        invoiceReportTemp.setGrossadd(df.format(new BigDecimal(invoiceReportAdditional.getGrossadd())));
+                        invoiceReportTemp.setVatadd(df.format(new BigDecimal(invoiceReportAdditional.getVatadd())));
+                        invoiceReportTemp.setAmountadd(df.format(new BigDecimal(invoiceReportAdditional.getAmountadd())));
+                        
+                        invoiceReportTemp.setPrice("");
+                        invoiceReportTemp.setItemno("");
+                        invoiceReportTemp.setAccname(accName);
+                        invoiceReportTemp.setAccno1(Accno1);
+                        invoiceReportTemp.setAccno2(Accno2);
+                        invoiceReportTemp.setAcctype(accType);
+                        invoiceReportTemp.setPrintby(printBy);
+                        invoiceReportTemp.setIsTemp(isTemp);
+                        invoiceReportTemp.setCurrency(util.ConvertString(B[17]));
+                        invoiceReportTemp.setVatpercent(vat);
+                        invoiceReportTemp.setBank1(Bank1);
+                        invoiceReportTemp.setBank2(Bank2);
+                        invoiceReportTemp.setBranch1(Branch1);
+                        invoiceReportTemp.setBranch2(Branch2);
+                        invoiceReportTemp.setBankid(BankId);
+                        invoiceReportTemp.setGrtotal(df.format(B[9]));
+                        if(B[7] != null){
+                            String totalTemp = util.ConvertString(B[7]);
+                            invoiceReportTemp.setTotal("0.00".equalsIgnoreCase(totalTemp) ? "0.00" : df.format(B[7]));
+                        } 
+                        if(B[8] != null){
+                            invoiceReportTemp.setTotalvat(df.format(B[8])); 
+                        }
+                        invoiceReportTemp.setTextmoney(totalWord.substring(0,1).toUpperCase() + totalWord.substring(1));
+                        if(sign != null){
+                            if("".equals(sign)){
+                                invoiceReportTemp.setSign("nosign");
+                                invoiceReportTemp.setSignname(printBy);
+                            }else{
+                                invoiceReportTemp.setSign(sign);
+                                String querySystemUser = "from SystemUser s where s.name like '%"+sign+"%'";
+                                List<SystemUser> systemUser = session.createQuery(querySystemUser).list();
+                                if(!systemUser.isEmpty()) {
+                                    invoiceReportTemp.setSignname(systemUser.get(0).getName());
+                                }        
+
+                            }
+                        }
+                        data.add(invoiceReportTemp);
+                        
+                        InvoiceReport invoiceReportPrevious = (InvoiceReport) data.get(count-1);
+                        BigDecimal gross1 = new BigDecimal(invoiceReportPrevious.getGross().replaceAll(",", ""));
+                        BigDecimal vat1 = (invoiceReportPrevious.getVat() != null ? new BigDecimal(invoiceReportPrevious.getVat().replaceAll(",", "")) : new BigDecimal("0.00"));
+                        BigDecimal amount1 = new BigDecimal(invoiceReportPrevious.getAmount().replaceAll(",", ""));
+                        BigDecimal gross2 = new BigDecimal(invoiceReportTemp.getGrossadd().replaceAll(",", ""));
+                        BigDecimal vat2 = new BigDecimal(invoiceReportTemp.getVatadd().replaceAll(",", ""));
+                        BigDecimal amount2 = new BigDecimal(invoiceReportTemp.getAmountadd().replaceAll(",", ""));
+                        invoiceReportPrevious.setGross(df.format(gross1.subtract(gross2)));
+                        invoiceReportPrevious.setVat(df.format(vat1.subtract(vat2)));
+                        invoiceReportPrevious.setAmount(df.format(amount1.subtract(amount2)));
+                        
+                    }
+                    
+                }
+            }
+            
+            
         }
         session.close();
         this.sessionFactory.close();
@@ -484,6 +566,77 @@ public class InvoiceImpl implements InvoiceReportDao{
         session.close();
         this.sessionFactory.close();
         return data;
+    }
+
+    private List<InvoiceReport> getInvoiceReportAdditional(String billableDescId, int mVat, boolean isVat, Session session) {
+        UtilityFunction util = new UtilityFunction();
+        List<InvoiceReport> invoiceReportList = new ArrayList<InvoiceReport>();
+        String query = "from BillableDesc bd where bd.id = :billableDescId ";
+         
+        List<BillableDesc> billableDescList = session.createQuery(query)
+                .setParameter("billableDescId", billableDescId)
+                .list();
+        
+        if(billableDescList.isEmpty()){
+            return invoiceReportList;
+        }
+        
+        String mBillType = billableDescList.get(0).getMBilltype().getName();
+        String refNo = billableDescList.get(0).getBillable().getMaster().getReferenceNo();
+        if("HOTEL".equalsIgnoreCase(mBillType.toUpperCase())){
+            invoiceReportList = getHotelAdditional(refNo,mVat,isVat,session);
+        }
+         
+        return invoiceReportList;
+    }
+
+    private List<InvoiceReport> getHotelAdditional(String refNo, int mVat, boolean isVat, Session session) {
+        UtilityFunction util = new UtilityFunction();
+        List<Object[]> hotelAdditionalPriceList = session.createSQLQuery(" SELECT * FROM `hotel_price_add_all` where ref_no =  '" + refNo + "' and bill_type = 'Hotel'")      
+                .addScalar("add_cost", Hibernate.STRING)
+                .addScalar("add_price", Hibernate.STRING)
+                .addScalar("ref_no", Hibernate.STRING)
+                .list();
+        
+        List<Object[]> hotelAdditionalDescriptionList = session.createSQLQuery(" SELECT * FROM `hotel_inbound_category` where ref_no =  '" + refNo + "'")      
+                .addScalar("cate_desc", Hibernate.STRING)
+                .addScalar("ref_no", Hibernate.STRING)
+                .list();
+        
+        List<InvoiceReport> invoiceReportList = new ArrayList<InvoiceReport>();
+        for(Object[] A : hotelAdditionalPriceList){
+            String refNo1 = (A[2] != null ? util.ConvertString(A[2]) : "");
+            
+            for(Object[] B : hotelAdditionalDescriptionList){
+                String refNo2 = (B[1] != null ? util.ConvertString(B[1]) : "");
+                
+                if(refNo1.equalsIgnoreCase(refNo2)){
+                    InvoiceReport invoiceReport = new InvoiceReport();
+                    BigDecimal amount = (A[1] != null ? new BigDecimal(util.ConvertString(A[1])) : new BigDecimal("0.00"));
+                    BigDecimal vatTemp = new BigDecimal(String.valueOf(mVat));
+                    BigDecimal gross = new BigDecimal("0.00");
+                    BigDecimal vat = new BigDecimal("0.00");
+                    
+                    if(isVat){
+                        gross = amount.multiply(new BigDecimal("100.00")).divide(new BigDecimal("100.00").add(vatTemp),2,RoundingMode.HALF_UP);
+                        vat = amount.subtract(gross);          
+                        
+                    } else {
+                        gross = amount;
+                    }
+                                                                                      
+                    invoiceReport.setDescription(B[0] != null ? "            : " + util.ConvertString(B[0]) : "");                   
+                    invoiceReport.setGrossadd(String.valueOf(gross)); 
+                    invoiceReport.setVatadd(String.valueOf(vat));
+                    invoiceReport.setAmountadd(String.valueOf(amount));
+                    
+                    invoiceReportList.add(invoiceReport);
+                    
+                }               
+            }
+        }
+        
+        return invoiceReportList;
     }
   
 }

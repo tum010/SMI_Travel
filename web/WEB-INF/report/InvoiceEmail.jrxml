@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="InvoiceEmail" language="groovy" pageWidth="595" pageHeight="843" columnWidth="522" leftMargin="45" rightMargin="28" topMargin="59" bottomMargin="56" uuid="573bfe06-de4f-4adc-b5b3-76cb68d89d08">
 	<property name="ireport.zoom" value="2.923075650000002"/>
-	<property name="ireport.x" value="489"/>
-	<property name="ireport.y" value="835"/>
+	<property name="ireport.x" value="950"/>
+	<property name="ireport.y" value="499"/>
 	<field name="invto" class="java.lang.String"/>
 	<field name="invno" class="java.lang.String"/>
 	<field name="invdate" class="java.lang.String"/>
@@ -39,6 +39,10 @@
 	<field name="branch2" class="java.lang.String"/>
 	<field name="price" class="java.lang.String"/>
 	<field name="isTemp" class="java.lang.String"/>
+	<field name="itemno" class="java.lang.String"/>
+	<field name="grossadd" class="java.lang.String"/>
+	<field name="vatadd" class="java.lang.String"/>
+	<field name="amountadd" class="java.lang.String"/>
 	<background>
 		<band height="727">
 			<image hAlign="Center" vAlign="Middle">
@@ -248,7 +252,7 @@
 				<textFieldExpression><![CDATA[$F{duedate}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="363" y="172" width="144" height="19" uuid="4115aed0-f3b6-414f-b6ce-61e46034e7d2">
+				<reportElement x="363" y="171" width="144" height="19" uuid="4115aed0-f3b6-414f-b6ce-61e46034e7d2">
 					<printWhenExpression><![CDATA[$F{showstaff}.equalsIgnoreCase("1")]]></printWhenExpression>
 				</reportElement>
 				<textElement>
@@ -380,7 +384,7 @@
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="21" splitType="Stretch">
+		<band height="20" splitType="Stretch">
 			<staticText>
 				<reportElement x="0" y="0" width="29" height="20" forecolor="#000000" uuid="b5037a15-96e8-4308-9e7c-e7dcf8c8194e"/>
 				<box>
@@ -447,7 +451,7 @@
 				<textElement textAlignment="Right">
 					<font fontName="Tahoma" size="8" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($F{vat} == null || "".equalsIgnoreCase($F{vat}))? "":$F{vat}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{vat} == null || "".equalsIgnoreCase($F{vat}) || "0.00".equalsIgnoreCase($F{vat}))? "":$F{vat}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00">
 				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="444" y="10" width="73" height="11" uuid="947a5225-ea47-4395-9c48-c96c7d90de49"/>
@@ -455,13 +459,6 @@
 					<font fontName="Tahoma" size="8" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[($F{amount} == null || "".equalsIgnoreCase($F{amount}))? "":$F{amount}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true">
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="2" y="0" width="22" height="20" uuid="87557536-8cfa-4f8b-ac9b-412bd53b8933"/>
-				<textElement textAlignment="Center" verticalAlignment="Top">
-					<font fontName="Cordia New" size="12" pdfFontName="resource/fonts/Cordia.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Transparent" x="229" y="0" width="88" height="20" uuid="5e45acc7-7e44-4a35-966e-bfd420f0020c"/>
@@ -478,6 +475,34 @@
 					<paragraph lineSpacing="Fixed" lineSpacingSize="7.0"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="3" y="0" width="24" height="24" uuid="39c71e95-a1f0-4392-a05d-60c323b7ef4e"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Cordia New" size="12" pdfFontName="resource/fonts/Cordia.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{itemno}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="">
+				<reportElement x="319" y="2" width="58" height="10" uuid="1a110555-4b4d-4d13-9846-c947e2b62601"/>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font fontName="Tahoma" size="8" isBold="false" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{grossadd} == null || "".equalsIgnoreCase($F{grossadd}))? "":$F{grossadd}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00">
+				<reportElement x="444" y="2" width="73" height="11" uuid="e15b184e-4c33-4503-94a8-9d3def02f8dc"/>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font fontName="Tahoma" size="8" isBold="false" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{amountadd} == null || "".equalsIgnoreCase($F{amountadd}))? "":$F{amountadd}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="">
+				<reportElement x="381" y="2" width="60" height="10" uuid="093357fd-74c1-4e2d-87f0-2f24360df3f8"/>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font fontName="Tahoma" size="8" isBold="false" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{vatadd} == null || "".equalsIgnoreCase($F{vatadd}) || "0.00".equalsIgnoreCase($F{vatadd}))? "":$F{vatadd}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

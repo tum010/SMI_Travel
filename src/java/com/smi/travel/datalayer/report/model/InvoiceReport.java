@@ -54,6 +54,10 @@ public class InvoiceReport {
     private String currencytotal;
     private String isHide;
     private String isTemp;
+    private String itemno;
+    private String grossadd;
+    private String vatadd;
+    private String amountadd;
 
     public String getCurrencytotal() {
         return currencytotal;
@@ -400,6 +404,38 @@ public class InvoiceReport {
 
     public void setIsTemp(String isTemp) {
         this.isTemp = isTemp;
+    }
+
+    public String getItemno() {
+        return itemno;
+    }
+
+    public void setItemno(String itemno) {
+        this.itemno = itemno;
+    }
+
+    public String getGrossadd() {
+        return grossadd;
+    }
+
+    public void setGrossadd(String grossadd) {
+        this.grossadd = grossadd;
+    }
+
+    public String getVatadd() {
+        return vatadd;
+    }
+
+    public void setVatadd(String vatadd) {
+        this.vatadd = vatadd;
+    }
+
+    public String getAmountadd() {
+        return amountadd;
+    }
+
+    public void setAmountadd(String amountadd) {
+        this.amountadd = amountadd;
     }
     
 }
