@@ -1007,7 +1007,7 @@ public class OtherBookingImpl implements OtherBookingDao{
         List<Object[]> QueryGuideComList = session.createSQLQuery(query)
                 .addScalar("name", Hibernate.STRING)
                 .addScalar("pax", Hibernate.INTEGER)
-                .addScalar("commission", Hibernate.INTEGER)
+                .addScalar("commission", Hibernate.BIG_DECIMAL)
 
                 .list();
         
@@ -1019,7 +1019,7 @@ public class OtherBookingImpl implements OtherBookingDao{
              guidecom.setDateto(!"".equalsIgnoreCase(dateto) && dateto != null ? new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(util.convertStringToDate(dateto)) : "");
              guidecom.setGuidename(util.ConvertString(B[0]));
              guidecom.setPax(B[1]== null ? 0:(Integer)B[1]);
-             guidecom.setCommission(B[2]== null ? 0:(Integer)B[2]);
+             guidecom.setCommission(B[2] == null ? new BigDecimal("0.00") : (BigDecimal) B[2]);
              data.add(guidecom);
         }
         
@@ -1071,8 +1071,8 @@ public class OtherBookingImpl implements OtherBookingDao{
                 .addScalar("tour", Hibernate.STRING)
                 .addScalar("leder", Hibernate.STRING)
                 .addScalar("pax", Hibernate.INTEGER)
-                .addScalar("commission", Hibernate.INTEGER)
-                .addScalar("selling", Hibernate.INTEGER)
+                .addScalar("commission", Hibernate.BIG_DECIMAL)
+                .addScalar("selling", Hibernate.BIG_DECIMAL)
                 .addScalar("guidename", Hibernate.STRING)
                 .addScalar("remark", Hibernate.STRING)
                 .list();
@@ -1087,8 +1087,8 @@ public class OtherBookingImpl implements OtherBookingDao{
              guidecom.setCode(util.ConvertString(B[1]));
              guidecom.setCustomer(util.ConvertString(B[2]));
              guidecom.setPax(B[3]== null ? 0:(Integer)B[3]);
-             guidecom.setComission(B[4]== null ? 0:(Integer)B[4]);
-             guidecom.setSelling(B[5]== null ? 0:(Integer)B[5]);
+             guidecom.setComission(B[4]== null ? new BigDecimal("0.00"):(BigDecimal)B[4]);
+             guidecom.setSelling(B[5]== null ? new BigDecimal("0.00"):(BigDecimal)B[5]);
              guidecom.setGuide(util.ConvertString(B[6]));
              guidecom.setRemark(util.ConvertString(B[7]));
              data.add(guidecom);
@@ -1153,8 +1153,8 @@ public class OtherBookingImpl implements OtherBookingDao{
                 .addScalar("code", Hibernate.STRING)
                 .addScalar("customer", Hibernate.STRING)
                 .addScalar("pax", Hibernate.STRING)
-                .addScalar("commission", Hibernate.INTEGER)
-                .addScalar("selling", Hibernate.INTEGER)
+                .addScalar("commission", Hibernate.BIG_DECIMAL)
+                .addScalar("selling", Hibernate.BIG_DECIMAL)
                 .addScalar("name", Hibernate.STRING)
                 .list();
                 
@@ -1164,8 +1164,8 @@ public class OtherBookingImpl implements OtherBookingDao{
              report.setTourcode(util.ConvertString(B[1]));
              report.setClient(util.ConvertString(B[2]));
              report.setPax("".equals(util.ConvertString(B[3])) ? 0 : Integer.parseInt(util.ConvertString(B[3])));
-             report.setCommission(B[4]== null ? 0:(Integer)B[4]);
-             report.setSell(B[5]== null ? 0:(Integer)B[5]);
+             report.setCommission(B[4]== null ? new BigDecimal("0.00"):(BigDecimal)B[4]);
+             report.setSell(B[5]== null ? new BigDecimal("0.00"):(BigDecimal)B[5]);
              report.setAgent(util.ConvertString(B[6]));
              report.setSystemdate(new SimpleDateFormat("dd MMM yy hh:mm", new Locale("us", "us")).format(thisdate));
              report.setDatefrom(!"".equalsIgnoreCase(datefrom) && datefrom != null ? new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(util.convertStringToDate(datefrom)) : "");
@@ -1225,16 +1225,16 @@ public class OtherBookingImpl implements OtherBookingDao{
                 .addScalar("code", Hibernate.STRING)
                 .addScalar("name", Hibernate.STRING)
                 .addScalar("count_booking", Hibernate.STRING)
-                .addScalar("commission", Hibernate.INTEGER)
+                .addScalar("commission", Hibernate.BIG_DECIMAL)
                 .list();
   
         System.out.println("QueryAgentComSummaryList.size : "+QueryAgentComSummaryList.size());
         for (Object[] B : QueryAgentComSummaryList) {
-             OtherAgentCommissionSummaryReport   report = new  OtherAgentCommissionSummaryReport(); 
+             OtherAgentCommissionSummaryReport report = new OtherAgentCommissionSummaryReport(); 
              report.setCode(util.ConvertString(B[0]));
              report.setName(util.ConvertString(B[1]));
              report.setCountbook("".equals(util.ConvertString(B[2])) ? 0 : Integer.parseInt(util.ConvertString(B[2])));
-             report.setCommission(B[3]== null ? 0:(Integer)B[3]);
+             report.setCommission(B[3]== null ? new BigDecimal("0.00"):(BigDecimal)B[3]);
              report.setSystemdate(new SimpleDateFormat("dd MMM yy hh:mm", new Locale("us", "us")).format(thisdate));
              report.setDatefrom(!"".equalsIgnoreCase(datefrom) && datefrom != null ? new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(util.convertStringToDate(datefrom)) : "");
              report.setDateto(!"".equalsIgnoreCase(dateto) && dateto != null ? new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(util.convertStringToDate(dateto)) : "");

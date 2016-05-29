@@ -10,6 +10,7 @@ import com.smi.travel.datalayer.report.model.AgentCommissionReport;
 import com.smi.travel.datalayer.report.model.AgentCommissionSummaryReport;
 import com.smi.travel.datalayer.view.dao.AgentCommissionReportDao;
 import com.smi.travel.util.UtilityFunction;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -70,7 +71,7 @@ public class AgentCommissionReportImpl implements AgentCommissionReportDao {
                 .addScalar("code", Hibernate.STRING)
                 .addScalar("name", Hibernate.STRING)
                 .addScalar("count_booking", Hibernate.STRING)
-                .addScalar("comission", Hibernate.INTEGER)
+                .addScalar("comission", Hibernate.BIG_DECIMAL)
                 .list();
   
         System.out.println("QueryAgentComSummaryList.size : "+QueryAgentComSummaryList.size());
@@ -79,7 +80,7 @@ public class AgentCommissionReportImpl implements AgentCommissionReportDao {
              report.setCode(util.ConvertString(B[0]));
              report.setName(util.ConvertString(B[1]));
              report.setCountbook(StringUtils.isEmpty(util.ConvertString(B[2])) ? 0 : Integer.parseInt(util.ConvertString(B[2])));
-             report.setCommission(B[3]== null ? 0:(Integer)B[3]);
+             report.setCommission(B[3]== null ? new BigDecimal("0.00"):(BigDecimal)B[3]);
              report.setSystemdate(new SimpleDateFormat("dd MMM yy hh:mm", new Locale("us", "us")).format(thisdate));
              report.setDatefrom(new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(util.convertStringToDate(datefrom)));
              report.setDateto(new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(util.convertStringToDate(dateto)));
@@ -104,8 +105,8 @@ public class AgentCommissionReportImpl implements AgentCommissionReportDao {
                 .addScalar("tourcode", Hibernate.STRING)
                 .addScalar("customer", Hibernate.STRING)
                 .addScalar("pax", Hibernate.STRING)
-                .addScalar("comission", Hibernate.INTEGER)
-                .addScalar("sell", Hibernate.INTEGER)
+                .addScalar("comission", Hibernate.BIG_DECIMAL)
+                .addScalar("sell", Hibernate.BIG_DECIMAL)
                 .addScalar("name", Hibernate.STRING)
                 .list();
                 
@@ -115,8 +116,8 @@ public class AgentCommissionReportImpl implements AgentCommissionReportDao {
              report.setTourcode(util.ConvertString(B[1]));
              report.setClient(util.ConvertString(B[2]));
              report.setPax(StringUtils.isEmpty(util.ConvertString(B[3])) ? 0 : Integer.parseInt(util.ConvertString(B[3])));
-             report.setCommission(B[4]== null ? 0:(Integer)B[4]);
-             report.setSell(B[5]== null ? 0:(Integer)B[5]);
+             report.setCommission(B[4]== null ? new BigDecimal("0.00"):(BigDecimal)B[4]);
+             report.setSell(B[5]== null ? new BigDecimal("0.00"):(BigDecimal)B[5]);
              report.setAgent(util.ConvertString(B[6]));
              report.setSystemdate(new SimpleDateFormat("dd MMM yy hh:mm", new Locale("us", "us")).format(thisdate));
              report.setDatefrom(new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(util.convertStringToDate(datefrom)));

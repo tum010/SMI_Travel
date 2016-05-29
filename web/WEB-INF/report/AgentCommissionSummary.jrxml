@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="AirlineVolumn" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="36591689-e817-40b9-bb01-c68bf69d6b71">
-	<property name="ireport.zoom" value="3.8906136901500177"/>
-	<property name="ireport.x" value="1093"/>
+	<property name="ireport.zoom" value="1.8150000000000073"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<queryString>
 		<![CDATA[]]>
@@ -13,11 +13,11 @@
 	<field name="countbook" class="java.lang.Integer"/>
 	<field name="code" class="java.lang.String"/>
 	<field name="name" class="java.lang.String"/>
-	<field name="commission" class="java.lang.Integer"/>
+	<field name="commission" class="java.math.BigDecimal"/>
 	<variable name="totalcountbook" class="java.lang.Integer" calculation="Sum">
 		<variableExpression><![CDATA[$F{countbook}]]></variableExpression>
 	</variable>
-	<variable name="totalcommission" class="java.lang.Integer" calculation="Sum">
+	<variable name="totalcommission" class="java.math.BigDecimal" calculation="Sum">
 		<variableExpression><![CDATA[$F{commission}]]></variableExpression>
 	</variable>
 	<background>
@@ -70,7 +70,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Tahoma" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Count Book in]]></text>
+				<text><![CDATA[Count Booking]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="443" y="5" width="96" height="18" uuid="2c511a20-3573-420b-8c32-d6395dc30413"/>
@@ -97,8 +97,8 @@
 				</graphicElement>
 			</rectangle>
 			<textField>
-				<reportElement x="0" y="4" width="76" height="15" uuid="46f0834d-b1c6-4cb2-8b2f-e0c87ffe44f6"/>
-				<textElement textAlignment="Center">
+				<reportElement x="0" y="2" width="76" height="15" uuid="46f0834d-b1c6-4cb2-8b2f-e0c87ffe44f6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{code}]]></textFieldExpression>
@@ -110,8 +110,8 @@
 				</graphicElement>
 			</rectangle>
 			<textField>
-				<reportElement x="78" y="4" width="279" height="15" uuid="2e4d4b2f-2287-4064-9c48-bfd5a71934cc"/>
-				<textElement>
+				<reportElement x="78" y="2" width="279" height="15" uuid="2e4d4b2f-2287-4064-9c48-bfd5a71934cc"/>
+				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
@@ -123,8 +123,8 @@
 				</graphicElement>
 			</rectangle>
 			<textField>
-				<reportElement x="357" y="5" width="86" height="15" uuid="cb5565c0-7352-45c0-a366-10a1e68a7517"/>
-				<textElement textAlignment="Center">
+				<reportElement x="357" y="3" width="86" height="15" uuid="cb5565c0-7352-45c0-a366-10a1e68a7517"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{countbook}]]></textFieldExpression>
@@ -135,9 +135,9 @@
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</rectangle>
-			<textField pattern="#,##0">
-				<reportElement x="443" y="5" width="92" height="15" uuid="d93d87d5-e5da-4dd5-bdc2-761a3caf5837"/>
-				<textElement textAlignment="Right">
+			<textField pattern="#,##0.00">
+				<reportElement x="443" y="3" width="92" height="15" uuid="d93d87d5-e5da-4dd5-bdc2-761a3caf5837"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{commission}]]></textFieldExpression>
@@ -171,7 +171,7 @@
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</rectangle>
-			<textField pattern="#,##0">
+			<textField pattern="#,##0.00">
 				<reportElement x="443" y="0" width="92" height="13" uuid="a998d3cc-5fab-45c8-8e0f-87b02911c195"/>
 				<textElement textAlignment="Right">
 					<font fontName="Tahoma" size="10"/>

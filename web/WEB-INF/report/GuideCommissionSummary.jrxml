@@ -10,10 +10,10 @@
 	<field name="user" class="java.lang.String"/>
 	<field name="datefrom" class="java.lang.String"/>
 	<field name="dateto" class="java.lang.String"/>
-	<field name="commission" class="java.lang.Integer"/>
+	<field name="commission" class="java.math.BigDecimal"/>
 	<field name="guidename" class="java.lang.String"/>
 	<field name="pax" class="java.lang.Integer"/>
-	<variable name="sumcommission" class="java.lang.Integer" calculation="Sum">
+	<variable name="sumcommission" class="java.math.BigDecimal" calculation="Sum">
 		<variableExpression><![CDATA[$F{commission}]]></variableExpression>
 	</variable>
 	<variable name="sumpax" class="java.lang.Integer" calculation="Sum">
@@ -104,7 +104,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{pax}]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0">
+			<textField pattern="#,##0.00">
 				<reportElement x="433" y="4" width="102" height="14" uuid="16d83640-5268-40d8-86f4-ef9b36aa52da"/>
 				<textElement textAlignment="Right">
 					<font fontName="Tahoma" size="9" isBold="false"/>
@@ -153,7 +153,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$V{sumpax}]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0">
+			<textField pattern="#,##0.00">
 				<reportElement x="433" y="-1" width="102" height="14" uuid="cf02aa20-be29-4672-8fd5-126168d68858"/>
 				<textElement textAlignment="Right">
 					<font fontName="Tahoma" isBold="false"/>

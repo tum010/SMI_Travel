@@ -5,6 +5,8 @@
  */
 package com.smi.travel.datalayer.report.model;
 
+import java.math.BigDecimal;
+
 /**
  *
  * @author Jittima
@@ -17,7 +19,7 @@ public class GuideCommissionSummaryHeader {
     private String dateto;
     private String guidename;
     private int pax;
-    private int commission;
+    private BigDecimal commission;
 
     public String getSystemdate() {
         return systemdate;
@@ -67,13 +69,12 @@ public class GuideCommissionSummaryHeader {
         this.pax = pax;
     }
 
-    public int getCommission() {
+    public BigDecimal getCommission() {
         return commission;
     }
 
-    public void setCommission(int commission) {
+    public void setCommission(BigDecimal commission) {
         this.commission = commission;
     }
 
-    
 }

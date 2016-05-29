@@ -11,6 +11,7 @@ import com.smi.travel.datalayer.report.model.GuideCommissionSummary;
 import com.smi.travel.datalayer.report.model.GuideCommissionSummaryHeader;
 import com.smi.travel.datalayer.view.dao.GuideCommissionReportDao;
 import com.smi.travel.util.UtilityFunction;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -97,8 +98,8 @@ public class GuideCommissionReportImpl implements GuideCommissionReportDao{
                 .addScalar("tourcode", Hibernate.STRING)
                 .addScalar("customer", Hibernate.STRING)
                 .addScalar("pax", Hibernate.INTEGER)
-                .addScalar("comission", Hibernate.INTEGER)
-                .addScalar("sell", Hibernate.INTEGER)
+                .addScalar("comission", Hibernate.BIG_DECIMAL)
+                .addScalar("sell", Hibernate.BIG_DECIMAL)
                 .addScalar("guide", Hibernate.STRING)
                 .addScalar("remark", Hibernate.STRING)
                 .list();
@@ -113,8 +114,8 @@ public class GuideCommissionReportImpl implements GuideCommissionReportDao{
              guidecom.setCode(util.ConvertString(B[1]));
              guidecom.setCustomer(util.ConvertString(B[2]));
              guidecom.setPax(B[3]== null ? 0:(Integer)B[3]);
-             guidecom.setComission(B[4]== null ? 0:(Integer)B[4]);
-             guidecom.setSelling(B[5]== null ? 0:(Integer)B[5]);
+             guidecom.setComission(B[4]== null ? new BigDecimal("0.00"):(BigDecimal)B[4]);
+             guidecom.setSelling(B[5]== null ? new BigDecimal("0.00"):(BigDecimal)B[5]);
              guidecom.setGuide(util.ConvertString(B[6]));
              guidecom.setRemark(util.ConvertString(B[7]));
              data.add(guidecom);
@@ -151,7 +152,7 @@ public class GuideCommissionReportImpl implements GuideCommissionReportDao{
         List<Object[]> QueryGuideComList = session.createSQLQuery(query)
                 .addScalar("guide", Hibernate.STRING)
                 .addScalar("pax", Hibernate.INTEGER)
-                .addScalar("comission", Hibernate.INTEGER)
+                .addScalar("comission", Hibernate.BIG_DECIMAL)
 
                 .list();
         
@@ -163,7 +164,7 @@ public class GuideCommissionReportImpl implements GuideCommissionReportDao{
              guidecom.setDateto(!"".equalsIgnoreCase(dateto) ? new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(util.convertStringToDate(dateto)) : "");
              guidecom.setGuidename(util.ConvertString(B[0]));
              guidecom.setPax(B[1]== null ? 0:(Integer)B[1]);
-             guidecom.setCommission(B[2]== null ? 0:(Integer)B[2]);
+             guidecom.setCommission(B[2]== null ? new BigDecimal("0.00"):(BigDecimal)B[2]);
              data.add(guidecom);
         }
         

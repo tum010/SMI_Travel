@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="OtherGuideCommissionSummary" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="aecd77e1-85b2-4865-b59b-c0544fb870b2">
-	<property name="ireport.zoom" value="3.8974342000000304"/>
-	<property name="ireport.x" value="1253"/>
+	<property name="ireport.zoom" value="2.000000000000015"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<field name="systemdate" class="java.lang.String"/>
 	<field name="user" class="java.lang.String"/>
 	<field name="datefrom" class="java.lang.String"/>
 	<field name="dateto" class="java.lang.String"/>
-	<field name="commission" class="java.lang.Integer"/>
+	<field name="commission" class="java.math.BigDecimal"/>
 	<field name="guidename" class="java.lang.String"/>
 	<field name="pax" class="java.lang.Integer"/>
-	<variable name="sumcommission" class="java.lang.Integer" calculation="Sum">
+	<variable name="sumcommission" class="java.math.BigDecimal" calculation="Sum">
 		<variableExpression><![CDATA[$F{commission}]]></variableExpression>
 	</variable>
 	<variable name="sumpax" class="java.lang.Integer" calculation="Sum">
@@ -79,7 +79,7 @@
 				</graphicElement>
 			</rectangle>
 			<rectangle>
-				<reportElement mode="Transparent" x="1" y="0" width="375" height="20" forecolor="#CCCCCC" uuid="e7c99a24-44f6-4ac5-9a24-f18d41d53732"/>
+				<reportElement mode="Opaque" x="1" y="0" width="375" height="20" forecolor="#CCCCCC" uuid="e7c99a24-44f6-4ac5-9a24-f18d41d53732"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
@@ -104,7 +104,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{pax}]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0">
+			<textField pattern="#,##0.00">
 				<reportElement x="434" y="3" width="104" height="16" uuid="15c533a5-2dd1-4d54-bc31-ee78c3ffb678"/>
 				<textElement textAlignment="Right">
 					<font fontName="Tahoma" size="9" isBold="false"/>
@@ -140,7 +140,7 @@
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</rectangle>
-			<textField pattern="#,##0">
+			<textField pattern="#,##0.00">
 				<reportElement x="434" y="-1" width="104" height="13" uuid="7cd8a25c-e230-4c82-ae9a-8075eaf74490"/>
 				<textElement textAlignment="Right">
 					<font fontName="Tahoma" size="10"/>

@@ -6,6 +6,8 @@
 
 package com.smi.travel.datalayer.report.model;
 
+import java.math.BigDecimal;
+
 /**
  *
  * @author Surachai
@@ -17,8 +19,8 @@ public class GuideCommissionSummary {
     private String code;
     private String customer;
     private int pax;
-    private int comission;
-    private int selling;
+    private BigDecimal comission;
+    private BigDecimal selling;
     private String guide;
     private String remark;
     private String datefrom;
@@ -72,22 +74,6 @@ public class GuideCommissionSummary {
         this.pax = pax;
     }
 
-    public int getComission() {
-        return comission;
-    }
-
-    public void setComission(int comission) {
-        this.comission = comission;
-    }
-
-    public int getSelling() {
-        return selling;
-    }
-
-    public void setSelling(int selling) {
-        this.selling = selling;
-    }
-
     public String getGuide() {
         return guide;
     }
@@ -119,8 +105,23 @@ public class GuideCommissionSummary {
     public void setDateto(String dateto) {
         this.dateto = dateto;
     }
-    
-    
+
+    public BigDecimal getComission() {
+        return comission;
+    }
+
+    public void setComission(BigDecimal comission) {
+        this.comission = comission;
+    }
+
+    public BigDecimal getSelling() {
+        return selling;
+    }
+
+    public void setSelling(BigDecimal selling) {
+        this.selling = selling;
+    }
+       
 }
 
 

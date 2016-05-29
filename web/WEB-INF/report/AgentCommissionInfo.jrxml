@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="AirlineVolumn" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isFloatColumnFooter="true" uuid="36591689-e817-40b9-bb01-c68bf69d6b71">
-	<property name="ireport.zoom" value="3.89061369015001"/>
+	<property name="ireport.zoom" value="1.6500000000000041"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
@@ -16,15 +16,15 @@
 	<field name="client" class="java.lang.String"/>
 	<field name="agent" class="java.lang.String"/>
 	<field name="pax" class="java.lang.Integer"/>
-	<field name="commission" class="java.lang.Integer"/>
-	<field name="sell" class="java.lang.Integer"/>
+	<field name="commission" class="java.math.BigDecimal"/>
+	<field name="sell" class="java.math.BigDecimal"/>
 	<variable name="totalpax" class="java.lang.Integer" resetType="Group" resetGroup="agentGroup" calculation="Sum">
 		<variableExpression><![CDATA[$F{pax}]]></variableExpression>
 	</variable>
-	<variable name="totalcom" class="java.lang.Integer" resetType="Group" resetGroup="agentGroup" calculation="Sum">
+	<variable name="totalcom" class="java.math.BigDecimal" resetType="Group" resetGroup="agentGroup" calculation="Sum">
 		<variableExpression><![CDATA[$F{commission}]]></variableExpression>
 	</variable>
-	<variable name="totalselling" class="java.lang.Integer" resetType="Group" resetGroup="agentGroup" calculation="Sum">
+	<variable name="totalselling" class="java.math.BigDecimal" resetType="Group" resetGroup="agentGroup" calculation="Sum">
 		<variableExpression><![CDATA[$F{sell}]]></variableExpression>
 	</variable>
 	<group name="agentGroup" isStartNewPage="true">
@@ -148,7 +148,7 @@
 						<pen lineWidth="0.25"/>
 					</graphicElement>
 				</rectangle>
-				<textField pattern="#,##0">
+				<textField pattern="#,##0.00">
 					<reportElement x="443" y="0" width="93" height="14" uuid="5d6edff3-a94d-4ec5-882a-fdc85d479340"/>
 					<textElement textAlignment="Right">
 						<font fontName="Tahoma" size="10"/>
@@ -181,7 +181,7 @@
 						<pen lineWidth="0.25"/>
 					</graphicElement>
 				</rectangle>
-				<textField pattern="#,##0">
+				<textField pattern="#,##0.00">
 					<reportElement x="347" y="0" width="93" height="14" uuid="7ac1e3b5-3f75-456f-8887-f1be4cff3209"/>
 					<textElement textAlignment="Right">
 						<font fontName="Tahoma" size="10"/>
@@ -197,79 +197,79 @@
 	<detail>
 		<band height="20" splitType="Stretch">
 			<rectangle>
-				<reportElement mode="Transparent" x="0" y="0" width="70" height="20" forecolor="#CCCCCC" uuid="34f6f55c-0e4d-4cc7-b98e-a91713465228"/>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Transparent" x="0" y="0" width="70" height="20" forecolor="#CCCCCC" uuid="34f6f55c-0e4d-4cc7-b98e-a91713465228"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</rectangle>
-			<textField>
-				<reportElement x="0" y="2" width="70" height="15" uuid="99757e2c-d656-4549-857f-cb5a508fe49c"/>
-				<textElement textAlignment="Center">
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="2" width="70" height="15" uuid="99757e2c-d656-4549-857f-cb5a508fe49c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{tourdate}]]></textFieldExpression>
 			</textField>
 			<rectangle>
-				<reportElement mode="Transparent" x="70" y="0" width="79" height="20" forecolor="#CCCCCC" uuid="0fe00285-008c-4aad-a51a-498c1576515c"/>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Transparent" x="70" y="0" width="79" height="20" forecolor="#CCCCCC" uuid="0fe00285-008c-4aad-a51a-498c1576515c"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</rectangle>
-			<textField>
-				<reportElement x="70" y="2" width="79" height="15" uuid="870cf05b-f655-42dc-a373-6f014aaff0c1"/>
-				<textElement textAlignment="Center">
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="70" y="2" width="79" height="15" uuid="870cf05b-f655-42dc-a373-6f014aaff0c1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{tourcode}]]></textFieldExpression>
 			</textField>
 			<rectangle>
-				<reportElement mode="Transparent" x="149" y="0" width="147" height="20" forecolor="#CCCCCC" uuid="25cd6969-0393-409c-84e3-62007ed1c051"/>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Transparent" x="149" y="0" width="147" height="20" forecolor="#CCCCCC" uuid="25cd6969-0393-409c-84e3-62007ed1c051"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</rectangle>
-			<textField>
-				<reportElement x="152" y="2" width="144" height="15" uuid="fd622100-5edc-41b8-9bc2-c8b2be053a5b"/>
-				<textElement>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="152" y="2" width="144" height="15" uuid="fd622100-5edc-41b8-9bc2-c8b2be053a5b"/>
+				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{client}]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0">
-				<reportElement x="443" y="2" width="93" height="15" uuid="143510ab-d051-4cba-9cbe-cd3d70985ac0"/>
-				<textElement textAlignment="Right">
+			<textField isStretchWithOverflow="true" pattern="#,##0.00">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="443" y="2" width="93" height="15" uuid="143510ab-d051-4cba-9cbe-cd3d70985ac0"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{sell}]]></textFieldExpression>
 			</textField>
 			<rectangle>
-				<reportElement mode="Transparent" x="443" y="0" width="96" height="20" forecolor="#CCCCCC" uuid="aa9eb074-1461-460f-aad6-c4fb604c7214"/>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Transparent" x="443" y="0" width="96" height="20" forecolor="#CCCCCC" uuid="aa9eb074-1461-460f-aad6-c4fb604c7214"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</rectangle>
-			<textField pattern="#,##0">
-				<reportElement x="347" y="2" width="93" height="15" uuid="cf11a47b-dea5-41fe-81e6-d10661fdc378"/>
-				<textElement textAlignment="Right">
+			<textField isStretchWithOverflow="true" pattern="#,##0.00">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="347" y="2" width="93" height="15" uuid="cf11a47b-dea5-41fe-81e6-d10661fdc378"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{commission}]]></textFieldExpression>
 			</textField>
 			<rectangle>
-				<reportElement mode="Transparent" x="347" y="0" width="96" height="20" forecolor="#CCCCCC" uuid="914510df-07ce-4a64-abe0-c1ad1dc5855c"/>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Transparent" x="347" y="0" width="96" height="20" forecolor="#CCCCCC" uuid="914510df-07ce-4a64-abe0-c1ad1dc5855c"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</rectangle>
-			<textField>
-				<reportElement x="296" y="2" width="51" height="15" uuid="a539db60-19f8-409c-9080-402a29f05458"/>
-				<textElement textAlignment="Center">
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="296" y="2" width="51" height="15" uuid="a539db60-19f8-409c-9080-402a29f05458"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{pax}]]></textFieldExpression>
 			</textField>
 			<rectangle>
-				<reportElement mode="Transparent" x="296" y="0" width="51" height="20" forecolor="#CCCCCC" uuid="87279b67-b13d-4650-862c-3585bad1b94a"/>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Transparent" x="296" y="0" width="51" height="20" forecolor="#CCCCCC" uuid="87279b67-b13d-4650-862c-3585bad1b94a"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>

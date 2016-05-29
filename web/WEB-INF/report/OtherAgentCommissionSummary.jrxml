@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="OtherAgentCommissionSummary" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="b06d1a2e-b11c-4b1e-b48a-508e14a1844c">
 	<property name="ireport.zoom" value="2.5937424601000103"/>
-	<property name="ireport.x" value="432"/>
+	<property name="ireport.x" value="633"/>
 	<property name="ireport.y" value="0"/>
 	<field name="systemdate" class="java.lang.String"/>
 	<field name="user" class="java.lang.String"/>
@@ -10,11 +10,11 @@
 	<field name="countbook" class="java.lang.Integer"/>
 	<field name="code" class="java.lang.String"/>
 	<field name="name" class="java.lang.String"/>
-	<field name="commission" class="java.lang.Integer"/>
+	<field name="commission" class="java.math.BigDecimal"/>
 	<variable name="totalcountbook" class="java.lang.Integer" calculation="Sum">
 		<variableExpression><![CDATA[$F{countbook}]]></variableExpression>
 	</variable>
-	<variable name="totalcommission" class="java.lang.Integer" calculation="Sum">
+	<variable name="totalcommission" class="java.math.BigDecimal" calculation="Sum">
 		<variableExpression><![CDATA[$F{commission}]]></variableExpression>
 	</variable>
 	<background>
@@ -67,7 +67,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="10" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Count Book in]]></text>
+				<text><![CDATA[Count Booking]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="446" y="2" width="93" height="17" uuid="943c1e82-109d-4e95-a8da-3865886b75b8"/>
@@ -132,7 +132,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{countbook}]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0">
+			<textField pattern="#,##0.00">
 				<reportElement x="446" y="4" width="89" height="13" uuid="79e688ef-6f95-467a-9cc2-bcbb66388123"/>
 				<textElement textAlignment="Right">
 					<font fontName="Tahoma" size="9" isBold="false"/>
@@ -168,7 +168,7 @@
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</rectangle>
-			<textField pattern="#,##0">
+			<textField pattern="#,##0.00">
 				<reportElement x="446" y="-1" width="90" height="13" uuid="54868c90-aada-4740-bee9-4760ea516256"/>
 				<textElement textAlignment="Right">
 					<font fontName="Tahoma" size="10" isBold="false"/>

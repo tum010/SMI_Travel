@@ -6,6 +6,8 @@
 
 package com.smi.travel.datalayer.report.model;
 
+import java.math.BigDecimal;
+
 /**
  *
  * @author Surachai
@@ -21,9 +23,9 @@ public class AgentCommissionReport {
     private String book;
     private String client;
     private int pax;
-    private int sell;
+    private BigDecimal sell;
     private String agent;
-    private int commission;
+    private BigDecimal commission;
     
 
     public String getSystemdate() {
@@ -84,14 +86,6 @@ public class AgentCommissionReport {
         this.book = book;
     }
 
-    public int getCommission() {
-        return commission;
-    }
-
-    public void setCommission(int commission) {
-        this.commission = commission;
-    }
-
     public String getClient() {
         return client;
     }
@@ -108,14 +102,6 @@ public class AgentCommissionReport {
         this.pax = pax;
     }
 
-    public int getSell() {
-        return sell;
-    }
-
-    public void setSell(int sell) {
-        this.sell = sell;
-    }
-
     public String getAgent() {
         return agent;
     }
@@ -123,7 +109,21 @@ public class AgentCommissionReport {
     public void setAgent(String agent) {
         this.agent = agent;
     }
-    
-    
- 
+
+    public BigDecimal getSell() {
+        return sell;
+    }
+
+    public void setSell(BigDecimal sell) {
+        this.sell = sell;
+    }
+
+    public BigDecimal getCommission() {
+        return commission;
+    }
+
+    public void setCommission(BigDecimal commission) {
+        this.commission = commission;
+    }
+       
 }
