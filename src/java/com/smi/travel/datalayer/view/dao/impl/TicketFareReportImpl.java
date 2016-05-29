@@ -773,7 +773,7 @@ public class TicketFareReportImpl implements TicketFareReportDao {
             query += " `inv`.`inv_date` <= '" + invoiceToDate + "'";
             cause = false;        
         }
-        query += " group by `inv`.`inv_no` ";
+        query += " group by `inv`.`inv_no` having round(sum(ifnull(`fare`.`litter_commission`,0)),2) <> 0";
         List<Object[]> QueryList = new ArrayList<Object[]>();
         QueryList = session.createSQLQuery(query)
                         .addScalar("invno",Hibernate.STRING)
