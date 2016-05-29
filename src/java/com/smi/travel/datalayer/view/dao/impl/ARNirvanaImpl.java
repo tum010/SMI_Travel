@@ -666,10 +666,6 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
             String companyId = (arNirvana.getComid()!= null && !"".equalsIgnoreCase(arNirvana.getComid()) ? arNirvana.getComid() : "");;
             dataArea += util.generateDataAreaNirvana(companyId,21);
             System.out.println("===== companyId ===== : "+ companyId);
-//            String documentPrefix = (arNirvana.getPrefix() != null && !"".equalsIgnoreCase(arNirvana.getPrefix()) ? arNirvana.getPrefix() : "");
-//            dataArea += generateDataAreaARNirvana(documentPrefix.length(),6);
-            
-//            String documentNo = (arNirvana.getDocumentno() != null && !"".equalsIgnoreCase(arNirvana.getDocumentno()) ? arNirvana.getDocumentno() : "");
             
             String intreference = (arNirvana.getIntreference() != null && !"".equalsIgnoreCase(arNirvana.getIntreference()) ? arNirvana.getIntreference() : "");
             dataArea += util.generateDataAreaNirvana(intreference,21);
@@ -812,6 +808,16 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
             String service = (arNirvana.getService()!= null && !"".equalsIgnoreCase(arNirvana.getService()) ? arNirvana.getService(): "");
             dataArea += util.generateDataAreaNirvana(service,1);
             System.out.println("===== service ===== : "+ service);
+            
+            String prefix = (arNirvana.getPrefix() != null && !"".equalsIgnoreCase(arNirvana.getPrefix()) ? arNirvana.getPrefix() : "");
+            dataArea += util.generateDataAreaNirvana(prefix,6);
+            System.out.println("===== documentPrefix ===== : "+ prefix);
+            
+            String documentNo = (arNirvana.getDocumentno() != null && !"".equalsIgnoreCase(arNirvana.getDocumentno()) ? arNirvana.getDocumentno() : "");
+            dataArea += util.generateDataAreaNirvana(documentNo,8);
+            System.out.println("===== documentNo ===== : "+ documentNo);
+            
+            System.out.println("===== dataArea ==== : " + dataArea);
             
             ssDataexchTemp.setDataArea(dataArea);
             
