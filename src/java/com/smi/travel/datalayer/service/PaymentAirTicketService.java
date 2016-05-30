@@ -9,6 +9,7 @@ import com.smi.travel.datalayer.dao.PaymentAirTicketDao;
 import com.smi.travel.datalayer.entity.PaymentAirCredit;
 import com.smi.travel.datalayer.entity.PaymentAirDebit;
 import com.smi.travel.datalayer.entity.PaymentAirticket;
+import com.smi.travel.datalayer.entity.PaymentAirticketAccount;
 import com.smi.travel.datalayer.entity.PaymentAirticketFare;
 import com.smi.travel.datalayer.entity.PaymentAirticketRefund;
 import com.smi.travel.datalayer.entity.RefundAirticket;
@@ -77,12 +78,20 @@ public class PaymentAirTicketService {
         return paymentairticketdao.getPaymentAirDebitByPaymentAirId(paymentAirId);
     }
     
+    public List<PaymentAirticketAccount> getPaymentAirticketAccountByPaymentAirId(String paymentAirId){
+        return paymentairticketdao.getPaymentAirticketAccountByPaymentAirId(paymentAirId);
+    }
+    
     public String DeletePaymentAirCredit(String paymentAirId,String paymentCreditId){
         return paymentairticketdao.DeletePaymentAirCredit(paymentAirId,paymentCreditId);
     }
     
     public String DeletePaymentAirDebit(String paymentAirId,String paymentDebitId){
         return paymentairticketdao.DeletePaymentAirDebit(paymentAirId,paymentDebitId);
+    }
+    
+    public String DeletePaymentAccount(String paymentAirId,String paymentAccountId){
+        return paymentairticketdao.DeletePaymentAccount(paymentAirId,paymentAccountId);
     }
     
     public PaymentAirticket getPaymentAirTicketByWildCardSearch(String paymentId, String paymentNo, String wildCardSearch, String keyCode){

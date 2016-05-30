@@ -47,6 +47,7 @@ public class PaymentAirticket  {
     private List paymentAirticketFares = new LinkedList<PaymentAirticketFare>();
     private List paymentAirCredits = new LinkedList<PaymentAirCredit>();
     private List paymentAirDebits = new LinkedList<PaymentAirDebit>();
+    private List paymentAirticketAccounts = new LinkedList<PaymentAirticketAccount>();
     
     public PaymentAirticket() {
     }
@@ -333,6 +334,14 @@ public class PaymentAirticket  {
 
     public void setDataNo(String dataNo) {
         this.dataNo = dataNo;
+    }
+
+    public List getPaymentAirticketAccounts() {
+        return paymentAirticketAccounts;
+    }
+
+    public void setPaymentAirticketAccounts(List paymentAirticketAccounts) {
+        this.paymentAirticketAccounts = paymentAirticketAccounts;
     }
 
     

@@ -11,6 +11,7 @@ import com.smi.travel.datalayer.entity.MRunningCode;
 import com.smi.travel.datalayer.entity.PaymentAirCredit;
 import com.smi.travel.datalayer.entity.PaymentAirDebit;
 import com.smi.travel.datalayer.entity.PaymentAirticket;
+import com.smi.travel.datalayer.entity.PaymentAirticketAccount;
 import com.smi.travel.datalayer.entity.PaymentAirticketFare;
 import com.smi.travel.datalayer.entity.PaymentAirticketRefund;
 import com.smi.travel.datalayer.entity.RefundAirticketDetail;
@@ -88,6 +89,14 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
                 }
             }
             
+            List<PaymentAirticketAccount> paymentAirticketAccounts = payAir.getPaymentAirticketAccounts();
+            
+            if(paymentAirticketAccounts != null){
+                for(int i = 0; i < paymentAirticketAccounts.size(); i++){
+                   session.save(paymentAirticketAccounts.get(i));
+                }
+            }
+            
             transaction.commit();
             session.close();
             this.sessionFactory.close();
@@ -156,6 +165,18 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
                 }
             }
             
+            List<PaymentAirticketAccount> paymentAirticketAccounts = payAir.getPaymentAirticketAccounts();
+            
+            if(paymentAirticketAccounts != null){
+                for(int i = 0; i < paymentAirticketAccounts.size(); i++){
+                    if(paymentAirticketAccounts.get(i).getId() == null){
+                        session.save(paymentAirticketAccounts.get(i));
+                    } else {
+                        session.update(paymentAirticketAccounts.get(i));
+                    }             
+                }
+            }
+            
             transaction.commit();
             session.close();
             this.sessionFactory.close();
@@ -180,7 +201,18 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
             result = "delete unsuccessful.Please delete all payment airticket in this Payment Airticket Refund";
             return result;
         }
-        
+        if (IsExistPaymentAirticketDebit(payAir.getId())) {
+            result = "delete unsuccessful.Please delete all payment airticket in this Payment Airticket Debit";
+            return result;
+        }
+        if (IsExistPaymentAirticketCredit(payAir.getId())) {
+            result = "delete unsuccessful.Please delete all payment airticket in this Payment Airticket Credit";
+            return result;
+        }
+        if (IsExistPaymentAirticketAccount(payAir.getId())) {
+            result = "delete unsuccessful.Please delete all payment airticket in this Payment Airticket Account";
+            return result;
+        }
         try {
             Session session = this.sessionFactory.openSession();
             transaction = session.beginTransaction();
@@ -509,6 +541,48 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
         boolean result;
         Session session = this.sessionFactory.openSession();
         List<PaymentAirticketRefund> list = session.createQuery("from PaymentAirticketRefund p WHERE p.paymentAirticket.id = :paymentAirId").setParameter("paymentAirId", paymentAirId).list();
+        if(list.isEmpty()){
+            result = false;
+        }else{
+            result = true;
+        }
+        session.close();
+        this.sessionFactory.close();
+        return result;
+    }
+    
+    private boolean IsExistPaymentAirticketDebit(String paymentAirId) {
+        boolean result;
+        Session session = this.sessionFactory.openSession();
+        List<PaymentAirDebit> list = session.createQuery("from PaymentAirDebit p WHERE p.paymentAirticket.id = :paymentAirId").setParameter("paymentAirId", paymentAirId).list();
+        if(list.isEmpty()){
+            result = false;
+        }else{
+            result = true;
+        }
+        session.close();
+        this.sessionFactory.close();
+        return result;
+    }
+    
+    private boolean IsExistPaymentAirticketCredit(String paymentAirId) {
+        boolean result;
+        Session session = this.sessionFactory.openSession();
+        List<PaymentAirCredit> list = session.createQuery("from PaymentAirCredit p WHERE p.paymentAirticket.id = :paymentAirId").setParameter("paymentAirId", paymentAirId).list();
+        if(list.isEmpty()){
+            result = false;
+        }else{
+            result = true;
+        }
+        session.close();
+        this.sessionFactory.close();
+        return result;
+    }
+    
+    private boolean IsExistPaymentAirticketAccount(String paymentAirId) {
+        boolean result;
+        Session session = this.sessionFactory.openSession();
+        List<PaymentAirticketAccount> list = session.createQuery("from PaymentAirticketAccount p WHERE p.paymentAirticket.id = :paymentAirId").setParameter("paymentAirId", paymentAirId).list();
         if(list.isEmpty()){
             result = false;
         }else{
@@ -1297,5 +1371,70 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
 //            paymentAirticket =  paymentAirticketList.get(0);
 //        }
 //        return paymentAirticket;   
+    }
+
+    @Override
+    public String DeletePaymentAccount(String paymentAirId, String paymentAccountId) {
+        String result = "";
+        PaymentAirticketAccount paa = new PaymentAirticketAccount();
+        List<PaymentAirticketAccount> paaList = new ArrayList<PaymentAirticketAccount>();
+        Session session = this.sessionFactory.openSession();
+        if(paymentAirId.isEmpty() || "".equals(paymentAirId)){
+            String query = "from PaymentAirticketAccount pay where pay.id = :paymentAccountId";
+            paaList = session.createQuery(query).setParameter("paymentAccountId", paymentAccountId).list();
+            System.out.println(" Delete PaymentAirticketAccountList size (1) "+paaList.size());
+            if (paaList.isEmpty()) {
+                return null;
+            }else{
+                paa =  paaList.get(0);
+                try {
+                    transaction = session.beginTransaction();
+                    session.delete(paa);
+                    transaction.commit();
+                    result = "success";
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    result = "fail";
+                }
+            }
+        } else { 
+            String query = "from PaymentAirticketAccount pay where pay.id = :paymentAccountId and pay.paymentAirticket.id =:paymentAirId ";
+            paaList = session.createQuery(query).setParameter("paymentAccountId", paymentAccountId).setParameter("paymentAirId", paymentAirId).list();
+            System.out.println(" Delete PaymentAirticketAccountList size "+paaList.size());
+            if (paaList.isEmpty()) {
+                return null;
+            }else{
+                for(int i = 0; i < paaList.size(); i++){
+                    paa = paaList.get(i);
+                    try {
+                        transaction = session.beginTransaction();
+                        session.delete(paa);
+                        transaction.commit();
+                        result = "success";
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                        result = "fail";
+                    }
+                }
+            }
+        }
+        session.close();
+        this.sessionFactory.close();
+        return result;
+    }
+
+    @Override
+    public List<PaymentAirticketAccount> getPaymentAirticketAccountByPaymentAirId(String paymentAirId) {
+        String query = "from PaymentAirticketAccount pay where pay.paymentAirticket.id = :paymentAirId";
+        Session session = this.sessionFactory.openSession();
+        List<PaymentAirticketAccount> list = session.createQuery(query).setParameter("paymentAirId", paymentAirId).list();
+
+        if (list.isEmpty()){
+            return null;
+        }
+        
+        session.close();
+        this.sessionFactory.close();
+        return list;
     }
 }

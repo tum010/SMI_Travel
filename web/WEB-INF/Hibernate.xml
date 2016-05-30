@@ -157,7 +157,8 @@ http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
                                 <value>resource/hibernate/PaymentStock.hbm.xml</value>    
                                 <value>resource/hibernate/PaymentStockDetail.hbm.xml</value>    
                                 <value>resource/hibernate/PaymentStockItem.hbm.xml</value>  
-                                <value>resource/hibernate/LandCity.hbm.xml</value>         
+                                <value>resource/hibernate/LandCity.hbm.xml</value>    
+                                <value>resource/hibernate/PaymentAirticketAccount.hbm.xml</value>          
 			</list>
 		</property>
 

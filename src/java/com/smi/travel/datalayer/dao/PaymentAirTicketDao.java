@@ -9,6 +9,7 @@ package com.smi.travel.datalayer.dao;
 import com.smi.travel.datalayer.entity.PaymentAirCredit;
 import com.smi.travel.datalayer.entity.PaymentAirDebit;
 import com.smi.travel.datalayer.entity.PaymentAirticket;
+import com.smi.travel.datalayer.entity.PaymentAirticketAccount;
 import com.smi.travel.datalayer.entity.PaymentAirticketFare;
 import com.smi.travel.datalayer.entity.RefundAirticketDetailView;
 import com.smi.travel.datalayer.report.model.PaymentAirline;
@@ -31,6 +32,7 @@ public interface PaymentAirTicketDao {
     public String DeletePaymentAirRefund(String paymentAirId,String refundDetailId , int option);
     public String DeletePaymentAirCredit(String paymentAirId,String paymentCreditId);
     public String DeletePaymentAirDebit(String paymentAirId,String paymentDebitId);
+    public String DeletePaymentAccount(String paymentAirId,String paymentAccountId);
     //delete from PaymentAirticketRefund payrefund where payrefund.id = AirRefundId
     public PaymentAirticket getPaymentAirTicketFromPayno(String payNo);
     public List<TicketFareView> getListTicketFare(String from,String to,String by,String airAgentId,String invoiceSubCode,String typeAirlineOther,String ticketType);
@@ -46,6 +48,7 @@ public interface PaymentAirTicketDao {
     public List<RefundAirticketDetailView> getRefundDetailByPaymentAirId(String paymentAirId);
     public List<PaymentAirCredit> getPaymentAirCreditByPaymentAirId(String paymentAirId);
     public List<PaymentAirDebit> getPaymentAirDebitByPaymentAirId(String paymentAirId);
+    public List<PaymentAirticketAccount> getPaymentAirticketAccountByPaymentAirId(String paymentAirId);
     public List<PaymentAirView> getPaymentAirViewReport(String payno);
     public PaymentAirline getPaymentAirlineReport(String payno,String printby);
     

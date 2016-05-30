@@ -22,6 +22,9 @@
 <c:set var="debitList" value="${requestScope['debitList']}" />
 <c:set var="ticketwhtax" value="${requestScope['ticketwhtax']}" />
 <c:set var="ticketvat" value="${requestScope['ticketvat']}" />
+<c:set var="paymentAccountList" value="${requestScope['paymentAccountList']}" />
+
+
 <section class="content-header" >
     <h1>
         Checking - Air Ticket
@@ -82,6 +85,9 @@
                 <input type="hidden" name="ticketNoList" id="ticketNoList" value="">
                 <input type="hidden" class="form-control" id="countRowCredit" name="countRowCredit" value="${requestScope['creditRowCount']}" />
                 <input type="hidden" class="form-control" id="countRowCreditNo" name="countRowCreditNo" value="${requestScope['creditRowCount']}" />
+                <input type="hidden" class="form-control" id="countRowPaymentAccount" name="countRowPaymentAccount" value="${requestScope['countRowPaymentAccount']}" />
+                <input type="hidden" name="paymentAccountIdDelete" id="paymentAccountIdDelete" value="">
+                <input type="hidden" name="paymentAccountRowDelete" id="paymentAccountRowDelete" value="">
                 <input type="hidden" name="creditIdDelete" id="creditIdDelete" value="">
                 <input type="hidden" name="creditRowDelete" id="creditRowDelete" value="">
                 <input type="hidden" name="checksearchticket" id="checksearchticket" value="">
@@ -681,7 +687,107 @@
                             </div>
                         </div>
                     </div>
-                </div> 
+                </div>
+                                
+                <div class="panel panel-default" style="margin-top: -10px">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">Payment Account</h4>
+                    </div> 
+                    <div class="panel-body" style="width: 100%; padding-left: 0px; padding-right: 0px;">
+                        <div class="col-xs-12" style="margin-top: 4px;">
+                            <table class="display" id="PaymentAccountTable" style="margin-top: -10px">
+                                <thead class="datatable-header">
+                                    <tr>
+                                        <th style="width:10%;">No</th>
+                                        <th style="width:15%;">Accno</th>
+                                        <th style="width:20%;">Detail</th>
+                                        <th style="width:15;">Department</th>
+                                        <th style="width:20;">DR Amount</th>
+                                        <th style="width:20;">CR Amount</th>
+                                        <th style="width:10;">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <c:forEach var="table" items="${paymentAccountList}" varStatus="i">
+                                        <tr>
+                                            <input type="hidden" name="paaId${i.count}" id="paaId${i.count}" value="${table.id}">
+                                            <td align="center">${i.count}</td>
+                                            <td>                                   
+                                                <select class="form-control" name="accno${i.count}" id="accno${i.count}" value="${table.accNo}" >
+                                                    <option value="">>---------</option>
+                                                    <c:set var="selected1" value="" />
+                                                    <c:set var="selected2" value="" />
+                                                    <c:set var="selected3" value="" />
+                                                    <c:if test="${table.accNo == '51010'}">
+                                                        <c:set var="selected1" value="selected" />
+                                                    </c:if>
+                                                    <c:if test="${table.accNo == '21035'}">
+                                                        <c:set var="selected2" value="selected" />
+                                                    </c:if>
+                                                    <c:if test="${table.accNo == '43010'}">
+                                                        <c:set var="selected3" value="selected" />
+                                                    </c:if>
+                                                    <option value="51010" ${selected1}>51010</option>
+                                                    <option value="21035" ${selected2}>21035</option>
+                                                    <option value="43010" ${selected3}>43010</option>
+                                                </select>
+                                            </td>
+                                            <td><input maxlength="255" id="detail${i.count}" name="detail${i.count}" type="text" class="form-control" value="${table.detail}"></td>
+                                            <td>
+                                                <select class="form-control" name="department${i.count}" id="department${i.count}" value="${table.department}">
+                                                    <option value="">>---------</option>
+                                                    <c:set var="selectedWendy" value="" />
+                                                    <c:set var="selectedOutbound" value="" />
+                                                    <c:set var="selectedInbound" value="" />
+                                                    <c:if test="${table.department == 'Wendy'}">
+                                                        <c:set var="selectedWendy" value="selected" />
+                                                    </c:if>
+                                                    <c:if test="${table.department == 'Outbound'}">
+                                                        <c:set var="selectedOutbound" value="selected" />
+                                                    </c:if>
+                                                    <c:if test="${table.department == 'Inbound'}">
+                                                        <c:set var="selectedInbound" value="selected" />
+                                                    </c:if>
+                                                    <option value="Wendy" ${selectedWendy}>Wendy</option>
+                                                    <option value="Outbound" ${selectedOutbound}>Outbound</option>
+                                                    <option value="Inbound" ${selectedInbound}>Inbound</option>
+                                                </select>
+                                            </td>
+                                            <td><input maxlength="10" id="drAmount${i.count}"  name="drAmount${i.count}"  type="text" class="form-control text-right"  value="${table.drAmount}" onfocusout="calculateTotalDrCrAmount()" onkeyup="insertCommas(this)"></td>
+                                            <td><input maxlength="10" id="crAmount${i.count}"  name="crAmount${i.count}"  type="text" class="form-control text-right"  value="${table.crAmount}" onfocusout="calculateTotalDrCrAmount()" onkeyup="insertCommas(this)"></td>
+                                            <td> 
+                                                <center> 
+                                                    <a class="remCF"><span id="SpanRemove${i.count}" onclick="deletePaymentAccList('${table.id}','${i.count}');" class="glyphicon glyphicon-remove deleteicon "></span></a>
+                                                </center>
+                                            </td>                                     
+                                        </tr>
+                                    </c:forEach>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="tr_PaymentAccountTableAddRow" class="text-center hide" style="padding-top: 10px">
+                            <a class="btn btn-success" onclick="AddRowPaymentAccount(1)">
+                                <i class="glyphicon glyphicon-plus"></i> Add
+                            </a>
+                        </div>     
+                        <div class="col-xs-12 form-group" style="padding-top: 5px;margin-bottom: -10px">
+                            <div class="col-xs-1 text-right"  style="width: 563px">
+                                <label class="control-label text-right">Total</label>
+                            </div>
+                            <div class="col-xs-1"  >
+                                <div class="input-group">                                    
+                                    <input type="text" style="width: 177px" class="form-control money" id="totalDrAmount" name="totalDrAmount" readonly="" value="" />
+                                </div>
+                            </div>
+                            <div class="col-xs-1" >
+                                <div class="input-group">                                    
+                                    <input type="text" style="width: 177px;margin-left: 114px" class="form-control money" id="totalCrAmount" name="totalCrAmount" readonly="" value="" />
+                                </div>
+                            </div>
+                        </div>  
+                    </div>
+                </div>        
+                                
                 <div class="row">
                     <div class="col-xs-12" style="margin-top: -14px">
                         <div class="col-xs-12 text-right" >
@@ -930,7 +1036,25 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal-dialog -->
+<!--DELETE MODAL-->
 
+<div class="modal fade" id="DeletePaymentAccountModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"  id="Titlemodel">Payment Account</h4>
+            </div>
+            <div class="modal-body" id="delPaymentAccount">
+
+            </div>
+            <div class="modal-footer">
+                <button type="submit" onclick="DeleteRowPaymentAccount()" class="btn btn-danger">Delete</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>               
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
 
 <c:if test="${! empty requestScope['saveresult']}">
     <c:if test="${requestScope['saveresult'] =='save successful'}">        
@@ -1031,7 +1155,37 @@
         </script>
     </c:if>
 </c:if>          
-        
+<c:if test="${! empty requestScope['setCalculatePayment']}">
+    <c:if test="${requestScope['setCalculatePayment'] == 1 }">        
+        <script language="javascript">
+            $(document).ready(function() {
+                var length = $("#PaymentAccountTable tr").length ;
+                if(length > 1) {
+                    for(var i = 1;i<length;i++){
+                        if( $('#drAmount'+i).val() != "" ){
+                            var drAmount = replaceAll(",","",$('#drAmount'+i).val()); 
+                            if (drAmount == ""){
+                                drAmount = 0;
+                            }
+                            drAmount = parseFloat(drAmount); 
+                            document.getElementById("drAmount"+i).value = formatNumber(drAmount);
+                        }
+                        
+                        if( $('#crAmount'+i).val() != "" ){
+                            var crAmount = replaceAll(",","",$('#crAmount'+i).val()); 
+                            if (crAmount == ""){
+                                crAmount = 0;
+                            }
+                            crAmount = parseFloat(crAmount); 
+                            document.getElementById("crAmount"+i).value = formatNumber(crAmount);
+                        }
+                    }
+                }
+                calculateTotalDrCrAmount();
+            });
+        </script>
+    </c:if>
+</c:if>         
 <script>
 var rad = document.PaymentAirlineForm.payto;
 var prev = null;
@@ -1418,6 +1572,48 @@ for(var i = 0; i < rad.length; i++) {
             $(this).parent().removeClass("show");
             $(this).parent().addClass("hide");
         });
+        
+        // +++++++++++++++++++++ Payment Account Table +++++++++++++++++++++ //
+        AddRowPaymentAccount(parseInt($("#countRowPaymentAccount").val()));
+
+        $("#PaymentAccountTable").on("keyup", function() {
+            var rowAll = $("#PaymentAccountTable tr").length;
+            $("td").keyup(function() {
+                if ($(this).find("input").val() != '') {
+                    var colIndex = $(this).parent().children().index($(this));
+                    var rowIndex = $(this).parent().parent().children().index($(this).parent()) + 2;
+                    rowAll = $("#PaymentAccountTable tr").length;
+                    //console.log('Row: ' + rowIndex + ', Column: ' + colIndex + ', All Row ' + rowAll);
+                    if (rowIndex == rowAll) {
+                        AddRowPaymentAccount(parseInt($("#countRowPaymentAccount").val()));
+                    }
+                    if (rowAll < 2) {
+                        $("#tr_PaymentAccountTableAddRow").removeClass("hide");
+                        $("#tr_PaymentAccountTableAddRow").addClass("show");
+                    }
+                 }
+            });
+        });
+        
+        $("#PaymentAccountTable").on("change", "select:last", function () {
+            var row = parseInt($("#countRowPaymentAccount").val());
+            AddRowPaymentAccount(row);
+        });
+        
+        $("#PaymentAccountTable").on('click', '.newRemCF', function () {
+            $(this).parent().parent().remove();
+                var rowAll = $("#PaymentAccountTable tr").length;
+                if (rowAll < 2) {
+                    $("#tr_PaymentAccountTableAddRow").removeClass("hide");
+                    $("#tr_PaymentAccountTableAddRow").addClass("show");
+            }
+        });
+        
+        $("#tr_PaymentAccountTableAddRow a").click(function () {
+            $(this).parent().removeClass("show");
+            $(this).parent().addClass("hide");
+        });
+        
     });
 
 function refundnoValidate(){
@@ -2192,6 +2388,71 @@ function getTicketNoFromTicketFare() {
     document.getElementById("ticketNoList").value = ticeketList;
 }
 
+function AddRowPaymentAccount(row) {    
+    if (!row) {
+        row = 1;
+    }
+    
+    $("#PaymentAccountTable tbody").append(
+        '<tr style="higth 100px">' +
+        '<td class="text-center">' + row + '</td>' +
+        '<td>' +
+        '<select class="form-control" name="accno' + row + '" id="accno' + row + '" ><option value="">---------</option><option value="51010" >51010</option><option value="21035">21035</option><option value="43010" >43010</option></select>' +
+        '</td>' +
+        '<td><input maxlength="255" id="detail' + row + '" name="detail' + row + '" type="text" class="form-control" value=""></td>' +
+        '<td>' +
+        '<select class="form-control" name="department' + row + '" id="department' + row + '" ><option value="">---------</option><option value="Wendy" >Wendy</option><option value="Outbound">Outbound</option><option value="Inbound" >Inbound</option></select>' +
+        '</td>' +
+        '<td><input id="drAmount' + row + '" name="drAmount' + row + '" type="text" class="form-control text-right" onfocusout="calculateTotalDrCrAmount()" onkeyup="insertCommas(this)"></td>' +
+        '<td><input id="crAmount' + row + '" name="crAmount' + row + '" type="text" class="form-control text-right" onfocusout="calculateTotalDrCrAmount()" onkeyup="insertCommas(this)"></td>' +
+        '<td class="text-center">' +
+        '<a class="remCF" onclick="deletePaymentAccList(\'\', \''+row+'\')">  '+
+        '<span id="SpanRemove' + row + '"class="glyphicon glyphicon-remove deleteicon"></span></a></td>' +
+        '</tr>'
+    );
+    
+    $("#drAmount"+row).focusout(function(){
+        var drAmount = replaceAll(",","",$('#drAmount'+row).val()); 
+        if (drAmount == ""){
+            drAmount = 0;
+        }
+        drAmount = parseFloat(drAmount); 
+        document.getElementById("drAmount"+row).value = formatNumber(drAmount);
+
+        if (drAmount == "" || drAmount == 0){
+            document.getElementById("drAmount"+row).value = "";
+        }
+        calculateTotalDrCrAmount();
+    }); 
+    
+    $("#crAmount"+row).focusout(function(){
+        var crAmount = replaceAll(",","",$('#crAmount'+row).val()); 
+        if (crAmount == ""){
+            crAmount = 0;
+        }
+        crAmount = parseFloat(crAmount); 
+        document.getElementById("crAmount"+row).value = formatNumber(crAmount);
+
+        if (crAmount == "" || crAmount == 0){
+            document.getElementById("crAmount"+row).value = "";
+        }
+        calculateTotalDrCrAmount();
+    }); 
+    
+    var countrow = 1;
+    var rowAll = $("#PaymentAccountTable tr").length;
+    if (rowAll <= 1) {
+        $("#tr_PaymentAccountTableAddRow").removeClass("hide");
+        $("#tr_PaymentAccountTableAddRow").addClass("show");
+    }
+    $('#PaymentAccountTable tr:gt(0) ').each(function() {
+        $(this).find('td:eq(0)').html(countrow) ;
+        countrow = countrow+1;
+    });    
+//    var tempCount = parseInt($("#countRowCredit").val()) + 1;
+    $("#countRowPaymentAccount").val(row+1);
+}
+
 function AddRowCredit(row) {    
     if (!row) {
         row = 1;
@@ -2350,6 +2611,7 @@ function calculateWithodingTax(){
         document.getElementById("withholdingTax").value = formatNumber(0);
     }
 }
+
 function deleteCreditList(id,Ccount) {
     document.getElementById('creditIdDelete').value = id;
     document.getElementById('creditRowDelete').value = Ccount;
@@ -2521,4 +2783,88 @@ function clearNew(){
    $("#action").val("");
    document.getElementById('PaymentAirlineForm').submit();
 }
+
+function deletePaymentAccList(id,Ccount) {
+    document.getElementById('paymentAccountIdDelete').value = id;
+    document.getElementById('paymentAccountRowDelete').value = Ccount;
+    $("#delPaymentAccount").text('Are you sure delete this payment account ?');
+    $('#DeletePaymentAccountModal').modal('show');
+}
+
+function DeleteRowPaymentAccount(){
+    var cCount = document.getElementById('paymentAccountRowDelete').value;
+    var id = document.getElementById('paymentAccountIdDelete').value;
+    if(id === ''){
+        var countrow=1;
+        $("#accno" + cCount).parent().parent().remove();
+        var rowAll = $("#PaymentAccountTable tr").length;
+        if (rowAll <= 1) {
+            $("#tr_PaymentAccountTableAddRow").removeClass("hide");
+            $("#tr_PaymentAccountTableAddRow").addClass("show");
+        }
+        $('#PaymentAccountTable tr:gt(0) ').each(function() {
+            $(this).find('td:eq(0)').html(countrow) ; 
+            countrow = countrow+1;
+        });
+     }else {
+        $.ajax({
+            url: 'PaymentAirline.smi?action=deletePaymentAccount',
+            type: 'get',
+            data: {paymentAccountIdDelete: id},
+            success: function () {
+                var countrow=1;
+                $("#accno" + cCount).parent().parent().remove();
+                var rowAll = $("#PaymentAccountTable tr").length;
+                if (rowAll <= 1) {
+                    $("#tr_PaymentAccountTableAddRow").removeClass("hide");
+                    $("#tr_PaymentAccountTableAddRow").addClass("show");
+                }
+                $('#PaymentAccountTable tr:gt(0) ').each(function() {
+                    $(this).find('td:eq(0)').html(countrow) ;
+                    countrow = countrow+1;
+                });
+                calculateTotalDrCrAmount();
+            },
+            error: function () {
+                console.log("error");
+                result =0;
+            }
+        }); 
+    }
+    $('#DeletePaymentAccountModal').modal('hide');
+    calculateTotalDrCrAmount();
+}
+
+function calculateTotalDrCrAmount(){
+    var count = parseInt(document.getElementById('countRowPaymentAccount').value);
+    var i;
+    var grandDrTotal = 0;
+    var grandCrTotal = 0;
+    for(i=1;i<count+1;i++){
+        var dramount = document.getElementById("drAmount" + i);
+        if (dramount !== null){
+            var drvalue = dramount.value;
+            if(drvalue !== ''){
+                drvalue = drvalue.replace(/,/g,"");
+                var drtotal = parseFloat(drvalue);
+                grandDrTotal += drtotal;
+                document.getElementById('drAmount' + i).value = formatNumber(drtotal);
+            }
+        }
+        
+        var cramount = document.getElementById("crAmount" + i);
+        if (cramount !== null){
+            var crvalue = cramount.value;
+            if(crvalue !== ''){
+                crvalue = crvalue.replace(/,/g,"");
+                var crtotal = parseFloat(crvalue);
+                grandCrTotal += crtotal;
+                document.getElementById('crAmount' + i).value = formatNumber(crtotal);
+            }
+        }
+    }
+    document.getElementById('totalDrAmount').value = formatNumber(grandDrTotal);
+    document.getElementById('totalCrAmount').value = formatNumber(grandCrTotal);
+}
+
 </script>
