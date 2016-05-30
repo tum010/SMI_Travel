@@ -421,7 +421,7 @@
                                     </div>
                                 </div> -->
                                 <div class="row">
-                                    <div class="col-md-6 " style="margin-top: -10px;">
+                                    <div class="col-md-6" style="margin-top: -10px;">
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label" for="nameProduct">Adult</label>
                                             <div class="col-sm-3">
@@ -1238,6 +1238,22 @@ $('#savereal').on("keyup keypress", function(e) {
                             message: 'The agent code is required'  
                         }
 
+                    }
+                },
+                currencycost: {
+                    validators: {
+                        notEmpty: {
+                            message: 'The Cost Currency is required',
+                            //enabled: false
+                        }
+                    }
+                },
+                currency: {
+                    validators: {
+                        notEmpty: {
+                            message: 'The Price Currency is required',
+                            //enabled: false
+                        }
                     }
                 }
             }

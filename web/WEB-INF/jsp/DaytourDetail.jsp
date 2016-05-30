@@ -597,7 +597,7 @@
                             $(".ui-widget").css("left", position.left);
                             var name = this.value;
                             var code = this.value.toUpperCase();
-                            $("#InputTourName").val(null);
+                            $("#InputTourName").val(name);
                         });
 
 //                        $("#InputTourCode").autocomplete({

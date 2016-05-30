@@ -352,12 +352,12 @@ public class CollectionNirvanaImpl implements CollectionNirvanaDao{
             ssDataexchTemp.setDataArea(setDataArea(co));
             
             //Ss_dataextrchtr2
-            List<SsDataexchTr> ssDataexchTr2List = setCollectionNirvanaCashReceipt(co.getRowid() , colNirvanaNo); 
-            ssDataexchTemp.setSsDataexchTr2List(ssDataexchTr2List);
+            List<SsDataexchTr> ssDataexchTrList = setCollectionNirvanaCashReceipt(co.getRowid() , colNirvanaNo); 
+            ssDataexchTemp.setSsDataexchTrList(ssDataexchTrList);
             
             //Ss_dataextrchtr3
-            List<SsDataexchTr> ssDataexchTr3List = setCollectionNirvanaExpenseReceipt(co.getRowid() , colNirvanaNo); 
-            ssDataexchTemp.setSsDataexchTr3List(ssDataexchTr3List);
+//            List<SsDataexchTr> ssDataexchTr3List = setCollectionNirvanaExpenseReceipt(co.getRowid() , colNirvanaNo); 
+//            ssDataexchTemp.setSsDataexchTr3List(ssDataexchTr3List);
             
             util.logsNirvana(ssDataexchTemp,co.getRowid());
             
@@ -462,10 +462,10 @@ public class CollectionNirvanaImpl implements CollectionNirvanaDao{
         String cust_taxid = "";
         dataArea += util.generateDataAreaNirvana(cust_taxid,21);
         
-        String cust_branch = "";
+        String cust_branch = "1";
         dataArea += util.generateDataAreaNirvana(cust_branch,6);
         
-        String company_branch = "";
+        String company_branch = "1";
         dataArea += util.generateDataAreaNirvana(company_branch,6);
         
         return dataArea;
@@ -586,7 +586,7 @@ public class CollectionNirvanaImpl implements CollectionNirvanaDao{
                     recno += "," +parts[i] ;
                 }
             }
-            collectionNirvana.setRecno(recno);
+            collectionNirvana.setRecno(recno.substring(1));
             collectionNirvana.setRecamount((BigDecimal) CN[6]);
             collectionNirvana.setCur(util.ConvertString(CN[7]));
             collectionNirvana.setDiff((BigDecimal) CN[8]);

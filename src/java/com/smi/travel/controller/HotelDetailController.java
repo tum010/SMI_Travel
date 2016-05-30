@@ -94,8 +94,8 @@ public class HotelDetailController extends SMITravelController {
         String infant = request.getParameter("infant");
         String Deadline = request.getParameter("deadline");
         String Flight = request.getParameter("Flight");
-        String currency = request.getParameter("select-currency");
-        String currencycost = request.getParameter("select-currencycost");
+        String currency = request.getParameter("selectcurrency");
+        String currencycost = request.getParameter("selectcurrencycost");
         String supplier = request.getParameter("Supplier");
 
         String hotelRoomRows = request.getParameter("roomCounter");

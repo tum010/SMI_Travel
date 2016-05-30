@@ -259,11 +259,11 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row form-group">
-                            <div class="col-sm-4" style="margin-top: -10px;">
+                        <div class="row">
+                            <div class="col-sm-4  form-group" style="margin-top: -10px;">
                                 <label class="col-sm-5 control-label text-right">Cost Currency</label>
                                 <div class="col-sm-6">
-                                    <select id="select-currencycost" name="select-currencycost" class="form-control">
+                                    <select id="selectcurrencycost" name="selectcurrencycost" class="form-control">
                                         <option id="" value="">---------</option>
                                         <c:forEach var="price" items="${mCurrency}" >
                                             <c:set var="select1" value="" />
@@ -275,10 +275,10 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-sm-4" style="margin-top: -10px;">
+                            <div class="col-sm-4  form-group" style="margin-top: -10px;">
                                 <label class="col-sm-5 control-label text-right">Price Currency</label>
                                 <div class="col-sm-6">
-                                    <select id="select-currency" name="select-currency" class="form-control">
+                                    <select id="selectcurrency" name="selectcurrency" class="form-control">
                                     <option id="" value="">---------</option>
                                     <c:forEach var="price" items="${mCurrency}" >
                                         <c:set var="select1" value="" />
@@ -290,7 +290,7 @@
                                 </select>
                                 </div>
                             </div>
-                            <div class="col-sm-4" style="margin-top: -10px;"> 
+                            <div class="col-sm-4  form-group" style="margin-top: -10px;"> 
                                 <label class="col-sm-4 control-label text-right">Supplier</label>
                                 <div class="col-sm-6">
                                     <input class="form-control" type="text" maxlength="" id="Supplier" name="Supplier" 

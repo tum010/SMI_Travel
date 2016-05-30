@@ -213,7 +213,7 @@ public class SsDataexch {
             if(con != null){
                 System.out.println(" ===== callStoredProcedure Collection ===== ");
                 stmt = con.createStatement();
-                stmt.executeUpdate(" exec SOFTPACK.zz_SMI_payablejrnl "); 
+                stmt.executeUpdate(" exec SOFTPACK.zz_SMI_CasRcptjrnl ");  
                 if(!"null".equalsIgnoreCase(result)){
                     for(int i=0; i<ssDataexchList.size(); i++){
                         SsDataexch ssDataexch = ssDataexchList.get(i);
@@ -285,7 +285,6 @@ public class SsDataexch {
             
             try {
                 stmt.executeUpdate(sql);
-                
             } catch (Exception e) {
                 e.printStackTrace();
                 

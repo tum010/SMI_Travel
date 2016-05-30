@@ -150,6 +150,22 @@ $(document).ready(function () {
                         //enabled: false
                     }
                 }
+            },
+            selectcurrencycost : {
+                validators: {
+                    notEmpty: {
+                        message: 'The Cost Currency is required',
+                        //enabled: false
+                    }
+                }
+            },
+            selectcurrency: {
+                validators: {
+                    notEmpty: {
+                        message: 'The Price Currency is required',
+                        //enabled: false
+                    }
+                }
             }
         }
     })
@@ -169,6 +185,14 @@ $(document).ready(function () {
         var checkout = $(this).find('[name="checkout"]');
         var isEmpty = checkout.val() === '';
         vForm.bootstrapValidator('enableFieldValidators', 'checkout', isEmpty);
+        
+        var selectcurrency = $(this).find('[name="selectcurrency"]');
+        var isEmpty = selectcurrency.val() === '';
+        vForm.bootstrapValidator('enableFieldValidators', 'selectcurrency', isEmpty);
+        
+        var selectcurrencycost = $(this).find('[name="selectcurrencycost"]');
+        var isEmpty = selectcurrencycost.val() === '';
+        vForm.bootstrapValidator('enableFieldValidators', 'selectcurrencycost', isEmpty);
     });
 
     var codeHotel = [];

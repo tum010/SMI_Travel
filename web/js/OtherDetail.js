@@ -204,8 +204,23 @@ $(document).ready(function() {
                         message: 'The product code is required'
                     }
                 }
+            },
+            currencycost: {
+                validators: {
+                    notEmpty: {
+                        message: 'The Cost Currency is required',
+                        //enabled: false
+                    }
+                }
+            },
+            currency: {
+                validators: {
+                    notEmpty: {
+                        message: 'The Price Currency is required',
+                        //enabled: false
+                    }
+                }
             }
-
         }
     }).on('success.field.bv', function(e, data) {
         if (data.bv.isValid()) {
