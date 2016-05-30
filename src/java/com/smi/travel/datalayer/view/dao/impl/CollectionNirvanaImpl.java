@@ -8,6 +8,8 @@ package com.smi.travel.datalayer.view.dao.impl;
 import com.smi.travel.datalayer.entity.MRunningCode;
 import com.smi.travel.datalayer.view.dao.CollectionNirvanaDao;
 import com.smi.travel.datalayer.view.entity.CollectionNirvana;
+import com.smi.travel.datalayer.view.entity.CollectionNirvanaCashReceipt;
+import com.smi.travel.datalayer.view.entity.CollectionNirvanaExpenseReceipt;
 import com.smi.travel.model.nirvana.SsDataexch;
 import com.smi.travel.model.nirvana.SsDataexchTr;
 import com.smi.travel.util.UtilityFunction;
@@ -126,7 +128,7 @@ public class CollectionNirvanaImpl implements CollectionNirvanaDao{
                                 .addScalar("comid",Hibernate.STRING)
                                 .addScalar("invname",Hibernate.STRING)
                                 .addScalar("transdate",Hibernate.DATE)
-                                .addScalar("bankid",Hibernate.STRING)
+                                .addScalar("bankcode",Hibernate.STRING)
                                 .list();
 
         List data = new ArrayList();
@@ -231,7 +233,7 @@ public class CollectionNirvanaImpl implements CollectionNirvanaDao{
             
             collectionNirvana.setTrancode(util.ConvertString(CN[24]));
             collectionNirvana.setPrefix(util.ConvertString(CN[25]));
-            collectionNirvana.setDocno(util.ConvertString(CN[256]));
+            collectionNirvana.setDocno(util.ConvertString(CN[26]));
             collectionNirvana.setRefvoucher(util.ConvertString(CN[27]));
             collectionNirvana.setYear(util.ConvertString(CN[28]));
             collectionNirvana.setPeriod(util.ConvertString(CN[29]));
@@ -340,12 +342,14 @@ public class CollectionNirvanaImpl implements CollectionNirvanaDao{
             ssDataexchTemp.setRcvStaCd("1");
             ssDataexchTemp.setRcvSysDate("00000000.000000");
             ssDataexchTemp.setRcvComment("");
-            
-            //DataArea
+            //DataArea Header
             ssDataexchTemp.setDataArea(setDataArea(co));
             
-//            List<SsDataexchTr> ssDataexchTrList = setApNirvanaDetail(apNirvana,apNirvanaNo);
-//            ssDataexchTemp.setSsDataexchTrList(ssDataexchTrList);
+            //Ss_dataextrchtr2
+            List<SsDataexchTr> ssDataexchTrList = setCollectionNirvanaCashReceipt(co.getRowid() , colNirvanaNo); 
+            ssDataexchTemp.setSsDataexchTrList(ssDataexchTrList);
+            
+            //Ss_dataextrchtr3
             
         }
         return "";
@@ -358,7 +362,7 @@ public class CollectionNirvanaImpl implements CollectionNirvanaDao{
         
         String companyId = (col.getComid()!= null && !"".equalsIgnoreCase(col.getComid()) ? col.getComid() : "");
         dataArea += util.generateDataAreaNirvana(companyId,21);
-
+        
         String tranCode = (col.getTrancode() != null && !"".equalsIgnoreCase(col.getTrancode()) ? col.getTrancode() : "");
         dataArea += util.generateDataAreaNirvana(tranCode,2);
         
@@ -468,9 +472,9 @@ public class CollectionNirvanaImpl implements CollectionNirvanaDao{
         
         String rowId = "";
         for(int i = 0;i<cnList.size();i++){
-            rowId = ",'"+cnList.get(i).getRowid()+"'";
+            rowId += ",'"+cnList.get(i).getRowid()+"'";
         }
-        String query = " SELECT * FROM `collection_nirvana` where rowid in "+rowId.substring(1)+")" ;
+        String query = " SELECT * FROM `collection_nirvana` where rowid in ("+rowId.substring(1)+")" ;
         List<Object[]> QueryList = session.createSQLQuery(query)
                 .addScalar("invno",Hibernate.STRING)
                 .addScalar("invto",Hibernate.STRING)
@@ -514,7 +518,7 @@ public class CollectionNirvanaImpl implements CollectionNirvanaDao{
                 .addScalar("comid",Hibernate.STRING)
                 .addScalar("invname",Hibernate.STRING)
                 .addScalar("transdate",Hibernate.DATE)
-                .addScalar("bankid",Hibernate.STRING)
+                .addScalar("bankcode",Hibernate.STRING)
                 .list();
         
          List data = new ArrayList();
@@ -603,7 +607,7 @@ public class CollectionNirvanaImpl implements CollectionNirvanaDao{
             collectionNirvana.setRowid(util.ConvertString(CN[23]));
             collectionNirvana.setTrancode(util.ConvertString(CN[24]));
             collectionNirvana.setPrefix(util.ConvertString(CN[25]));
-            collectionNirvana.setDocno(util.ConvertString(CN[256]));
+            collectionNirvana.setDocno(util.ConvertString(CN[26]));
             collectionNirvana.setRefvoucher(util.ConvertString(CN[27]));
             collectionNirvana.setYear(util.ConvertString(CN[28]));
             collectionNirvana.setPeriod(util.ConvertString(CN[29]));
@@ -627,6 +631,189 @@ public class CollectionNirvanaImpl implements CollectionNirvanaDao{
         this.sessionFactory.close();
         return collectionNirvanaList;
     }
+    
+    
+    private List<SsDataexchTr> setCollectionNirvanaCashReceipt(String rowid , String datano) {
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();
+        List<CollectionNirvanaCashReceipt> cncrList = new ArrayList<CollectionNirvanaCashReceipt>();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd.HHmmss", Locale.US);
+        String query = " SELECT * FROM `collection_nirvana_cash_receipt` where receiptid = '"+rowid+"'" ;
+        List<Object[]> QueryList = session.createSQLQuery(query)
+                .addScalar("receiptid",Hibernate.STRING)
+                .addScalar("transcode",Hibernate.STRING)
+                .addScalar("prefix",Hibernate.STRING)
+                .addScalar("documentno",Hibernate.STRING)
+                .addScalar("discount_amt",Hibernate.BIG_DECIMAL)
+                .addScalar("allowance_amt",Hibernate.BIG_DECIMAL)
+                .addScalar("wht_amt",Hibernate.BIG_DECIMAL)
+                .addScalar("vatamount",Hibernate.BIG_DECIMAL)
+                .addScalar("ClearArAmt",Hibernate.BIG_DECIMAL)
+                .addScalar("note",Hibernate.STRING)
+                .addScalar("basewhtamt",Hibernate.BIG_DECIMAL)
+                .addScalar("intrecno",Hibernate.STRING)
+                .addScalar("basevatamt",Hibernate.BIG_DECIMAL)
+                .list();
+        for(Object[] CN : QueryList){
+            CollectionNirvanaCashReceipt cncr = new CollectionNirvanaCashReceipt();
+            cncr.setReceiptid(util.ConvertString(CN[0]));
+            cncr.setTranscode(util.ConvertString(CN[1]));
+            cncr.setPrefix(util.ConvertString(CN[2]));
+            cncr.setDocumentno(util.ConvertString(CN[3]));
+            cncr.setDiscountamt((BigDecimal) CN[4]);
+            cncr.setAllowanceamt((BigDecimal) CN[5]);
+            cncr.setWhtamt((BigDecimal) CN[6]);
+            cncr.setVatamount((BigDecimal) CN[7]);
+            cncr.setClearArAmt((BigDecimal) CN[8]);
+            cncr.setNote(util.ConvertString(CN[9]));
+            cncr.setBasewhtamt((BigDecimal) CN[10]);
+            cncr.setIntrecno(util.ConvertString(CN[11]));
+            cncr.setBasevatamt((BigDecimal) CN[12]);
+            cncrList.add(cncr);
+        }
+        
+        List<SsDataexchTr> ssDataexchTrList = new ArrayList<SsDataexchTr>();
+        
+        for(int i = 0 ; i < cncrList.size() ; i ++){
+            SsDataexchTr ssDataexchTr = new SsDataexchTr();
+            ssDataexchTr.setDataCd("240030");            
+            ssDataexchTr.setDataNo(datano);
+            if(!"".equalsIgnoreCase(datano)){
+                ssDataexchTr.setDataSeq(String.valueOf(Integer.parseInt(datano)-1));
+            }
+            ssDataexchTr.setEntSysCd("SMI");           
+            ssDataexchTr.setEntSysDate(sdf.format(new Date()));
+            ssDataexchTr.setRcvComment("");
+            ssDataexchTr.setDataArea(setDataAreaSsDataexChTr2(cncrList.get(i)));
+            ssDataexchTrList.add(ssDataexchTr);
+        }        
+        session.close();
+        this.sessionFactory.close();
+        return ssDataexchTrList;
+    }
+    
+    
+    private String setDataAreaSsDataexChTr2(CollectionNirvanaCashReceipt cncr){
+        SimpleDateFormat sf = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd.HHmmss", Locale.US);
+        UtilityFunction util = new UtilityFunction();
+        String dataArea = "";
+        
+        String referenceTransCode = (cncr.getTranscode()!= null && !"".equalsIgnoreCase(cncr.getTranscode()) ? cncr.getTranscode() : "");
+        String referencePrefix = (cncr.getPrefix()!= null && !"".equalsIgnoreCase(cncr.getPrefix()) ? cncr.getPrefix() : "");
+        String referenceNo = (cncr.getDocumentno()!= null && !"".equalsIgnoreCase(cncr.getDocumentno()) ? cncr.getDocumentno() : "");
+        String discountAmt = (cncr.getDiscountamt() != null ? String.valueOf(cncr.getDiscountamt()) : "0.00");
+        String allowanceAmt = (cncr.getAllowanceamt() != null ? String.valueOf(cncr.getAllowanceamt()) : "0.00");
+        String withholdTaxAmt = (cncr.getWhtamt()!= null ? String.valueOf(cncr.getWhtamt()) : "0.00");
+        String vatAmt = (cncr.getVatamount()!= null ? String.valueOf(cncr.getVatamount()) : "0.00");
+        String clearArAmt = (cncr.getClearArAmt() != null ? String.valueOf(cncr.getClearArAmt()) : "0.00");
+        String note = (cncr.getNote()!= null && !"".equalsIgnoreCase(cncr.getNote()) ? cncr.getNote(): "");
+        String vatFlag = (cncr.getVatflag()!= null && !"".equalsIgnoreCase(cncr.getVatflag()) ? cncr.getVatflag() : "");
+        String vatid = (cncr.getVatid()!= null && !"".equalsIgnoreCase(cncr.getVatid()) ? cncr.getVatid(): "");
+        String basewithholdtaxamt = (cncr.getBasewhtamt()!= null ? String.valueOf(cncr.getBasewhtamt()) : "0.00");
+        String intReceiptNo = (cncr.getIntrecno() != null && !"".equalsIgnoreCase(cncr.getIntrecno()) ? cncr.getIntrecno() : "");
+        String basevatamt = (cncr.getBasevatamt()!= null ? String.valueOf(cncr.getBasevatamt()) : "0.00");
 
+        dataArea += util.generateDataAreaNirvana(referenceTransCode,2);
+        dataArea += util.generateDataAreaNirvana(referencePrefix,6); 
+        dataArea += util.generateDataAreaNirvana(referenceNo,9); 
+        dataArea += util.generateDataAreaNirvana(discountAmt,30); 
+        dataArea += util.generateDataAreaNirvana(allowanceAmt,30);  
+        dataArea += util.generateDataAreaNirvana(withholdTaxAmt,30);  
+        dataArea += util.generateDataAreaNirvana(vatAmt,30);  
+        dataArea += util.generateDataAreaNirvana(clearArAmt,30);  
+        dataArea += util.generateDataAreaNirvana(note,150); 
+        dataArea += util.generateDataAreaNirvana(vatFlag,1);  
+        dataArea += util.generateDataAreaNirvana(vatid,6);  
+        dataArea += util.generateDataAreaNirvana(basewithholdtaxamt,30); 
+        dataArea += util.generateDataAreaNirvana(intReceiptNo,21);
+        dataArea += util.generateDataAreaNirvana(basevatamt,30); 
+        System.out.println(" referenceTransCode   :::  " + referenceTransCode);
+        System.out.println(" referencePrefix   :::  " + referencePrefix); 
+        System.out.println(" referenceNo   :::  " + referenceNo); 
+        System.out.println(" discountAmt   :::  " + discountAmt); 
+        System.out.println(" allowanceAmt   :::  " + allowanceAmt );  
+        System.out.println(" withholdTaxAmt   :::  " + withholdTaxAmt);  
+        System.out.println(" vatAmt   :::  " + vatAmt );  
+        System.out.println(" clearArAmt   :::  " + clearArAmt );  
+        System.out.println(" note   :::  " + note); 
+        System.out.println(" vatFlag   :::  " + vatFlag);  
+        System.out.println(" vatid   :::  " +vatid );  
+        System.out.println(" basewithholdtaxamt   :::  " + basewithholdtaxamt); 
+        System.out.println(" intReceiptNo   :::  " + intReceiptNo);
+        System.out.println(" basevatamt   :::  " + basevatamt); 
+        
+        return dataArea;
+    }
+    
+    private List<SsDataexchTr> setCollectionNirvanaExpenseReceipt(String rowid , String datano) {
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();
+        List<CollectionNirvanaExpenseReceipt> cnerList = new ArrayList<CollectionNirvanaExpenseReceipt>();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd.HHmmss", Locale.US);
+        String query = " select * from collection_nirvana_expense_receipt where receiptid = '"+rowid+"'" ;
+        List<Object[]> QueryList = session.createSQLQuery(query)
+                .addScalar("receiptid",Hibernate.STRING)
+                .addScalar("transcode",Hibernate.STRING)
+                .addScalar("prefix",Hibernate.STRING)
+                .addScalar("discount_amt",Hibernate.BIG_DECIMAL)
+                .addScalar("note",Hibernate.STRING)
+                .list();
+        for(Object[] CN : QueryList){
+            CollectionNirvanaExpenseReceipt cner = new CollectionNirvanaExpenseReceipt();
+            cner.setProjectid(util.ConvertString(CN[0]));
+            cner.setDivisionid(util.ConvertString(CN[1]));
+            cner.setGlaccountid(util.ConvertString(CN[2]));
+            cner.setAmount((BigDecimal) CN[3]);
+            cner.setNote(util.ConvertString(CN[4]));
+            cnerList.add(cner);
+        }
+        
+        List<SsDataexchTr> ssDataexchTrList = new ArrayList<SsDataexchTr>();
+        
+        for(int i = 0 ; i < cnerList.size() ; i ++){
+            SsDataexchTr ssDataexchTr = new SsDataexchTr();
+            ssDataexchTr.setDataCd("240030");            
+            ssDataexchTr.setDataNo(datano);
+            if(!"".equalsIgnoreCase(datano)){
+                ssDataexchTr.setDataSeq(String.valueOf(Integer.parseInt(datano)-1));
+            }
+            ssDataexchTr.setEntSysCd("SMI");           
+            ssDataexchTr.setEntSysDate(sdf.format(new Date()));
+            ssDataexchTr.setRcvComment("");
+            ssDataexchTr.setDataArea(setDataAreaSsDataexChTr3(cnerList.get(i)));
+            ssDataexchTrList.add(ssDataexchTr);
+        }        
+        session.close();
+        this.sessionFactory.close();
+        return ssDataexchTrList;
+    }
+    
+    private String setDataAreaSsDataexChTr3(CollectionNirvanaExpenseReceipt cner){
+        SimpleDateFormat sf = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd.HHmmss", Locale.US);
+        UtilityFunction util = new UtilityFunction();
+        String dataArea = "";
+
+        String projectID = (cner.getProjectid()!= null && !"".equalsIgnoreCase(cner.getProjectid()) ? cner.getProjectid() : "");
+        String divisionID = (cner.getDivisionid()!= null && !"".equalsIgnoreCase(cner.getDivisionid()) ? cner.getDivisionid() : "");
+        String glAccountID = (cner.getGlaccountid()!= null && !"".equalsIgnoreCase(cner.getGlaccountid()) ? cner.getGlaccountid() : "");
+        String amount = (cner.getAmount()!= null ? String.valueOf(cner.getAmount()) : "0.00");
+        String note = (cner.getNote()!= null && !"".equalsIgnoreCase(cner.getNote()) ? cner.getNote(): "");
+      
+        dataArea += util.generateDataAreaNirvana(projectID,21);
+        dataArea += util.generateDataAreaNirvana(divisionID,21); 
+        dataArea += util.generateDataAreaNirvana(glAccountID,21); 
+        dataArea += util.generateDataAreaNirvana(amount,30); 
+        dataArea += util.generateDataAreaNirvana(note,150); 
+
+        System.out.println(" projectID   :::  " + projectID);
+        System.out.println(" divisionID   :::  " + divisionID); 
+        System.out.println(" glAccountID   :::  " + glAccountID); 
+        System.out.println(" amount   :::  " + amount); 
+        System.out.println(" note   :::  " + note); 
+
+        return dataArea;
+    }
 
 }
