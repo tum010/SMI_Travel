@@ -43,7 +43,7 @@
         <property name="isPayCom" type="java.lang.Integer">
             <column name="is_pay_com"/>
         </property>
-        <property name="isWhtCom" type="java.lang.Integer">
+		<property name="isWhtCom" type="java.lang.Integer">
             <column name="is_wht_com"/>
         </property>
         <property name="whtComAmt" type="big_decimal">

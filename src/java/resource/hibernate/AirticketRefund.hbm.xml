@@ -3,7 +3,7 @@
 <!-- Generated Dec 4, 2014 5:36:02 PM by Hibernate Tools 3.6.0 -->
 <!-- Generated Nov 4, 2015 10:49:35 AM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="com.smi.travel.datalayer.entity.AirticketRefund" table="airticket_refund" catalog="smitravel" >
+    <class name="com.smi.travel.datalayer.entity.AirticketRefund" table="airticket_refund" catalog="smi_uat" >
         <id name="id" type="string">
             <column name="id" />
             <generator class="identity" />

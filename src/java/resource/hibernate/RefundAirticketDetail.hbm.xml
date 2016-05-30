@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated Jul 9, 2015 9:38:51 AM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="com.smi.travel.datalayer.entity.RefundAirticketDetail" table="refund_airticket_detail" catalog="smitravel">
+    <class name="com.smi.travel.datalayer.entity.RefundAirticketDetail" table="refund_airticket_detail" catalog="smi_uat">
         <id name="id" type="string">
             <column name="id" />
             <generator class="identity" />
@@ -46,7 +46,7 @@
         <property name="clientCharge" type="big_decimal">
             <column name="client_charge" precision="10" />
         </property>
-        <property name="airlineCharge" type="big_decimal">
+		<property name="airlineCharge" type="big_decimal">
             <column name="airline_charge" precision="10" />
         </property>
         <bag name="paymentAirticketRefunds" table="payment_airticket_refund" inverse="true" lazy="true" fetch="select">

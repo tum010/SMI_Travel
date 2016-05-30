@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="com.smi.travel.datalayer.entity.AdvanceReceiveCredit" table="advance_receive_credit" catalog="smitravel" optimistic-lock="version">
+    <class name="com.smi.travel.datalayer.entity.AdvanceReceiveCredit" table="advance_receive_credit" catalog="smi_uat" optimistic-lock="version">
         <id name="id" type="string">
             <column name="id" />
             <generator class="identity" />

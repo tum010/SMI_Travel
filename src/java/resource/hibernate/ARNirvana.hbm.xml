@@ -169,8 +169,8 @@
         <property name="comid" type="string">
             <column name="comid"/>
         </property>
-        <property name="invid" type="integer">
+		<property name="invid" type="integer">
             <column name="inv_id"/>
-        </property>    
+        </property> 
     </class>
 </hibernate-mapping>

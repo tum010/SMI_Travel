@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-    <class name="com.smi.travel.datalayer.entity.MProductType" table="m_product_type" catalog="smitravel">
+    <class name="com.smi.travel.datalayer.entity.MProductType" table="m_product_type" catalog="smi_uat">
         <id name="id" type="string">
             <column name="id" />
             <generator class="identity" />

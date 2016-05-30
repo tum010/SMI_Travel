@@ -3,7 +3,7 @@
 <!-- Generated Dec 4, 2014 5:36:02 PM by Hibernate Tools 3.6.0 -->
 <!-- Generated Dec 23, 2014 9:31:32 AM by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
-    <class name="com.smi.travel.datalayer.entity.MItemstatus" table="m_itemstatus" catalog="smitravel">
+    <class name="com.smi.travel.datalayer.entity.MItemstatus" table="m_itemstatus" catalog="smi_uat">
         <id name="id" type="string">
             <column name="id" />
             <generator class="identity" />

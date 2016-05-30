@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated Nov 4, 2015 5:40:03 PM by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
-    <class name="com.smi.travel.datalayer.entity.AdvanceReceivePeriod" table="advance_receive_period" catalog="smitravel">
+    <class name="com.smi.travel.datalayer.entity.AdvanceReceivePeriod" table="advance_receive_period" catalog="smi_uat">
         <id name="id" type="string">
             <column name="id" />
             <generator class="identity" />

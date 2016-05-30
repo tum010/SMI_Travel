@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated Dec 4, 2014 5:36:02 PM by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
-    <class name="com.smi.travel.datalayer.entity.TaxInvoiceDetail" table="tax_invoice_detail" catalog="smitravel">
+    <class name="com.smi.travel.datalayer.entity.TaxInvoiceDetail" table="tax_invoice_detail" catalog="smi_uat">
         <id name="id" type="string">
             <column name="id" />
             <generator class="identity" />
@@ -66,6 +66,9 @@
         </property>
         <property name="refAmount" type="big_decimal">
             <column name="ref_amount" precision="10" />
+        </property>
+        <property name="dataNo" type="string">
+            <column name="data_no" length="10" />
         </property>
     </class>
 </hibernate-mapping>

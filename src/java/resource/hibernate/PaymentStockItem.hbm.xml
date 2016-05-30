@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated Dec 25, 2015 10:19:36 AM by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
-    <class name="com.smi.travel.datalayer.entity.PaymentStockItem" table="payment_stock_item" catalog="smitravel">
+    <class name="com.smi.travel.datalayer.entity.PaymentStockItem" table="payment_stock_item" catalog="smi_uat">
         <id name="id" type="string">
             <column name="id" />
             <generator class="identity" />

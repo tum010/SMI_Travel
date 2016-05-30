@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated Jul 20, 2015 5:52:41 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="com.smi.travel.datalayer.entity.Receipt" table="receipt" catalog="smitravel" >
+    <class name="com.smi.travel.datalayer.entity.Receipt" table="receipt" catalog="smi_uat" >
         <id name="id" type="string">
             <column name="id" />
             <generator class="identity" />
@@ -113,9 +113,9 @@
         <property name="operationUser" type="string">
             <column name="operation_user" length="20" />
         </property>
-        <property name="dataNo" type="string">
+		<property name="dataNo" type="string">
             <column name="data_no" length="10" />
-        </property>
+        </property>		
         <bag name="receiptDetails" table="receipt_detail" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="rec_id" />
