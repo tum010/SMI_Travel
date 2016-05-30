@@ -7,6 +7,7 @@ package com.smi.travel.datalayer.service;
 
 import com.smi.travel.datalayer.view.dao.CollectionNirvanaDao;
 import com.smi.travel.datalayer.view.entity.CollectionNirvana;
+import com.smi.travel.datalayer.view.entity.NirvanaInterface;
 import java.util.List;
 
 /**
@@ -20,8 +21,8 @@ public class CollectionNirvanaService {
         return collectionNirvanaDao.getCollectionNirvanaFromFilter(department, type, status, from, to, invno, printby);
     }
     
-    public String UpdateStatusCollection(List<CollectionNirvana> collectionNirvanaList){
-        return collectionNirvanaDao.UpdateStatusCollection(collectionNirvanaList);
+    public String UpdateStatusCollection(List<NirvanaInterface> nirvanaInterfaceList){
+        return collectionNirvanaDao.UpdateStatusCollection(nirvanaInterfaceList);
     }
     
     public String MappingCollectionNirvana(List<CollectionNirvana> cnData){

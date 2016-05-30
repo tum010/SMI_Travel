@@ -6,6 +6,7 @@
 package com.smi.travel.datalayer.view.dao;
 
 import com.smi.travel.datalayer.view.entity.CollectionNirvana;
+import com.smi.travel.datalayer.view.entity.NirvanaInterface;
 import java.util.List;
 
 /**
@@ -14,6 +15,6 @@ import java.util.List;
  */
 public interface CollectionNirvanaDao {
     public List<CollectionNirvana> getCollectionNirvanaFromFilter(String department,String type,String status,String from,String to,String invno,String printby);
-    public String UpdateStatusCollection(List<CollectionNirvana> collectionNirvanaList);
+    public String UpdateStatusCollection(List<NirvanaInterface> nirvanaInterfaceList);
     public String MappingCollectionNirvana(List<CollectionNirvana> cnData);
 }

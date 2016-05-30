@@ -22,7 +22,7 @@ import java.util.List;
  * @author chonnasith
  */
 public class SsDataexch {
-    private static final String ip = "192.168.129.184";
+    private static final String ip = "192.168.1.185";
     private static final String port = "2638";
     private static final String username = "ICONEXT";
     private static final String password = "iconext";
@@ -46,7 +46,9 @@ public class SsDataexch {
     private String traSysDate;
     private String dataArea;
     private List ssDataexchTrList = new ArrayList<SsDataexchTr>();
-    
+    //Collection
+    private List ssDataexchTr2List = new ArrayList<SsDataexchTr>();
+    private List ssDataexchTr3List = new ArrayList<SsDataexchTr>();
     //Nirvana Interface
     //AP
     private String payment_detail_id;
@@ -196,9 +198,50 @@ public class SsDataexch {
         return nirvanaInterfaceList;
     }
     
+    
+    public List<NirvanaInterface> callStoredProcedureCollection(List<SsDataexch> ssDataexchList) throws Exception {
+        String result = "success";
+        List<NirvanaInterface> nirvanaInterfaceList = new ArrayList<NirvanaInterface>();
+        sybDriver = (SybDriver) Class.forName("com.sybase.jdbc3.jdbc.SybDriver").newInstance();  
+        con = DriverManager.getConnection(url,username, password);
+        try {
+            if(con != null){
+                System.out.println(" ===== callStoredProcedure Collection ===== ");
+                stmt = con.createStatement();
+                stmt.executeUpdate(" exec SOFTPACK.zz_SMI_payablejrnl "); 
+                if(!"null".equalsIgnoreCase(result)){
+                    for(int i=0; i<ssDataexchList.size(); i++){
+                        SsDataexch ssDataexch = ssDataexchList.get(i);
+                        System.out.println("===== Data No ===== : "+ ssDataexch.getDataNo());
+                        System.out.println("===== Data Cd ===== : "+ ssDataexch.getDataCd());
+                        ResultSet rs = stmt.executeQuery("select * from ss_dataexch2 where data_no = '" + ssDataexch.getDataNo() + "' and data_cd = '" + ssDataexch.getDataCd() + "'" );
+                        while (rs.next()) {    
+                            String status = rs.getString("rcv_sta_cd") == null ? "" : rs.getString("rcv_sta_cd");
+                            if("9".equalsIgnoreCase(status)){
+                                String datano = (ssDataexch.getDataNo() != null && !"".equalsIgnoreCase(ssDataexch.getDataNo()) ? ssDataexch.getDataNo() : "");
+                                String rowid = (ssDataexch.getRowid() != null && !"".equalsIgnoreCase(ssDataexch.getRowid()) ? ssDataexch.getRowid() : "");
+                                NirvanaInterface nirvanaInterface = new NirvanaInterface();
+                                nirvanaInterface.setDatano(datano);
+                                nirvanaInterface.setRowid(rowid);
+                                nirvanaInterfaceList.add(nirvanaInterface);
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            
+        } finally {
+            stmt.close();
+            con.close();
+        }
+        return nirvanaInterfaceList;
+    }
+    
     public String insertHeader(SsDataexch ssDataexch) throws SQLException {
         String dataNo = "";
-        String sql = " INSERT INTO ss_dataexch2 values ("
+        String sql = " INSERT INTO ss_dataexch2 values (" 
                 + "'" + ssDataexch.getDataCd() + "'"
                 + ",'" + ssDataexch.getDataNo() + "'"
                 + ",'" + ssDataexch.getEntSysCd() + "'"
@@ -390,6 +433,22 @@ public class SsDataexch {
 
     public void setPaymenttype(String paymenttype) {
         this.paymenttype = paymenttype;
+    }
+
+    public List getSsDataexchTr2List() {
+        return ssDataexchTr2List;
+    }
+
+    public void setSsDataexchTr2List(List ssDataexchTr2List) {
+        this.ssDataexchTr2List = ssDataexchTr2List;
+    }
+
+    public List getSsDataexchTr3List() {
+        return ssDataexchTr3List;
+    }
+
+    public void setSsDataexchTr3List(List ssDataexchTr3List) {
+        this.ssDataexchTr3List = ssDataexchTr3List;
     }
     
 }

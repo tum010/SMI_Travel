@@ -10,6 +10,7 @@ import com.smi.travel.datalayer.view.dao.CollectionNirvanaDao;
 import com.smi.travel.datalayer.view.entity.CollectionNirvana;
 import com.smi.travel.datalayer.view.entity.CollectionNirvanaCashReceipt;
 import com.smi.travel.datalayer.view.entity.CollectionNirvanaExpenseReceipt;
+import com.smi.travel.datalayer.view.entity.NirvanaInterface;
 import com.smi.travel.model.nirvana.SsDataexch;
 import com.smi.travel.model.nirvana.SsDataexchTr;
 import com.smi.travel.util.UtilityFunction;
@@ -26,7 +27,8 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author Jittima
@@ -284,13 +286,13 @@ public class CollectionNirvanaImpl implements CollectionNirvanaDao{
     }
 
     @Override
-    public String UpdateStatusCollection(List<CollectionNirvana> cnList) {
+    public String UpdateStatusCollection(List<NirvanaInterface> nirvanaInterfaceList) {
         UtilityFunction utilty =  new UtilityFunction();
         String isUpdate ="";
         try {
             Session session = this.sessionFactory.openSession();
             transaction = session.beginTransaction();
-            for (int i = 0; i < cnList.size(); i++) {
+            for (int i = 0; i < nirvanaInterfaceList.size(); i++) {
                 Calendar cal = Calendar.getInstance();
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 String strDate = sdf.format(cal.getTime());
@@ -298,13 +300,16 @@ public class CollectionNirvanaImpl implements CollectionNirvanaDao{
                 
                 String hql = "";
                 String id = "";
-                if(cnList.get(i).getRowid() != null && !"".equalsIgnoreCase(cnList.get(i).getRowid())){
-                    id = cnList.get(i).getRowid();
-                    hql = "update Receipt rec set rec.isExport = 1 , rec.exportDate = :date where rec.id = :recid";
+                String dataNo = "";
+                if(nirvanaInterfaceList.get(i).getRowid() != null && !"".equalsIgnoreCase(nirvanaInterfaceList.get(i).getRowid())){
+                    id = nirvanaInterfaceList.get(i).getRowid();
+                    dataNo = nirvanaInterfaceList.get(i).getDatano();
+                    hql = "update Receipt rec set rec.isExport = 1 , rec.exportDate = :date , rec.dataNo = :dataNo where rec.id = :recid";
                 }
                 Query query = session.createQuery(hql);
                 query.setParameter("recid", String.valueOf(id));
                 query.setParameter("date", date);
+                query.setParameter("dataNo", dataNo);
                 int result = query.executeUpdate();
                 System.out.println("Query Update : " + result + ":" + query);
             }
@@ -335,6 +340,7 @@ public class CollectionNirvanaImpl implements CollectionNirvanaDao{
             Date date = new Date();
             //Data ss_dataexch2 For Header , Receipt Voucher
             SsDataexch ssDataexchTemp = new SsDataexch();
+            ssDataexchTemp.setRowid(co.getRowid()); // Receiot Id
             ssDataexchTemp.setDataCd("240030");            
             ssDataexchTemp.setDataNo(colNirvanaNo);
             ssDataexchTemp.setEntSysCd("SMI");           
@@ -346,13 +352,37 @@ public class CollectionNirvanaImpl implements CollectionNirvanaDao{
             ssDataexchTemp.setDataArea(setDataArea(co));
             
             //Ss_dataextrchtr2
-            List<SsDataexchTr> ssDataexchTrList = setCollectionNirvanaCashReceipt(co.getRowid() , colNirvanaNo); 
-            ssDataexchTemp.setSsDataexchTrList(ssDataexchTrList);
+            List<SsDataexchTr> ssDataexchTr2List = setCollectionNirvanaCashReceipt(co.getRowid() , colNirvanaNo); 
+            ssDataexchTemp.setSsDataexchTr2List(ssDataexchTr2List);
             
             //Ss_dataextrchtr3
+            List<SsDataexchTr> ssDataexchTr3List = setCollectionNirvanaExpenseReceipt(co.getRowid() , colNirvanaNo); 
+            ssDataexchTemp.setSsDataexchTr3List(ssDataexchTr3List);
+            
+            util.logsNirvana(ssDataexchTemp,co.getRowid());
+            
+            try {
+                result = ssDataexchTemp.connectSybase(ssDataexchTemp); // insert header & insert detail
+            } catch (Exception ex) {
+                Logger.getLogger(APNirvanaImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            ssDataexchList.add(ssDataexchTemp);
+            
+            if(i == cnData.size()-1){
+                try {
+                    List<NirvanaInterface> nirvanaInterfaceList = ssDataexchTemp.callStoredProcedureCollection(ssDataexchList);
+                    if(nirvanaInterfaceList != null){
+                        System.out.println("===== UpdateStatusCollectionInterface =====");
+                        result = UpdateStatusCollection(nirvanaInterfaceList);
+                    }
+                } catch (Exception ex) {
+                    Logger.getLogger(APNirvanaImpl.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
             
         }
-        return "";
+        return result;
     }
     private String setDataArea(CollectionNirvana col){
         SimpleDateFormat sf = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
