@@ -718,18 +718,23 @@
                                                     <c:set var="selected1" value="" />
                                                     <c:set var="selected2" value="" />
                                                     <c:set var="selected3" value="" />
-                                                    <c:if test="${table.accNo == '51010'}">
+                                                     <c:set var="selected4" value="" />
+                                                    <c:if test="${table.accNo == '5130-08'}">
                                                         <c:set var="selected1" value="selected" />
                                                     </c:if>
-                                                    <c:if test="${table.accNo == '21035'}">
+                                                    <c:if test="${table.accNo == '4300-06'}">
                                                         <c:set var="selected2" value="selected" />
                                                     </c:if>
-                                                    <c:if test="${table.accNo == '43010'}">
+                                                    <c:if test="${table.accNo == '2120-05'}">
                                                         <c:set var="selected3" value="selected" />
                                                     </c:if>
-                                                    <option value="51010" ${selected1}>51010</option>
-                                                    <option value="21035" ${selected2}>21035</option>
-                                                    <option value="43010" ${selected3}>43010</option>
+                                                    <c:if test="${table.accNo == '2120-03'}">
+                                                        <c:set var="selected4" value="selected" />
+                                                    </c:if>
+                                                    <option value="5130-08" ${selected1}>5130-08</option>
+                                                    <option value="4300-06" ${selected2}>4300-06</option>
+                                                    <option value="2120-05" ${selected3}>2120-05</option>
+                                                    <option value="2120-03" ${selected4}>2120-03</option>                                          
                                                 </select>
                                             </td>
                                             <td><input maxlength="255" id="detail${i.count}" name="detail${i.count}" type="text" class="form-control" value="${table.detail}"></td>
@@ -2397,7 +2402,7 @@ function AddRowPaymentAccount(row) {
         '<tr style="higth 100px">' +
         '<td class="text-center">' + row + '</td>' +
         '<td>' +
-        '<select class="form-control" name="accno' + row + '" id="accno' + row + '" ><option value="">---------</option><option value="51010" >51010</option><option value="21035">21035</option><option value="43010" >43010</option></select>' +
+        '<select class="form-control" name="accno' + row + '" id="accno' + row + '" ><option value="">---------</option><option value="5130-08" >5130-08</option><option value="4300-06" >4300-06</option><option value="2120-05">2120-05</option><option value="2120-03" >2120-03</option></select>' +
         '</td>' +
         '<td><input maxlength="255" id="detail' + row + '" name="detail' + row + '" type="text" class="form-control" value=""></td>' +
         '<td>' +
