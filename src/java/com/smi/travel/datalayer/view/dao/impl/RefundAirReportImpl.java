@@ -178,10 +178,10 @@ public class RefundAirReportImpl implements RefundAirReportDao{
 //         
          if((refundagent != null) &&(!"".equalsIgnoreCase(refundagent))){
             if(checkQuery == 1){
-                query += " and invm.agent  = '" + refundagent + "' ";
+                query += " and invm.airlineagent  = '" + refundagent + "' ";
             }else{
                 checkQuery = 1;
-                query += " invm.agent  = '" + refundagent + "' ";
+                query += " invm.airlineagent  = '" + refundagent + "' ";
             }
          }
          

@@ -38,7 +38,7 @@
                     <div class="row">
                         <div class="col-xs-12 form-group">
                             <div class="col-xs-1 text-right"  style="width: 330px">
-                                <label class="control-label text-right">Refund Agent</label>
+                                <label class="control-label text-right">Request Airline</label>
                             </div>
                             <div class="col-xs-1"  style="width: 150px">
                                 <div class="input-group" id="refundAgentCodeValidate">
