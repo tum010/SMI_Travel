@@ -169,9 +169,13 @@ public class InvoiceImpl implements InvoiceDao{
     @Override
     public synchronized String updateInvoice(Invoice invoice) {
         String result = "";
+        Invoice mInvoice = getExportData(invoice);
         try {
             Session session = this.sessionFactory.openSession();
             transaction = session.beginTransaction();
+            invoice.setIsExport(mInvoice.getIsExport());
+            invoice.setExportDate(mInvoice.getExportDate());
+            invoice.setDataNo(mInvoice.getDataNo() != null && !"".equalsIgnoreCase(mInvoice.getDataNo()) ? mInvoice.getDataNo() : "");
             session.update(invoice);
             
             List<InvoiceDetail> invoiceDetail = invoice.getInvoiceDetails();
@@ -1133,5 +1137,20 @@ public class InvoiceImpl implements InvoiceDao{
         this.sessionFactory.close();
         return list.get(0);
     
+    }
+
+    private Invoice getExportData(Invoice invoice) {
+        Session session = this.sessionFactory.openSession();
+        List<Invoice> invoiceList = session.createQuery("FROM Invoice inv where inv.id = :invoiceId ")
+            .setParameter("invoiceId", invoice.getId())
+            .list();
+        if (!invoiceList.isEmpty()) {
+            Invoice mInvoice = invoiceList.get(0);
+            invoice.setIsExport(mInvoice.getIsExport());
+            invoice.setExportDate(mInvoice.getExportDate());
+            invoice.setDataNo(mInvoice.getDataNo());
+        }
+        session.close();
+        return invoiceList.get(0);
     }
 }

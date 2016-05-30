@@ -133,6 +133,10 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
                 if (taxInvoiceDetail.get(i).getId() == null) {
                     session.save(taxInvoiceDetail.get(i));
                 } else {
+                    TaxInvoiceDetail mTaxInvoiceDetail = getExportData(taxInvoiceDetail.get(i));
+                    taxInvoiceDetail.get(i).setIsExport(mTaxInvoiceDetail.getIsExport());
+                    taxInvoiceDetail.get(i).setExportDate(mTaxInvoiceDetail.getExportDate());
+                    taxInvoiceDetail.get(i).setDataNo(mTaxInvoiceDetail.getDataNo() != null && !"".equalsIgnoreCase(mTaxInvoiceDetail.getDataNo()) ? mTaxInvoiceDetail.getDataNo() : "");
                     session.update(taxInvoiceDetail.get(i));
                 }
             }
@@ -872,6 +876,17 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
         session.close();
         this.sessionFactory.close();
         return amountLocal.subtract(amount);
+    }
+
+    private TaxInvoiceDetail getExportData(TaxInvoiceDetail taxInvoiceDetail) {
+        Session session = this.sessionFactory.openSession();
+        List<TaxInvoiceDetail> taxInvoiceDetailList = session.createQuery("FROM TaxInvoiceDetail tax where tax.id = :id ")
+            .setParameter("id", taxInvoiceDetail.getId())
+            .list();
+
+        session.close();
+        
+        return taxInvoiceDetailList.get(0);
     }
 
 }

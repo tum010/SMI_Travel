@@ -32,11 +32,12 @@ public class TaxInvoiceDetail  {
      private BigDecimal gross;
      private BigDecimal exRate;
      private BigDecimal refAmount;
+     private String dataNo;
 
     public TaxInvoiceDetail() {
     }
 
-    public TaxInvoiceDetail(TaxInvoice taxInvoice, InvoiceDetail invoiceDetail, Character vatType, BigDecimal vat, BigDecimal amount, BigDecimal cost, String createBy, Date createDate, Integer isVat, String curCost, String curAmount, MBilltype mbillType, Master master, String description, Integer isProfit, Integer isExport, Date exportDate, BigDecimal gross, BigDecimal exRate, BigDecimal refAmount) {
+    public TaxInvoiceDetail(TaxInvoice taxInvoice, InvoiceDetail invoiceDetail, Character vatType, BigDecimal vat, BigDecimal amount, BigDecimal cost, String createBy, Date createDate, Integer isVat, String curCost, String curAmount, MBilltype mbillType, Master master, String description, Integer isProfit, Integer isExport, Date exportDate, BigDecimal gross, BigDecimal exRate, BigDecimal refAmount, String dataNo) {
        this.taxInvoice = taxInvoice;
        this.invoiceDetail = invoiceDetail;
        this.vatType = vatType;
@@ -57,6 +58,7 @@ public class TaxInvoiceDetail  {
        this.gross = gross;
        this.exRate = exRate;
        this.refAmount = refAmount;
+       this.dataNo = dataNo;
     }
    
     public String getId() {
@@ -218,6 +220,14 @@ public class TaxInvoiceDetail  {
 
     public void setRefAmount(BigDecimal refAmount) {
         this.refAmount = refAmount;
+    }
+
+    public String getDataNo() {
+        return dataNo;
+    }
+
+    public void setDataNo(String dataNo) {
+        this.dataNo = dataNo;
     }
 
 }

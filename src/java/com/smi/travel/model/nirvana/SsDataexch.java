@@ -99,14 +99,14 @@ public class SsDataexch {
         con = DriverManager.getConnection(url,username, password);
         try {
             if(con != null){
-                System.out.println(" ===== callStoredProcedure AP===== ");
+                System.out.println(" ===== callStoredProcedure AP ===== ");
                 stmt = con.createStatement();
                 stmt.executeUpdate(" exec SOFTPACK.zz_SMI_payablejrnl "); 
                 if(!"null".equalsIgnoreCase(result)){
                     for(int i=0; i<ssDataexchList.size(); i++){
                         SsDataexch ssDataexch = ssDataexchList.get(i);
                         System.out.println("===== Data No ===== : "+ssDataexch.getDataNo());
-                        ResultSet rs = stmt.executeQuery("select * from ss_dataexch2 where data_no = '" + ssDataexch.getDataNo() + "'");
+                        ResultSet rs = stmt.executeQuery("select * from ss_dataexch2 where data_no = '" + ssDataexch.getDataNo() + "' and data_cd = '240020' ");
                         while (rs.next()) {    
                             String status = rs.getString("rcv_sta_cd") == null ? "" : rs.getString("rcv_sta_cd");
                             
@@ -154,12 +154,17 @@ public class SsDataexch {
             if(con != null){
                 System.out.println(" ===== callStoredProcedure AR ===== ");
                 stmt = con.createStatement();
-                stmt.executeUpdate(" exec SOFTPACK.zz_smi_salesjrnl "); 
+                try {
+                    stmt.executeUpdate(" exec SOFTPACK.zz_smi_salesjrnl "); 
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                
                 if(!"null".equalsIgnoreCase(result)){
                     for(int i=0; i<ssDataexchList.size(); i++){
                         SsDataexch ssDataexch = ssDataexchList.get(i);
                         System.out.println("===== Data No ===== : "+ssDataexch.getDataNo());
-                        ResultSet rs = stmt.executeQuery("select * from ss_dataexch2 where data_no = '" + ssDataexch.getDataNo() + "'");
+                        ResultSet rs = stmt.executeQuery("select * from ss_dataexch2 where data_no = '" + ssDataexch.getDataNo() + "' and data_cd = '240010' ");
                         while (rs.next()) {    
                             String status = rs.getString("rcv_sta_cd") == null ? "" : rs.getString("rcv_sta_cd");
                             

@@ -367,19 +367,24 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
                 
                 String hql = "";
                 String id = "";
+                String dataNo = "";
+                System.out.println("===== nirvanaInterfaceList.get(i).getRowid() ===== : "+nirvanaInterfaceList.get(i).getRowid());
                 if(nirvanaInterfaceList.get(i).getRowid().indexOf("TAX") != -1){
                     id = nirvanaInterfaceList.get(i).getRowid().substring(3);
-                    hql = "update TaxInvoiceDetail taxd set taxd.isExport = 1 , taxd.exportDate = :date where taxd.id = :invDetailId";
+                    dataNo = nirvanaInterfaceList.get(i).getDatano();
+                    hql = "update TaxInvoiceDetail taxd set taxd.isExport = 1 , taxd.exportDate = :date , taxd.dataNo = :dataNo where taxd.id = :invDetailId";
                 
                 }else{
                     id = nirvanaInterfaceList.get(i).getRowid().substring(1);
-                    hql = "update Invoice inv set inv.isExport = 1 , inv.exportDate = :date where inv.id = :invDetailId";
+                    dataNo = nirvanaInterfaceList.get(i).getDatano();
+                    hql = "update Invoice inv set inv.isExport = 1 , inv.exportDate = :date , inv.dataNo = :dataNo where inv.id = :invDetailId";
                 
                 }
                 
                 Query query = session.createQuery(hql);
                 query.setParameter("invDetailId", String.valueOf(id));
                 query.setParameter("date", date);
+                query.setParameter("dataNo", dataNo);
                 int result = query.executeUpdate();
                 System.out.println("Query Update : " + result + ":" + query);
                 
@@ -662,8 +667,12 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
             ssDataexchTemp.setTraStaCd("1");
             ssDataexchTemp.setTraSysDate("00000000.000000");
             
+            String rowId = (arNirvana.getRowid()!= null && !"".equalsIgnoreCase(arNirvana.getRowid()) ? arNirvana.getRowid() : "");
+            ssDataexchTemp.setRowid(rowId);
+            System.out.println("===== rowId ===== : "+ rowId);
+            
             String dataArea = "";
-            String companyId = (arNirvana.getComid()!= null && !"".equalsIgnoreCase(arNirvana.getComid()) ? arNirvana.getComid() : "");;
+            String companyId = (arNirvana.getComid()!= null && !"".equalsIgnoreCase(arNirvana.getComid()) ? arNirvana.getComid() : "");
             dataArea += util.generateDataAreaNirvana(companyId,21);
             System.out.println("===== companyId ===== : "+ companyId);
             
@@ -740,13 +749,15 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
             
             BigDecimal salesAmtTemp = (arNirvana.getSalesamt() != null ? arNirvana.getSalesamt() : new BigDecimal("0.00"));
             BigDecimal vatAmtTemp = (arNirvana.getVatamt()!= null ? arNirvana.getVatamt(): new BigDecimal("0.00"));
-            String arAmt = String.valueOf(salesAmtTemp.add(vatAmtTemp));
+//            String arAmt = String.valueOf(salesAmtTemp.add(vatAmtTemp));
+            String arAmt = (arNirvana.getAramt()!= null ? String.valueOf(arNirvana.getAramt()) : "0.00");
             dataArea += util.generateDataAreaNirvana(arAmt,20);
             System.out.println("===== arAmt ===== : "+ arAmt);
             
             BigDecimal salesHAmtTemp = (arNirvana.getSaleshmamt()!= null ? arNirvana.getSaleshmamt(): new BigDecimal("0.00"));
             BigDecimal vatHAmtTemp = (arNirvana.getVathmamt()!= null ? arNirvana.getVathmamt(): new BigDecimal("0.00"));
-            String arHmAmt = String.valueOf(salesHAmtTemp.add(vatHAmtTemp));
+//            String arHmAmt = String.valueOf(salesHAmtTemp.add(vatHAmtTemp));
+            String arHmAmt = (arNirvana.getArhmamt()!= null ? String.valueOf(arNirvana.getArhmamt()) : "0.00");
             dataArea += util.generateDataAreaNirvana(arHmAmt,20);
             System.out.println("===== arHmAmt ===== : "+ arHmAmt);
             
