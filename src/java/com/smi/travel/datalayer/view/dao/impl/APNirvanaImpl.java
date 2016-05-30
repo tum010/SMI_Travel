@@ -76,109 +76,169 @@ public class APNirvanaImpl implements APNirvanaDao {
         return status;
     }
     
-    public List<SsDataexchTr> setApNirvanaDetail(APNirvana ap,String datano){
+    public List<SsDataexchTr> setApNirvanaDetail(APNirvana ap,String datano,String paymentType){
         List<SsDataexchTr> ssdtrList = new ArrayList<SsDataexchTr>();
         UtilityFunction util = new UtilityFunction();
         String dataArea = "";
         int count = 1;
-        for(int i=1; i<11; i++){
-            String puraccount = "";
-            String purdivision = "";
-            String purproject = "";
-            String puramt = "";
-            String purhmamt = "";
-            if(i == 1){
-                puraccount = (ap.getPuraccount1() != null && !"".equalsIgnoreCase(ap.getPuraccount1()) ? ap.getPuraccount1() : "");
-                purdivision = (ap.getPurdivision1() != null && !"".equalsIgnoreCase(ap.getPurdivision1()) ? ap.getPurdivision1() : "");
-                purproject = (ap.getPurproject1() != null && !"".equalsIgnoreCase(ap.getPurproject1()) ? ap.getPurproject1() : "");
-                puramt = (ap.getPuramt1() != null ? String.valueOf(ap.getPuramt1()) : "0.00");
-                purhmamt = (ap.getPurhmamt1() != null ? String.valueOf(ap.getPurhmamt1()) : "0.00");
-            }else if(i == 2){
-                puraccount = (ap.getPuraccount2() != null && !"".equalsIgnoreCase(ap.getPuraccount2()) ? ap.getPuraccount2() : "");
-                purdivision = (ap.getPurdivision2() != null && !"".equalsIgnoreCase(ap.getPurdivision2()) ? ap.getPurdivision2() : "");
-                purproject = (ap.getPurproject2() != null && !"".equalsIgnoreCase(ap.getPurproject2()) ? ap.getPurproject2() : "");
-                puramt = (ap.getPuramt2() != null ? String.valueOf(ap.getPuramt2()) : "0.00");
-                purhmamt = (ap.getPurhmamt2() != null ? String.valueOf(ap.getPurhmamt2()) : "0.00");
-            }else if(i == 3){
-                puraccount = (ap.getPuraccount3() != null && !"".equalsIgnoreCase(ap.getPuraccount3()) ? ap.getPuraccount3() : "");
-                purdivision = (ap.getPurdivision3() != null && !"".equalsIgnoreCase(ap.getPurdivision3()) ? ap.getPurdivision3() : "");
-                purproject = (ap.getPurproject3() != null && !"".equalsIgnoreCase(ap.getPurproject3()) ? ap.getPurproject3() : "");
-                puramt = (ap.getPuramt3() != null ? String.valueOf(ap.getPuramt3()) : "0.00");
-                purhmamt = (ap.getPurhmamt3() != null ? String.valueOf(ap.getPurhmamt3()) : "0.00");
-            }else if(i == 4){
-                puraccount = (ap.getPuraccount4() != null && !"".equalsIgnoreCase(ap.getPuraccount4()) ? ap.getPuraccount4() : "");
-                purdivision = (ap.getPurdivision4() != null && !"".equalsIgnoreCase(ap.getPurdivision4()) ? ap.getPurdivision4() : "");
-                purproject = (ap.getPurproject4() != null && !"".equalsIgnoreCase(ap.getPurproject4()) ? ap.getPurproject4() : "");
-                puramt = (ap.getPuramt4() != null ? String.valueOf(ap.getPuramt4()) : "0.00");
-                purhmamt = (ap.getPurhmamt4() != null ? String.valueOf(ap.getPurhmamt4()) : "0.00");
-            }else if(i == 5){
-                puraccount = (ap.getPuraccount5() != null && !"".equalsIgnoreCase(ap.getPuraccount5()) ? ap.getPuraccount5() : "");
-                purdivision = (ap.getPurdivision5() != null && !"".equalsIgnoreCase(ap.getPurdivision5()) ? ap.getPurdivision5() : "");
-                purproject = (ap.getPurproject5() != null && !"".equalsIgnoreCase(ap.getPurproject5()) ? ap.getPurproject5() : "");
-                puramt = (ap.getPuramt5() != null ? String.valueOf(ap.getPuramt5()) : "0.00");
-                purhmamt = (ap.getPurhmamt5() != null ? String.valueOf(ap.getPurhmamt5()) : "0.00");
-            }else if(i == 6){
-                puraccount = (ap.getPuraccount6() != null && !"".equalsIgnoreCase(ap.getPuraccount6()) ? ap.getPuraccount6() : "");
-                purdivision = (ap.getPurdivision6() != null && !"".equalsIgnoreCase(ap.getPurdivision6()) ? ap.getPurdivision6() : "");
-                purproject = (ap.getPurproject6() != null && !"".equalsIgnoreCase(ap.getPurproject6()) ? ap.getPurproject6() : "");
-                puramt = (ap.getPuramt6() != null ? String.valueOf(ap.getPuramt6()) : "0.00");
-                purhmamt = (ap.getPurhmamt6() != null ? String.valueOf(ap.getPurhmamt6()) : "0.00");
-            }else if(i == 7){
-                puraccount = (ap.getPuraccount7() != null && !"".equalsIgnoreCase(ap.getPuraccount7()) ? ap.getPuraccount7() : "");
-                purdivision = (ap.getPurdivision7() != null && !"".equalsIgnoreCase(ap.getPurdivision7()) ? ap.getPurdivision7() : "");
-                purproject = (ap.getPurproject7() != null && !"".equalsIgnoreCase(ap.getPurproject7()) ? ap.getPurproject7() : "");
-                puramt = (ap.getPuramt7() != null ? String.valueOf(ap.getPuramt7()) : "0.00");
-                purhmamt = (ap.getPurhmamt7() != null ? String.valueOf(ap.getPurhmamt7()) : "0.00");
-            }else if(i == 8){
-                puraccount = (ap.getPuraccount8() != null && !"".equalsIgnoreCase(ap.getPuraccount8()) ? ap.getPuraccount8() : "");
-                purdivision = (ap.getPurdivision8() != null && !"".equalsIgnoreCase(ap.getPurdivision8()) ? ap.getPurdivision8() : "");
-                purproject = (ap.getPurproject8() != null && !"".equalsIgnoreCase(ap.getPurproject8()) ? ap.getPurproject8() : "");
-                puramt = (ap.getPuramt8() != null ? String.valueOf(ap.getPuramt8()) : "0.00");
-                purhmamt = (ap.getPurhmamt8() != null ? String.valueOf(ap.getPurhmamt8()) : "0.00");
-            }else if(i == 9){
-                puraccount = (ap.getPuraccount9() != null && !"".equalsIgnoreCase(ap.getPuraccount9()) ? ap.getPuraccount9() : "");
-                purdivision = (ap.getPurdivision9() != null && !"".equalsIgnoreCase(ap.getPurdivision9()) ? ap.getPurdivision9() : "");
-                purproject = (ap.getPurproject9() != null && !"".equalsIgnoreCase(ap.getPurproject9()) ? ap.getPurproject9() : "");
-                puramt = (ap.getPuramt9() != null ? String.valueOf(ap.getPuramt9()) : "0.00");
-                purhmamt = (ap.getPurhmamt9() != null ? String.valueOf(ap.getPurhmamt9()) : "0.00");
-            }else if(i == 10){
-                puraccount = (ap.getPuraccount10() != null && !"".equalsIgnoreCase(ap.getPuraccount10()) ? ap.getPuraccount10() : "");
-                purdivision = (ap.getPurdivision10() != null && !"".equalsIgnoreCase(ap.getPurdivision10()) ? ap.getPurdivision10() : "");
-                purproject = (ap.getPurproject10() != null && !"".equalsIgnoreCase(ap.getPurproject10()) ? ap.getPurproject10() : "");
-                puramt = (ap.getPuramt10() != null ? String.valueOf(ap.getPuramt10()) : "0.00");
-                purhmamt = (ap.getPurhmamt10() != null ? String.valueOf(ap.getPurhmamt10()) : "0.00");
+        if(!"A".equalsIgnoreCase(paymentType)){
+            for(int i=1; i<11; i++){
+                String puraccount = "";
+                String purdivision = "";
+                String purproject = "";
+                String puramt = "";
+                String purhmamt = "";
+                if(i == 1){
+                    puraccount = (ap.getPuraccount1() != null && !"".equalsIgnoreCase(ap.getPuraccount1()) ? ap.getPuraccount1() : "");
+                    purdivision = (ap.getPurdivision1() != null && !"".equalsIgnoreCase(ap.getPurdivision1()) ? ap.getPurdivision1() : "");
+                    purproject = (ap.getPurproject1() != null && !"".equalsIgnoreCase(ap.getPurproject1()) ? ap.getPurproject1() : "");
+                    puramt = (ap.getPuramt1() != null ? String.valueOf(ap.getPuramt1()) : "0.00");
+                    purhmamt = (ap.getPurhmamt1() != null ? String.valueOf(ap.getPurhmamt1()) : "0.00");
+                }else if(i == 2){
+                    puraccount = (ap.getPuraccount2() != null && !"".equalsIgnoreCase(ap.getPuraccount2()) ? ap.getPuraccount2() : "");
+                    purdivision = (ap.getPurdivision2() != null && !"".equalsIgnoreCase(ap.getPurdivision2()) ? ap.getPurdivision2() : "");
+                    purproject = (ap.getPurproject2() != null && !"".equalsIgnoreCase(ap.getPurproject2()) ? ap.getPurproject2() : "");
+                    puramt = (ap.getPuramt2() != null ? String.valueOf(ap.getPuramt2()) : "0.00");
+                    purhmamt = (ap.getPurhmamt2() != null ? String.valueOf(ap.getPurhmamt2()) : "0.00");
+                }else if(i == 3){
+                    puraccount = (ap.getPuraccount3() != null && !"".equalsIgnoreCase(ap.getPuraccount3()) ? ap.getPuraccount3() : "");
+                    purdivision = (ap.getPurdivision3() != null && !"".equalsIgnoreCase(ap.getPurdivision3()) ? ap.getPurdivision3() : "");
+                    purproject = (ap.getPurproject3() != null && !"".equalsIgnoreCase(ap.getPurproject3()) ? ap.getPurproject3() : "");
+                    puramt = (ap.getPuramt3() != null ? String.valueOf(ap.getPuramt3()) : "0.00");
+                    purhmamt = (ap.getPurhmamt3() != null ? String.valueOf(ap.getPurhmamt3()) : "0.00");
+                }else if(i == 4){
+                    puraccount = (ap.getPuraccount4() != null && !"".equalsIgnoreCase(ap.getPuraccount4()) ? ap.getPuraccount4() : "");
+                    purdivision = (ap.getPurdivision4() != null && !"".equalsIgnoreCase(ap.getPurdivision4()) ? ap.getPurdivision4() : "");
+                    purproject = (ap.getPurproject4() != null && !"".equalsIgnoreCase(ap.getPurproject4()) ? ap.getPurproject4() : "");
+                    puramt = (ap.getPuramt4() != null ? String.valueOf(ap.getPuramt4()) : "0.00");
+                    purhmamt = (ap.getPurhmamt4() != null ? String.valueOf(ap.getPurhmamt4()) : "0.00");
+                }else if(i == 5){
+                    puraccount = (ap.getPuraccount5() != null && !"".equalsIgnoreCase(ap.getPuraccount5()) ? ap.getPuraccount5() : "");
+                    purdivision = (ap.getPurdivision5() != null && !"".equalsIgnoreCase(ap.getPurdivision5()) ? ap.getPurdivision5() : "");
+                    purproject = (ap.getPurproject5() != null && !"".equalsIgnoreCase(ap.getPurproject5()) ? ap.getPurproject5() : "");
+                    puramt = (ap.getPuramt5() != null ? String.valueOf(ap.getPuramt5()) : "0.00");
+                    purhmamt = (ap.getPurhmamt5() != null ? String.valueOf(ap.getPurhmamt5()) : "0.00");
+                }else if(i == 6){
+                    puraccount = (ap.getPuraccount6() != null && !"".equalsIgnoreCase(ap.getPuraccount6()) ? ap.getPuraccount6() : "");
+                    purdivision = (ap.getPurdivision6() != null && !"".equalsIgnoreCase(ap.getPurdivision6()) ? ap.getPurdivision6() : "");
+                    purproject = (ap.getPurproject6() != null && !"".equalsIgnoreCase(ap.getPurproject6()) ? ap.getPurproject6() : "");
+                    puramt = (ap.getPuramt6() != null ? String.valueOf(ap.getPuramt6()) : "0.00");
+                    purhmamt = (ap.getPurhmamt6() != null ? String.valueOf(ap.getPurhmamt6()) : "0.00");
+                }else if(i == 7){
+                    puraccount = (ap.getPuraccount7() != null && !"".equalsIgnoreCase(ap.getPuraccount7()) ? ap.getPuraccount7() : "");
+                    purdivision = (ap.getPurdivision7() != null && !"".equalsIgnoreCase(ap.getPurdivision7()) ? ap.getPurdivision7() : "");
+                    purproject = (ap.getPurproject7() != null && !"".equalsIgnoreCase(ap.getPurproject7()) ? ap.getPurproject7() : "");
+                    puramt = (ap.getPuramt7() != null ? String.valueOf(ap.getPuramt7()) : "0.00");
+                    purhmamt = (ap.getPurhmamt7() != null ? String.valueOf(ap.getPurhmamt7()) : "0.00");
+                }else if(i == 8){
+                    puraccount = (ap.getPuraccount8() != null && !"".equalsIgnoreCase(ap.getPuraccount8()) ? ap.getPuraccount8() : "");
+                    purdivision = (ap.getPurdivision8() != null && !"".equalsIgnoreCase(ap.getPurdivision8()) ? ap.getPurdivision8() : "");
+                    purproject = (ap.getPurproject8() != null && !"".equalsIgnoreCase(ap.getPurproject8()) ? ap.getPurproject8() : "");
+                    puramt = (ap.getPuramt8() != null ? String.valueOf(ap.getPuramt8()) : "0.00");
+                    purhmamt = (ap.getPurhmamt8() != null ? String.valueOf(ap.getPurhmamt8()) : "0.00");
+                }else if(i == 9){
+                    puraccount = (ap.getPuraccount9() != null && !"".equalsIgnoreCase(ap.getPuraccount9()) ? ap.getPuraccount9() : "");
+                    purdivision = (ap.getPurdivision9() != null && !"".equalsIgnoreCase(ap.getPurdivision9()) ? ap.getPurdivision9() : "");
+                    purproject = (ap.getPurproject9() != null && !"".equalsIgnoreCase(ap.getPurproject9()) ? ap.getPurproject9() : "");
+                    puramt = (ap.getPuramt9() != null ? String.valueOf(ap.getPuramt9()) : "0.00");
+                    purhmamt = (ap.getPurhmamt9() != null ? String.valueOf(ap.getPurhmamt9()) : "0.00");
+                }else if(i == 10){
+                    puraccount = (ap.getPuraccount10() != null && !"".equalsIgnoreCase(ap.getPuraccount10()) ? ap.getPuraccount10() : "");
+                    purdivision = (ap.getPurdivision10() != null && !"".equalsIgnoreCase(ap.getPurdivision10()) ? ap.getPurdivision10() : "");
+                    purproject = (ap.getPurproject10() != null && !"".equalsIgnoreCase(ap.getPurproject10()) ? ap.getPurproject10() : "");
+                    puramt = (ap.getPuramt10() != null ? String.valueOf(ap.getPuramt10()) : "0.00");
+                    purhmamt = (ap.getPurhmamt10() != null ? String.valueOf(ap.getPurhmamt10()) : "0.00");
+                }
+
+                if(!"".equalsIgnoreCase(puraccount)){
+                    dataArea += util.generateDataAreaNirvana(puraccount,21);
+                    dataArea += util.generateDataAreaNirvana(purdivision,21);
+                    dataArea += util.generateDataAreaNirvana(purproject,21);
+                    dataArea += util.generateDataAreaNirvana(puramt,20);
+                    dataArea += util.generateDataAreaNirvana(purhmamt,20);
+                    dataArea += util.generateDataAreaNirvana("detail",61);
+
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd.HHmmss", Locale.US);
+                    SsDataexchTr ssdtr = new SsDataexchTr();
+                    ssdtr.setDataCd("240020");
+                    ssdtr.setDataNo(datano);
+                    ssdtr.setDataSeq(String.valueOf(count));
+                    ssdtr.setEntSysCd("SMI");
+                    ssdtr.setEntSysDate(sdf.format(new Date()));
+            //        ssdtr.setEntDataNo(datano);
+            //        ssdtr.setEntComment("");
+            //        ssdtr.setRcvSysCd("NIRVANA");
+            //        ssdtr.setRcvStaCd("1");
+            //        ssdtr.setCvSysDate("00000000.000000");
+                    ssdtr.setRcvComment("");
+            //        ssdtr.setTraNesCd("1");
+            //        ssdtr.setTraStaCd("1");
+            //        ssdtr.setTraSysDate("00000000.000000");
+                    ssdtr.setDataArea(dataArea);
+                    ssdtrList.add(ssdtr);
+                    count += 1;
+                }
+
             }
-            
-            if(!"".equalsIgnoreCase(puraccount)){
-                dataArea += util.generateDataAreaNirvana(puraccount,21);
-                dataArea += util.generateDataAreaNirvana(purdivision,21);
-                dataArea += util.generateDataAreaNirvana(purproject,21);
-                dataArea += util.generateDataAreaNirvana(puramt,20);
-                dataArea += util.generateDataAreaNirvana(purhmamt,20);
-                dataArea += util.generateDataAreaNirvana("detail",61);
+        
+        } else {
+            Session session = this.sessionFactory.openSession();
+            String paymentId = ap.getPayment_id();
+            String query = " SELECT * FROM `ap_nirvana_pay_detail` where payment_id = '"+paymentId+"'" ;
+
+            List<Object[]> APNirvanaList = session.createSQLQuery(query)
+                    .addScalar("payment_id", Hibernate.STRING)
+                    .addScalar("puraccount", Hibernate.STRING)
+                    .addScalar("purdivision", Hibernate.STRING)
+                    .addScalar("purproject", Hibernate.STRING)
+                    .addScalar("puramt", Hibernate.STRING)
+                    .addScalar("purhmamt", Hibernate.STRING)
+                    .addScalar("note", Hibernate.STRING)
+                    .list();
+
+            for (Object[] B : APNirvanaList) {
+                String payment_id = (B[0] != null && !"".equalsIgnoreCase(String.valueOf(B[0])) ? String.valueOf(B[0]) : "");
+                String puraccount = (B[1] != null && !"".equalsIgnoreCase(String.valueOf(B[1])) ? String.valueOf(B[1]) : "");
+                String purdivision = (B[2] != null && !"".equalsIgnoreCase(String.valueOf(B[2])) ? String.valueOf(B[2]) : "");
+                String purproject = (B[3] != null && !"".equalsIgnoreCase(String.valueOf(B[3])) ? String.valueOf((BigDecimal)B[3]) : "");
+                String puramt = (B[4] != null && !"".equalsIgnoreCase(String.valueOf(B[4])) ? String.valueOf((BigDecimal)B[4]) : "0.00");
+                String purhmamt = (B[5] != null && !"".equalsIgnoreCase(String.valueOf(B[5])) ? String.valueOf(B[5]) : "0.00");
+                String note = (B[6] != null && !"".equalsIgnoreCase(String.valueOf(B[6])) ? String.valueOf(B[6]) : "");
                 
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd.HHmmss", Locale.US);
-                SsDataexchTr ssdtr = new SsDataexchTr();
-                ssdtr.setDataCd("240020");
-                ssdtr.setDataNo(datano);
-                ssdtr.setDataSeq(String.valueOf(count));
-                ssdtr.setEntSysCd("SMI");
-                ssdtr.setEntSysDate(sdf.format(new Date()));
-        //        ssdtr.setEntDataNo(datano);
-        //        ssdtr.setEntComment("");
-        //        ssdtr.setRcvSysCd("NIRVANA");
-        //        ssdtr.setRcvStaCd("1");
-        //        ssdtr.setCvSysDate("00000000.000000");
-                ssdtr.setRcvComment("");
-        //        ssdtr.setTraNesCd("1");
-        //        ssdtr.setTraStaCd("1");
-        //        ssdtr.setTraSysDate("00000000.000000");
-                ssdtr.setDataArea(dataArea);
-                ssdtrList.add(ssdtr);
-                count += 1;
-            }
-                      
-        }                             
+                if(!"".equalsIgnoreCase(puraccount)){
+                    dataArea += util.generateDataAreaNirvana(puraccount,21);
+                    dataArea += util.generateDataAreaNirvana(purdivision,21);
+                    dataArea += util.generateDataAreaNirvana(purproject,21);
+                    dataArea += util.generateDataAreaNirvana(puramt,20);
+                    dataArea += util.generateDataAreaNirvana(purhmamt,20);
+                    dataArea += util.generateDataAreaNirvana(note,61);
+
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd.HHmmss", Locale.US);
+                    SsDataexchTr ssdtr = new SsDataexchTr();
+                    ssdtr.setDataCd("240020");
+                    ssdtr.setDataNo(datano);
+                    ssdtr.setDataSeq(String.valueOf(count));
+                    ssdtr.setEntSysCd("SMI");
+                    ssdtr.setEntSysDate(sdf.format(new Date()));
+            //        ssdtr.setEntDataNo(datano);
+            //        ssdtr.setEntComment("");
+            //        ssdtr.setRcvSysCd("NIRVANA");
+            //        ssdtr.setRcvStaCd("1");
+            //        ssdtr.setCvSysDate("00000000.000000");
+                    ssdtr.setRcvComment("");
+            //        ssdtr.setTraNesCd("1");
+            //        ssdtr.setTraStaCd("1");
+            //        ssdtr.setTraSysDate("00000000.000000");
+                    ssdtr.setDataArea(dataArea);
+                    ssdtrList.add(ssdtr);
+                    count += 1;
+                }
+
+            }                      
+
+            session.close();
+            this.sessionFactory.close();
+        }
 
         return ssdtrList;
     }
@@ -941,7 +1001,7 @@ public class APNirvanaImpl implements APNirvanaDao {
             String paymentType = (apNirvana.getPaymenttype()!= null ? String.valueOf(apNirvana.getPaymenttype()) : "");
             ssDataexchTemp.setPaymenttype(paymentType);
             
-            List<SsDataexchTr> ssDataexchTrList = setApNirvanaDetail(apNirvana,apNirvanaNo);
+            List<SsDataexchTr> ssDataexchTrList = setApNirvanaDetail(apNirvana,apNirvanaNo,paymentType);
             ssDataexchTemp.setSsDataexchTrList(ssDataexchTrList);
 
             util.logsNirvana(ssDataexchTemp,apNirvana.getRowid());

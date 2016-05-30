@@ -116,6 +116,13 @@ public class TransferJobReportImpl implements TransferJobReportDao {
     private List setTransferJobReportModel(List<DaytourBooking> Booklist,TransferJob job){
         List list = new ArrayList();
         UtilityFunction util = new UtilityFunction();
+        String[] placeOther = (job.getPlaceOther()).split("||");
+        System.out.println("===== job.getPlaceOther() ===== : "+job.getPlaceOther());
+        for(String a : placeOther){
+            System.out.println("===== placeOther ===== : "+a);
+        }
+        
+        int indexPlaceOther = 0;
         for(int i=0;i<Booklist.size();i++){
              TransferJobReport report = new TransferJobReport();
             DaytourBooking book = Booklist.get(i);
@@ -134,7 +141,9 @@ public class TransferJobReportImpl implements TransferJobReportDao {
                 
                 report.setPlace(place);
                 if("OTHERS".equalsIgnoreCase(place)){
-                    report.setPlace(job.getPlaceOther());
+                    report.setPlace(book.getPickupDetail());
+//                    report.setPlace(placeOther[indexPlaceOther]);
+//                    indexPlaceOther += 1;
                 }
                 report.setMemo(memo);
                 System.out.println("place : "+place);
