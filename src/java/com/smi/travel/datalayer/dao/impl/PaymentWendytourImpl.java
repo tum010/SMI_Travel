@@ -567,6 +567,7 @@ public class PaymentWendytourImpl implements PaymentWendytourDao{
                 .addScalar("cur",Hibernate.STRING)
                 .addScalar("status",Hibernate.STRING)
                 .addScalar("description",Hibernate.STRING)
+                .addScalar("commission",Hibernate.STRING)
                 .list();
         
         int no = 1;
@@ -585,9 +586,10 @@ public class PaymentWendytourImpl implements PaymentWendytourDao{
             paymentTourHotelSummary.setCur(util.ConvertString(B[7]));
             paymentTourHotelSummary.setStatus(util.ConvertString(B[8]));
             paymentTourHotelSummary.setDescription(util.ConvertString(B[9]));
+            paymentTourHotelSummary.setCom(util.ConvertString(B[10]) != null ? util.ConvertString(B[10]) : "0");
             paymentTourHotelSummary.setSystemdate(String.valueOf(dateformat.format(new Date())));
             paymentTourHotelSummary.setPaydatefrom(!"".equalsIgnoreCase(from) ? String.valueOf(df.format(util.convertStringToDate(from))) : "");
-            paymentTourHotelSummary.setPaydateto(!"".equalsIgnoreCase(to) ? String.valueOf(df.format(util.convertStringToDate(to))) : "");
+            paymentTourHotelSummary.setPaydateto(!"".equalsIgnoreCase(to) ? String.valueOf(df.format(util.convertStringToDate(to))) : "");          
             paymentTourHotelSummary.setUser(printBy);
             paymentTourHotelSummary.setPvtypeheader(pvtypeshow);
             

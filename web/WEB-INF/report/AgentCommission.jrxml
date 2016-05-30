@@ -22,30 +22,30 @@
 	<pageHeader>
 		<band height="80">
 			<staticText>
-				<reportElement x="1" y="13" width="283" height="20" uuid="9d2d185a-081e-487f-85e6-1a937cfb33be"/>
+				<reportElement x="1" y="13" width="325" height="20" uuid="9d2d185a-081e-487f-85e6-1a937cfb33be"/>
 				<textElement>
-					<font fontName="Tahoma" size="13"/>
+					<font fontName="Tahoma" size="16"/>
 				</textElement>
 				<text><![CDATA[Report Days Tour Agent Commission Service]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="71" y="37" width="18" height="19" uuid="1bc5ae63-b011-4cf1-b255-f99722416a85"/>
-				<textElement>
-					<font fontName="Tahoma" size="11"/>
+				<reportElement x="120" y="38" width="18" height="19" uuid="1bc5ae63-b011-4cf1-b255-f99722416a85"/>
+				<textElement textAlignment="Center">
+					<font fontName="Tahoma" size="14"/>
 				</textElement>
 				<text><![CDATA[to]]></text>
 			</staticText>
 			<textField pattern="">
-				<reportElement x="2" y="38" width="69" height="19" uuid="6d753604-badd-4df5-a753-6f3997e3db8b"/>
-				<textElement>
-					<font fontName="Tahoma" size="10"/>
+				<reportElement x="2" y="38" width="118" height="19" uuid="6d753604-badd-4df5-a753-6f3997e3db8b"/>
+				<textElement textAlignment="Right">
+					<font fontName="Tahoma" size="14"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{datefrom}]]></textFieldExpression>
 			</textField>
 			<textField pattern="">
-				<reportElement x="89" y="38" width="90" height="19" uuid="e6318956-fdd2-4fdf-8bf3-354beabacd5f"/>
+				<reportElement x="138" y="38" width="121" height="19" uuid="e6318956-fdd2-4fdf-8bf3-354beabacd5f"/>
 				<textElement>
-					<font fontName="Tahoma" size="10"/>
+					<font fontName="Tahoma" size="14"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{dateto}]]></textFieldExpression>
 			</textField>
