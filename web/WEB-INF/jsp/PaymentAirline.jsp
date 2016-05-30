@@ -699,8 +699,8 @@
                                 <thead class="datatable-header">
                                     <tr>
                                         <th style="width:10%;">No</th>
-                                        <th style="width:15%;">Accno</th>
-                                        <th style="width:20%;">Detail</th>
+                                        <th style="width:10%;">Accno</th>
+                                        <th style="width:25%;">Detail</th>
                                         <th style="width:15;">Department</th>
                                         <th style="width:20;">DR Amount</th>
                                         <th style="width:20;">CR Amount</th>
@@ -735,7 +735,7 @@
                                             <td><input maxlength="255" id="detail${i.count}" name="detail${i.count}" type="text" class="form-control" value="${table.detail}"></td>
                                             <td>
                                                 <select class="form-control" name="department${i.count}" id="department${i.count}" value="${table.department}">
-                                                    <option value="">>---------</option>
+                                                    <option value="">---------</option>
                                                     <c:set var="selectedWendy" value="" />
                                                     <c:set var="selectedOutbound" value="" />
                                                     <c:set var="selectedInbound" value="" />
