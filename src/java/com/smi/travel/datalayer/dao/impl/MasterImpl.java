@@ -180,7 +180,7 @@ public class MasterImpl implements MasterDao{
        if(query.uniqueResult() != null){
            result =  Integer.parseInt(String.valueOf(query.uniqueResult()));
        }else{
-           result = 250000;
+           result = 350000;
        }
        System.out.println("Max refno :"+result);
        session.close();
