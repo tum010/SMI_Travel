@@ -231,7 +231,7 @@
                                     </c:if>    
                                     <i id="ajaxload1-${index}"  class="fa fa-spinner fa-spin hidden"></i>
                                 </td>
-                                <td style="text-align:center"> <input id="refund${index}" name="refund${index}" colName="refund" type="text" class="form-control" value="${detail.sectorRefund}" onfocusout="checkRefund(this)"></td>
+                                <td style="text-align:center"> <input id="refund${index}" name="refund${index}" colName="refund" type="text" class="form-control" value="${detail.sectorRefund}" ></td>
                                 <td style="text-align:center"> <input id="receive${index}" name="receive${index}" colName="receive" onfocusout="calculateProfit(this)" type="text" class="form-control text-right decimal" style="text-align: right" value="${detail.receiveAirline}"></td>
                                 <td style="text-align:center"> <input id="pay${index}" name="pay${index}" colName="pay" type="text" onfocusout="calculateProfit(this)" class="form-control text-right decimal" style="text-align: right" value="${detail.payCustomer}"></td>
                                 <td style="text-align:center"> <input id="profit${index}" name="profit${index}" colName="profit" type="text" class="form-control text-right decimal" style="text-align: right" value="${detail.profit}" ></td>
@@ -412,7 +412,7 @@
                         user = [];
                     </script>
                     <c:forEach var="a" items="${user}">
-                        <tr>
+                        <tr onclick="setReceiveUser('${a.id}', '${a.username}', '${a.name}');">
                             <td class="user-id hidden">${a.id}</td>
                             <td class="user-user">${a.username}</td>
                             <td class="user-name">${a.name}</td>
@@ -528,7 +528,7 @@
         <input type="hidden" id="isTicketFromPassenger" name="isTicketFromPassenger" colName="isTicketFromPassenger" value="0">
         <td rowspan='2'> <input id="checkCharge" name="checkCharge" colName="checkCharge" type="checkbox" class="form-control text-center" onclick="checkboxCharge(this)" value=""></td>
         <td style="text-align:center"> <input id="ticketNo" name="ticketNo" colName="ticketNo" type="text" class="form-control" value=""><span  id="ajaxload1-" colName="ajaxload1-" class="fa fa-spinner fa-spin hidden"></span></td>
-        <td style="text-align:center"> <input id="refund" name="refund" colName="refund" type="text" maxlength="255" class="form-control" value="" onfocusout="checkRefund(this)"></td>
+        <td style="text-align:center"> <input id="refund" name="refund" colName="refund" type="text" maxlength="255" class="form-control" value="" ></td>
         <td style="text-align:center"> <input id="receive" name="receive" colName="receive" onfocusout="calculateProfit(this)" type="text" class="form-control text-right decimal" value=""></td>
         <td style="text-align:center"> <input id="pay" name="pay" type="text" colName="pay" onfocusout="calculateProfit(this)"  class="form-control text-right decimal"></td>
         <td style="text-align:center"> <input id="profit" name="profit" colName="profit" type="text" class="form-control text-right decimal"></td>
@@ -900,19 +900,19 @@
             return;
         }
         var valid = true;
-        for (var i = 1; i < $("#counter").val(); i++) {
-            var isTicketFromPassenger = $("#isTicketFromPassenger" + i).val();
-            if(isTicketFromPassenger === '1'){
-                var refund = $("#refund" + i).val();
-                var sector = $("#sectorIssue" + i).html();
-                if ("" === refund || sector.indexOf(refund) < 0) {
-                    $("#refund" + i).css('border-color', "Red");
-                    valid = false;
-                } else {
-                    $("#refund" + i).css('border-color', "Green");
-                }
-            }
-        }
+//        for (var i = 1; i < $("#counter").val(); i++) {
+//            var isTicketFromPassenger = $("#isTicketFromPassenger" + i).val();
+//            if(isTicketFromPassenger === '1'){
+//                var refund = $("#refund" + i).val();
+//                var sector = $("#sectorIssue" + i).html();
+//                if ("" === refund || sector.indexOf(refund) < 0) {
+//                    $("#refund" + i).css('border-color', "Red");
+//                    valid = false;
+//                } else {
+//                    $("#refund" + i).css('border-color', "Green");
+//                }
+//            }
+//        }
         if (valid) {
             var action = document.getElementById('action');
             action.value = 'save';
@@ -929,19 +929,19 @@
             return;
         }
         var valid = true;
-        for (var i = 1; i < $("#counter").val(); i++) {
-            var isTicketFromPassenger = $("#isTicketFromPassenger" + i).val();
-            if(isTicketFromPassenger === '1'){
-                var refund = $("#refund" + i).val();
-                var sector = $("#sectorIssue" + i).html();
-                if ("" === refund || sector.indexOf(refund) < 0) {
-                    $("#refund" + i).css('border-color', "Red");
-                    valid = false;
-                } else {
-                    $("#refund" + i).css('border-color', "Green");
-                }
-            }
-        }
+//        for (var i = 1; i < $("#counter").val(); i++) {
+//            var isTicketFromPassenger = $("#isTicketFromPassenger" + i).val();
+//            if(isTicketFromPassenger === '1'){
+//                var refund = $("#refund" + i).val();
+//                var sector = $("#sectorIssue" + i).html();
+//                if ("" === refund || sector.indexOf(refund) < 0) {
+//                    $("#refund" + i).css('border-color', "Red");
+//                    valid = false;
+//                } else {
+//                    $("#refund" + i).css('border-color', "Green");
+//                }
+//            }
+//        }
         if (valid) {
             var action = document.getElementById('action');
             action.value = 'saveAndNew';

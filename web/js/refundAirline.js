@@ -750,6 +750,12 @@ function setRefundAgent(id, code, name) {
     $("#RefundAgentModal").modal('hide');
 }
 
+function setReceiveUser(id, code, name) {
+    document.getElementById("receiveBy").value = code;
+    document.getElementById("receiveByName").value = name;
+    $("#receiveUserModal").modal('hide');
+}
+
 function clearNew() {
     var action = document.getElementById('action');
     action.value = 'new';
