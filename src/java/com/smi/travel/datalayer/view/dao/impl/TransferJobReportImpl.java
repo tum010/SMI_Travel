@@ -68,8 +68,10 @@ public class TransferJobReportImpl implements TransferJobReportDao {
             }
             getJobDetailQuery += " and " + open + " DB.place.place in ('" + Place.replaceAll("\\|\\|", "','").replaceAll(" '", "'").replaceAll("' ", "'") + "')";
         }
-        if (Other != null) {
+        if (Other != null && !"".equalsIgnoreCase(Other)) {
             getJobDetailQuery += " or DB.pickupDetail in ('" + Other.replaceAll("\\|\\|", "','") + "') " + close;
+        }else{
+            getJobDetailQuery += close;
         }
         getJobDetailQuery += "  ORDER BY DB.pickupTime";
 

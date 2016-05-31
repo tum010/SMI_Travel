@@ -473,7 +473,7 @@ public class ReceiptImpl implements ReceiptDao{
                     String querySystemUser = "from SystemUser s where s.name like '%"+sign+"%'";
                     List<SystemUser> systemUser = session.createQuery(querySystemUser).list();
                     if(!systemUser.isEmpty()) {
-                        receiptView.setSignname(systemUser.get(0).getName());
+                        receiptView.setSignname(systemUser.get(0).getRole().getName());
                     }        
                     
                 }

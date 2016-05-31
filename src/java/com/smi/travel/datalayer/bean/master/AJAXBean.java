@@ -2668,10 +2668,11 @@ public class AJAXBean extends AbstractBean implements
     public String calculatePriceDaytour(List<DaytourBookingPrice> DriverList) {
         String result = "";
         UtilityFunction util = new UtilityFunction();
-        int Pricesum = 0;
+        BigDecimal Pricesum = new BigDecimal(0);
         for (int i = 0; i < DriverList.size(); i++) {
             DaytourBookingPrice price = DriverList.get(i);
-            Pricesum += util.ConvertInt(price.getQty()) * util.ConvertInt(price.getPrice());
+            Pricesum = Pricesum.add((new BigDecimal(price.getQty() == null ? 0 : price.getQty())).multiply(price.getPrice() == null ? new BigDecimal(0) : price.getPrice()));
+//            util.ConvertInt(price.getQty()) * util.ConvertInt(price.getPrice());
         }
 
         return String.valueOf(NumberFormat.getNumberInstance(Locale.US).format(Pricesum));
