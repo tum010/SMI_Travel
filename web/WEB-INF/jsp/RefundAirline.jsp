@@ -294,11 +294,11 @@
                                 <div class="col-sm-12">
                                     <label class="col-sm-2 control-label text-right">Airline Charge</label>
                                     <div class="col-sm-3">
-                                        <input id="airlineCharge-${i.count}" name="airlineCharge-${i.count}" class="form-control text-right decimal" value="${detail.airlineCharge}" readonly="" type="text" maxlength="10"  />
+                                        <input id="airlineCharge-${i.count}" name="airlineCharge-${i.count}" class="form-control text-right decimal" value="${detail.airlineCharge}" type="text" />
                                     </div>
                                     <label class="col-sm-2 control-label text-right">Client Charge</label>
                                     <div class="col-sm-3">
-                                        <input id="clientCharge-${i.count}" name="clientCharge-${i.count}" class="form-control text-right decimal" value="${detail.clientCharge}" readonly="" type="text" maxlength="10" />
+                                        <input id="clientCharge-${i.count}" name="clientCharge-${i.count}" class="form-control text-right decimal" value="${detail.clientCharge}" type="text" />
                                     </div>
                                 </div>
                             </div>

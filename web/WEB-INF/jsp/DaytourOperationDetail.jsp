@@ -123,7 +123,7 @@
                                 <fmt:formatDate value="${tourDates}" var="tourDates" pattern="dd-MM-yyyy" />
                                 <input id="InputTourDetailTourDate" name="InputTourDetailTourDate"  type="text" 
                                    class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${tourDates}">
-                                <span class="input-group-addon "><span class="glyphicon glyphicon-calendar"></span></span>
+                                <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                 
                             </c:if>
                             <c:if test='${dayTourOperation.tourDate == null}'>
@@ -925,7 +925,7 @@
                                     </div>
                                     <div id="GuideBillForm">
                                         <div class="col-xs-12 form-group" style="margin-top: -10px;">
-                                            <div class="col-xs-1">
+                                            <div class="col-xs-1" style="width: 90px;">
                                                 <label class="control-label">Payno</label>                                                                                  
                                             </div>
                                             <div class="col-xs-1" style="width: 250px">                                       
@@ -943,7 +943,55 @@
                                                     <option id="" value="">---------</option>
                                                 </select>
                                             </div>
-                                            <div class="col-xs-1 text-right" style="width: 120px">
+                                            <div class="col-xs-1 text-left">
+                                                <label class="control-label">Status</label>
+                                            </div>
+                                            <div class="col-xs-1" style="width: 150px">
+                                                <select class="form-control" id="StatusGuideBillShow" name="StatusGuideBill" disabled="">
+                                                    <option id="" value="">---------</option>  
+                                                    <c:forEach var="status" items="${statusList}">
+                                                        <c:set var="select2" value="" />
+                                                        <c:if test="${status.id == paymentWendyList.MItemstatus.id}">
+                                                            <c:set var="select2" value="selected" />
+                                                        </c:if>
+                                                        <option value="<c:out value="${status.id}" />" ${select2}><c:out value="${status.name}" /></option>                                         
+                                                    </c:forEach>
+                                                </select>
+                                                <select class="form-control hidden" id="StatusGuideBill" name="StatusGuideBill" >
+                                                    <option id="" value="">---------</option>  
+                                                    <c:forEach var="status" items="${statusList}">
+                                                        <c:set var="select2" value="" />
+                                                        <c:if test="${status.id == paymentWendyList.MItemstatus.id}">
+                                                            <c:set var="select2" value="selected" />
+                                                        </c:if>
+                                                        <option value="<c:out value="${status.id}" />" ${select2}><c:out value="${status.name}" /></option>                                         
+                                                    </c:forEach>
+                                                </select>    
+                                            </div>                                           
+                                        </div>
+                                        <div class="col-xs-12 form-group" style="margin-top: -10px;">
+                                            <div class="col-md-1 text-left" style="width: 90px;">
+                                                <label class="control-label text-right" >Inv Date</lable>
+                                            </div>
+                                            <div class="col-md-3 form-group text-left" style="width: 260px;">
+                                                <div class="col-sm-12" style="padding-left: 0px;">
+                                                    <div class='input-group ' style="width:140px;">
+                                                        <c:set var="invDate" value="${paymentWendyDetailList.invDate}" />
+                                                        <%--<fmt:parseDate value="${InputPayDate}" var="InputPayDate" pattern="yyyy-MM-dd" />--%>
+                                                        <fmt:formatDate value="${invDate}" var="invDate" pattern="dd-MM-yyyy" />
+                                                        <input name="invDate" id="invDate" type="text" class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${invDate}" readonly=""/>
+                                                        <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                    </div>
+                                                </div>
+                                            </div>                                          
+                                            <div class="col-xs-1 text-left" style="width: 110px">
+                                                <label class="control-label">Amount</label>
+                                            </div>
+                                            <div class="col-xs-1" style="width: 250px">
+                                                <input class="form-control decimal" type="text" id="AmountGuideBill" name="AmountGuideBill" value="${paymentWendyDetailList.amount}" readonly="">
+                                                <input class="form-control numerical" type="hidden" id="AmountGuideBillDefault" name="AmountGuideBillDefault" value="${paymentWendyDetailList.amount}" readonly="">
+                                            </div>
+                                            <div class="col-xs-1 text-left" >
                                                 <label class="control-label">Currency</label>
                                             </div>
                                             <div class="col-xs-1" style="width: 150px">
@@ -973,40 +1021,6 @@
 
                                                     });
                                                 </script>
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-12 form-group" style="margin-top: -10px;">
-                                            <div class="col-xs-1">
-                                                <label class="control-label">Status</label>
-                                            </div>
-                                            <div class="col-xs-1" style="width: 250px">
-                                                <select class="form-control" id="StatusGuideBillShow" name="StatusGuideBill" disabled="">
-                                                    <option id="" value="">---------</option>  
-                                                    <c:forEach var="status" items="${statusList}">
-                                                        <c:set var="select2" value="" />
-                                                        <c:if test="${status.id == paymentWendyList.MItemstatus.id}">
-                                                            <c:set var="select2" value="selected" />
-                                                        </c:if>
-                                                        <option value="<c:out value="${status.id}" />" ${select2}><c:out value="${status.name}" /></option>                                         
-                                                    </c:forEach>
-                                                </select>
-                                                <select class="form-control hidden" id="StatusGuideBill" name="StatusGuideBill" >
-                                                    <option id="" value="">---------</option>  
-                                                    <c:forEach var="status" items="${statusList}">
-                                                        <c:set var="select2" value="" />
-                                                        <c:if test="${status.id == paymentWendyList.MItemstatus.id}">
-                                                            <c:set var="select2" value="selected" />
-                                                        </c:if>
-                                                        <option value="<c:out value="${status.id}" />" ${select2}><c:out value="${status.name}" /></option>                                         
-                                                    </c:forEach>
-                                                </select>    
-                                            </div>
-                                            <div class="col-xs-1 text-right" style="width: 120px">
-                                                <label class="control-label">Amount</label>
-                                            </div>
-                                            <div class="col-xs-1" style="width: 250px">
-                                                <input class="form-control decimal" type="text" id="AmountGuideBill" name="AmountGuideBill" value="${paymentWendyDetailList.amount}" readonly="">
-                                                <input class="form-control numerical" type="hidden" id="AmountGuideBillDefault" name="AmountGuideBillDefault" value="${paymentWendyDetailList.amount}" readonly="">
                                             </div>
                                             <div class="col-xs-1 hidden" style="padding: 0px 0px 20px 30px">
                                                 <input class="form-control" type="checkbox" id="ConfirmGuideBill" name="ConfirmGuideBill" value="1" onclick="confirmCheckboxGuideBill()">
@@ -1140,7 +1154,7 @@
                                     </div>
                                     <div id="GuideBillForm">
                                         <div class="col-xs-12 form-group" style="margin-top: -10px;">
-                                            <div class="col-xs-1">
+                                            <div class="col-xs-1" style="width: 90px;">
                                                 <label class="control-label">Payno</label>
                                             </div>                                   
                                             <div class="col-xs-1" style="width: 250px">                                       
@@ -1158,7 +1172,45 @@
                                                     <option id="" value="">---------</option>
                                                 </select>
                                             </div>
-                                            <div class="col-xs-1 text-right" style="width: 120px">
+                                            <div class="col-xs-1 text-left">
+                                                <label class="control-label">Status</label>
+                                            </div>
+                                            <div class="col-xs-1" style="width: 150px">
+                                                <select class="form-control" id="StatusGuideBill" name="StatusGuideBill">
+                                                    <option id="" value="">---------</option>  
+                                                    <c:forEach var="status" items="${statusList}">
+                                                        <c:set var="select2" value="" />
+                                                        <c:if test="${status.id == paymentWendyList.MItemstatus.id}">
+                                                            <c:set var="select2" value="selected" />
+                                                        </c:if>
+                                                        <option value="<c:out value="${status.id}" />" ${select2}><c:out value="${status.name}" /></option>                                         
+                                                    </c:forEach>
+                                                </select>    
+                                            </div>                                               
+                                        </div>
+                                        <div class="col-xs-12 form-group" style="margin-top: -10px;">
+                                            <div class="col-md-1 text-left" style="width: 90px;">
+                                                <label class="control-label text-right" >Inv Date</lable>
+                                            </div>
+                                            <div class="col-md-2 form-group text-left" style="width: 260px;">
+                                                <div class="col-sm-12" style="padding-left: 0px;">
+                                                    <div class='input-group date' style="width:140px;">
+                                                        <c:set var="invDate" value="${paymentWendyDetailList.invDate}" />
+                                                        <%--<fmt:parseDate value="${invDate}" var="invDate" pattern="yyyy-MM-dd" />--%>
+                                                        <fmt:formatDate value="${invDate}" var="invDate" pattern="dd-MM-yyyy" />
+                                                        <input name="invDate" id="invDate" type="text" class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${invDate}"/>
+                                                        <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-1 text-left" style="width: 110px">
+                                                <label class="control-label">Amount</label>
+                                            </div>
+                                            <div class="col-xs-1" style="width: 250px">
+                                                <input class="form-control decimal" type="text" id="AmountGuideBill" name="AmountGuideBill" value="${paymentWendyDetailList.amount}" readonly="">
+                                                <input class="form-control numerical" type="hidden" id="AmountGuideBillDefault" name="AmountGuideBillDefault" value="${paymentWendyDetailList.amount}" readonly="">
+                                            </div>
+                                            <div class="col-xs-1 text-left" >
                                                 <label class="control-label">Currency</label>
                                             </div>
                                             <div class="col-xs-1" style="width: 150px">
@@ -1178,31 +1230,7 @@
 
                                                     });
                                                 </script>
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-12 form-group" style="margin-top: -10px;">
-                                            <div class="col-xs-1">
-                                                <label class="control-label">Status</label>
-                                            </div>
-                                            <div class="col-xs-1" style="width: 250px">
-                                                <select class="form-control" id="StatusGuideBill" name="StatusGuideBill">
-                                                    <option id="" value="">---------</option>  
-                                                    <c:forEach var="status" items="${statusList}">
-                                                        <c:set var="select2" value="" />
-                                                        <c:if test="${status.id == paymentWendyList.MItemstatus.id}">
-                                                            <c:set var="select2" value="selected" />
-                                                        </c:if>
-                                                        <option value="<c:out value="${status.id}" />" ${select2}><c:out value="${status.name}" /></option>                                         
-                                                    </c:forEach>
-                                                </select>    
-                                            </div>
-                                            <div class="col-xs-1 text-right" style="width: 120px">
-                                                <label class="control-label">Amount</label>
-                                            </div>
-                                            <div class="col-xs-1" style="width: 250px">
-                                                <input class="form-control decimal" type="text" id="AmountGuideBill" name="AmountGuideBill" value="${paymentWendyDetailList.amount}" readonly="">
-                                                <input class="form-control numerical" type="hidden" id="AmountGuideBillDefault" name="AmountGuideBillDefault" value="${paymentWendyDetailList.amount}" readonly="">
-                                            </div>
+                                            </div>                                           
                                             <div class="col-xs-1 hidden" style="padding: 0px 0px 20px 30px">
                                                 <input class="form-control" type="checkbox" id="ConfirmGuideBill" name="ConfirmGuideBill" value="1" onclick="confirmCheckboxGuideBill()">
                                             </div>

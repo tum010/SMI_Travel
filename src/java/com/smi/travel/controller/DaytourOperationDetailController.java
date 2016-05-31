@@ -396,6 +396,7 @@ public class DaytourOperationDetailController extends SMITravelController {
     }
     
     private String setGuideBill(HttpServletRequest request, HttpSession session, TourOperationDesc tourOperationDesc, List<DaytourBooking> daytourBookings) {
+        UtilityFunction util = new UtilityFunction();
         String PayNoGuideBillId = request.getParameter("PayNoGuideBillId");
         String PayNoGuideBill = request.getParameter("PayNoGuideBill");
         String PaymentWendyDetailId = request.getParameter("PaymentWendyDetailId");
@@ -404,6 +405,8 @@ public class DaytourOperationDetailController extends SMITravelController {
         String status = request.getParameter("StatusGuideBill");
         String amount = request.getParameter("AmountGuideBill");
         String currency = request.getParameter("SelectCur");
+        String invDate = request.getParameter("invDate");
+        
         SystemUser user = (SystemUser) session.getAttribute("USER");
         
         String tourCode = request.getParameter("tourCode");
@@ -456,6 +459,16 @@ public class DaytourOperationDetailController extends SMITravelController {
         if((!"".equalsIgnoreCase(amount)) && (amount != null)){
             BigDecimal amountRe = new BigDecimal(amount.replaceAll(",",""));
             paymentDetailWendy.setAmount(amountRe);
+        
+        } else {
+            paymentDetailWendy.setAmount(null);
+        }
+        
+        if((!"".equalsIgnoreCase(invDate)) && (invDate != null)){
+            paymentDetailWendy.setInvDate(util.convertStringToDate(invDate));
+        
+        } else {
+            paymentDetailWendy.setInvDate(null);
         }
        
         String result = "";            

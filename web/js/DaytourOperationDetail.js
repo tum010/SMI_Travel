@@ -38,6 +38,12 @@ $(document).ready(function () {
         "iDisplayLength": 10
     });
     
+    $('.spandate').click(function() {
+        var position = $(this).offset();
+        console.log("positon :" + position.top);
+        $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
+    });
+    
     var sumConfirm = 0;
     $(".sumConfirm").each(function () {
         sumConfirm += +$(this).text();
