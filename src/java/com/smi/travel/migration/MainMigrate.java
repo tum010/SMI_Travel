@@ -66,6 +66,7 @@ public class MainMigrate {
     private static final String sqlInv2 = " SELECT inv2. ID AS ID, INV2.inv_no AS invno, INV2.\"NAME\" AS NAME, TO_CHAR (INV2.INV_DATE, 'DD-MM-YYYY') AS invdate, SUM (invd2.price) AS grand_total, SUM (invd2.price) AS grand_total_gross, 0 AS grand_total_vat, MIN (INVD2.CUR) AS cur, 'INBOUND' AS department, '2' AS acc_no FROM \"INBOUND\".\"INVOICE2\" inv2 INNER JOIN INBOUND.INVOICE2_DETAIL invd2 ON inv2. ID = invd2.INVOICE2_ID LEFT JOIN ( SELECT NAME, MIN (code) AS code FROM \"TRAVOX3\".AGENT GROUP BY NAME ) agt ON agt. NAME = inv2. NAME WHERE \"TO_CHAR\" (inv2.INV_DATE, 'MMYYYY') IN ('102015', '112015', '122015', '012016', '022016', '032016' ) GROUP BY inv2. ID, INV2.inv_no, INV2.\"NAME\", INV2.INV_DATE ORDER BY INV2. ID ";
     private static final String sqlTravoxProduction = " SELECT gj.gj_no AS gj, '' AS PAY_NO, ( SELECT ap. NAME FROM ACCTSMI3.ap_code ap WHERE ap.code = ( SELECT MIN (GJD1.code_ap) FROM ACCTSMI3.GENERAL_JOURNAL_DETAIL1 GJD1 WHERE GJD1.general_journal1_ID = gj. ID AND GJD1.code_ap IS NOT NULL GROUP BY gj. ID )) AS NAME, ( SELECT MIN (GJD1.code_ap) FROM ACCTSMI3.GENERAL_JOURNAL_DETAIL1 GJD1 WHERE GJD1.general_journal1_ID = gj. ID AND GJD1.code_ap IS NOT NULL GROUP BY gj. ID ) AS AP_CODE, gj.ref_doc_no AS REFDOC, TO_CHAR ( gj.SYSTEM_DATE, 'DD-MM-YYYY' ) AS system_date, TO_CHAR (gj.DUE_DATE, 'DD-MM-YYYY') AS due_date, '' AS INVOICE_NUM, GJ.DESCRIPTION AS Main_Description, CASE WHEN act.code IS NULL THEN act1.code ELSE act.code END AS code, CASE WHEN act.code IS NULL THEN act1.detail ELSE act.detail END AS type_product, act.code AS code11, act1.code AS code22, GJD.DESCRIPTION AS description, ( SELECT SUM ( CASE WHEN SUBSTR (act2.code, 0, 2) = '21' OR act3.code = '22021' THEN NVL (GJD1.cr_amount, 0) ELSE 0 END ) FROM ACCTSMI3.GENERAL_JOURNAL_DETAIL1 GJD1 LEFT JOIN ACCTSMI3.ACCT_CODE act2 ON act2. ID = GJD1.ap_acct_code_id LEFT JOIN ACCTSMI3.ACCT_CODE act3 ON act3. ID = GJD1.acct_code_id WHERE GJD1.general_journal1_ID = gj. ID GROUP BY gj. ID ) AS TOTAL_AMOUNT, GJD.ACCT_CODE_ID, ( SELECT SUM (NVL(GJD1.dr_amount, 0)) FROM ACCTSMI3.GENERAL_JOURNAL_DETAIL1 GJD1 WHERE GJD1.general_journal1_ID = gj. ID AND GJD1.acct_code_id = - 10 GROUP BY gj. ID ) AS TOTAL_VAT, 'THB' AS cur, CASE WHEN gjd.cr_amount IS NULL THEN gjd.dr_amount ELSE gjd.cr_amount * - 1 END AS amount, CASE WHEN GJD.department = 'I' THEN 'Inbound' WHEN GJD.department = 'O' THEN 'Outbound' WHEN GJD.department = 'W' THEN 'Wendy' ELSE '' END AS DEPARTMENT, SUBSTR (gj.gj_no, 0, 1) AS acc_no, TO_CHAR (gj.book_DATE, 'DD-MM-YYYY') AS EXPENSE_DATE, gv.voucher_no AS voucher_no, gvd.amount AS voucher_amount FROM ACCTSMI3.GENERAL_JOURNAL1 gj INNER JOIN ACCTSMI3.GENERAL_JOURNAL_DETAIL1 GJD ON gj. ID = gjd.general_journal1_ID LEFT JOIN ACCTSMI3.ap_code ap ON ap.code = gjd.code_AP LEFT JOIN ACCTSMI3.ACCT_CODE act ON act. ID = gjd.acct_code_id LEFT JOIN ACCTSMI3.ACCT_CODE act1 ON act1. ID = gjd.ap_acct_code_id LEFT JOIN ACCTSMI3.GENERAL_VOUCHER_DETAIL gvd ON gvd.general_journal_id = gj. ID LEFT JOIN ACCTSMI3.GENERAL_VOUCHER gv ON gv. ID = gvd.general_voucher_id WHERE TO_CHAR (gj.book_DATE, 'MMYYYY') IN ( '042016' ) AND ( gj.book_type1 = 1 OR gj.book_type1 = 2 ) AND gj.book_type = 'E' ORDER BY gj.GJ_NO, gj.book_DATE ASC ";
     private static final String sqlDaytourExpense = " SELECT * FROM `daytour_expense` ";
+    private static final String sqlMaster = " SELECT ID, memo, REMARKS FROM \"TRAVOX3\".\"DETAIL_PACKAGE\" WHERE ID IN ( 1201738, 1202193, 1202192, 1202191, 1202227, 1202362, 1203046, 1203126, 1203591, 1203742, 1203757, 1203796, 1203802, 1203809, 1203870, 1203909, 1203993, 1203992, 1204024, 1204026, 1204028, 1204029, 1204138, 1204155, 1204214, 1204304, 1204315, 1204338, 1204409, 1204408, 1204431, 1204443, 1204442, 1204471, 1204472, 1204536, 1204535, 1204586, 1204754, 1204589, 1204629, 1204642, 1204643, 1204644, 1204646, 1204647, 1204679, 1204708, 1204706, 1204701, 1204721, 1204723, 1204724, 1204725, 1204751, 1204755, 1204759, 1204758, 1204756, 1204778, 1204780, 1204785, 1204789, 1204790, 1204792, 1204798, 1204799, 1204818, 1204820, 1204819, 1204821, 1204829, 1204830, 1204832, 1204833, 1204835, 1204842, 1204845, 1204851, 1204853, 1204852, 1204854, 1204861, 1204862, 1204869, 1204868, 1204880, 1204896, 1204899, 1204904, 1204907, 1204918, 1204928, 1204932, 1204936, 1204940, 1204939, 1204945, 1204944, 1204952, 1204951, 1204953, 1204954, 1204956, 1204955, 1204964, 1204966, 1204967, 1204974, 1204978, 1204981, 1204983, 1204985, 1204987, 1204986, 1205198, 1205197, 1205003, 1205001, 1205005, 1205006, 1205007, 1205013, 1205014, 1205017, 1205031, 1205030, 1205045, 1205047, 1205048, 1205051, 1205050, 1205049, 1205052, 1205053, 1205055, 1205056, 1205067, 1205068, 1205076, 1205083, 1205088, 1205089, 1205090, 1205091, 1205092, 1205093, 1205095, 1205094, 1205096, 1205098, 1205099, 1205100, 1205103, 1205105, 1205107, 1205113, 1205115, 1205114, 1205116, 1205118, 1205120, 1205121, 1205122, 1205125, 1205124, 1205129, 1205131, 1205132, 1205139, 1205140, 1205143, 1205142, 1205144, 1205146, 1205145, 1205147, 1205149, 1205148, 1205150, 1205158, 1205162, 1205159, 1205161, 1205163, 1205164, 1205167, 1205166, 1205169, 1205171, 1205172, 1205179, 1205180, 1205184, 1205185, 1205186, 1205191, 1205192, 1205194, 1205196, 1205200, 1205199, 1205201, 1205203, 1205204, 1205211, 1205212, 1205216, 1205217, 1205218, 1205219, 1205223, 1205221, 1205220, 1205224, 1205226, 1205229, 1205230, 1205231, 1205232, 1205233, 1205235, 1205237, 1205239, 1205240, 1205241, 1205242, 1205245, 1205246, 1205248, 1205247, 1205249, 1205250, 1205251, 1205252, 1205254 ); ";
     public static void main(String[] args) {
         Connection connect = null;
         Statement s = null;  
@@ -77,7 +78,7 @@ public class MainMigrate {
 //                getTaxInvoice(s,stmt);
 //                getAgentReport(s, stmt);
 //                getStaffReport(s, stmt);
-//                getCity(s, stmt);
+                getCity(s, stmt);
 //                getCountry(s,stmt);
 //                getCurrency(s, stmt);
 //                getAirline(s, stmt);
@@ -85,12 +86,13 @@ public class MainMigrate {
 //                getProduct(s, stmt);
 //                getHotel(s, stmt);
 //                getCustomer(s, stmt);
-                getARData(s,stmt);
+//                getARData(s,stmt);
 //                getAPData(s,stmt);
 //                getDeptorInvoiceData(s, stmt);
 //                getInvoiceData(s, stmt);
 //                getTravoxData(s, stmt);
 //                getDaytourExpense(s, stmt);
+      //          getMasterFromTravox(s, stmt);
             } else {
                 System.out.println("Database Connect Failed.");
             }
@@ -107,6 +109,67 @@ public class MainMigrate {
         } 
     }
     
+    public static void getMasterFromTravox(Statement s,Statement stmt){
+        List<MainMigrateModel> list = new ArrayList<MainMigrateModel>();
+        UtilityFunction util = new UtilityFunction();
+        try {
+            ResultSet rs = s.executeQuery(sqlMaster);
+            while (rs.next()) {       
+                String id = rs.getString("ID") == null ? "" : rs.getString("ID");
+                String remark = rs.getString("REMARKS") == null ? "" : new String(rs.getString("REMARKS").getBytes("ISO8859_1"),"TIS-620");
+                String memo = rs.getString("MEMO") == null ? "" : new String(rs.getString("MEMO").getBytes("ISO8859_1"),"TIS-620");
+                System.out.println(" id " + id);
+                MainMigrateModel migrateModel = new MainMigrateModel();
+                migrateModel.setRemark(remark);
+                migrateModel.setMemo(memo);
+                migrateModel.setId(id);
+                list.add(migrateModel);
+            }
+        } catch (SQLException e ) {
+            
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(MainMigrate.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (stmt != null) {
+                try { 
+                    stmt.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(MainMigrate.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        
+        Connection connect = null;
+        Statement stm = null; 
+        if(list != null){
+            connect = MySqlConnection.getConnection();
+            try {
+                stm = connect.createStatement();
+            } catch (SQLException ex) {
+                Logger.getLogger(MainMigrate.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            String sql = "";
+            System.out.println(" list.get(i) " + list.size());
+//            for(int i = 0 ; i< list.size() ; i ++){
+//                try {
+//                    String sqlselect = " SELECT id FROM `daytour_booking` where tempid = '"+list.get(i).getId()+"' ";
+//                    String id = "";
+//                    ResultSet rs2 = stm.executeQuery(sqlselect);
+//                    while (rs2.next()){
+//                        id = rs2.getString("ID") == null ? "" : new String(rs2.getString("ID").getBytes("ISO8859_1"),"TIS-620");
+//                    }
+//                    System.out.println(" id " + id);
+//                    String sqlupdate = " UPDATE `daytour_booking` SET remark = '"+new String(list.get(i).getRemark().getBytes("ISO8859_1"),"TIS-620")+"'  , memo = '"+new String(list.get(i).getMemo().getBytes("ISO8859_1"),"TIS-620")+"' WHERE id = '"+id+"'  ";
+//                    stm.executeUpdate(sqlupdate);
+////                    stm.executeUpdate(sql);
+//                } catch (SQLException ex) {
+//                    Logger.getLogger(MainMigrate.class.getName()).log(Level.SEVERE, null, ex);
+//                }catch (UnsupportedEncodingException ex) {
+//                    Logger.getLogger(MainMigrate.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//            }
+        }
+    }
     
     public static void getDaytourExpense(Statement s,Statement stmt){
         List<MainMigrateModel> list = new ArrayList<MainMigrateModel>();
@@ -1762,14 +1825,19 @@ public class MainMigrate {
         UtilityFunction util = new UtilityFunction();
         List<MCity> mCitys = new ArrayList<MCity>();
         try {
-            ResultSet rs = s.executeQuery(sqlCity);
+            ResultSet rs = s.executeQuery(sqlMaster);
             while (rs.next()) {
-                String code = rs.getString("CODE");
-                String description = new String(rs.getString("DESCRIPTION").getBytes("ISO8859_1"),"TIS-620");
-                MCity mCity = new MCity();
-                mCity.setCode(code);
-                mCity.setName(description);
-                mCitys.add(mCity);
+               while (rs.next()) {       
+                String id = rs.getString("ID") == null ? "" : rs.getString("ID");
+                String remark = rs.getString("REMARKS") == null ? "" : new String(rs.getString("REMARKS").getBytes("ISO8859_1"),"TIS-620");
+                String memo = rs.getString("MEMO") == null ? "" : new String(rs.getString("MEMO").getBytes("ISO8859_1"),"TIS-620");
+                System.out.println(" id " + id);
+                MainMigrateModel migrateModel = new MainMigrateModel();
+                migrateModel.setRemark(remark);
+                migrateModel.setMemo(memo);
+                migrateModel.setId(id);
+               // list.add(migrateModel);
+            }
             }
         } catch (SQLException e ) {
             
@@ -1795,18 +1863,18 @@ public class MainMigrate {
             }
             String sql = "";
             System.out.println(" City size :: "+ mCitys.size());
-            for(int i = 0 ; i< mCitys.size() ; i ++){
-                if(mCitys.get(i).getCode().length() > 3 ){
-                    sql = " INSERT INTO `m_city` (`code`,`name`) VALUES ('"+mCitys.get(i).getCode().substring(0,3)+"','"+mCitys.get(i).getName().replaceAll("'", "''")+"'); " ;
-                }else{
-                    sql = " INSERT INTO `m_city` (`code`,`name`) VALUES ('"+mCitys.get(i).getCode()+"','"+mCitys.get(i).getName().replaceAll("'", "''")+"'); " ;
-                }
-                try {
-                    stm.executeUpdate(sql);
-                } catch (SQLException ex) {
-                    Logger.getLogger(MainMigrate.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
+//            for(int i = 0 ; i< mCitys.size() ; i ++){
+//                if(mCitys.get(i).getCode().length() > 3 ){
+//                    sql = " INSERT INTO `m_city` (`code`,`name`) VALUES ('"+mCitys.get(i).getCode().substring(0,3)+"','"+mCitys.get(i).getName().replaceAll("'", "''")+"'); " ;
+//                }else{
+//                    sql = " INSERT INTO `m_city` (`code`,`name`) VALUES ('"+mCitys.get(i).getCode()+"','"+mCitys.get(i).getName().replaceAll("'", "''")+"'); " ;
+//                }
+//                try {
+//                    stm.executeUpdate(sql);
+//                } catch (SQLException ex) {
+//                    Logger.getLogger(MainMigrate.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//            }
         }
     }
     
@@ -2539,7 +2607,7 @@ class OracleConnection{
 class MySqlConnection{
     private static final String ip = "192.168.0.100";
     private static final String port = "3306";
-    private static final String schema   = "smitravel_production";
+    private static final String schema   = "smi_uat";
     private static final String username = "DEV01";
     private static final String password = "P@ssw0rd";
     

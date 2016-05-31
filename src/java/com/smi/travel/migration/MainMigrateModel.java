@@ -146,7 +146,7 @@ public class MainMigrateModel {
     private String pricead;
     private String pricech;
     private String pricein;
-    
+    private String memo;
     public String getCode() {
         return code;
     }
@@ -1027,6 +1027,14 @@ public class MainMigrateModel {
 
     public void setPricein(String pricein) {
         this.pricein = pricein;
+    }
+
+    public String getMemo() {
+        return memo;
+    }
+
+    public void setMemo(String memo) {
+        this.memo = memo;
     }
 
   
