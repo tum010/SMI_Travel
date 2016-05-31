@@ -520,6 +520,7 @@ public class BillableImpl implements BillableDao {
         String description = "";
         Session session = this.sessionFactory.openSession();
         List<OtherBooking> list = session.createQuery(QUERY_OTHERS).setParameter("refitemid", refno).list();
+        DecimalFormat df = new DecimalFormat("###,##0.00");
 
         if (list.isEmpty()) {
             return null;
@@ -565,7 +566,7 @@ public class BillableImpl implements BillableDao {
                 String amount = "";
                 if(list.get(i).getAdPrice()!= null && (new BigDecimal(BigInteger.ZERO)).compareTo(list.get(i).getAdPrice()) != 0 ){ // Adult Cost
                     if(list.get(i).getAdQty() != null && list.get(i).getAdQty() != 0){ // Adult Qty
-                        amount += "("+list.get(i).getAdPrice()+" x ";
+                        amount += "("+df.format(list.get(i).getAdPrice())+" x ";
                         amount += ""+list.get(i).getAdQty() +") ";
                     }else{
                         amount += "";
@@ -575,7 +576,7 @@ public class BillableImpl implements BillableDao {
                 }
                 if(list.get(i).getChPrice()!= null && (new BigDecimal(BigInteger.ZERO)).compareTo(list.get(i).getChPrice()) != 0){ // Children Cost
                     if(list.get(i).getChQty()!= null && list.get(i).getChQty() != 0){ // Children Qty
-                        amount += " ("+list.get(i).getChPrice()+" x ";
+                        amount += " ("+df.format(list.get(i).getChPrice())+" x ";
                         amount += ""+list.get(i).getChQty() +")";
                     }else{
                         amount += "";
@@ -585,7 +586,7 @@ public class BillableImpl implements BillableDao {
                 }
                 if(list.get(i).getInPrice()!= null &&(new BigDecimal(BigInteger.ZERO)).compareTo(list.get(i).getInPrice())  != 0){ // Infant Cost
                     if(list.get(i).getInQty()!= null && list.get(i).getInQty() != 0){ // Infant Qty
-                        amount += "  ("+list.get(i).getInPrice()+" x ";
+                        amount += "  ("+df.format(list.get(i).getInPrice())+" x ";
                         amount += ""+list.get(i).getInQty() +")";
                     }else{
                         amount += "";

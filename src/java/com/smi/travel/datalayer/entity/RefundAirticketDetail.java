@@ -29,13 +29,14 @@ public class RefundAirticketDetail {
      private BigDecimal clientCharge;
      private BigDecimal airlineCharge;
      private BigDecimal totalCharge;
+     private BigDecimal salePrice;
      private List paymentAirticketRefunds = new LinkedList<PaymentAirticketRefund>();
      private Map<String, Object> ticketFareAirline;
 
     public RefundAirticketDetail() {
     }
 
-    public RefundAirticketDetail(RefundAirticket refundAirticket,AirticketPassenger airticketPassenger, String sectorRefund, BigDecimal receiveAirline, BigDecimal payCustomer, BigDecimal agentComission,BigDecimal airComission,BigDecimal profit,Date expenseDate,Date receiveDate, List paymentAirticketRefunds, BigDecimal airlineCharge) {
+    public RefundAirticketDetail(RefundAirticket refundAirticket,AirticketPassenger airticketPassenger, String sectorRefund, BigDecimal receiveAirline, BigDecimal payCustomer, BigDecimal agentComission,BigDecimal airComission,BigDecimal profit,Date expenseDate,Date receiveDate, List paymentAirticketRefunds, BigDecimal airlineCharge, BigDecimal salePrice) {
        this.refundAirticket = refundAirticket;
        this.airticketPassenger = airticketPassenger;
        this.sectorRefund = sectorRefund;
@@ -47,6 +48,7 @@ public class RefundAirticketDetail {
        this.profit = profit;
        this.expenseDate = expenseDate;
        this.airlineCharge = airlineCharge;
+       this.salePrice = salePrice;
        this.paymentAirticketRefunds = paymentAirticketRefunds;
     }
    
@@ -202,6 +204,14 @@ public class RefundAirticketDetail {
 
     public void setTotalCharge(BigDecimal totalCharge) {
         this.totalCharge = totalCharge;
+    }
+
+    public BigDecimal getSalePrice() {
+        return salePrice;
+    }
+
+    public void setSalePrice(BigDecimal salePrice) {
+        this.salePrice = salePrice;
     }
 
 }

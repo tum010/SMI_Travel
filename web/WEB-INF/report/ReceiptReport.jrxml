@@ -440,9 +440,9 @@
 				<textFieldExpression><![CDATA[($F{tax} != null && !"null".equals($F{tax}) && $F{tax}.length() > 0) ? new BigDecimal($F{tax}) : ""]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="99" y="54" width="290" height="30" uuid="c3db3df8-d8ba-40df-95bb-9e4ec2250f62"/>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="99" y="54" width="297" height="30" uuid="c3db3df8-d8ba-40df-95bb-9e4ec2250f62"/>
 				<textElement textAlignment="Left" verticalAlignment="Top">
-					<font fontName="Tahoma" size="8" isBold="true" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<font fontName="Tahoma" size="7" isBold="false" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{textmoney}]]></textFieldExpression>
 			</textField>

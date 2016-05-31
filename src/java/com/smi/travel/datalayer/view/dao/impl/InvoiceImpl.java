@@ -592,48 +592,37 @@ public class InvoiceImpl implements InvoiceReportDao{
 
     private List<InvoiceReport> getHotelAdditional(String refNo, int mVat, boolean isVat, Session session) {
         UtilityFunction util = new UtilityFunction();
-        List<Object[]> hotelAdditionalPriceList = session.createSQLQuery(" SELECT * FROM `hotel_price_add_all` where ref_no =  '" + refNo + "' and bill_type = 'Hotel'")      
-                .addScalar("add_cost", Hibernate.STRING)
-                .addScalar("add_price", Hibernate.STRING)
+        List<Object[]> hotelAdditionalList = session.createSQLQuery(" SELECT * FROM `invoice_view_hotel_additional` WHERE ref_no = '" + refNo + "' ")      
                 .addScalar("ref_no", Hibernate.STRING)
-                .list();
-        
-        List<Object[]> hotelAdditionalDescriptionList = session.createSQLQuery(" SELECT * FROM `hotel_inbound_category` where ref_no =  '" + refNo + "'")      
                 .addScalar("cate_desc", Hibernate.STRING)
-                .addScalar("ref_no", Hibernate.STRING)
+                .addScalar("cost", Hibernate.STRING)
+                .addScalar("price", Hibernate.STRING)
                 .list();
         
         List<InvoiceReport> invoiceReportList = new ArrayList<InvoiceReport>();
-        for(Object[] A : hotelAdditionalPriceList){
-            String refNo1 = (A[2] != null ? util.ConvertString(A[2]) : "");
             
-            for(Object[] B : hotelAdditionalDescriptionList){
-                String refNo2 = (B[1] != null ? util.ConvertString(B[1]) : "");
-                
-                if(refNo1.equalsIgnoreCase(refNo2)){
-                    InvoiceReport invoiceReport = new InvoiceReport();
-                    BigDecimal amount = (A[1] != null ? new BigDecimal(util.ConvertString(A[1])) : new BigDecimal("0.00"));
-                    BigDecimal vatTemp = new BigDecimal(String.valueOf(mVat));
-                    BigDecimal gross = new BigDecimal("0.00");
-                    BigDecimal vat = new BigDecimal("0.00");
-                    
-                    if(isVat){
-                        gross = amount.multiply(new BigDecimal("100.00")).divide(new BigDecimal("100.00").add(vatTemp),2,RoundingMode.HALF_UP);
-                        vat = amount.subtract(gross);          
-                        
-                    } else {
-                        gross = amount;
-                    }
-                                                                                      
-                    invoiceReport.setDescription(B[0] != null ? "            : " + util.ConvertString(B[0]) : "");                   
-                    invoiceReport.setGrossadd(String.valueOf(gross)); 
-                    invoiceReport.setVatadd(String.valueOf(vat));
-                    invoiceReport.setAmountadd(String.valueOf(amount));
-                    
-                    invoiceReportList.add(invoiceReport);
-                    
-                }               
+        for(Object[] B : hotelAdditionalList){
+            InvoiceReport invoiceReport = new InvoiceReport();
+            BigDecimal amount = (B[3] != null ? new BigDecimal(util.ConvertString(B[3])) : new BigDecimal("0.00"));
+            BigDecimal vatTemp = new BigDecimal(String.valueOf(mVat));
+            BigDecimal gross = new BigDecimal("0.00");
+            BigDecimal vat = new BigDecimal("0.00");
+
+            if(isVat){
+                gross = amount.multiply(new BigDecimal("100.00")).divide(new BigDecimal("100.00").add(vatTemp),2,RoundingMode.HALF_UP);
+                vat = amount.subtract(gross);          
+
+            } else {
+                gross = amount;
             }
+
+            invoiceReport.setDescription(B[1] != null ? "            : " + util.ConvertString(B[1]) : "");                   
+            invoiceReport.setGrossadd(String.valueOf(gross)); 
+            invoiceReport.setVatadd(String.valueOf(vat));
+            invoiceReport.setAmountadd(String.valueOf(amount));
+
+            invoiceReportList.add(invoiceReport);
+
         }
         
         return invoiceReportList;

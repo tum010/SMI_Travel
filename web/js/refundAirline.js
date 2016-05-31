@@ -324,7 +324,7 @@ function addRowRefundAirlineList() {
                                         $("#ticketId" + row).val(fare.Id);
                                         $("#ticketDate" + row).html(fare.TicketDate);
                                         $("#sectorIssue" + row).html(fare.Sector);
-                                        $("#total" + row).html(fare.Total);
+                                        $("#salePrice" + row).val(fare.Total);
                                         $("#department" + row).html(fare.Dept);
                                         $("#passsenger" + row).html(fare.Passenger);
                                         $("#isTicketFromPassenger" + row).val('1');

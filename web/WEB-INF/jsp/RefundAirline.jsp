@@ -260,7 +260,10 @@
                                     <td  style="text-align:center"><span id="ticketDate" name="ticketDate">${detail.ticketFareAirline["TicketDate"]}</span></td>
                                     <td><span id="sectorIssue${index}" colName="sectorIssue">${detail.ticketFareAirline["Sector"]}</span></td>
                                     <!--<td style="text-align:center"><span id="total">${detail.ticketFareAirline["Total"]}</span></td>-->
-                                    <td style="text-align:center"><fmt:formatNumber type="number" maxFractionDigits="3" minFractionDigits="2" value="${detail.ticketFareAirline['Total']}"/></td>
+                                    <td style="text-align:center">
+                                        <%--<fmt:formatNumber type="number" maxFractionDigits="3" minFractionDigits="2" value="${detail.ticketFareAirline['Total']}"/>--%>
+                                        <input id="salePrice${index}" name="salePrice${index}" colName="salePrice" type="text" class="form-control text-right decimal" style="text-align: right" value="${detail.salePrice}">
+                                    </td>
                                     <td ><span id="department">${detail.ticketFareAirline["Dept"]}</span></td>       
                                     <td colspan='2'><span id="passsenger" name="passsenger">${detail.ticketFareAirline["Passenger"]}</span></td>
                                     <td style="text-align:center" > 
@@ -315,11 +318,11 @@
                                 <div class="col-sm-12">
                                     <label class="col-sm-2 control-label text-right">Airline Charge</label>
                                     <div class="col-sm-3">
-                                        <input id="airlineCharge-" name="airlineCharge-" class="form-control text-right decimal" value="" readonly=""  type="text" maxlength="10"  />
+                                        <input id="airlineCharge-" name="airlineCharge-" class="form-control text-right decimal" value="" type="text" maxlength="10"  />
                                     </div>
                                     <label class="col-sm-2 control-label text-right">Client Charge</label>
                                     <div class="col-sm-3">
-                                        <input id="clientCharge-" name="clientCharge-" class="form-control text-right decimal" value="" readonly="" type="text" maxlength="10" />
+                                        <input id="clientCharge-" name="clientCharge-" class="form-control text-right decimal" value="" type="text" maxlength="10" />
                                     </div>
                                 </div>
                             </div>
@@ -549,7 +552,7 @@
         <tr>
             <td  style="text-align:center"><span id="ticketDate" colName="ticketDate"></span></td>
             <td ><span id="sectorIssue" colName="sectorIssue"></span></td>
-            <td style="text-align:center"><span id="total" colName="total"></span></td>
+            <td style="text-align:center"><span id="total" colName="total"><input id="salePrice" name="salePrice" colName="salePrice" type="text" class="form-control text-right decimal" style="text-align: right" value=""></span></td>
             <td ><span id="department" colName="department"></span></td>       
             <td colspan='2'><span id="passsenger" colName="passsenger"></span></td>
             <td style="text-align:center"> 
