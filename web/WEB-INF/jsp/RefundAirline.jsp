@@ -318,11 +318,11 @@
                                 <div class="col-sm-12">
                                     <label class="col-sm-2 control-label text-right">Airline Charge</label>
                                     <div class="col-sm-3">
-                                        <input id="airlineCharge-" name="airlineCharge-" class="form-control text-right decimal" value="" readonly=""  type="text" maxlength="10"  />
+                                        <input id="airlineCharge-" name="airlineCharge-" class="form-control text-right decimal" value="" type="text" maxlength="10"  />
                                     </div>
                                     <label class="col-sm-2 control-label text-right">Client Charge</label>
                                     <div class="col-sm-3">
-                                        <input id="clientCharge-" name="clientCharge-" class="form-control text-right decimal" value="" readonly="" type="text" maxlength="10" />
+                                        <input id="clientCharge-" name="clientCharge-" class="form-control text-right decimal" value="" type="text" maxlength="10" />
                                     </div>
                                 </div>
                             </div>
