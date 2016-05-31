@@ -48,11 +48,16 @@ public class RefundAirlineService {
         if (refund != null) {
             for (int i = 0; i < refund.getRefundAirticketDetails().size(); i++) {
                 RefundAirticketDetail detail = (RefundAirticketDetail) refund.getRefundAirticketDetails().get(i);
-                String ticketNo = detail.getAirticketPassenger().getSeries1()
-                        + detail.getAirticketPassenger().getSeries2()
-                        + detail.getAirticketPassenger().getSeries3();
-                detail.setTicketFareAirline(ticketFareAirlineDao.getDetailTicketFareAirline(ticketNo));
-                detail.getTicketFareAirline().put("TicketNo", ticketNo);
+                String ticketNo = "";
+                if(detail.getAirticketPassenger() != null){
+                    ticketNo = detail.getAirticketPassenger().getSeries1()
+                            + detail.getAirticketPassenger().getSeries2()
+                            + detail.getAirticketPassenger().getSeries3();
+                    detail.setTicketFareAirline(ticketFareAirlineDao.getDetailTicketFareAirline(ticketNo));
+                    detail.getTicketFareAirline().put("TicketNo", ticketNo);
+                }else{
+                    ticketNo = detail.getTicketNo();
+                }
             }
         }
         return refund;
