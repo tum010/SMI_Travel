@@ -203,6 +203,15 @@
                                     <tr row="${index}">
                                 <input type="hidden" name="detailId${index}" id="detailId${index}" colName="detailId" value="${detail.id}">
                                 <input type="hidden" id="ticketId${index}" name="ticketId${index}" colName="ticketId" value="${detail.airticketPassenger.id}">
+                                <c:choose>
+                                    <c:when test="${detail.airticketPassenger == null}">
+                                        <input type="hidden" id="isTicketFromPassenger${index}" name="isTicketFromPassenger${index}" colName="isTicketFromPassenger" value="0">
+                                    </c:when>
+                                    <c:otherwise>
+                                        <input type="hidden" id="isTicketFromPassenger${index}" name="isTicketFromPassenger${index}" colName="isTicketFromPassenger" value="1">
+                                    </c:otherwise>
+                                </c:choose>    
+                                
                                 <td rowspan='2' class="text-center">
                                     <c:choose>
                                         <c:when test="${detail.refundCharge == 1}">
@@ -213,8 +222,14 @@
                                         </c:otherwise>
                                     </c:choose>    
                                 </td>
-                                <td style="text-align:center"><input id="ticketNo${index}" name="ticketNo${index}" colName="ticketNo" type="text" class="form-control" value="${detail.ticketFareAirline["TicketNo"]}">
-                                <i id="ajaxload1-${index}"  class="fa fa-spinner fa-spin hidden"></i>
+                                <td style="text-align:center">
+                                    <c:if test="${detail.ticketFareAirline != null}">
+                                        <input id="ticketNo${index}" name="ticketNo${index}" colName="ticketNo" type="text" class="form-control" value="${detail.ticketFareAirline["TicketNo"]}">
+                                    </c:if>
+                                    <c:if test="${detail.ticketFareAirline == null}">
+                                        <input id="ticketNo${index}" name="ticketNo${index}" colName="ticketNo" type="text" class="form-control" value="${detail.ticketNo}">
+                                    </c:if>    
+                                    <i id="ajaxload1-${index}"  class="fa fa-spinner fa-spin hidden"></i>
                                 </td>
                                 <td style="text-align:center"> <input id="refund${index}" name="refund${index}" colName="refund" type="text" class="form-control" value="${detail.sectorRefund}" onfocusout="checkRefund(this)"></td>
                                 <td style="text-align:center"> <input id="receive${index}" name="receive${index}" colName="receive" onfocusout="calculateProfit(this)" type="text" class="form-control text-right decimal" style="text-align: right" value="${detail.receiveAirline}"></td>
@@ -507,6 +522,7 @@
             <tr>
         <input type="hidden" name="detailId" id="detailId" colName="detailId" value="">
         <input type="hidden" id="ticketId" name="ticketId" colName="ticketId" value="">
+        <input type="hidden" id="isTicketFromPassenger" name="isTicketFromPassenger" colName="isTicketFromPassenger" value="0">
         <td rowspan='2'> <input id="checkCharge" name="checkCharge" colName="checkCharge" type="checkbox" class="form-control text-center" onclick="checkboxCharge(this)" value=""></td>
         <td style="text-align:center"> <input id="ticketNo" name="ticketNo" colName="ticketNo" type="text" class="form-control" value=""><span  id="ajaxload1-" colName="ajaxload1-" class="fa fa-spinner fa-spin hidden"></span></td>
         <td style="text-align:center"> <input id="refund" name="refund" colName="refund" type="text" maxlength="255" class="form-control" value="" onfocusout="checkRefund(this)"></td>
@@ -882,13 +898,16 @@
         }
         var valid = true;
         for (var i = 1; i < $("#counter").val(); i++) {
-            var refund = $("#refund" + i).val();
-            var sector = $("#sectorIssue" + i).html();
-            if ("" === refund || sector.indexOf(refund) < 0) {
-                $("#refund" + i).css('border-color', "Red");
-                valid = false;
-            } else {
-                $("#refund" + i).css('border-color', "Green");
+            var isTicketFromPassenger = $("#isTicketFromPassenger" + i).val();
+            if(isTicketFromPassenger === '1'){
+                var refund = $("#refund" + i).val();
+                var sector = $("#sectorIssue" + i).html();
+                if ("" === refund || sector.indexOf(refund) < 0) {
+                    $("#refund" + i).css('border-color', "Red");
+                    valid = false;
+                } else {
+                    $("#refund" + i).css('border-color', "Green");
+                }
             }
         }
         if (valid) {
@@ -908,13 +927,16 @@
         }
         var valid = true;
         for (var i = 1; i < $("#counter").val(); i++) {
-            var refund = $("#refund" + i).val();
-            var sector = $("#sectorIssue" + i).html();
-            if ("" === refund || sector.indexOf(refund) < 0) {
-                $("#refund" + i).css('border-color', "Red");
-                valid = false;
-            } else {
-                $("#refund" + i).css('border-color', "Green");
+            var isTicketFromPassenger = $("#isTicketFromPassenger" + i).val();
+            if(isTicketFromPassenger === '1'){
+                var refund = $("#refund" + i).val();
+                var sector = $("#sectorIssue" + i).html();
+                if ("" === refund || sector.indexOf(refund) < 0) {
+                    $("#refund" + i).css('border-color', "Red");
+                    valid = false;
+                } else {
+                    $("#refund" + i).css('border-color', "Green");
+                }
             }
         }
         if (valid) {

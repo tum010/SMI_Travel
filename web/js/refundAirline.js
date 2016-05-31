@@ -3,6 +3,7 @@ $(document).ready(function () {
 
     
     addRowRefundAirlineList();
+    
     $(".decimal").inputmask({
         alias: "decimal",
         integerDigits: 8,
@@ -271,6 +272,12 @@ function addRowRefundAirlineList() {
         $("#counter").val(counter);
 
         if (this.id.startsWith("ticketNo")) {
+            $(this).on("focusout", function (event) {
+                var ticketNumber = this.value;
+                if(ticketNumber !== ''){
+                    addRowRefundAirlineList();
+                }
+            });
             $(this).on("keyup", function (event) {
                 var inputTicket = this;
                 var ticketNo = this.value;
@@ -320,6 +327,7 @@ function addRowRefundAirlineList() {
                                         $("#total" + row).html(fare.Total);
                                         $("#department" + row).html(fare.Dept);
                                         $("#passsenger" + row).html(fare.Passenger);
+                                        $("#isTicketFromPassenger" + row).val('1');
                                         document.getElementById("refundBy").value = fare.InvTo;
                                         document.getElementById("refundByName").value = fare.InvName;
                                         var size = fare.SizeData ;
@@ -333,7 +341,7 @@ function addRowRefundAirlineList() {
                                         
                                         var counter = $('#RefundAirlineTable tbody tr').length / 2;
                                         if (row === counter) {
-                                            addRowRefundAirlineList();
+//                                            addRowRefundAirlineList();
                                             $(".decimal").inputmask({
                                                 alias: "decimal",
                                                 integerDigits: 8,
@@ -353,7 +361,6 @@ function addRowRefundAirlineList() {
                                         $("#alertSuccess").hide();
                                         $("#ajaxload1-"+rows).addClass("hidden");
                                     }
-
                                 }, error: function (msg) {
                                     console.log('auto ERROR');
                                     $("#dataload").addClass("hidden");

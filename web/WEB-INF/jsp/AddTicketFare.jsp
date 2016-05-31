@@ -1060,6 +1060,7 @@
         //on modal List Ticket
         $("#filtercus").keyup(function (event) {
             if (event.keyCode === 13) {
+                $("#refno").val($("#filtercus").val());
                 FilterTicketList($("#filtercus").val());
             }
         });

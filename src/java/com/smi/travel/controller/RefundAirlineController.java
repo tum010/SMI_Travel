@@ -196,9 +196,15 @@ public class RefundAirlineController extends SMITravelController {
                         detail.setRefundCharge(0);
                     }
                     detail.setId(detailId);
-                    AirticketPassenger ticket = new AirticketPassenger();
-                    ticket.setId(ticketId);
-                    detail.setAirticketPassenger(ticket);
+                    
+                    if(!"".equalsIgnoreCase(ticketId) && ticketId != null){
+                        AirticketPassenger ticket = new AirticketPassenger();
+                        ticket.setId(ticketId);
+                        detail.setAirticketPassenger(ticket);
+                    }else{
+                        detail.setAirticketPassenger(null);
+                    }
+                    
                     detail.setSectorRefund(refund);
                     if(receive != null && !"".equals(receive)){
                         detail.setReceiveAirline(new BigDecimal(df.parse(receive).toString()));
