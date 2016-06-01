@@ -415,7 +415,13 @@
                             <button type="button" class="close" aria-label="Close" onclick="hideTextAlertDiv()"><span aria-hidden="true">&times;</span></button>
                             <strong id="alertInvoice"></strong>
                         </div>
-                    </div>          
+                    </div>
+                    <div class="col-xs-12" style="padding: 0px 15px 0px 0px;">        
+                        <div id="textAlertDivExRate"  style="display:none;" class="alert alert-danger">
+                            <button type="button" class="close" aria-label="Close" onclick="hideTextAlertDiv()"><span aria-hidden="true">&times;</span></button>
+                            <strong id="alertExRate"></strong>
+                        </div>
+                    </div>    
                     <div class="col-xs-12 hidden" id="searchInvoiceNo2" style="padding: 0px 15px 0px 0px;">
                         <table id="InvoiceListTable" class="display" cellspacing="0" width="100px">
                             <thead>
@@ -1873,6 +1879,11 @@
                                 $("#textAlertDivRefNo").show();
                             }
                             
+//                            if(result[3] !== 'fail'){
+//                                $("#alertExRate").html(result[3]);
+//                                $("#textAlertDivExRate").show();
+//                            }                          
+                            
                             $("#RefNoListTableTemp tbody").append(result[0]);                           
                             if(document.getElementById("receiveTaxInvTo")!==null && ($("#receiveTaxInvTo").val()!==undefined)){
                                 document.getElementById("TaxInvTo").value = $("#receiveTaxInvTo").val();
@@ -2974,6 +2985,7 @@
         $("#textAlertCurrencyAmountNotMatch").hide();
         $("#textAlertDivRefNo").hide();
         $("#textAlertDivInvoice").hide();
+        $("#textAlertDivExRate").hide();
     }
     
     $(window).on("beforeunload", function() {
