@@ -58,6 +58,7 @@ public class MHotelDetailController extends SMITravelController {
         country.setId(countryid);
         Hotel hotel = new Hotel();
         hotel.setCode((String.valueOf(code)).toUpperCase());
+        hotel.setApCode((String.valueOf(code)).toUpperCase());
         hotel.setName((String.valueOf(name)).toUpperCase());
         if(!"0".equalsIgnoreCase(cityid)){
             hotel.setMCity(city);

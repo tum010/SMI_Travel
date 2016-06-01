@@ -73,6 +73,7 @@ public class AgentImpl implements AgentDao{
         int result = 0;
         String agentCode = generateAgentCode(agent.getName());
         agent.setCode(agentCode);
+        agent.setApCode(agentCode);
         try {
             Session session = this.sessionFactory.openSession();
             transaction = session.beginTransaction();

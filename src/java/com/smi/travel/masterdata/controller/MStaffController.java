@@ -50,6 +50,7 @@ public class MStaffController extends SMITravelController {
         String roleId = request.getParameter("Role");
         String StaffID = request.getParameter("StaffID");
         String email = request.getParameter("Email");
+        String apcode = request.getParameter("apcode");
 
         System.out.println("MStaffController - action  :" + action + " RoldId = " + roleId);
         int result = 0;
@@ -64,6 +65,7 @@ public class MStaffController extends SMITravelController {
         staff.setCar(car);
         staff.setStatus(status);
         staff.setEmail(email);
+        staff.setApCode(apcode);
         if (StringUtils.isNotEmpty(roleId)) {
             staff.setRole(mRoleService.getroleFromID(roleId));
         }
@@ -143,6 +145,7 @@ public class MStaffController extends SMITravelController {
             staff.setCar(car);
             staff.setStatus(status);
             staff.setCreateBy(createBy);
+            staff.setApCode(apcode);
             staff.setRole(null);
             staff.setMDepartment(null);
         }

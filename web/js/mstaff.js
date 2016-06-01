@@ -121,7 +121,7 @@ function searchAction() {
     $("#SearchStaff").submit();
 }
 
-function EditStaff(id, name, username, password, position, tel, car, departmentId, status, createBy, roleId, email) {
+function EditStaff(id, name, username, password, position, tel, car, departmentId, status, createBy, roleId, email,apCode) {
     $('#Staffform').bootstrapValidator('resetForm', true);
     $("#StaffName").val(name);
     $("#UserName").val(username);
@@ -130,6 +130,7 @@ function EditStaff(id, name, username, password, position, tel, car, departmentI
     $("#Tel").val(tel);
     $("#Car").val(car);
     $("#Department").val(departmentId);
+    $("#apcode").val(apCode);
     console.log(status + " roldId = " + roleId);
     var $radios = $('input:radio[name=Status]');
     $radios.filter('[value=' + status + ']').prop('checked', true);
