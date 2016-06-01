@@ -621,6 +621,14 @@ function  deleteBookExpen() {
 function printGuideJob() {
     var inputDetailTourCode = document.getElementById("InputDetailTourCode").value;
     var inputTourDetailTourDate = document.getElementById("InputTourDetailTourDate").value;
+    var specialChar = [{char : "+",encode : "%2B"},
+                        {char : "-",encode : "%2D"},
+                        {char : "&",encode : "%26"}];
+    for(var i = 0; i < specialChar.length ; i++){
+        while(inputDetailTourCode.indexOf(specialChar[i].char) !== -1){
+            inputDetailTourCode = inputDetailTourCode.replace(specialChar[i].char,specialChar[i].encode);
+        }
+    }
     window.open("report.smi?name=GuideJob&tourdate=" + inputTourDetailTourDate + "&tourcode=" + inputDetailTourCode);
 }
 

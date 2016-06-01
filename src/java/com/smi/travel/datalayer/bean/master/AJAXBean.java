@@ -1840,9 +1840,12 @@ public class AJAXBean extends AbstractBean implements
         
         String alertMessage = "";
         String alertMessageInvoiceAlready = "";
+        String alertMessageExRate = "";
         Date date = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+        SimpleDateFormat sdfShow = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
         String todayDate = sdf.format(date);
+        String todayDateShow = sdfShow.format(date);
         for (int i = 0; i < billableDescs.size(); i++) {
             billableDescId = billableDescs.get(i).getId();
             String description = billableDescs.get(i).getDetail();
@@ -1854,49 +1857,77 @@ public class AJAXBean extends AbstractBean implements
             alertMessage += (!"".equalsIgnoreCase(alertMessage) ? "<br>" : "");
             
             List<TaxInvoice> taxInvoiceList = taxInvoiceDao.checkInvoiceAlready(billableDescId);
-            alertMessageInvoiceAlready += (!"".equalsIgnoreCase(alertMessageInvoiceAlready) ? "<br>" : "");
+            alertMessageInvoiceAlready += (!"".equalsIgnoreCase(alertMessageInvoiceAlready) ? "<br>" : "");            
             if(taxInvoiceList == null){
            
                 for(int j=0; j<invoiceDetailList.size(); j++){
 //                    BigDecimal exrate = invoiceDetailList.get(j).getExRate();
-                    BigDecimal exrate = new BigDecimal(BigInteger.ZERO);
-                    if(!"".equalsIgnoreCase(billableDescs.get(i).getCurrency()) && billableDescs.get(i).getCurrency() != null){
+                    BigDecimal costCheck = (billableDescs.get(i).getCost() != null ? (billableDescs.get(i).getCost()) : new BigDecimal(BigInteger.ZERO));
+                    BigDecimal amountCheck = (billableDescs.get(i).getPrice()!= null ? (billableDescs.get(i).getPrice()) : new BigDecimal(BigInteger.ZERO));
+                    BigDecimal exrateCost = new BigDecimal(BigInteger.ZERO);
+                    BigDecimal exrateAmount = new BigDecimal(BigInteger.ZERO);
+                    if(!"".equalsIgnoreCase(billableDescs.get(i).getCurCost()) && !"THB".equalsIgnoreCase(billableDescs.get(i).getCurCost()) && billableDescs.get(i).getCurCost() != null){
+                        List<MExchangeRate> listMExchange = mExchangeRateDao.searchExchangeRate(todayDate, todayDate, billableDescs.get(i).getCurCost());
+                        exrateCost = (listMExchange != null && listMExchange.size() > 0 ? listMExchange.get(0).getExrate() : BigDecimal.ZERO);
+                        alertMessageExRate += (!"".equalsIgnoreCase(alertMessageExRate) ? "<br>" : "");
+                        alertMessageExRate += (exrateCost.compareTo(BigDecimal.ZERO) == 0 ? "Exchange Rate " + billableDescs.get(i).getCurCost() + " on " + todayDateShow + " not found." : "");
+                    }
+                    if(!"".equalsIgnoreCase(billableDescs.get(i).getCurrency()) && !"THB".equalsIgnoreCase(billableDescs.get(i).getCurrency()) && billableDescs.get(i).getCurrency() != null){
                         List<MExchangeRate> listMExchange = mExchangeRateDao.searchExchangeRate(todayDate, todayDate, billableDescs.get(i).getCurrency());
-                        exrate = (listMExchange != null && listMExchange.size() > 0 ? listMExchange.get(0).getExrate() : BigDecimal.ZERO);
+                        exrateAmount = (listMExchange != null && listMExchange.size() > 0 ? listMExchange.get(0).getExrate() : BigDecimal.ZERO);
+                        alertMessageExRate += (!"".equalsIgnoreCase(alertMessageExRate) ? "<br>" : "");
+                        alertMessageExRate += (exrateCost.compareTo(BigDecimal.ZERO) == 0 ? "Exchange Rate " + billableDescs.get(i).getCurrency()+ " on " + todayDateShow + " not found." : "");
                     }
                     
                     curcost = (billableDescs.get(i).getCurCost() == null ? "" : billableDescs.get(i).getCurCost());
                     curamount = (billableDescs.get(i).getCurrency() == null ? "" : billableDescs.get(i).getCurrency());
                     BigDecimal profitTaxInvoice = new BigDecimal(BigInteger.ZERO);
-                    BigDecimal costCheck = (billableDescs.get(i).getCost() != null ? (billableDescs.get(i).getCost()) : new BigDecimal(BigInteger.ZERO));
-                    BigDecimal amountCheck = (billableDescs.get(i).getPrice()!= null ? (billableDescs.get(i).getPrice()) : new BigDecimal(BigInteger.ZERO));
+                    
                     BigDecimal profitCheck = new BigDecimal(BigInteger.ZERO);
-
+                    System.out.println("===== Ex Rate Cost ===== : "+exrateCost);
+                    System.out.println("===== Ex Rate Price ===== : "+exrateAmount);
+                    System.out.println("===== Curency Cost ===== : "+curcost);
+                    System.out.println("===== Currency Amount ===== : "+curamount);
+                    System.out.println("===== Cost Check ===== : "+costCheck);
+                    System.out.println("===== Amount Check ===== : "+amountCheck);
+                    System.out.println("===== alertMessageExRate ===== : "+alertMessageExRate);
+                    
                     if(billableDescId.equalsIgnoreCase(invoiceDetailList.get(j).getBillableDesc().getId()) && !"".equalsIgnoreCase(curcost) && !"".equalsIgnoreCase(curamount)){
-                        boolean check = true;                   
+                        boolean check = true;
                         String invoiceDetailId = invoiceDetailList.get(j).getId();
                         String invNo = taxInvoiceDao.getInvoiceNoByInvoiceDetailId(invoiceDetailId);
-
-                        if(!"THB".equalsIgnoreCase(curcost) || !"THB".equalsIgnoreCase(curamount)){
-                            if(exrate.compareTo(BigDecimal.ZERO) == 0){
-                                check = false;
-
-                            }else{
-                                profitTaxInvoice = taxInvoiceDao.getProfitFromTaxInvoice(billableDescId,"");                           
-                                if(!"THB".equalsIgnoreCase(curcost) && !"THB".equalsIgnoreCase(curamount)){
-                                    profitCheck = ((amountCheck.multiply(exrate)).subtract(costCheck.multiply(exrate))).setScale(2, RoundingMode.UP);
-
-                                }else{
-                                    profitCheck = (amountCheck.subtract(costCheck)).setScale(2, RoundingMode.UP);
-                                }
-
-                            }                       
-
+                        if(!"THB".equalsIgnoreCase(curcost) && exrateCost.compareTo(BigDecimal.ZERO) != 0){
+                            costCheck = costCheck.multiply(exrateCost);
                         }else{
-                            profitTaxInvoice = taxInvoiceDao.getProfitFromTaxInvoice(billableDescId,"");     
-                            profitCheck = (amountCheck).subtract(costCheck);
+                            check = false;
                         }
-
+                        if(!"THB".equalsIgnoreCase(curamount) && exrateAmount.compareTo(BigDecimal.ZERO) != 0){
+                            amountCheck = amountCheck.multiply(exrateAmount);
+                        }else{
+                            check = false;
+                        }
+                        profitCheck = (amountCheck).subtract(costCheck).setScale(2, RoundingMode.HALF_UP);
+//                        if(!"THB".equalsIgnoreCase(curcost) || !"THB".equalsIgnoreCase(curamount)){
+//                            if(exrate.compareTo(BigDecimal.ZERO) == 0){
+//                                check = false;
+//
+//                            }else{
+//                                profitTaxInvoice = taxInvoiceDao.getProfitFromTaxInvoice(billableDescId,"");                           
+//                                if(!"THB".equalsIgnoreCase(curcost) && !"THB".equalsIgnoreCase(curamount)){
+//                                    profitCheck = ((amountCheck.multiply(exrate)).subtract(costCheck.multiply(exrate))).setScale(2, RoundingMode.UP);
+//
+//                                }else{
+//                                    profitCheck = (amountCheck.subtract(costCheck)).setScale(2, RoundingMode.UP);
+//                                }
+//
+//                            }                       
+//
+//                        }else{
+//                            profitTaxInvoice = taxInvoiceDao.getProfitFromTaxInvoice(billableDescId,"");     
+//                            profitCheck = (amountCheck).subtract(costCheck);
+//                        }
+                        System.out.println("===== Profix Check ===== : "+profitCheck);
+                        
                         if(profitCheck.compareTo(profitTaxInvoice) == 0 || profitCheck.compareTo(profitTaxInvoice) < 0){
                             check = false;
                             boolean checkInvNoProfit = taxInvoiceDao.checkInvNoProfit(invoiceDetailId);
@@ -1948,15 +1979,18 @@ public class AJAXBean extends AbstractBean implements
                                 BigDecimal profit = new BigDecimal(0);
                                 BigDecimal remain = new BigDecimal(0);
         //                        exrate = billableDescs.get(i).getExRate();
+                                
+                                profit = amountCheck.subtract(costCheck).setScale(2, RoundingMode.HALF_UP);
+                                remain = profit.subtract(amountTemp).setScale(2, RoundingMode.HALF_UP);
 
-                                if(exrate != null && exrate.compareTo(BigDecimal.ZERO) != 0){
-                                    profit = ((amount.multiply(exrate)).subtract(cost.multiply(exrate))).setScale(2, RoundingMode.HALF_UP);
-                                    remain = profit.subtract(amountTemp);
-
-                                }else{
-                                    profit = amount.subtract(cost);
-                                    remain = profit.subtract(amountTemp);
-                                }                        
+//                                if(exrate != null && exrate.compareTo(BigDecimal.ZERO) != 0){
+//                                    profit = ((amount.multiply(exrate)).subtract(cost.multiply(exrate))).setScale(2, RoundingMode.HALF_UP);
+//                                    remain = profit.subtract(amountTemp);
+//
+//                                }else{
+//                                    profit = amount.subtract(cost);
+//                                    remain = profit.subtract(amountTemp);
+//                                }                        
 
         //                        if((curcost.equalsIgnoreCase(curamount)) && (!"".equalsIgnoreCase(curcost)) && (!"".equalsIgnoreCase(curamount))){
         //                            profit = amount.subtract(cost);
@@ -1968,8 +2002,8 @@ public class AJAXBean extends AbstractBean implements
         //                            profit = amount.subtract(cost.multiply(exrate)).setScale(2, RoundingMode.HALF_UP);
         //                            remain = profit.subtract(amountTemp);
         //                        }
-
-
+                                
+                                BigDecimal exrate = (!"THB".equalsIgnoreCase(curcost) ? exrateCost : exrateAmount);
                                 if (remain.compareTo(BigDecimal.ZERO) != 0 && remain.compareTo(BigDecimal.ZERO) != -1) {
                                     newrow = "";              
                                     newrow += "<tr>"
@@ -2033,6 +2067,11 @@ public class AJAXBean extends AbstractBean implements
         newrow = "";
         newrow += "//";
         newrow += (!"".equalsIgnoreCase(alertMessageInvoiceAlready) ? alertMessageInvoiceAlready : "fail");
+        html.append(newrow);
+        
+        newrow = "";
+        newrow += "//";
+        newrow += (!"".equalsIgnoreCase(alertMessageExRate) ? alertMessageExRate : "fail");
         html.append(newrow);
         
         return html.toString();
