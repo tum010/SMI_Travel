@@ -2343,16 +2343,19 @@ public class AJAXBean extends AbstractBean implements
     }        
 
     public String buildPassengerListHTML(List<Customer> passList) {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        UtilityFunction util = new UtilityFunction();
         String passenger = "";
         String MInitialname = "";
         String MInitialID = "";
         for (int i = 0; i < passList.size(); i++) {
+            
             Customer cus = passList.get(i);
+            String birthdate = cus.getBirthDate() == null ? "" : String.valueOf(formatter.format(cus.getBirthDate()));
             if (cus.getMInitialname() != null) {
                 MInitialname = cus.getMInitialname().getName();
                 MInitialID = cus.getMInitialname().getId();
             }
-
             passenger += "<tr>"
                     + "<td class='customer-id hidden'>" + cus.getId() + "</td>"
                     + "<td class='customer-code '>" + cus.getCode() + "</td>"
@@ -2360,6 +2363,7 @@ public class AJAXBean extends AbstractBean implements
                     + "<td class='customer-initialId hidden'>" + MInitialID + "</td>"
                     + "<td class='customer-lastname '>" + cus.getLastName() + "</td>"
                     + "<td class='customer-firstname '>" + cus.getFirstName() + "</td>"
+                    + "<td class='customer-birthdate hidden'>" + birthdate + "</td>"
                     + "<td class='customer-sex hidden'>" + (cus.getSex() == null ? "" : cus.getSex()) + "</td>"
                     + "<td class='customer-address hidden'>" + (cus.getAddress() == null ? "" : cus.getAddress()) + "</td>"
                     + "<td class='customer-tel hidden'>" + (cus.getTel() == null ? "" : cus.getTel()) + "</td>"
@@ -2370,6 +2374,8 @@ public class AJAXBean extends AbstractBean implements
                     + "<td class='customer-japanlastname hidden'>" + cus.getLastNameJapan() + "</td>"
                     + "<td class='customer-remark hidden'>" + (cus.getRemark() == null ? "" : cus.getRemark()) + "</td>"
                     + "<td class='customer-passportno hidden'>" + (cus.getPassportNo() == null ? "" : cus.getPassportNo()) + "</td>"
+                    + "<td class='customer-nationality hidden'>" + (cus.getNationality() == null ? "" : cus.getNationality()) + "</td>"
+                    + "<td class='customer-personalId hidden'>" + (cus.getPersonalId()== null ? "" : cus.getPersonalId()) + "</td>"
                     + "</tr>";
 
         }
@@ -2391,6 +2397,7 @@ public class AJAXBean extends AbstractBean implements
     }
 
     public JSONArray buildPassengerListJSON(List<Customer> listCutomer) {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
         JSONArray record = new JSONArray();
         for (int i = 0; i < listCutomer.size(); i++) {
             Customer customer = listCutomer.get(i);
@@ -2409,6 +2416,10 @@ public class AJAXBean extends AbstractBean implements
             field.put("passportno", customer.getPassportNo());
             field.put("firstnamejapan", customer.getFirstNameJapan());
             field.put("lastnamejapan", customer.getLastNameJapan());
+            field.put("birthdate", String.valueOf(customer.getBirthDate() == null ? "" : formatter.format(customer.getBirthDate())));
+            field.put("nationality", customer.getNationality());
+            field.put("personalid", customer.getPersonalId());
+            field.put("postalcode", customer.getPostalCode());
             record.add(field);
         }
         return record;

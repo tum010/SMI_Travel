@@ -129,6 +129,7 @@ public class PassengerDetailController extends SMITravelController {
             Customer customer = null;
             if (StringUtils.isNotEmpty(customerBean.getCode())) {
                 customer = utilservice.getCustomerdao().getCustomerFromID(customerId);
+                BeanUtils.copyProperties(customerBean, customer, new String[]{"id", "masters", "passengers"});
             } else {
                 customer = new Customer();
                 BeanUtils.copyProperties(customerBean, customer, new String[]{"id", "masters", "passengers"});

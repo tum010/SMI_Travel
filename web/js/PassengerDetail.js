@@ -100,15 +100,20 @@ $(document).ready(function () {
             $("#MInitialname").val("");
             $("#firstName").val("");
             $("#lastName").val("");
+            $("#firstNameJapan").val("");
+            $("#lastNameJapan").val("");
+            $("#birthDate").val("");
             $("input[name=sex]").prop('checked', false);
             $("#address").val("");
             $("#tel").val("");
             $("#phone").val("");
+            $("#postalCode").val("");
             $("#email").val("");
             $("#remark").val("");
             $("#Passport").val("");
-            $("#firstNameJapan").val("");
-            $("#lastNameJapan").val("");
+            $("#Nationnality").val("");
+            $("#personalId").val("");
+            $("#passengerId").val("");
         }else{
             if(event.keyCode === 13){
                 searchPassengerAutoList(this.value); 
@@ -156,9 +161,14 @@ function CallAjaxPassengerAuto(param){
      var PSListPassportNo = [];
      var PSListFirstNameJapan = [];
      var PSListLastNameJapan = [];
+     
+     var PSListBirthDate = [];
+     var PSListNationality = [];
+     var PSListPersonalId = [];
+     var PSListPostalCode = [];
      var psid ,pscode , psinitialname, psfirstname ,pslastname, pssex, psaddress,
                pstel, psphone, psemail, psremark, pspassportno, psfirstnamejapan,
-               pslastnamejapan;
+               pslastnamejapan,psbirthdate,psnationality,pspersonalid,pspostalcode;
      $("#passengerIdVal").autocomplete("destroy");
      try {
         $.ajax({
@@ -171,6 +181,9 @@ function CallAjaxPassengerAuto(param){
             },
             success: function(msg) {     
                 console.log("getAutoListPS =="+msg);
+                if(msg === '[]'){
+                    $("#dataload").addClass("hidden");  
+                }
                 var PSJson =  JSON.parse(msg);
                 for (var i in PSJson){
                     if (PSJson.hasOwnProperty(i)){
@@ -188,7 +201,10 @@ function CallAjaxPassengerAuto(param){
                         pspassportno  = PSJson[i].passportno;
                         psfirstnamejapan  = PSJson[i].firstnamejapan;
                         pslastnamejapan  = PSJson[i].lastnamejapan;
-                        
+                        psbirthdate  = PSJson[i].birthdate;
+                        psnationality = PSJson[i].nationality;
+                        pspersonalid = PSJson[i].personalid;
+                        pspostalcode = PSJson[i].postalcode;
                         PSArray.push(pscode);
                         PSArray.push(pslastname+" "+psfirstname);
 //                        PSArray.push();
@@ -207,12 +223,16 @@ function CallAjaxPassengerAuto(param){
                         PSListPassportNo.push(pspassportno);
                         PSListFirstNameJapan.push(psfirstnamejapan);
                         PSListLastNameJapan.push(pslastnamejapan);
-               
+                        PSListBirthDate.push(psbirthdate);
+                        PSListNationality.push(psnationality);
+                        PSListPersonalId.push(pspersonalid);
+                        PSListPostalCode.push(pspostalcode);
                     }                 
                      $("#dataload").addClass("hidden"); 
                 }
                 $("#customerId").val(psid);
                 $("#passengerId").val(pscode);
+//                $("#code").val(pscode);
                 $("#MInitialname").val(psinitialname);
                 $("#firstName").val(psfirstname);
                 $("#lastName").val(pslastname);
@@ -231,7 +251,10 @@ function CallAjaxPassengerAuto(param){
                 $("#Passport").val(pspassportno);
                 $("#firstNameJapan").val(psfirstnamejapan);
                 $("#lastNameJapan").val(pslastnamejapan);
-              
+                $("#Nationnality").val(psnationality);
+                $("#personalId").val(pspersonalid);
+                $("#postalCode").val(pspostalcode);
+                $("#birthDate").val(psbirthdate);
                 $("#passengerIdVal").autocomplete({
                     source: PSArray,
                     close: function(){
@@ -254,6 +277,10 @@ function CallAjaxPassengerAuto(param){
                                 $("#Passport").val(PSListPassportNo[i]);
                                 $("#firstNameJapan").val(PSListFirstNameJapan[i]);
                                 $("#lastNameJapan").val(PSListLastNameJapan[i]);
+                                $("#Nationnality").val(PSListNationality[i]);
+                                $("#personalId").val(PSListPersonalId[i]);
+                                $("#postalCode").val(PSListPostalCode[i]);
+                                $("#birthDate").val(PSListBirthDate[i]);
                             }                 
                         }   
                     }
@@ -381,7 +408,9 @@ $(document).ready(function () {
         var customer_passportno = $(this).find(".customer-passportno").text();
         var customer_japanfirstname = $(this).find(".customer-japanfirstname").text();
         var customer_japanlastname = $(this).find(".customer-japanlastname").text();
-        
+        var customer_birthdate = $(this).find(".customer-birthdate").text();
+        var customer_nationality = $(this).find(".customer-nationality").text();
+        var customer_personalId = $(this).find(".customer-personalId").text();
         var code = $("#existCode").val();
         var subcode  = code.split("||");
         for(var i = 0 ;i< subcode.length ; i++){
@@ -389,43 +418,51 @@ $(document).ready(function () {
             if(customer_code == subcode[i] && customer_code !="" ){
                 alert("Profile Code  นี้ ถูกใช้ไปแล้ว");
                 $(this).val("");
-                $("#passengerId").val("");
                 $("#customerId").val("");
                 $("#MInitialname").val("");
                 $("#firstName").val("");
                 $("#lastName").val("");
+                $("#firstNameJapan").val("");
+                $("#lastNameJapan").val("");
+                $("#birthDate").val("");
                 $("input[name=sex]").prop('checked', false);
                 $("#address").val("");
                 $("#tel").val("");
                 $("#phone").val("");
+                $("#postalCode").val("");
                 $("#email").val("");
                 $("#remark").val("");
                 $("#Passport").val("");
-                $("#firstNameJapan").val("");
-                $("#lastNameJapan").val("");
+                $("#Nationnality").val("");
+                $("#personalId").val("");
+                $("#passengerId").val("");
                 return;
             }
         }
-        
         $("#customerId").val(customer_id);
         $("#MInitialname").val(customer_initialId);
-        $("#passengerId").val(customer_code);
-        $("#passengerIdVal").val(customer_code);
         $("#firstName").val(customer_firstname);
         $("#lastName").val(customer_lastname);
-        
+        $("#firstNameJapan").val(customer_japanfirstname);
+        $("#lastNameJapan").val(customer_japanlastname);
+        $("#birthDate").val(customer_birthdate);
         if(customer_sex !== ""){
             $("input[name=sex][value="+customer_sex+"]").prop('checked', true);
         }else{
             $("input[name=sex]").prop('checked', false);
         }
-        
         $("#address").val(customer_address);
         $("#tel").val(customer_tel);
         $("#phone").val(customer_phone);
+        $("#postalCode").val(customer_postal);
         $("#email").val(customer_email);
         $("#remark").val(customer_remark);
         $("#Passport").val(customer_passportno);
+        $("#Nationnality").val(customer_nationality);
+        $("#personalId").val(customer_personalId);
+        $("#passengerId").val(customer_code);
+        $("#passengerIdVal").val(customer_code);
+//        $("#code").val(customer_code);
         $("#CustomerModal").modal('hide');
     });
     // PASSENGER TABLE
@@ -501,7 +538,9 @@ function CallFilterAjax(param) {
                         var customer_passportno = $(this).find(".customer-passportno").text();
                         var customer_japanfirstname = $(this).find(".customer-japanfirstname").text();
                         var customer_japanlastname = $(this).find(".customer-japanlastname").text();
-                        
+                        var customer_birthdate = $(this).find(".customer-birthdate").text();
+                        var customer_nationality = $(this).find(".customer-nationality").text();
+                        var customer_personalId = $(this).find(".customer-personalId").text();
                         var code = $("#existCode").val();
                         var subcode  = code.split("||");
                         for(var i = 0 ;i< subcode.length ; i++){
@@ -509,37 +548,51 @@ function CallFilterAjax(param) {
                             if(customer_code == subcode[i] && customer_code !="" ){
                                 alert("Profile Code  นี้ ถูกใช้ไปแล้ว");
                                 $(this).val("");
-                                $("#passengerId").val("");
                                 $("#customerId").val("");
                                 $("#MInitialname").val("");
                                 $("#firstName").val("");
                                 $("#lastName").val("");
+                                $("#firstNameJapan").val("");
+                                $("#lastNameJapan").val("");
+                                $("#birthDate").val("");
                                 $("input[name=sex]").prop('checked', false);
                                 $("#address").val("");
                                 $("#tel").val("");
                                 $("#phone").val("");
+                                $("#postalCode").val("");
                                 $("#email").val("");
                                 $("#remark").val("");
                                 $("#Passport").val("");
-                                $("#firstNameJapan").val("");
-                                $("#lastNameJapan").val("");
+                                $("#Nationnality").val("");
+                                $("#personalId").val("");
+                                $("#passengerId").val("");
                                 return;
                             }
                         }
-                        
                         $("#customerId").val(customer_id);
                         $("#MInitialname").val(customer_initialId);
-                        $("#passengerId").val(customer_code);
-                        $("#passengerIdVal").val(customer_code);
                         $("#firstName").val(customer_firstname);
                         $("#lastName").val(customer_lastname);
-                        $("#sex").val(customer_sex);
+                        $("#firstNameJapan").val(customer_japanfirstname);
+                        $("#lastNameJapan").val(customer_japanlastname);
+                        $("#birthDate").val(customer_birthdate);
+                        if(customer_sex !== ""){
+                            $("input[name=sex][value="+customer_sex+"]").prop('checked', true);
+                        }else{
+                            $("input[name=sex]").prop('checked', false);
+                        }
                         $("#address").val(customer_address);
                         $("#tel").val(customer_tel);
                         $("#phone").val(customer_phone);
+                        $("#postalCode").val(customer_postal);
                         $("#email").val(customer_email);
                         $("#remark").val(customer_remark);
                         $("#Passport").val(customer_passportno);
+                        $("#Nationnality").val(customer_nationality);
+                        $("#personalId").val(customer_personalId);
+                        $("#passengerId").val(customer_code);
+                        $("#passengerIdVal").val(customer_code);
+//                        $("#code").val(customer_code);
                         $("#CustomerModal").modal('hide');
                     });
                     

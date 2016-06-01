@@ -79,20 +79,25 @@
                             if($(this).val() == subcode[i] && $(this).val() !="" ){
                                 alert("Profile Code  นี้ ถูกใช้ไปแล้ว");
                                 $(this).val("");
-                                $("#passengerId").val("");
+//                                $("#code").val("");
                                 $("#customerId").val("");
                                 $("#MInitialname").val("");
                                 $("#firstName").val("");
                                 $("#lastName").val("");
+                                $("#firstNameJapan").val("");
+                                $("#lastNameJapan").val("");
+                                $("#birthDate").val("");
                                 $("input[name=sex]").prop('checked', false);
                                 $("#address").val("");
                                 $("#tel").val("");
                                 $("#phone").val("");
+                                $("#postalCode").val("");
                                 $("#email").val("");
                                 $("#remark").val("");
                                 $("#Passport").val("");
-                                $("#firstNameJapan").val("");
-                                $("#lastNameJapan").val("");
+                                $("#Nationnality").val("");
+                                $("#personalId").val("");
+                                $("#passengerId").val("");
                             }else if($(this).val() == ""){
                                 return ;
                             }
@@ -328,6 +333,7 @@
                             <th class="hidden">InitialID</th>
                             <th>Last Name</th>
                             <th>First Name</th>
+                            <th class="hidden">birth date</th>
                             <th class="hidden">sex</th>
                             <th class="hidden">address</th>
                             <th class="hidden">tel</th>
@@ -338,6 +344,8 @@
                             <th class="hidden">Japanese lastname</th>
                             <th class="hidden">remark</th>
                             <th class="hidden">passportNo</th>
+                            <th class="hidden">nationality</th>
+                            <th class="hidden">personalId</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -352,6 +360,9 @@
                             <td class="customer-initialId hidden">${customer.getMInitialname().getId()}</td>
                             <td class="customer-lastname">${customer.lastName}</td>
                             <td class="customer-firstname">${customer.firstName}</td>
+                            <c:set var="birthDate" value="${customer.birthDate}" />
+                            <fmt:parseDate value="${birthDate}" var="birthDate" pattern="yyyy-MM-dd" />
+                            <td class="customer-birthdate hidden">${birthDate}</td>
                             <td class="customer-sex hidden">${customer.sex}</td>
                             <td class="customer-address hidden">${customer.address}</td>
                             <td class="customer-tel hidden">${customer.tel}</td>
@@ -361,7 +372,9 @@
                             <td class="customer-japanfirstname hidden">${customer.firstNameJapan}</td>
                             <td class="customer-japanlastname hidden">${customer.lastNameJapan}</td>
                             <td class="customer-remark hidden">${customer.remark}</td>
-                            <td class="customer-passportno hidden">${customer.passportNo}</td>                                
+                            <td class="customer-passportno hidden">${customer.passportNo}</td>
+                            <td class="customer-nationality hidden">${customer.nationality}</td>   
+                            <td class="customer-personalId hidden">${customer.personalId}</td>   
                         </tr>
                         <script>
 //                            customer.push({

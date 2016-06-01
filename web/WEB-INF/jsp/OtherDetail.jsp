@@ -488,7 +488,8 @@
                     </div> 
                     <div class="row" style="padding: 50px 0px 0px 30px">
                         <font style="color: red" id="alertCheckbox"></font>
-                    </div>    
+                    </div>
+                    <input type="hidden"  id="ticketListSize" name="ticketListSize" value="${requestScope['ticketListSize']}"/>
                     <div class="row" style="margin-left: 10px;margin-right: 10px;"> 
                         <table id="TicketTable" class="display" cellspacing="0"  >
                             <thead>
@@ -503,13 +504,13 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <c:forEach var="table" items="${ticketList}" varStatus="i">        
+                                <c:forEach var="table" items="${ticketList}" varStatus="i"> 
                                     <tr>
                                         <td class="hidden">
                                             <input type="hidden" class="form-control" id="stockticketid${i.count}" name="stockticketid${i.count}" value="${table.id}">
                                         </td>
                                         <td align="center">
-                                            <input type="checkbox" class="form-control" id="selectAll${i.count}" name="selectAll${i.count}" value="1" onclick="removeAlertCheckbox()">
+                                            <input type="checkbox" class="form-control" id="selectAll${i.count}" name="selectAll${i.count}" value="1" onclick="removeAlertCheckbox();setSelectCheckBox('${i.count}')">
                                         </td>
                                         <td align="center">${i.count}</td>
                                         <fmt:formatDate value="${table.addDate}" var="addDate" pattern="dd-MM-yyyy" />

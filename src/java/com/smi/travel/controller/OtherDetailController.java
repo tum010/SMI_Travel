@@ -218,6 +218,7 @@ public class OtherDetailController extends SMITravelController {
                         int row = Integer.parseInt(counter);
                         for(int i=1;i<row;i++){
                             String selectAll = request.getParameter("selectAll" + i);
+                            System.out.println(" selectAll 0 ::::  " +selectAll + "   ii " + i );
                             if("1".equalsIgnoreCase(selectAll)){
                                 String stockticketid = request.getParameter("stockticketid" + i);
                                 String resultTicket = OtherService.updateStockTicketStatus(stockticketid,ticketstatus);
@@ -266,6 +267,7 @@ public class OtherDetailController extends SMITravelController {
                         int row = Integer.parseInt(counter);
                         for(int i=1;i<row;i++){
                             String selectAll = request.getParameter("selectAll" + i);
+                            System.out.println(" selectAll 1 ::::  " +selectAll + "   ii " + i );
                             if("1".equalsIgnoreCase(selectAll)){
                                 String stockticketid = request.getParameter("stockticketid" + i);
                                 String resultTicket = OtherService.updateStockTicketStatus(stockticketid,ticketstatus);
@@ -441,6 +443,7 @@ public class OtherDetailController extends SMITravelController {
 //      List<StockDetail> stockDetailList = OtherService.getListStockDetail(stockId);
 //      String a = stockDetailList.get(0).getTypeId().getName();
         request.setAttribute("ticketList",ticketList);
+        request.setAttribute("ticketListSize",ticketList.size());
         return;
     }
 

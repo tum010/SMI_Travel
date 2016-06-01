@@ -584,9 +584,11 @@ function setStockTicket() {
 }
 
 function cancelStockTicket() {
-    var row = $('#TicketTable tr').length;
+//    var row = $('#TicketTable tr').length;
+    var row = parseInt($('#ticketListSize').val())+1;
     var check = 0;
     for (var i = 1; i < row; i++) {
+        var value = document.getElementById("selectAll" + i).value;
         var selectAll = document.getElementById("selectAll" + i);
         if (selectAll !== null && selectAll !== '') {
             if (document.getElementById("selectAll" + i).checked) {
@@ -628,7 +630,8 @@ function addStockTicket() {
 }
 
 function selectAll() {
-    var row = $('#TicketTable tr').length;
+//    var row = $('#TicketTable tr').length;
+    var row = parseInt($('#ticketListSize').val())+1;
     var check = 0;
     var unCheck = 0;
     for (var i = 1; i < row; i++) {
@@ -705,7 +708,11 @@ function selectAll() {
 function removeAlertCheckbox() {
     document.getElementById('alertCheckbox').innerHTML = '';
 }
-
+function setSelectCheckBox(row){
+    if(document.getElementById("selectAll" + row).checked){
+        document.getElementById("selectAll" + row).value = '1';
+    }
+}
 function saveOther(){
     var isSave = true;
     var productCode = $("#product_code").val();

@@ -467,13 +467,13 @@ public class ReceiptImpl implements ReceiptDao{
             if(sign != null){
                 if("".equals(sign)){
                     receiptView.setSign("nosign");
-                    receiptView.setSignname(printby);
+                    receiptView.setSignname("ACCOUNT");
                 }else{
                     receiptView.setSign(sign);
                     String querySystemUser = "from SystemUser s where s.name like '%"+sign+"%'";
                     List<SystemUser> systemUser = session.createQuery(querySystemUser).list();
                     if(!systemUser.isEmpty()) {
-                        receiptView.setSignname(systemUser.get(0).getRole().getName());
+                        receiptView.setSignname("ACCOUNT");
                     }        
                     
                 }
