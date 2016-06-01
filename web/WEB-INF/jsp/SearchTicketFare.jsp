@@ -488,8 +488,8 @@ function checkDateValue(date){
     var inputFromDate = document.getElementById("issueDateFrom");
     var InputToDate = document.getElementById("issueDateTo");
     if((inputFromDate.value !== '') && (InputToDate.value !== '')){
-        var fromDate = (inputFromDate.value).split('-');
-        var toDate = (InputToDate.value).split('-');
+        var fromDate = (convertFormatDate(inputFromDate.value)).split('-');
+        var toDate = (convertFormatDate(InputToDate.value)).split('-');
         if((parseInt(fromDate[0])) > (parseInt(toDate[0]))){
             validateDate(date,"over");
         }
