@@ -2119,7 +2119,23 @@ public class AJAXBean extends AbstractBean implements
             String displaydesTemp = "";
             if ("1".equals(product)) {                
                 displaydescription = billTypeName;
-            } else if ("2".equals(product) || "8".equals(product)) {
+            } else if ("2".equals(product)) {
+                if (!"".equals(refItemId)) {
+//                    displaydescription += billTypeName + " :- ";
+                    displaydesTemp = billableDao.getDescriptionInvoiceOthersFromRefId(refItemId);
+                    System.out.println("displaydesTemp" + displaydesTemp);
+                    if(displaydesTemp != null && !"".equalsIgnoreCase(displaydesTemp)){
+                        String[] parts = displaydesTemp.split("\\|");
+                        if("JPN POCKET WIFI".equalsIgnoreCase(parts[4])){
+                            displaydescription = parts[4];
+                        }else{
+                            displaydescription = parts[4] + " : " + parts[5];
+                        }
+                    }
+                }else{
+                    displaydescription = billTypeName;
+                }
+            } else if ("8".equals(product)) {
                 if (!"".equals(refItemId)) {
                     displaydescription += billTypeName + " :- ";
                     displaydesTemp = billableDao.getDescriptionInvoiceOthersFromRefId(refItemId);
@@ -2263,18 +2279,27 @@ public class AJAXBean extends AbstractBean implements
             String displaydescription = "";
             String displaydesTemp = "";
             String displaydescriptionother = "";
+            String displaydescriptioncoupon = "";
             description = refNo + " " +leader +" " + billTypeName ;
             if ("1".equals(product)) {
                 displaydescription = billTypeName;
             } else if ("2".equals(product) || "8".equals(product)) {
                 if (!"".equals(refItemId)) {
                     displaydescription += billTypeName + " #-- ";
-                    displaydescriptionother += billTypeName + " #-- ";
+//                  displaydescriptionother = billTypeName ;
+                    displaydescriptioncoupon += billTypeName + " #-- ";
                     displaydesTemp = billableDao.getDescriptionInvoiceOthersFromRefId(refItemId);
                     if(displaydesTemp != null && !"".equalsIgnoreCase(displaydesTemp)){
                         String[] parts = displaydesTemp.split("\\|");
                         displaydescription += parts[4] + " : " + parts[5];
-                        displaydescriptionother += parts[9] + " : " + parts[4] + " : " + parts[5];
+                        if("JPN POCKET WIFI".equalsIgnoreCase(parts[4])){
+                            displaydescriptionother = parts[4];
+                            displaydescription = displaydescriptionother;
+                        }else{
+                            displaydescriptionother = parts[4] + " : " + parts[5];
+                            displaydescription = displaydescriptionother;
+                        }
+                        displaydescriptioncoupon += parts[9] + " : " + parts[4] + " : " + parts[5];
                     }
                 }
             } else if ("3".equals(product)) {
@@ -2314,8 +2339,10 @@ public class AJAXBean extends AbstractBean implements
 //                        + "<td class='text-center'>" + No + "</td>";
                 newrow += "<tr>" 
                         +"<td class='text-center'>" + No + "</td>";
-                        if ("2".equals(product) || "8".equals(product)) {
+                        if ("2".equals(product)) {
                             newrow += "<td>" + displaydescriptionother + "</td>";
+                        }else if("8".equals(product)){
+                            newrow += "<td>" + displaydescriptioncoupon + "</td>";
                         }else{
                             newrow += "<td>" + displaydescription + "</td>";
                         }
