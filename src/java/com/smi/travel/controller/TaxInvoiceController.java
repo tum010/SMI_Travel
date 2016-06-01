@@ -755,6 +755,11 @@ public class TaxInvoiceController extends SMITravelController {
             BigDecimal amountLocal = amountLocalList.get(i);
             costTotal = costLocal.subtract(cost);
             amountTotal = amountLocal.subtract(amount);
+            System.out.println("id "+i+" : "+id);
+            System.out.println("Cost "+i+" : "+cost);
+            System.out.println("Amount "+i+" : "+amount);
+            System.out.println("Cost Local "+i+" : "+costLocal);
+            System.out.println("Amount Local "+i+" : "+amountLocal);
 //            if((costTotal.compareTo(BigDecimal.ZERO) < 0)){
 //                result = "cost much over";
 //                return result;
@@ -762,20 +767,21 @@ public class TaxInvoiceController extends SMITravelController {
 //                result = "amount much over";
 //                return result;
 //            }
-            if((amountTotal.compareTo(BigDecimal.ZERO) < 0)){
+            System.out.println("amountTotal.compareTo(BigDecimal.ZERO) : "+amountTotal.compareTo(BigDecimal.ZERO));
+            if((amountTotal.compareTo(BigDecimal.ZERO) < 0)){                
                 result = "amount much over";
                 return result;
             }
 //            result = taxInvoiceService.checkInvoiceDetailValue(id,cost,amount);
         }
         
-        if(taxInvoice.getIsProfit() != null && taxInvoice.getIsProfit() == 1){
-            String profit = checkProfit(taxInvoice);
-            if("fail".equalsIgnoreCase(profit)){
-                result = "amount much over";
-                return result; 
-            }
-        }    
+//        if(taxInvoice.getIsProfit() != null && taxInvoice.getIsProfit() == 1){
+//            String profit = checkProfit(taxInvoice);
+//            if("fail".equalsIgnoreCase(profit)){
+//                result = "amount much over";
+//                return result; 
+//            }
+//        }    
         
         result = "success";
         
@@ -804,6 +810,7 @@ public class TaxInvoiceController extends SMITravelController {
                 }
             }
         }
+        System.out.println("Have Billable Desc : "+haveBillabledesc);
         if(haveBillabledesc){
             for(int i=0; i<invoiceDetailIdList.size(); i++){
                 String invoiceDetailId = invoiceDetailIdList.get(i);
@@ -826,6 +833,8 @@ public class TaxInvoiceController extends SMITravelController {
                     }    
                 }
                 
+                System.out.println("mProfit "+i+" : "+mProfit);
+                System.out.println("Profit Tax Invoice "+i+" : "+profitTaxInvoice);
                 profitTaxInvoice = profitTaxInvoice.add(taxInvoiceService.getProfitFromTaxInvoice(billableDesc.getId(),taxInvoiceDetailId));
                 if(mProfit.compareTo(profitTaxInvoice) < 0 ){
                     result = "fail";

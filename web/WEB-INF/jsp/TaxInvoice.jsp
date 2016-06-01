@@ -2210,7 +2210,7 @@
             $('[name=currencyCost' + count + '] option').filter(function() { 
                 return ($(this).text() === curCost);
             }).prop('selected', true);
-            $("#amount" + count).val(formatNumber(parseFloat(amount)));
+//            $("#amount" + count).val(formatNumber(parseFloat(amount)));
             $('[name=currencyAmount' + count + '] option').filter(function() { 
                 return ($(this).text() === curAmount);
             }).prop('selected', true);           
@@ -2241,7 +2241,7 @@
             $("#refNo" + count).val(refNo);
             $("#fromAjax" + count).val(fromAjax);
             $("#refAmount" + count).val(refAmount);
-            $("#exRate" + count).val(exRate);
+//            $("#exRate" + count).val(exRate);
             $("#exRate" + count).keyup(function(event) {
                 if (event.keyCode === 13) {
                     calculateAmountByExRate(count,'exRate');
@@ -3058,9 +3058,23 @@
         if (option === 'exRate') {
             var refAmount = $("#refAmount" + row).val();
             if(refAmount !== ''){
+//                refAmount = ($("#refAmount" + row).val() !== '' ? parseFloat(($("#refAmount" + row).val()).replace(/\,/g, '')) : 0);
+//                var exRate = ($("#exRate" + row).val() !== '' ? parseFloat(($("#exRate" + row).val()).replace(/\,/g, '')) : 0);
+//                var amount = refAmount * exRate;
+//                $("#amount" + row).val((amount !== 0 ? amount : ''));
+//                if ($('#isVat' + row).is(":checked")) {
+//                    var vat = ($("#vat" + row).val() !== '' ? parseFloat($("#vat" + row).val()) : parseFloat($("#vatDefault").val()));
+//                    var gross = (amount*100)/(100+vat);
+//                    $("#gross" + row).val(gross);
+//                }
                 refAmount = ($("#refAmount" + row).val() !== '' ? parseFloat(($("#refAmount" + row).val()).replace(/\,/g, '')) : 0);
+                var cost = ($("#cost" + row).val() !== '' ? parseFloat(($("#cost" + row).val()).replace(/\,/g, '')) : 0);
+                var curCost = $("#currecnyCost" + row).val();
                 var exRate = ($("#exRate" + row).val() !== '' ? parseFloat(($("#exRate" + row).val()).replace(/\,/g, '')) : 0);
-                var amount = refAmount * exRate;
+                if(curCost !== '' && curCost !== 'THB'){
+                    cost = cost * exRate;
+                }              
+                var amount = (refAmount - cost).toFixed(2);
                 $("#amount" + row).val((amount !== 0 ? amount : ''));
                 if ($('#isVat' + row).is(":checked")) {
                     var vat = ($("#vat" + row).val() !== '' ? parseFloat($("#vat" + row).val()) : parseFloat($("#vatDefault").val()));
