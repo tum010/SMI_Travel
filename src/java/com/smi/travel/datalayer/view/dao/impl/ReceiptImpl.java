@@ -475,7 +475,6 @@ public class ReceiptImpl implements ReceiptDao{
                     if(!systemUser.isEmpty()) {
                         receiptView.setSignname("ACCOUNT");
                     }        
-                    
                 }
             }
             String curtemp = "null".equals(String.valueOf(T[31])) ? "" : String.valueOf(T[31]);

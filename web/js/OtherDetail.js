@@ -588,7 +588,6 @@ function cancelStockTicket() {
     var row = parseInt($('#ticketListSize').val())+1;
     var check = 0;
     for (var i = 1; i < row; i++) {
-        var value = document.getElementById("selectAll" + i).value;
         var selectAll = document.getElementById("selectAll" + i);
         if (selectAll !== null && selectAll !== '') {
             if (document.getElementById("selectAll" + i).checked) {
