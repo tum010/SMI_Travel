@@ -1279,7 +1279,13 @@ function setBillableInvoice(data) {
     $('#SaleStaffId').val(array[4]);
     $('#SaleStaffName').val(array[5]);
     $('#SaleStaffCode').val(array[6]);
-    $('#InputDueDate').val(array[7]);
+    
+    var dueDate = '';
+    if(array[7] !== null && array[7] !== ''){
+        var date = array[7].split('-');
+        dueDate = date[2]+"-"+date[1]+"-"+date[0];
+    }
+    $('#InputDueDate').val(dueDate);
 }
 
 function addInvoiceDetail(rowId) {
