@@ -23,7 +23,7 @@
             <column name="inv_to" length="20" />
         </property>
         <property name="invName" type="string">
-            <column name="inv_name" length="50" />
+            <column name="inv_name" length="255" />
         </property>
         <property name="invAddress" type="string">
             <column name="inv_address" />

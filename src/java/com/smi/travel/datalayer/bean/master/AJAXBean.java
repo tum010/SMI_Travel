@@ -1898,13 +1898,9 @@ public class AJAXBean extends AbstractBean implements
                         String invNo = taxInvoiceDao.getInvoiceNoByInvoiceDetailId(invoiceDetailId);
                         if(!"THB".equalsIgnoreCase(curcost) && exrateCost.compareTo(BigDecimal.ZERO) != 0){
                             costCheck = costCheck.multiply(exrateCost);
-                        }else{
-                            check = false;
                         }
                         if(!"THB".equalsIgnoreCase(curamount) && exrateAmount.compareTo(BigDecimal.ZERO) != 0){
                             amountCheck = amountCheck.multiply(exrateAmount);
-                        }else{
-                            check = false;
                         }
                         profitCheck = (amountCheck).subtract(costCheck).setScale(2, RoundingMode.HALF_UP);
 //                        if(!"THB".equalsIgnoreCase(curcost) || !"THB".equalsIgnoreCase(curamount)){
