@@ -718,23 +718,48 @@
                                                     <c:set var="selected1" value="" />
                                                     <c:set var="selected2" value="" />
                                                     <c:set var="selected3" value="" />
-                                                     <c:set var="selected4" value="" />
-                                                    <c:if test="${table.accNo == '5130-08'}">
+                                                    <c:set var="selected4" value="" />
+                                                    <c:set var="selected5" value="" />
+                                                    <c:set var="selected6" value="" />
+                                                    <c:set var="selected7" value="" />
+                                                    <c:set var="selected8" value="" />
+                                                    <c:set var="selected9" value="" />
+                                                    <c:if test="${table.accNo == '5130-15'}">
                                                         <c:set var="selected1" value="selected" />
                                                     </c:if>
-                                                    <c:if test="${table.accNo == '4300-06'}">
+                                                    <c:if test="${table.accNo == '5130-08'}">
                                                         <c:set var="selected2" value="selected" />
                                                     </c:if>
-                                                    <c:if test="${table.accNo == '2120-05'}">
+                                                    <c:if test="${table.accNo == '1155-00'}">
                                                         <c:set var="selected3" value="selected" />
                                                     </c:if>
-                                                    <c:if test="${table.accNo == '2120-03'}">
+                                                    <c:if test="${table.accNo == '1152-04'}">
                                                         <c:set var="selected4" value="selected" />
                                                     </c:if>
-                                                    <option value="5130-08" ${selected1}>5130-08</option>
-                                                    <option value="4300-06" ${selected2}>4300-06</option>
-                                                    <option value="2120-05" ${selected3}>2120-05</option>
-                                                    <option value="2120-03" ${selected4}>2120-03</option>                                          
+                                                    <c:if test="${table.accNo == '2120-05'}">
+                                                        <c:set var="selected5" value="selected" />
+                                                    </c:if>
+                                                    <c:if test="${table.accNo == '4300-06'}">
+                                                        <c:set var="selected6" value="selected" />
+                                                    </c:if>
+                                                    <c:if test="${table.accNo == '4100-07'}">
+                                                        <c:set var="selected7" value="selected" />
+                                                    </c:if>
+                                                    <c:if test="${table.accNo == '5200-01'}">
+                                                        <c:set var="selected8" value="selected" />
+                                                    </c:if>
+                                                    <c:if test="${table.accNo == '4100-08'}">
+                                                        <c:set var="selected9" value="selected" />
+                                                    </c:if>
+                                                    <option value="5130-15" ${selected1}>5130-15</option>
+                                                    <option value="5130-08" ${selected2}>5130-08</option>
+                                                    <option value="1155-00" ${selected3}>1155-00</option>
+                                                    <option value="1152-04" ${selected4}>1152-04</option>
+                                                    <option value="2120-05" ${selected5}>2120-05</option>
+                                                    <option value="4300-06" ${selected6}>4300-06</option>
+                                                    <option value="4100-07" ${selected7}>4100-07</option>
+                                                    <option value="5200-01" ${selected8}>5200-01</option>
+                                                    <option value="4100-08" ${selected9}>4100-08</option>  
                                                 </select>
                                             </td>
                                             <td><input maxlength="255" id="detail${i.count}" name="detail${i.count}" type="text" class="form-control" value="${table.detail}"></td>
@@ -2402,8 +2427,17 @@ function AddRowPaymentAccount(row) {
         '<tr style="higth 100px">' +
         '<td class="text-center">' + row + '</td>' +
         '<td>' +
-        '<select class="form-control" name="accno' + row + '" id="accno' + row + '" ><option value="">---------</option><option value="5130-08" >5130-08</option><option value="4300-06" >4300-06</option><option value="2120-05">2120-05</option><option value="2120-03" >2120-03</option></select>' +
-        '</td>' +
+        '<select class="form-control" name="accno' + row + '" id="accno' + row + '" ><option value="">---------</option>' +
+        '<option value="5130-15" >5130-15</option>'+
+        '<option value="5130-08" >5130-08</option>'+
+        '<option value="1155-00" >1155-00</option>'+
+        '<option value="1152-04" >1152-04</option>'+
+        '<option value="2120-05" >2120-05</option>'+
+        '<option value="4300-06" >4300-06</option>'+
+        '<option value="4100-07" >4100-07</option>'+
+        '<option value="5200-01" >5200-01</option>'+
+        '<option value="4100-08" >4100-08</option>'+  
+        '</select></td>' +
         '<td><input maxlength="255" id="detail' + row + '" name="detail' + row + '" type="text" class="form-control" value=""></td>' +
         '<td>' +
         '<select class="form-control" name="department' + row + '" id="department' + row + '" ><option value="">---------</option><option value="Wendy" >Wendy</option><option value="Outbound">Outbound</option><option value="Inbound" >Inbound</option></select>' +
