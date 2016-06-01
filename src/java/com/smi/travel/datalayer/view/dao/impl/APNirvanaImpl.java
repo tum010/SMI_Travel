@@ -183,9 +183,9 @@ public class APNirvanaImpl implements APNirvanaDao {
         
         } else {
             Session session = this.sessionFactory.openSession();
-            String paymentId = ap.getPayment_id();
+            String paymentId = ap.getPayment_detail_id();
             String query = " SELECT * FROM `ap_nirvana_pay_detail` where payment_id = '"+paymentId+"'" ;
-
+System.out.println("query ap_nirvana : "+query);
             List<Object[]> APNirvanaList = session.createSQLQuery(query)
                     .addScalar("payment_id", Hibernate.STRING)
                     .addScalar("puraccount", Hibernate.STRING)
@@ -200,8 +200,8 @@ public class APNirvanaImpl implements APNirvanaDao {
                 String payment_id = (B[0] != null && !"".equalsIgnoreCase(String.valueOf(B[0])) ? String.valueOf(B[0]) : "");
                 String puraccount = (B[1] != null && !"".equalsIgnoreCase(String.valueOf(B[1])) ? String.valueOf(B[1]) : "");
                 String purdivision = (B[2] != null && !"".equalsIgnoreCase(String.valueOf(B[2])) ? String.valueOf(B[2]) : "");
-                String purproject = (B[3] != null && !"".equalsIgnoreCase(String.valueOf(B[3])) ? String.valueOf((BigDecimal)B[3]) : "");
-                String puramt = (B[4] != null && !"".equalsIgnoreCase(String.valueOf(B[4])) ? String.valueOf((BigDecimal)B[4]) : "0.00");
+                String purproject = (B[3] != null && !"".equalsIgnoreCase(String.valueOf(B[3])) ? String.valueOf(B[3]) : "");
+                String puramt = (B[4] != null && !"".equalsIgnoreCase(String.valueOf(B[4])) ? String.valueOf(B[4]) : "0.00");
                 String purhmamt = (B[5] != null && !"".equalsIgnoreCase(String.valueOf(B[5])) ? String.valueOf(B[5]) : "0.00");
                 String note = (B[6] != null && !"".equalsIgnoreCase(String.valueOf(B[6])) ? String.valueOf(B[6]) : "");
                 
@@ -232,6 +232,8 @@ public class APNirvanaImpl implements APNirvanaDao {
                     ssdtr.setDataArea(dataArea);
                     ssdtrList.add(ssdtr);
                     count += 1;
+                    System.out.println("ssdtrList.add(ssdtr); ");
+                    dataArea = "";
                 }
 
             }                      
@@ -930,12 +932,14 @@ public class APNirvanaImpl implements APNirvanaDao {
             String transHmamt = (apNirvana.getTranshmamt()!= null ? String.valueOf(apNirvana.getTranshmamt()) : "0.00");
             dataArea += util.generateDataAreaNirvana(transHmamt,20);
             
-            String totBaseVatAmt = ("Y".equalsIgnoreCase(vatFlag) ? transAmt : "0.00");
+            String totBaseVatAmt = (apNirvana.getTranshmamt()!= null ? String.valueOf(apNirvana.getBasevatamt()) : "0.00");
+            //String totBaseVatAmt = ("Y".equalsIgnoreCase(vatFlag) ? apNirvana.getBasevatamt() : "0.00");
             dataArea += util.generateDataAreaNirvana(totBaseVatAmt,20);
             
-            String totBaseVatHmAmt = ("Y".equalsIgnoreCase(vatFlag) ? transHmamt : "0.00");
+            String totBaseVatHmAmt = (apNirvana.getTranshmamt()!= null ? String.valueOf(apNirvana.getBasevathmamt()) : "0.00");
+            //String totBaseVatHmAmt = ("Y".equalsIgnoreCase(vatFlag) ? transHmamt : "0.00");
             dataArea += util.generateDataAreaNirvana(totBaseVatHmAmt,20);
-            
+            System.out.println("base vat amt : "+totBaseVatAmt +"base vat home"+ totBaseVatHmAmt);
             String totVatAmt = (apNirvana.getVatamt() != null ? String.valueOf(apNirvana.getVatamt()) : "0.00");
             dataArea += util.generateDataAreaNirvana(totVatAmt,20);
             
@@ -1006,28 +1010,28 @@ public class APNirvanaImpl implements APNirvanaDao {
 
             util.logsNirvana(ssDataexchTemp,apNirvana.getRowid());
             
-            try {
-                result = ssDataexchTemp.connectSybase(ssDataexchTemp);
-            } catch (Exception ex) {
-                Logger.getLogger(APNirvanaImpl.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-            ssDataexchList.add(ssDataexchTemp);
-            
-            if(i == APList.size()-1){
-                try {
-                    List<NirvanaInterface> nirvanaInterfaceList = ssDataexchTemp.callStoredProcedureAP(ssDataexchList);
-                    if(nirvanaInterfaceList != null){
-                        System.out.println("===== UpdateStatusAPInterface =====");
-                        result = UpdateStatusAPInterface(nirvanaInterfaceList);
-                    }
-               
-                } catch (Exception ex) {
-                    Logger.getLogger(APNirvanaImpl.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                
-//                result = "success";
-            }
+//            try {
+//                result = ssDataexchTemp.connectSybase(ssDataexchTemp);
+//            } catch (Exception ex) {
+//                Logger.getLogger(APNirvanaImpl.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//            
+//            ssDataexchList.add(ssDataexchTemp);
+//            
+//            if(i == APList.size()-1){
+//                try {
+//                    List<NirvanaInterface> nirvanaInterfaceList = ssDataexchTemp.callStoredProcedureAP(ssDataexchList);
+//                    if(nirvanaInterfaceList != null){
+//                        System.out.println("===== UpdateStatusAPInterface =====");
+//                        result = UpdateStatusAPInterface(nirvanaInterfaceList);
+//                    }
+//               
+//                } catch (Exception ex) {
+//                    Logger.getLogger(APNirvanaImpl.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//                
+////                result = "success";
+//            }
         }
         
         return result;
