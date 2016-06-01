@@ -195,7 +195,11 @@ public class OtherDetailController extends SMITravelController {
             }  
 //            int result = OtherService.saveBookingOther(Other,user);
             List<String> result = OtherService.saveBookingOther(Other,user,createby);
-            
+            if("1".equalsIgnoreCase(result.get(0))){
+                request.setAttribute("resultsave", "success");
+            }else if("0".equalsIgnoreCase(result.get(0))){
+                request.setAttribute("resultsave", "unsuccess");
+            }
             
             String billDescId = utilservice.getBillableDescId(itemid, bookTypeNo);
             if("".equalsIgnoreCase(billDescId)){
@@ -205,12 +209,13 @@ public class OtherDetailController extends SMITravelController {
                 BillableView billableView = utilservice.getBillableDescByBookId(itemid,bookTypeNo);
                 int resultupdate = utilservice.updateBillableDesc(billableView,billDescId);
             }
-            
+
             if(("1".equalsIgnoreCase(result.get(0))) && (callpageSubmit==null || !callpageSubmit.equalsIgnoreCase("FromDayTour"))){
                 String stock = OtherService.saveStockDetailOther(Other, user, addticket, adTicket, chTicket, infTicket, itemid);
                 if("notStock".equalsIgnoreCase(stock)){
-                    ModelAndView OTHER = new ModelAndView(new RedirectView("Other.smi?referenceNo="+refno+"&result=1", true));
-                    return OTHER;
+//                    ModelAndView OTHER = new ModelAndView(new RedirectView("Other.smi?referenceNo="+refno+"&result=1", true));
+//                    ModelAndView OTHER = new ModelAndView(new RedirectView("OtherDetail.smi?referenceNo="+refno+"&result=1&itemid="+itemid+"&action=edit&callPageFrom=FromOther", true));
+//                    return OTHER;
                 }else if("fail".equalsIgnoreCase(stock)){
                     request.setAttribute("resultText", "unsuccess");
                 }else {

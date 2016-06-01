@@ -40,7 +40,6 @@
 </c:if>
 <c:set var="lockUnlockBooking" value="${requestScope['LockUnlockBooking']}" />
 <c:set var="enableSave" value="${requestScope['EnableSave']}" />
-
 <section class="content-header" >
     <h1>
         Booking - Other Detail
@@ -114,6 +113,18 @@
             <div id="textAlertDivNotSave"  style="" class="alert alert-danger alert-dismissible" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <strong>Update Stock Ticket Not Success!</strong> 
+            </div>
+            </c:if>
+            <c:if test="${requestScope['resultsave'] == 'success'}">
+            <div id="textAlertDivSavess"  style="" class="alert alert-success alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Save Success! </strong><br>
+            </div>
+            </c:if>
+            <c:if test="${requestScope['resultsave'] == 'unsuccess'}">
+            <div id="textAlertDivNotSave"  style="" class="alert alert-danger alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Save Not Success!</strong> 
             </div>
             </c:if>
             <div class="row">
