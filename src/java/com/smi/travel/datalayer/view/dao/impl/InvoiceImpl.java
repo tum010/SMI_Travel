@@ -99,6 +99,7 @@ public class InvoiceImpl implements InvoiceReportDao{
                 .addScalar("refno", Hibernate.STRING)
                 .addScalar("vatpercent", Hibernate.INTEGER)
                 .addScalar("billable_desc_id", Hibernate.STRING)
+                .addScalar("create_by", Hibernate.STRING)
                 .list();
         int count = 0;
         int vat = 0;
@@ -223,7 +224,7 @@ public class InvoiceImpl implements InvoiceReportDao{
             if(sign != null){
                 if("".equals(sign)){
                     invoice.setSign("nosign");
-                    invoice.setSignname(printBy);
+                    invoice.setSignname(util.ConvertString(B[23]));
                 }else{
                     invoice.setSign(sign);
                     String querySystemUser = "from SystemUser s where s.name like '%"+sign+"%'";
@@ -281,7 +282,7 @@ public class InvoiceImpl implements InvoiceReportDao{
                         if(sign != null){
                             if("".equals(sign)){
                                 invoiceReportTemp.setSign("nosign");
-                                invoiceReportTemp.setSignname(printBy);
+                                invoiceReportTemp.setSignname(util.ConvertString(B[23]));
                             }else{
                                 invoiceReportTemp.setSign(sign);
                                 String querySystemUser = "from SystemUser s where s.name like '%"+sign+"%'";
