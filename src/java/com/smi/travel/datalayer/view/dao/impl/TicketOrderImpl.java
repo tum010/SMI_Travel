@@ -155,7 +155,7 @@ public class TicketOrderImpl implements TicketOrderDao{
         }
         ticket.setInfoDataSource(new JRBeanCollectionDataSource(info));
          
-        List<Object[]> QueryFlightList = session.createSQLQuery("SELECT * FROM `ticket_order_flight`  Where `ticket_order_flight`.pnr_id = " + pnrID)
+        List<Object[]> QueryFlightList = session.createSQLQuery("SELECT * FROM `ticket_order_flight`  Where `ticket_order_flight`.pnr_id = " + pnrID + " AND `ticket_order_flight`.flight_status <> 'CANCEL' ")
                 .addScalar("flight_no", Hibernate.STRING)
                 .addScalar("filght_class", Hibernate.STRING)
                 .addScalar("depart_date", Hibernate.STRING)
