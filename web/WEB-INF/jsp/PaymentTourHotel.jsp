@@ -78,7 +78,9 @@
                 <div class="col-xs-4 text-left" style="padding-left:10px;padding-right:0px;"></div>
                 
                 <c:choose>
-                    <c:when test="${(idRole  == 22) || (idRole == 1)}">       
+                    <c:when test="${(idRole  == 22) || (idRole == 1) || (idRole  == 20
+                                    
+                                    )}">       
                     <div class="col-xs-1 text-left hidden" style="padding-left:10px;padding-right:0px;">
                         <label class="control-label">Account<font style="color: red">*</font></lable>
                     </div>
@@ -154,7 +156,7 @@
                 </div>
                 <div class="col-md-2 form-group text-left" style="padding-left:5px;padding-right:0px;">
                 <c:choose>
-                    <c:when test="${(idRole  == 22) || (idRole == 1)}">    
+                    <c:when test="${(idRole  == 22) || (idRole == 1)|| (idRole == 20)}">    
                     <div class="col-sm-12">
                         <select name="itemPvType" id="itemPvType" class="form-control">
                             <option id="" value="">---------</option>  
@@ -227,7 +229,7 @@
                             <input name="InputInvoiceSupId" id="InputInvoiceSupId" type="hidden" class="form-control" value="${requestScope['InputInvoiceSupId']}" />
                             <input name="InputInvoiceSupCode" id="InputInvoiceSupCode" type="text" class="form-control" value="${requestScope['InputInvoiceSupCode']}" onkeypress="getInvoiceSup()" style="text-transform:uppercase" ${readonly}/>                       
                             <c:choose>
-                                <c:when test="${(idRole  == 22) || (idRole == 1)}">       
+                                <c:when test="${(idRole  == 22) || (idRole == 1)|| (idRole == 20)}">       
                                     <span class="input-group-addon" data-toggle="modal" data-target="#SearchInvoiceSup">
                                         <span class="glyphicon-search glyphicon"></span>
                                     </span>
@@ -277,7 +279,7 @@
             <div class="col-md-2 form-group text-left" style="padding-left:9px;width:190px;margin-top: -10px">
                 <div class="col-sm-12">
                 <c:choose>
-                    <c:when test="${(idRole  == 22) || (idRole == 1)}">    
+                    <c:when test="${(idRole  == 22) || (idRole == 1)|| (idRole == 20)}">    
                     <select class="form-control" id="itemPayment" name="itemPayment">
                             <option id="" value="">---------</option>  
                             <c:forEach var="payment" items="${payment_list}">
@@ -319,7 +321,7 @@
             </div>    
             <div class="col-xs-1 form-group text-left" style="padding-left:25px;width:175px;margin-top: -10px">
             <c:choose>
-                <c:when test="${(idRole  == 22) || (idRole == 1)}">
+                <c:when test="${(idRole  == 22) || (idRole == 1)|| (idRole == 20)}">
                 <select class="form-control" name="InputCurrency" id="InputCurrency">
                     <option  value="">---------</option>
                     <c:forEach var="currency" items="${currency_list}" varStatus="status">
@@ -360,7 +362,7 @@
                 
                 
         <c:choose>
-            <c:when test="${(idRole  == 22) || (idRole == 1)}">        
+            <c:when test="${(idRole  == 22) || (idRole == 1) || (idRole == 20)}">        
             <!-- Table Role Checking-->
             <div class="row" >
                 <div class="col-12" style="width:1035px;padding-left:15px;margin-top: -10px">
@@ -656,7 +658,7 @@
                         <textarea rows="3" cols="255" class="form-control" id="InputRemark" name="InputRemark"  maxlength="255">${requestScope['InputRemark']}</textarea>        
                     </div>
                     <c:choose>
-                        <c:when test="${(idRole  == 22) || (idRole == 1)}">
+                        <c:when test="${(idRole  == 22) || (idRole == 1)|| (idRole == 20)}">
                             <div class="col-xs-2 text-right" >
                                 <label class="control-label">Grand Total</lable>
                             </div>
@@ -738,7 +740,7 @@
             </div>
             <div class="col-xs-6 text-left">
                 <c:choose>
-                    <c:when test="${(idRole  == 22) || (idRole == 1)}">
+                    <c:when test="${(idRole  == 22) || (idRole == 1)|| (idRole == 20)}">
                     <button type="button" id="btnNew" name="btnNew" onclick="clearScreen()" class="btn btn-primary">
                         <i class="glyphicon glyphicon-plus"></i> New
                     </button>
@@ -1200,7 +1202,7 @@
                     }
                 }
             });
-        }else if((idRole === '22') || (idRole === '1')){
+        }else if((idRole === '22') || (idRole === '1') || (idRole === '20')){
             $('#PaymentTourHotelForm').bootstrapValidator({
                 container: 'tooltip',
                 excluded: [':disabled', ':hidden', ':not(:visible)'],
@@ -1458,7 +1460,7 @@
                   
     function AddRow(row) {
         var idRole = '${idRole}';
-        if((idRole === '22') || (idRole === '1')){                  
+        if((idRole === '22') || (idRole === '1')  || (idRole === '20') ){                  
             $("#PaymentHotelTable tbody").append(
                 '<tr style="higth 100px">' +
                 '<td class="hidden"> <input id="tableId' + row + '" name="tableId' + row + '"  type="hidden" >  </td>' +
@@ -1842,7 +1844,7 @@
     
     function checkRefNo(row){
         var idRole = '${idRole}';
-        if((idRole === '22') || (idRole === '1')){ 
+        if((idRole === '22') || (idRole === '1')  || (idRole === '20')){ 
             var list = '${refNo_list}';
             var refNo = document.getElementById('refNo'+row).value;
 
@@ -1875,7 +1877,7 @@
     
     function validateForm(){              
         var idRole = '${idRole}';
-        if((idRole === '22') || (idRole === '1')){
+        if((idRole === '22') || (idRole === '1') || (idRole === '20')){
             var invoiceSup = $("#InputInvoiceSupCode").val();
             var apCode = $("#InputAPCode").val();
             var status = $("#itemStatus").val();
