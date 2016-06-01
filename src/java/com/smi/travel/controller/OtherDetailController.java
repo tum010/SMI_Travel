@@ -82,7 +82,8 @@ public class OtherDetailController extends SMITravelController {
         String infTicket = request.getParameter("infTicket");       
         String counter = request.getParameter("counter");
         String memo = request.getParameter("memo");
-                        
+        String resultsave = request.getParameter("resultsave");
+                         
         SystemUser user = (SystemUser) session.getAttribute("USER");
         
         request.setAttribute(ISBILLSTATUS,0);
@@ -195,11 +196,6 @@ public class OtherDetailController extends SMITravelController {
             }  
 //            int result = OtherService.saveBookingOther(Other,user);
             List<String> result = OtherService.saveBookingOther(Other,user,createby);
-            if("1".equalsIgnoreCase(result.get(0))){
-                request.setAttribute("resultsave", "success");
-            }else if("0".equalsIgnoreCase(result.get(0))){
-                request.setAttribute("resultsave", "unsuccess");
-            }
             
             String billDescId = utilservice.getBillableDescId(itemid, bookTypeNo);
             if("".equalsIgnoreCase(billDescId)){
@@ -214,8 +210,8 @@ public class OtherDetailController extends SMITravelController {
                 String stock = OtherService.saveStockDetailOther(Other, user, addticket, adTicket, chTicket, infTicket, itemid);
                 if("notStock".equalsIgnoreCase(stock)){
 //                    ModelAndView OTHER = new ModelAndView(new RedirectView("Other.smi?referenceNo="+refno+"&result=1", true));
-//                    ModelAndView OTHER = new ModelAndView(new RedirectView("OtherDetail.smi?referenceNo="+refno+"&result=1&itemid="+itemid+"&action=edit&callPageFrom=FromOther", true));
-//                    return OTHER;
+                    ModelAndView OTHER = new ModelAndView(new RedirectView("OtherDetail.smi?referenceNo="+refno+"&resultsave=1&itemid="+result.get(1)+"&action=edit&callPageFrom=FromOther", true));
+                    return OTHER;
                 }else if("fail".equalsIgnoreCase(stock)){
                     request.setAttribute("resultText", "unsuccess");
                 }else {
@@ -391,6 +387,12 @@ public class OtherDetailController extends SMITravelController {
             request.setAttribute(ISBILLSTATUS,1);   
         }else{
             request.setAttribute(ISBILLSTATUS,0);   
+        }
+        
+        if("1".equalsIgnoreCase(resultsave)){
+            request.setAttribute("resultsave", "success");
+        }else if("0".equalsIgnoreCase(resultsave)){
+            request.setAttribute("resultsave", "unsuccess");
         }
         
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
