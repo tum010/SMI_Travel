@@ -2241,7 +2241,7 @@ public class AJAXBean extends AbstractBean implements
                     System.out.println("displaydesTemp" + displaydesTemp);
                     if(displaydesTemp != null && !"".equalsIgnoreCase(displaydesTemp)){
                         String[] parts = displaydesTemp.split("\\|");
-                        if("JPN POCKET WIFI".equalsIgnoreCase(parts[4])){
+                        if("JPN POCKET WIFI".equalsIgnoreCase(parts[4]) || "POCKET WIFI".equalsIgnoreCase(parts[4])){
                             displaydescription = parts[4];
                         }else{
                             displaydescription = parts[4] + " : " + parts[5];
@@ -2407,7 +2407,7 @@ public class AJAXBean extends AbstractBean implements
                     if(displaydesTemp != null && !"".equalsIgnoreCase(displaydesTemp)){
                         String[] parts = displaydesTemp.split("\\|");
                         displaydescription += parts[4] + " : " + parts[5];
-                        if("JPN POCKET WIFI".equalsIgnoreCase(parts[4])){
+                        if("JPN POCKET WIFI".equalsIgnoreCase(parts[4]) || "POCKET WIFI".equalsIgnoreCase(parts[4])){
                             displaydescriptionother = parts[4];
                             displaydescription = displaydescriptionother;
                         }else{
