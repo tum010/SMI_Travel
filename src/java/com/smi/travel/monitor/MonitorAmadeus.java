@@ -255,6 +255,7 @@ public class MonitorAmadeus extends MonitorScheduler {
             airlineName = mAirReturn.getName();
         }
         ticketDateS = getField("ticket date");
+        System.out.println("Ticket Date : "+ticketDateS);
         String year = "20" + ticketDateS.substring(0, 2);
         String month = ticketDateS.substring(2, 4);
         String date = ticketDateS.substring(4);
@@ -452,10 +453,12 @@ public class MonitorAmadeus extends MonitorScheduler {
                 passengerTypes = passengerTypes + "," + passengerType;
                 BigDecimal cost = new BigDecimal(BigInteger.ZERO);
                 BigDecimal price = new BigDecimal(BigInteger.ZERO);
+                String costS = getField("cost").trim();
+                String costS2 = getField("cost2").trim();
                 
                 if(isDomestic(ticketType,ticketNo1)){
-                    String costS = getField("cost").trim();
-                    String costS2 = getField("cost2").trim();
+//                    String costS = getField("cost").trim();
+//                    String costS2 = getField("cost2").trim();
                     
                     if (("0".equalsIgnoreCase(costS))||("0.00".equalsIgnoreCase(costS))) {
                         if((!"0".equalsIgnoreCase(costS2))&&(!"0.00".equalsIgnoreCase(costS2))){
@@ -470,8 +473,8 @@ public class MonitorAmadeus extends MonitorScheduler {
                     price = util.convertStringToBigDecimal(costS);
                     
                 } else if (isInternationalTicket(ticketType)) {
-                    String costS = getField("cost").trim();
-                    String costS2 = getField("cost2").trim();
+//                    String costS = getField("cost").trim();
+//                    String costS2 = getField("cost2").trim();
                     System.out.println("Internal");
                     System.out.println("CostS : "+costS);
                     System.out.println("CostS2 : "+costS2);
@@ -498,8 +501,18 @@ public class MonitorAmadeus extends MonitorScheduler {
                     }
                                        
                 } else {
-                    price = util.convertStringToBigDecimal(ticket_fare);
-                    cost = (price.multiply((new BigDecimal(100)).subtract(new BigDecimal(fareCommission)))).divide(new BigDecimal(100));
+//                    price = util.convertStringToBigDecimal(ticket_fare);
+//                    cost = (price.multiply((new BigDecimal(100)).subtract(new BigDecimal(fareCommission)))).divide(new BigDecimal(100));
+                    if(haveAInFareCommission(getField("fare commission", fareLine).trim())){
+                        cost = util.convertStringToBigDecimal(costS);
+                        System.out.println("cost [" + cost +"]");
+                        price = cost.add(util.convertStringToBigDecimal(fareCommission));
+                        
+                    } else {
+                        cost = util.convertStringToBigDecimal(costS).multiply((new BigDecimal("100.00").subtract(new BigDecimal(fareCommission))).divide(new BigDecimal("100.00")));
+                        System.out.println("cost [" + cost +"]");
+                        price = util.convertStringToBigDecimal(costS);
+                    }
                     
                 }
                 System.out.println("Cost : "+cost);
@@ -543,6 +556,7 @@ public class MonitorAmadeus extends MonitorScheduler {
     }
     
     private boolean isInternationalTicket(String ticketType) {
+        System.out.println("Ticket Type : "+ticketType);
         return "X".equalsIgnoreCase(ticketType);
     }
 

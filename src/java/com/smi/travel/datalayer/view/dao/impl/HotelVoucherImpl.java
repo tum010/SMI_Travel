@@ -69,14 +69,15 @@ public class HotelVoucherImpl   implements  HotelVoucherDao{
             voucher.setCode(B[1] == null ? "" : util.ConvertString(B[1]));
             voucher.setName(util.ConvertString(B[2]));
             voucher.setAddress(util.ConvertString(B[3]));
-            voucher.setTel(util.ConvertString(B[4]));
+            voucher.setTel(util.ConvertString(B[4]));A
             voucher.setFax(util.ConvertString(B[5]));
             voucher.setAdult(util.ConvertString(B[6]));
             voucher.setChild(util.ConvertString(B[7]));
             voucher.setInfant(util.ConvertString(B[8]));
             voucher.setTotal(util.ConvertString(B[9]));
             voucher.setLeadername(util.ConvertString(B[10]));
-            voucher.setRemark(util.ConvertString(B[11]));
+            String remark = generateRemark(B,session);
+            voucher.setRemark(remark);
             voucher.setCheckin(new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format((Date)B[12]));
             voucher.setCheckout(new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format((Date)B[13]));
             voucher.setHotelref(util.ConvertString(B[14]));
@@ -128,6 +129,26 @@ public class HotelVoucherImpl   implements  HotelVoucherDao{
         session.close();
         this.sessionFactory.close();
         return voucher;
+    }
+
+    private String generateRemark(Object[] B, Session session) {       
+        UtilityFunction util = new UtilityFunction();
+        String refNo = (B[0] != null ? (util.ConvertString(B[0])).replaceAll("-", "") : "");
+        String remark = (B[11] != null ? util.ConvertString(B[11]) : "");
+        String result = remark;
+        
+         List<String> queryList = session.createSQLQuery(" SELECT * FROM `invoice_view_hotel_additional` where ref_no =  '" + refNo + "'")
+                .addScalar("cate_desc", Hibernate.STRING)
+                .list();
+         
+         for(String A : queryList){
+             String hotelAdditional = (A != null && !"".equalsIgnoreCase(A) ? A : "");
+             System.out.println("Hotel Additional : "+hotelAdditional);
+             result += (!"".equalsIgnoreCase(result) ? "\n" + hotelAdditional : hotelAdditional);
+         }
+         System.out.println("Result : "+result);
+        
+        return result;
     }
 
 }

@@ -362,10 +362,20 @@ public class MonitorGalileo extends MonitorScheduler {
             }
             
             String[] splitName = passengerName.split("/");                     
-            String[] initialList = {"MR","MS","MISS","MRS"};           
+            String[] initialList = {"MR","MS","MISS","MRS"};   
+            String[] typeCheck = {"ADT","CHD","INF"};
             String initial = "";
             String firstName = "";
             String lastName = splitName[0];
+            for(int i = 0; i < typeCheck.length; i++){
+                if(splitName[1].indexOf(typeCheck[i]) != -1){
+                    int indexType = splitName[1].indexOf(typeCheck[i]);
+                    System.out.println("Index Type : "+indexType);
+                    splitName[1] = splitName[1].substring(0,indexType);
+                    System.out.println("Split Name[1] : "+splitName[1]);
+                    i = typeCheck.length;
+                }
+            }
             for(int i = 0; i < initialList.length; i++){
                 String initialTemp = splitName[1].substring(splitName[1].length() - initialList[i].length());
                 System.out.println("===== Initial Temp ===== : "+initialTemp);
