@@ -2252,13 +2252,13 @@ public class AJAXBean extends AbstractBean implements
                 }
             } else if ("8".equals(product)) {
                 if (!"".equals(refItemId)) {
-                    displaydescription += billTypeName + " :- ";
+//                    displaydescription += billTypeName + " :- ";
                     displaydesTemp = billableDao.getDescriptionInvoiceOthersFromRefId(refItemId);
                     System.out.println("displaydesTemp" + displaydesTemp);
                     if(displaydesTemp != null && !"".equalsIgnoreCase(displaydesTemp)){
                         String[] parts = displaydesTemp.split("\\|");
-                        displaydescription += parts[9] + " : " + parts[4] + " : " + parts[5];
-
+//                        displaydescription += parts[9] + " : " + parts[4] + " : " + parts[5];
+                        displaydescription += parts[4] + " : " + parts[5];
                     }
                 }else{
                     displaydescription = billTypeName + " : "+description;
