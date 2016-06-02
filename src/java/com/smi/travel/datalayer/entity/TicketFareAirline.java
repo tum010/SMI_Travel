@@ -59,6 +59,7 @@ public class TicketFareAirline {
      private Integer isTempTicket;
      private String otherAirAgent;
      private Integer enablePvCode;
+     private Integer enableInvNo;
      private List paymentAirticketFares = new LinkedList<PaymentAirticketFare>();
      private List refundAirticketDetails = new LinkedList<RefundAirticketDetail>();
      private List ticketFareInvoices = new LinkedList<TicketFareInvoice>();
@@ -479,6 +480,14 @@ public class TicketFareAirline {
 
     public void setEnablePvCode(Integer enablePvCode) {
         this.enablePvCode = enablePvCode;
+    }
+
+    public Integer getEnableInvNo() {
+        return enableInvNo;
+    }
+
+    public void setEnableInvNo(Integer enableInvNo) {
+        this.enableInvNo = enableInvNo;
     }
 
     

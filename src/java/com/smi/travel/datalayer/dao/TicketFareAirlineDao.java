@@ -8,6 +8,7 @@ package com.smi.travel.datalayer.dao;
 
 import com.smi.travel.datalayer.entity.AirticketFlightView;
 import com.smi.travel.datalayer.entity.BookingFlight;
+import com.smi.travel.datalayer.entity.Invoice;
 import com.smi.travel.datalayer.entity.InvoiceDetail;
 import com.smi.travel.datalayer.entity.MAirlineAgent;
 import com.smi.travel.datalayer.entity.RefundAirticketDetail;
@@ -43,4 +44,5 @@ public interface TicketFareAirlineDao {
     public List<RefundAirticketDetail> getRefundAirticketDetailFromTicketNo(String ticketNo);
     
     public String getMAirlineAgentFromAirlineCode(String airlineCode);
+    public String searchInvoiceFromInvoiceNumber(String InvoiceNumber);
 }

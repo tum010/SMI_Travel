@@ -13,6 +13,7 @@ import com.smi.travel.datalayer.entity.AirticketFlightView;
 import com.smi.travel.datalayer.entity.AirticketPassenger;
 import com.smi.travel.datalayer.entity.BookingFlight;
 import com.smi.travel.datalayer.entity.BookingPassenger;
+import com.smi.travel.datalayer.entity.Invoice;
 import com.smi.travel.datalayer.entity.InvoiceDetail;
 import com.smi.travel.datalayer.entity.MAirlineAgent;
 import com.smi.travel.datalayer.entity.MInitialname;
@@ -1322,5 +1323,23 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         session.close();
         this.sessionFactory.close();
         return MAirlineAgentList.get(0).getId();
+    }
+
+    @Override
+    public String searchInvoiceFromInvoiceNumber(String invNo) {
+        String result = "";
+        System.out.println(" invNo ::: " + invNo);
+        String query = " From Invoice inv where inv.invNo = :invNo ";
+        Session session = this.sessionFactory.openSession();
+        List<Invoice> invoices = session.createQuery(query).setParameter("invNo", invNo).list();
+        System.out.println(" invoices.size() " + invoices.size());
+        if (invoices.isEmpty()){
+            return null;
+        }else{
+            result = invoices.get(0).getId();
+        }
+        session.close();
+        this.sessionFactory.close();
+        return result;
     }
 }

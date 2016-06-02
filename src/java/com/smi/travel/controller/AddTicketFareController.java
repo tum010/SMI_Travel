@@ -132,7 +132,11 @@ public class AddTicketFareController extends SMITravelController {
         String invoiceDetailTableId = request.getParameter("invoiceDetailTableId");
         String ticketAirlineOther = request.getParameter("ticketAirlineOther");
         String invNoFilter = request.getParameter("invNoFilter");
-        
+        String enableInvNo = request.getParameter("enableInvNo");
+        String checkInvId = request.getParameter("checkInvId");
+        if("1".equalsIgnoreCase(enableInvNo) && !"".equalsIgnoreCase(checkInvId)){
+            invoiceId = checkInvId;
+        }
         String issueDate = util.covertStringDateToFormatYMD(request.getParameter("issueDate"));
         String dueDate = util.covertStringDateToFormatYMD(request.getParameter("dueDate"));
         String agentCommDate = util.covertStringDateToFormatYMD(request.getParameter("agentCommDate"));

@@ -270,7 +270,7 @@
                         <div class="col-xs-1 text-right" style="width: 150px">
                             <div class="col-xs-1 text-right" style="width: 50px">
                                 <c:choose>
-                                    <c:when test="${ticketFare.enablePvCode == 0}">
+                                    <c:when test="${ticketFare.enablePvCode == 1}">
                                         <input type="checkbox" class="form-control" id="enablePvCode" name="enablePvCode" onclick="checkboxEnablePvCode(this)" value="1" checked/>
                                     </c:when>
                                     <c:otherwise>
@@ -469,12 +469,22 @@
                             </div>
                         </div>
                         <div class="col-xs-12" style="margin-top: 3px">
-                            <div class="col-xs-1 text-right"  style="width: 121px">
+                            <div class="col-xs-1 text-right" style="width: 125px">
+                                <div class="col-xs-1 text-right" style="width: 50px">
+                                    <c:choose>
+                                        <c:when test="${ticketFare.enableInvNo == 1}">
+                                            <input type="checkbox" class="form-control" id="enableInvNo" name="enableInvNo" onclick="checkboxEnableInvNo(this)" value="1" checked/>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <input type="checkbox" class="form-control" id="enableInvNo" name="enableInvNo" onclick="checkboxEnableInvNo(this)" value="0"/>
+                                        </c:otherwise>
+                                    </c:choose> 
+                                </div>
                                 <label class="control-label text-right">Inv No</label>
                             </div>
-                            <div class="col-xs-1"  style="width: 200px">
-                                <div class="input-group">
-                                    <input id="invoiceNo" name="invoiceNo" type="text" class="form-control" maxlength="50" value="${requestScope['invoiceNo']}" readonly="">
+                            <div class="col-xs-1"  style="width: 200px;margin-left: -3px">
+                                <div class="input-group" id="invnopanel">
+                                    <input id="invoiceNo" name="invoiceNo" type="text" class="form-control" maxlength="50" value="${requestScope['invoiceNo']}" disabled="disabled" onfocusout="searchInvoiceNoAjax(this)">
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 128px">
@@ -593,7 +603,8 @@
                 </div>
                 <div class="row" style="margin-top: -12px">
                     <div class="col-xs-12">
-                        <div class="col-xs-12 text-center" >  
+                        <div class="col-xs-12 text-center" >
+                            <input type="hidden" name="checkInvId" id="checkInvId" value="">
                             <input type="hidden" name="airlinecode" id="airlinecode" value="">
                             <input type="hidden" name="action" id="action" value="">
                             <input type="hidden" name="temp" id="temp" value="">
@@ -990,14 +1001,11 @@
 //            FilterTicketList($("#filtercus").val());
 //        }
 
-//        var pvcode = $("#pvCode").val();
-//        if(pvcode !== '') {
-//            document.getElementById("enablePvCode").value = "1";
-//            $("#pvCode").removeAttr("disabled");
-//        }else{
-//            document.getElementById("enablePvCode").value = "0";
-//            $("#pvCode").attr("disabled", "disabled");
-//        }
+        if(document.getElementById("enablePvCode").value == '1'){
+            $("#pvCode").removeAttr("disabled");
+        }else{
+            $("#pvCode").attr("disabled", "disabled");
+        }
         
         $(".money").mask('000,000,000.00', {reverse: true});
         $('.date').datetimepicker();
@@ -2090,7 +2098,20 @@ function checkboxEnablePvCode(e) {
         $("#pvCode").attr("disabled", "disabled");
     }
 }
-
+function checkboxEnableInvNo(e) {
+    $("#invnopanel").removeClass("has-error");
+    $("#invnopanel").removeClass("has-success");
+    $("#ButtonSave").removeClass("disabled");
+    $("#ButtonSaveAndNew").removeClass("disabled");
+    if(e.checked) {
+        document.getElementById("enableInvNo").value = "1";
+        $("#invoiceNo").removeAttr("disabled");
+    }else{
+        document.getElementById("enableInvNo").value = "0";
+        $("#invoiceNo").attr("disabled", "disabled");
+        $("#invoiceNo").val("");
+    }
+}
 function setSelectTicketNoDetail(ticketno,ticketid,invamount){
     $('#ListTicketNoDuplicateModal').modal('hide');
     setSelectTicketNoTemp.push({no:ticketno,id:ticketid,amount:invamount});
@@ -2153,5 +2174,59 @@ function checkAirlineSelected(){
         $("#ticketAirlineOther").attr("disabled", "disabled");
     }
 }
+
+function searchInvoiceNoAjax(invno){
+    var invoiceNo = invno.value;
+    if(invoiceNo !== ''){
+        var servletName = 'TicketFareAirlineServlet';
+        var servicesName = 'AJAXBean';
+        var param = 'action=' + 'text' +
+                '&servletName=' + servletName +
+                '&servicesName=' + servicesName +
+                '&invNo=' + invoiceNo +
+                '&type=' + 'searchInvoiceNo';
+        CallAjaxSearchInvoice(param);
+    }else{
+        $("#invnopanel").removeClass("has-error");
+        $("#invnopanel").removeClass("has-success");
+        $("#ButtonSave").removeClass("disabled");
+        $("#ButtonSaveAndNew").removeClass("disabled");
+    }
+}
+
+function CallAjaxSearchInvoice(param) {
+        var url = 'AJAXServlet';
+        try {
+            $.ajax({
+                type: "POST",
+                url: url,
+                cache: false,
+                data: param,
+                success: function (msg) {
+                    try {
+                        if(msg === 'null'){
+                            $("#invnopanel").removeClass("has-success");
+                            $("#invnopanel").addClass("has-error");  
+                            $("#ButtonSave").addClass("disabled");
+                            $("#ButtonSaveAndNew").addClass("disabled");
+                        }else{
+                            $("#checkInvId").val(msg);
+                            $("#invnopanel").removeClass("has-error");
+                            $("#invnopanel").addClass("has-success");
+                            $("#ButtonSave").removeClass("disabled");
+                            $("#ButtonSaveAndNew").removeClass("disabled");
+                        }
+                    } catch (e) {
+                        alert(e);
+                    }
+
+                }, error: function (msg) {
+                    
+                }
+            });
+        } catch (e) {
+            alert(e);
+        }
+    }
 </script>
   
