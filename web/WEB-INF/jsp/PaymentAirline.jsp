@@ -23,7 +23,7 @@
 <c:set var="ticketwhtax" value="${requestScope['ticketwhtax']}" />
 <c:set var="ticketvat" value="${requestScope['ticketvat']}" />
 <c:set var="paymentAccountList" value="${requestScope['paymentAccountList']}" />
-
+<c:set var="paymentAirlineList" value="${requestScope['paymentAirlineList']}" />
 
 <section class="content-header" >
     <h1>
@@ -212,7 +212,9 @@
                                 </select>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 165px">
-                                <label class="control-label text-right"></label>
+                                <a href="#" data-toggle="modal" data-target="" onclick="getPaymentList()">
+                                    <span>Payment List</span>
+                                </a>   
                             </div>
                             <div class="col-xs-1 text-left" style="width: 170px">
                                 <a href="#" data-toggle="modal" data-target="#AirCommissionDetailModal" onclick="getAirCommissionDetail()">
@@ -1066,8 +1068,60 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal-dialog -->
-<!--DELETE MODAL-->
 
+<div class="modal fade" id="PaymentListModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width: 70%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"  id="Titlemodel">Air Commission</h4>
+            </div>
+            <div class="modal-body">
+                <table class="display" id="PaymentAirlineListTable">
+                    <thead class="datatable-header">
+                        <tr>
+                            <th style="width:9%;">Pay No</th>
+                            <th style="width:10%;">Pay Date</th>
+                            <th style="width:23%;">Supplier</th>
+                            <th style="width:23%;">Detail</th>
+                            <th style="width:10%;">Amount</th>
+                            <th style="width:8%;">Wht</th>
+                            <th style="width:10%;">Payment</th>
+                            <th style="width:7%;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach var="paymentAirlineList" items="${paymentAirlineList}">
+                            <tr>
+                                <td class="text-center">${paymentAirlineList.payNo}</td>
+                                <c:set var="payDate" value="${paymentAirlineList.payDate}" />
+                                <fmt:parseDate value="${payDate}" var="payDate" pattern="yyyy-MM-dd" />
+                                <fmt:formatDate value="${payDate}" var="payDate" pattern="dd-MM-yyyy" />
+                                <td class="text-center">${payDate}</td>
+                                <td>${paymentAirlineList.supplier}</td>
+                                <td>${paymentAirlineList.detail}</td>
+                                <td class="text-right"><fmt:formatNumber type="currency" pattern="#,##0.00;-#,##0.00" value="${paymentAirlineList.amount}" /></td>
+                                <td class="text-right"><fmt:formatNumber type="currency" pattern="#,##0.00;-#,##0.00" value="${paymentAirlineList.wth}" /></td>
+                                <td class="text-right"><fmt:formatNumber type="currency" pattern="#,##0.00;-#,##0.00" value="${paymentAirlineList.payment}" /></td>
+                                <td class="text-center" >
+                                    <a href="PaymentAirline.smi?action=search&paymentNo=${paymentAirlineList.payNo}">
+                                        <span class="glyphicon glyphicon-check"></span>
+                                    </a>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button id="ListRefnoModalOK" name="ListRefnoModalOK" type="button"  class="btn btn-success" data-dismiss="modal">OK</button>
+                <button id="ListRefnoModalClose" name="ListRefnoModalClose" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal-dialog -->
+
+<!--DELETE MODAL-->
 <div class="modal fade" id="DeletePaymentAccountModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -1642,6 +1696,17 @@ for(var i = 0; i < rad.length; i++) {
         $("#tr_PaymentAccountTableAddRow a").click(function () {
             $(this).parent().removeClass("show");
             $(this).parent().addClass("hide");
+        });
+        
+        $('#PaymentAirlineListTable').dataTable({bJQueryUI: true,
+            "sPaginationType": "full_numbers",
+            "bAutoWidth": false,
+            "bFilter": false,
+            "bPaginate": true,
+            "bInfo": false,
+            "bLengthChange": false,
+            "iDisplayLength": 10,
+            "aaSorting": [[ 0, "desc" ]]
         });
         
     });
@@ -2767,6 +2832,10 @@ function checkAirlineSelected(){
         $("#typeAirlineOther").val("");
         $("#typeAirlineOther").attr("disabled", "disabled");
     }
+}
+
+function getPaymentList(){
+    $("#PaymentListModal").modal('show');
 }
 
 function getAirCommissionDetail() {

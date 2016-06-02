@@ -14,6 +14,7 @@ import com.smi.travel.datalayer.entity.PaymentAirticketFare;
 import com.smi.travel.datalayer.entity.RefundAirticketDetailView;
 import com.smi.travel.datalayer.report.model.PaymentAirline;
 import com.smi.travel.datalayer.view.entity.PaymentAirView;
+import com.smi.travel.datalayer.view.entity.PaymentAirlineList;
 import com.smi.travel.datalayer.view.entity.TicketFareView;
 import java.util.List;
 
@@ -57,4 +58,5 @@ public interface PaymentAirTicketDao {
 //    public List getPaymentAirlineRefund(String payno,String printby) ;
     
     public PaymentAirticket getPaymentAirTicketByWildCardSearch(String paymentId, String paymentNo, String wildCardSearch, String keyCode);
+    public List<PaymentAirlineList> getPaymentAirlineList();
 }

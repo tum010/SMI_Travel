@@ -15,6 +15,7 @@ import com.smi.travel.datalayer.entity.TicketFareAirline;
 import com.smi.travel.datalayer.service.PaymentAirTicketService;
 import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.datalayer.view.entity.InvoiceSupplier;
+import com.smi.travel.datalayer.view.entity.PaymentAirlineList;
 import com.smi.travel.datalayer.view.entity.TicketFareView;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
@@ -66,6 +67,7 @@ public class PaymentAirlineController extends SMITravelController {
     private static final String SETCALCULATEDEBIT = "setCalculateDebit";
     private static final String TYPEAIRLINEOTHER = "TypeAirlineOther";
     private static final String TICKETTYPE = "TicketType";
+    private static final String PAYMENTAIRLINELIST = "paymentAirlineList";
     
     
     private static final String PAROWCOUNT = "countRowPaymentAccount";
@@ -957,6 +959,8 @@ public class PaymentAirlineController extends SMITravelController {
         request.setAttribute(VAT,mDefaultData.getValue());
         MDefaultData mDefault = utilityService.getMDefaultDataFromType("withholding tax");
         request.setAttribute(withholdingtax,mDefault.getValue());
+        List<PaymentAirlineList> paymentAirlineList = paymentAirTicketService.getPaymentAirlineList();
+        request.setAttribute(PAYMENTAIRLINELIST,paymentAirlineList);
     }
     
     public UtilityService getUtilityService() {
