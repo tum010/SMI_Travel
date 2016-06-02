@@ -30,23 +30,24 @@
 
 <div class="container" style="padding-top: 15px;padding-right: 0px; padding-left: 0px;"ng-app=""> 
     <div class="row">
-        <!--Alert Save and Update-->
-        <div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <strong>Save Success!</strong> 
-        </div>
-        <div id="textAlertDivNotSave"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <strong>Save Unsuccess!</strong> 
-        </div>
-        <div id="textAlertTicketNo"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <strong>Ticket no. not available !</strong> 
-        </div>
         <div class="col-sm-2" style="border-right:  solid 1px #01C632;padding-top: 10px;">
             <div ng-include="'WebContent/Checking/CheckingAirTicketMenu.html'"></div>
         </div>
-        
+        <div class="col-xs-10">
+            <!--Alert Save and Update-->
+            <div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Save Success!</strong> 
+            </div>
+            <div id="textAlertDivNotSave"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Save Unsuccess!</strong> 
+            </div>
+            <div id="textAlertTicketNo"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Ticket no. not available !</strong> 
+            </div>
+        </div>
         <div class="col-sm-10">
             <div class="row" style="padding-left: 15px">  
                 <div class="col-sm-6" style="padding-right: 15px">
@@ -1000,7 +1001,7 @@
 //            $("#filtercus").val(refNo);
 //            FilterTicketList($("#filtercus").val());
 //        }
-
+    
         if(document.getElementById("enablePvCode").value == '1'){
             $("#pvCode").removeAttr("disabled");
         }else{
