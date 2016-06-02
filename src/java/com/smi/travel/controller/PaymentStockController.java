@@ -63,13 +63,13 @@ public class PaymentStockController extends SMITravelController{
         String payId = request.getParameter("payId");
         String createBy = request.getParameter("createBy");
         String createDate = request.getParameter("createDate");
-        String totalSale = request.getParameter("totalSaleAll");
-        String totalCost = request.getParameter("totalCostAll");
+//        String totalSale = request.getParameter("totalSaleAll");
+//        String totalCost = request.getParameter("totalCostAll");
         String curCost = request.getParameter("curCost");
         String curSale = request.getParameter("curSale");
         String noStockTable = request.getParameter("noStockTable");
-        String totalCostAll = request.getParameter("totalCostAll");
-        String totalSaleAll = request.getParameter("totalSaleAll");
+//        String totalCostAll = request.getParameter("totalCostAll");
+//        String totalSaleAll = request.getParameter("totalSaleAll");
         System.out.println("===== createDate =====" + createDate);
         
         request.setAttribute(NOSTOCKTABLE,1);
@@ -82,6 +82,8 @@ public class PaymentStockController extends SMITravelController{
             PaymentStockItem paymentStockItem = new PaymentStockItem();
             if(!"".equals(payNo)){
                 paymentStock = paymentStockService.getPaymentStockFromPayNo(payNo);
+                request.setAttribute("totalCostAll",paymentStock.getCostAmount());
+                request.setAttribute("totalSaleAll",paymentStock.getSaleAmount());
                 if(paymentStock != null) {
                     if(!paymentStock.getId().isEmpty()){
                         List<PaymentStockDetail> psdList = new ArrayList<PaymentStockDetail>();
@@ -180,7 +182,7 @@ public class PaymentStockController extends SMITravelController{
             if(paymentStock.getPaymentStockDetails() == null){
                 paymentStock.setPaymentStockDetails(new ArrayList<PaymentStockDetail>());
             }
-            
+
             for (int i = 1; i < rowsStock ; i++) {
                 String paymentStockId = request.getParameter("paymentStockId" + i);
                 String stockId = request.getParameter("stockId" + i);
@@ -216,7 +218,8 @@ public class PaymentStockController extends SMITravelController{
                                     StockDetail stockDetail = new StockDetail();
                                     stockDetail.setId(stockDetailIdTable);
                                     psi.setStockDetail(stockDetail);
-
+//                                    totalCostAll = totalCostAll.add(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(cost) ? cost.replaceAll(",","") : 0)));
+//                                    totalSaleAll = totalSaleAll.add(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(sale) ? sale.replaceAll(",","") : 0)));
                                     psi.setCost(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(cost) ? cost.replaceAll(",","") : 0)));
                                     psi.setSale(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(sale) ? sale.replaceAll(",","") : 0)));
                                     psd.getPaymentStockItems().add(psi);
@@ -227,8 +230,8 @@ public class PaymentStockController extends SMITravelController{
                     paymentStock.getPaymentStockDetails().add(psd);
                 }
             }
-            paymentStock.setCostAmount(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(totalCostAll) ? totalCostAll.replaceAll(",","") : 0)));
-            paymentStock.setSaleAmount(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(totalSaleAll) ? totalSaleAll.replaceAll(",","") : 0)));
+//            paymentStock.setCostAmount(totalCostAll);
+//            paymentStock.setSaleAmount(totalSaleAll);
             saveresult = paymentStockService.insertOrUpdatePaymentStock(paymentStock);
             System.out.println(" saveresult " + saveresult);
             if("fail".equalsIgnoreCase(saveresult)){
@@ -248,6 +251,10 @@ public class PaymentStockController extends SMITravelController{
             request.setAttribute(PAYMENTSTOCKTEMP,payList);
             List<PaymentStockDetail> psdList = new ArrayList<PaymentStockDetail>();
             List<StockDetail> stockDetailList = new ArrayList<StockDetail>();
+            
+            BigDecimal totalCostAll = new BigDecimal(0);
+            BigDecimal totalSaleAll = new BigDecimal(0);
+            
             if(paymentStockDetailList!=null){
                 for(int i=0; i<paymentStockDetailList.size();i++){
                     BigDecimal cost = new BigDecimal(BigInteger.ZERO);
@@ -258,15 +265,17 @@ public class PaymentStockController extends SMITravelController{
                       for(int k = 0; k < paymentStockItems.size() ; k++){
                         PaymentStockItem psi = paymentStockItems.get(k);
                         if(psi.getCost() != null){
-                        cost = cost.add(psi.getCost());
+                            cost = cost.add(psi.getCost());
                         }
                         if(psi.getSale()!= null){
-                        sale = sale.add(psi.getSale());
+                            sale = sale.add(psi.getSale());
                         }
                       }  
                     }
                     pad.setCost(cost);
                     pad.setSale(sale);
+                    totalCostAll = totalCostAll.add(cost);
+                    totalSaleAll = totalSaleAll.add(sale);
                     psdList.add(pad);
                     if(pad.getStock()!=null){
                         List<StockDetail> stockDetails = new ArrayList<StockDetail>(pad.getStock().getStockDetails()); 
@@ -280,6 +289,11 @@ public class PaymentStockController extends SMITravelController{
                     }
                 }
             }
+            System.out.println(" totalCostAll :::: " + totalCostAll);
+            System.out.println(" totalSaleAll :::: " + totalSaleAll);
+            paymentStockService.updateTotalCostAndSale(totalCostAll, totalSaleAll, paymentStock.getId());
+            request.setAttribute("totalCostAll",totalCostAll);
+            request.setAttribute("totalSaleAll",totalSaleAll);
             request.setAttribute(STOCKDETAILLIST,stockDetailList);
             request.setAttribute(PAYMENTSTOCKDETAILLIST,psdList);
 //            request.setAttribute(PAYMENTSTOCKDETAILLIST,paymentStockDetailList);

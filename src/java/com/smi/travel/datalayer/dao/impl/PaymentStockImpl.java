@@ -251,5 +251,27 @@ public class PaymentStockImpl implements PaymentStockDao {
         }
         return paymentStockItems;
     }
+
+    @Override
+    public int updateTotalCostAndSale(BigDecimal cost, BigDecimal sale, String paymentStockId) {
+        int result = 0;
+        String hql = "UPDATE PaymentStock ps set ps.costAmount = :costAmount , ps.saleAmount = :saleAmount "
+                + " WHERE ps.id = :paymentStockId ";
+        try {
+            Session session = this.sessionFactory.openSession();
+            Query query = session.createQuery(hql);
+            query.setParameter("paymentStockId", paymentStockId);
+            query.setParameter("costAmount", cost);
+            query.setParameter("saleAmount", sale);
+            result = query.executeUpdate();
+            System.out.println("Rows affected: " + result);
+            session.close();
+            this.sessionFactory.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            result = 0;
+        }
+        return result;
+    }
     
 }

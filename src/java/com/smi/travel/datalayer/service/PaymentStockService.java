@@ -10,6 +10,7 @@ import com.smi.travel.datalayer.entity.PaymentStock;
 import com.smi.travel.datalayer.entity.PaymentStockDetail;
 import com.smi.travel.datalayer.entity.PaymentStockItem;
 import com.smi.travel.datalayer.entity.Stock;
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -32,6 +33,10 @@ public class PaymentStockService {
     
     public List<PaymentStockItem> getListPaymentStockItemFromPaymentStockId(String paymentStockId){
         return paymentStockDao.getListPaymentStockItemFromPaymentStockId(paymentStockId);
+    }
+    
+    public int updateTotalCostAndSale(BigDecimal cost,BigDecimal sale,String paymentStockId){
+        return paymentStockDao.updateTotalCostAndSale(cost, sale, paymentStockId);
     }
     
     public String deletePaymentStock(String paymentStockDetailId){

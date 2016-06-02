@@ -1236,10 +1236,15 @@ public class AJAXBean extends AbstractBean implements
                 String stockId = map.get("stockId").toString();
                 String countRowDetail = map.get("countRowDetail").toString();
                 String noStockTable = map.get("noStockTable").toString();
-                
+                String psdId = map.get("psdId").toString();
                 List<StockDetail> stockDetails = paymentStockDao.getListStockDetailFromStockId(stockId);
+                List<PaymentStockItem> paymentStockItems = null;
+                System.out.println(" psdId " +psdId);
+                if(!"".equalsIgnoreCase(psdId)){
+                    paymentStockItems = paymentStockDao.getListPaymentStockItemFromPaymentStockDetailId(psdId);
+                }
                 if (stockDetails != null) {
-                    result = buildPaymentStockDetailHTML(stockDetails,countRowDetail,noStockTable);
+                    result = buildPaymentStockDetailHTML(stockDetails,countRowDetail,noStockTable,paymentStockItems);
                 } else {
                     result = "null";
                 }
@@ -1354,7 +1359,8 @@ public class AJAXBean extends AbstractBean implements
         return result;
     }
 
-    private String getPaymentStockItemCostSale(List<PaymentStockItem> paymentStockItems,String row) {
+    private JSONArray getPaymentStockItemCostSale(List<PaymentStockItem> paymentStockItems,String row) {
+        JSONArray data = new JSONArray();
         StringBuffer html = new StringBuffer();     
         UtilityFunction utilty = new UtilityFunction();
         int no = 1;
@@ -1375,20 +1381,27 @@ public class AJAXBean extends AbstractBean implements
             cost = String.valueOf(paymentStockItem.getCost());
             sale = String.valueOf(paymentStockItem.getSale());
             
-            String newrow = "";              
-            newrow += "<input type='hidden' id='noMaxTemp' name='noMaxTemp'  value='" + noMaxTemp + "'>"
-                    + "<input type='hidden' id='psiIdTemp" + no + "' name='psiIdTemp" + no + "'  value='" + paystockitemid + "'>"
-                    + "<input type='hidden' id='psdIdTemp" + no + "' name='psdIdTemp" + no + "'  value='" + paystockdetailid + "'>" 
-                    + "<input type='hidden' id='stockDetailIdTemp" + no + "' name='stockDetailIdTemp" + no + "'  value='" + stockdetailid + "'>"
-                    + "<input id=\"costTemp" + no + "\" name=\"costTemp" + no + "\" type=\"hidden\" class=\"form-control text-right\" value='" + cost + "' >"
-                    + "<input id=\"saleTemp" + no + "\" name=\"saleTemp" + no + "\" type=\"hidden\" class=\"form-control text-right\" value='" + sale + "' >";
-            html.append(newrow);
+            JSONObject field = new JSONObject();
+            field.put(String.valueOf("data"), paystockitemid + "||" + paystockdetailid + "||" + stockdetailid + "||" + cost + "||" + sale );
+
+            data.add(field);
+            
+//            String newrow = "";              
+//            newrow += "<input type='hidden' id='dataTempPaymentStock" + no + "' name='dataTempPaymentStock" + no + "'  value='" + paystockitemid + "||" + paystockdetailid + "||" + stockdetailid + "||" + cost + "||" + sale + "'>";
+////                    + "<input type='hidden' id='psdIdTemp" + no + "' name='psdIdTemp" + no + "'  value='" + paystockdetailid + "'>" 
+////                    + "<input type='hidden' id='stockDetailIdTemp" + no + "' name='stockDetailIdTemp" + no + "'  value='" + stockdetailid + "'>"
+////                    + "<input id=\"costTemp" + no + "\" name=\"costTemp" + no + "\" type=\"hidden\" class=\"form-control text-right\" value='" + cost + "' >"
+////                    + "<input id=\"saleTemp" + no + "\" name=\"saleTemp" + no + "\" type=\"hidden\" class=\"form-control text-right\" value='" + sale + "' >";
+//            if(i == paymentStockItems.size() -1){
+//                newrow +=  "<input type='hidden' id='noMaxTemp' name='noMaxTemp'  value='" + noMaxTemp + "'>";
+//            }
+//            html.append(newrow);
             no++;
         } 
-        return html.toString();
+        return data;
     }
     
-    private String buildPaymentStockDetailHTML(List<StockDetail> stockDetails,String row,String noStockTable) {
+    private String buildPaymentStockDetailHTML(List<StockDetail> stockDetails,String row,String noStockTable,List<PaymentStockItem> paymentStockItems) {
         StringBuffer html = new StringBuffer();     
         UtilityFunction utilty = new UtilityFunction();
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
@@ -1404,7 +1417,12 @@ public class AJAXBean extends AbstractBean implements
         String stockId = "";
         String cost = "" ;
         String sale = "";
+        String paystockitemid = "";
+        String paystockdetailid = "";
+        String stockdetailid = "";
+        
         for (int i = 0; i < stockDetails.size(); i++) {
+            boolean checkhavedata = false;
             StockDetail stockDetail = new StockDetail();
             stockDetail = stockDetails.get(i);
             code = stockDetail.getCode();
@@ -1423,26 +1441,79 @@ public class AJAXBean extends AbstractBean implements
             }
             if(stockDetail.getPickupDate() != null){
                 pickdate = sdf.format(stockDetail.getPickupDate());
-            }           
+            }      
+            
             stockDetailIdTable = stockDetail.getId();
             stockId = stockDetail.getStock().getId();
-            String newrow = "";              
-            newrow += "<tr>"
-                    + "<input type='hidden' id='psdIdTable" + no + "' name='psdIdTable" + no + "'  value='" + psdIdTable + "'>"
-                    + "<input type='hidden' id='psiIdTable" + no + "' name='psiIdTable" + no + "'  value='" +  psiIdTable + "'>"
-                    + "<input type='hidden' id='stockDetailIdTable" + no + "' name='stockDetailIdTable" + no + "'  value='" + stockDetailIdTable + "'>" 
-                    + "<input type='hidden' id='stockIdTable" + no + "' name='stockIdTable" + no + "'  value='" + stockId + "'>"
-                    + "<td class='text-center'>" + no + "</td>"
-                    + "<td class='text-left'>" + code + "</td>"
-                    + "<td class='text-left'>" + type + "</td>"
-                    + "<td class='text-left'>" + refno + "</td>"
-                    + "<td class='text-center'>" + pickup + "</td>"
-                    + "<td class='text-center'>" + pickdate + "</td>"
-                    + "<td><input maxlength=\"10\" id=\"cost" + no + "\" name=\"cost" + no + "\" type=\"text\" class=\"form-control decimal text-right\" value='" + cost + "' onkeydown=\"setFormatCurrencyOnFocusOut('"+  no + "' ,'"+  noStockTable + "')\" ></td>" 
-                    + "<td><input maxlength=\"10\" id=\"sale" + no + "\" name=\"sale" + no + "\" type=\"text\" class=\"form-control decimal text-right\" value='" + sale + "' onkeydown=\"setFormatCurrencyOnFocusOut('"+  no + "' , '"+  noStockTable + "' )\" ></td>"
-                    + "</tr>";
-            html.append(newrow);
-            no++;
+            
+            if(paymentStockItems == null){
+                String newrow = "";              
+                    newrow += "<tr>"
+                            + "<input type='hidden' id='psdIdTable" + no + "' name='psdIdTable" + no + "'  value=''>"
+                            + "<input type='hidden' id='psiIdTable" + no + "' name='psiIdTable" + no + "'  value=''>"
+                            + "<input type='hidden' id='stockDetailIdTable" + no + "' name='stockDetailIdTable" + no + "'  value='" + stockDetailIdTable + "'>" 
+                            + "<input type='hidden' id='stockIdTable" + no + "' name='stockIdTable" + no + "'  value='" + stockId + "'>"
+                            + "<td class='text-center'>" + no + "</td>"
+                            + "<td class='text-left'>" + code + "</td>"
+                            + "<td class='text-left'>" + type + "</td>"
+                            + "<td class='text-left'>" + refno + "</td>"
+                            + "<td class='text-center'>" + pickup + "</td>"
+                            + "<td class='text-center'>" + pickdate + "</td>"
+                            + "<td><input maxlength=\"10\" id=\"cost" + no + "\" name=\"cost" + no + "\" type=\"text\" class=\"form-control decimal text-right\" value='' onkeydown=\"setFormatCurrencyOnFocusOut('"+  no + "' ,'"+  noStockTable + "')\" ></td>" 
+                            + "<td><input maxlength=\"10\" id=\"sale" + no + "\" name=\"sale" + no + "\" type=\"text\" class=\"form-control decimal text-right\" value='' onkeydown=\"setFormatCurrencyOnFocusOut('"+  no + "' , '"+  noStockTable + "' )\" ></td>"
+                            + "</tr>";
+                    html.append(newrow);
+                    no++;
+            }else{
+                for (int j = 0; j < paymentStockItems.size(); j++) {
+                    PaymentStockItem paymentStockItem = new PaymentStockItem();
+                    paymentStockItem = paymentStockItems.get(j);
+                    paystockitemid = paymentStockItem.getId() ;
+                    paystockdetailid = paymentStockItem.getPaymentStockDetail().getId() ;
+                    stockdetailid = paymentStockItem.getStockDetail().getId() ;     
+                    cost = String.valueOf(paymentStockItem.getCost());
+                    sale = String.valueOf(paymentStockItem.getSale());
+                    if(stockdetailid.equalsIgnoreCase(stockDetailIdTable)){
+                        String newrow = "";              
+                        newrow += "<tr>"
+                                + "<input type='hidden' id='psdIdTable" + no + "' name='psdIdTable" + no + "'  value='" + paystockdetailid + "'>"
+                                + "<input type='hidden' id='psiIdTable" + no + "' name='psiIdTable" + no + "'  value='" +  paystockitemid + "'>"
+                                + "<input type='hidden' id='stockDetailIdTable" + no + "' name='stockDetailIdTable" + no + "'  value='" + stockDetailIdTable + "'>" 
+                                + "<input type='hidden' id='stockIdTable" + no + "' name='stockIdTable" + no + "'  value='" + stockId + "'>"
+                                + "<td class='text-center'>" + no + "</td>"
+                                + "<td class='text-left'>" + code + "</td>"
+                                + "<td class='text-left'>" + type + "</td>"
+                                + "<td class='text-left'>" + refno + "</td>"
+                                + "<td class='text-center'>" + pickup + "</td>"
+                                + "<td class='text-center'>" + pickdate + "</td>"
+                                + "<td><input maxlength=\"10\" id=\"cost" + no + "\" name=\"cost" + no + "\" type=\"text\" class=\"form-control decimal text-right\" value='" + cost + "' onkeydown=\"setFormatCurrencyOnFocusOut('"+  no + "' ,'"+  noStockTable + "')\" ></td>" 
+                                + "<td><input maxlength=\"10\" id=\"sale" + no + "\" name=\"sale" + no + "\" type=\"text\" class=\"form-control decimal text-right\" value='" + sale + "' onkeydown=\"setFormatCurrencyOnFocusOut('"+  no + "' , '"+  noStockTable + "' )\" ></td>"
+                                + "</tr>";
+                        html.append(newrow);
+                        no++;
+                        checkhavedata = true;
+                    }
+                }
+                if(!checkhavedata){
+                    String newrow = "";              
+                    newrow += "<tr>"
+                            + "<input type='hidden' id='psdIdTable" + no + "' name='psdIdTable" + no + "'  value=''>"
+                            + "<input type='hidden' id='psiIdTable" + no + "' name='psiIdTable" + no + "'  value=''>"
+                            + "<input type='hidden' id='stockDetailIdTable" + no + "' name='stockDetailIdTable" + no + "'  value='" + stockDetailIdTable + "'>" 
+                            + "<input type='hidden' id='stockIdTable" + no + "' name='stockIdTable" + no + "'  value='" + stockId + "'>"
+                            + "<td class='text-center'>" + no + "</td>"
+                            + "<td class='text-left'>" + code + "</td>"
+                            + "<td class='text-left'>" + type + "</td>"
+                            + "<td class='text-left'>" + refno + "</td>"
+                            + "<td class='text-center'>" + pickup + "</td>"
+                            + "<td class='text-center'>" + pickdate + "</td>"
+                            + "<td><input maxlength=\"10\" id=\"cost" + no + "\" name=\"cost" + no + "\" type=\"text\" class=\"form-control decimal text-right\" value='' onkeydown=\"setFormatCurrencyOnFocusOut('"+  no + "' ,'"+  noStockTable + "')\" ></td>" 
+                            + "<td><input maxlength=\"10\" id=\"sale" + no + "\" name=\"sale" + no + "\" type=\"text\" class=\"form-control decimal text-right\" value='' onkeydown=\"setFormatCurrencyOnFocusOut('"+  no + "' , '"+  noStockTable + "' )\" ></td>"
+                            + "</tr>";
+                    html.append(newrow);
+                    no++;
+                }
+            }
         } 
         return html.toString();
     }

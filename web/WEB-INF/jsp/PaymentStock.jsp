@@ -218,7 +218,7 @@
                     <label class="control-label text-right">Total Cost</label>
                 </div>
                 <div class="col-xs-1" style="width: 200px;padding-top: 8px">
-                    <input type="text" class="form-control money text-right" id="totalCostAll" name="totalCostAll" value="${paymentStock.costAmount}" readonly=""/>
+                    <input type="text" class="form-control money text-right" id="totalCostAll" name="totalCostAll" value="${requestScope['totalCostAll']}" readonly=""/>
                 </div>
                 <div class="col-xs-1" style="width: 100px;padding-top: 8px">
                     <select class="form-control" name="curCost" id="curCost" >
@@ -236,7 +236,7 @@
                     <label class="control-label text-right">Total Sale</label>
                 </div>
                 <div class="col-xs-1" style="width: 200px;padding-top: 8px">
-                    <input type="text" class="form-control money text-right" id="totalSaleAll" name="totalSaleAll" value="${paymentStock.saleAmount}" readonly=""/>
+                    <input type="text" class="form-control money text-right" id="totalSaleAll" name="totalSaleAll" value="${requestScope['totalSaleAll']}" readonly=""/>
                 </div>
                  <div class="col-xs-1" style="width: 100px;padding-top: 8px">
                     <select class="form-control" name="curSale" id="curSale" >
@@ -331,7 +331,7 @@
                             </div>
                         </div>            
                     </div>
-                    <div class="row" style="margin-top: -10px; padding-bottom:  15px; padding-left:  100px;">
+<!--                    <div class="row" style="margin-top: -10px; padding-bottom:  15px; padding-left:  100px;">
                         <div class="col-xs-1 text-right" style="width: 130px">
                             <label class="control-label text-right">Total Cost</label>
                         </div>
@@ -347,7 +347,7 @@
                             <input type="hidden" class="form-control text-right" id="totalSaleTempCal" name="totalSaleTempCal" value="${paymentStock.saleAmount}" readonly=""/>
                             <input type="text" class="form-control text-right" id="totalSale" name="totalSale" value="" readonly=""/>
                         </div>
-                    </div> 
+                    </div> -->
                 </div>
             </div> 
             <br>
@@ -541,15 +541,31 @@
     }
     
     function getPaymentStockItemCostSaleAjax(psdId,noStockTable){
-        var servletName = 'PaymentStockServlet';
-        var servicesName = 'AJAXBean';
-        var param = 'action=' + 'text' +
-                '&servletName=' + servletName +
-                '&servicesName=' + servicesName +
-                '&psdId=' + psdId +
-                '&countRowDetail=' + 1 +
-                '&type=' + 'getPaymentStockItemCostSale';
-        CallAjaxPaymentStockItemCostSale(param,noStockTable);
+        var countRowStockDetail = $("#StockDetailTable tr").length;
+        var countRow = $("#StockDetailTableTempCal tr").length;
+        for(var i = 1 ; i<countRowStockDetail ; i++ ){
+            for(var j = 1 ; j < countRow ; j++ ){
+                var stockDetailIdTable = $("#stockDetailIdTable"+i).val(); 
+                var stockDetailIdTemp = $("#stockDetailIdTableTempCount"+j).val();
+                if(stockDetailIdTable === stockDetailIdTemp){
+                    $("#costTempCount"+j).val( $("#cost"+i).val()); 
+                    $("#saleTempCount"+j).val( $("#sale"+i).val()); 
+                    $("#psiIdTableTempCount"+j).val($("#psiIdTable"+i).val());
+                    $("#psdIdTableTempCount"+j).val($("#psdIdTable"+i).val());
+//                                    calculateCostTotalAll();
+//                                    calculateSaleTotalAll();
+                }
+            }
+        }
+//        var servletName = 'PaymentStockServlet';
+//        var servicesName = 'AJAXBean';
+//        var param = 'action=' + 'text' +
+//                '&servletName=' + servletName +
+//                '&servicesName=' + servicesName +
+//                '&psdId=' + psdId +
+//                '&countRowDetail=' + 1 +
+//                '&type=' + 'getPaymentStockItemCostSale';
+//        CallAjaxPaymentStockItemCostSale(param,noStockTable);
     }
     
     function CallAjaxPaymentStockItemCostSale(param,noStockTable) {
@@ -563,44 +579,29 @@
                 data: param,
                 success: function(msg) {
                     if(msg !== 'null'){
-                        $('#StockDetailTableTemp').dataTable().fnClearTable();
-                        $('#StockDetailTableTemp').dataTable().fnDestroy();
-                        $("#StockDetailTableTemp tbody").append(msg);
-                        var countRowStockDetail = $("#StockDetailTable tr").length;
-                        var noMaxTemp = $("#noMaxTemp").val();
-                        for(var i = 1 ; i<countRowStockDetail ; i++ ){
-                            for(var j = 1 ; j < noMaxTemp+1 ; j++ ){
-                                var stockDetailIdTable = $("#stockDetailIdTable"+i).val(); 
-                                var stockDetailIdTemp = $("#stockDetailIdTemp"+j).val();
-                                if(stockDetailIdTable === stockDetailIdTemp){
-                                    $("#cost"+i).val( $("#costTemp"+j).val()); 
-                                    $("#sale"+i).val( $("#saleTemp"+j).val()); 
-                                    $("#psiIdTable"+i).val($("#psiIdTemp"+j).val());
-                                    $("#psdIdTable"+i).val($("#psdIdTemp"+j).val());
-                                    setCostAmountToTableTemp(i);
-                                    setFormatCurrency(i,noStockTable);
-                                    calculateCostTotal(noStockTable);
-                                    calculateSaleTotal(noStockTable);
-                                }
-                            }
-                        }
+//                        $('#StockDetailTableTemp').dataTable().fnClearTable();
+//                        $('#StockDetailTableTemp').dataTable().fnDestroy();
+//                        $("#StockDetailTableTemp tbody").append(msg);
+//                        var countRowStockDetail = $("#StockDetailTable tr").length;
+//                        var noMaxTemp = $("#noMaxTemp").val();
+//                        for(var i = 1 ; i<countRowStockDetail ; i++ ){
+//                            for(var j = 1 ; j < noMaxTemp+1 ; j++ ){
+//                                var stockDetailIdTable = $("#stockDetailIdTable"+i).val(); 
+//                                var stockDetailIdTemp = $("#stockDetailIdTemp"+j).val();
+//                                if(stockDetailIdTable === stockDetailIdTemp){
+//                                    $("#cost"+i).val( $("#costTemp"+j).val()); 
+//                                    $("#sale"+i).val( $("#saleTemp"+j).val()); 
+//                                    $("#psiIdTable"+i).val($("#psiIdTemp"+j).val());
+//                                    $("#psdIdTable"+i).val($("#psdIdTemp"+j).val());
+//                                    setCostAmountToTableTemp(i);
+//                                    setFormatCurrency(i,noStockTable);
+//                                    calculateCostTotal(noStockTable);
+//                                    calculateSaleTotal(noStockTable);
+//                                }
+//                            }
+//                        }
                         
-                        var countRowStockDetail = $("#StockDetailTable tr").length;
-                        var countRow = $("#StockDetailTableTempCal tr").length;
-                        for(var i = 1 ; i<countRowStockDetail ; i++ ){
-                            for(var j = 1 ; j < countRow ; j++ ){
-                                var stockDetailIdTable = $("#stockDetailIdTable"+i).val(); 
-                                var stockDetailIdTemp = $("#stockDetailIdTableTempCount"+j).val();
-                                if(stockDetailIdTable === stockDetailIdTemp){
-                                    $("#costTempCount"+j).val( $("#cost"+i).val()); 
-                                    $("#saleTempCount"+j).val( $("#sale"+i).val()); 
-                                    $("#psiIdTableTempCount"+j).val($("#psiIdTable"+i).val());
-                                    $("#psdIdTableTempCount"+j).val($("#psdIdTable"+i).val());
-//                                    calculateCostTotalAll();
-//                                    calculateSaleTotalAll();
-                                }
-                            }
-                        }
+                        
 
                     }
                 }, error: function(msg) {
@@ -622,8 +623,8 @@ function deletePaymentStockDetailList(paymentStockDetailId , row , stockid){
     $('#fail').hide();
     if(paymentStockDetailId === ''){
         $("#paymentStockDetailId" + row).parent().remove();
-        document.getElementById('totalCost').value = formatNumber(0);
-        document.getElementById('totalSale').value = formatNumber(0);
+//        document.getElementById('totalCost').value = formatNumber(0);
+//        document.getElementById('totalSale').value = formatNumber(0);
         var hideCollapseCheck = document.getElementById('hideCollapseCheck').value;
         if(hideCollapseCheck !== ''){
             $("div").find($('.collapse')).collapse('hide');
@@ -664,8 +665,8 @@ function DeleteRowPaymentStock(){
         if (psdIdDelete === '') {
             $("#paymentStockDetailId" + row).parent().remove();
             $('#textAlertDivDelete').show();
-            document.getElementById('totalCost').value = formatNumber(0);
-            document.getElementById('totalSale').value = formatNumber(0);
+//            document.getElementById('totalCost').value = formatNumber(0);
+//            document.getElementById('totalSale').value = formatNumber(0);
             var hideCollapseCheck = document.getElementById('hideCollapseCheck').value;
             if(hideCollapseCheck !== ''){
                 $("div").find($('.collapse')).collapse('hide');
@@ -843,6 +844,7 @@ function getStockDetailTempCal(stockid,psdId,productname,noStockTable) {
                 '&stockId=' + stockid +
                 '&countRowDetail=' + 1 +
                 '&noStockTable=' +noStockTable +
+                '&psdId=' +psdId +
                 '&type=' + 'getStockDetail';
         CallAjax(param,psdId,stockid,noStockTable);
     }
@@ -884,24 +886,24 @@ function getStockDetailTempCal(stockid,psdId,productname,noStockTable) {
                             placeholder: "0.00",
                         });
                         
-                        var countRowStockDetail = $("#StockDetailTable tr").length;
-                        var countRow = $("#StockDetailTableTempCal tr").length;
-                        
-                        for(var i = 1 ; i<countRowStockDetail ; i++ ){
-                            for(var j = 1 ; j < countRow ; j++ ){
-                                var stockDetailIdTable = $("#stockDetailIdTable"+i).val(); 
-                                var stockDetailIdTemp = $("#stockDetailIdTableTempCount"+j).val();
-                                if(stockDetailIdTable === stockDetailIdTemp){
-                                    $("#cost"+i).val( $("#costTempCount"+j).val()); 
-                                    $("#sale"+i).val( $("#saleTempCount"+j).val()); 
-                                    $("#psiIdTable"+i).val($("#psiIdTableTempCount"+j).val());
-                                    $("#psdIdTable"+i).val($("#psdIdTableTempCount"+j).val());
-                                    setFormatCurrency(i,noStockTable);
-                                    calculateCostTotalAll();
-                                    calculateSaleTotalAll();
-                                }
-                            }
-                        }
+//                        var countRowStockDetail = $("#StockDetailTable tr").length;
+//                        var countRow = $("#StockDetailTableTempCal tr").length;
+//                        
+//                        for(var i = 1 ; i<countRowStockDetail ; i++ ){
+//                            for(var j = 1 ; j < countRow ; j++ ){
+//                                var stockDetailIdTable = $("#stockDetailIdTable"+i).val(); 
+//                                var stockDetailIdTemp = $("#stockDetailIdTableTempCount"+j).val();
+//                                if(stockDetailIdTable === stockDetailIdTemp){
+//                                    $("#cost"+i).val( $("#costTempCount"+j).val()); 
+//                                    $("#sale"+i).val( $("#saleTempCount"+j).val()); 
+//                                    $("#psiIdTable"+i).val($("#psiIdTableTempCount"+j).val());
+//                                    $("#psdIdTable"+i).val($("#psdIdTableTempCount"+j).val());
+//                                    setFormatCurrency(i,noStockTable);
+//                                    calculateCostTotalAll();
+//                                    calculateSaleTotalAll();
+//                                }
+//                            }
+//                        }
 
                         $('table.paginated').each(function() {
                             var currentPage = 0;
@@ -1078,45 +1080,45 @@ function getStockDetailTempCal(stockid,psdId,productname,noStockTable) {
     }
 
     function calculateCostTotal(noStockTable) {
-        var count = $("#StockDetailTable tr").length;    
-        var i;
-        var grandTotal = 0;
-        for (i = 1; i < count + 1; i++){
-            var amount = document.getElementById("cost" + i);
-            if (amount !== null) {
-                var value = amount.value;
-                if (value !== '') {
-                    value = value.replace(/,/g, "");
-                    var total = parseFloat(value);
-                    grandTotal += total;
-                    document.getElementById('cost' + i).value = formatNumber(total);
-                }
-            }
-        }
-        document.getElementById('totalCost').value = formatNumber(grandTotal);
-        document.getElementById('totalcostamount'+(noStockTable)).value = $("#totalCost").val();
-        calculateCostTotalAll();
+//        var count = $("#StockDetailTable tr").length;    
+//        var i;
+//        var grandTotal = 0;
+//        for (i = 1; i < count + 1; i++){
+//            var amount = document.getElementById("cost" + i);
+//            if (amount !== null) {
+//                var value = amount.value;
+//                if (value !== '') {
+//                    value = value.replace(/,/g, "");
+//                    var total = parseFloat(value);
+//                    grandTotal += total;
+//                    document.getElementById('cost' + i).value = formatNumber(total);
+//                }
+//            }
+//        }
+//        document.getElementById('totalCost').value = formatNumber(grandTotal);
+//        document.getElementById('totalcostamount'+(noStockTable)).value = $("#totalCost").val();
+//        calculateCostTotalAll();
     }
 
     function calculateSaleTotal(noStockTable) {
-        var count = $("#StockDetailTable tr").length;
-        var i;
-        var grandTotal = 0;
-        for (i = 1; i < count + 1; i++) {
-            var amount = document.getElementById("sale" + i);
-            if (amount !== null) {
-                var value = amount.value;
-                if (value !== '') {
-                    value = value.replace(/,/g, "");
-                    var total = parseFloat(value);
-                    grandTotal += total;
-                    document.getElementById('sale' + i).value = formatNumber(total);
-                }
-            }
-        }
-        document.getElementById('totalSale').value = formatNumber(grandTotal);
-        document.getElementById('totalsaleamount'+noStockTable).value = $("#totalSale").val();
-        calculateSaleTotalAll();
+//        var count = $("#StockDetailTable tr").length;
+//        var i;
+//        var grandTotal = 0;
+//        for (i = 1; i < count + 1; i++) {
+//            var amount = document.getElementById("sale" + i);
+//            if (amount !== null) {
+//                var value = amount.value;
+//                if (value !== '') {
+//                    value = value.replace(/,/g, "");
+//                    var total = parseFloat(value);
+//                    grandTotal += total;
+//                    document.getElementById('sale' + i).value = formatNumber(total);
+//                }
+//            }
+//        }
+//        document.getElementById('totalSale').value = formatNumber(grandTotal);
+//        document.getElementById('totalsaleamount'+noStockTable).value = $("#totalSale").val();
+//        calculateSaleTotalAll();
     }
 
     function setFormatCurrencyOnFocusOut(row,noStockTable) {
@@ -1219,41 +1221,41 @@ function getStockDetailTempCal(stockid,psdId,productname,noStockTable) {
 
 
     function calculateCostTotalAll() {
-        var count = $("#StockTable tr").length;    
-        var i;
-        var grandTotal = 0;
-        for (i = 1; i < count + 1; i++){
-            var amount = document.getElementById("totalcostamount" + i);
-            if (amount !== null) {
-                var value = amount.value;
-                if (value !== '') {
-                    value = value.replace(/,/g, "");
-                    var total = parseFloat(value);
-                    grandTotal += total;
-                    document.getElementById('totalcostamount' + i).value = formatNumber(total);
-                }
-            }
-        }
-        document.getElementById('totalCostAll').value = formatNumber(grandTotal);
+//        var count = $("#StockTable tr").length;    
+//        var i;
+//        var grandTotal = 0;
+//        for (i = 1; i < count + 1; i++){
+//            var amount = document.getElementById("totalcostamount" + i);
+//            if (amount !== null) {
+//                var value = amount.value;
+//                if (value !== '') {
+//                    value = value.replace(/,/g, "");
+//                    var total = parseFloat(value);
+//                    grandTotal += total;
+//                    document.getElementById('totalcostamount' + i).value = formatNumber(total);
+//                }
+//            }
+//        }
+//        document.getElementById('totalCostAll').value = formatNumber(grandTotal);
     }
 
     function calculateSaleTotalAll() {
-        var count = $("#StockTable tr").length;
-        var i;
-        var grandTotal = 0;
-        for (i = 1; i < count + 1; i++) {
-            var amount = document.getElementById("totalsaleamount" + i);
-            if (amount !== null) {
-                var value = amount.value;
-                if (value !== '') {
-                    value = value.replace(/,/g, "");
-                    var total = parseFloat(value);
-                    grandTotal += total;
-                    document.getElementById('totalsaleamount' + i).value = formatNumber(total);
-                }
-            }
-        }
-        document.getElementById('totalSaleAll').value = formatNumber(grandTotal);
+//        var count = $("#StockTable tr").length;
+//        var i;
+//        var grandTotal = 0;
+//        for (i = 1; i < count + 1; i++) {
+//            var amount = document.getElementById("totalsaleamount" + i);
+//            if (amount !== null) {
+//                var value = amount.value;
+//                if (value !== '') {
+//                    value = value.replace(/,/g, "");
+//                    var total = parseFloat(value);
+//                    grandTotal += total;
+//                    document.getElementById('totalsaleamount' + i).value = formatNumber(total);
+//                }
+//            }
+//        }
+//        document.getElementById('totalSaleAll').value = formatNumber(grandTotal);
     }
     
     function clearNew() {

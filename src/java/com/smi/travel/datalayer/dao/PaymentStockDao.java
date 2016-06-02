@@ -11,6 +11,7 @@ import com.smi.travel.datalayer.entity.PaymentStockDetail;
 import com.smi.travel.datalayer.entity.PaymentStockItem;
 import com.smi.travel.datalayer.entity.Stock;
 import com.smi.travel.datalayer.entity.StockDetail;
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -26,4 +27,5 @@ public interface PaymentStockDao {
     public String deletePaymentStock(String paymentStockDetailId);
     public String insertOrUpdatePaymentStock(PaymentStock paymentStock);
     public List<PaymentStockItem> getListPaymentStockItemFromPaymentStockDetailId(String psdId);
+    public int updateTotalCostAndSale(BigDecimal cost,BigDecimal sale,String paymentStockId);
 }
