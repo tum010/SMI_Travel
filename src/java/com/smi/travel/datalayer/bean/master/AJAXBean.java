@@ -1972,7 +1972,7 @@ public class AJAXBean extends AbstractBean implements
                     System.out.println("===== Amount Check ===== : "+amountCheck);
                     System.out.println("===== alertMessageExRate ===== : "+alertMessageExRate);
                     
-                    if(billableDescId.equalsIgnoreCase(invoiceDetailList.get(j).getBillableDesc().getId()) && !"".equalsIgnoreCase(curcost) && !"".equalsIgnoreCase(curamount)){
+//                    if(billableDescId.equalsIgnoreCase(invoiceDetailList.get(j).getBillableDesc().getId()) && !"".equalsIgnoreCase(curcost) && !"".equalsIgnoreCase(curamount)){
                         boolean check = true;
                         String invoiceDetailId = invoiceDetailList.get(j).getId();
                         String invNo = taxInvoiceDao.getInvoiceNoByInvoiceDetailId(invoiceDetailId);
@@ -2004,16 +2004,16 @@ public class AJAXBean extends AbstractBean implements
 //                        }
                         System.out.println("===== Profix Check ===== : "+profitCheck);
                         
-                        if(profitCheck.compareTo(profitTaxInvoice) == 0 || profitCheck.compareTo(profitTaxInvoice) < 0){
-                            check = false;
-                            boolean checkInvNoProfit = taxInvoiceDao.checkInvNoProfit(invoiceDetailId);
-                            if(checkInvNoProfit){
-                                invNoProfit += (!"".equalsIgnoreCase(invNoProfit) ? ","+invNo : invNo);
-
-                            }else{
-                                invNoOutput += (!"".equalsIgnoreCase(invNoOutput) ? ","+invNo : invNo);
-                            }                                              
-                        }
+//                        if(profitCheck.compareTo(profitTaxInvoice) == 0 || profitCheck.compareTo(profitTaxInvoice) < 0){
+//                            check = false;
+//                            boolean checkInvNoProfit = taxInvoiceDao.checkInvNoProfit(invoiceDetailId);
+//                            if(checkInvNoProfit){
+//                                invNoProfit += (!"".equalsIgnoreCase(invNoProfit) ? ","+invNo : invNo);
+//
+//                            }else{
+//                                invNoOutput += (!"".equalsIgnoreCase(invNoOutput) ? ","+invNo : invNo);
+//                            }                                              
+//                        }
 
                         if((j==invoiceDetailList.size()-1) && checkAlertMessage){
                             if(!"".equalsIgnoreCase(invNoProfit) && !"".equalsIgnoreCase(invNoOutput)){
@@ -2095,8 +2095,8 @@ public class AJAXBean extends AbstractBean implements
                                             + "<td class='text-right money'>" + amount + "</td>"
                                             + "<td class='text-center'>" + curamount + "</td>"
                                             + "<td class='text-right money3'>" + ("0".equalsIgnoreCase(String.valueOf(exrate)) ? "" : exrate) + "</td>"
-                                            + "<td class='text-right money'>" + profit + "</td>"
-                                            + "<td class='text-right money'>" + remain + "</td>"
+//                                            + "<td class='text-right money'>" + profit + "</td>"
+//                                            + "<td class='text-right money'>" + remain + "</td>"
                                             + "<td><center><a href=\"#/ref\"><span onclick=\"AddRefNo('" + product + "','" + description + "','" + cost + "','" + curcost + "','" + remain + "','THB','" + invoiceDetailId + "','" + displaydescription + "','" + refNo + "','" + exrate + "','" + amount + "')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
         //                                    + "<td><center><a href=\"#/ref\"><span onclick=\"AddRefNo('" + product + "','" + description + "','" + cost + "','" + curcost + "','" + remain + "','" + curamount + "','" + invoiceDetailId + "','" + displaydescription + "','" + refNo + "')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
                                             + "</tr>";
@@ -2116,7 +2116,7 @@ public class AJAXBean extends AbstractBean implements
                 //                }
                             }
                         }    
-                    }
+//                    }
 
                     if((j==invoiceDetailList.size()-1) && checkAlertMessage){
                         if(!"".equalsIgnoreCase(invNoProfit) && !"".equalsIgnoreCase(invNoOutput)){

@@ -69,7 +69,7 @@ public class HotelVoucherImpl   implements  HotelVoucherDao{
             voucher.setCode(B[1] == null ? "" : util.ConvertString(B[1]));
             voucher.setName(util.ConvertString(B[2]));
             voucher.setAddress(util.ConvertString(B[3]));
-            voucher.setTel(util.ConvertString(B[4]));A
+            voucher.setTel(util.ConvertString(B[4]));
             voucher.setFax(util.ConvertString(B[5]));
             voucher.setAdult(util.ConvertString(B[6]));
             voucher.setChild(util.ConvertString(B[7]));

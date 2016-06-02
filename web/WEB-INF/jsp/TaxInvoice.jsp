@@ -474,8 +474,8 @@
                                     <th style="width:10%;">Amount</th>
                                     <th style="width:5%;">Cur</th>
                                     <th style="width:5%;">Ex Rate</th>
-                                    <th style="width:10%;">Profit</th>
-                                    <th style="width:10%;">Remain</th>
+                                    <!--<th style="width:10%;">Profit</th>-->
+                                    <!--<th style="width:10%;">Remain</th>-->
                                     <th style="width:7%;">Action</th>
                                 </tr>
                             </thead>

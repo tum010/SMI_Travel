@@ -375,8 +375,14 @@ public class BillableImpl implements BillableDao {
                 String ticketlife = "";
                 DecimalFormat df = new DecimalFormat("###,##0.00");
                 String DepartDateAndFlight = "";
-                BigDecimal price = new BigDecimal(BigInteger.ZERO);
-                BigDecimal tax = new BigDecimal(BigInteger.ZERO);
+                BigDecimal adPrice = new BigDecimal(BigInteger.ZERO);
+                BigDecimal chPrice = new BigDecimal(BigInteger.ZERO);
+                BigDecimal inPrice = new BigDecimal(BigInteger.ZERO);
+                BigDecimal adTax = new BigDecimal(BigInteger.ZERO);
+                BigDecimal chTax = new BigDecimal(BigInteger.ZERO);
+                BigDecimal inTax = new BigDecimal(BigInteger.ZERO);
+//                BigDecimal price = new BigDecimal(BigInteger.ZERO);
+//                BigDecimal tax = new BigDecimal(BigInteger.ZERO);
                 //Ref No. {Ref NO}
                 if(k ==0){
                     FlightDescription += "Ref No. "+airline.getAirticketPnr().getAirticketBooking().getMaster().getReferenceNo()+" : "+"\n";                    
@@ -399,48 +405,55 @@ public class BillableImpl implements BillableDao {
                 DepartDateAndFlight += "                     "+new SimpleDateFormat("ddMMMyyyy", new Locale("us", "us")).format(flightDetail.getDepartDate()) + " / "+flightDetail.getFlightNo() +"\n";
                 
                 //PRICE
-                if(flightDetail.getAdPrice() != null){
-                    if(flightDetail.getChPrice() != null){
-                        if(flightDetail.getInPrice() != null){
-                            price = price.add((flightDetail.getAdPrice().add(flightDetail.getChPrice())).add(flightDetail.getInPrice()));
-                        }else{
-                            price = price.add((flightDetail.getAdPrice().add(flightDetail.getChPrice())).add(new BigDecimal(BigInteger.ZERO)));
-                        }
-                    }else{
-                        if(flightDetail.getInPrice() != null){
-//                            price += flightDetail.getAdPrice() + 0 + flightDetail.getInPrice();
-                            price = price.add((flightDetail.getAdPrice().add(new BigDecimal(BigInteger.ZERO))).add(flightDetail.getInPrice()));
-                        }else{
-//                            price += flightDetail.getAdPrice() + 0 + 0;
-                            price = price.add((flightDetail.getAdPrice().add(new BigDecimal(BigInteger.ZERO))).add(new BigDecimal(BigInteger.ZERO)));
-                        }
-                    }
-                }else{
-                    if(flightDetail.getChPrice() != null){
-                        if(flightDetail.getInPrice() != null){
-                            price = price.add((flightDetail.getChPrice().add(flightDetail.getInPrice())).add(new BigDecimal(BigInteger.ZERO)));
-//                            price += 0 + flightDetail.getChPrice() + flightDetail.getInPrice();
-                        }else{
-                            price = price.add((flightDetail.getChPrice().add(new BigDecimal(BigInteger.ZERO))).add(new BigDecimal(BigInteger.ZERO)));
-//                            price += 0 + flightDetail.getChPrice() + 0;
-                        }
-                    }else{
-                        if(flightDetail.getInPrice() != null){
-                            price = price.add((flightDetail.getInPrice().add(new BigDecimal(BigInteger.ZERO))).add(new BigDecimal(BigInteger.ZERO)));
-//                            price += 0 + 0 + flightDetail.getInPrice();
-                        }else{
-                            price = price.add(new BigDecimal(BigInteger.ZERO));
-//                            price += 0;
-                        }
-                    }
-                }    
+//                if(flightDetail.getAdPrice() != null){
+//                    if(flightDetail.getChPrice() != null){
+//                        if(flightDetail.getInPrice() != null){
+//                            price = price.add((flightDetail.getAdPrice().add(flightDetail.getChPrice())).add(flightDetail.getInPrice()));
+//                        }else{
+//                            price = price.add((flightDetail.getAdPrice().add(flightDetail.getChPrice())).add(new BigDecimal(BigInteger.ZERO)));
+//                        }
+//                    }else{
+//                        if(flightDetail.getInPrice() != null){
+////                            price += flightDetail.getAdPrice() + 0 + flightDetail.getInPrice();
+//                            price = price.add((flightDetail.getAdPrice().add(new BigDecimal(BigInteger.ZERO))).add(flightDetail.getInPrice()));
+//                        }else{
+////                            price += flightDetail.getAdPrice() + 0 + 0;
+//                            price = price.add((flightDetail.getAdPrice().add(new BigDecimal(BigInteger.ZERO))).add(new BigDecimal(BigInteger.ZERO)));
+//                        }
+//                    }
+//                }else{
+//                    if(flightDetail.getChPrice() != null){
+//                        if(flightDetail.getInPrice() != null){
+//                            price = price.add((flightDetail.getChPrice().add(flightDetail.getInPrice())).add(new BigDecimal(BigInteger.ZERO)));
+////                            price += 0 + flightDetail.getChPrice() + flightDetail.getInPrice();
+//                        }else{
+//                            price = price.add((flightDetail.getChPrice().add(new BigDecimal(BigInteger.ZERO))).add(new BigDecimal(BigInteger.ZERO)));
+////                            price += 0 + flightDetail.getChPrice() + 0;
+//                        }
+//                    }else{
+//                        if(flightDetail.getInPrice() != null){
+//                            price = price.add((flightDetail.getInPrice().add(new BigDecimal(BigInteger.ZERO))).add(new BigDecimal(BigInteger.ZERO)));
+////                            price += 0 + 0 + flightDetail.getInPrice();
+//                        }else{
+//                            price = price.add(new BigDecimal(BigInteger.ZERO));
+////                            price += 0;
+//                        }
+//                    }
+//                }
+                
+                //Price
+                adPrice = adPrice.add(flightDetail.getAdPrice() != null ? flightDetail.getAdPrice() : new BigDecimal(BigInteger.ZERO));
+                chPrice = chPrice.add(flightDetail.getChPrice() != null ? flightDetail.getChPrice() : new BigDecimal(BigInteger.ZERO));
+                inPrice = inPrice.add(flightDetail.getInPrice() != null ? flightDetail.getInPrice() : new BigDecimal(BigInteger.ZERO));
+                System.out.println("Adult Price : " + adPrice);
                 
                 //TAX
-                BigDecimal adtax = flightDetail.getAdTax() != null ? flightDetail.getAdTax() : new BigDecimal(BigInteger.ZERO);
-                BigDecimal chtax = flightDetail.getChTax() != null ? flightDetail.getChTax() : new BigDecimal(BigInteger.ZERO);
-                BigDecimal intax = flightDetail.getInTax() != null ? flightDetail.getInTax() : new BigDecimal(BigInteger.ZERO);
+                adTax = adTax.add(flightDetail.getAdTax() != null ? flightDetail.getAdTax() : new BigDecimal(BigInteger.ZERO));
+                chTax = chTax.add(flightDetail.getChTax() != null ? flightDetail.getChTax() : new BigDecimal(BigInteger.ZERO));
+                inTax = inTax.add(flightDetail.getInTax() != null ? flightDetail.getInTax() : new BigDecimal(BigInteger.ZERO));
+                System.out.println("Adult Tax : " + adTax);
                 
-                tax = tax.add((adtax.add(chtax)).add(intax));
+//                tax = tax.add((adtax.add(chtax)).add(intax));
 //                tax += (flightDetail.getAdTax() != null ? flightDetail.getAdTax() : 0) + (flightDetail.getChTax() != null ? flightDetail.getChTax() : 0) + (flightDetail.getInTax() != null ? flightDetail.getInTax() : 0);
             }
             if(ticketlife.length() > 0){
@@ -466,6 +479,29 @@ public class BillableImpl implements BillableDao {
             
             for(int p =0;p<passengerList.size();p++){
                 AirticketPassenger passenger = passengerList.get(p);
+                BigDecimal price = new BigDecimal(BigInteger.ZERO);
+                BigDecimal tax = new BigDecimal(BigInteger.ZERO);
+                if("ADT".equalsIgnoreCase(passenger.getMPricecategory().getCode())){
+                    price = adPrice;
+                    tax = adTax;
+                    
+                } else if("CHD".equalsIgnoreCase(passenger.getMPricecategory().getCode())) {
+                    price = chPrice;
+                    tax = chTax;
+                    
+                } else if("INF".equalsIgnoreCase(passenger.getMPricecategory().getCode())) {
+                    price = inPrice;
+                    tax = inTax;
+                    
+                } else {
+                    price = adPrice;
+                    tax = adTax;
+                    
+                }
+                System.out.println("Price : " + price);
+                System.out.println("Tax : " + tax);
+                System.out.println("Passenger Type : " + passenger.getMPricecategory().getCode());
+                
                 if(p == 0){
                     description += FlightDescription +"";
                 }else{
