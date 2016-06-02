@@ -1,14 +1,17 @@
 package com.smi.travel.controller;
 
 import com.smi.travel.datalayer.entity.Agent;
+import com.smi.travel.datalayer.entity.Customer;
 import com.smi.travel.datalayer.entity.HistoryBooking;
 import com.smi.travel.datalayer.entity.MCurrency;
 import com.smi.travel.datalayer.entity.MItemstatus;
 import com.smi.travel.datalayer.entity.Master;
 import com.smi.travel.datalayer.entity.OtherBooking;
+import com.smi.travel.datalayer.entity.Passenger;
 import com.smi.travel.datalayer.entity.Product;
 import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.service.BookingOtherService;
+import com.smi.travel.datalayer.service.PassengerService;
 import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.datalayer.view.entity.BillableView;
 import com.smi.travel.datalayer.view.entity.OtherTicketView;
@@ -38,8 +41,10 @@ public class OtherDetailController extends SMITravelController {
     private static final String LockUnlockBooking = "LockUnlockBooking";
     private static final String ISBILLSTATUS = "IsBillStatus";
     private static final String EnableSave = "EnableSave";
+    private static final String PASSENGERID = "passengerId";
     private UtilityService utilservice;
     private BookingOtherService OtherService;
+    private PassengerService passsengerService;
     private UtilityFunction util;
 
     @Override
@@ -101,6 +106,16 @@ public class OtherDetailController extends SMITravelController {
                 
         if((callPageFrom!=null) && (callPageFrom.equalsIgnoreCase("FromOther"))){
             request.setAttribute("callpage", callPageFrom);
+        }
+        
+        List<Passenger> passengerList = passsengerService.getPassengerFromRefno(refno);
+        if(passengerList != null){
+            String passengerId = "";
+            for(Passenger passenger : passengerList){
+                Customer customer = passenger.getCustomer();
+                passengerId += (!"".equalsIgnoreCase(passengerId) ? "," + customer.getId() : customer.getId());
+                request.setAttribute(PASSENGERID, passengerId);       
+            }
         }
         
         if(action.equalsIgnoreCase("new")){
@@ -506,5 +521,13 @@ public class OtherDetailController extends SMITravelController {
         historyBooking.setMaster(other.getMaster());
         historyBooking.setStaff(user);
         int resultsave = utilservice.insertHistoryBooking(historyBooking);
+    }
+
+    public PassengerService getPasssengerService() {
+        return passsengerService;
+    }
+
+    public void setPasssengerService(PassengerService passsengerService) {
+        this.passsengerService = passsengerService;
     }
 }
