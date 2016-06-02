@@ -21,15 +21,18 @@ import com.smi.travel.datalayer.report.model.PaymentAirline;
 import com.smi.travel.datalayer.view.entity.PaymentAirFare;
 import com.smi.travel.datalayer.view.entity.PaymentAirRefund;
 import com.smi.travel.datalayer.view.entity.PaymentAirView;
+import com.smi.travel.datalayer.view.entity.PaymentAirlineList;
 import com.smi.travel.datalayer.view.entity.TicketFareView;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
@@ -1436,5 +1439,39 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
         session.close();
         this.sessionFactory.close();
         return list;
+    }
+
+    @Override
+    public List<PaymentAirlineList> getPaymentAirlineList() {
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();       
+        List<Object[]> queryList =  session.createSQLQuery("SELECT * FROM `payment_airline_list` ")
+                .addScalar("pay_no",Hibernate.STRING)
+                .addScalar("pay_date",Hibernate.STRING)
+                .addScalar("name",Hibernate.STRING)
+                .addScalar("detail",Hibernate.STRING)
+                .addScalar("amount",Hibernate.BIG_DECIMAL)
+                .addScalar("wth",Hibernate.BIG_DECIMAL)
+                .addScalar("total_payment",Hibernate.BIG_DECIMAL)               
+                .list();
+        
+        List<PaymentAirlineList> paymentAirlineList = new ArrayList<PaymentAirlineList>();
+        DecimalFormat df = new DecimalFormat("###,##0.00");
+        SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+
+        for (Object[] B : queryList) {
+            PaymentAirlineList paymentAirlineView = new PaymentAirlineList();
+            paymentAirlineView.setPayNo(B[0] != null ? util.ConvertString(B[0]) : "");
+            paymentAirlineView.setPayDate(B[1] != null ? util.ConvertString(B[1]) : "");
+            paymentAirlineView.setSupplier(B[2] != null ? util.ConvertString(B[2]) : "");
+            paymentAirlineView.setDetail(B[3] != null ? util.ConvertString(B[3]) : "");
+            paymentAirlineView.setAmount(B[4] != null ? (BigDecimal) B[4] : new BigDecimal("0.00"));
+            paymentAirlineView.setWth(B[5] != null ? (BigDecimal) B[5] : new BigDecimal("0.00"));
+            paymentAirlineView.setPayment(B[6] != null ? (BigDecimal) B[6] : new BigDecimal("0.00"));
+            paymentAirlineList.add(paymentAirlineView);
+        }
+        
+        session.close();
+        return paymentAirlineList;
     }
 }

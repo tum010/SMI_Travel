@@ -15,6 +15,7 @@ import com.smi.travel.datalayer.entity.PaymentAirticketRefund;
 import com.smi.travel.datalayer.entity.RefundAirticket;
 import com.smi.travel.datalayer.entity.RefundAirticketDetailView;
 import com.smi.travel.datalayer.entity.TicketFareAirline;
+import com.smi.travel.datalayer.view.entity.PaymentAirlineList;
 import com.smi.travel.datalayer.view.entity.TicketFareView;
 import java.util.List;
 
@@ -104,5 +105,9 @@ public class PaymentAirTicketService {
 
     public void setPaymentairticketdao(PaymentAirTicketDao paymentairticketdao) {
         this.paymentairticketdao = paymentairticketdao;
+    }
+
+    public List<PaymentAirlineList> getPaymentAirlineList() {
+        return paymentairticketdao.getPaymentAirlineList(); 
     }
 }
