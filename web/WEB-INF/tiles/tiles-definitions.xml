@@ -101,7 +101,7 @@
     </definition>
     
     <definition name="DaytourOperationOther" extends="baseLayout">
-        <put-attribute name="title" value="Opt : DayTour Operation Other" />
+        <put-attribute name="title" value="Opt : Other" />
         <put-attribute name="body" value="/WEB-INF/jsp/DaytourOperationOther.jsp" />
     </definition>
     
@@ -121,7 +121,7 @@
     </definition>
     
     <definition name="DaytourOtherCommission" extends="baseLayout">
-        <put-attribute name="title" value="Opt : DayTour Other Commission" />
+        <put-attribute name="title" value="Opt : Other Commission" />
         <put-attribute name="body" value="/WEB-INF/jsp/DayTourOtherComission.jsp" />
     </definition>
     

@@ -26,6 +26,7 @@
 <c:set var="isBillStatus" value="${requestScope['IsBillStatus']}" />
 <input type="hidden" value="${master.departmentNo}" id="departmentNo">
 <input type="hidden" value="${master.id}" id="master-id">
+<input type="hidden" value="${requestScope['passengerId']}" id="passengerId">
 <c:set var="enableVat" value="" />
 <c:set var="checkVat" value="checked" />
 <c:set var="hiddenPrintBtn" value="" />

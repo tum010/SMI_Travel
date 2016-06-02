@@ -752,7 +752,7 @@ function printOther(){
     var otherId = document.getElementById("itemid").value;
     var InputRefNo = document.getElementById("refno").value;
     
-    var passengerId = '';
+    var passengerId = document.getElementById("passengerId").value;
     var status = '';
     if (voucher === "OtherVouncher"){
         window.open("report.smi?name=DaytourOther&otherId=" + otherId + "&passengerId=" + passengerId + "&refNo=" + InputRefNo + "&comfirm="+status);
