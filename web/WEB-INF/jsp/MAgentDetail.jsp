@@ -131,6 +131,7 @@
                                 <label class="col-sm-3   control-label" for="codeProduct">Branch</label>
                                 <div class="col-sm-6">
                                     <select name="Branch" id="Branch"  class="form-control">
+                                        <option value=""> --select branch-- </option> 
                                         <c:forEach var="table" items="${branchList}">
                                             <c:set var="select" value="" />
                                             <c:if test="${table.id == requestScope['Branch']}">

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PaymentTourHotelSummary" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="5" bottomMargin="20" uuid="68d5fb0e-7818-49f5-b9ad-b3cb6139fbd7">
 	<property name="ireport.zoom" value="2.9282000000000123"/>
-	<property name="ireport.x" value="951"/>
+	<property name="ireport.x" value="754"/>
 	<property name="ireport.y" value="253"/>
 	<field name="paydatefrom" class="java.lang.String"/>
 	<field name="paydateto" class="java.lang.String"/>
@@ -45,6 +45,9 @@
 	</variable>
 	<variable name="totalamount" class="java.math.BigDecimal" resetType="Group" resetGroup="supplier" calculation="Sum">
 		<variableExpression><![CDATA[new BigDecimal($F{amount})]]></variableExpression>
+	</variable>
+	<variable name="totalcomm" class="java.math.BigDecimal" resetType="Group" resetGroup="supplier" calculation="Sum">
+		<variableExpression><![CDATA[($F{com} != null && !"null".equals($F{com}) && $F{com}.length() > 0 && !"".equalsIgnoreCase($F{com}) && !"0".equalsIgnoreCase($F{com})) ? new BigDecimal($F{com}) : new BigDecimal(0)]]></variableExpression>
 	</variable>
 	<group name="supplier" keepTogether="true">
 		<groupExpression><![CDATA[$F{supplier}]]></groupExpression>
@@ -215,19 +218,26 @@
 		<groupFooter>
 			<band height="20">
 				<textField pattern="#,##0.00">
-					<reportElement x="463" y="3" width="64" height="16" uuid="a0a2771a-fd89-4e15-9606-d19019124733"/>
+					<reportElement x="429" y="3" width="60" height="16" uuid="a0a2771a-fd89-4e15-9606-d19019124733"/>
 					<textElement textAlignment="Right">
 						<font fontName="Tahoma" size="8" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{totalamount}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="346" y="3" width="117" height="15" uuid="aa77a01f-0a4d-49a4-98d9-a567b2424462"/>
+					<reportElement x="307" y="3" width="117" height="15" uuid="aa77a01f-0a4d-49a4-98d9-a567b2424462"/>
 					<textElement textAlignment="Center">
 						<font fontName="Tahoma" size="8" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
 					</textElement>
 					<text><![CDATA[Total]]></text>
 				</staticText>
+				<textField pattern="#,##0.00">
+					<reportElement x="492" y="3" width="60" height="16" uuid="a4749806-0463-467e-8ce5-0b93c20c0884"/>
+					<textElement textAlignment="Right">
+						<font fontName="Tahoma" size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{totalcomm}]]></textFieldExpression>
+				</textField>
 			</band>
 		</groupFooter>
 	</group>
@@ -536,7 +546,7 @@
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="12" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($F{com} != null && !"null".equals($F{com}) && $F{com}.length() > 0 && !"".equalsIgnoreCase($F{com}) && !"0".equalsIgnoreCase($F{com})) ? new BigDecimal($F{com}) : ""]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{com} != null && !"null".equals($F{com}) && $F{com}.length() > 0 && !"".equalsIgnoreCase($F{com}) && !"0".equalsIgnoreCase($F{com})) ? new BigDecimal($F{com}) : "0.00"]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

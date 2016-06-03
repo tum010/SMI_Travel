@@ -705,7 +705,7 @@
                                 <c:if test="${paymentOutbound.isWhtCom == 1}">
                                     <input type="checkbox" id="isWhtCom" checked name="isWhtCom" value="${paymentOutbound.isWhtCom}"/>
                                 </c:if>
-                                <c:if test="${paymentOutbound.isWhtCom == 0 || paymentOutbound.isWhtCom == '' }">
+                                <c:if test="${paymentOutbound.isWhtCom != 1 }">
                                     <input type="checkbox" id="isWhtCom" name="isWhtCom" value="${paymentOutbound.isWhtCom}"/>
                                 </c:if>
                             </div>

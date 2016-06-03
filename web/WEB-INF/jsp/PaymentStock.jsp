@@ -694,8 +694,8 @@ function DeleteRowPaymentStock(){
                 success: function() {
                     $("#paymentStockDetailId" + row).parent().remove();
                     $('#textAlertDivDelete').show();
-                    document.getElementById('totalCost').value = formatNumber(0);
-                    document.getElementById('totalSale').value = formatNumber(0);
+//                    document.getElementById('totalCost').value = formatNumber(0);
+//                    document.getElementById('totalSale').value = formatNumber(0);
                     var hideCollapseCheck = document.getElementById('hideCollapseCheck').value;
                     if(hideCollapseCheck !== ''){
                         $("div").find($('.collapse')).collapse('hide');

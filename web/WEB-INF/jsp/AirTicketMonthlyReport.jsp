@@ -186,7 +186,7 @@
                     </script>
                     <tbody>
                         <c:forEach var="item" items="${customerAgentList}">
-                            <tr onclick="setBillValue('${item.billTo}', '${item.billName}', '${item.address}', '${item.term}', '${item.pay}');">                             
+                            <tr >                             
                                 <td class="item-billto">${item.billTo}</td>
                                 <td class="item-name">${item.billName}</td>                                
                                 <td class="item-address ">${item.address}</td>
@@ -258,10 +258,11 @@
                             var billname = $(this).find(".item-name").text();
                             var address = $(this).find(".item-address").text();
                             var tel = $(this).find(".item-tel").text();
-                            $("#billto").val(billto);
-                            $("#billname").val(billname);
-                            $("#address").val(address);
-                            $("#BillToModal").modal('hide');
+                            setBillValue(billto, billname, address, '', '');
+//                            $("#billto").val(billto);
+//                            $("#billname").val(billname);
+//                            $("#address").val(address);
+//                            $("#BillToModal").modal('hide');
                         });
 
 

@@ -164,7 +164,7 @@
                     </thead>
                     <tbody>
                         <c:forEach var="item" items="${customerAgentList}">
-                            <tr onclick="setBillValue('${item.billTo}', '${item.billName}', '${item.address}', '${item.term}', '${item.pay}');">                                
+                            <tr>                                
                                 <td class="item-billto">${item.billTo}</td>
                                 <td class="item-name">${item.billName}</td>                                
                                 <td class="item-address hidden">${item.address}</td>
@@ -197,6 +197,10 @@
                                 ReceiveFromTable.$('tr.row_selected').removeClass('row_selected');
                                 $(this).addClass('row_selected');
                             }
+                            var billto = $(this).find(".item-billto").html();
+                            var name = $(this).find(".item-name").html();
+                            var address = $(this).find(".item-address").html();
+                            setBillValue(billto, name, address);
                         });
 
                         $("#searchReceiveFrom").keyup(function(event) {
@@ -238,7 +242,7 @@
                         });
                     });
 
-                    function setBillValue(billto, billname, address, term, pay) {
+                    function setBillValue(billto, billname, address) {
                         $("#receiveFromCode").val(billto);
                         $("#arCode").val(billto);
                         $("#receiveFromName").val(billname);

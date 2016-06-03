@@ -82,10 +82,10 @@ public class PaymentStockController extends SMITravelController{
             PaymentStockItem paymentStockItem = new PaymentStockItem();
             if(!"".equals(payNo)){
                 paymentStock = paymentStockService.getPaymentStockFromPayNo(payNo);
-                request.setAttribute("totalCostAll",paymentStock.getCostAmount());
-                request.setAttribute("totalSaleAll",paymentStock.getSaleAmount());
                 if(paymentStock != null) {
                     if(!paymentStock.getId().isEmpty()){
+                        request.setAttribute("totalCostAll",paymentStock.getCostAmount() == null ? "" : paymentStock.getCostAmount());
+                        request.setAttribute("totalSaleAll",paymentStock.getSaleAmount() == null ? "" : paymentStock.getSaleAmount());
                         List<PaymentStockDetail> psdList = new ArrayList<PaymentStockDetail>();
                         List<PaymentStockDetail> paymentStockDetailList = paymentStockService.getListPaymentStockDetailFromPaymentStockId(paymentStock.getId());
 //                        List<PaymentStockItem> paymentStockItemList = paymentStockService.getListPaymentStockItemFromPaymentStockId(paymentStock.getId());
