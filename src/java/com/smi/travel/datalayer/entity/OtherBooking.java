@@ -268,14 +268,6 @@ public class OtherBooking  {
         this.remarkAgentCommission = remarkAgentCommission;
     }
 
-    public void setGuideCommission(Integer guideCommission) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    public void setAgentCommission(Integer agentCommission) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
     public String getRemarkTicket() {
         return remarkTicket;
     }

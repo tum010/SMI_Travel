@@ -188,7 +188,7 @@ public class DaytourComissionController extends SMITravelController {
             log.info("agentComm(" + i + ")-" + agentComm);
             log.info("agentRemark(" + i + ")-" + agentRemark);
 
-            if (StringUtils.isNotEmpty(guideId)) {
+            if (StringUtils.isNotEmpty(guideId) && !"".equalsIgnoreCase(guideId)) {
                 SystemUser guide = new SystemUser();
                 guide.setId(guideId);
                 booking.setGuide(guide);
@@ -205,7 +205,7 @@ public class DaytourComissionController extends SMITravelController {
             }
             booking.setRemarkGuideCom(guideRemark);
 
-            if (StringUtils.isNotEmpty(agentId)) {
+            if (StringUtils.isNotEmpty(agentId) && !"".equalsIgnoreCase(agentId)) {
                 Agent agent = new Agent();
                 agent.setId(agentId);
                 booking.setAgent(agent);

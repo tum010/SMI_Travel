@@ -79,16 +79,29 @@ public class DaytourComissionImpl implements DaytourComissionDao {
                 checkQuery = 0;
                 
                 DaytourBooking book = BookList.get(i);
-                if ((book.getGuide() != null) && (book.getGuide().getId() != null)&& (!"- - SELECT - -".equalsIgnoreCase(book.getGuide().getId()) )) {
+                if ((book.getGuide() != null) && (book.getGuide().getId() != null)&& (!"- - SELECT - -".equalsIgnoreCase(book.getGuide().getId()) ) ) {
                     queryupdate += " DB.guide.id = " + book.getGuide().getId();
                     if (checkQuery == 0) {
                         checkQuery = 1;
                         prefix = ",";
                     }
+                }else{
+                    queryupdate += " DB.guide = " + null ;
+                    if (checkQuery == 0) {
+                        checkQuery = 1;
+                        prefix = ",";
+                    }
                 }
-                if ((book.getAgent() != null) && (book.getAgent().getId() != null)&& (!"- - SELECT - -".equalsIgnoreCase(book.getAgent().getId()) )) {
+                
+                if ((book.getAgent() != null) && (book.getAgent().getId() != null)&& (!"- - SELECT - -".equalsIgnoreCase(book.getAgent().getId()) ) ) {
 
                     queryupdate += prefix + " DB.agent.id = " + book.getAgent().getId();
+                    if (checkQuery == 0) {
+                        checkQuery = 1;
+                        prefix = ",";
+                    }
+                }else{
+                    queryupdate += prefix + " DB.agent = " + null ;
                     if (checkQuery == 0) {
                         checkQuery = 1;
                         prefix = ",";

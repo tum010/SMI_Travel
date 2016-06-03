@@ -229,7 +229,8 @@ public class DaytourOtherComissionController extends SMITravelController {
             log.info("agentComm(" + i + ")-" + agentComm);
             log.info("agentRemark(" + i + ")-" + agentRemark);
 
-            if (StringUtils.isNotEmpty(guideId)) {
+            if (StringUtils.isNotEmpty(guideId) && !"".equalsIgnoreCase(guideId)) {
+                System.out.println("  guideId "  +guideId);
                 SystemUser guide = new SystemUser();
                 guide.setId(guideId);
                 booking.setGuide(guide);
@@ -247,7 +248,8 @@ public class DaytourOtherComissionController extends SMITravelController {
             }
             booking.setRemarkGuideCommission(guideRemark);
 
-            if (StringUtils.isNotEmpty(agentId)) {
+            if (StringUtils.isNotEmpty(agentId) && !"".equalsIgnoreCase(agentId)) {
+                System.out.println("  agentId "  +agentId);
                 Agent agent = new Agent();
                 agent.setId(agentId);
                 booking.setAgent(agent);
@@ -260,7 +262,7 @@ public class DaytourOtherComissionController extends SMITravelController {
 //                agentCommission = utilFunc.convertStringTolong(agentComm);
                 booking.setAgentCommission(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(agentComm) ? agentComm.replaceAll(",","") : 0)));
             }else{
-                booking.setAgentCommission(0);
+                booking.setAgentCommission(BigDecimal.ZERO);
             }
             booking.setRemarkAgentCommission(agentRemark);
 

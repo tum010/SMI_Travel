@@ -772,10 +772,23 @@ public class OtherBookingImpl implements OtherBookingDao{
                         checkQuery = 1;
                         prefix = ",";
                     }
+                }else{
+                     queryupdate += " ot.guide = " + null;
+                    if (checkQuery == 0) {
+                        checkQuery = 1;
+                        prefix = ",";
+                    }
+                
                 }
                 if ((book.getAgent() != null) && (book.getAgent().getId() != null) ) {
 
                     queryupdate += prefix + " ot.agent.id = " + book.getAgent().getId();
+                    if (checkQuery == 0) {
+                        checkQuery = 1;
+                        prefix = ",";
+                    }
+                }else{
+                    queryupdate += prefix + " ot.agent = " + null;
                     if (checkQuery == 0) {
                         checkQuery = 1;
                         prefix = ",";
@@ -798,7 +811,7 @@ public class OtherBookingImpl implements OtherBookingDao{
                     }
                 }
 
-                if ((book.getRemarkGuideCommission() != null) && !"".equals(book.getRemarkGuideCommission())) {
+                if ((book.getRemarkGuideCommission() != null)) {
                     queryupdate += prefix + " ot.remarkGuideCommission = '" + book.getRemarkGuideCommission() + "' ";
                     if (checkQuery == 0) {
                         checkQuery = 1;
@@ -806,7 +819,7 @@ public class OtherBookingImpl implements OtherBookingDao{
                     }
                 }
 
-                if ((book.getRemarkAgentCommission() != null) && !"".equals(book.getRemarkAgentCommission())) {
+                if ((book.getRemarkAgentCommission() != null)) {
                     queryupdate += prefix + " ot.remarkAgentCommission = '" + book.getRemarkAgentCommission() + "' ";
                     if (checkQuery == 0) {
                         checkQuery = 1;
