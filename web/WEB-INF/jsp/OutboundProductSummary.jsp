@@ -298,7 +298,9 @@
                             <tr>
                                 <td class="product-id hidden">${pro.id}</td>
                                 <td class="product-code">${pro.code}</td>
-                                <td class="product-name">${pro.name}</td>
+                                <c:set var="name1" value="${pro.name}"/>
+                                <c:set var="name2" value="${fn:replace(name1, '\\\\', '')}" />
+                                <td class="product-name">${name2}</td>
                             </tr>
                         <script>
                             productCode.push({id: "${pro.id}", code: "${pro.code}", name: "${pro.name}"});

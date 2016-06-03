@@ -1177,11 +1177,16 @@
                 var overcomm = (vat * (-1)) ;
                 document.getElementById("overCommission").value = formatNumber(overcomm);
                 document.getElementById("overDate").value = document.getElementById("invoiceDate").value ;
+                
+                document.getElementById("litterCommission").value = '';
+                document.getElementById("litterDate").value = '' ;  
             }else if(diffVat > 0){
         //      Little Comm = (Diff vat ) *(100/(100+wh))
                 var littlecomm = (vat) * (100/(100+tax));
                 document.getElementById("litterCommission").value = formatNumber(littlecomm);
-                document.getElementById("litterDate").value = document.getElementById("invoiceDate").value ;    
+                document.getElementById("litterDate").value = document.getElementById("invoiceDate").value ; 
+                document.getElementById("overCommission").value = '';
+                document.getElementById("overDate").value = '' ;
             }
         });
             

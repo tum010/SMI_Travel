@@ -625,11 +625,15 @@
                     </thead>
                     <tbody>
                         <c:forEach var="table" items="${product_list}">
-                            <tr onclick ="setupproductvalue('${table.id}', '${table.code}', '${table.name}', '${booktype}');" >
+                            <tr onclick ="setupproductvalue('${table.id}', '${table.code}', '${table.name}' , '${booktype}');" >
                                 <td class="hidden">${table.id}</td>
                                 <td>${table.code} </td>
-                                <td>${table.name} </td>
-                                <td>${table.description} </td>
+                                <c:set var="name1" value="${table.name}"/>
+                                <c:set var="name2" value="${fn:replace(name1, '\\\\', '')}" />
+                                <td>${name2}</td>
+                                <c:set var="description1" value="${table.description}"/>
+                                <c:set var="description2" value="${fn:replace(description1, '\\\\', '')}" />
+                                <td>${description2} </td>
                             </tr>
                             <script>
                             product.push({id: "${table.id}",code: "${table.code}",name: "${table.name}"});
