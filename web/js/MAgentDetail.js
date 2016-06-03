@@ -37,15 +37,16 @@ $(document).ready(function () {
                         message: 'The website address is not valid'
                     }
                 }
-            },
-            Tel: {
-                validators: {
-                    regexp: {
-                        regexp: "^[0-9()+,/#\-]+$",
-                        message: 'The tel is not valid'
-                    }
-                }
             }
+//            ,
+//            Tel: {
+//                validators: {
+//                    regexp: {
+//                        regexp: "^[0-9()+,/#\-]+$",
+//                        message: 'The tel is not valid'
+//                    }
+//                }
+//            }
         }
     }).on('success.field.bv', function (e, data) {
         if (data.bv.isValid()) {
