@@ -634,8 +634,8 @@
         var InputToDate = document.getElementById("InputDateTo");
 
         if ((inputFromDate.value !== '') && (InputToDate.value !== '')) {
-            var fromDate = (inputFromDate.value).split('-');
-            var toDate = (InputToDate.value).split('-');
+            var fromDate = convertFormatDates(inputFromDate.value).split('-');
+            var toDate = convertFormatDates(InputToDate.value).split('-');
             if ((parseInt(fromDate[0])) > (parseInt(toDate[0]))) {
                 validateDate(date, "over");
             }

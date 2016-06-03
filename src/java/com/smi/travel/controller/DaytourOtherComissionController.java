@@ -233,6 +233,8 @@ public class DaytourOtherComissionController extends SMITravelController {
                 SystemUser guide = new SystemUser();
                 guide.setId(guideId);
                 booking.setGuide(guide);
+            }else{
+                booking.setGuide(null);
             }
 
 //            BigDecimal guideCommission = null;
@@ -240,6 +242,8 @@ public class DaytourOtherComissionController extends SMITravelController {
             if (StringUtils.isNotEmpty(guideComm)) {
 //                guideCommission = 
                 booking.setGuideCommission(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(guideComm) ? guideComm.replaceAll(",","") : 0)));
+            }else{
+                booking.setGuideCommission(BigDecimal.ZERO);
             }
             booking.setRemarkGuideCommission(guideRemark);
 
@@ -247,12 +251,16 @@ public class DaytourOtherComissionController extends SMITravelController {
                 Agent agent = new Agent();
                 agent.setId(agentId);
                 booking.setAgent(agent);
+            }else{
+                booking.setAgent(null);
             }
 
             if (StringUtils.isNotEmpty(agentComm)) {
 //                Long agentCommission = null;
 //                agentCommission = utilFunc.convertStringTolong(agentComm);
                 booking.setAgentCommission(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(agentComm) ? agentComm.replaceAll(",","") : 0)));
+            }else{
+                booking.setAgentCommission(0);
             }
             booking.setRemarkAgentCommission(agentRemark);
 

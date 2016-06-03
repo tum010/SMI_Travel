@@ -92,7 +92,7 @@ $(document).ready(function() {
     });
 
     var rowPaymentDetailTable = parseInt($("#countPaymentDetail").val());
-//    addRowPaymentDetailTable(rowPaymentDetailTable);
+    addRowPaymentDetailTable(rowPaymentDetailTable);
 
     $("#PaymentDetailTable").on("keyup", function() {
         var rowAll = ($("#PaymentDetailTable tr").length) - 2;
