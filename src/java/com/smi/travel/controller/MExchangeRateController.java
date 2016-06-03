@@ -82,7 +82,7 @@ public class MExchangeRateController  extends SMITravelController{
         }else{
             mExchangeRate.setCurrency(null);
         }
-        mExchangeRate.setCreateby(user.getName());
+        mExchangeRate.setCreateby(user.getUsername());
         mExchangeRate.setCreatedate(new Date());
         
         // Search
@@ -103,6 +103,7 @@ public class MExchangeRateController  extends SMITravelController{
         }else if ("add".equalsIgnoreCase(action)) {
             String result = "";
             String result_find = mExchangeRateService.findExchangeDuplicate(EdxchangeDate, Currency,ExchangeId);
+            System.out.println("Result Find : "+result_find);
             if("OK".equals(result_find)){
                 result = mExchangeRateService.insertExchange(mExchangeRate);             
             }else{

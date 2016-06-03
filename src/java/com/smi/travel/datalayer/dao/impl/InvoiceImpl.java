@@ -726,7 +726,7 @@ public class InvoiceImpl implements InvoiceDao{
     @Override
     public String checkOverflowValueOfInvoice(List<InvoiceDetail> invoiceDetail) {
         Session session = this.sessionFactory.openSession();
-        String result = "";
+        String result = "okMoney";
         if(invoiceDetail != null && invoiceDetail.size() != 0){
         for(int i=0;i<invoiceDetail.size();i++){
             BigDecimal cost;
@@ -780,19 +780,19 @@ public class InvoiceImpl implements InvoiceDao{
                 System.out.println("SumInvoiceCost : "+InvoiceCost +"SumInvoicePrice : "+InvoicePrice);
                 System.out.println("Compare price : "+price.compareTo(InvoicePrice));
                     if((price.compareTo(InvoicePrice) == -1)){
-                        result = "moreMoney";
+//                        result = "moreMoney";
                     }else{
-                        result = "okMoney";
+//                        result = "okMoney";
                     }
                 }else{
-                    result = "okMoney";
+//                    result = "okMoney";
                 }
             }else{
-                result = "okMoney";
+//                result = "okMoney";
             }
         }
         }else{
-            result = "okMoney";
+//            result = "okMoney";
         }
         this.sessionFactory.close();
         session.close();

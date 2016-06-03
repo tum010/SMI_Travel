@@ -301,15 +301,16 @@
                         <div class="row form-group">
                             <div class="col-sm-12" style="margin-top: -10px;">
                                 <label class="col-sm-1 control-label text-right"  style="margin-left: 45px;">Remarks</label>
-                                <div class="col-sm-4" style="width: 56.5%;">
-                                    <input id="remark" name="remark" class="form-control" value="${hotelBooking.remark}" maxlength="100">
+                                <div class="col-sm-4" style="width: 50%;">
+                                    <textarea class="form-control" style="resize: none; " id="remark" name="remark" rows="2" cols="50" maxlength="100">${hotelBooking.remark}</textarea>
+                                    <!--<input id="remark" name="remark" class="form-control" value="${hotelBooking.remark}" maxlength="100">-->
                                 </div>
                             </div>
                         </div>
                         <div class="row form-group">
                             <div class="col-sm-12" style="margin-top: -10px;">
                                 <label class="col-sm-1 control-label text-right"  style="margin-left: 45px;">OK By</label>
-                                <div class="col-sm-4" style="width: 56.5%;">
+                                <div class="col-sm-4" style="width: 50%;">
                                     <input id="reconfirm" name="reconfirm" class="form-control" value="${hotelBooking.reconfirm}" maxlength="100">
                                 </div>
                             </div>
