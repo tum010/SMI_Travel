@@ -500,6 +500,9 @@
                 $(".ui-widget").css("top", position.top + 30);
                 $(".ui-widget").css("left", position.left);
                 $(".ui-widget").css("font-size", 10);
+                if($(this).val() == ''){
+                    $(this).attr("valHidden",'');
+                }
             }); 
         });
       

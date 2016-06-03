@@ -1010,28 +1010,28 @@ System.out.println("query ap_nirvana : "+query);
 
             util.logsNirvana(ssDataexchTemp,apNirvana.getRowid());
             
-//            try {
-//                result = ssDataexchTemp.connectSybase(ssDataexchTemp);
-//            } catch (Exception ex) {
-//                Logger.getLogger(APNirvanaImpl.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//            
-//            ssDataexchList.add(ssDataexchTemp);
-//            
-//            if(i == APList.size()-1){
-//                try {
-//                    List<NirvanaInterface> nirvanaInterfaceList = ssDataexchTemp.callStoredProcedureAP(ssDataexchList);
-//                    if(nirvanaInterfaceList != null){
-//                        System.out.println("===== UpdateStatusAPInterface =====");
-//                        result = UpdateStatusAPInterface(nirvanaInterfaceList);
-//                    }
-//               
-//                } catch (Exception ex) {
-//                    Logger.getLogger(APNirvanaImpl.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//                
-////                result = "success";
-//            }
+            try {
+                result = ssDataexchTemp.connectSybase(ssDataexchTemp);
+            } catch (Exception ex) {
+                Logger.getLogger(APNirvanaImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            ssDataexchList.add(ssDataexchTemp);
+            
+            if(i == APList.size()-1){
+                try {
+                    List<NirvanaInterface> nirvanaInterfaceList = ssDataexchTemp.callStoredProcedureAP(ssDataexchList);
+                    if(nirvanaInterfaceList != null){
+                        System.out.println("===== UpdateStatusAPInterface =====");
+                        result = UpdateStatusAPInterface(nirvanaInterfaceList);
+                    }
+               
+                } catch (Exception ex) {
+                    Logger.getLogger(APNirvanaImpl.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+//                result = "success";
+            }
         }
         
         return result;
