@@ -2080,7 +2080,7 @@ public class AJAXBean extends AbstractBean implements
         //                        }
                                 
                                 BigDecimal exrate = (!"THB".equalsIgnoreCase(curcost) ? exrateCost : exrateAmount);
-                                if (remain.compareTo(BigDecimal.ZERO) != 0 && remain.compareTo(BigDecimal.ZERO) != -1) {
+//                                if (remain.compareTo(BigDecimal.ZERO) != 0 && remain.compareTo(BigDecimal.ZERO) != -1) {
                                     newrow = "";              
                                     newrow += "<tr>"
                                             + "<input type='hidden' name='receiveTaxInvTo' id='receiveTaxInvTo' value='" + receiveTaxInvTo + "'>"
@@ -2102,7 +2102,7 @@ public class AJAXBean extends AbstractBean implements
                                             + "</tr>";
                                     html.append(newrow);
                                     No++;                          
-                                } 
+//                                } 
                 //                } else {
                 //                    String newrow = "";
                 //                    newrow += "<tr>"
