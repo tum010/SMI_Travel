@@ -63,7 +63,7 @@ public class PaymentWendytourImpl implements PaymentWendytourDao{
                 paymentDetailWendyList = payment.getPaymentDetailWendies();
                 PaymentDetailWendy paymentDetailWendy = new PaymentDetailWendy();
                 paymentDetailWendy = paymentDetailWendyList.get(0);
-                paymentDetailWendy.setInvoiceCreditor("PW"+refCode+runningCode);
+//                paymentDetailWendy.setInvoiceCreditor("PW"+refCode+runningCode);
             }
             session.save(payment);    
             List<PaymentDetailWendy> paymentDetailWendy = payment.getPaymentDetailWendies();
