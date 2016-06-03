@@ -464,9 +464,9 @@ public class MListItemImpl implements MListItemDao {
         if (MAirline.isEmpty()) {
             return null;
         }else{
-            for (int i = 0; i < MAirline.size(); i++) {
-                System.out.println("Code Airline : " + MAirline.get(i).getCode());
-            }
+//            for (int i = 0; i < MAirline.size(); i++) {
+//               System.out.println("Code Airline : " + MAirline.get(i).getCode());
+//            }
         }
         session.close();
         this.sessionFactory.close();
