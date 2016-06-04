@@ -503,8 +503,13 @@ public class InvoiceImpl implements InvoiceReportDao{
         }else{
             query += " and  invm.invstatus  != 2 ";
         }
-//        if(checkQuery == 0){query = query.replaceAll("Where", "");}
-         System.out.println("query : "+query);
+        if(checkQuery == 1){
+            query += " and (ifnull(thb,0) > ifnull(recamt,0) ) ";
+        }
+        
+        
+        System.out.println("query : "+query);
+         
          
         List<Object[]> QueryInvoiceMounthList = session.createSQLQuery(query)      
                 .addScalar("invname", Hibernate.STRING)
