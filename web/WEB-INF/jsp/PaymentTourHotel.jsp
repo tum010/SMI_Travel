@@ -378,7 +378,7 @@
                                 <th style="width: 11%">Amount</th>
                                 <th style="width: 11%">Comm</th>
                                 <th style="width: 11%">Description</th>
-                                <th style="width: 7%">A/C</th>
+                                <th style="width: 7%">Ex Rate</th>
                                 <th style="width: 7%">Action</th>
                                 <th class="hidden">Export Date</th>
                                 <th class="hidden">Is Export</th>
@@ -440,7 +440,7 @@
                                     <td> <input style="width: ${Amount};text-align:right;"  id="amount${i.count}" name="amount${i.count}" type="text" class="form-control decimal" onfocusout="CalculateGrandTotal('${pl.id}')" onfocus="onfocusTour('${i.count}')" value="${pl.amount}"> </td>
                                     <td> <input style="width: ${recCom};text-align:right;"  id="recCom${i.count}" name="recCom${i.count}" type="text" class="form-control decimal" onfocusout="calculateComm('${i.count}')" onfocus="onfocusTour('${i.count}')" value="${pl.recCom}"> </td>                               
                                     <td> <input style="width: ${Description}" id="description${i.count}" name="description${i.count}" maxlength ="255"  type="text" class="form-control" value="${pl.description}" onfocus="onfocusTour('${i.count}')"> </td>
-                                    <td> <input style="width: ${AC}" id="ac${i.count}" name="ac${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.accCode}" readonly=""> </td>
+                                    <td> <input style="text-align: right;" id="exRate${i.count}" name="exRate${i.count}" type="text" class="form-control decimalexrate" value="${pl.exRate}"> </td>
                                     <td class="text-center">
                                         <a href="#" onclick=""  data-toggle="modal" data-target="">
                                             <span id="editSpan${i.count}" class="glyphicon glyphicon-th-list" onclick="editlist('${pl.id}','${i.count}'); onfocusTour('${i.count}')"></span>
@@ -452,11 +452,13 @@
                                             <span id="SpanRemove${i.count}" onclick="deletelist('${pl.id}','${i.count}'); onfocusTour('${i.count}')" class="glyphicon glyphicon-remove deleteicon "></span>
                                         </a>
                                     </td>
+                                    <td class="hidden"> <input style="width: ${AC}" id="ac${i.count}" name="ac${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.accCode}" readonly=""> </td>
                                     <td class="hidden"> <input id="exportDate${i.count}" name="exportDate${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.exportDate}"> </td>
                                     <td class="hidden"> <input id="isExport${i.count}" name="isExport${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.isExport}"> </td>
                                     <td class="hidden"> <input id="isExInv${i.count}" name="isExInv${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.isExInv}"> </td>
                                     <td class="hidden"> <input id="tourId${i.count}" name="tourId${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.tourId}"> </td>
                                     <td class="hidden"> <input id="tourDate${i.count}" name="tourDate${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.tourDate}"> </td>
+                                    <td class="hidden"> <input id="dataNo${i.count}" name="dataNo${i.count}" type="text" class="form-control" value="${pl.dataNo}"> </td>
                                 </tr>                       
                             </c:forEach> 
                         </tbody>
@@ -487,9 +489,9 @@
                                 <th style="width: 5%">Vat</th>
                                 <th style="width: 11%">Gross</th>
                                 <th style="width: 11%">Amount</th>
-                                <th style="width: 11%">Comm</th>
-                                <th style="width: 14%">Description</th>
-                                <th style="width: 4%">A/C</th>
+                                <th style="width: 10%">Comm</th>
+                                <th style="width: 12%">Description</th>
+                                <th style="width: 7%">Ex Rate</th>
                                 <th style="width: 1%">Action</th>
                                 <th class="hidden">Export Date</th>
                                 <th class="hidden">Is Export</th>
@@ -554,10 +556,10 @@
                                         <input class="form-control" type="text" id="amountCal${i.count}" name="amountCal$${i.count}" value="${pl.amount}">
                                     </td>
                                     <td> <input style="width: ${Amount};text-align:right;" id="amount${i.count}" name="amount${i.count}" type="text" class="form-control decimal" value="${pl.amount}" readonly=""> </td>
-                                    <td> <input style="width: ${recCom};text-align:right;"  id="recCom${i.count}" name="recCom${i.count}" type="text" class="form-control decimal" value="${pl.recCom}" readonly=""> </td>
+                                    <td> <input style="width: ${recCom};text-align:right;"  id="recCom${i.count}" name="recCom${i.count}" type="text" class="form-control decimal" value="${pl.recCom}" readonly=""> </td>                                   
                                     <td>${pl.description}</td>
                                     <td class="hidden"> <input style="width: ${Description}" id="description${i.count}" name="description${i.count}" maxlength ="255"  type="text" class="form-control" value="${pl.description}"> </td>                                   
-                                    <td align="center">${pl.accCode}</td>
+                                    <td> <input style="text-align:right;" id="exRatet${i.count}" name="exRate${i.count}" type="text" class="form-control decimalexrate" value="${pl.exRate}" readonly=""></td>
                                     <td align="center">
                                         <a href="#" onclick=""  data-toggle="modal" data-target="">
                                             <span id="editSpan${i.count}" class="glyphicon glyphicon-th-list" onclick="editlist('${pl.id}','${i.count}')" ></span>
@@ -571,6 +573,7 @@
                                     <td class="hidden"> <input id="isExport${i.count}" name="isExport${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.isExport}"> </td>
                                     <td class="hidden"> <input id="tourId${i.count}" name="tourId${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.tourId}"> </td>
                                     <td class="hidden"> <input id="tourDate${i.count}" name="tourDate${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.tourDate}"> </td>
+                                    <td class="hidden"> <input id="dataNo${i.count}" name="dataNo${i.count}" type="text" class="form-control" value="${pl.dataNo}"> </td>
                                 </tr>                       
                             </c:forEach> 
                         </tbody>
@@ -596,6 +599,7 @@
         <input type="hidden" name="productCountDel" id="productCountDel">
         <input type="hidden" name="plTableId" id="plTableId">
         <input type="hidden" id="createBy" name="createBy" value="${requestScope['createBy']}">
+        <input type="hidden" id="exportDate" name="exportDate" value="${requestScope['exportDate']}">
         
         <!-- Table Content -->
         <div class="panel panel-default hidden" id="packagepanel">                    
@@ -639,7 +643,13 @@
                 </div>
                 <!--Row 1.2 -->
                 <div class="row" style="padding-left: 25px;">
-                    <div class="col-xs-1 text-right" style="width: 975px">
+                    <div class="col-xs-1" style="width: 100px">
+                        <label class="control-label">A/C</lable>
+                    </div>
+                    <div class="col-xs-1 text-right" style="width: 175px">
+                         <input name="ac" id="ac" type="text" class="form-control" value="" readonly=""/>
+                    </div>  
+                    <div class="col-xs-1 text-right" style="width: 700px">
                          <button type="button" onclick="checkDaytour()" class="btn btn-success">OK</button>
                     </div>    
                 </div>
@@ -1147,6 +1157,17 @@
             placeholder: "0.00",
         });
         
+        $(".decimalexrate").inputmask({
+            alias: "decimal",
+            integerDigits: 8,
+            groupSeparator: ',',
+            autoGroup: true,
+            digits: 4,
+            allowMinus: false,
+            digitsOptional: false,
+            placeholder: "0.0000",
+        });
+        
         var idRole = '${idRole}';
         if(idRole === '19'){
             $('#PaymentTourHotelForm').bootstrapValidator({
@@ -1482,7 +1503,7 @@
                 '<td><input class="form-control decimal" id="amount' + row + '" name="amount' + row + '" type="text" onfocusout="CalculateGrandTotal(\'\')" onfocus="onfocusTour(\''+row+'\')"></td>' +
                 '<td><input class="form-control decimal" id="recCom' + row + '" name="recCom' + row + '" type="text" onfocusout="calculateComm(\''+row+'\')" onfocus="onfocusTour(\''+row+'\')" ></td>' +
                 '<td><input class="form-control" maxlength="255" id="description' + row + '" name="description' + row + '" rows="2" onfocus="onfocusTour(\''+row+'\')"></td>' +
-                '<td><input id="ac' + row + '" name="ac' + row + '"   type="text" class="form-control" readonly=""></td>' +
+                '<td><input id="exRate' + row + '" name="exRate' + row + '"   type="text" class="form-control decimalexrate" ></td>' +
                 '<td class="text-center">' +
                     '<a href="#" onclick=""  data-toggle="modal" data-target=""> ' +
                         '<span id="editSpan' + row + '" class="glyphicon glyphicon-th-list" onclick="editlist(\'\',\''+ row + '\'); onfocusTour(\''+row+'\')" ></span>' +
@@ -1511,6 +1532,16 @@
                 allowMinus: false,
                 digitsOptional: false,
                 placeholder: "0.00",
+            });
+            $(".decimalexrate").inputmask({
+                alias: "decimal",
+                integerDigits: 8,
+                groupSeparator: ',',
+                autoGroup: true,
+                digits: 4,
+                allowMinus: false,
+                digitsOptional: false,
+                placeholder: "0.0000",
             });
             var tempCount = parseInt($("#counter").val()) + 1;
             $("#counter").val(tempCount);
@@ -2103,6 +2134,8 @@
         if(row !== $("#tourRow").val()){
             var tourId = $("#tourId"+row).val();
             var tourDate = $("#tourDate"+row).val();
+            var ac = $("#ac"+row).val();
+            $("#ac").val(ac);
             if((tourId !== '') && (tourDate !== '')){
                 for(var i=0;i<tourCode.length;i++){
                     var id = tourCode[i].id;

@@ -64,5 +64,8 @@
         <property name="dataNo" type="string">
             <column name="data_no" length="10" />
         </property>
+        <property name="exRate" type="big_decimal">
+            <column name="ex_rate" precision="10" />
+        </property>
     </class>
 </hibernate-mapping>

@@ -31,11 +31,12 @@ public class PaymentDetailWendy   {
      private Integer tourId;
      private Date tourDate;
      private String dataNo;
+     private BigDecimal exRate;
 
     public PaymentDetailWendy() {
     }
 
-    public PaymentDetailWendy(Master master, MPaytype MPaytype, PaymentWendy paymentWendy, String invoiceCreditor, BigDecimal amount, String amountType, String description ,String accCode,Double vat,BigDecimal gross,Integer isVat,Date exportDate,Integer isExport,BigDecimal recCom,Integer isExInv,Date invDate,Integer tourId,Date tourDate, String dataNo) {
+    public PaymentDetailWendy(Master master, MPaytype MPaytype, PaymentWendy paymentWendy, String invoiceCreditor, BigDecimal amount, String amountType, String description ,String accCode,Double vat,BigDecimal gross,Integer isVat,Date exportDate,Integer isExport,BigDecimal recCom,Integer isExInv,Date invDate,Integer tourId,Date tourDate, String dataNo, BigDecimal exRate) {
        this.master = master;
        this.MPaytype = MPaytype;
        this.paymentWendy = paymentWendy;
@@ -55,6 +56,7 @@ public class PaymentDetailWendy   {
        this.tourId = tourId;
        this.tourDate = tourDate;
        this.dataNo = dataNo;
+       this.exRate = exRate;
     }
    
     public String getId() {
@@ -210,6 +212,14 @@ public class PaymentDetailWendy   {
 
     public void setDataNo(String dataNo) {
         this.dataNo = dataNo;
+    }
+
+    public BigDecimal getExRate() {
+        return exRate;
+    }
+
+    public void setExRate(BigDecimal exRate) {
+        this.exRate = exRate;
     }
 
 }
