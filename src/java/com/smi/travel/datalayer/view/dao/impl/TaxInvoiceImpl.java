@@ -73,11 +73,12 @@ public class TaxInvoiceImpl implements TaxInvoiceReportDao{
             taxInvoiceView.setDescription(util.ConvertString(B[8]));
             taxInvoiceView.setNondescription(util.ConvertString(B[9]));
             taxInvoiceView.setInvoice(util.ConvertString(B[10]));
-            taxInvoiceView.setGrandtotal(df.format(B[14]));
+            taxInvoiceView.setGrandtotal(B[14] != null ? df.format(B[14]) : "0.00");
             taxInvoiceView.setUser(util.ConvertString(B[15]));
             taxInvoiceView.setCuramount(util.ConvertString(B[16]));
             taxInvoiceView.setTaxidno(B[17] != null ? util.ConvertString(B[17]) : "");
-            taxInvoiceView.setBranch(B[18] != null ? util.ConvertString(B[18]) : "");
+            String taxBranch = util.getTaxBranch(util.ConvertString(B[1]), util.ConvertString(B[18]));
+            taxInvoiceView.setBranch(taxBranch);
             String curamount = "";
             if("THB".equalsIgnoreCase(util.ConvertString(B[16]))){
                 curamount = " BAHT ";

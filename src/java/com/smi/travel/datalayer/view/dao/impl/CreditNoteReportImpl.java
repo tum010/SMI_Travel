@@ -89,7 +89,8 @@ public class CreditNoteReportImpl implements  CreditNoteReportDao{
             cn.setRemark(util.ConvertString(B[6]));
             cn.setUser(util.ConvertString(B[7]));
             cn.setTaxidno(B[12] != null ? util.ConvertString(B[12]) : "");
-            cn.setBranch(B[13] != null ? util.ConvertString(B[13]) : "");
+            String taxBranch = util.getTaxBranch(util.ConvertString(B[0]), util.ConvertString(B[13]));
+            cn.setBranch(taxBranch);
             curAmount = util.ConvertString(B[11]);
             data.add(cn);
         }

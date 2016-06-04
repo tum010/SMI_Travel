@@ -126,9 +126,10 @@ public class InvoiceImpl implements InvoiceReportDao{
             invoice.setBranch2(Branch2);
             invoice.setInvto(util.ConvertString(B[0]));
             invoice.setInvno(util.ConvertString(B[13]));
-            invoice.setBankid(BankId);
+            invoice.setBankid(BankId);          
             invoice.setTaxid(util.ConvertString(B[14]));
-            invoice.setTaxbranch(util.ConvertString(B[15]));
+            String taxBranch = util.getTaxBranch(util.ConvertString(B[0]),util.ConvertString(B[15]));
+            invoice.setTaxbranch(taxBranch);
             if(B[1] != null){
                 invoice.setInvdate(new SimpleDateFormat("dd-MM-yyyy", new Locale("us", "us")).format((Date)B[1]));
             }

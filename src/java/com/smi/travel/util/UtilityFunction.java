@@ -668,4 +668,31 @@ public class UtilityFunction {
         return refNo;
     } 
 
+    public String getTaxBranch(String invTo, String taxBranch) {
+        String result = "";
+        if(taxBranch != null && !"".equalsIgnoreCase(taxBranch)){
+            String[] characterList = {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
+            boolean isEng = false;
+            String invToFirstChar = invTo.substring(0, 1);
+
+            charactorLoop:
+            for(String character : characterList){
+                if(character.equalsIgnoreCase(invToFirstChar)){
+                    isEng = true;
+                    break charactorLoop;
+                }
+            }
+
+            if(isEng){
+                result = "Head Office";
+
+            } else {
+                result = "สำนักงานใหญ่";
+
+            }
+        }
+            
+        return result;
+    }
+
 }
