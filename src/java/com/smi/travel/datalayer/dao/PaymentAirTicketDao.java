@@ -36,7 +36,7 @@ public interface PaymentAirTicketDao {
     public String DeletePaymentAccount(String paymentAirId,String paymentAccountId);
     //delete from PaymentAirticketRefund payrefund where payrefund.id = AirRefundId
     public PaymentAirticket getPaymentAirTicketFromPayno(String payNo);
-    public List<TicketFareView> getListTicketFare(String from,String to,String by,String airAgentId,String invoiceSubCode,String typeAirlineOther,String ticketType);
+    public List<TicketFareView> getListTicketFare(String from,String to,String by,String airAgentId,String invoiceSubCode,String typeAirlineOther,String ticketType,String TicketNum);
     //from TicketFareAirline
     //By = ticketBuy 
     //From , to  = issueDate

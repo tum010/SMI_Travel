@@ -66,6 +66,7 @@ public class PaymentAirlineController extends SMITravelController {
     private static final String DEBITLIST = "debitList";
     private static final String SETCALCULATEDEBIT = "setCalculateDebit";
     private static final String TYPEAIRLINEOTHER = "TypeAirlineOther";
+    private static final String TICKETNUM = "Ticketnum";
     private static final String TICKETTYPE = "TicketType";
     private static final String PAYMENTAIRLINELIST = "paymentAirlineList";
     
@@ -112,12 +113,14 @@ public class PaymentAirlineController extends SMITravelController {
         String isExport = request.getParameter("isExport");
         String wildCardSearch = request.getParameter("wildCardSearch");
         String keyCode = request.getParameter("keyCode");
+        
 
         String dateFrom = util.covertStringDateToFormatYMD(request.getParameter("dateFrom"));
         String dateTo = util.covertStringDateToFormatYMD(request.getParameter("dateTo"));
         String paymentDate = util.covertStringDateToFormatYMD(request.getParameter("paymentDate")); 
         String duePaymentDate = util.covertStringDateToFormatYMD(request.getParameter("duePaymentDate"));
         String exportDate = util.covertStringDateToFormatYMD(request.getParameter("exportDate"));
+        String TicketNum = request.getParameter("TicketNum");
         
         String saveandnewresult = request.getParameter("saveandnewresult");
         if("savesuccessful".equalsIgnoreCase(saveandnewresult)){
@@ -298,7 +301,7 @@ public class PaymentAirlineController extends SMITravelController {
                 typeAirline = "";
             }
             
-            ticketFareViews = paymentAirTicketService.getListTicketFare(dateFrom,dateTo,ticketFrom,typeAirline,invoiceSupCode,typeAirlineOther,ticketType);
+            ticketFareViews = paymentAirTicketService.getListTicketFare(dateFrom,dateTo,ticketFrom,typeAirline,invoiceSupCode,typeAirlineOther,ticketType,TicketNum);
             if(ticketFareViews != null){
                 request.setAttribute(SETCALCULATETICKET,1);
                 request.setAttribute(TICKETFARECOUNT,ticketFareViews.size()+1);
@@ -944,6 +947,7 @@ public class PaymentAirlineController extends SMITravelController {
         request.setAttribute(TYPEAIRLINEOTHER,typeAirlineOther);
         request.setAttribute(TICKETTYPE,ticketType);
         request.setAttribute(PAYMENTAIRTICKET,paymentAirticket);
+        request.setAttribute(TICKETNUM, TicketNum);
         setResponseAttribute(request);
         return PaymentAirline;
     }

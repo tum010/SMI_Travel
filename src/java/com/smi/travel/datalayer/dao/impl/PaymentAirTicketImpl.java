@@ -353,7 +353,7 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
     }
 
     @Override
-    public List<TicketFareView> getListTicketFare(String from, String to, String by, String airAgentId,String invoiceSubCode,String typeAirlineOther,String ticketType) {
+    public List<TicketFareView> getListTicketFare(String from, String to, String by, String airAgentId,String invoiceSubCode,String typeAirlineOther,String ticketType,String TicketNum) {
         Session session = this.sessionFactory.openSession();
         String query ="from TicketFareAirline t where";
         String queryOperation = "";
@@ -398,6 +398,12 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
             query += " t.ticketType = "+"'"+ticketType+"'";
             check =1;
         } 
+        if((TicketNum != null) && (!"".equalsIgnoreCase(String.valueOf(TicketNum)))){
+            if(check == 1){query += " and ";}
+            query += " t.ticketNo like "+"'"+TicketNum+"%'";
+            check =1;
+        } 
+        
         
         if(check == 0){
             query = query.replaceAll("where", " ");

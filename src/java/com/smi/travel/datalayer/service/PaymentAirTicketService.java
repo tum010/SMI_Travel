@@ -51,8 +51,8 @@ public class PaymentAirTicketService {
         return paymentairticketdao.getPaymentAirTicketFromPayno(payNo);
     }
     
-    public List<TicketFareView> getListTicketFare(String from,String to,String by,String airAgentId,String invoiceSubCode,String typeAirlineOther,String ticketType){
-        return paymentairticketdao.getListTicketFare(from,to,by,airAgentId,invoiceSubCode,typeAirlineOther,ticketType);
+    public List<TicketFareView> getListTicketFare(String from,String to,String by,String airAgentId,String invoiceSubCode,String typeAirlineOther,String ticketType,String TicketNum){
+        return paymentairticketdao.getListTicketFare(from,to,by,airAgentId,invoiceSubCode,typeAirlineOther,ticketType,TicketNum);
     }
 
     public String addRefundAirTicket(String refundNo,String rowCount,String ticketNoList){

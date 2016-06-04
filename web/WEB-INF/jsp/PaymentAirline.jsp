@@ -22,6 +22,7 @@
 <c:set var="debitList" value="${requestScope['debitList']}" />
 <c:set var="ticketwhtax" value="${requestScope['ticketwhtax']}" />
 <c:set var="ticketvat" value="${requestScope['ticketvat']}" />
+<c:set var="ticketnum" value="${requestScope['Ticketnum']}" />
 <c:set var="paymentAccountList" value="${requestScope['paymentAccountList']}" />
 <c:set var="paymentAirlineList" value="${requestScope['paymentAirlineList']}" />
 
@@ -339,11 +340,22 @@
                                     <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                 </div>
                             </div>
-                            <div class="col-xs-1  text-right" style="width: 188px"><i id="ajaxload"  class="fa fa-spinner fa-spin hidden"></i></div>
-                            <div class="col-xs-1 text-right" style="width: 80px">
-                                <button style="height:34px" type="button"  id="ButtonSearchTicket"  name="ButtonSearchTicket" onclick="searchTicketFare();" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;Search</button>
+                        
+                            <div class="col-xs-2 text-right" >
+                                <label class="control-label text-right">Ticket No </label>
                             </div>
+                            <div class="col-xs-1" style="  width:200px">
+                                <input id="TicketNum"  name="TicketNum" type="text" class="form-control" maxlength="50" value="${requestScope['Ticketnum']}" >
+                            </div>
+                                <div class="col-xs-1  text-right" style="width: 188px"><i id="ajaxload"  class="fa fa-spinner fa-spin hidden"></i></div>
                         </div>
+                       
+                            <div class="col-xs-12 text-right" >
+                                <button style="height:34px" type="button"  id="ButtonSearchTicket"  name="ButtonSearchTicket" onclick="searchTicketFare();" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;Search</button>
+                            </div> 
+                            
+                                  
+                                    
                         <div class="col-xs-12" style="margin-top: 4px;">
                             <table class="display" id="TicketFareTable" style="margin-top: -20px">
                                 <thead class="datatable-header">
