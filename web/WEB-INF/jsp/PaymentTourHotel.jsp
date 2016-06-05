@@ -559,7 +559,7 @@
                                     <td> <input style="width: ${recCom};text-align:right;"  id="recCom${i.count}" name="recCom${i.count}" type="text" class="form-control decimal" value="${pl.recCom}" readonly=""> </td>                                   
                                     <td>${pl.description}</td>
                                     <td class="hidden"> <input style="width: ${Description}" id="description${i.count}" name="description${i.count}" maxlength ="255"  type="text" class="form-control" value="${pl.description}"> </td>                                   
-                                    <td> <input style="text-align:right;" id="exRatet${i.count}" name="exRate${i.count}" type="text" class="form-control decimalexrate" value="${pl.exRate}" readonly=""></td>
+                                    <td> <input style="text-align:right;" id="exRatet${i.count}" name="exRate${i.count}" type="text" class="form-control decimalexrate" value="${pl.exRate}" ></td>
                                     <td align="center">
                                         <a href="#" onclick=""  data-toggle="modal" data-target="">
                                             <span id="editSpan${i.count}" class="glyphicon glyphicon-th-list" onclick="editlist('${pl.id}','${i.count}')" ></span>

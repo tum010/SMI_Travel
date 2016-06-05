@@ -156,7 +156,7 @@ public class APNirvanaImpl implements APNirvanaDao {
                     dataArea += util.generateDataAreaNirvana(purproject,21);
                     dataArea += util.generateDataAreaNirvana(puramt,20);
                     dataArea += util.generateDataAreaNirvana(purhmamt,20);
-                    dataArea += util.generateDataAreaNirvana("detail",61);
+                    dataArea += util.generateDataAreaNirvana("",61);
 
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd.HHmmss", Locale.US);
                     SsDataexchTr ssdtr = new SsDataexchTr();

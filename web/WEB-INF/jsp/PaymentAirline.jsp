@@ -807,8 +807,8 @@
                                                     <option value="Inbound" ${selectedInbound}>Inbound</option>
                                                 </select>
                                             </td>
-                                            <td><input maxlength="10" id="drAmount${i.count}"  name="drAmount${i.count}"  type="text" class="form-control text-right"  value="${table.drAmount}" onfocusout="calculateTotalDrCrAmount()" onkeyup="insertCommas(this)"></td>
-                                            <td><input maxlength="10" id="crAmount${i.count}"  name="crAmount${i.count}"  type="text" class="form-control text-right"  value="${table.crAmount}" onfocusout="calculateTotalDrCrAmount()" onkeyup="insertCommas(this)"></td>
+                                            <td><input maxlength="15" id="drAmount${i.count}"  name="drAmount${i.count}"  type="text" class="form-control text-right"  value="${table.drAmount}" onfocusout="calculateTotalDrCrAmount()" onkeyup="insertCommas(this)"></td>
+                                            <td><input maxlength="15" id="crAmount${i.count}"  name="crAmount${i.count}"  type="text" class="form-control text-right"  value="${table.crAmount}" onfocusout="calculateTotalDrCrAmount()" onkeyup="insertCommas(this)"></td>
                                             <td> 
                                                 <center> 
                                                     <a class="remCF"><span id="SpanRemove${i.count}" onclick="deletePaymentAccList('${table.id}','${i.count}');" class="glyphicon glyphicon-remove deleteicon "></span></a>

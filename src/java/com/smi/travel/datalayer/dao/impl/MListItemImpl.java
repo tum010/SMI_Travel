@@ -257,7 +257,7 @@ public class MListItemImpl implements MListItemDao {
 
     @Override
     public List<MTicketType> getListMTicketType() {
-        String query = "from MTicketType ticket";
+        String query = "from MTicketType ticket Order by ticket.code";
         Session session = this.sessionFactory.openSession();
 
         List<MTicketType> MTicketTypeList = session.createQuery(query).list();
