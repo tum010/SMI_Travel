@@ -462,10 +462,10 @@ public class CollectionNirvanaImpl implements CollectionNirvanaDao{
         String cust_taxid = "";
         dataArea += util.generateDataAreaNirvana(cust_taxid,21);
         
-        String cust_branch = "1";
+        String cust_branch = "000000";
         dataArea += util.generateDataAreaNirvana(cust_branch,6);
         
-        String company_branch = "1";
+        String company_branch = "000000";
         dataArea += util.generateDataAreaNirvana(company_branch,6);
         
         return dataArea;
