@@ -471,16 +471,17 @@
                         </div>
                         <div class="col-xs-12" style="margin-top: 3px">
                             <div class="col-xs-1 text-right" style="width: 125px">
-                                <div class="col-xs-1 text-right" style="width: 50px">
-                                    <c:choose>
-                                        <c:when test="${ticketFare.enableInvNo == 1}">
-                                            <input type="checkbox" class="form-control" id="enableInvNo" name="enableInvNo" onclick="checkboxEnableInvNo(this)" value="1" checked/>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <input type="checkbox" class="form-control" id="enableInvNo" name="enableInvNo" onclick="checkboxEnableInvNo(this)" value="0"/>
-                                        </c:otherwise>
-                                    </c:choose> 
-                                </div>
+                                
+                                <!--<div class="col-xs-1 text-right" style="width: 50px">-->
+                                    <%--<c:choose>--%>
+                                        <%--<c:when test="${ticketFare.enableInvNo == 1}">--%>
+                                            <!--<input type="checkbox" class="form-control" id="enableInvNo" name="enableInvNo" onclick="checkboxEnableInvNo(this)" value="1" checked/>-->
+                                        <%--</c:when>--%>
+                                        <%--<c:otherwise>--%>
+                                            <!--<input type="checkbox" class="form-control" id="enableInvNo" name="enableInvNo" onclick="checkboxEnableInvNo(this)" value="0"/>-->
+                                        <%--</c:otherwise>--%>
+                                    <%--</c:choose>--%> 
+                                <!--</div>-->
                                 <label class="control-label text-right">Inv No</label>
                             </div>
                             <div class="col-xs-1"  style="width: 200px;margin-left: -3px">
@@ -1384,7 +1385,7 @@ function setDuaDate(){
         }
         
         //Result
-        document.getElementById('dueDate').value = yshow+"-"+point1+mshow+"-"+point2+dshow;
+        document.getElementById('dueDate').value =  point2+dshow+"-" +point1+mshow+ "-" + yshow;
     }
 }
     

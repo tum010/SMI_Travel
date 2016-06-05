@@ -58,12 +58,12 @@ public class MHotelDetailController extends SMITravelController {
         country.setId(countryid);
         Hotel hotel = new Hotel();
         hotel.setCode((String.valueOf(code)).toUpperCase());
-        hotel.setApCode((String.valueOf(code)).toUpperCase());
+        //hotel.setApCode((String.valueOf(code)).toUpperCase());
         hotel.setName((String.valueOf(name)).toUpperCase());
-        if(!"0".equalsIgnoreCase(cityid)){
+        if((!"0".equalsIgnoreCase(cityid))&&(!"".equalsIgnoreCase(cityid))){
             hotel.setMCity(city);
         }
-        if(!"0".equalsIgnoreCase(countryid)){
+        if((!"0".equalsIgnoreCase(countryid))&&(!"".equalsIgnoreCase(countryid))){
             hotel.setMCountry(country);
         }
         request.setAttribute("disableHotelCode", "");
