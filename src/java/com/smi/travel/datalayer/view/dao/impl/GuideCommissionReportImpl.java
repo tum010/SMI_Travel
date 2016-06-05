@@ -30,7 +30,7 @@ public class GuideCommissionReportImpl implements GuideCommissionReportDao{
     
     private SessionFactory sessionFactory;
     private final  String GUIDECOM_SUMMARY_QUERY = "SELECT" +
-                                                    "`st`.`name` AS `guide`," +
+                                                    " concat(`st`.`name`, ' ', `st`.`tel`) AS `guide`," +
                                                     "GET_SUM_PAX_DAYTOUR(st.id,'datefrom','dateto')  AS `pax`," +
                                                     "sum(`db`.`guide_commission`) AS `comission`," +
                                                     "`st`.`id` AS `guideid`" +
