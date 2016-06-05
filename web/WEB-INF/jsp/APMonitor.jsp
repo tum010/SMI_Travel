@@ -193,9 +193,10 @@
                                 <th style="width: 12%">Pay No.</th>
                                 <th style="width: 12%">AP Code</th>
                                 <th style="width: 26%">Invoice Sup</th>
-                                <th style="width: 12%">Acc Code</th>
-                                <th style="width: 15%">Gross</th>
-                                <th style="width: 15%">Amount</th>
+                                <th style="width: 8%">Acc Code</th>
+                                <th style="width: 13%">Gross</th>
+                                <th style="width: 8%">Vat</th>
+                                <th style="width: 13%">Amount</th>
                                 <th style="width: 2%">Cur</th>
                                 <th style="width: 5%">Status</th>
                              </tr>
@@ -223,8 +224,9 @@
                                 <td>${data_list.vendorid}</td>
                                 <td>${data_list.vendorname}</td>
                                 <td>${data_list.puraccount1}</td>
-                                <td align="right" class="money">${data_list.vatamt}</td>
                                 <td align="right" class="money">${data_list.basevatamt}</td>
+                                <td align="right" class="money">${data_list.vatamt}</td>
+                                <td align="right" class="money">${data_list.transamt}</td>
                                 <td align="center">${data_list.currencyid}</td>
                                 <td align="center">${data_list.itf_status}</td>
                             </tr>

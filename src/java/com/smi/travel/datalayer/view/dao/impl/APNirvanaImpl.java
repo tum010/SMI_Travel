@@ -476,6 +476,7 @@ System.out.println("query ap_nirvana : "+query);
             apNirvana.setCurrencyid(util.ConvertString(B[8]));
             apNirvana.setBasevatamt((B[11]) != null ? new BigDecimal(util.ConvertString(B[11])) : new BigDecimal("0.00"));
             apNirvana.setVatamt((B[13]) != null ? new BigDecimal(util.ConvertString(B[13])) : new BigDecimal("0.00"));
+            apNirvana.setTransamt((B[15]) != null ? new BigDecimal(util.ConvertString(B[15])) : new BigDecimal("0.00"));
             apNirvana.setPuraccount1(util.ConvertString(B[28]));
             apNirvana.setItf_status(util.ConvertString(B[85]));
             apNirvana.setPaymenttype(util.ConvertString(B[87]));
