@@ -1973,6 +1973,7 @@ public class AJAXBean extends AbstractBean implements
                     System.out.println("===== alertMessageExRate ===== : "+alertMessageExRate);
                     
 //                    if(billableDescId.equalsIgnoreCase(invoiceDetailList.get(j).getBillableDesc().getId()) && !"".equalsIgnoreCase(curcost) && !"".equalsIgnoreCase(curamount)){
+                    if(billableDescId.equalsIgnoreCase(invoiceDetailList.get(j).getBillableDesc().getId())){
                         boolean check = true;
                         String invoiceDetailId = invoiceDetailList.get(j).getId();
                         String invNo = taxInvoiceDao.getInvoiceNoByInvoiceDetailId(invoiceDetailId);
@@ -2116,7 +2117,7 @@ public class AJAXBean extends AbstractBean implements
                 //                }
                             }
                         }    
-//                    }
+                    }
 
                     if((j==invoiceDetailList.size()-1) && checkAlertMessage){
                         if(!"".equalsIgnoreCase(invNoProfit) && !"".equalsIgnoreCase(invNoOutput)){
