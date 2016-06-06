@@ -62,7 +62,9 @@ public class LandController extends SMITravelController {
             }
             
         }
-       if(("1").equals(String.valueOf(master.getFlagLand())) 
+        if(("2").equals(String.valueOf(master.getFlagLand()))){
+            request.setAttribute(LockUnlockBooking,2);
+        }else if(("1").equals(String.valueOf(master.getFlagLand())) 
             || ("2").equals(String.valueOf(master.getMBookingstatus().getId()))
             || ("5").equals(String.valueOf(master.getMBookingstatus().getId()))){
             request.setAttribute(LockUnlockBooking,1);
