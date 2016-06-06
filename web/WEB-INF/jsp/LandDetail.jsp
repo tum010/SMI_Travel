@@ -169,7 +169,7 @@
 */              
                 var templock = parseInt($("#requestLock").val());
                 $("#LandItinerary").on('click', '.remCF', function() {
-                    if(templock == 0){
+                    if(templock != 1){
                         $(this).parent().parent().remove();
                          var rowAll = $("#LandItinerary tr").length;
                         if (rowAll < 2) {
@@ -733,6 +733,9 @@
                                             <c:if test="${lockUnlockBooking == 1}">
                                                 <span class="glyphicon glyphicon-remove deleteicon" ></span>
                                             </c:if>
+                                            <c:if test="${lockUnlockBooking == 2}">
+                                                <a class="remCF"><span  onclick="deleteCityTable('${landCity.id}','${Counter.count}');" class="glyphicon glyphicon-remove deleteicon "></span></a>
+                                            </c:if>
                                         </td>
                                     </tr>                       
                                 </c:forEach>     
@@ -800,6 +803,9 @@
                                         <c:if test="${lockUnlockBooking == 1}">
                                             <span class="glyphicon glyphicon-remove deleteicon" ></span>
                                         </c:if>
+                                        <c:if test="${lockUnlockBooking == 2}">
+                                            <a class="remCF"><span  onclick="deletelist('${table.id}');" class="glyphicon glyphicon-remove deleteicon "></span></a>
+                                        </c:if>    
                                     </td>
                                 </tr>                       
                             </c:forEach>     
@@ -825,6 +831,11 @@
                             <span class="glyphicon glyphicon-plus"></span>Add</button>
                         </a>   
                     </c:if>
+                    <c:if test="${lockUnlockBooking == 2}">
+                        <a class="btn btn-success" onclick="AddRow()">
+                            <i class="glyphicon glyphicon-plus"></i> Add
+                        </a>
+                    </c:if>
                 </div>
                 <input type="hidden" class="form-control" name="action" id="action" value="save" >  
                 <input type="hidden" class="form-control" name="Itenarary" id="Itenarary" >  
@@ -844,7 +855,7 @@
                             <button type="button" disabled id="saveland"  onclick="readdata()" class="btn btn-success"><span class="fa fa-save"></span> Save</button>
                         </c:when>
                         <c:otherwise>
-                            <c:if test="${lockUnlockBooking == 0}">
+                            <%--<c:if test="${lockUnlockBooking == 0}">--%>
                                 <%--<c:if test="${isBillStatus == 0}">--%>
                                     <button type="submit" id="savereal" onfocus="readdata()"  onmouseover="readdata()"  class="btn btn-success duplicate"><span class="fa fa-save"></span> Save</button>
                                 <%--</c:if>--%>
@@ -858,10 +869,10 @@
                                         <%--</c:when>--%>
                                     <%--</c:choose>--%> 
                                 <%--</c:if>--%>
-                            </c:if>
-                            <c:if test="${lockUnlockBooking == 1}">
-                                <button class="btn btn-success disabled"><span class="fa fa-save"></span> Save</button>
-                            </c:if>   
+                            <%--</c:if>--%>
+                            <%--<c:if test="${lockUnlockBooking == 1}">--%>
+                                <!--<button class="btn btn-success disabled"><span class="fa fa-save"></span> Save</button>-->
+                            <%--</c:if>--%>   
                         </c:otherwise>
                     </c:choose>
                 </div>              

@@ -141,7 +141,7 @@ public class AirticketBookingImpl implements AirticketBookingDao {
             setTransaction(session.beginTransaction());
             String hql = "update Master m set m.flagAir = :flagAir , m.MBookingstatus.id = :status where m.referenceNo = :referenceNo";
             Query query = session.createQuery(hql);
-            query.setParameter("flagAir", 0);
+            query.setParameter("flagAir", 2);
             query.setParameter("status", "1");
             query.setParameter("referenceNo", master.getReferenceNo());
             result = query.executeUpdate();

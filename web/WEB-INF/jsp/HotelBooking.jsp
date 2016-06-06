@@ -80,7 +80,7 @@
                 <div class="row-fluid">
 
                     <div class="form-actions pull-right" style="padding-right: 20px">
-                    <c:if test="${lockUnlockBooking == 0}">
+                    <c:if test="${lockUnlockBooking == 0 || lockUnlockBooking == 2 }">
                         <a id="ButtonAdd" href="HotelDetail.smi?referenceNo=${param.referenceNo}&Order=${hotelBookingList.size()+1}&action=new" class="btn btn-success duplicate">
                             <span id="SpanAdd" class="glyphicon glyphicon-plus"></span>Add
                         </a>                    
@@ -205,6 +205,9 @@
                             </c:if>
                             <c:if test="${lockUnlockBooking == 1}">
                                 <span class="glyphicon glyphicon-remove deleteicon disabled"></span>
+                            </c:if>
+                            <c:if test="${lockUnlockBooking == 2}">
+                                <span class="glyphicon glyphicon-remove deleteicon" id="DisableHotel-${loopCounter.count}"   onclick="DeleteHotel('${b.id}', ' ${b.hotel.getName()}');" data-toggle="modal" data-target="#DeleteHotel" ></span>
                             </c:if>
                         </c:if>
                     </td>

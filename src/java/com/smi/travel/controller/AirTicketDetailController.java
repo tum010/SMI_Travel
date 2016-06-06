@@ -325,7 +325,7 @@ public class AirTicketDetailController extends SMITravelController {
         Master master = utilservice.getMasterdao().getBookingFromRefno(referenceNo);
         request.setAttribute(Master, master);
         // Mbookstatus ==> 2 Finish , 5 Finish by Finance
-        if(("2").equals(String.valueOf(master.getFlagAir()))) {
+        if(("2").equals(String.valueOf(master.getFlagAir()))){
             request.setAttribute(LockUnlockBooking,2);
         }else if(("1").equals(String.valueOf(master.getFlagAir())) 
             || ("2").equals(String.valueOf(master.getMBookingstatus().getId()))

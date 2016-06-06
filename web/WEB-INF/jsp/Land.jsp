@@ -77,7 +77,7 @@
                 <div class="row-fluid">
 
                     <div class="form-actions pull-right" style="padding-right: 20px">
-                        <c:if test="${lockUnlockBooking == 0}">
+                        <c:if test="${lockUnlockBooking == 0 || lockUnlockBooking == 2}">
                                 <a href="LandDetail.smi?referenceNo=${param.referenceNo}&action=add"><button type="button" id="acs" onclick=""  class="btn btn-success duplicate"><span class="glyphicon glyphicon-plus"></span>Add</button>  </a>   
                         </c:if>
                         <c:if test="${lockUnlockBooking == 1}">
@@ -206,6 +206,9 @@
                                         </c:if>
                                         <c:if test="${lockUnlockBooking == 1}">
                                             <span class="glyphicon glyphicon-remove deleteicon" ></span>
+                                        </c:if>
+                                        <c:if test="${lockUnlockBooking == 2}">
+                                            <span class="glyphicon glyphicon-remove deleteicon"   onclick="DeleteLand('${table.id}', ' ${table.agent.code}');" data-toggle="modal" data-target="#DelLand" ></span>
                                         </c:if>
                                     </c:if>
                                 </td>
