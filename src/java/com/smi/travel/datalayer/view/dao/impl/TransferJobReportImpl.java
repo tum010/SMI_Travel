@@ -57,7 +57,7 @@ public class TransferJobReportImpl implements TransferJobReportDao {
         String Other = job.getPlaceOther();
 
         String getJobDetailQuery = "from DaytourBooking DB where DB.tourDate = '" + TourDate + "'"
-                + " and DB.daytour.code in ('" + TourId.replaceAll(" ", "").replaceAll("\\|\\|", "','").trim() + "') ";
+                + " and DB.daytour.code in ('" + TourId.replaceAll(" ", "").replaceAll("\\|\\|", "','").trim() + "') and DB.MItemstatus.id <> 2 ";
         String open = "";
         String close = "";
         List Transferjoblist = new ArrayList();
