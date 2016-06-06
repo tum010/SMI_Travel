@@ -253,7 +253,12 @@
                             <a class="btn btn-success disabled">
                                 <span class="glyphicon glyphicon-plus"></span>Add</button>
                             </a>   
-                        </c:if>                       
+                        </c:if>
+                        <c:if test="${lockUnlockBooking == 2}">
+                            <a id="ButtonAdd"  href="AirTicketDetail.smi?referenceNo=${param.referenceNo}&action=add" class="btn btn-success duplicate ${add_button}">
+                                <span id="SpanAdd" class="glyphicon glyphicon-plus"></span> Add
+                            </a>
+                        </c:if>
                     </div>
                 </div>
                 <!-- Air Table --> 
@@ -305,6 +310,9 @@
                                             <c:if test="${lockUnlockBooking == 1}">
                                                 <span class="glyphicon glyphicon-remove deleteicon" ></span>
                                             </c:if>
+                                            <c:if test="${lockUnlockBooking == 2}">
+                                                <span id="SpanGlyphiconRemove${loopCounter.count}" class="glyphicon glyphicon-remove deleteicon" onclick="setDisablePnrForm('${p.id}', '${p.pnr}');" data-toggle="modal" data-target="#DisablePnr" ></span>
+                                            </c:if>
                                         </c:if>
                                     </td>
                                 </tr>
@@ -339,6 +347,9 @@
                                     <c:set var="readonly" value="readonly" />
                                 </c:if>
                                 <c:if test="${detail.isBill == 0}">
+                                    <c:set var="readonly" value="" />
+                                </c:if>
+                                <c:if test="${lockUnlockBooking == 2}">
                                     <c:set var="readonly" value="" />
                                 </c:if>
                                 <tr>
@@ -387,6 +398,11 @@
                                         <c:if test="${lockUnlockBooking == 1}">
                                             <span class="glyphicon glyphicon-remove deleteicon" ></span>
                                         </c:if>
+                                        <c:if test="${lockUnlockBooking == 2}">
+                                            <a id="ButtonRemove${airdesc.count}" class="remCF" onclick="deleteDesc(${param.referenceNo},${detail.id})">
+                                                <span id="SpanRemove${airdesc.count}"  class="glyphicon glyphicon-remove deleteicon"></span>
+                                            </a>    
+                                        </c:if>
                                     </td>
                                     <c:if test="${airdesc.last}">
                                     <script>
@@ -427,17 +443,7 @@
                     </button>
                     <input type="hidden" id="flagAir" name="flagAir" value="${booking.master.flagAir}"/>
                     <input type="hidden" id="mBookingStatus" name="mBookingStatus" value="${booking.master.MBookingstatus.id}"/>
-                    <c:if test="${lockUnlockBooking == 0}">
-                        <c:if test="${isBillStatus == 0}">
-                            <button id="ButtonSave" type="submit" class="btn btn-success"><span class="fa fa-save"></span> Save</button>
-                        </c:if>
-                        <c:if test="${isBillStatus == 1}">
-                            <button class="btn btn-success disabled" ><span class="fa fa-save"></span> Save</button>
-                        </c:if>
-                    </c:if>
-                    <c:if test="${lockUnlockBooking == 1}">
-                        <button class="btn btn-success disabled" ><span class="fa fa-save"></span> Save</button>
-                    </c:if>                      
+                    <button id="ButtonSave" type="submit" class="btn btn-success"><span class="fa fa-save"></span> Save</button>                     
                 </div>
             </form>
         </div>

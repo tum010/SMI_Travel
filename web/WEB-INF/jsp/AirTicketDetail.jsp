@@ -45,9 +45,22 @@
 <input type="hidden" value="${master.id}" id="master-id">
 <c:set var="enableSave" value="${requestScope['EnableSave']}" />
 <c:set var="readonly" value="" />
-<c:if test="${isBillStatus == 1}">
+
+<c:if test="${lockUnlockBooking == 0}">
+    <c:if test="${isBillStatus == 0}">
+        <c:set var="readonly" value="" />
+    </c:if>
+    <c:if test="${isBillStatus == 1}">
+        <c:set var="readonly" value="readonly" />
+    </c:if>
+</c:if>
+<c:if test="${lockUnlockBooking == 1}">
     <c:set var="readonly" value="readonly" />
 </c:if>
+<c:if test="${lockUnlockBooking == 2}">
+    <c:set var="readonly" value="" />
+</c:if>
+
 <!--Header-->
 <section class="content-header" >
     <h1>
@@ -124,6 +137,9 @@
                                 </c:if>
                                 <c:if test="${lockUnlockBooking == 1}">
                                     <span class="input-group-addon"><span class="glyphicon-import glyphicon disabled"></span></span>
+                                </c:if>
+                                <c:if test="${lockUnlockBooking == 2}">
+                                    <span class="input-group-addon"><span data-toggle="modal" data-target="#ImportModal" class="glyphicon-import glyphicon"></span></span>
                                 </c:if>
                             </div>
                         </div>

@@ -35,8 +35,19 @@
 <input type="hidden" value="${booktype}" id="booktypetemp">
 
 <c:set var="readonly" value="" />
-<c:if test="${isBillStatus == 1}">
+<c:if test="${lockUnlockBooking == 0}">
+    <c:if test="${isBillStatus == 0}">
+        <c:set var="readonly" value="" />
+    </c:if>
+    <c:if test="${isBillStatus == 1}">
+        <c:set var="readonly" value="readonly" />
+    </c:if>
+</c:if>
+<c:if test="${lockUnlockBooking == 1}">
     <c:set var="readonly" value="readonly" />
+</c:if>
+<c:if test="${lockUnlockBooking == 2}">
+    <c:set var="readonly" value="" />
 </c:if>
 <c:set var="DescriptionSize" value="670px" />
 <c:if test="${booktype == 'i'}">

@@ -37,10 +37,28 @@
 <input type="hidden" value="${master.id}" id="master-id">
 <c:set var="readonly" value="" />
 <c:set var="disabled" value="" />
-<c:if test="${isBillStatus == 1}">
+
+<c:if test="${lockUnlockBooking == 0}">
+    <c:if test="${isBillStatus == 0}">
+        <c:set var="readonly" value="" />
+        <c:set var="disabled" value="" />
+    </c:if>
+    <c:if test="${isBillStatus == 1}">
+        <c:set var="readonly" value="readonly" />
+        <c:set var="disabled" value="disabled" />
+    </c:if>
+</c:if>
+<c:if test="${lockUnlockBooking == 1}">
     <c:set var="readonly" value="readonly" />
     <c:set var="disabled" value="disabled" />
 </c:if>
+<c:if test="${lockUnlockBooking == 2}">
+    <c:set var="readonly" value="" />
+    <c:set var="disabled" value="" />
+</c:if>
+
+
+
 <section class="content-header" >
     <h1>
         Booking - Day Tours Detail

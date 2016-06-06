@@ -42,8 +42,19 @@
 <input type="hidden" value="1" id="statusBar">
 <c:set var="enableSave" value="${requestScope['EnableSave']}" />
 <c:set var="readonly" value="" />
-<c:if test="${isBillStatus == 1}">
+<c:if test="${lockUnlockBooking == 0}">
+    <c:if test="${isBillStatus == 0}">
+        <c:set var="readonly" value="" />
+    </c:if>
+    <c:if test="${isBillStatus == 1}">
+        <c:set var="readonly" value="readonly" />
+    </c:if>
+</c:if>
+<c:if test="${lockUnlockBooking == 1}">
     <c:set var="readonly" value="readonly" />
+</c:if>
+<c:if test="${lockUnlockBooking == 2}">
+    <c:set var="readonly" value="" />
 </c:if>
 <input type="hidden" value="${readonly}" id="readonly">
 <section class="content-header" >
