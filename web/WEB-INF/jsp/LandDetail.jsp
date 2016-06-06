@@ -35,7 +35,7 @@
 <input type="hidden" value="${booktype}" id="booktypetemp">
 
 <c:set var="readonly" value="" />
-<c:if test="${lockUnlockBooking == 1}">
+<c:if test="${isBillStatus == 1}">
     <c:set var="readonly" value="readonly" />
 </c:if>
 <c:set var="DescriptionSize" value="670px" />
@@ -711,17 +711,17 @@
                                             </select>
                                         </td>                                     
                                         <td class="text-center">
-                                            <%--<c:if test="${lockUnlockBooking == 0}">--%>
+                                            <c:if test="${lockUnlockBooking == 0}">
                                                 <c:if test="${isBillStatus == 0}">
                                                     <a class="remCF"><span  onclick="deleteCityTable('${landCity.id}','${Counter.count}');" class="glyphicon glyphicon-remove deleteicon "></span></a>
                                                 </c:if>
                                                 <c:if test="${isBillStatus == 1}">
                                                     <span class="glyphicon glyphicon-remove deleteicon" ></span>
                                                 </c:if>
-                                            <%--</c:if>--%>
-                                            <%--<c:if test="${lockUnlockBooking == 1}">--%>
-                                                <!--<span class="glyphicon glyphicon-remove deleteicon" ></span>-->
-                                            <%--</c:if>--%>
+                                            </c:if>
+                                            <c:if test="${lockUnlockBooking == 1}">
+                                                <span class="glyphicon glyphicon-remove deleteicon" ></span>
+                                            </c:if>
                                         </td>
                                     </tr>                       
                                 </c:forEach>     
@@ -778,17 +778,17 @@
                                     <td> <input style="width: 80px" type="text" class="form-control time" value="${table.dayTime}" placeholder="HH:MM">  </td>
                                     <td> <input style="width: ${DescriptionSize}" maxlength ="255"  type="text" class="form-control" value="${table.description}">  </td>
                                     <td class="text-center">
-                                        <%--<c:if test="${lockUnlockBooking == 0}">--%>
+                                        <c:if test="${lockUnlockBooking == 0}">
                                             <c:if test="${isBillStatus == 0}">
                                                 <a class="remCF"><span  onclick="deletelist('${table.id}');" class="glyphicon glyphicon-remove deleteicon "></span></a>
                                             </c:if>
                                             <c:if test="${isBillStatus == 1}">
                                                 <span class="glyphicon glyphicon-remove deleteicon" ></span>
                                             </c:if>
-                                        <%--</c:if>--%>
-                                        <%--<c:if test="${lockUnlockBooking == 1}">--%>
-                                            <!--<span class="glyphicon glyphicon-remove deleteicon" ></span>-->
-                                        <%--</c:if>--%>
+                                        </c:if>
+                                        <c:if test="${lockUnlockBooking == 1}">
+                                            <span class="glyphicon glyphicon-remove deleteicon" ></span>
+                                        </c:if>
                                     </td>
                                 </tr>                       
                             </c:forEach>     
@@ -797,7 +797,7 @@
                 </div>
 
                 <div id="tr_ItineraryAddRow" class="text-center hide" style="padding-top: 10px">
-                    <%--<c:if test="${lockUnlockBooking == 0}">--%>
+                    <c:if test="${lockUnlockBooking == 0}">
                         <c:if test="${isBillStatus == 0}">
                             <a class="btn btn-success" onclick="AddRow()">
                                 <i class="glyphicon glyphicon-plus"></i> Add
@@ -808,12 +808,12 @@
                                 <span class="glyphicon glyphicon-plus"></span>Add</button>
                             </a>   
                         </c:if>
-                    <%--</c:if>--%>
-                    <%--<c:if test="${lockUnlockBooking == 1}">--%>
-<!--                        <a class="btn btn-success disabled">
+                    </c:if>
+                    <c:if test="${lockUnlockBooking == 1}">
+                        <a class="btn btn-success disabled">
                             <span class="glyphicon glyphicon-plus"></span>Add</button>
-                        </a>   -->
-                    <%--</c:if>--%>
+                        </a>   
+                    </c:if>
                 </div>
                 <input type="hidden" class="form-control" name="action" id="action" value="save" >  
                 <input type="hidden" class="form-control" name="Itenarary" id="Itenarary" >  
@@ -833,24 +833,24 @@
                             <button type="button" disabled id="saveland"  onclick="readdata()" class="btn btn-success"><span class="fa fa-save"></span> Save</button>
                         </c:when>
                         <c:otherwise>
-                            <%--<c:if test="${lockUnlockBooking == 0}">--%>
-                                <c:if test="${isBillStatus == 0}">
+                            <c:if test="${lockUnlockBooking == 0}">
+                                <%--<c:if test="${isBillStatus == 0}">--%>
                                     <button type="submit" id="savereal" onfocus="readdata()"  onmouseover="readdata()"  class="btn btn-success duplicate"><span class="fa fa-save"></span> Save</button>
-                                </c:if>
-                                <c:if test="${isBillStatus == 1}">
-                                    <c:choose>
-                                        <c:when test="${enableSave == 0}">
-                                            <button type="submit" id="savereal" onfocus="readdata()"  onmouseover="readdata()"  class="btn btn-success duplicate"><span class="fa fa-save"></span> Save</button>
-                                        </c:when>
-                                        <c:when test="${enableSave == 1}">
-                                            <button class="btn btn-success disabled" ><span class="fa fa-save"></span> Save</button>
-                                        </c:when>
-                                    </c:choose> 
-                                </c:if>
-                            <%--</c:if>--%>
-                            <%--<c:if test="${lockUnlockBooking == 1}">--%>
-                                <!--<button class="btn btn-success disabled"><span class="fa fa-save"></span> Save</button>-->
-                            <%--</c:if>--%>   
+                                <%--</c:if>--%>
+                                <%--<c:if test="${isBillStatus == 1}">--%>
+                                    <%--<c:choose>--%>
+                                        <%--<c:when test="${enableSave == 0}">--%>
+                                            <!--<button type="submit" id="savereal" onfocus="readdata()"  onmouseover="readdata()"  class="btn btn-success duplicate"><span class="fa fa-save"></span> Save</button>-->
+                                        <%--</c:when>--%>
+                                        <%--<c:when test="${enableSave == 1}">--%>
+                                            <!--<button class="btn btn-success disabled" ><span class="fa fa-save"></span> Save</button>-->
+                                        <%--</c:when>--%>
+                                    <%--</c:choose>--%> 
+                                <%--</c:if>--%>
+                            </c:if>
+                            <c:if test="${lockUnlockBooking == 1}">
+                                <button class="btn btn-success disabled"><span class="fa fa-save"></span> Save</button>
+                            </c:if>   
                         </c:otherwise>
                     </c:choose>
                 </div>              

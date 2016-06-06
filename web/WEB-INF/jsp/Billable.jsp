@@ -37,10 +37,7 @@
 <input type="hidden" value="${master.departmentNo}" id="departmentNo">
 <input type="hidden" value="${requestScope['result']}" id="resultText">
 <input type="hidden" value="${master.bookingType}" id="master-bookingType">
-<c:set var="readonly" value="" />
-<c:if test="${lockUnlockBooking == 1}">
-    <c:set var="readonly" value="readonly" />
-</c:if>
+
 <section class="content-header" >
     <h1>
         Booking - Billable
@@ -359,7 +356,7 @@
                                 </c:if>
                             </td>
                             <td>
-                                <input type="text" id="exrate-${Counter.count}" name="exrate-${Counter.count}" value="${b.exRate}" class="form-control text-right decimalexrate" ${readonly}/>
+                                <input type="text" id="exrate-${Counter.count}" name="exrate-${Counter.count}" value="${b.exRate}" class="form-control text-right decimalexrate" />
                             </td>
                             <td>      
                                
@@ -483,12 +480,12 @@
                     <button type="button" onclick="printTicketOrderReport()" class="btn btn-default disabled" id="btnPrintTicketOrder" name="btnPrintTicketOrder">
                         <span id="SpanPrintTicketOrder" class="glyphicon glyphicon-print"></span> Ticket Order
                     </button>
-                    <%--<c:if test="${lockUnlockBooking == 0}">--%>
+                    <c:if test="${lockUnlockBooking == 0}">
                         <button id="ButtonSave" name="ButtonSave" type="submit" onclick class="btn btn-success duplicate" ><span id="SpanButtonSave" class="fa fa-save"></span> Save</button>
-                    <%--</c:if>--%>
-                    <%--<c:if test="${lockUnlockBooking == 1}">--%>
-                        <!--<button class="btn btn-success disabled" ><span class="fa fa-save"></span> Save</button>-->
-                    <%--</c:if>--%>
+                    </c:if>
+                    <c:if test="${lockUnlockBooking == 1}">
+                        <button class="btn btn-success disabled" ><span class="fa fa-save"></span> Save</button>
+                    </c:if>
                     <button id="btnNew" name="btnNew" type="button" onclick="addNewBooking()" class="btn btn-success">
                         <span id="SpanNew" class="fa fa fa-plus-circle"></span> New
                     </button>   

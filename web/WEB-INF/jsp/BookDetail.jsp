@@ -26,9 +26,9 @@
 <c:set var="refno2" value="${fn:substring(param.referenceNo, 2,7)}" />
 <c:set var="lockUnlockBooking" value="${requestScope['LockUnlockBooking']}" />
 <c:set var="readonly" value="" />
-<c:if test="${lockUnlockBooking == 1}">
+<%--<c:if test="${lockUnlockBooking == 1}">
     <c:set var="readonly" value="readonly" />
-</c:if>
+</c:if>--%>
 <input type="hidden" value="1" id="enable-status">
 <input type="hidden" value="${param.action}" id="actionIDown">
 <input type="hidden" id="saveText" name="saveText" value="${status}">
@@ -303,14 +303,14 @@
 
                 <!--Save-->
                 <div class="text-center" style="margin-top: 10px">
-                    <%--<c:if test="${lockUnlockBooking == 0}">--%>
+                    <c:if test="${lockUnlockBooking == 0}">
                         <button id="BookDetailButtonSave" type="submit" class="btn btn-success duplicate" >
                             <span id="BookDetailSpanSave" class="fa fa-save"></span> Save
                         </button>                           
-                    <%--</c:if>--%>
-                    <%--<c:if test="${lockUnlockBooking == 1}">--%>
-                        <!--<button class="btn btn-success disabled" ><span class="fa fa-save"></span> Save</button>-->
-                    <%--</c:if>--%> 
+                    </c:if>
+                    <c:if test="${lockUnlockBooking == 1}">
+                        <button class="btn btn-success disabled" ><span class="fa fa-save"></span> Save</button>
+                    </c:if> 
                 </div>
 
 

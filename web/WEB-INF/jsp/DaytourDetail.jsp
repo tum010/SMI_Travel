@@ -37,7 +37,7 @@
 <input type="hidden" value="${master.id}" id="master-id">
 <c:set var="readonly" value="" />
 <c:set var="disabled" value="" />
-<c:if test="${lockUnlockBooking == 1}">
+<c:if test="${isBillStatus == 1}">
     <c:set var="readonly" value="readonly" />
     <c:set var="disabled" value="disabled" />
 </c:if>
@@ -278,7 +278,12 @@
                         <label class="control-label text-right">Value&nbsp;List</lable>
                     </div>
                     <div class="col-md-10 text-right" >
-                        <a name="ButtonPriceList" id="ButtonPriceList" class="btn btn-primary btn-sm " ${disabled} data-toggle="modal" data-target="#PriceModal" >Price List</a>
+                        <c:if test="${isBillStatus == 0}">
+                            <a name="ButtonPriceList" id="ButtonPriceList" class="btn btn-primary btn-sm"  data-toggle="modal" data-target="#PriceModal" >Price List</a>
+                        </c:if>
+                        <c:if test="${isBillStatus == 1}">
+                            <a name="ButtonPriceList" id="ButtonPriceList" class="btn btn-primary btn-sm disabled"  data-toggle="modal" data-target="#" >Price List</a>
+                        </c:if>
                     </div>
                     <!--</div>-->
                 </div>
@@ -435,24 +440,24 @@
                 <!--</div>-->
                 <div class="col-xs-12 form-group"  ></div>
                 <div class="text-center" style="margin-top: 20px">
-                    <%--<c:if test="${lockUnlockBooking == 0}">--%>
-                        <c:if test="${isBillStatus == 0}">
+                    <c:if test="${lockUnlockBooking == 0}">
+                        <%--<c:if test="${isBillStatus == 0}">--%>
                             <button id="ButtonSave" type="submit" onclick="submitAction();" class="btn btn-success"><span class="fa fa-save"></span> Save</button>
-                        </c:if>
-                        <c:if test="${isBillStatus == 1}">
-                            <c:choose>
-                                <c:when test="${enableSave == 0}">
-                                    <button id="ButtonSave" type="submit" onclick="submitAction();" class="btn btn-success duplicate"><span class="fa fa-save"></span> Save</button>
-                                </c:when>
-                                <c:when test="${enableSave == 1}">
-                                    <button class="btn btn-success disabled" ><span class="fa fa-save"></span> Save</button>
-                                </c:when>
-                            </c:choose> 
-                        </c:if>
-                    <%--</c:if>--%>
-                    <%--<c:if test="${lockUnlockBooking == 1}">--%>
-                        <!--<button class="btn btn-success disabled"><span class="fa fa-save"></span> Save</button>-->
-                    <%--</c:if>--%>   
+                        <%--</c:if>--%>
+                        <%--<c:if test="${isBillStatus == 1}">--%>
+                            <%--<c:choose>--%>
+                                <%--<c:when test="${enableSave == 0}">--%>
+                                    <!--<button id="ButtonSave" type="submit" onclick="submitAction();" class="btn btn-success duplicate"><span class="fa fa-save"></span> Save</button>-->
+                                <%--</c:when>--%>
+                                <%--<c:when test="${enableSave == 1}">--%>
+                                    <!--<button class="btn btn-success disabled" ><span class="fa fa-save"></span> Save</button>-->
+                                <%--</c:when>--%>
+                            <%--</c:choose>--%> 
+                        <%--</c:if>--%>
+                    </c:if>
+                    <c:if test="${lockUnlockBooking == 1}">
+                        <button class="btn btn-success disabled"><span class="fa fa-save"></span> Save</button>
+                    </c:if>   
                     <input type="hidden" name="action" id="action" value="${param.action}">
                 </div>
             </form>

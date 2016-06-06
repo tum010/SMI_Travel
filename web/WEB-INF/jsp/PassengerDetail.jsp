@@ -28,9 +28,9 @@
 <input type="hidden" value="${master.departmentNo}" id="departmentNo">
 <input type="hidden" value="${master.id}" id="master-id">
 <c:set var="readonly" value="" />
-<c:if test="${lockUnlockBooking == 1}">
+<%--<c:if test="${lockUnlockBooking == 1}">
     <c:set var="readonly" value="readonly" /> 
-</c:if>
+</c:if>--%>
 <section class="content-header" >
     <h1>
         Booking - Passenger
@@ -298,12 +298,12 @@
                                 <input name="id" value="${param.id}"type="hidden">
                                 <input name="master" value="${passenger.getMaster().getId()}"type="hidden">
                                 <input name="referenceNo" value="${param.referenceNo}"type="hidden">
-                                <%--<c:if test="${lockUnlockBooking == 0}">--%>
+                                <c:if test="${lockUnlockBooking == 0}">
                                     <button id="ButtonSave" class="btn btn-success duplicate" type="submit"><span class="fa fa-save"></span> Save</button>
-                                <%--</c:if>--%>
-                                <%--<c:if test="${lockUnlockBooking == 1}">--%>
-                                    <!--<button class="btn btn-success disabled" ><span class="fa fa-save"></span> Save</button>-->
-                                <%--</c:if>--%> 
+                                </c:if>
+                                <c:if test="${lockUnlockBooking == 1}">
+                                    <button class="btn btn-success disabled" ><span class="fa fa-save"></span> Save</button>
+                                </c:if> 
                             </div>
                         </div>
                     </div>

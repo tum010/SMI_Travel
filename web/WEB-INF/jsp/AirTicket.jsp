@@ -52,9 +52,6 @@
     </c:otherwise>
 </c:choose>
 <c:set var="readonly" value="" />
-<c:if test="${lockUnlockBooking == 1}">
-    <c:set var="readonly" value="readonly" />
-</c:if>
 
 <!--Header-->
 <section class="content-header" >
@@ -338,6 +335,12 @@
                             <tbody>
                             <input type="text" class="hidden" id="counter" name="counter" value="1" />
                             <c:forEach var="detail" items="${airticketDescs}" varStatus="airdesc">
+                                <c:if test="${detail.isBill == 1}">
+                                    <c:set var="readonly" value="readonly" />
+                                </c:if>
+                                <c:if test="${detail.isBill == 0}">
+                                    <c:set var="readonly" value="" />
+                                </c:if>
                                 <tr>
                                     <td class="hidden"><input type="text" class="hidden" id="row-${airdesc.count}-id" name="row-${airdesc.count}-id" value="${detail.id}" /></td>
                                     <td><input  type="text" class="form-control" id="row-${airdesc.count}-detail" name="row-${airdesc.count}-detail" value="${detail.detail}" maxlength="100"/></td>
@@ -355,7 +358,9 @@
                                             </c:forEach>
                                         </select>                                       
                                     </td>
-                                    <td><input  type="text" class="form-control decimal" id="row-${airdesc.count}-amount" name="row-${airdesc.count}-amount" value="${detail.amount}" maxlength="11" ${readonly} /></td>
+                                    <td>
+                                        <input  type="text" class="form-control decimal" id="row-${airdesc.count}-amount" name="row-${airdesc.count}-amount" value="${detail.amount}" maxlength="11" ${readonly} />
+                                    </td>
                                     <td>
                                         <select id="row-${airdesc.count}-currency" name="row-${airdesc.count}-currency" class="form-control">
                                             <option id="" value="">---------</option>
@@ -370,12 +375,12 @@
                                     </td>
                                     <td class="text-center">
                                         <c:if test="${lockUnlockBooking == 0}">
-                                            <c:if test="${isBillStatus == 0}">
+                                            <c:if test="${detail.isBill == 0}">
                                                 <a id="ButtonRemove${airdesc.count}" class="remCF" onclick="deleteDesc(${param.referenceNo},${detail.id})">
                                                     <span id="SpanRemove${airdesc.count}"  class="glyphicon glyphicon-remove deleteicon"></span>
                                                 </a>    
                                             </c:if>
-                                            <c:if test="${isBillStatus == 1}">
+                                            <c:if test="${detail.isBill == 1}">
                                                 <span class="glyphicon glyphicon-remove deleteicon" ></span>
                                             </c:if>
                                         </c:if>
@@ -422,17 +427,17 @@
                     </button>
                     <input type="hidden" id="flagAir" name="flagAir" value="${booking.master.flagAir}"/>
                     <input type="hidden" id="mBookingStatus" name="mBookingStatus" value="${booking.master.MBookingstatus.id}"/>
-                    <%--<c:if test="${lockUnlockBooking == 0}">--%>
+                    <c:if test="${lockUnlockBooking == 0}">
                         <c:if test="${isBillStatus == 0}">
                             <button id="ButtonSave" type="submit" class="btn btn-success"><span class="fa fa-save"></span> Save</button>
                         </c:if>
                         <c:if test="${isBillStatus == 1}">
                             <button class="btn btn-success disabled" ><span class="fa fa-save"></span> Save</button>
                         </c:if>
-                    <%--</c:if>--%>
-                    <%--<c:if test="${lockUnlockBooking == 1}">--%>
-                        <!--<button class="btn btn-success disabled" ><span class="fa fa-save"></span> Save</button>-->
-                    <%--</c:if>--%>                      
+                    </c:if>
+                    <c:if test="${lockUnlockBooking == 1}">
+                        <button class="btn btn-success disabled" ><span class="fa fa-save"></span> Save</button>
+                    </c:if>                      
                 </div>
             </form>
         </div>
