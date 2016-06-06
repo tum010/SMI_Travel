@@ -325,6 +325,7 @@ function FormulaAddRow(row) {
     });
     var tempCount = parseInt($("#roomCounter").val()) + 1;
     $("#roomCounter").val(tempCount);
+    runningPassengerNo();
 }
 function deleteRoom(hotelId, roomId) {
     console.log(hotelId + ":" + roomId);
@@ -580,4 +581,16 @@ function DeleteRow(hotelId, rowType, id, cCount) {
         }
     }
     $('#DeleteHotel').modal('hide');
+}
+
+function runningPassengerNo(){
+    var passengerCounter = parseInt($("#passengerCounter").val());
+    var row = 1;
+    for(var i = 1; i <= passengerCounter; i++){
+        var no = $("#row-passenger-" + i + "-no").val();
+        if(no !== undefined){
+            $("#row-passenger-" + i + "-no").html(row);
+            row += 1;
+        }
+    }
 }

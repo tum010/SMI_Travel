@@ -101,7 +101,7 @@ public class HotelVoucherImpl   implements  HotelVoucherDao{
             }
         }
 
-        List<String> QueryPassengerList = session.createSQLQuery(" SELECT * FROM `hotel_voucher_passenger` where hotel_id =  " + hotelID)
+        List<String> QueryPassengerList = session.createSQLQuery(" SELECT * FROM `hotel_voucher_passenger` where hotel_id =  " + hotelID + " ORDER BY passenger_id ")
                 .addScalar("passenger_name", Hibernate.STRING)
                 .list();
 

@@ -239,7 +239,7 @@ function addFight(rowId) {
             + '<div class="form-group">'
             + '<div class="input-group ">'
             + '<input type="hidden" class="form-control departureid" id="departure-' + rowId + '-id" name="departure-' + rowId + '-id">'
-            + '<input type="hidden" class="form-control departurecode" data-id="' + rowId + '" id="departure-' + rowId + '-code" name="departure-' + rowId + '-code" placeholder=test>'
+            + '<input type="hidden" class="form-control departurecode" data-id="' + rowId + '" id="departure-' + rowId + '-code" name="departure-' + rowId + '-code" >'
             + '<input type="text" class="form-control departurecodeVal" data-id="' + rowId + '" id="departure-' + rowId + '-codeVal" name="departure-' + rowId + '-codeVal" >'
             + '<span class="input-group-addon" data-toggle="modal" data-target="#DepartureModal" onclick="get_id(' + rowId + ')">'
             + '<i id="datadepload-'+rowId+'" class="fa fa-spinner fa-spin hidden"></i>'
@@ -276,7 +276,7 @@ function addFight(rowId) {
             + '<div class="form-group">'
             + '<div class="input-group ">'
             + '<input type="hidden" class="form-control arrivalid" id="arrival-' + rowId + '-id" name="arrival-' + rowId + '-id">'
-            + '<input type="hidden" class="form-control arrivalcode" data-id="' + rowId + '" id="arrival-' + rowId + '-code" name="arrival-' + rowId + '-code"  placeholder="testArrive">'
+            + '<input type="hidden" class="form-control arrivalcode" data-id="' + rowId + '" id="arrival-' + rowId + '-code" name="arrival-' + rowId + '-code" >'
             + '<input type="text" class="form-control arrivalcodeVal" data-id="' + rowId + '" id="arrival-' + rowId + '-codeVal" name="arrival-' + rowId + '-codeVal">'
             + '<span class="input-group-addon" data-toggle="modal" data-target="#ArrivalModal" onclick="get_id(' + rowId + ')">'
             + '<i id="dataarrload-'+rowId+'" class="fa fa-spinner fa-spin hidden"></i>'
@@ -433,6 +433,16 @@ function addFight(rowId) {
         pick12HourFormat: false,
         format: 'HH:mm'
     });
+    $(".decimal").inputmask({
+        alias: "decimal",
+        integerDigits: 8,
+        groupSeparator: ',',
+        autoGroup: true,
+        digits: 2,
+        allowMinus: false,
+        digitsOptional: false,
+        placeholder: "0"
+    });
     $("div").find('.input-group-addon').click(function () {
         var position = $(this).offset();
         console.log("positon :" + position.top);
@@ -525,7 +535,7 @@ function CallAjaxDepartureAirportDummy(param,count){
      var depListCode= [];
      var depListName= [];
      var depid , depcode ,depname;
-     $(".departurecodeVal").autocomplete("destroy");
+     $("#departure-" + count + "-codeVal").autocomplete("destroy");
      try {
         $.ajax({
             type: "POST",
@@ -551,39 +561,48 @@ function CallAjaxDepartureAirportDummy(param,count){
                     }                 
                     $("#datadepload-"+count).addClass("hidden"); 
                 }
-                $(".departureid").val(depid);
-                $(".departurecode").val(depcode);
-                $(".departurename").val(depname);
+//                $(".departureid").val(depid);
+//                $(".departurecode").val(depcode);
+//                $(".departurename").val(depname);
+                
+                $("#departure-" + count + "-id").val(depid);
+                $("#departure-" + count + "-code").val(depcode);
+                $("#departure-" + count + "-name").val(depname);
 
-                $(".departurecodeVal").autocomplete({
+                $("#departure-" + count + "-codeVal").autocomplete({
                     source: depArray,
                     close: function(){
-                        $(".departurecodeVal").trigger("keyup");
-                        var depselect = $(".departurecodeVal").val();
+                        $("#departure-" + count + "-codeVal").trigger("keyup");
+                        var depselect = $("#departure-" + count + "-codeVal").val();
                         for(var i =0;i<depListId.length;i++){
                             if((depselect==depListName[i])||(depselect==depListCode[i])){      
-                                $(".departureid").val(depListId[i]);
-                                $(".departurecode").val(depListCode[i]);
-                                $(".departurecodeVal").val(depListCode[i]);
-                                $(".departurename").val(depListName[i]);
+//                                $(".departureid").val(depListId[i]);
+//                                $(".departurecode").val(depListCode[i]);
+//                                $(".departurecodeVal").val(depListCode[i]);
+//                                $(".departurename").val(depListName[i]);
+
+                                $("#departure-" + count + "-id").val(depListId[i]);
+                                $("#departure-" + count + "-code").val(depListCode[i]);
+                                $("#departure-" + count + "-codeVal").val(depListCode[i]);
+                                $("#departure-" + count + "-name").val(depListName[i]);
                             }                 
                         }   
                     }
                  });
                 
-                var selectval = $(".departurecodeVal").val();
+                var selectval = $("#departure-" + count + "-codeVal").val();
                 for(var i =0;i<depListId.length;i++){
                     if(selectval==depListName[i]){
-                        $(".departurecodeVal").val(depListCode[i]);
+                        $("#departure-" + count + "-codeVal").val(depListCode[i]);
                     }
                 }
                 if(depListCode.length === 1){
                     showflagDepDum = 0;
-                    $(".departurecodeVal").val(depListCode[0]);
+                    $("#departure-" + count + "-codeVal").val(depListCode[0]);
                 }
                 var event = jQuery.Event('keydown');
                 event.keyCode = 40;
-                $(".departurecodeVal").trigger(event);
+                $("#departure-" + count + "-codeVal").trigger(event);
             }, error: function(msg) {
                 console.log('auto Departure Dummy ERROR');
                 $("#datadepload-"+count).addClass("hidden");
@@ -600,7 +619,7 @@ function CallAjaxArraivalAirportDummy(param,count){
      var arrListCode= [];
      var arrListName= [];
      var arrid , arrcode ,arrname;
-     $(".arrivalcodeVal").autocomplete("destroy");
+     $("#arrival-" + count + "-codeVal").autocomplete("destroy");
      try {
         $.ajax({
             type: "POST",
@@ -626,39 +645,48 @@ function CallAjaxArraivalAirportDummy(param,count){
                     }                 
                     $("#dataarrload-"+count).addClass("hidden"); 
                 }
-                $(".arrivalid").val(arrid);
-                $(".arrivalcode").val(arrcode);
-                $(".arrivalname").val(arrname);
+//                $(".arrivalid").val(arrid);
+//                $(".arrivalcode").val(arrcode);
+//                $(".arrivalname").val(arrname);
+                
+                $("#arrival-" + count + "-id").val(arrid);
+                $("#arrival-" + count + "-code").val(arrcode);
+                $("#arrival-" + count + "-name").val(arrname);
 
-                $(".arrivalcodeVal").autocomplete({
+                $("#arrival-" + count + "-codeVal").autocomplete({
                     source: arrArray,
                     close: function(){
-                        $(".arrivalcodeVal").trigger("keyup");
-                        var arrselect = $(".arrivalcodeVal").val();
+                        $("#arrival-" + count + "-codeVal").trigger("keyup");
+                        var arrselect = $("#arrival-" + count + "-codeVal").val();
                         for(var i =0;i<arrListId.length;i++){
                             if((arrselect==arrListName[i])||(arrselect==arrListCode[i])){      
-                                $(".arrivalid").val(arrListId[i]);
-                                $(".arrivalcode").val(arrListCode[i]);
-                                $(".arrivalcodeVal").val(arrListCode[i]);
-                                $(".arrivalname").val(arrListName[i]);
+//                                $(".arrivalid").val(arrListId[i]);
+//                                $(".arrivalcode").val(arrListCode[i]);
+//                                $(".arrivalcodeVal").val(arrListCode[i]);
+//                                $(".arrivalname").val(arrListName[i]);
+                                
+                                $("#arrival-" + count + "-id").val(arrListId[i]);
+                                $("#arrival-" + count + "-code").val(arrListCode[i]);
+                                $("#arrival-" + count + "-codeVal").val(arrListCode[i]);
+                                $("#arrival-" + count + "-name").val(arrListName[i]);
                             }                 
                         }   
                     }
                  });
                 
-                var selectval = $(".arrivalcodeVal").val();
+                var selectval = $("#arrival-" + count + "-codeVal").val();
                 for(var i =0;i<arrListId.length;i++){
                     if(selectval==arrListName[i]){
-                        $(".arrivalcodeVal").val(arrListCode[i]);
+                        $("#arrival-" + count + "-codeVal").val(arrListCode[i]);
                     }
                 }
                 if(arrListId.length === 1){
                     showflagArrDum = 0;
-                    $(".arrivalcodeVal").val(arrListCode[0]);
+                    $("#arrival-" + count + "-codeVal").val(arrListCode[0]);
                 }
                 var event = jQuery.Event('keydown');
                 event.keyCode = 40;
-                $(".arrivalcodeVal").trigger(event);
+                $("#arrival-" + count + "-codeVal").trigger(event);
             }, error: function(msg) {
                 console.log('auto Arrival Dummy ERROR');
                 $("#dataarrload-"+count).addClass("hidden");

@@ -137,11 +137,13 @@ public class ReceiptImpl implements ReceiptDao{
             String textmoneypoint = (utilityFunction.changPoint(String.valueOf(part2)));
             String currency = "";
             if("JPY".equalsIgnoreCase(curtemp)){
-                currency = " YEN";
+//                currency = " YEN";
+                currency = " JPY";
             }else if("THB".equalsIgnoreCase(curtemp)){
                 currency = " BAHT";
             }else if("USD".equalsIgnoreCase(curtemp)){
-                currency = " DOLLAR";
+//                currency = " DOLLAR";
+                currency = " USD";
             }else{
                 currency = curtemp;
             }
@@ -493,11 +495,13 @@ public class ReceiptImpl implements ReceiptDao{
             String textmoneypoint = (utilityFunction.changPoint(String.valueOf(part2)));
             String currency = "";
             if("JPY".equalsIgnoreCase(curtemp)){
-                currency = " YEN";
+//                currency = " YEN";
+                currency = " JPY";
             }else if("THB".equalsIgnoreCase(curtemp)){
                 currency = " BAHT";
             }else if("USD".equalsIgnoreCase(curtemp)){
-                currency = " DOLLAR";
+//                currency = " DOLLAR";
+                currency = " USD";
             }
             String totalWord = textmoney + currency + textmoneypoint;
             if("".equalsIgnoreCase(textmoneypoint.trim())){
