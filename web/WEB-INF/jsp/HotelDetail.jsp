@@ -160,7 +160,7 @@
                                             </span>
                                         </div>
                                     </c:if>
-                                    <c:if test="${lockUnlockBooking == 0}">
+                                    <c:if test="${lockUnlockBooking == 0 || lockUnlockBooking == 2}">
                                         <div class='input-group date' >
                                             <fmt:formatDate value="${hotelBooking.checkin}" var="checkIn" pattern="dd-MM-yyyy" />
                                             <input id="checkin" name="checkin" type='text' class="form-control datemask"  data-date-format="DD-MM-YYYY" value="${checkIn}" placeholder="DD-MM-YYYY" ${readonly}/>
@@ -181,7 +181,7 @@
                                             </span>
                                         </div>
                                     </c:if>
-                                    <c:if test="${lockUnlockBooking == 0}">
+                                    <c:if test="${lockUnlockBooking == 0 || lockUnlockBooking == 2}">
                                         <div class='input-group date'>
                                             <fmt:formatDate value="${hotelBooking.checkout}" var="checkOut" pattern="dd-MM-yyyy" />
                                             <input id="checkout" name="checkout" type='text'  data-date-format="DD-MM-YYYY" class="form-control datemask" value="${checkOut}" placeholder="DD-MM-YYYY" ${readonly}/>
@@ -392,7 +392,12 @@
                                         </c:if>
                                         <c:if test="${lockUnlockBooking == 1}">
                                             <span class="glyphicon glyphicon-remove deleteicon" ></span>
-                                        </c:if>    
+                                        </c:if>
+                                        <c:if test="${lockUnlockBooking == 2}">
+                                            <a id="ButtonRemove${formula.count}" class="remCF" onclick="ConfirmDelete('${hotelBooking.id}', '1', '${re.id}', '${formula.count}')">
+                                                <span id="SpanRemove${formula.count}" class="glyphicon glyphicon-remove deleteicon"></span>
+                                            </a> 
+                                        </c:if>
                                     </td>
                                 <script>
                                     $(document).ready(function () {
@@ -451,7 +456,12 @@
                                         </c:if>
                                         <c:if test="${lockUnlockBooking == 1}">
                                             <span class="glyphicon glyphicon-remove deleteicon" ></span>
-                                        </c:if>                                         
+                                        </c:if>
+                                        <c:if test="${lockUnlockBooking == 2}">
+                                            <a id="AdditionalButtonRemove${additional.count}" class="remCF" onclick="ConfirmDelete('${hotelBooking.id}', '2', '${re.id}', '${additional.count}')">
+                                                <span id="AdditionalSpanRemove${additional.count}" class="glyphicon glyphicon-remove deleteicon"></span>
+                                            </a>     
+                                        </c:if>
                                     </td>
                                 <script>
                                     $(document).ready(function () {
@@ -528,7 +538,12 @@
                                         </c:if>
                                         <c:if test="${lockUnlockBooking == 1}">
                                             <span class="glyphicon glyphicon-remove deleteicon" ></span>
-                                        </c:if>  
+                                        </c:if> 
+                                        <c:if test="${lockUnlockBooking == 2}">
+                                            <a id="PassengerButtonRemove${passenger.count}" class="remCF" onclick="ConfirmDelete('${hotelBooking.id}', '3', '${pa.id}', '${passenger.count}')">
+                                                <span id="PassengerSpanRemove${passenger.count}" class="glyphicon glyphicon-remove deleteicon"></span>
+                                            </a>
+                                        </c:if>
                                     </td>
                                 </tr>
                                 <script>
@@ -558,7 +573,7 @@
                     </c:if>
                     <input name="id" value="${param.id}"type="hidden">
                     <input name="referenceNo" value="${param.referenceNo}"type="hidden">
-                    <c:if test="${lockUnlockBooking == 0}">
+                    <%--<c:if test="${lockUnlockBooking == 0}">--%>
                         <%--<c:if test="${isBillStatus == 0}">--%>
                             <button id="hotelSave" name="hotelSave" type="submit" class="btn btn-success duplicate" ><span class="fa fa-save"></span> Save</button>
                         <%--</c:if>--%>
@@ -572,10 +587,10 @@
                                 <%--</c:when>--%>
                             <%--</c:choose>--%> 
                         <%--</c:if>--%>
-                    </c:if>
-                    <c:if test="${lockUnlockBooking == 1}">
-                        <button class="btn btn-success disabled" ><span class="fa fa-save"></span> Save</button>
-                    </c:if>    
+                    <%--</c:if>--%>
+                    <%--<c:if test="${lockUnlockBooking == 1}">--%>
+                        <!--<button class="btn btn-success disabled" ><span class="fa fa-save"></span> Save</button>-->
+                    <%--</c:if>--%>    
                 </div>
             </form>
         </div>

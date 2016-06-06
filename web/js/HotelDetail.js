@@ -256,7 +256,7 @@ $(document).ready(function () {
     FormulaAddRow(parseInt($("#table-formula-size").val()) + 1);
     var templock = parseInt($("#requestLock").val());
     $("#formula-table").on('click', '.newRemCF', function () {
-        if(templock == 0){
+        if(templock != 1){
         //console.log('remove');
             $(this).parent().parent().remove();
             var rowAll = $("#formula-table tr").length;
@@ -348,7 +348,7 @@ $(document).ready(function () {
     AdditionAddRow(parseInt($("#table-additional-size").val()) + 1);
     var templock = parseInt($("#requestLock").val());
     $("#addition-table").on('click', '.newRemCF', function () {
-        if(templock == 0){
+        if(templock != 1){
             $(this).parent().parent().remove();
             var rowAll = $("#addition-table tr").length;
             console.log("rowAll : " + rowAll);
@@ -434,7 +434,7 @@ $(document).ready(function () {
     PassengerAddRow((parseInt($("#table-passenger-size").val()) + 1));
     var templock = parseInt($("#requestLock").val());
     $("#passenger-table").on('click', '.newRemCF', function () {
-        if(templock == 0){
+        if(templock != 1){
             $(this).parent().parent().remove();
             var rowAll = $("#passenger-table tr").length;
             console.log("rowAll : " + rowAll);

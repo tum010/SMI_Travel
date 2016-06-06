@@ -166,6 +166,9 @@
                                         <span class="glyphicon glyphicon-plus"></span>Add</button>
                                     </a>   
                                 </c:if>
+                                <c:if test="${lockUnlockBooking == 2}">
+                                    <a id="btn-add"  class="btn btn-success" data-toggle="collapse" data-parent="#accordion" aria-controls="collapseExample"><span class="glyphicon glyphicon-plus"></span> Add</a>
+                                </c:if>
                             </c:otherwise>
                         </c:choose>
 
@@ -298,7 +301,10 @@
                                             </c:if>
                                             <c:if test="${lockUnlockBooking == 1}">
                                                 <span class="glyphicon glyphicon-remove deleteicon" ></span>
-                                            </c:if>                                                
+                                            </c:if>
+                                            <c:if test="${lockUnlockBooking == 2}"> 
+                                                <span id="SpanRemove${i.count}" class="glyphicon glyphicon-remove deleteicon" onclick="setDisableFlight('${flight.id}', '${flight.flightNo}');" data-toggle="modal" data-target="#DisableFlight" ></span>
+                                            </c:if>
                                         </c:if>
                                         <c:if test="${flight.MItemstatus.id == 3}">
                                             <span id="SpanPlus${i.count}" class="glyphicon glyphicon-plus addicon" onclick="setEnableFlight('${flight.id}', '${flight.flightNo}');" data-toggle="modal" data-target="#EnableFlight" ></span>
@@ -1103,6 +1109,11 @@
                                 <span class="glyphicon glyphicon-plus"></span>Add</button>
                             </a>   
                         </c:if>
+                        <c:if test="${lockUnlockBooking == 2}">
+                            <a id="btn-addPassenger" class="btn btn-success" data-toggle="collapse" data-parent="#accordion"  aria-controls="collapseExample">
+                                <span class="glyphicon glyphicon-plus"></span> Add
+                            </a>
+                        </c:if>
                         <%--</c:if>--%>
                     </div>
                     <div class="panel-body">
@@ -1195,7 +1206,12 @@
                                             </c:if>
                                             <c:if test="${lockUnlockBooking == 1}">
                                                 <span class="glyphicon glyphicon-remove deleteicon" ></span>
-                                            </c:if>                                                
+                                            </c:if>
+                                            <c:if test="${lockUnlockBooking == 2}">
+                                                <a id="passenger_tableButtonRemove${pStatus.count}" href="#" class="confirm-delete" data-id="${passenger.id}">
+                                                    <span id="passenger_tableSpanRemove${pStatus.count}" class="glyphicon glyphicon-remove deleteicon"></span>
+                                                </a> 
+                                            </c:if>
                                        <%--</c:if>--%>
                                     </td>
                                 </tr>
@@ -1361,7 +1377,7 @@
                             <button type="button" disabled id="saveDetail" class="btn btn-success"><span class="fa fa-save"></span> Save</button>
                         </c:when>
                         <c:otherwise>
-                            <c:if test="${lockUnlockBooking == 0}">
+                            <%--<c:if test="${lockUnlockBooking == 0}">--%>
                                 <%--<c:if test="${isBillStatus == 0}">--%>
                                     <button id="ButtonSave" class="btn btn-success" type="submit"><span class="fa fa-save"></span> Save</button>
                                 <%--</c:if>--%>
@@ -1375,10 +1391,10 @@
                                         <%--</c:when>--%>
                                     <%--</c:choose>--%> 
                                 <%--</c:if>--%>
-                            </c:if>
-                            <c:if test="${lockUnlockBooking == 1}">
-                                <button class="btn btn-success disabled" ><span class="fa fa-save"></span> Save</button>
-                            </c:if> 
+                            <%--</c:if>--%>
+                            <%--<c:if test="${lockUnlockBooking == 1}">--%>
+                                <!--<button class="btn btn-success disabled" ><span class="fa fa-save"></span> Save</button>-->
+                            <%--</c:if>--%> 
                         </c:otherwise>
                     </c:choose>
                 </div>
@@ -1454,7 +1470,7 @@
                             });
 
                             $("#pnr_name").keyup(function (e) {
-                                if(${lockUnlockBooking == 0}){
+                                if(${lockUnlockBooking != 1}){
                                     if (e.keyCode === 13) {
                                         /*e.preventDefault();*/
                                         var name = $("#pnr_name").val();

@@ -373,7 +373,15 @@
                                         </c:if>
                                         <c:if test="${lockUnlockBooking == 1}">
                                             <span class="glyphicon glyphicon-remove deleteicon" ></span>
-                                        </c:if>   
+                                        </c:if>
+                                        <c:if test="${lockUnlockBooking == 2}">
+                                            <a id="RowPriceButtonRemove-${loop.count}"  name="RowPriceButtonRemove-${loop.count}"  ParentTrPriceId=""  class="RemovePriceRow">
+                                                <span id="RowPriceSpanRemove-${loop.count}"  name="RowPriceSpanRemove-${loop.count}"  
+                                                      class="glyphicon glyphicon-remove deleteicon" 
+                                                      onclick="DeletePrice('${item.id}', '${item.detail}');"
+                                                      data-toggle="modal" data-target="#DelPrice" ></span>
+                                            </a>
+                                        </c:if>    
                                         </td>
                                     </tr>
 
@@ -458,7 +466,7 @@
                 <!--</div>-->
                 <div class="col-xs-12 form-group"  ></div>
                 <div class="text-center" style="margin-top: 20px">
-                    <c:if test="${lockUnlockBooking == 0}">
+                    <%--<c:if test="${lockUnlockBooking == 0}">--%>
                         <%--<c:if test="${isBillStatus == 0}">--%>
                             <button id="ButtonSave" type="submit" onclick="submitAction();" class="btn btn-success"><span class="fa fa-save"></span> Save</button>
                         <%--</c:if>--%>
@@ -472,10 +480,10 @@
                                 <%--</c:when>--%>
                             <%--</c:choose>--%> 
                         <%--</c:if>--%>
-                    </c:if>
-                    <c:if test="${lockUnlockBooking == 1}">
-                        <button class="btn btn-success disabled"><span class="fa fa-save"></span> Save</button>
-                    </c:if>   
+                    <%--</c:if>--%>
+                    <%--<c:if test="${lockUnlockBooking == 1}">--%>
+                        <!--<button class="btn btn-success disabled"><span class="fa fa-save"></span> Save</button>-->
+                    <%--</c:if>--%>   
                     <input type="hidden" name="action" id="action" value="${param.action}">
                 </div>
             </form>

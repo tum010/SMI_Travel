@@ -199,7 +199,7 @@ $(document).ready(function () {
     AddRow(parseInt($("#counter").val()));
     var templock = parseInt($("#requestLock").val());
     $("#DetailTable").on('click', '.remCF', function () {
-        if(templock == 0){
+        if(templock != 1){
             //console.log('remove');
             $(this).parent().parent().remove();
             //$(this).parent().parent().hide();

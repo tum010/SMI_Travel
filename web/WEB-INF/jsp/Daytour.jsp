@@ -65,7 +65,7 @@
                     <h4><b>Day Tours</b></h4>
                 </div>
                 <div class="col-sm-2 col-sm-offset-4 text-right" style="padding-left: 26px">
-                    <c:if test="${lockUnlockBooking == 0}">
+                    <c:if test="${lockUnlockBooking == 0 || lockUnlockBooking == 2}">
                         <a id="Add" name="Add" href="DaytourDetail.smi?action=new&referenceNo=${param.referenceNo}" class="btn btn-success duplicate">
                             <span id="SpanAdd" name="SpanAdd" class="glyphicon glyphicon-plus"></span>Add
                         </a>
@@ -144,6 +144,9 @@
                                     <c:if test="${lockUnlockBooking == 1}">
                                         <span class="glyphicon glyphicon-remove deleteicon" ></span>
                                     </c:if>
+                                    <c:if test="${lockUnlockBooking == 2}">
+                                        <span id="SpanGlyphiconRemove" class="glyphicon glyphicon-remove deleteicon" onclick="setDisableDaytour('${item.id}', ' ${item.daytour.code}');" data-toggle="modal" data-target="#DaytourModal" ></span>
+                                    </c:if>
                                 </c:if>
                             </td>
                         </tr>
@@ -161,7 +164,7 @@
         <div class="col-sm-2 col-sm-offset-4 text-right" style="padding-left: 26px">
 
             <div class="form-actions pull-right" style="padding-right: 0px">
-                <c:if test="${lockUnlockBookingOther == 0}">
+                <c:if test="${lockUnlockBookingOther == 0 || lockUnlockBookingOther == 2}">
                     <a id="acs"  href="OtherDetail.smi?referenceNo=${param.referenceNo}&action=new&callPageFrom=FromDayTour" class="btn btn-success duplicate">
                         <span class="glyphicon glyphicon-plus"></span>Add</button>
                     </a>         
@@ -268,6 +271,9 @@
                             <c:if test="${lockUnlockBookingOther == 1}">
                                 <span class="glyphicon glyphicon-remove deleteicon" ></span>
                             </c:if>
+                            <c:if test="${lockUnlockBookingOther == 2}">
+                                <span class="glyphicon glyphicon-remove deleteicon"   onclick="getCouponCheck('${table.id}', ' ${table.product.code}');" data-toggle="modal" data-target="" ></span>                            
+                            </c:if>    
                         </c:if>                                   
                     </center>
                     </td>

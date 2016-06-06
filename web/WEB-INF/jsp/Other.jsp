@@ -108,7 +108,7 @@
 
                 <div class="row-fluid">
                     <div class="form-actions pull-right" style="padding-right: 20px">
-                        <c:if test="${lockUnlockBooking == 0}">
+                        <c:if test="${lockUnlockBooking == 0 || lockUnlockBooking == 2}">
                             <a href="OtherDetail.smi?referenceNo=${param.referenceNo}&action=new&callPageFrom=FromOther"><button type="button" id="acs" onclick=""  class="btn btn-success duplicate"><span class="glyphicon glyphicon-plus"></span>Add</button>  </a>  
                         </c:if>
                         <c:if test="${lockUnlockBooking == 1}">
@@ -206,6 +206,9 @@
                                             </c:if>
                                             <c:if test="${lockUnlockBooking == 1}">
                                                 <span class="glyphicon glyphicon-remove deleteicon" ></span>
+                                            </c:if>
+                                            <c:if test="${lockUnlockBooking == 2}">
+                                                <span class="glyphicon glyphicon-remove deleteicon"   onclick="getCouponCheck('${table.id}',' ${table.product.code}');" data-toggle="modal" data-target="" ></span>
                                             </c:if>
                                         </c:if>
                                         
