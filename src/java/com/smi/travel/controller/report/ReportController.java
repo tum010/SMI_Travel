@@ -158,6 +158,8 @@ public class ReportController extends SMITravelController {
         
         String BillFrom = request.getParameter("billFromName");
         String ClientTo = request.getParameter("clientCode");
+         
+        
         String ClientName = request.getParameter("clientName");
         String Payment  = request.getParameter("payment");
         String Accno  = request.getParameter("accNo");
@@ -308,6 +310,8 @@ public class ReportController extends SMITravelController {
                 billingFax = new String(billingFax.getBytes("ISO8859_1"),"UTF-8");
                 billingMail = new String(billingMail.getBytes("ISO8859_1"),"UTF-8");
                 billingDate = new String(billingDate.getBytes("ISO8859_1"),"UTF-8");
+                ClientTo = new String(ClientTo.getBytes("ISO8859_1"),"UTF-8");
+                ClientName = new String(ClientName.getBytes("ISO8859_1"),"UTF-8");
                 System.out.println("billingAttn :  "+billingAttn);
             } catch (UnsupportedEncodingException ex) {
                 ex.printStackTrace();
