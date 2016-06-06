@@ -236,7 +236,7 @@
 			<staticText>
 				<reportElement x="363" y="24" width="45" height="21" uuid="3f56065f-24d8-465f-a0ac-038c5ce7026b"/>
 				<textElement textAlignment="Right">
-					<font fontName="Tahoma" size="9" isBold="true" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<font fontName="Tahoma" size="10" isBold="true" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[TOTAL]]></text>
 			</staticText>
@@ -275,7 +275,7 @@
 			<textField pattern="" isBlankWhenNull="true">
 				<reportElement x="424" y="24" width="126" height="21" uuid="f6735a34-6ef1-4aee-931b-527b758d6d17"/>
 				<textElement textAlignment="Right">
-					<font fontName="Tahoma" size="9" isBold="true" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<font fontName="Tahoma" size="10" isBold="true" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{total} == null ? "0.00":$F{total}]]></textFieldExpression>
 			</textField>
