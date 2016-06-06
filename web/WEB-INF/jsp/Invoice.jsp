@@ -647,7 +647,7 @@
                                                                 <td ><input type="text" readonly  onfocusout="changeFormatGrossNumber(${taxdesc.count})" class="form-control decimal" id="InputGross${taxdesc.count}" name="InputGross${taxdesc.count}" value="${ind.gross}" ></td>
                                                                 <td><input type="text" class="form-control text-right decimal" id="InputAmount${taxdesc.count}" name="InputAmount${taxdesc.count}" value="${ind.amount}" onfocusout="changeFormatAmountNumber('${taxdesc.count}');"></td>
                                                                 <td class="priceCurrencyAmount">
-                                                                    <select id="SelectCurrencyAmount${taxdesc.count}" name="SelectCurrencyAmount${taxdesc.count}" class="form-control" onclick="" onchange="CalculateGrandTotal('')">
+                                                                    <select id="SelectCurrencyAmount${taxdesc.count}" name="SelectCurrencyAmount${taxdesc.count}" class="form-control" onclick="" onchange="CalculateGrandTotal(''); checkCurrency('${taxdesc.count}');">
                                                                         <option value='' ></option>
                                                                         <c:forEach var="cur" items="${listCurrency}">
                                                                             <c:set var="selectA" value="" />
@@ -769,7 +769,7 @@
                                                                 <td class="hidden" ><input type="text" onfocusout="changeFormatGrossNumber(${taxdesc.count})" class="form-control decimal" id="InputGross${taxdesc.count}" name="InputGross${taxdesc.count}" value="${ind.gross}" ></td>
                                                                 <td><input type="text" class="form-control decimal text-right" id="InputAmount${taxdesc.count}" name="InputAmount${taxdesc.count}" value="${ind.amount}" onfocusout="changeFormatAmountNumber('${taxdesc.count}');"></td>
                                                                 <td class="priceCurrencyAmount">
-                                                                    <select id="SelectCurrencyAmount${taxdesc.count}" name="SelectCurrencyAmount${taxdesc.count}" class="form-control" onclick="" onchange="CalculateGrandTotal('')">
+                                                                    <select id="SelectCurrencyAmount${taxdesc.count}" name="SelectCurrencyAmount${taxdesc.count}" class="form-control" onclick="" onchange="CalculateGrandTotal(''); checkCurrency('${taxdesc.count}');">
                                                                         <option value='' ></option>
                                                                         <c:forEach var="cur" items="${listCurrency}">
                                                                             <c:set var="selectA" value="" />

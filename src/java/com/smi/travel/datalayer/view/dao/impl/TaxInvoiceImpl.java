@@ -89,15 +89,15 @@ public class TaxInvoiceImpl implements TaxInvoiceReportDao{
             } else {
                 curamount = " " + util.ConvertString(B[16]) + " ";
             }
-            if(B[12] != null){
-                taxInvoiceView.setTotal(!"0.00".equalsIgnoreCase(util.ConvertString(B[12])) ? df.format(B[12]) : "0.00");
-            }
-            if(B[13] != null){
-                taxInvoiceView.setVat(!"0.00".equalsIgnoreCase(util.ConvertString(B[13])) ? df.format(B[13]) : "0.00");
-            }                        
-            if(B[11] != null){
-                taxInvoiceView.setAmount(!"0.00".equalsIgnoreCase(util.ConvertString(B[11])) ? df.format(B[11]) : "0.00");
-            }
+//            if(B[12] != null){
+                taxInvoiceView.setTotal(B[12] != null && !"0.00".equalsIgnoreCase(util.ConvertString(B[12])) ? df.format(B[12]) : "0.00");
+//            }
+//            if(B[13] != null){
+                taxInvoiceView.setVat(B[13] != null && !"0.00".equalsIgnoreCase(util.ConvertString(B[13])) ? df.format(B[13]) : "0.00");
+//            }                        
+//            if(B[11] != null){
+                taxInvoiceView.setAmount(B[11] != null && !"0.00".equalsIgnoreCase(util.ConvertString(B[11])) ? df.format(B[11]) : "0.00");
+//            }
            
             if(sign != null){
                 if("".equals(sign)){

@@ -629,7 +629,7 @@ function AddRowDetailBillAble(row, prod, des, cos, id, price, RefNo, cur, cur_c,
                 '<td class="hidden"><input type="text" class="form-control" id="InputVatTemp' + row + '" name="InputVatTemp' + row + '" value="' + vat + '" ></td>' +
                 '<td ' + vathidden + ' ><input type="text" readonly onfocusout="changeFormatGrossNumber(' + row + ')" class="form-control decimal text-right" id="InputGross' + row + '" name="InputGross' + row + '" value="" ></td>' +
                 '<td><input type="text" onfocusout="changeFormatAmountNumber(' + row + ');" class="form-control decimal text-right" id="InputAmount' + row + '" name="InputAmount' + row + '" value="' + price + '" ></td>' +
-                '<td class="priceCurrencyAmount"><select id="SelectCurrencyAmount' + row + '" name="SelectCurrencyAmount' + row + '" class="form-control" onclick="" onchange="CalculateGrandTotal(\'\')">' + selectC + '</select></td>' +
+                '<td class="priceCurrencyAmount"><select id="SelectCurrencyAmount' + row + '" name="SelectCurrencyAmount' + row + '" class="form-control" onclick="" onchange="CalculateGrandTotal(\'\'); checkCurrency(\'' + row + '\');">' + selectC + '</select></td>' +
                 '<td><input type="text" id="InputExRate' + row + '" onfocusout="changeFormatExRateNumber(' + row + ')" name="InputExRate' + row + '" class="form-control text-right decimalexrate" ></td>' +
                 '<td><input type="text" onfocusout="changeFormatAmountLocalNumber(' + row + ')" value="' + price + '" id="InputAmountLocal' + row + '" name="InputAmountLocal' + row + '" class="form-control text-right decimal" ></td>' +
                 '<td class="hidden"><input type="text" onfocusout="changeFormatAmountLocalTempNumber(' + row + ')" value="' + price + '" id="InputAmountLocalTemp' + row + '" name="InputAmountLocalTemp' + row + '"  ></td>' +
@@ -662,7 +662,7 @@ function AddRowDetailBillAble(row, prod, des, cos, id, price, RefNo, cur, cur_c,
                 '<td class="hidden"><input type="text" class="form-control" id="InputVatTemp' + row + '" name="InputVatTemp' + row + '" value="' + vat + '" ></td>' +
                 '<td ' + vathidden + ' ><input type="text" readonly onfocusout="changeFormatGrossNumber(' + row + ')" class="form-control decimal text-right" id="InputGross' + row + '" name="InputGross' + row + '" value="" ></td>' +
                 '<td><input type="text" onfocusout="changeFormatAmountNumber(' + row + ');" class="form-control decimal text-right" id="InputAmount' + row + '" name="InputAmount' + row + '"  value="' + price + '" ></td>' +
-                '<td class="priceCurrencyAmount"><select id="SelectCurrencyAmount' + row + '" name="SelectCurrencyAmount' + row + '" class="form-control" onclick="" onchange="CalculateGrandTotal(\'\')">' + selectC + '</select></td>' +
+                '<td class="priceCurrencyAmount"><select id="SelectCurrencyAmount' + row + '" name="SelectCurrencyAmount' + row + '" class="form-control" onclick="" onchange="CalculateGrandTotal(\'\'); checkCurrency(\'' + row + '\')">' + selectC + '</select></td>' +
                 '<td><input type="text" id="InputExRate' + row + '" onfocusout="changeFormatExRateNumber(' + row + ')" name="InputExRate' + row + '" class="form-control text-right decimalexrate" ></td>' +
                 '<td><input type="text" onfocusout="changeFormatAmountLocalNumber(' + row + ')" value="' + price + '" id="InputAmountLocal' + row + '" name="InputAmountLocal' + row + '" class="form-control text-right decimal" ></td>' +
                 '<td class="hidden"><input type="text" onfocusout="changeFormatAmountLocalTempNumber(' + row + ')" value="' + price + '" id="InputAmountLocalTemp' + row + '" name="InputAmountLocalTemp' + row + '"  ></td>' +
@@ -1408,8 +1408,8 @@ function setbillAndDescription(row, ref, name, text, des) {
     var bill = ref + " " + (name !== undefined ? name : '') + " " + des;
     $('#BillDescriptionTemp' + row).val(bill);
     $('#BillDescription' + row).val(bill);
-    $('#DescriptionInvoiceDetail' + row).html(text !== undefined ? text : '');
-    $("#DescriptionInvoiceDetailTextArea" + row).html(text !== undefined ? text : '');
+    $('#DescriptionInvoiceDetail' + row).val(text !== undefined ? text : '');
+    $("#DescriptionInvoiceDetailTextArea" + row).val(text !== undefined ? text : '');
 }
 
 function checkDuplicateInvoiceDetail(product, rowId) {
@@ -1881,4 +1881,19 @@ function hideTextAlertDiv(){
     $("#textAlertInvoiceNotEmptyTax").hide();
     $("#textAlertInvoiceNotEmptyReceipt").hide();
     $("#textAlertDuplicate").hide();
+}
+
+function checkCurrency(row){
+    var currencyAmount = $("#SelectCurrencyAmount" + row).val();
+    var product = $('#SelectProductType' + row + ' option:selected').text();
+    if(currencyAmount !== 'THB' && product === 'Air Ticket'){
+        var description = $("#DescriptionInvoiceDetail" + row).val();
+        while(description.indexOf("<P>") !== -1){
+            var tagP1 = description.indexOf("<P>");
+            var tagP2 = description.indexOf("</P>");
+            var amount = description.substring(tagP1,tagP2+4);
+            description = description.replace(amount,'');
+        }
+        $("#DescriptionInvoiceDetail" + row).val(description);
+    }
 }
