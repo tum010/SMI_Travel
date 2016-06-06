@@ -60,7 +60,7 @@ public class TransferJobImpl implements TransferJobDao {
     @Override
     public List<Place> filterPlaceFromDateAndTour(String TourDate, String TourID) {
         String filterPlaceQuery = "from DaytourBooking DB where DB.tourDate = '" + TourDate + "'"
-                + " and DB.daytour.id in (" + TourID + ") GROUP BY DB.place.id ";
+                + " and DB.daytour.id in (" + TourID + ") GROUP BY DB.place.id order by DB.place.place ";
         Session session = this.sessionFactory.openSession();
         List<Place> placeList = new LinkedList<Place>();
         List<DaytourBooking> list = session.createQuery(filterPlaceQuery)
