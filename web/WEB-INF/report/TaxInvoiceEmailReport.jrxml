@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TaxInvoiceEmailReport" language="groovy" pageWidth="594" pageHeight="421" columnWidth="524" leftMargin="42" rightMargin="28" topMargin="42" bottomMargin="28" uuid="346dddd2-e21a-4c7b-8d69-ccea53d38a9d">
 	<property name="ireport.zoom" value="2.415765000000001"/>
-	<property name="ireport.x" value="33"/>
+	<property name="ireport.x" value="642"/>
 	<property name="ireport.y" value="212"/>
 	<field name="customer" class="java.lang.String"/>
 	<field name="address" class="java.lang.String"/>
@@ -231,7 +231,7 @@
 			<textField>
 				<reportElement x="450" y="87" width="73" height="17" uuid="6b287877-91d2-4efc-a9a2-8afa6b40e25e"/>
 				<textElement textAlignment="Left">
-					<font fontName="Tahoma" size="10" isBold="false" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<font fontName="Tahoma" size="10" isBold="true" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{taxno}]]></textFieldExpression>
 			</textField>

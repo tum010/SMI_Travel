@@ -133,7 +133,7 @@
 			<textField>
 				<reportElement x="494" y="85" width="70" height="17" uuid="650a79ac-d792-4c60-848d-9b6c118fd5f0"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Tahoma" size="8" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<font fontName="Tahoma" size="9" isBold="true" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cnno}]]></textFieldExpression>
 			</textField>

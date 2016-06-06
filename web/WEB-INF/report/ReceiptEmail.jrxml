@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReceiptEmail" language="groovy" pageWidth="595" pageHeight="421" columnWidth="525" leftMargin="42" rightMargin="28" topMargin="42" bottomMargin="28" uuid="0038deea-02d3-4a9f-8925-fb54dc3fc533">
-	<property name="ireport.zoom" value="1.3636363636363704"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="101"/>
+	<property name="ireport.zoom" value="1.8150000000000093"/>
+	<property name="ireport.x" value="234"/>
+	<property name="ireport.y" value="179"/>
 	<field name="recto" class="java.lang.String"/>
 	<field name="recadd" class="java.lang.String"/>
 	<field name="tel" class="java.lang.String"/>
@@ -147,13 +147,13 @@
 				<text><![CDATA[TAX ID. NO. 0105523020132]]></text>
 			</staticText>
 			<rectangle radius="10">
-				<reportElement mode="Transparent" x="364" y="84" width="161" height="64" uuid="235d0ab1-060f-44f8-b70f-71c28973aa32"/>
+				<reportElement mode="Transparent" x="364" y="81" width="161" height="67" uuid="235d0ab1-060f-44f8-b70f-71c28973aa32"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</rectangle>
 			<rectangle radius="10">
-				<reportElement mode="Transparent" x="0" y="84" width="361" height="64" uuid="ee81fd89-af56-4d2e-b258-8ebbdb77e385"/>
+				<reportElement mode="Transparent" x="0" y="81" width="361" height="67" uuid="ee81fd89-af56-4d2e-b258-8ebbdb77e385"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
