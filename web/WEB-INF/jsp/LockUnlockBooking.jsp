@@ -216,7 +216,7 @@ function setCheckboxFlag(){
         if($('input:checkbox[name=flagAir]').is(':checked')){
             $("#flagAir").val('1');
         }else{
-            $("#flagAir").val('0');
+            $("#flagAir").val('2');
         }
     });
 
@@ -229,7 +229,7 @@ function setCheckboxFlag(){
         if($('input:checkbox[name=flagHotel]').is(':checked')){
             $("#flagHotel").val('1');
         }else{
-            $("#flagHotel").val('0');
+            $("#flagHotel").val('2');
         }
     });
 
@@ -242,7 +242,7 @@ function setCheckboxFlag(){
         if($('input:checkbox[name=flagDaytour]').is(':checked')){
             $("#flagDaytour").val('1');
         }else{
-            $("#flagDaytour").val('0');
+            $("#flagDaytour").val('2');
         }
     });
 
@@ -255,7 +255,7 @@ function setCheckboxFlag(){
         if($('input:checkbox[name=flagOther]').is(':checked')){
             $("#flagOther").val('1');
         }else{
-            $("#flagOther").val('0');
+            $("#flagOther").val('2');
         }
     });
 
@@ -268,7 +268,7 @@ function setCheckboxFlag(){
         if($('input:checkbox[name=flagLand]').is(':checked')){
             $("#flagLand").val('1');
         }else{
-            $("#flagLand").val('0');
+            $("#flagLand").val('2');
         }
     });
 }
