@@ -32,9 +32,12 @@
 <input type="hidden" value="${master.createBy}" id="master-createBy">
 <input type="hidden" value="${master.departmentNo}" id="departmentNo">
 <input type="hidden" value="${master.id}" id="master-id">
-
 <input type="hidden" value="${booktype}" id="booktypetemp">
 
+<c:set var="readonly" value="" />
+<c:if test="${lockUnlockBooking == 1}">
+    <c:set var="readonly" value="readonly" />
+</c:if>
 <c:set var="DescriptionSize" value="670px" />
 <c:if test="${booktype == 'i'}">
     <c:set var="DescriptionSize" value="670px" />
@@ -425,13 +428,13 @@
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label" for="nameProduct">Adult</label>
                                             <div class="col-sm-3">
-                                                <input type="text" maxlength="10" class="form-control decimal" id="inb_Cost" name="inb_Cost" value="${requestScope['inb_Cost']}" >  
+                                                <input type="text" maxlength="10" class="form-control decimal" id="inb_Cost" name="inb_Cost" value="${requestScope['inb_Cost']}" ${readonly}>  
                                             </div>
                                             <div class="col-sm-2">
-                                                <input type="text" maxlength="3" class="form-control money" id="inb_QTY" name="inb_QTY" value="${requestScope['inb_QTY']}">  
+                                                <input type="text" maxlength="3" class="form-control money" id="inb_QTY" name="inb_QTY" value="${requestScope['inb_QTY']}" ${readonly} >  
                                             </div>
                                             <div class="col-sm-3">
-                                                <input type="text" maxlength="10" class="form-control decimal" id="inb_Price" name="inb_Price" value="${requestScope['inb_Price']}">  
+                                                <input type="text" maxlength="10" class="form-control decimal" id="inb_Price" name="inb_Price" value="${requestScope['inb_Price']}" ${readonly}>   
                                             </div>
                                         </div>
                                     </div>
@@ -458,13 +461,13 @@
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label" for="nameProduct">Child</label>
                                             <div class="col-sm-3">
-                                                <input type="text" maxlength="10" class="form-control decimal"  id="inb_CH_Cost" name="inb_CH_Cost" value="${requestScope['inb_CH_Cost']}" >  
+                                                <input type="text" maxlength="10" class="form-control decimal"  id="inb_CH_Cost" name="inb_CH_Cost" value="${requestScope['inb_CH_Cost']}" ${readonly}>  
                                             </div>
                                             <div class="col-sm-2">
-                                                <input type="text" maxlength="3" class="form-control money"   id="inb_CH_Qty" name="inb_CH_Qty" value="${requestScope['inb_CH_Qty']}" >  
+                                                <input type="text" maxlength="3" class="form-control money"   id="inb_CH_Qty" name="inb_CH_Qty" value="${requestScope['inb_CH_Qty']}" ${readonly}>  
                                             </div>
                                             <div class="col-sm-3">
-                                                <input type="text" maxlength="10" class="form-control decimal" id="inb_CH_Price" name="inb_CH_Price" value="${requestScope['inb_CH_Price']}" >  
+                                                <input type="text" maxlength="10" class="form-control decimal" id="inb_CH_Price" name="inb_CH_Price" value="${requestScope['inb_CH_Price']}" ${readonly}>  
                                             </div>
                                         </div>
                                     </div>
@@ -491,13 +494,13 @@
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label" for="nameProduct">Infant</label>
                                             <div class="col-sm-3">
-                                                <input type="text" maxlength="10" class="form-control decimal" id="inb_IN_Cost" name="inb_IN_Cost" value="${requestScope['inb_IN_Cost']}" >  
+                                                <input type="text" maxlength="10" class="form-control decimal" id="inb_IN_Cost" name="inb_IN_Cost" value="${requestScope['inb_IN_Cost']}" ${readonly}>  
                                             </div>
                                             <div class="col-sm-2">
-                                                <input type="text" maxlength="3" class="form-control money"  id="inb_IN_Qty" name="inb_IN_Qty" value="${requestScope['inb_IN_Qty']}" >  
+                                                <input type="text" maxlength="3" class="form-control money"  id="inb_IN_Qty" name="inb_IN_Qty" value="${requestScope['inb_IN_Qty']}" ${readonly}>  
                                             </div>
                                             <div class="col-sm-3">
-                                                <input type="text" maxlength="10" class="form-control decimal" id="inb_IN_Price" name="inb_IN_Price"  value="${requestScope['inb_IN_Price']}" >  
+                                                <input type="text" maxlength="10" class="form-control decimal" id="inb_IN_Price" name="inb_IN_Price"  value="${requestScope['inb_IN_Price']}" ${readonly}>  
                                             </div>
                                         </div>
                                     </div>
@@ -708,17 +711,17 @@
                                             </select>
                                         </td>                                     
                                         <td class="text-center">
-                                            <c:if test="${lockUnlockBooking == 0}">
+                                            <%--<c:if test="${lockUnlockBooking == 0}">--%>
                                                 <c:if test="${isBillStatus == 0}">
                                                     <a class="remCF"><span  onclick="deleteCityTable('${landCity.id}','${Counter.count}');" class="glyphicon glyphicon-remove deleteicon "></span></a>
                                                 </c:if>
                                                 <c:if test="${isBillStatus == 1}">
                                                     <span class="glyphicon glyphicon-remove deleteicon" ></span>
                                                 </c:if>
-                                            </c:if>
-                                            <c:if test="${lockUnlockBooking == 1}">
-                                                <span class="glyphicon glyphicon-remove deleteicon" ></span>
-                                            </c:if>
+                                            <%--</c:if>--%>
+                                            <%--<c:if test="${lockUnlockBooking == 1}">--%>
+                                                <!--<span class="glyphicon glyphicon-remove deleteicon" ></span>-->
+                                            <%--</c:if>--%>
                                         </td>
                                     </tr>                       
                                 </c:forEach>     
@@ -775,17 +778,17 @@
                                     <td> <input style="width: 80px" type="text" class="form-control time" value="${table.dayTime}" placeholder="HH:MM">  </td>
                                     <td> <input style="width: ${DescriptionSize}" maxlength ="255"  type="text" class="form-control" value="${table.description}">  </td>
                                     <td class="text-center">
-                                        <c:if test="${lockUnlockBooking == 0}">
+                                        <%--<c:if test="${lockUnlockBooking == 0}">--%>
                                             <c:if test="${isBillStatus == 0}">
                                                 <a class="remCF"><span  onclick="deletelist('${table.id}');" class="glyphicon glyphicon-remove deleteicon "></span></a>
                                             </c:if>
                                             <c:if test="${isBillStatus == 1}">
                                                 <span class="glyphicon glyphicon-remove deleteicon" ></span>
                                             </c:if>
-                                        </c:if>
-                                        <c:if test="${lockUnlockBooking == 1}">
-                                            <span class="glyphicon glyphicon-remove deleteicon" ></span>
-                                        </c:if>
+                                        <%--</c:if>--%>
+                                        <%--<c:if test="${lockUnlockBooking == 1}">--%>
+                                            <!--<span class="glyphicon glyphicon-remove deleteicon" ></span>-->
+                                        <%--</c:if>--%>
                                     </td>
                                 </tr>                       
                             </c:forEach>     
@@ -794,7 +797,7 @@
                 </div>
 
                 <div id="tr_ItineraryAddRow" class="text-center hide" style="padding-top: 10px">
-                    <c:if test="${lockUnlockBooking == 0}">
+                    <%--<c:if test="${lockUnlockBooking == 0}">--%>
                         <c:if test="${isBillStatus == 0}">
                             <a class="btn btn-success" onclick="AddRow()">
                                 <i class="glyphicon glyphicon-plus"></i> Add
@@ -805,12 +808,12 @@
                                 <span class="glyphicon glyphicon-plus"></span>Add</button>
                             </a>   
                         </c:if>
-                    </c:if>
-                    <c:if test="${lockUnlockBooking == 1}">
-                        <a class="btn btn-success disabled">
+                    <%--</c:if>--%>
+                    <%--<c:if test="${lockUnlockBooking == 1}">--%>
+<!--                        <a class="btn btn-success disabled">
                             <span class="glyphicon glyphicon-plus"></span>Add</button>
-                        </a>   
-                    </c:if>
+                        </a>   -->
+                    <%--</c:if>--%>
                 </div>
                 <input type="hidden" class="form-control" name="action" id="action" value="save" >  
                 <input type="hidden" class="form-control" name="Itenarary" id="Itenarary" >  
@@ -830,7 +833,7 @@
                             <button type="button" disabled id="saveland"  onclick="readdata()" class="btn btn-success"><span class="fa fa-save"></span> Save</button>
                         </c:when>
                         <c:otherwise>
-                            <c:if test="${lockUnlockBooking == 0}">
+                            <%--<c:if test="${lockUnlockBooking == 0}">--%>
                                 <c:if test="${isBillStatus == 0}">
                                     <button type="submit" id="savereal" onfocus="readdata()"  onmouseover="readdata()"  class="btn btn-success duplicate"><span class="fa fa-save"></span> Save</button>
                                 </c:if>
@@ -844,10 +847,10 @@
                                         </c:when>
                                     </c:choose> 
                                 </c:if>
-                            </c:if>
-                            <c:if test="${lockUnlockBooking == 1}">
-                                <button class="btn btn-success disabled"><span class="fa fa-save"></span> Save</button>
-                            </c:if>   
+                            <%--</c:if>--%>
+                            <%--<c:if test="${lockUnlockBooking == 1}">--%>
+                                <!--<button class="btn btn-success disabled"><span class="fa fa-save"></span> Save</button>-->
+                            <%--</c:if>--%>   
                         </c:otherwise>
                     </c:choose>
                 </div>              

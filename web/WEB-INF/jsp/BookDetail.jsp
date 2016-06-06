@@ -25,7 +25,10 @@
 <c:set var="refno1" value="${fn:substring(param.referenceNo, 0, 2)}" />
 <c:set var="refno2" value="${fn:substring(param.referenceNo, 2,7)}" />
 <c:set var="lockUnlockBooking" value="${requestScope['LockUnlockBooking']}" />
-
+<c:set var="readonly" value="" />
+<c:if test="${lockUnlockBooking == 1}">
+    <c:set var="readonly" value="readonly" />
+</c:if>
 <input type="hidden" value="1" id="enable-status">
 <input type="hidden" value="${param.action}" id="actionIDown">
 <input type="hidden" id="saveText" name="saveText" value="${status}">
@@ -214,29 +217,29 @@
                                     <c:when test="${param.action == 'new'}">
                                         <label class="col-sm-1 control-label text-right" style="width: 127px">Adult</label>
                                         <div class="col-sm-1"> 
-                                            <input type="number" min="0" class="form-control" name="adult" id="adult" value="0">
+                                            <input type="number" min="0" class="form-control" name="adult" id="adult" value="0" >
                                         </div>
                                         <label class="col-sm-1 control-label text-right">Child</label>
                                         <div class="col-sm-1"> 
-                                            <input type="number" min="0" class="form-control" name="child" id="child" value="0">
+                                            <input type="number" min="0" class="form-control" name="child" id="child" value="0" >
                                         </div>
                                         <label class="col-sm-1 control-label text-right">Infant</label>
                                         <div class="col-sm-1"> 
-                                            <input type="number" min="0" class="form-control" name="infant" id="infant" value="0">
+                                            <input type="number" min="0" class="form-control" name="infant" id="infant" value="0" >
                                         </div>
                                     </c:when>
                                     <c:otherwise>
                                         <label class="col-sm-1 control-label text-right" style="width: 127px">Adult</label>
                                         <div class="col-sm-1"> 
-                                            <input type="number" min="0" class="form-control" name="adult" id="adult" value="${detail.adult}" maxlength="11">
+                                            <input type="number" min="0" class="form-control" name="adult" id="adult" value="${detail.adult}" maxlength="11" ${readonly}>
                                         </div>
                                         <label class="col-sm-1 control-label text-right">Child</label>
                                         <div class="col-sm-1"> 
-                                            <input type="number" min="0" class="form-control" name="child" id="child" value="${detail.child}" maxlength="11">
+                                            <input type="number" min="0" class="form-control" name="child" id="child" value="${detail.child}" maxlength="11" ${readonly}>
                                         </div>
                                         <label class="col-sm-1 control-label text-right">Infant</label>
                                         <div class="col-sm-1"> 
-                                            <input type="number" min="0" class="form-control" name="infant" id="infant" value="${detail.infant}" maxlength="11">
+                                            <input type="number" min="0" class="form-control" name="infant" id="infant" value="${detail.infant}" maxlength="11" ${readonly}>
                                         </div>
                                     </c:otherwise>
                                 </c:choose>
@@ -300,14 +303,14 @@
 
                 <!--Save-->
                 <div class="text-center" style="margin-top: 10px">
-                    <c:if test="${lockUnlockBooking == 0}">
+                    <%--<c:if test="${lockUnlockBooking == 0}">--%>
                         <button id="BookDetailButtonSave" type="submit" class="btn btn-success duplicate" >
                             <span id="BookDetailSpanSave" class="fa fa-save"></span> Save
                         </button>                           
-                    </c:if>
-                    <c:if test="${lockUnlockBooking == 1}">
-                        <button class="btn btn-success disabled" ><span class="fa fa-save"></span> Save</button>
-                    </c:if> 
+                    <%--</c:if>--%>
+                    <%--<c:if test="${lockUnlockBooking == 1}">--%>
+                        <!--<button class="btn btn-success disabled" ><span class="fa fa-save"></span> Save</button>-->
+                    <%--</c:if>--%> 
                 </div>
 
 

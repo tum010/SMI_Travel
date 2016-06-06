@@ -44,6 +44,10 @@
 <input type="hidden" value="${master.departmentNo}" id="departmentNo">
 <input type="hidden" value="${master.id}" id="master-id">
 <c:set var="enableSave" value="${requestScope['EnableSave']}" />
+<c:set var="readonly" value="" />
+<c:if test="${lockUnlockBooking == 1}">
+    <c:set var="readonly" value="readonly" />
+</c:if>
 <!--Header-->
 <section class="content-header" >
     <h1>
@@ -515,21 +519,21 @@
                                     <div class="row form-group">
                                         <label class="col-lg-3 control-label text-right">Adult</label>
                                         <div class="col-sm-6">
-                                            <input id="adCost-${fStatus.count}" name="adCost-${fStatus.count}" class="form-control text-right decimal" value="${flight.adCost}" type="text" maxlength="10"  tabindex="1"/>
+                                            <input id="adCost-${fStatus.count}" name="adCost-${fStatus.count}" class="form-control text-right decimal" value="${flight.adCost}" type="text" maxlength="10"  tabindex="1" ${readonly}/>
                                         </div>
 
                                     </div>
                                     <div class="row form-group">
                                         <label class="col-lg-3 control-label text-right">Child</label>
                                         <div class="col-sm-6">
-                                            <input id="chCost-${fStatus.count}" name="chCost-${fStatus.count}" class="form-control text-right decimal" value="${flight.chCost}" type="text" maxlength="10" tabindex="4"/>
+                                            <input id="chCost-${fStatus.count}" name="chCost-${fStatus.count}" class="form-control text-right decimal" value="${flight.chCost}" type="text" maxlength="10" tabindex="4" ${readonly}/>
                                         </div>
 
                                     </div>
                                     <div class="row form-group text-right">
                                         <label class="col-lg-3 control-label">Infant</label>
                                         <div class="col-sm-6">
-                                            <input id="inCost-${fStatus.count}" name="inCost-${fStatus.count}" class="form-control text-right decimal" value="${flight.inCost}" type="text" maxlength="10" tabindex="7"/>
+                                            <input id="inCost-${fStatus.count}" name="inCost-${fStatus.count}" class="form-control text-right decimal" value="${flight.inCost}" type="text" maxlength="10" tabindex="7" ${readonly}/>
                                         </div>
                                     </div>
                                 </div>
@@ -540,21 +544,21 @@
                                     <div class="row form-group">
                                         <label class="col-lg-3 control-label text-right">Adult</label>
                                         <div class="col-sm-6">
-                                            <input id="adTaxCost-${fStatus.count}" name="adTaxCost-${fStatus.count}" class="form-control text-right decimal" value="${flight.adTaxCost}" type="text" maxlength="10" tabindex="3"/>
+                                            <input id="adTaxCost-${fStatus.count}" name="adTaxCost-${fStatus.count}" class="form-control text-right decimal" value="${flight.adTaxCost}" type="text" maxlength="10" tabindex="3" ${readonly}/>
                                         </div>
 
                                     </div>
                                     <div class="row form-group">
                                         <label class="col-lg-3 control-label text-right">Child</label>
                                         <div class="col-sm-6">
-                                            <input id="chTaxCost-${fStatus.count}" name="chTaxCost-${fStatus.count}" class="form-control text-right decimal" value="${flight.chTaxCost}" type="text" maxlength="10" tabindex="6"/>
+                                            <input id="chTaxCost-${fStatus.count}" name="chTaxCost-${fStatus.count}" class="form-control text-right decimal" value="${flight.chTaxCost}" type="text" maxlength="10" tabindex="6" ${readonly}/>
                                         </div>
 
                                     </div>
                                     <div class="row form-group text-right">
                                         <label class="col-lg-3 control-label">Infant</label>
                                         <div class="col-sm-6">
-                                            <input id="inTaxCost-${fStatus.count}" name="inTaxCost-${fStatus.count}" class="form-control text-right decimal" value="${flight.inTaxCost}" type="text" maxlength="10" tabindex="9"/>
+                                            <input id="inTaxCost-${fStatus.count}" name="inTaxCost-${fStatus.count}" class="form-control text-right decimal" value="${flight.inTaxCost}" type="text" maxlength="10" tabindex="9" ${readonly}/>
                                         </div>
                                     </div>
                                 </div>        
@@ -565,21 +569,21 @@
                                     <div class="row form-group">
                                         <label class="col-lg-3 control-label text-right">Adult</label>
                                         <div class="col-sm-6">
-                                            <input id="adPrice-${fStatus.count}" name="adPrice-${fStatus.count}" class="form-control text-right decimal" value="${flight.adPrice}" type="text" maxlength="10" tabindex="2"/>
+                                            <input id="adPrice-${fStatus.count}" name="adPrice-${fStatus.count}" class="form-control text-right decimal" value="${flight.adPrice}" type="text" maxlength="10" tabindex="2" ${readonly}/>
                                         </div>
 
                                     </div>
                                     <div class="row form-group">
                                         <label class="col-lg-3 control-label text-right">Child</label>
                                         <div class="col-sm-6">
-                                            <input id="chPrice-${fStatus.count}" name="chPrice-${fStatus.count}" class="form-control text-right decimal" value="${flight.chPrice}" type="text" maxlength="10" tabindex="5"/>
+                                            <input id="chPrice-${fStatus.count}" name="chPrice-${fStatus.count}" class="form-control text-right decimal" value="${flight.chPrice}" type="text" maxlength="10" tabindex="5" ${readonly}/>
                                         </div>
 
                                     </div>
                                     <div class="row form-group text-right">
                                         <label class="col-lg-3 control-label">Infant</label>
                                         <div class="col-sm-6">
-                                            <input id="inPrice-${fStatus.count}" name="inPrice-${fStatus.count}" class="form-control text-right decimal" value="${flight.inPrice}" type="text" maxlength="10" tabindex="8"/>
+                                            <input id="inPrice-${fStatus.count}" name="inPrice-${fStatus.count}" class="form-control text-right decimal" value="${flight.inPrice}" type="text" maxlength="10" tabindex="8" ${readonly}/>
                                         </div>
                                     </div>
                                 </div>
@@ -590,21 +594,21 @@
                                     <div class="row form-group">
                                         <label class="col-lg-3 control-label text-right">Adult</label>
                                         <div class="col-sm-6">
-                                            <input id="adTax-${fStatus.count}" name="adTax-${fStatus.count}" class="form-control text-right decimal" value="${flight.adTax}" type="text" maxlength="10" tabindex="3"/>
+                                            <input id="adTax-${fStatus.count}" name="adTax-${fStatus.count}" class="form-control text-right decimal" value="${flight.adTax}" type="text" maxlength="10" tabindex="3" ${readonly}/>
                                         </div>
 
                                     </div>
                                     <div class="row form-group">
                                         <label class="col-lg-3 control-label text-right">Child</label>
                                         <div class="col-sm-6">
-                                            <input id="chTax-${fStatus.count}" name="chTax-${fStatus.count}" class="form-control text-right decimal" value="${flight.chTax}" type="text" maxlength="10" tabindex="6"/>
+                                            <input id="chTax-${fStatus.count}" name="chTax-${fStatus.count}" class="form-control text-right decimal" value="${flight.chTax}" type="text" maxlength="10" tabindex="6" ${readonly}/>
                                         </div>
 
                                     </div>
                                     <div class="row form-group text-right">
                                         <label class="col-lg-3 control-label">Infant</label>
                                         <div class="col-sm-6">
-                                            <input id="inTax-${fStatus.count}" name="inTax-${fStatus.count}" class="form-control text-right decimal" value="${flight.inTax}" type="text" maxlength="10" tabindex="9"/>
+                                            <input id="inTax-${fStatus.count}" name="inTax-${fStatus.count}" class="form-control text-right decimal" value="${flight.inTax}" type="text" maxlength="10" tabindex="9" ${readonly}/>
                                         </div>
                                     </div>
                                 </div>
@@ -1273,12 +1277,12 @@
                                     <div class="col-sm-1 text-right"><strong>Fare</strong></div>
                                     <div class="col-sm-2">
                                         <input name="passengerFare${pStatus.count}" id="passengerFare${pStatus.count}" 
-                                               value="${passenger.ticketFare}" class="form-control text-right decimal" maxlength="11" 
+                                               value="${passenger.ticketFare}" class="form-control text-right decimal" maxlength="11" ${readonly}
                                                />
                                     </div>
                                     <div class="col-sm-1 text-right"><strong>Tax</strong></div>
                                     <div class="col-sm-2"><input name="passengerTax${pStatus.count}" id="passengerTax${pStatus.count}" 
-                                                                 value="${passenger.ticketTax}" class="form-control text-right decimal" maxlength="11" 
+                                                                 value="${passenger.ticketTax}" class="form-control text-right decimal" maxlength="11"  ${readonly}
                                                                  />
                                     </div>
                                     <div class="col-sm-1 text-right"><strong>Type</strong><strong style="color: red">*</strong></div>
@@ -1341,7 +1345,7 @@
                             <button type="button" disabled id="saveDetail" class="btn btn-success"><span class="fa fa-save"></span> Save</button>
                         </c:when>
                         <c:otherwise>
-                            <c:if test="${lockUnlockBooking == 0}">
+                            <%--<c:if test="${lockUnlockBooking == 0}">--%>
                                 <c:if test="${isBillStatus == 0}">
                                     <button id="ButtonSave" class="btn btn-success" type="submit"><span class="fa fa-save"></span> Save</button>
                                 </c:if>
@@ -1355,10 +1359,10 @@
                                         </c:when>
                                     </c:choose> 
                                 </c:if>
-                            </c:if>
-                            <c:if test="${lockUnlockBooking == 1}">
-                                <button class="btn btn-success disabled" ><span class="fa fa-save"></span> Save</button>
-                            </c:if> 
+                            <%--</c:if>--%>
+                            <%--<c:if test="${lockUnlockBooking == 1}">--%>
+                                <!--<button class="btn btn-success disabled" ><span class="fa fa-save"></span> Save</button>-->
+                            <%--</c:if>--%> 
                         </c:otherwise>
                     </c:choose>
                 </div>

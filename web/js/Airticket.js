@@ -244,15 +244,19 @@ $(document).ready(function () {
 });
 
 function AddRow(row) {
-
+    var templock = parseInt($("#requestLock").val());
+    var read = '';
+    if(templock == 1){
+        read = 'readonly';
+    }
     $("#DetailTable tbody").append(
             '<tr>' +
             '<td class="hidden"><input type="text" class="hidden" id="row-' + row + '-id" name="row-' + row + '-id" /></td>' +
             '<td><input type="text" class="form-control" id="row-' + row + '-detail" name="row-' + row + '-detail" maxlength="100"/></td>' +
-            '<td><input type="text" class="form-control money" id="row-' + row + '-qty" name="row-' + row + '-qty" maxlength="11"/></td>' +
-            '<td><input type="text" class="form-control decimal" id="row-' + row + '-cost" name="row-' + row + '-cost" maxlength="11"/></td>' +
+            '<td><input type="text" class="form-control money" id="row-' + row + '-qty" name="row-' + row + '-qty" maxlength="11" '+read+' /></td>' +
+            '<td><input type="text" class="form-control decimal" id="row-' + row + '-cost" name="row-' + row + '-cost" maxlength="11" '+read+' /></td>' +
             '<td><select id="row-' + row + '-currencycost" name="row-' + row + '-currencycost" class="form-control"><option value="">---------</option></select></td>' +         
-            '<td><input type="text" class="form-control decimal" id="row-' + row + '-amount" name="row-' + row + '-amount" maxlength="11"></td>' +
+            '<td><input type="text" class="form-control decimal" id="row-' + row + '-amount" name="row-' + row + '-amount" maxlength="11" '+read+' ></td>' +
             '<td><select id="row-' + row + '-currency" name="row-' + row + '-currency" class="form-control"><option value="">---------</option></select></td>' +         
             '<td class="text-center"><a class="remCF" id="ButtonRemove'+row+'"><span id="SpanRemove'+row+'" class="glyphicon glyphicon-remove deleteicon"></span></a></td>' +
             '</tr>'

@@ -51,7 +51,10 @@
         <input type="hidden" value="${master.referenceNo}" id="getRealformatUrl">
     </c:otherwise>
 </c:choose>
-
+<c:set var="readonly" value="" />
+<c:if test="${lockUnlockBooking == 1}">
+    <c:set var="readonly" value="readonly" />
+</c:if>
 
 <!--Header-->
 <section class="content-header" >
@@ -68,6 +71,7 @@
     <div class="row">
         <!-- side bar -->
         <div class="col-md-2" style="border-right:  solid 1px #01C632;padding-top: 10px">
+            <input type="hidden" id="requestLock" name="requestLock" value="${lockUnlockBooking}"/>
             <input type="hidden" value="${master.customer.MInitialname.name}" id="initialname_tmp">
             <input type="hidden" value="${master.customer.firstName}" id="firstname_tmp">
             <input type="hidden" value="${master.customer.lastName}" id="lastname_tmp">  
@@ -337,8 +341,8 @@
                                 <tr>
                                     <td class="hidden"><input type="text" class="hidden" id="row-${airdesc.count}-id" name="row-${airdesc.count}-id" value="${detail.id}" /></td>
                                     <td><input  type="text" class="form-control" id="row-${airdesc.count}-detail" name="row-${airdesc.count}-detail" value="${detail.detail}" maxlength="100"/></td>
-                                    <td><input  type="text" class="form-control money" id="row-${airdesc.count}-qty" name="row-${airdesc.count}-qty" value="${detail.qty}" maxlength="11"/></td>
-                                    <td><input  type="text" class="form-control decimal" id="row-${airdesc.count}-cost" name="row-${airdesc.count}-cost" value="${detail.cost}" maxlength="11"/></td>
+                                    <td><input  type="text" class="form-control money" id="row-${airdesc.count}-qty" name="row-${airdesc.count}-qty" value="${detail.qty}" maxlength="11" ${readonly} /></td>
+                                    <td><input  type="text" class="form-control decimal" id="row-${airdesc.count}-cost" name="row-${airdesc.count}-cost" value="${detail.cost}" maxlength="11" ${readonly}  /></td>
                                     <td>
                                         <select id="row-${airdesc.count}-currencycost" name="row-${airdesc.count}-currencycost" class="form-control">
                                             <option id="" value="">---------</option>
@@ -351,7 +355,7 @@
                                             </c:forEach>
                                         </select>                                       
                                     </td>
-                                    <td><input  type="text" class="form-control decimal" id="row-${airdesc.count}-amount" name="row-${airdesc.count}-amount" value="${detail.amount}" maxlength="11"/></td>
+                                    <td><input  type="text" class="form-control decimal" id="row-${airdesc.count}-amount" name="row-${airdesc.count}-amount" value="${detail.amount}" maxlength="11" ${readonly} /></td>
                                     <td>
                                         <select id="row-${airdesc.count}-currency" name="row-${airdesc.count}-currency" class="form-control">
                                             <option id="" value="">---------</option>
@@ -418,17 +422,17 @@
                     </button>
                     <input type="hidden" id="flagAir" name="flagAir" value="${booking.master.flagAir}"/>
                     <input type="hidden" id="mBookingStatus" name="mBookingStatus" value="${booking.master.MBookingstatus.id}"/>
-                    <c:if test="${lockUnlockBooking == 0}">
+                    <%--<c:if test="${lockUnlockBooking == 0}">--%>
                         <c:if test="${isBillStatus == 0}">
                             <button id="ButtonSave" type="submit" class="btn btn-success"><span class="fa fa-save"></span> Save</button>
                         </c:if>
                         <c:if test="${isBillStatus == 1}">
                             <button class="btn btn-success disabled" ><span class="fa fa-save"></span> Save</button>
                         </c:if>
-                    </c:if>
-                    <c:if test="${lockUnlockBooking == 1}">
-                        <button class="btn btn-success disabled" ><span class="fa fa-save"></span> Save</button>
-                    </c:if>                      
+                    <%--</c:if>--%>
+                    <%--<c:if test="${lockUnlockBooking == 1}">--%>
+                        <!--<button class="btn btn-success disabled" ><span class="fa fa-save"></span> Save</button>-->
+                    <%--</c:if>--%>                      
                 </div>
             </form>
         </div>

@@ -35,6 +35,12 @@
 <c:set var="enableSave" value="${requestScope['EnableSave']}" />
 <input type="hidden" value="${master.departmentNo}" id="departmentNo">
 <input type="hidden" value="${master.id}" id="master-id">
+<c:set var="readonly" value="" />
+<c:set var="disabled" value="" />
+<c:if test="${lockUnlockBooking == 1}">
+    <c:set var="readonly" value="readonly" />
+    <c:set var="disabled" value="disabled" />
+</c:if>
 <section class="content-header" >
     <h1>
         Booking - Day Tours Detail
@@ -143,19 +149,19 @@
                                         <label class="control-label" for="InputAdult">Adult</label>
                                     </div>
                                     <div class="col-sm-2">
-                                        <input name="InputAdult" id="InputAdult" type="number" min="0" class="form-control" onkeyup="manualNumberOnly(this);" maxlength="3" value="${master.adult}">
+                                        <input name="InputAdult" id="InputAdult" type="number" min="0" class="form-control" onkeyup="manualNumberOnly(this);" maxlength="3" value="${master.adult}" ${readonly}> 
                                     </div>
                                     <div class="col-sm-2">
                                         <label class="control-label" for="InputChild">Child</label>
                                     </div>
                                     <div class="col-sm-2">
-                                        <input name="InputChild" id="InputChild" type="number" min="0" class="form-control" onkeyup="manualNumberOnly(this);" maxlength="3" value="${master.child}">
+                                        <input name="InputChild" id="InputChild" type="number" min="0" class="form-control" onkeyup="manualNumberOnly(this);" maxlength="3" value="${master.child}" ${readonly}>
                                     </div>
                                     <div class="col-sm-2">
                                         <label class="control-label" for="InputInfant">Infant</label>
                                     </div>
                                     <div class="col-sm-2 text-right">
-                                        <input name="InputInfant" id="InputInfant" type="number" min="0" class="form-control" onkeyup="manualNumberOnly(this);" maxlength="3" value="${master.infant}">
+                                        <input name="InputInfant" id="InputInfant" type="number" min="0" class="form-control" onkeyup="manualNumberOnly(this);" maxlength="3" value="${master.infant}" ${readonly}>
                                     </div>
                                 </div>
                             </c:when>
@@ -165,19 +171,19 @@
                                         <label class="control-label" for="InputAdult">Adult</label>
                                     </div>
                                     <div class="col-sm-2">
-                                        <input name="InputAdult" id="InputAdult" type="number" class="form-control" onkeyup="manualNumberOnly(this);" min="0" maxlength="3" value="${daytourBooking.adult}">
+                                        <input name="InputAdult" id="InputAdult" type="number" class="form-control" onkeyup="manualNumberOnly(this);" min="0" maxlength="3" value="${daytourBooking.adult}" ${readonly}>
                                     </div>
                                     <div class="col-sm-2">
                                         <label class="control-label" for="InputChild">Child</label>
                                     </div>
                                     <div class="col-sm-2">
-                                        <input name="InputChild" id="InputChild" type="number" class="form-control" onkeyup="manualNumberOnly(this);" min="0" maxlength="3" value="${daytourBooking.child}">
+                                        <input name="InputChild" id="InputChild" type="number" class="form-control" onkeyup="manualNumberOnly(this);" min="0" maxlength="3" value="${daytourBooking.child}" ${readonly}>
                                     </div>
                                     <div class="col-sm-2">
                                         <label class="control-label" for="InputInfant">Infant</label>
                                     </div>
                                     <div class="col-sm-2 text-right">
-                                        <input name="InputInfant" id="InputInfant" type="number" class="form-control" onkeyup="manualNumberOnly(this);" min="0" maxlength="3" value="${daytourBooking.infant}">
+                                        <input name="InputInfant" id="InputInfant" type="number" class="form-control" onkeyup="manualNumberOnly(this);" min="0" maxlength="3" value="${daytourBooking.infant}" ${readonly}>
                                     </div>
                                 </div>
                             </c:otherwise>
@@ -272,7 +278,7 @@
                         <label class="control-label text-right">Value&nbsp;List</lable>
                     </div>
                     <div class="col-md-10 text-right" >
-                        <a name="ButtonPriceList" id="ButtonPriceList" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#PriceModal">Price List</a>
+                        <a name="ButtonPriceList" id="ButtonPriceList" class="btn btn-primary btn-sm " ${disabled} data-toggle="modal" data-target="#PriceModal" >Price List</a>
                     </div>
                     <!--</div>-->
                 </div>
@@ -310,8 +316,8 @@
                                         <td class="priceDetail"><input style="width: 100%;" type="text" id="row-${loop.count}-pricedetail" name="row-${loop.count}-pricedetail" value="${item.detail}" ></td>
                                         <td class="hide"><input type=hidden id="row-${loop.count}-priceDefault" name="row-${loop.count}-priceDefault" value="${item.price}" ></td>
                                         <td class="priceAmountDefault text-right"><fmt:formatNumber type="currency" pattern="#,##0.00;-#,##0.00" value="${item.price}" /></td>
-                                        <td class="priceAmount text-right"><input type="text" class="form-control decimal otherprice" id="row-${loop.count}-priceamount" name="row-${loop.count}-priceamount" value="${item.price}" ></td>
-                                        <td class="priceQty"><input type=text class="form-control text-right numbermask qty" id="row-${loop.count}-priceqty" name="row-${loop.count}-priceqty"  value="${item.qty}" maxlength="3"></td>
+                                        <td class="priceAmount text-right"><input type="text" class="form-control decimal otherprice" id="row-${loop.count}-priceamount" name="row-${loop.count}-priceamount" value="${item.price}" ${readonly}></td>
+                                        <td class="priceQty"><input type=text class="form-control text-right numbermask qty" id="row-${loop.count}-priceqty" name="row-${loop.count}-priceqty"  value="${item.qty}" maxlength="3" ${readonly}></td>
                                         <td class="priceTotal decimal text-right">
                                             <input  type=hidden class="form-control decimal" id="row-${loop.count}-pricetotal" name="row-${loop.count}-pricetotal" value="${item.qty * item.price}" readonly="">
                                             <fmt:formatNumber type="currency" pattern="#,##0.00;-#,##0.00" value="${item.qty * item.price}" />
@@ -429,7 +435,7 @@
                 <!--</div>-->
                 <div class="col-xs-12 form-group"  ></div>
                 <div class="text-center" style="margin-top: 20px">
-                    <c:if test="${lockUnlockBooking == 0}">
+                    <%--<c:if test="${lockUnlockBooking == 0}">--%>
                         <c:if test="${isBillStatus == 0}">
                             <button id="ButtonSave" type="submit" onclick="submitAction();" class="btn btn-success"><span class="fa fa-save"></span> Save</button>
                         </c:if>
@@ -443,10 +449,10 @@
                                 </c:when>
                             </c:choose> 
                         </c:if>
-                    </c:if>
-                    <c:if test="${lockUnlockBooking == 1}">
-                        <button class="btn btn-success disabled"><span class="fa fa-save"></span> Save</button>
-                    </c:if>   
+                    <%--</c:if>--%>
+                    <%--<c:if test="${lockUnlockBooking == 1}">--%>
+                        <!--<button class="btn btn-success disabled"><span class="fa fa-save"></span> Save</button>-->
+                    <%--</c:if>--%>   
                     <input type="hidden" name="action" id="action" value="${param.action}">
                 </div>
             </form>

@@ -41,7 +41,11 @@
 <input type="hidden" value="${master.departmentNo}" id="departmentNo">
 <input type="hidden" value="1" id="statusBar">
 <c:set var="enableSave" value="${requestScope['EnableSave']}" />
-
+<c:set var="readonly" value="" />
+<c:if test="${lockUnlockBooking == 1}">
+    <c:set var="readonly" value="readonly" />
+</c:if>
+<input type="hidden" value="${readonly}" id="readonly">
 <section class="content-header" >
     <h1>
         Booking - Hotel
@@ -137,23 +141,43 @@
                             <div class="col-sm-4 form-group" style="margin-top: -10px;">
                                 <label class="col-sm-5 control-label text-right">Check In <strong style="color: red">*</strong></label>
                                 <div class="col-sm-6">
-                                    <div class='input-group date'>
-                                        <fmt:formatDate value="${hotelBooking.checkin}" var="checkIn" pattern="dd-MM-yyyy" />
-                                        <input id="checkin" name="checkin" type='text' class="form-control datemask"  data-date-format="DD-MM-YYYY" value="${checkIn}" placeholder="DD-MM-YYYY"/>
-                                        <span id="SpanCheckin" class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span>
-                                        </span>
-                                    </div>
+                                    <c:if test="${lockUnlockBooking == 1}">
+                                        <div class='input-group ' >
+                                            <fmt:formatDate value="${hotelBooking.checkin}" var="checkIn" pattern="dd-MM-yyyy" />
+                                            <input id="checkin" name="checkin" type='text' class="form-control datemask"  data-date-format="DD-MM-YYYY" value="${checkIn}" placeholder="DD-MM-YYYY" ${readonly}/>
+                                            <span id="SpanCheckin" class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                    </c:if>
+                                    <c:if test="${lockUnlockBooking == 0}">
+                                        <div class='input-group date' >
+                                            <fmt:formatDate value="${hotelBooking.checkin}" var="checkIn" pattern="dd-MM-yyyy" />
+                                            <input id="checkin" name="checkin" type='text' class="form-control datemask"  data-date-format="DD-MM-YYYY" value="${checkIn}" placeholder="DD-MM-YYYY" ${readonly}/>
+                                            <span id="SpanCheckin" class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                    </c:if>
                                 </div>
                             </div>
                             <div class="col-sm-4 form-group" style="margin-top: -10px;">
                                 <label class="col-sm-5 control-label text-right">Check Out <strong style="color: red">*</strong></label>
                                 <div class="col-sm-6">
-                                    <div class='input-group date'>
-                                        <fmt:formatDate value="${hotelBooking.checkout}" var="checkOut" pattern="dd-MM-yyyy" />
-                                        <input id="checkout" name="checkout" type='text'  data-date-format="DD-MM-YYYY" class="form-control datemask" value="${checkOut}" placeholder="DD-MM-YYYY"/>
-                                        <span id="SpanCheckout" class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span>
-                                        </span>
-                                    </div>
+                                    <c:if test="${lockUnlockBooking == 1}">
+                                        <div class='input-group '>
+                                            <fmt:formatDate value="${hotelBooking.checkout}" var="checkOut" pattern="dd-MM-yyyy" />
+                                            <input id="checkout" name="checkout" type='text'  data-date-format="DD-MM-YYYY" class="form-control datemask" value="${checkOut}" placeholder="DD-MM-YYYY" ${readonly}/>
+                                            <span id="SpanCheckout" class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                    </c:if>
+                                    <c:if test="${lockUnlockBooking == 0}">
+                                        <div class='input-group date'>
+                                            <fmt:formatDate value="${hotelBooking.checkout}" var="checkOut" pattern="dd-MM-yyyy" />
+                                            <input id="checkout" name="checkout" type='text'  data-date-format="DD-MM-YYYY" class="form-control datemask" value="${checkOut}" placeholder="DD-MM-YYYY" ${readonly}/>
+                                            <span id="SpanCheckout" class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                     </c:if>
                                 </div>
                             </div>
                             <div class="col-sm-4" style="margin-top: -10px;">
@@ -208,19 +232,19 @@
                                     <div class="col-sm-4 form-group" style="margin-top: -10px;">
                                         <label class="col-sm-5 control-label text-right">Adult<strong style="color: red">*</strong></label>
                                         <div class="col-sm-3">
-                                            <input name="adult" type="number" min="0" id="adult" class="form-control" value="${master.adult}" maxlength="11">
+                                            <input name="adult" type="number" min="0" id="adult" class="form-control" value="${master.adult}" maxlength="11" ${readonly}>
                                         </div>
                                     </div>
                                     <div class="col-sm-2 form-group" style="margin-left: -125px; margin-top: -10px;">
                                         <label class="col-sm-4 control-label text-right">Child<strong style="color: red">*</strong></label>
                                         <div class="col-sm-7">
-                                            <input name="child" id="child" type="number" min="0" class="form-control" value="${master.child}" maxlength="11">
+                                            <input name="child" id="child" type="number" min="0" class="form-control" value="${master.child}" maxlength="11" ${readonly}>
                                         </div>
                                     </div>
                                     <div class="col-sm-2 form-group" style="margin-top: -10px;">
                                         <label class="col-sm-4 control-label text-right">Infant<strong style="color: red">*</strong></label>
                                         <div class="col-sm-7">
-                                            <input name="infant" type="number" min="0" id="infant" class="form-control" value="${master.infant}" maxlength="11">
+                                            <input name="infant" type="number" min="0" id="infant" class="form-control" value="${master.infant}" maxlength="11" ${readonly}>
                                         </div>
                                     </div>
                                 </c:when>
@@ -228,19 +252,19 @@
                                     <div class="col-sm-4 form-group" style="margin-top: -10px;">
                                         <label class="col-sm-5 control-label text-right">Adult<strong style="color: red">*</strong></label>
                                         <div class="col-sm-3">
-                                            <input name="adult" type="number" min="0" id="adult" class="form-control" value="${hotelBooking.adult}" maxlength="11">
+                                            <input name="adult" type="number" min="0" id="adult" class="form-control" value="${hotelBooking.adult}" maxlength="11" ${readonly}>
                                         </div>
                                     </div>
                                     <div class="col-sm-2 form-group" style="margin-left: -125px; margin-top: -10px;">
                                         <label class="col-sm-4 control-label text-right">Child<strong style="color: red">*</strong></label>
                                         <div class="col-sm-7">
-                                            <input name="child" id="child" type="number" min="0" class="form-control" value="${hotelBooking.child}" maxlength="11">
+                                            <input name="child" id="child" type="number" min="0" class="form-control" value="${hotelBooking.child}" maxlength="11" ${readonly}>
                                         </div>
                                     </div>
                                     <div class="col-sm-2 form-group" style="margin-top: -10px;">
                                         <label class="col-sm-4 control-label text-right">Infant<strong style="color: red">*</strong></label>
                                         <div class="col-sm-7">
-                                            <input name="infant" type="number" min="0" id="infant" class="form-control" value="${hotelBooking.infant}" maxlength="11">
+                                            <input name="infant" type="number" min="0" id="infant" class="form-control" value="${hotelBooking.infant}" maxlength="11" ${readonly}>
                                         </div>
                                     </div>
                                 </c:otherwise>
@@ -339,11 +363,11 @@
                             <c:forEach var="re" items="${hotelRoomsList}"  varStatus="formula">
                                 <tr>
                                     <td class="hidden"><input id="row-room-${formula.count}-id" name="row-room-${formula.count}-id" class="form-control" value="${re.id}"></td>
-                                    <td><input id="row-room-${formula.count}-qty" name="row-room-${formula.count}-qty" class="form-control text-right money" value="${re.qty}" maxlength="3"></td>
+                                    <td><input id="row-room-${formula.count}-qty" name="row-room-${formula.count}-qty" class="form-control text-right money" value="${re.qty}" maxlength="3" ${readonly}></td>
                                     <td><input id="row-room-${formula.count}-room" name="row-room-${formula.count}-room" class="form-control" value="${re.room}" maxlength="50"></td>
                                     <td><input id="row-room-${formula.count}-category" name="row-room-${formula.count}-category" class="form-control" value="${re.category}" maxlength="50"></td>
-                                    <td><input id="row-room-${formula.count}-cost" name="row-room-${formula.count}-cost" class="form-control text-right decimal" value="${re.cost}" maxlength="11"></td>
-                                    <td><input id="row-room-${formula.count}-price" name="row-room-${formula.count}-price" class="form-control text-right decimal" value="${re.price}" maxlength="11"></td>
+                                    <td><input id="row-room-${formula.count}-cost" name="row-room-${formula.count}-cost" class="form-control text-right decimal" value="${re.cost}" maxlength="11" ${readonly}></td>
+                                    <td><input id="row-room-${formula.count}-price" name="row-room-${formula.count}-price" class="form-control text-right decimal" value="${re.price}" maxlength="11" ${readonly}></td>
                                     <td class="text-center">
                                         <c:if test="${lockUnlockBooking == 0}">
                                             <c:if test="${re.hotelBooking.isBill == 0}">
@@ -401,8 +425,8 @@
                                     <td class="hidden"><input id="row-request-${additional.count}-id" name="row-request-${additional.count}-id" class="form-control" value="${re.id}"></td>
                                     <td><input id="row-request-${additional.count}-category" name="row-request-${additional.count}-category" class="form-control" value="${re.category}" maxlength="100"></td>
                                     <td><input id="row-request-${additional.count}-description" name="row-request-${additional.count}-description" class="form-control " value="${re.description}" maxlength="100"></td>
-                                    <td><input id="row-request-${additional.count}-cost" name="row-request-${additional.count}-cost" class="form-control text-right decimaladditional" value="${re.cost}" maxlength="11"></td>
-                                    <td><input id="row-request-${additional.count}-price" name="row-request-${additional.count}-price" class="form-control text-right decimaladditional" value="${re.price}" maxlength="11"></td>
+                                    <td><input id="row-request-${additional.count}-cost" name="row-request-${additional.count}-cost" class="form-control text-right decimaladditional" value="${re.cost}" maxlength="11" ${readonly}></td>
+                                    <td><input id="row-request-${additional.count}-price" name="row-request-${additional.count}-price" class="form-control text-right decimaladditional" value="${re.price}" maxlength="11" ${readonly}></td>
                                     <td class="text-center">
                                         <c:if test="${lockUnlockBooking == 0}">
                                             <c:if test="${re.hotelBooking.isBill == 0}">
@@ -481,7 +505,7 @@
                                         </script>
                                     </td>          
                                     <td class="text-center">
-                                        <c:if test="${lockUnlockBooking == 0}">
+                                        <%--<c:if test="${lockUnlockBooking == 0}">--%>
                                             <c:if test="${pa.hotelBooking.isBill == 0}">
                                                 <a id="PassengerButtonRemove${passenger.count}" class="remCF" onclick="ConfirmDelete('${hotelBooking.id}', '3', '${pa.id}', '${passenger.count}')">
                                                     <span id="PassengerSpanRemove${passenger.count}" class="glyphicon glyphicon-remove deleteicon"></span>
@@ -490,11 +514,10 @@
                                             <c:if test="${pa.hotelBooking.isBill == 1}">
                                                 <span class="glyphicon glyphicon-remove deleteicon" ></span>
                                             </c:if>
-                                        </c:if>
-                                        <c:if test="${lockUnlockBooking == 1}">
-                                            <span class="glyphicon glyphicon-remove deleteicon" ></span>
-                                        </c:if>  
-
+                                        <%--</c:if>--%>
+                                        <%--<c:if test="${lockUnlockBooking == 1}">--%>
+                                            <!--<span class="glyphicon glyphicon-remove deleteicon" ></span>-->
+                                        <%--</c:if>--%>  
                                     </td>
                                 </tr>
                                 <script>
@@ -524,7 +547,7 @@
                     </c:if>
                     <input name="id" value="${param.id}"type="hidden">
                     <input name="referenceNo" value="${param.referenceNo}"type="hidden">
-                    <c:if test="${lockUnlockBooking == 0}">
+                    <%--<c:if test="${lockUnlockBooking == 0}">--%>
                         <c:if test="${isBillStatus == 0}">
                             <button id="hotelSave" name="hotelSave" type="submit" class="btn btn-success duplicate" ><span class="fa fa-save"></span> Save</button>
                         </c:if>
@@ -538,10 +561,10 @@
                                 </c:when>
                             </c:choose> 
                         </c:if>
-                    </c:if>
-                    <c:if test="${lockUnlockBooking == 1}">
-                        <button class="btn btn-success disabled" ><span class="fa fa-save"></span> Save</button>
-                    </c:if>    
+                    <%--</c:if>--%>
+                    <%--<c:if test="${lockUnlockBooking == 1}">--%>
+                        <!--<button class="btn btn-success disabled" ><span class="fa fa-save"></span> Save</button>-->
+                    <%--</c:if>--%>    
                 </div>
             </form>
         </div>

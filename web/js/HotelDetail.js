@@ -252,6 +252,7 @@ function getDate() {
 
 // ### Formula PANAL ### //
 $(document).ready(function () {
+    if(readonly)
     FormulaAddRow(parseInt($("#table-formula-size").val()) + 1);
     var templock = parseInt($("#requestLock").val());
     $("#formula-table").on('click', '.newRemCF', function () {
@@ -295,7 +296,7 @@ $(document).ready(function () {
 
 });
 function FormulaAddRow(row) {
-
+    var read = $("#readonly").val();
     if (!row) {
         row = 1;
     }
@@ -303,11 +304,11 @@ function FormulaAddRow(row) {
     $("#formula-table tbody").append(
             '<tr>' +
             '<td class="hidden"><input id="row-room-' + row + '-id" name="row-room-' + row + '-id"  type="text" class="form-control"></td>' +
-            '<td><input id="row-room-' + row + '-qty" name="row-room-' + row + '-qty"  type="text" class="form-control text-right money" maxlength="3"></td>' +
+            '<td><input id="row-room-' + row + '-qty" name="row-room-' + row + '-qty"  type="text" class="form-control text-right money" maxlength="3" '+read+'></td>' +
             '<td><input id="row-room-' + row + '-room" name="row-room-' + row + '-room" type="text" class="form-control" maxlength="50"></td>' +
             '<td><input id="row-room-' + row + '-category" name="row-room-' + row + '-category" type="text" class="form-control" maxlength="50"></td>' +
-            '<td><input id="row-room-' + row + '-cost" name="row-room-' + row + '-cost" type="text" class="form-control decimal" maxlength="11"></td>' +
-            '<td><input id="row-room-' + row + '-price" name="row-room-' + row + '-price" type="text" class="form-control decimal" maxlength="11"></td>' +
+            '<td><input id="row-room-' + row + '-cost" name="row-room-' + row + '-cost" type="text" class="form-control decimal" maxlength="11" '+read+'></td>' +
+            '<td><input id="row-room-' + row + '-price" name="row-room-' + row + '-price" type="text" class="form-control decimal" maxlength="11" '+read+'></td>' +
             '<td class="text-center">' +
             '<a class="newRemCF" id="ButtonFormulaRemove'+row+'"><span id="SpanFormulaRemove'+row+'"  class="glyphicon glyphicon-remove deleteicon"></span></a></td>' +
             '</tr>'
@@ -384,7 +385,7 @@ $(document).ready(function () {
 
 });
 function AdditionAddRow(row) {
-
+    var read = $("#readonly").val();
     if (!row) {
         row = 1;
     }
@@ -393,8 +394,8 @@ function AdditionAddRow(row) {
             '<tr>' +
             '<td><input id="row-request-' + row + '-category" name="row-request-' + row + '-category" type="text" class="form-control" maxlength="100"></td>' +
             '<td><input id="row-request-' + row + '-description" name="row-request-' + row + '-description" type="text" class="form-control" maxlength="100"></td>' +
-            '<td><input id="row-request-' + row + '-cost" name="row-request-' + row + '-cost" type="text" class="form-control decimaladditional" maxlength="11"></td>' +
-            '<td><input id="row-request-' + row + '-price" name="row-request-' + row + '-price" type="text" class="form-control decimaladditional" maxlength="11"></td>' +
+            '<td><input id="row-request-' + row + '-cost" name="row-request-' + row + '-cost" type="text" class="form-control decimaladditional" maxlength="11" '+read+' ></td>' +
+            '<td><input id="row-request-' + row + '-price" name="row-request-' + row + '-price" type="text" class="form-control decimaladditional" maxlength="11" '+read+' ></td>' +
             '<td class="text-center">' +
             '<a id="ButtonAdditonRemove'+row+'" class="newRemCF"><span id="SpanAdditionRemove'+row+'"  class="glyphicon glyphicon-remove deleteicon"></span></a></td>' +
             '</tr>'

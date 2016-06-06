@@ -40,6 +40,10 @@
     <c:set var="hiddenPrintBtn" value="hidden" />
 </c:if>
 <c:set var="lockUnlockBooking" value="${requestScope['LockUnlockBooking']}" />
+<c:set var="readonly" value="" />
+<c:if test="${lockUnlockBooking == 1}">
+    <c:set var="readonly" value="readonly" />
+</c:if>
 <c:set var="enableSave" value="${requestScope['EnableSave']}" />
 <section class="content-header" >
     <h1>
@@ -248,21 +252,21 @@
                                 <div class="form-group">
                                     <label class="col-sm-2   control-label" for="cost">Adult</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control decimal text-right" id="ad_cost" name="ad_cost" value="${requestScope['ad_cost']}">  
+                                        <input type="text" class="form-control decimal text-right" id="ad_cost" name="ad_cost" value="${requestScope['ad_cost']}" ${readonly}>  
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-1 ">
                                 <div class="form-group">
                                     <div class="col-sm-12" >
-                                        <input type="text" class="form-control money text-right" id="ad_qty" name="ad_qty" value="${requestScope['ad_qty']}">  
+                                        <input type="text" class="form-control money text-right" id="ad_qty" name="ad_qty" value="${requestScope['ad_qty']}" ${readonly}>  
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-3 ">
                                 <div class="form-group">
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control decimal text-right" id="ad_price" name="ad_price" value="${requestScope['ad_price']}" >  
+                                        <input type="text" class="form-control decimal text-right" id="ad_price" name="ad_price" value="${requestScope['ad_price']}" ${readonly}>  
                                     </div>
                                 </div>
                             </div>
@@ -297,21 +301,21 @@
                                 <div class="form-group">
                                     <label class="col-sm-2   control-label" for="cost">Child</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control decimal text-right" id="ch_cost" name="ch_cost" value="${requestScope['ch_cost']}">  
+                                        <input type="text" class="form-control decimal text-right" id="ch_cost" name="ch_cost" value="${requestScope['ch_cost']}" ${readonly}>  
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-1 " style="margin-top: -10px;">
                                 <div class="form-group">
                                     <div class="col-sm-12" >
-                                        <input type="text" class="form-control money text-right" id="ch_qty" name="ch_qty" value="${requestScope['ch_qty']}" >  
+                                        <input type="text" class="form-control money text-right" id="ch_qty" name="ch_qty" value="${requestScope['ch_qty']}" ${readonly} >  
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-3 " style="margin-top: -10px;">
                                 <div class="form-group">
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control decimal text-right" id="ch_price" name="ch_price" value="${requestScope['ch_price']}" >  
+                                        <input type="text" class="form-control decimal text-right" id="ch_price" name="ch_price" value="${requestScope['ch_price']}" ${readonly}>  
                                     </div>
                                 </div>
                             </div>
@@ -343,21 +347,21 @@
                                 <div class="form-group">
                                     <label class="col-sm-2   control-label" for="cost">Infant</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control decimal text-right" id="in_cost" name="in_cost"  value="${requestScope['in_cost']}">  
+                                        <input type="text" class="form-control decimal text-right" id="in_cost" name="in_cost"  value="${requestScope['in_cost']}" ${readonly}>  
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-1 " style="margin-top: -10px;">
                                 <div class="form-group">
                                     <div class="col-sm-12" >
-                                        <input type="text" class="form-control money text-right" id="in_qty" name="in_qty"  value="${requestScope['in_qty']}">  
+                                        <input type="text" class="form-control money text-right" id="in_qty" name="in_qty"  value="${requestScope['in_qty']}" ${readonly}>  
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-3 " style="margin-top: -10px;">
                                 <div class="form-group">
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control decimal text-right" id="in_price" name="in_price" value="${requestScope['in_price']}" >  
+                                        <input type="text" class="form-control decimal text-right" id="in_price" name="in_price" value="${requestScope['in_price']}" ${readonly} >  
                                     </div>
                                 </div>
                             </div>
@@ -442,7 +446,7 @@
                                         <button type="submit" disabled  class="btn btn-success"><span class="fa fa-save"></span> Save</button>
                                     </c:when>
                                     <c:otherwise>
-                                        <c:if test="${lockUnlockBooking == 0}">
+                                        <%--<c:if test="${lockUnlockBooking == 0}">--%>
                                             <c:if test="${isBillStatus == 0}">
                                                 <button type="button" class="btn btn-success duplicate" onclick="saveOther()"><span class="fa fa-save"></span> Save</button>
                                             </c:if>
@@ -456,10 +460,10 @@
                                                     </c:when>
                                                 </c:choose> 
                                             </c:if>
-                                        </c:if>
-                                        <c:if test="${lockUnlockBooking == 1}">
-                                            <button class="btn btn-success disabled"><span class="fa fa-save"></span> Save</button>
-                                        </c:if>   
+                                        <%--</c:if>--%>
+                                        <%--<c:if test="${lockUnlockBooking == 1}">--%>
+                                            <!--<button class="btn btn-success disabled"><span class="fa fa-save"></span> Save</button>-->
+                                        <%--</c:if>--%>   
                                     </c:otherwise>
                                 </c:choose>  
                             </div>
