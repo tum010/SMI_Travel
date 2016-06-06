@@ -448,10 +448,12 @@ public class OtherDetailController extends SMITravelController {
         List<MCurrency> mCurrency = utilservice.getListMCurrency();
         request.setAttribute(CurrencyList, mCurrency);
         System.out.println("OtherController");
-        if(("1").equals(String.valueOf(master.getFlagOther())) 
+        if(("2").equals(String.valueOf(master.getFlagOther()))) {
+            request.setAttribute(LockUnlockBooking,2);
+        }else if(("1").equals(String.valueOf(master.getFlagOther())) 
             || ("2").equals(String.valueOf(master.getMBookingstatus().getId()))
             || ("5").equals(String.valueOf(master.getMBookingstatus().getId()))){
-            request.setAttribute(LockUnlockBooking,1);  
+            request.setAttribute(LockUnlockBooking,1);
         }else{
             request.setAttribute(LockUnlockBooking,0);
         }

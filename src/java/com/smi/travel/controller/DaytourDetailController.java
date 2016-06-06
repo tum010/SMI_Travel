@@ -255,7 +255,9 @@ public class DaytourDetailController extends SMITravelController {
 
         List<OtherBooking> couponList = bookingDaytourService.getCouponList(refNo);
         request.setAttribute(Coupons, couponList);
-        if(("1").equals(String.valueOf(master.getFlagDaytour())) 
+        if(("2").equals(String.valueOf(master.getFlagDaytour()))) {
+            request.setAttribute(LockUnlockBooking,2);
+        }else if(("1").equals(String.valueOf(master.getFlagDaytour())) 
             || ("2").equals(String.valueOf(master.getMBookingstatus().getId()))
             || ("5").equals(String.valueOf(master.getMBookingstatus().getId()))){
             request.setAttribute(LockUnlockBooking,1);

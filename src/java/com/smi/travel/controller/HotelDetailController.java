@@ -474,7 +474,9 @@ public class HotelDetailController extends SMITravelController {
         Master master = utilservice.getMasterdao().getBookingFromRefno(refNo);
         request.setAttribute(Master, master);
         // Mbookstatus ==> 2 Finish , 5 Finish by Finance
-        if(("1").equals(String.valueOf(master.getFlagHotel())) 
+        if(("2").equals(String.valueOf(master.getFlagHotel()))) {
+            request.setAttribute(LockUnlockBooking,2);
+        }else if(("1").equals(String.valueOf(master.getFlagHotel())) 
             || ("2").equals(String.valueOf(master.getMBookingstatus().getId()))
             || ("5").equals(String.valueOf(master.getMBookingstatus().getId()))){
             request.setAttribute(LockUnlockBooking,1);

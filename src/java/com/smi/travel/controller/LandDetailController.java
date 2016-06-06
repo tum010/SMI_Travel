@@ -380,7 +380,9 @@ public class LandDetailController extends SMITravelController {
             request.setAttribute("departdate", departDate); 
             request.setAttribute("remark", remark);
         }
-        if(("1").equals(String.valueOf(master.getFlagLand())) 
+        if(("2").equals(String.valueOf(master.getFlagLand()))) {
+            request.setAttribute(LockUnlockBooking,2);
+        }else if(("1").equals(String.valueOf(master.getFlagLand())) 
             || ("2").equals(String.valueOf(master.getMBookingstatus().getId()))
             || ("5").equals(String.valueOf(master.getMBookingstatus().getId()))){
             request.setAttribute(LockUnlockBooking,1);
