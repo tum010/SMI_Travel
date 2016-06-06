@@ -61,15 +61,28 @@ public class TransferJobReportImpl implements TransferJobReportDao {
         String open = "";
         String close = "";
         List Transferjoblist = new ArrayList();
+        boolean checkplace = false;
         if (Place != null) {
             if (Other != null) {
                 open = "(";
                 close = ")";
             }
-            getJobDetailQuery += " and " + open + " DB.place.place in ('" + Place.replaceAll("\\|\\|", "','").replaceAll(" '", "'").replaceAll("' ", "'") + "')";
+            String PlaceTemp = "";
+            String placetemp[] = Place.replaceAll("OTHERS", "").split("\\|\\|");
+            for(int i = 0 ; i<placetemp.length;i++){
+                PlaceTemp += ",'"+placetemp[i]+"'";
+            }
+            if(!"".equalsIgnoreCase(PlaceTemp.substring(1))){
+                getJobDetailQuery += " and " + open + " DB.place.place in (" + PlaceTemp.substring(1).replaceAll(" '", "'").replaceAll("' ", "'").replaceAll(",''", "") + ")";
+                checkplace = true;
+            }
         }
         if (Other != null && !"".equalsIgnoreCase(Other)) {
-            getJobDetailQuery += " or DB.pickupDetail in ('" + Other.replaceAll("\\|\\|", "','") + "') " + close;
+            if(checkplace){
+                getJobDetailQuery += " or DB.pickupDetail in ('" + Other.replaceAll("\\|\\|", "','").replaceAll(" '", "'").replaceAll("' ", "'") + "') " + close;
+            }else{
+                getJobDetailQuery += " and DB.pickupDetail in ('" + Other.replaceAll("\\|\\|", "','").replaceAll(" '", "'").replaceAll("' ", "'") + "') " ;
+            }
         }else{
             getJobDetailQuery += close;
         }
