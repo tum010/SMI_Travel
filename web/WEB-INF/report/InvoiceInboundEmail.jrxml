@@ -105,7 +105,8 @@
 			<textField>
 				<reportElement x="37" y="140" width="278" height="57" uuid="08c1c36e-97df-4407-9662-f18543accfdb"/>
 				<textElement>
-					<font fontName="Cordia New" size="14" isBold="false" pdfFontName="resource/fonts/Cordia.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<font fontName="Cordia New" size="16" isBold="false" pdfFontName="resource/fonts/Cordia.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<paragraph lineSpacing="Fixed" lineSpacingSize="11.0"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{address}]]></textFieldExpression>
 			</textField>
