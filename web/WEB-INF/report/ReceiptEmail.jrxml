@@ -273,7 +273,7 @@
 			</textField>
 			<textField>
 				<reportElement x="69" y="133" width="106" height="15" uuid="d14ff6ed-44d4-402a-b697-70d04b0734c8">
-					<printWhenExpression><![CDATA[!("").equalsIgnoreCase($F{taxidno}) && $F{taxidno} != nul]]></printWhenExpression>
+					<printWhenExpression><![CDATA[!("").equalsIgnoreCase($F{taxidno}) && $F{taxidno} != null]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Left" verticalAlignment="Top">
 					<font fontName="Cordia New" size="12" isBold="false" pdfFontName="resource/fonts/Cordia.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>

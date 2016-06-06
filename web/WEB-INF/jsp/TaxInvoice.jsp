@@ -2210,7 +2210,9 @@
             $('[name=currencyCost' + count + '] option').filter(function() { 
                 return ($(this).text() === curCost);
             }).prop('selected', true);
-//            $("#amount" + count).val(formatNumber(parseFloat(amount)));
+            if(fromAjax === 'invoice'){
+                $("#amount" + count).val(formatNumber(parseFloat(amount)));
+            }
             $('[name=currencyAmount' + count + '] option').filter(function() { 
                 return ($(this).text() === curAmount);
             }).prop('selected', true);           
