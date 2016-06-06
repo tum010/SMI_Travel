@@ -95,7 +95,7 @@ public class AgentImpl implements AgentDao{
         Session session = this.sessionFactory.openSession();
         List<String> listAgentCode = new LinkedList<String>();
         String firstChar = name.substring(0, 1);
-        Query query = session.createSQLQuery("SELECT code FROM `agent` WHERE LENGTH(code) = 6 AND code LIKE '" + firstChar + "%' ORDER BY code DESC");
+        Query query = session.createSQLQuery("SELECT code FROM `agent` WHERE CHARACTER_LENGTH(code) = 6 AND code LIKE '" + firstChar + "%' ORDER BY code DESC");
         query.setMaxResults(1);
         listAgentCode = query.list();   
         
@@ -106,7 +106,7 @@ public class AgentImpl implements AgentDao{
             no = listAgentCode.get(0).substring(1);
             int running = Integer.parseInt(no) + 1;
             String temp = String.valueOf(running);
-            for (int i = temp.length(); i < 6; i++) {
+            for (int i = temp.length(); i < 5; i++) {
                 temp = "0" + temp;
             }
             agentCode = agentCode + "" + temp;
