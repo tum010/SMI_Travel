@@ -505,7 +505,7 @@ public class InvoiceImpl implements InvoiceReportDao{
             query += " and  invm.invstatus  != 2 ";
         }
         if(checkQuery == 1){
-            query += " and (ifnull(thb,0) > ifnull(recamt,0) ) ";
+            query += " and (recstatus  like '%7%' or recstatus is null) ";
         }
         
         
