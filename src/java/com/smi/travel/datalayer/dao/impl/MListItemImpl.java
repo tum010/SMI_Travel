@@ -32,6 +32,7 @@ import com.smi.travel.datalayer.entity.MStockStatus;
 import com.smi.travel.datalayer.entity.MTicketType;
 import com.smi.travel.datalayer.view.entity.BillableView;
 import com.smi.travel.util.UtilityFunction;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Hibernate;
@@ -562,8 +563,8 @@ public class MListItemImpl implements MListItemDao {
         try {
             Session session = this.sessionFactory.openSession();
             Query query = session.createQuery(hql);
-            query.setParameter("cost", billableView.getCost());
-            query.setParameter("price", billableView.getPrice());
+            query.setParameter("cost", billableView.getCost() != null && !"".equalsIgnoreCase(billableView.getCost()) ? new BigDecimal(billableView.getCost()) : new BigDecimal(0));
+            query.setParameter("price", billableView.getPrice() != null && !"".equalsIgnoreCase(billableView.getPrice()) ? new BigDecimal(billableView.getPrice()) : new BigDecimal(0));
             query.setParameter("curprice",  billableView.getCurAmount());
             query.setParameter("curcost",  billableView.getCurCost());
             query.setParameter("billdesc_id",  billDescId);
