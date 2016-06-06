@@ -385,16 +385,16 @@
                 <!--FamilyLeaderTable List Table-->
 
                 <div style="text-align: right"><i id="ajaxload"  class="fa fa-spinner fa-spin hidden"></i>Search : <input placeholder ="LAST/FIRST " type="text" style="width: 175px" id="filtercus" name="filtercus"/> </div> 
-                <table class="display" id="FamilyLeaderTable">
+                <table class="display" id="FamilyLeaderTable" style="width: 100%; table-layout: fixed;">
                     <thead>                        
                         <tr class="datatable-header">
                             <th class="hidden">ID</th>
-                            <th>Code</th>
-                            <th class="hidden">Initial Name</th>
-                            <th>Last Name</th>
-                            <th>First Name</th>
+                            <th style="width: 15%;">Code</th>
+                            <th style="width: 11%;" class="">Initial Name</th>
+                            <th style="width: 27%;">Last Name</th>
+                            <th style="width: 27%;">First Name</th>
                             <th class="hidden">Address</th>
-                            <th >Tel</th>
+                            <th style="width: 20%;">Tel</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -405,7 +405,7 @@
                         <tr onclick="setCustomerDetail('${customer.id}', '${customer.code}', '${customer.MInitialname.name}', '${customer.firstName}', '${customer.lastName}', '${customer.address}', '${customer.tel}')">
                             <td id="customerId" class="hidden customerId">${customer.id}</td>
                             <td >${customer.code}</td>
-                            <td class="hidden">${customer.MInitialname.name}</td>
+                            <td class="">${customer.MInitialname.name}</td>
                             <td >${customer.lastName}</td>
                             <td >${customer.firstName}</td>
                             <td class="hidden">${customer.address}</td>

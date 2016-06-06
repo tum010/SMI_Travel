@@ -2902,7 +2902,7 @@ public class AJAXBean extends AbstractBean implements
                     = "<tr onclick=\"setCustomerDetail('" + id + "','" + code + "','" + Initialname + "','" + first + "','" + last + "','" + ReplaceEnterKey(address) + "','" + tel + "')\">"
                     + "<td class='hidden'>" + id + "</td>"
                     + "<td>" + code + "</td>"
-                    + "<td class='hidden'>" + Initialname + "</td>"
+                    + "<td class=''>" + Initialname + "</td>"
                     + "<td >" + last + "</td>"
                     + "<td >" + first + "</td>"
                     + "<td class='hidden'>" + address + "</td>"
