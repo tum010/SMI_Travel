@@ -232,19 +232,19 @@
                                     <div class="col-sm-4 form-group" style="margin-top: -10px;">
                                         <label class="col-sm-5 control-label text-right">Adult<strong style="color: red">*</strong></label>
                                         <div class="col-sm-3">
-                                            <input name="adult" type="number" min="0" id="adult" class="form-control" value="${master.adult}" maxlength="11" ${readonly}>
+                                            <input name="adult" type="number" min="0" id="adult" class="form-control" value="${master.adult}" maxlength="11" >
                                         </div>
                                     </div>
                                     <div class="col-sm-2 form-group" style="margin-left: -125px; margin-top: -10px;">
                                         <label class="col-sm-4 control-label text-right">Child<strong style="color: red">*</strong></label>
                                         <div class="col-sm-7">
-                                            <input name="child" id="child" type="number" min="0" class="form-control" value="${master.child}" maxlength="11" ${readonly}>
+                                            <input name="child" id="child" type="number" min="0" class="form-control" value="${master.child}" maxlength="11">
                                         </div>
                                     </div>
                                     <div class="col-sm-2 form-group" style="margin-top: -10px;">
                                         <label class="col-sm-4 control-label text-right">Infant<strong style="color: red">*</strong></label>
                                         <div class="col-sm-7">
-                                            <input name="infant" type="number" min="0" id="infant" class="form-control" value="${master.infant}" maxlength="11" ${readonly}>
+                                            <input name="infant" type="number" min="0" id="infant" class="form-control" value="${master.infant}" maxlength="11" >
                                         </div>
                                     </div>
                                 </c:when>
@@ -252,19 +252,19 @@
                                     <div class="col-sm-4 form-group" style="margin-top: -10px;">
                                         <label class="col-sm-5 control-label text-right">Adult<strong style="color: red">*</strong></label>
                                         <div class="col-sm-3">
-                                            <input name="adult" type="number" min="0" id="adult" class="form-control" value="${hotelBooking.adult}" maxlength="11" ${readonly}>
+                                            <input name="adult" type="number" min="0" id="adult" class="form-control" value="${hotelBooking.adult}" maxlength="11">
                                         </div>
                                     </div>
                                     <div class="col-sm-2 form-group" style="margin-left: -125px; margin-top: -10px;">
                                         <label class="col-sm-4 control-label text-right">Child<strong style="color: red">*</strong></label>
                                         <div class="col-sm-7">
-                                            <input name="child" id="child" type="number" min="0" class="form-control" value="${hotelBooking.child}" maxlength="11" ${readonly}>
+                                            <input name="child" id="child" type="number" min="0" class="form-control" value="${hotelBooking.child}" maxlength="11" >
                                         </div>
                                     </div>
                                     <div class="col-sm-2 form-group" style="margin-top: -10px;">
                                         <label class="col-sm-4 control-label text-right">Infant<strong style="color: red">*</strong></label>
                                         <div class="col-sm-7">
-                                            <input name="infant" type="number" min="0" id="infant" class="form-control" value="${hotelBooking.infant}" maxlength="11" ${readonly}>
+                                            <input name="infant" type="number" min="0" id="infant" class="form-control" value="${hotelBooking.infant}" maxlength="11">
                                         </div>
                                     </div>
                                 </c:otherwise>

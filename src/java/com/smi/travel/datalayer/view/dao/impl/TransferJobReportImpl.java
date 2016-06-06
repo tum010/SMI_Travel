@@ -86,7 +86,7 @@ public class TransferJobReportImpl implements TransferJobReportDao {
         }else{
             getJobDetailQuery += close;
         }
-        getJobDetailQuery += "  ORDER BY DB.pickupTime";
+        getJobDetailQuery += "  ORDER BY DB.pickupTime , DB.place.place , DB.pickupDetail ";
 
         System.out.println("getJobDetailQuery : " + getJobDetailQuery);
 

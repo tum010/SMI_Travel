@@ -584,13 +584,13 @@
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label" for="nameProduct">Adult</label>
                                             <div class="col-sm-3">
-                                                <input type="text" maxlength="10" id="AD_Cost" name="AD_Cost" class="form-control decimal" value="${requestScope['AD_Cost']}" >  
+                                                <input type="text" maxlength="10" id="AD_Cost" name="AD_Cost" class="form-control decimal" value="${requestScope['AD_Cost']}" ${readonly}>  
                                             </div>
                                             <div class="col-sm-2">
-                                                <input type="text" maxlength="3" onkeyup="validateMaxCost('AD_Qty');" class="form-control money" id="AD_Qty" name="AD_Qty" value="${requestScope['AD_Qty']}">  
+                                                <input type="text" maxlength="3" onkeyup="validateMaxCost('AD_Qty');" class="form-control money" id="AD_Qty" name="AD_Qty" value="${requestScope['AD_Qty']}" ${readonly}>  
                                             </div>
                                             <div class="col-sm-3">
-                                                <input type="text" maxlength="10"  id="AD_Price" name="AD_Price" class="form-control decimal" value="${requestScope['AD_Price']}">  
+                                                <input type="text" maxlength="10"  id="AD_Price" name="AD_Price" class="form-control decimal" value="${requestScope['AD_Price']}" ${readonly}>  
                                             </div>
                                         </div>
                                     </div>
@@ -617,13 +617,13 @@
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label" for="nameProduct">Child</label>
                                             <div class="col-sm-3">
-                                                <input type="text" maxlength="10" class="form-control decimal"   id="CH_Cost" name="CH_Cost" value="${requestScope['CH_Cost'] }" >  
+                                                <input type="text" maxlength="10" class="form-control decimal"   id="CH_Cost" name="CH_Cost" value="${requestScope['CH_Cost'] }" ${readonly}>  
                                             </div>
                                             <div class="col-sm-2">
-                                                <input type="text" maxlength="3" class="form-control money" onkeyup="validateMaxCost('CH_Qty');"  id="CH_Qty" name="CH_Qty" value="${requestScope['CH_Qty'] }" >  
+                                                <input type="text" maxlength="3" class="form-control money" onkeyup="validateMaxCost('CH_Qty');"  id="CH_Qty" name="CH_Qty" value="${requestScope['CH_Qty'] }" ${readonly}>  
                                             </div>
                                             <div class="col-sm-3">
-                                                <input type="text" maxlength="10" class="form-control decimal"   id="CH_Price" name="CH_Price" value="${requestScope['CH_Price'] }" >  
+                                                <input type="text" maxlength="10" class="form-control decimal"   id="CH_Price" name="CH_Price" value="${requestScope['CH_Price'] }" ${readonly}>  
                                             </div>
                                         </div>
                                     </div>
@@ -652,13 +652,13 @@
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label" for="nameProduct">Infant</label>
                                             <div class="col-sm-3">
-                                                <input type="text" maxlength="10" class="form-control decimal" id="IN_Cost" name="IN_Cost" value="${requestScope['IN_Cost']}" >  
+                                                <input type="text" maxlength="10" class="form-control decimal" id="IN_Cost" name="IN_Cost" value="${requestScope['IN_Cost']}" ${readonly} >  
                                             </div>
                                             <div class="col-sm-2">
-                                                <input type="text" maxlength="3" class="form-control money" onkeyup="validateMaxCost('IN_Qty');" id="IN_Qty" name="IN_Qty" value="${requestScope['IN_Qty']}" >  
+                                                <input type="text" maxlength="3" class="form-control money" onkeyup="validateMaxCost('IN_Qty');" id="IN_Qty" name="IN_Qty" value="${requestScope['IN_Qty']}" ${readonly}>  
                                             </div>
                                             <div class="col-sm-3">
-                                                <input type="text" maxlength="10" class="form-control decimal" id="IN_Price" name="IN_Price"  value="${requestScope['IN_Price']}" >  
+                                                <input type="text" maxlength="10" class="form-control decimal" id="IN_Price" name="IN_Price"  value="${requestScope['IN_Price']}" ${readonly} >  
                                             </div>
                                         </div>
                                     </div>

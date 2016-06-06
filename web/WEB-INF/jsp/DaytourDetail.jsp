@@ -149,19 +149,19 @@
                                         <label class="control-label" for="InputAdult">Adult</label>
                                     </div>
                                     <div class="col-sm-2">
-                                        <input name="InputAdult" id="InputAdult" type="number" min="0" class="form-control" onkeyup="manualNumberOnly(this);" maxlength="3" value="${master.adult}" ${readonly}> 
+                                        <input name="InputAdult" id="InputAdult" type="number" min="0" class="form-control" onkeyup="manualNumberOnly(this);" maxlength="3" value="${master.adult}" > 
                                     </div>
                                     <div class="col-sm-2">
                                         <label class="control-label" for="InputChild">Child</label>
                                     </div>
                                     <div class="col-sm-2">
-                                        <input name="InputChild" id="InputChild" type="number" min="0" class="form-control" onkeyup="manualNumberOnly(this);" maxlength="3" value="${master.child}" ${readonly}>
+                                        <input name="InputChild" id="InputChild" type="number" min="0" class="form-control" onkeyup="manualNumberOnly(this);" maxlength="3" value="${master.child}" >
                                     </div>
                                     <div class="col-sm-2">
                                         <label class="control-label" for="InputInfant">Infant</label>
                                     </div>
                                     <div class="col-sm-2 text-right">
-                                        <input name="InputInfant" id="InputInfant" type="number" min="0" class="form-control" onkeyup="manualNumberOnly(this);" maxlength="3" value="${master.infant}" ${readonly}>
+                                        <input name="InputInfant" id="InputInfant" type="number" min="0" class="form-control" onkeyup="manualNumberOnly(this);" maxlength="3" value="${master.infant}" >
                                     </div>
                                 </div>
                             </c:when>
@@ -171,19 +171,19 @@
                                         <label class="control-label" for="InputAdult">Adult</label>
                                     </div>
                                     <div class="col-sm-2">
-                                        <input name="InputAdult" id="InputAdult" type="number" class="form-control" onkeyup="manualNumberOnly(this);" min="0" maxlength="3" value="${daytourBooking.adult}" ${readonly}>
+                                        <input name="InputAdult" id="InputAdult" type="number" class="form-control" onkeyup="manualNumberOnly(this);" min="0" maxlength="3" value="${daytourBooking.adult}" >
                                     </div>
                                     <div class="col-sm-2">
                                         <label class="control-label" for="InputChild">Child</label>
                                     </div>
                                     <div class="col-sm-2">
-                                        <input name="InputChild" id="InputChild" type="number" class="form-control" onkeyup="manualNumberOnly(this);" min="0" maxlength="3" value="${daytourBooking.child}" ${readonly}>
+                                        <input name="InputChild" id="InputChild" type="number" class="form-control" onkeyup="manualNumberOnly(this);" min="0" maxlength="3" value="${daytourBooking.child}" >
                                     </div>
                                     <div class="col-sm-2">
                                         <label class="control-label" for="InputInfant">Infant</label>
                                     </div>
                                     <div class="col-sm-2 text-right">
-                                        <input name="InputInfant" id="InputInfant" type="number" class="form-control" onkeyup="manualNumberOnly(this);" min="0" maxlength="3" value="${daytourBooking.infant}" ${readonly}>
+                                        <input name="InputInfant" id="InputInfant" type="number" class="form-control" onkeyup="manualNumberOnly(this);" min="0" maxlength="3" value="${daytourBooking.infant}" >
                                     </div>
                                 </div>
                             </c:otherwise>
