@@ -100,6 +100,7 @@ public class InvoiceImpl implements InvoiceReportDao{
                 .addScalar("vatpercent", Hibernate.INTEGER)
                 .addScalar("billable_desc_id", Hibernate.STRING)
                 .addScalar("create_by", Hibernate.STRING)
+                .addScalar("inv_type", Hibernate.STRING)
                 .list();
         int count = 0;
         int vat = 0;
@@ -235,6 +236,9 @@ public class InvoiceImpl implements InvoiceReportDao{
                     }        
                     
                 }
+            }
+            if("T".equalsIgnoreCase(util.ConvertString(B[24]))){
+                invoice.setSignname("ACCOUNT");
             }
             invoice.setGrossadd("");
             invoice.setVatadd("");
