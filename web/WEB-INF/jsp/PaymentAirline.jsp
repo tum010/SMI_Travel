@@ -789,7 +789,7 @@
                                             </td>
                                             <td>      
                                                 <div class="input-group datetime" >
-                                                    <c:set var="bookingDate" value="${table.bookingDate}" />
+                                                    <c:set var="bookingDate" value="${table.bookDate}" />
                                                     <fmt:parseDate value="${bookingDate}" var="bookingDateTemp" pattern="yyyy-MM-dd" />
                                                     <fmt:formatDate value="${bookingDateTemp}" var="bookingDates" pattern="dd-MM-yyyy" />
                                                     <input style="width: 100%" type="text" class="form-control" id="bookingDate${i.count}" name="bookingDate${i.count}" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${bookingDates}">
