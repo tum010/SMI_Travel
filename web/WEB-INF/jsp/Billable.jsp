@@ -399,15 +399,20 @@
                         <c:set var="totalPrice"  value="${totalPrice + b.price}"/> 
                     </c:forEach>
 
-<!--                    <tr>
+                    <tr>
                         <td></td>
                         <td></td>
                         <td class="text-center"><strong>Total</strong></td>
                         <td class="text-right"><strong class="moneyformat">${totalCost}</strong></td>
+                        <td class="text-right"></td> 
                         <td class="text-right"><strong class="moneyformat">${totalPrice}</strong></td>                    
                         <td></td>
                         <td></td>
-                    </tr>-->
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
                     </tbody>
                 </table>
                 
@@ -829,15 +834,21 @@
         
         var rowall = $("#billableTable tr").length;
         for(var i = 1 ; i < rowall ;i++){
-            var date = $('#billDate-'+i).val();
-            if(date !=='' ){
-                $('#billDate-'+i).val(convertFormatDate(date));
+            var date = document.getElementById("billDate-" + i);
+            if (date !== null) {
+                $('#billDate-'+i).val(convertFormatDate(date.value));
             }
         }
-        var trandate = $('#transferD').val();
-        if(trandate !== ''){
-            $('#transferD').val(convertFormatDate(trandate));
+//        var trandate = $('#transferD').val();
+//        if(trandate !== ''){
+////            $('#transferD').val(convertFormatDate(trandate));
+//        }
+        
+        var trandate = document.getElementById("transferD");
+        if (trandate !== null) {
+            $('#transferD').val(convertFormatDate(trandate.value));
         }
+        
         
         $('.datemask').mask('00-00-0000');
         $('.date').datetimepicker();

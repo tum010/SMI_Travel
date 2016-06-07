@@ -940,14 +940,16 @@ public class PaymentAirlineController extends SMITravelController {
         }
         
 //      request.setAttribute(PAYNO,paymentNo);
-        request.setAttribute(DATEFROM,dateFrom);
-        request.setAttribute(DATETO,dateTo);
-        request.setAttribute(TICKETFROM,ticketFrom);
-        request.setAttribute(TYPEAIRLINE,typeAirline);
-        request.setAttribute(TYPEAIRLINEOTHER,typeAirlineOther);
-        request.setAttribute(TICKETTYPE,ticketType);
-        request.setAttribute(PAYMENTAIRTICKET,paymentAirticket);
-        request.setAttribute(TICKETNUM, TicketNum);
+        if(!"".equalsIgnoreCase(action)){
+            request.setAttribute(DATEFROM,dateFrom);
+            request.setAttribute(DATETO,dateTo);
+            request.setAttribute(TICKETFROM,ticketFrom);
+            request.setAttribute(TYPEAIRLINE,typeAirline);
+            request.setAttribute(TYPEAIRLINEOTHER,typeAirlineOther);
+            request.setAttribute(TICKETTYPE,ticketType);
+            request.setAttribute(PAYMENTAIRTICKET,paymentAirticket);
+            request.setAttribute(TICKETNUM, TicketNum);
+        }
         setResponseAttribute(request);
         return PaymentAirline;
     }

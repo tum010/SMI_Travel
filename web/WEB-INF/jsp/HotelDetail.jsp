@@ -526,24 +526,24 @@
                                         </script>
                                     </td>          
                                     <td class="text-center">
-                                        <c:if test="${lockUnlockBooking == 0}">
-                                            <c:if test="${pa.hotelBooking.isBill == 0}">
-                                                <a id="PassengerButtonRemove${passenger.count}" class="remCF" onclick="ConfirmDelete('${hotelBooking.id}', '3', '${pa.id}', '${passenger.count}')">
-                                                    <span id="PassengerSpanRemove${passenger.count}" class="glyphicon glyphicon-remove deleteicon"></span>
-                                                </a>
-                                            </c:if>
-                                            <c:if test="${pa.hotelBooking.isBill == 1}">
-                                                <span class="glyphicon glyphicon-remove deleteicon" ></span>
-                                            </c:if>
-                                        </c:if>
-                                        <c:if test="${lockUnlockBooking == 1}">
-                                            <span class="glyphicon glyphicon-remove deleteicon" ></span>
-                                        </c:if> 
-                                        <c:if test="${lockUnlockBooking == 2}">
+                                        <%--<c:if test="${lockUnlockBooking == 0}">--%>
+                                            <%--<c:if test="${pa.hotelBooking.isBill == 0}">--%>
+                                                <!--<a id="PassengerButtonRemove${passenger.count}" class="remCF" onclick="ConfirmDelete('${hotelBooking.id}', '3', '${pa.id}', '${passenger.count}')">-->
+                                                    <!--<span id="PassengerSpanRemove${passenger.count}" class="glyphicon glyphicon-remove deleteicon"></span>-->
+                                                <!--</a>-->
+                                            <%--</c:if>--%>
+                                            <%--<c:if test="${pa.hotelBooking.isBill == 1}">--%>
+                                                <!--<span class="glyphicon glyphicon-remove deleteicon" ></span>-->
+                                            <%--</c:if>--%>
+                                        <%--</c:if>--%>
+                                        <%--<c:if test="${lockUnlockBooking == 1}">--%>
+                                            <!--<span class="glyphicon glyphicon-remove deleteicon" ></span>-->
+                                        <%--</c:if>--%> 
+                                        <%--<c:if test="${lockUnlockBooking == 2}">--%>
                                             <a id="PassengerButtonRemove${passenger.count}" class="remCF" onclick="ConfirmDelete('${hotelBooking.id}', '3', '${pa.id}', '${passenger.count}')">
                                                 <span id="PassengerSpanRemove${passenger.count}" class="glyphicon glyphicon-remove deleteicon"></span>
                                             </a>
-                                        </c:if>
+                                        <%--</c:if>--%>
                                     </td>
                                 </tr>
                                 <script>
