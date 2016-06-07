@@ -208,9 +208,12 @@ public class InvoiceInboundController extends SMITravelController {
             if(!"V".equals(invoiceType)){
                invoiceType = "T";
             }
-            invoice = invoiceService.getInvoiceByWildCardSearch(invoiceId,invoiceNo,wildCardSearch,keyCode,department,invoiceType);            
-            saveAction(invoice.getInvNo(), invoiceNo, invoice, "wildCardSearch", request);   
-            request.setAttribute("thisdate", invoice.getInvDate());
+            invoice = invoiceService.getInvoiceByWildCardSearch(invoiceId,invoiceNo,wildCardSearch,keyCode,department,invoiceType);       
+            if(invoice != null){
+                saveAction(invoice.getInvNo(), invoiceNo, invoice, "wildCardSearch", request);   
+                request.setAttribute("thisdate", invoice.getInvDate());
+            }
+            
         }else if("new".equals(action)){
             if(invoice != null){
               invoice.setInvoiceDetails(null);  

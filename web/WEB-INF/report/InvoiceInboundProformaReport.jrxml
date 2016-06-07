@@ -258,7 +258,7 @@
 				</textElement>
 				<text><![CDATA[ PREPARED BY : ]]></text>
 			</staticText>
-			<textField>
+			<textField isStretchWithOverflow="true">
 				<reportElement x="7" y="6" width="350" height="20" uuid="606580e8-0632-46bc-a83c-297e7417026b"/>
 				<textElement verticalAlignment="Top">
 					<font fontName="Tahoma" size="9" isBold="true" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>

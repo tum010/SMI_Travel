@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReceiptTempReport" language="groovy" pageWidth="575" pageHeight="411" columnWidth="570" leftMargin="5" rightMargin="0" topMargin="8" bottomMargin="0" uuid="d5abd156-d66e-4355-bf32-cbf56f5c1dcf">
-	<property name="ireport.zoom" value="5.559917313492249"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="915"/>
+	<property name="ireport.zoom" value="5.5599173134922495"/>
+	<property name="ireport.x" value="2027"/>
+	<property name="ireport.y" value="973"/>
 	<field name="recto" class="java.lang.String"/>
 	<field name="recadd" class="java.lang.String"/>
 	<field name="tel" class="java.lang.String"/>
@@ -400,8 +400,8 @@
 				</textElement>
 				<textFieldExpression><![CDATA[($F{tax} != null && !"null".equals($F{tax}) && $F{tax}.length() > 0) ? new BigDecimal($F{tax}) : ""]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="16" y="2" width="409" height="12" uuid="93a7114a-2d0a-46f4-b739-cc9d4996baf4"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="16" y="3" width="409" height="13" uuid="93a7114a-2d0a-46f4-b739-cc9d4996baf4"/>
 				<textElement textAlignment="Left">
 					<font fontName="Tahoma" size="9" isBold="false" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>

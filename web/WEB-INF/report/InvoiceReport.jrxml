@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Invoice" language="groovy" pageWidth="595" pageHeight="842" columnWidth="563" leftMargin="12" rightMargin="20" topMargin="40" bottomMargin="0" uuid="59f0ec99-8109-4367-975c-dc17aad92f4d">
-	<property name="ireport.zoom" value="2.2000000000000095"/>
+	<property name="ireport.zoom" value="1.0263162364614176"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="253"/>
+	<property name="ireport.y" value="0"/>
 	<field name="invto" class="java.lang.String"/>
 	<field name="invno" class="java.lang.String"/>
 	<field name="invdate" class="java.lang.String"/>
@@ -458,7 +458,7 @@
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</line>
-			<textField>
+			<textField isStretchWithOverflow="true">
 				<reportElement x="8" y="77" width="276" height="12" uuid="0c6d68b3-8301-450d-81a0-ff495e804908"/>
 				<textElement>
 					<font fontName="Tahoma" size="7" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>

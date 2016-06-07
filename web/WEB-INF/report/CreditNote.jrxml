@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TaxInvoiceEmailReport" language="groovy" pageWidth="648" pageHeight="396" columnWidth="569" leftMargin="28" rightMargin="51" topMargin="8" bottomMargin="28" uuid="346dddd2-e21a-4c7b-8d69-ccea53d38a9d">
-	<property name="ireport.zoom" value="2.1961500000000047"/>
-	<property name="ireport.x" value="626"/>
-	<property name="ireport.y" value="186"/>
+	<property name="ireport.zoom" value="1.3636363636363662"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
 	<field name="customer" class="java.lang.String"/>
 	<field name="address" class="java.lang.String"/>
 	<field name="cnno" class="java.lang.String"/>
@@ -433,7 +433,7 @@
 				</textElement>
 				<text><![CDATA[Grand Total]]></text>
 			</staticText>
-			<textField>
+			<textField isStretchWithOverflow="true">
 				<reportElement x="3" y="63" width="353" height="17" uuid="c5294060-3d01-4314-aca8-89f3b57e9f9a"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="8" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H"/>

@@ -252,8 +252,8 @@
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</line>
-			<textField>
-				<reportElement x="5" y="56" width="229" height="32" uuid="0c6d68b3-8301-450d-81a0-ff495e804908"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="5" y="56" width="238" height="32" uuid="0c6d68b3-8301-450d-81a0-ff495e804908"/>
 				<textElement>
 					<font fontName="Tahoma" size="9" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>

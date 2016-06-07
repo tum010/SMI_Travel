@@ -383,11 +383,14 @@
                                     <label class="control-label text-right">Payment <font style="color: red">*</font></label>
                                 </div>
                                 <div class="form-group col-xs-1" style="width: 170px; margin-top: -10px">
-                                    <select name="inputStatus" id="inputStatus" class="form-control">
+                                    <select name="inputStatus" id="inputStatus" class="form-control"> 
                                         <option value="">--- Status ---</option> 
                                         <c:forEach var="table" items="${statusList}" >
                                             <c:set var="select" value="" />
-                                            <c:set var="selectedId" value="${receipt.MAccpay.id}" />
+                                            <c:set var="selectedId" value="7" />
+                                            <c:if test="${receipt.MAccpay.id != null}">
+                                                <c:set var="selectedId" value="${receipt.MAccpay.id}" />
+                                            </c:if>
                                             <c:if test="${table.id == selectedId}">
                                                 <c:set var="select" value="selected" />
                                             </c:if>
