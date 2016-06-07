@@ -126,7 +126,8 @@
                         <tr>
                             <td class="center">${varPassenger.count}</td>
                             <td class="codeCustomer">${passenger.getCustomer().getCode()}</td>
-                            <td>${passenger.getCustomer().getLastName()}    
+                            <td>${passenger.getCustomer().getMInitialname().getName()}
+                                ${passenger.getCustomer().getLastName()}    
                                 ${passenger.getCustomer().getFirstName()}</td>
                     <script>
                         $(document).ready(function () {

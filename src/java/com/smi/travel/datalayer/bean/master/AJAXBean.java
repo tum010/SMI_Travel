@@ -1973,6 +1973,7 @@ public class AJAXBean extends AbstractBean implements
                     System.out.println("===== alertMessageExRate ===== : "+alertMessageExRate);
                     
 //                    if(billableDescId.equalsIgnoreCase(invoiceDetailList.get(j).getBillableDesc().getId()) && !"".equalsIgnoreCase(curcost) && !"".equalsIgnoreCase(curamount)){
+                    if(billableDescId.equalsIgnoreCase(invoiceDetailList.get(j).getBillableDesc().getId())){
                         boolean check = true;
                         String invoiceDetailId = invoiceDetailList.get(j).getId();
                         String invNo = taxInvoiceDao.getInvoiceNoByInvoiceDetailId(invoiceDetailId);
@@ -2116,7 +2117,7 @@ public class AJAXBean extends AbstractBean implements
                 //                }
                             }
                         }    
-//                    }
+                    }
 
                     if((j==invoiceDetailList.size()-1) && checkAlertMessage){
                         if(!"".equalsIgnoreCase(invNoProfit) && !"".equalsIgnoreCase(invNoOutput)){
@@ -2902,7 +2903,7 @@ public class AJAXBean extends AbstractBean implements
                     = "<tr onclick=\"setCustomerDetail('" + id + "','" + code + "','" + Initialname + "','" + first + "','" + last + "','" + ReplaceEnterKey(address) + "','" + tel + "')\">"
                     + "<td class='hidden'>" + id + "</td>"
                     + "<td>" + code + "</td>"
-                    + "<td class='hidden'>" + Initialname + "</td>"
+                    + "<td class=''>" + Initialname + "</td>"
                     + "<td >" + last + "</td>"
                     + "<td >" + first + "</td>"
                     + "<td class='hidden'>" + address + "</td>"

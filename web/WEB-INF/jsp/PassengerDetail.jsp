@@ -326,15 +326,15 @@
             <div class="modal-body">
                 <!--Owner List Table-->
                 <div style="text-align: right"><i id="ajaxload"  class="fa fa-spinner fa-spin hidden"></i>Search : <input placeholder ="LAST/FIRST " type="text" style="width: 175px" id="filtercus" name="filtercus"/> </div> 
-                <table class="display" id="CustomerTable">
+                <table class="display" id="CustomerTable" style="width: 100%; table-layout: fixed;">
                     <thead>                        
                         <tr class="datatable-header">
                             <th class="hidden">ID</th>
-                            <th>Code</th>
-                            <th>Initial Name</th>
+                            <th style="width: 18%;">Code</th>
+                            <th style="width: 12%;">Initial Name</th>
                             <th class="hidden">InitialID</th>
-                            <th>Last Name</th>
-                            <th>First Name</th>
+                            <th style="width: 35%;">Last Name</th>
+                            <th style="width: 35%;">First Name</th>
                             <th class="hidden">birth date</th>
                             <th class="hidden">sex</th>
                             <th class="hidden">address</th>

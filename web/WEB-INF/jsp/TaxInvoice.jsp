@@ -2205,12 +2205,13 @@
             
             $("#invoiceDetailCost" + count).val(formatNumber(parseFloat(cost)));
             $("#invoiceDetailAmount" + count).val(formatNumber(parseFloat(amount)));            
-            $("#description" + count).val(description);
+//            $("#description" + count).val(description);
             $("#cost" + count).val(formatNumber(parseFloat(cost)));
             $('[name=currencyCost' + count + '] option').filter(function() { 
                 return ($(this).text() === curCost);
             }).prop('selected', true);
             if(fromAjax === 'invoice'){
+                $("#description" + count).val(description);
                 $("#amount" + count).val(formatNumber(parseFloat(amount)));
             }
             $('[name=currencyAmount' + count + '] option').filter(function() { 
