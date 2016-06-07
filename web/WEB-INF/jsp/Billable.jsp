@@ -403,8 +403,8 @@
                         <td></td>
                         <td></td>
                         <td class="text-center"><strong>Total</strong></td>
-                        <td class="text-right"><strong class="moneyformat">${totalCost}</strong></td>
-                        <td class="text-right"></td> 
+                        <td></td>
+                        <td></td>
                         <td class="text-right"><strong class="moneyformat">${totalPrice}</strong></td>                    
                         <td></td>
                         <td></td>
