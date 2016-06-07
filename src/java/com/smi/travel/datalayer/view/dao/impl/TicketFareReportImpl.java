@@ -33,7 +33,7 @@ public class TicketFareReportImpl implements TicketFareReportDao {
     private UtilityFunction utilityFunction;
     
     @Override
-    public List getTicketFareReport(String ticketType,String ticketBuy,String airline,String airlineCode,String dateFrom,String dateTo,String department,String staff,String termPay,String printby,String invdateFrom,String invdateTo){
+    public List getTicketFareReport(String ticketType,String ticketBuy,String airline,String airlineCode,String dateFrom,String dateTo,String department,String staff,String termPay,String printby,String invdateFrom,String invdateTo,String reportType){
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
         List data = new ArrayList<TicketFareReport>();
@@ -126,6 +126,12 @@ public class TicketFareReportImpl implements TicketFareReportDao {
         
         if(checkQuery == 0){query = query.replaceAll("where", "");}
         System.out.println("query : "+query);
+        
+        if("TicketFareAirline".equalsIgnoreCase(reportType)){
+            query += " ORDER BY docno  ";
+        }else if("TicketFareInvoice".equalsIgnoreCase(reportType) || "TicketFareAgent".equalsIgnoreCase(reportType)){
+            query += " ORDER BY invno ";
+        }
         
         List<Object[]> QueryList =  session.createSQLQuery(query)
                 .addScalar("air",Hibernate.STRING)
