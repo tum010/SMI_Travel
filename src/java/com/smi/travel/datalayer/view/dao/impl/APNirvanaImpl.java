@@ -998,6 +998,12 @@ System.out.println("query ap_nirvana : "+query);
             String custBranch = (apNirvana.getVendor_branch()!= null ? String.valueOf(apNirvana.getVendor_branch()) : "0");
             dataArea += util.generateDataAreaNirvana(custBranch,6);
             
+            String prefix = (apNirvana.getPrefix()!= null ? String.valueOf(apNirvana.getPrefix()) : "");
+            dataArea += util.generateDataAreaNirvana(prefix,6);
+            
+            String voucherno = (apNirvana.getVoucherno()!= null ? String.valueOf(apNirvana.getVoucherno()) : "");
+            dataArea += util.generateDataAreaNirvana(voucherno,9);
+            
             ssDataexchTemp.setDataArea(dataArea);
                     
             String paymentDetailId = (apNirvana.getPayment_detail_id()!= null ? String.valueOf(apNirvana.getPayment_detail_id()) : "");

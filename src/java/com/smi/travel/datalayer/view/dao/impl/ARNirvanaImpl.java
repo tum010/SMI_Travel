@@ -825,7 +825,7 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
             System.out.println("===== documentPrefix ===== : "+ prefix);
             
             String documentNo = (arNirvana.getDocumentno() != null && !"".equalsIgnoreCase(arNirvana.getDocumentno()) ? arNirvana.getDocumentno() : "");
-            dataArea += util.generateDataAreaNirvana(documentNo,8);
+            dataArea += util.generateDataAreaNirvana(documentNo,9);
             System.out.println("===== documentNo ===== : "+ documentNo);
             
             System.out.println("===== dataArea ==== : " + dataArea);
