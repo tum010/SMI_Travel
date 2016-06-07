@@ -478,7 +478,9 @@ public class UtilityService {
     public void setPackageTourDao(PackageTourDao packageTourDao) {
         this.packageTourDao = packageTourDao;
     }
-    
-    
-    
+
+    public List<MBilltype> getListMBilltypeInbound(String invoiceType) {
+        return listitemdao.getListMBilltypeInbound(invoiceType);
+    }
+          
 }

@@ -2,6 +2,7 @@ package com.smi.travel.controller;
 import com.smi.travel.datalayer.entity.Invoice;
 import com.smi.travel.datalayer.entity.InvoiceDetail;
 import com.smi.travel.datalayer.entity.MAccterm;
+import com.smi.travel.datalayer.entity.MBilltype;
 import com.smi.travel.datalayer.entity.MCurrency;
 import com.smi.travel.datalayer.entity.MDefaultData;
 import com.smi.travel.datalayer.entity.MFinanceItemstatus;
@@ -28,6 +29,7 @@ import org.springframework.web.servlet.view.RedirectView;
 public class InvoiceInboundController extends SMITravelController {
     private static final ModelAndView InvoiceInbound = new ModelAndView("InvoiceInbound");
     private static final ModelAndView InvoiceInbound_REFRESH = new ModelAndView(new RedirectView("InvoiceInbound.smi", true));
+    private static final String MBILLTYPELIST = "mBillTypeList";
     private UtilityService utilityService;
     UtilityFunction utilty = new UtilityFunction();
     private static final String LINKNAME = "InvoiceInbound";
@@ -76,6 +78,15 @@ public class InvoiceInboundController extends SMITravelController {
         }
         System.out.println("invoiceType : "+invoiceType);
         System.out.println("department : "+department);
+        
+        // List Type
+        List<MBilltype> mBillTypeList = new ArrayList<MBilltype>();
+        mBillTypeList = utilityService.getListMBilltypeInbound(invoiceType);
+        if(mBillTypeList != null){
+            request.setAttribute(MBILLTYPELIST, mBillTypeList);
+        }else{
+            request.setAttribute(MBILLTYPELIST, null);
+        } 
        
         //Role User
         SystemUser  user = (SystemUser) session.getAttribute("USER");
@@ -522,9 +533,12 @@ public class InvoiceInboundController extends SMITravelController {
             String gross = request.getParameter("InputGross"+i);
             String amount = request.getParameter("InputAmount"+i);
             String amountCurren = request.getParameter("SelectCurrencyAmount"+i);
-            String isVat = request.getParameter("checkUse"+i);          
+            String isVat = request.getParameter("checkUse"+i);
+            String product = request.getParameter("product"+i);
             request.getParameterMap();
             System.out.println("isvat : ["+i+"]"+isVat);
+            System.out.println("vat : ["+i+"]"+vat);
+            System.out.println("product : ["+i+"]"+product);
             
             if(idDetail != null && !idDetail.equals("") || (amount != null && !amount.equals("")) || (gross != null && !gross.equals("")) 
                     || (description!="" && description!=null)){  
@@ -557,6 +571,9 @@ public class InvoiceInboundController extends SMITravelController {
                 if(vat != null && !vat.equals("")){
                     BigDecimal vatInt =  new BigDecimal(vat);
                     invoiceDetail.setVat(vatInt);
+                }else{
+                    BigDecimal vatInt =  new BigDecimal("0.00");
+                    invoiceDetail.setVat(vatInt);
                 }
 
                 if(isVat == null){
@@ -575,6 +592,14 @@ public class InvoiceInboundController extends SMITravelController {
                    invoiceDetail.setIsExport(1);
                 }else{
                    invoiceDetail.setIsExport(0);
+                }
+                
+                if(product != null && !"".equalsIgnoreCase(product)){
+                    MBilltype mBillType = new MBilltype();
+                    mBillType.setId(product);
+                    invoiceDetail.setMbillType(mBillType);
+                }else{
+                    invoiceDetail.setMbillType(null);
                 }
                 
                 invoiceDetail.setInvoice(invoice);   

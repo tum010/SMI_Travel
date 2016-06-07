@@ -10,6 +10,15 @@
         <property name="name" type="string">
             <column name="name" length="50" not-null="true" />
         </property>
+        <property name="accCode" type="string">
+            <column name="acc_code" length="20" not-null="true" />
+        </property>
+        <property name="department" type="string">
+            <column name="department" length="20" not-null="true" />
+        </property>
+        <property name="accNo" type="java.lang.Integer">
+            <column name="acc_no" length="11" not-null="true" />
+        </property>
         <set name="billableDescs" table="billable_desc" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="bill_type" />

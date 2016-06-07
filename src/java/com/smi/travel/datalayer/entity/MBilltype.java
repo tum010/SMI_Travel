@@ -13,6 +13,9 @@ public class MBilltype  {
 
      private String id;
      private String name;
+     private String accCode;
+     private String department;
+     private Integer accNo;
      private Set billableDescs = new HashSet(0);
 
     public MBilltype() {
@@ -47,6 +50,30 @@ public class MBilltype  {
     
     public void setBillableDescs(Set billableDescs) {
         this.billableDescs = billableDescs;
+    }
+
+    public String getAccCode() {
+        return accCode;
+    }
+
+    public void setAccCode(String accCode) {
+        this.accCode = accCode;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+
+    public Integer getAccNo() {
+        return accNo;
+    }
+
+    public void setAccNo(Integer accNo) {
+        this.accNo = accNo;
     }
 
 

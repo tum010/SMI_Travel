@@ -375,7 +375,7 @@ public class MListItemImpl implements MListItemDao {
     
     @Override
     public List<MBilltype> getListMBilltype(){
-        String query = "from MBilltype m";
+        String query = "from MBilltype m where m.department = 'W' ";
         Session session = this.sessionFactory.openSession();
         List<MBilltype> List = session.createQuery(query).list();
         if (List.isEmpty()) {
@@ -654,6 +654,25 @@ public class MListItemImpl implements MListItemDao {
         session.close();
         this.sessionFactory.close();
         return billableDescList;
+    }
+
+    @Override
+    public List<MBilltype> getListMBilltypeInbound(String invoiceType) {
+        Session session = this.sessionFactory.openSession();
+        int accNo = 0;
+        accNo = ("V".equalsIgnoreCase(invoiceType) ? 1 : 2);
+        String query = "from MBilltype mb where mb.department = 'I' and mb.accNo = '" + accNo + "' ";
+        List<MBilltype> mBillTypeList = session.createQuery(query).list();
+
+        if(mBillTypeList.isEmpty()){
+            session.close();
+            this.sessionFactory.close();
+            return null;
+        }
+               
+        session.close();
+        this.sessionFactory.close();
+        return mBillTypeList;
     }
 
 }

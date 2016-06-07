@@ -78,4 +78,5 @@ public interface MListItemDao {
     public String getRefitemIdFromRefNo(String refno);
     public List<BillableView> getBillableDescFromRefItemId(String refItemId);
     public List<BillableDesc> getBillableDescIdFromRefNo(String refno);
+    public List<MBilltype> getListMBilltypeInbound(String invoiceType);
 }

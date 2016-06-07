@@ -22,6 +22,7 @@
 <c:set var="result" value="${requestScope['result']}" />
 <c:set var="InvoiceDate" value="${requestScope['InvoiceDate']}" />
 <c:set var="textVoid" value="" />
+<c:set var="mBillTypeList" value="${requestScope['mBillTypeList']}" />
 
 <section class="content-header" >
     <c:if test="${invoice.MFinanceItemstatus.id == '2'}">        
@@ -205,6 +206,7 @@
                                     <thead class="datatable-header">
                                         <tr>
                                             <th class="hidden"> Id</th>
+                                            <th style="width:10%;">Product</th>
                                             <th style="width:30%;" align="left">Description</th>
                                             <c:choose>
                                                 <c:when test="${fn:contains(page , 'PM')}">
@@ -221,17 +223,27 @@
                                                 </c:when>                        
                                             </c:choose>
                                             <th style="width: 8%" align="center">Amount</th>
-                                            <th style="width: 7%" align="center" class="" >Cur</th>
-                                            <th style="width: 3%" align="center">Action</th>
+                                            <th style="width: 6%" align="center" class="" >Cur</th>
+                                            <th style="width: 2%" align="center">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <c:forEach var="ind" items="${listInvoiceDetail}" varStatus="taxdesc">
                                         <tr>
-                                            <td class="hidden">
-                                                <input type="text" class="form-control" id="detailId${taxdesc.count}" name="detailId${taxdesc.count}" 
+                                            <td>
+                                                <input type="hidden" class="form-control" id="detailId${taxdesc.count}" name="detailId${taxdesc.count}" 
                                                 value="${ind.id}" > 
-                                            </td> 
+                                                <select class="form-control" name="product${taxdesc.count}" id="product${taxdesc.count}" >
+                                                    <option  value="" >---------</option>
+                                                <c:forEach var="mBillType" items="${mBillTypeList}" varStatus="status">                                       
+                                                    <c:set var="select" value="" />
+                                                    <c:if test="${mBillType.id == ind.mbillType.id}">
+                                                        <c:set var="select" value="selected" />
+                                                    </c:if>
+                                                    <option  value="${mBillType.id}" ${select}>${mBillType.name}</option>
+                                                </c:forEach>
+                                             </select>      
+                                            </td>
                                             <td>
                                                 <input type="text" class="form-control" id="BillDescriptionTemp${taxdesc.count}" 
                                                 name="BillDescriptionTemp${taxdesc.count}"  value="${ind.description}">
@@ -654,6 +666,13 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog --> <!-- /.modal-dialog -->
 </div>
+
+<select class="form-control hidden" name="mBillTypeListTemp" id="mBillTypeListTemp">
+    <c:forEach var="mBillTypeTemp" items="${mBillTypeList}" varStatus="status">                                              
+        <option  value="${mBillTypeTemp.id}">${mBillTypeTemp.name}</option>
+    </c:forEach>
+</select>
+
 <script type="text/javascript" charset="utf-8">
     var select = "<option value='' ></option>";
     var defaultD = "";

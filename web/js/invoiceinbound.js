@@ -743,7 +743,7 @@ function addRowInvoiceInboundDetail(row){
     var vat = $('#vatBase').val();
     $("#DetailBillableTable tbody").append(
     '<tr>' +
-    '<td class="hidden"><input type="text" class="form-control" id="detailId' + row + '" name="detailId' + row + '" value="" > </td>' +
+    '<td class=""><input type="hidden" class="form-control" id="detailId' + row + '" name="detailId' + row + '" value="" ><select class="form-control" name="product' + row + '" id="product' + row + '" ><option  value="" >---------</option></select> </td>' +
     '<td><input type="text" class="form-control" id="BillDescriptionTemp' + row + '" name="BillDescriptionTemp' + row + '"   value=""></td>' +
     '<td align="center" '+ textHidden+'><input type="checkbox" id="checkUse' + row + '" name="checkUse' + row + '" onclick="calculateGross(' + row + ')" value="" checked></td>' +
     '<td class="hidden" ><input type="text" id="InputVatTemp' + row + '" name="InputVatTemp' + row + '"  value="' + vat + '"></td>' +
@@ -767,6 +767,7 @@ function addRowInvoiceInboundDetail(row){
         digitsOptional: false,
         placeholder: "0.00",
     });
+    $("#mBillTypeListTemp option").clone().appendTo("#product" + row);
     var count = document.getElementById('counterTable');
     count.value = row++;
 }
@@ -1119,7 +1120,7 @@ $(document).ready(function() {
     } else if (bla === "fail") {
         $('#textAlertDivNotSave').show();
     } else if (bla === "NEW") {
-        clearInvoice();
+//        clearInvoice();
     } else if (bla === "notDeleteReciptAndTax") {
         $("#textAlertInvoiceNotEmpty").show();
     }
