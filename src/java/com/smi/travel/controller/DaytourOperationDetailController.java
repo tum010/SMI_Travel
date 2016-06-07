@@ -448,7 +448,7 @@ public class DaytourOperationDetailController extends SMITravelController {
         PaymentDetailWendy paymentDetailWendy = new PaymentDetailWendy();
             
         MPaytype mpayType = new MPaytype();                   
-        mpayType.setId("6");
+        mpayType.setId("5");
         paymentDetailWendy.setMPaytype(mpayType);
         String acc_code = paymentTourHotelService.getAccountCode("6");
         paymentDetailWendy.setAccCode(acc_code);           
