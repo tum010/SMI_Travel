@@ -66,6 +66,7 @@ public class ReceiptImpl implements ReceiptDao{
                 .addScalar("currency",Hibernate.STRING)
                 .addScalar("tax_no",Hibernate.STRING)
                 .addScalar("branch",Hibernate.STRING)
+                .addScalar("createBy",Hibernate.STRING)
                 .list();
         
         List data = new ArrayList();
@@ -112,7 +113,7 @@ public class ReceiptImpl implements ReceiptDao{
             if(sign != null){
                 if("".equals(sign)){
                     receiptView.setSign("nosign");
-                    receiptView.setSignname(printby);
+                    receiptView.setSignname(T[34] != null ? String.valueOf(T[34]) : "");
                 }else{
                     receiptView.setSign(sign);
                     String querySystemUser = "from SystemUser s where s.name like '%"+sign+"%'";

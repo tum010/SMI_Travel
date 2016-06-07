@@ -102,7 +102,7 @@ public class TaxInvoiceImpl implements TaxInvoiceReportDao{
             if(sign != null){
                 if("".equals(sign)){
                     taxInvoiceView.setSign("nosign");
-                    taxInvoiceView.setSignname(printby);
+                    taxInvoiceView.setSignname(util.ConvertString(B[15]));
                 }else{
                     taxInvoiceView.setSign(sign);
                     String querySystemUser = "from SystemUser s where s.name like '%"+sign+"%'";
