@@ -71,6 +71,8 @@ public class MAgentDetailController extends SMITravelController {
         if(!"0".equalsIgnoreCase(Branch)){
             mBranch.setId(Branch);
             agent.setMBranch(mBranch);
+        } else {
+            agent.setMBranch(null);
         }
         
         agent.setRemark(remark);

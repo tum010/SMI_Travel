@@ -442,16 +442,18 @@ public class BillableImpl implements BillableDao {
 //                }
                 
                 //Price
-                adPrice = adPrice.add(flightDetail.getAdPrice() != null ? flightDetail.getAdPrice() : new BigDecimal(BigInteger.ZERO));
-                chPrice = chPrice.add(flightDetail.getChPrice() != null ? flightDetail.getChPrice() : new BigDecimal(BigInteger.ZERO));
-                inPrice = inPrice.add(flightDetail.getInPrice() != null ? flightDetail.getInPrice() : new BigDecimal(BigInteger.ZERO));
-                System.out.println("Adult Price : " + adPrice);
-                
-                //TAX
-                adTax = adTax.add(flightDetail.getAdTax() != null ? flightDetail.getAdTax() : new BigDecimal(BigInteger.ZERO));
-                chTax = chTax.add(flightDetail.getChTax() != null ? flightDetail.getChTax() : new BigDecimal(BigInteger.ZERO));
-                inTax = inTax.add(flightDetail.getInTax() != null ? flightDetail.getInTax() : new BigDecimal(BigInteger.ZERO));
-                System.out.println("Adult Tax : " + adTax);
+                if("1".equalsIgnoreCase(flightDetail.getMItemstatus().getId())){
+                    adPrice = adPrice.add(flightDetail.getAdPrice() != null ? flightDetail.getAdPrice() : new BigDecimal(BigInteger.ZERO));
+                    chPrice = chPrice.add(flightDetail.getChPrice() != null ? flightDetail.getChPrice() : new BigDecimal(BigInteger.ZERO));
+                    inPrice = inPrice.add(flightDetail.getInPrice() != null ? flightDetail.getInPrice() : new BigDecimal(BigInteger.ZERO));
+                    System.out.println("Adult Price : " + adPrice);
+
+                    //TAX
+                    adTax = adTax.add(flightDetail.getAdTax() != null ? flightDetail.getAdTax() : new BigDecimal(BigInteger.ZERO));
+                    chTax = chTax.add(flightDetail.getChTax() != null ? flightDetail.getChTax() : new BigDecimal(BigInteger.ZERO));
+                    inTax = inTax.add(flightDetail.getInTax() != null ? flightDetail.getInTax() : new BigDecimal(BigInteger.ZERO));
+                    System.out.println("Adult Tax : " + adTax);
+                }    
                 
 //                tax = tax.add((adtax.add(chtax)).add(intax));
 //                tax += (flightDetail.getAdTax() != null ? flightDetail.getAdTax() : 0) + (flightDetail.getChTax() != null ? flightDetail.getChTax() : 0) + (flightDetail.getInTax() != null ? flightDetail.getInTax() : 0);

@@ -2213,6 +2213,10 @@
             if(fromAjax === 'invoice'){
                 $("#description" + count).val(description);
                 $("#amount" + count).val(formatNumber(parseFloat(amount)));
+            } else if (fromAjax){
+                if(curCost === 'THB' && curAmount === 'THB'){
+                    $("#amount" + count).val(formatNumber(parseFloat(amount)));
+                }
             }
             $('[name=currencyAmount' + count + '] option').filter(function() { 
                 return ($(this).text() === curAmount);
