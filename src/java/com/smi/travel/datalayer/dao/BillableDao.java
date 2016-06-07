@@ -9,6 +9,7 @@ import com.smi.travel.datalayer.entity.Billable;
 import com.smi.travel.datalayer.entity.BillableDesc;
 import com.smi.travel.datalayer.entity.Invoice;
 import com.smi.travel.datalayer.entity.Master;
+import com.smi.travel.datalayer.entity.SystemUser;
 /**
  *
  * @author Surachai
@@ -33,5 +34,6 @@ public interface BillableDao {
     public String DeleteBillableDesc(String billdescId);
     public BillableDesc getBillableDescFromBillDescId(String billDescId);
     public String searchBillableType(Master master);
+    public SystemUser getOwnerBooking(Master master);
 
 }

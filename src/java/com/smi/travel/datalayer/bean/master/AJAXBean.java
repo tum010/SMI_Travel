@@ -64,6 +64,7 @@ import com.smi.travel.datalayer.entity.Product;
 import com.smi.travel.datalayer.entity.ProductDetail;
 import com.smi.travel.datalayer.entity.ReceiptDetail;
 import com.smi.travel.datalayer.entity.StockDetail;
+import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.entity.TaxInvoice;
 import com.smi.travel.datalayer.entity.TaxInvoiceDetail;
 import com.smi.travel.datalayer.view.dao.BookingSummaryDao;
@@ -2944,10 +2945,28 @@ public class AJAXBean extends AbstractBean implements
                 dateDue = utility.convertDateToString(ff);
             }
         }
-
+        SystemUser staff = billableDao.getOwnerBooking(bill.getMaster());
+        String staffId = "";
+        String staffName = "";
+        String staffUsername = "";
+        if(staff != null){
+            staffId = staff.getId();
+            staffName = staff.getName();
+            staffUsername = staff.getUsername();
+        
+        } else {
+            staffId = bill.getMaster().getStaff().getId();
+            staffName = bill.getMaster().getStaff().getName();
+            staffUsername = bill.getMaster().getStaff().getUsername();
+        }
+        System.out.println("Staff Id : "+staffId);
+        System.out.println("Staff Name : "+staffName);
+        System.out.println("Staff Username : "+staffUsername);
         result += bill.getMaster().getBookingType() + "||";
         result += bill.getBillTo() + "//" + bill.getBillName() + "//" + bill.getBillAddress() + "//" + term
-                + "//" + bill.getMaster().getStaff().getId() + "//" + bill.getMaster().getStaff().getName() + "//" + bill.getMaster().getStaff().getUsername() + "//" + dateDue + "//" + bill.getType() + "//" + "||";
+                + "//" + staffId + "//" + staffName + "//" + staffUsername + "//" + dateDue + "//" + bill.getType() + "//" + "||";
+//        result += bill.getBillTo() + "//" + bill.getBillName() + "//" + bill.getBillAddress() + "//" + term
+//                + "//" + bill.getMaster().getStaff().getId() + "//" + bill.getMaster().getStaff().getName() + "//" + bill.getMaster().getStaff().getUsername() + "//" + dateDue + "//" + bill.getType() + "//" + "||";
         List<BillableDesc> billdeescList = bill.getBillableDescs();
         int count = 0;
         NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US);

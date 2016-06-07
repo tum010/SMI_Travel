@@ -345,6 +345,9 @@ public class MListItemImpl implements MListItemDao {
 
     @Override
     public MInitialname getMInitialnameFromName(String name) {
+        if("MSTR".equalsIgnoreCase(name)){
+            name = "Master";
+        }
         String query = "from MInitialname i where i.name LIKE '"+name+"%'";
         Session session = this.sessionFactory.openSession();
         List<MInitialname> List = session.createQuery(query).list();

@@ -8,6 +8,7 @@ package com.smi.travel.datalayer.dao.impl;
 import com.smi.travel.datalayer.dao.BillableDao;
 import com.smi.travel.datalayer.entity.Agent;
 import com.smi.travel.datalayer.entity.AirticketAirline;
+import com.smi.travel.datalayer.entity.AirticketBooking;
 import com.smi.travel.datalayer.entity.AirticketDesc;
 import com.smi.travel.datalayer.entity.AirticketFlight;
 import com.smi.travel.datalayer.entity.AirticketPassenger;
@@ -1383,5 +1384,30 @@ public class BillableImpl implements BillableDao {
         }
         
         return type;
+    }
+
+    @Override
+    public SystemUser getOwnerBooking(Master master) {
+        Session session = this.sessionFactory.openSession();
+        List<AirticketBooking> airticketBookingList = session.createQuery("from AirticketBooking a where a.master.id = :masterId ")
+                .setParameter("masterId", master.getId()).list();
+
+        if (airticketBookingList.isEmpty()) {
+            session.close();
+            return null;
+        }
+        System.out.println("Airticket Booking List size : "+airticketBookingList.size());
+        SystemUser staff = new SystemUser();
+        for(AirticketBooking airticketBooking : airticketBookingList){
+            SystemUser staffTemp = airticketBooking.getStaffByOwnerBy();
+            staff.setId(staffTemp.getId());
+            staff.setName(staffTemp.getName());
+            staff.setUsername(staffTemp.getUsername());
+            System.out.println("Id : "+staffTemp.getId());
+            System.out.println("Name : "+staffTemp.getName());
+            System.out.println("Username : "+staffTemp.getUsername());
+        }
+        session.close();
+        return staff;
     }
 }
