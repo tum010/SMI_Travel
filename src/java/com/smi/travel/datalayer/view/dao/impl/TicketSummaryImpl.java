@@ -151,7 +151,7 @@ public class TicketSummaryImpl implements TicketSummaryDao {
 
         if (((startdate != null) && (!"".equalsIgnoreCase(startdate))) && ((enddate != null) && (!"".equalsIgnoreCase(enddate)))) {
             if (check == 1) {query += " and"; }
-            query += "  create_date between '" + startdate + "' and '" + enddate + "'";
+            query += "  ticket_date between '" + startdate + "' and '" + enddate + "'";
             query += "";
             check = 1;
         }
