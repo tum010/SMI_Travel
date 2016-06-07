@@ -285,7 +285,7 @@ public class BillAirAgentImpl implements BillAirAgentDao{
                  query2 += " invm.payment_type  = '" + paymentType + "' ";
             }
         }
-        query += " order by ticket_tail asc ";
+        query += " ORDER BY type_order , invno , ticket_tail ";
         System.out.println("query : "+query);
         List<Object[]> QueryList =  session.createSQLQuery(query)
                 .addScalar("agentname",Hibernate.STRING)
