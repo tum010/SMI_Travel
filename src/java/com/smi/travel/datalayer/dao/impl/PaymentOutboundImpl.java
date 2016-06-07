@@ -443,15 +443,35 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
     }
 
     @Override
-    public List getPaymentOutboundSummaryReport(String fromDate, String toDate, String status, String invSupCode, String refNo, String username) {
+    public List getPaymentOutboundSummaryReport(String fromDate, String toDate, String status, String invSupCode, String refNo, String username,String payno,String duedatefrom,String duedateto) {
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
         Date thisDate = new Date();
         List data = new ArrayList();
         String invSupCodeTemp = "ALL";
         String refNoTemp = "ALL";
-        String Query = "SELECT * FROM `payment_outbound_summary` where paydate BETWEEN '"+fromDate+"' and '"+toDate+"' ";
-
+        String Query = "SELECT * FROM `payment_outbound_summary` where " ;
+        String and = "";
+        if ((payno != null) && (!"".equalsIgnoreCase(payno))) {
+            Query += " payno = '" + payno + "'" ;
+            and = " and ";
+        } 
+        
+        if ((refNo != null) && (!"".equalsIgnoreCase(refNo))) {
+            Query += and +"  refno = '" + refNo + "'";
+            refNoTemp = refNo;
+            and = " and ";
+        }    
+        if (((fromDate != null) && (!"".equalsIgnoreCase(fromDate))) && ((toDate != null) && (!"".equalsIgnoreCase(toDate))) ) {
+            Query += and + " paydate BETWEEN '"+fromDate+"' and '"+toDate+"' ";
+            and = " and ";
+        } 
+        
+        if (((duedatefrom != null) && (!"".equalsIgnoreCase(duedatefrom))) && ((duedateto != null) && (!"".equalsIgnoreCase(duedateto))) ) {
+            Query += and + " duepaymentdate BETWEEN '"+duedatefrom+"' and '"+duedateto+"' ";
+            and = " and ";
+        } 
+                
         if ((status != null) && (!"".equalsIgnoreCase(status))) {
             Query += "  and status = '" + status + "'";
         } 
@@ -460,10 +480,7 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
             Query += "  and suppliercode = '" + invSupCode + "'";
         }
         
-        if ((refNo != null) && (!"".equalsIgnoreCase(refNo))) {
-            Query += "  and refno = '" + refNo + "'";
-            refNoTemp = refNo;
-        }      
+  
         
         Query += " order by payno ";        
         System.out.println("Query : "+Query);
@@ -498,8 +515,8 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
 
             sum.setSystemdate(util.ConvertString(new SimpleDateFormat("dd MMM yyyy hh:mm:ss", new Locale("us", "us")).format(thisDate)));
             sum.setUser(username);
-            sum.setHeaderfromdate(util.ConvertString(new SimpleDateFormat("dd-MM-yyyy", new Locale("us", "us")).format(util.convertStringToDate(fromDate))));
-            sum.setHeadertodate(util.ConvertString(new SimpleDateFormat("dd-MM-yyyy", new Locale("us", "us")).format(util.convertStringToDate(toDate))));
+            sum.setHeaderfromdate(fromDate != null && !"".equalsIgnoreCase(fromDate) ? util.ConvertString(new SimpleDateFormat("dd-MM-yyyy", new Locale("us", "us")).format(util.convertStringToDate(fromDate))) : "");
+            sum.setHeadertodate(toDate != null && !"".equalsIgnoreCase(toDate) ? util.ConvertString(new SimpleDateFormat("dd-MM-yyyy", new Locale("us", "us")).format(util.convertStringToDate(toDate))) : "");
             sum.setHeaderstatus(status);
             sum.setHeaderrefno(refNoTemp);
             sum.setHeaderinvoicesupcode(invSupCodeTemp);

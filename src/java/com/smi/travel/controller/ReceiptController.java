@@ -110,6 +110,7 @@ public class ReceiptController extends SMITravelController {
         String invoiceTableNo = request.getParameter("invoiceTableNo1");
         String invoiceTableId = request.getParameter("invoiceTableId1");
         String isref = request.getParameter("isref");
+        String createBy = request.getParameter("createBy");
         
         //** For Duplicate User
         String recNoForCheckUser = request.getParameter("recNoForCheckUser");
@@ -544,11 +545,12 @@ public class ReceiptController extends SMITravelController {
             receipt.setDepartment(InputDepartment);
             receipt.setRecType(InputReceiptType);
             receipt.setCreateDate(new Date());
-            receipt.setCreateBy(user.getUsername());
             if(receipt.getId() == ""){
                 receipt.setIsExport(0);
+                receipt.setCreateBy(user.getUsername());
                 result = receiptService.insertReceipt(receipt);
             }else{
+                receipt.setCreateBy(createBy);
                 Receipt receiptTemp = receiptService.getSaleVatData(receipt.getId());
                 receipt.setExportDate(receiptTemp.getExportDate() != null ? receiptTemp.getExportDate() : null);
                 receipt.setIsExport(receiptTemp.getIsExport() != null ? receiptTemp.getIsExport() : 0);

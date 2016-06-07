@@ -32,7 +32,7 @@ public interface PaymentOutboundDao {
     public List<PaymentStock> getPaymentStock(String payStockNo);
     public List<PaymentOutboundView> searchPaymentOutboundByFilter(String fromDate, String toDate, String status, String invSupCode, String invSupName, String refNo, String dueDateFrom, String dueDateTo, String payNo);
     public String deletePaymentOutbound(String paymentId);  
-    public List getPaymentOutboundSummaryReport(String fromDate,String toDate,String status,String invSupCode,String refNo,String username);
+    public List getPaymentOutboundSummaryReport(String fromDate,String toDate,String status,String invSupCode,String refNo,String username,String payno,String duedatefrom,String duedateto);
     public PaymentOutbound getPaymentOutbound(String payId);
     public List<PaymentOutboundDetail> checkDuplicatePaymentStock(String payStockNo);
     public List<String> getProductByStock(String paymentStockId);

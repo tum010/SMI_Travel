@@ -307,8 +307,8 @@ public class ReportService {
         return billAirAgentDao.getBillAirAgentReportSummary(agentCode, invoiceFromDate, InvoiceToDate, issueFrom, issueTo, refundFrom, refundTo, department, salebyUser, termPay,printby,paymentType,vat,wht);
     }
     
-    public List getPaymentOutboundSummaryReport(String fromDate,String toDate,String status,String invSup,String refNo,String username){
-        return paymentOutboundDao.getPaymentOutboundSummaryReport(fromDate, toDate, status, invSup, refNo, username);
+    public List getPaymentOutboundSummaryReport(String fromDate,String toDate,String status,String invSup,String refNo,String username,String payno,String duedatefrom,String duedateto){
+        return paymentOutboundDao.getPaymentOutboundSummaryReport(fromDate, toDate, status, invSup, refNo, username,payno,duedatefrom,duedateto);
     }
     
     public List getPaymentSummaryReport(String fromDate,String toDate,String saleby,String invSupCode,String refNo,String username){

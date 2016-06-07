@@ -305,6 +305,7 @@
                                     <label class="control-label text-right">Receive No </label>                                    
                                 </div> 
                                 <div class="col-xs-1" style="width: 80px; margin-top: -10px" id='receivenumber'>
+                                    <input type="hidden" class="form-control" id="createBy" name="createBy"  value="${receipt.createBy}" >
                                     <input type="hidden" class="form-control" id="isref" name="isref"  value="${receipt.isRef}" >        
                                     <input type="hidden" class="form-control" id="wildCardSearch" name="wildCardSearch"  value="${requestScope['wildCardSearch']}" >
                                     <input type="hidden" class="form-control" id="keyCode" name="keyCode"  value="" >

@@ -305,6 +305,7 @@
                         <h4 class="panel-title"><font style="color: white">Invoice Detail</font></h4>
                     </div>
                     <div class="panel-body"  style="padding-right: 0px;">
+                        <input type="hidden"  class="form-control" id="invoiceCreateBy" name="invoiceCreateBy"  value="${invoice.createBy}" >
                         <input type="hidden"  class="form-control" id="InvoiceId" name="InvoiceId"  value="${invoice.id}" >
                         <input type="hidden" class="form-control" id="wildCardSearch" name="wildCardSearch"  value="${requestScope['wildCardSearch']}" >
                         <input type="hidden" class="form-control" id="keyCode" name="keyCode"  value="" >

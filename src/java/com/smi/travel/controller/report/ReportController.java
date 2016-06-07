@@ -421,8 +421,11 @@ public class ReportController extends SMITravelController {
             String todate = request.getParameter("todate");
             String statusP = request.getParameter("status");
             String invSupCodeP = request.getParameter("invSupCode");
-            String refnoP = request.getParameter("refno");         
-            data = reportservice.getPaymentOutboundSummaryReport(fromdate, todate,statusP,invSupCodeP, refnoP, user.getName());
+            String refnoP = request.getParameter("refno");     
+            String payNo = request.getParameter("payNo");     
+            String dueDateFrom = request.getParameter("dueDateFrom");     
+            String dueDateTo = request.getParameter("dueDateTo");     
+            data = reportservice.getPaymentOutboundSummaryReport(fromdate, todate,statusP,invSupCodeP, refnoP, user.getName(),payNo,dueDateFrom,dueDateTo);
         }else if(PaymentProfitLossSummary.equals(name)){
             String departFromDate = request.getParameter("departFromDate");
             String departToDate = request.getParameter("departToDate");

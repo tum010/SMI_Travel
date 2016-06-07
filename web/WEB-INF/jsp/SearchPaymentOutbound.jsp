@@ -504,12 +504,28 @@ $(document).ready(function () {
         var status = document.getElementById("status").value;
         var invSupCode= document.getElementById("invSupCode").value;
         var refNo= document.getElementById("refNo").value;
+        var payNo= document.getElementById("payNo").value;
+        var dueDateFrom=  convertFormatDate(document.getElementById("dueDateFrom").value);
+        var dueDateTo=  convertFormatDate(document.getElementById("dueDateTo").value);
         
-        if((fromdate === '') || (todate === '')){
-           validateDate();
-        } else {
-            window.open("report.smi?name=PaymentOutboundSummaryReport&fromdate="+fromdate+"&todate="+todate+"&status="+status+"&invSupCode="+invSupCode+"&refno="+refNo);
-        }    
+//        if( (fromdate === '') || (todate === '') && (payNo === '' && refNo === '' )){
+//           validateDate();
+//        }else if (payNo !== '' || refNo !== '' ) {
+//            window.open("report.smi?name=PaymentOutboundSummaryReport&fromdate="+fromdate+"&todate="+todate+"&status="+status+"&invSupCode="+invSupCode+"&refno="+refNo+"&payNo="+payNo+"&dueDateFrom="+dueDateFrom+"&dueDateTo="+dueDateTo);
+//        }else  if (fromdate !== '' && todate !== '') {
+//            window.open("report.smi?name=PaymentOutboundSummaryReport&fromdate="+fromdate+"&todate="+todate+"&status="+status+"&invSupCode="+invSupCode+"&refno="+refNo+"&payNo="+payNo+"&dueDateFrom="+dueDateFrom+"&dueDateTo="+dueDateTo);
+//        }     
+//        
+        
+        if (payNo !== '' || refNo !== '' ) {
+            window.open("report.smi?name=PaymentOutboundSummaryReport&fromdate="+fromdate+"&todate="+todate+"&status="+status+"&invSupCode="+invSupCode+"&refno="+refNo+"&payNo="+payNo+"&dueDateFrom="+dueDateFrom+"&dueDateTo="+dueDateTo);
+        }else{
+            if((fromdate !== '') && (todate !== '')){
+                window.open("report.smi?name=PaymentOutboundSummaryReport&fromdate="+fromdate+"&todate="+todate+"&status="+status+"&invSupCode="+invSupCode+"&refno="+refNo+"&payNo="+payNo+"&dueDateFrom="+dueDateFrom+"&dueDateTo="+dueDateTo);
+            }else{
+                validateDate();  
+            }
+        }
     }
     
 //    function checkFromDateField(){
@@ -784,7 +800,8 @@ $(document).ready(function () {
         var dueDateFrom = document.getElementById('dueDateFrom').value;
         var dueDateTo = document.getElementById('dueDateTo').value;
         var payno = document.getElementById('payNo').value;
-        if(payno !== ''){
+        var refNo = document.getElementById('refNo').value;
+        if(payno !== '' || refNo !== ''){
                 $("#searchPaymentOutboundForm").submit();
         }else{
             if((fromDate !== '') && (toDate !== '')){
