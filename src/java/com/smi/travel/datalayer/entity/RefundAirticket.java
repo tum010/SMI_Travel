@@ -26,6 +26,7 @@ public class RefundAirticket {
      private String ownerBy;
      private String refundType;
      private String otherReason;
+     private String refundByName;
 
      private List<RefundAirticketDetail> refundAirticketDetails = new LinkedList<RefundAirticketDetail>();
 
@@ -166,6 +167,14 @@ public class RefundAirticket {
 
     public void setOtherReason(String otherReason) {
         this.otherReason = otherReason;
+    }
+
+    public String getRefundByName() {
+        return refundByName;
+    }
+
+    public void setRefundByName(String refundByName) {
+        this.refundByName = refundByName;
     }
 
 }

@@ -117,7 +117,7 @@
                         </div>
                         <div class="col-xs-1" style="width: 200px">
                             <div class="input-group">
-                                <input id="refundByName" name="refundByName" type="text" class="form-control" value="${refundByName}" readonly="">
+                                <input id="refundByName" name="refundByName" type="text" class="form-control" value="${refundAirline.refundByName}" readonly="">
                             </div>
                         </div>
                     </div>

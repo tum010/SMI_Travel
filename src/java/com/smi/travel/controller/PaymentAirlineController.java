@@ -487,8 +487,8 @@ public class PaymentAirlineController extends SMITravelController {
                     String department = request.getParameter("department" + i);
                     String drAmount = request.getParameter("drAmount" + i);
                     String crAmount = request.getParameter("crAmount" + i);
-                    
-                    
+                    String bookingDate = request.getParameter("bookingDate" + i);
+                    System.out.println("bookingDate "+i+"::::"+ bookingDate);
 //                    System.out.println("paaId "+i+"::::"+ paaId);
 //                    System.out.println("accno "+i+"::::"+ accno);
 //                    System.out.println("details "+i+"::::"+ details);
@@ -503,6 +503,7 @@ public class PaymentAirlineController extends SMITravelController {
                     paa.setAccNo(accno);
                     paa.setDetail(details);
                     paa.setDepartment(department);
+                    paa.setBookDate(util.convertStringToDate(bookingDate != "" ? bookingDate : ""));
                     if(StringUtils.isNotEmpty(drAmount)){
                         paa.setDrAmount(new BigDecimal(String.valueOf(drAmount.replaceAll(",","")))); 
                     }else{
@@ -517,7 +518,8 @@ public class PaymentAirlineController extends SMITravelController {
                         || (!"".equalsIgnoreCase(crAmount) && crAmount != null) 
                         || (!"".equalsIgnoreCase(accno) && accno != null)
                         || (!"".equalsIgnoreCase(details) && details != null)
-                        || (!"".equalsIgnoreCase(department) && department != null) ){
+                        || (!"".equalsIgnoreCase(department) && department != null)
+                        || (!"".equalsIgnoreCase(bookingDate) && bookingDate != null)){
                         paymentAirticket.getPaymentAirticketAccounts().add(paa);
                     }
                 }
@@ -631,12 +633,13 @@ public class PaymentAirlineController extends SMITravelController {
                     String department = request.getParameter("department" + i);
                     String drAmount = request.getParameter("drAmount" + i);
                     String crAmount = request.getParameter("crAmount" + i);
+                    String bookingDate = request.getParameter("bookingDate" + i);
 //                    System.out.println("paaId "+i+"::::"+ paaId);
 //                    System.out.println("accno "+i+"::::"+ accno);
 //                    System.out.println("details "+i+"::::"+ details);
 //                    System.out.println("department "+i+"::::"+ department);
 //                    System.out.println("drAmount "+i+"::::"+ drAmount);
-//                    System.out.println("crAmount "+i+"::::"+ crAmount);
+                    System.out.println("bookingDate "+i+"::::"+ bookingDate);
                     PaymentAirticketAccount paa = new PaymentAirticketAccount();
                     //payment air id
                     paa.setPaymentAirticket(paymentAirticket);
@@ -645,6 +648,7 @@ public class PaymentAirlineController extends SMITravelController {
                     paa.setAccNo(accno);
                     paa.setDetail(details);
                     paa.setDepartment(department);
+                    paa.setBookDate(util.convertStringToDate(bookingDate != "" ? bookingDate : ""));
                     if(StringUtils.isNotEmpty(drAmount)){
                         paa.setDrAmount(new BigDecimal(String.valueOf(drAmount.replaceAll(",","")))); 
                     }else{
@@ -659,7 +663,8 @@ public class PaymentAirlineController extends SMITravelController {
                         || (!"".equalsIgnoreCase(crAmount) && crAmount != null) 
                         || (!"".equalsIgnoreCase(accno) && accno != null)
                         || (!"".equalsIgnoreCase(details) && details != null)
-                        || (!"".equalsIgnoreCase(department) && department != null) ){
+                        || (!"".equalsIgnoreCase(department) && department != null) 
+                        || (!"".equalsIgnoreCase(bookingDate) && bookingDate != null)){
                         paymentAirticket.getPaymentAirticketAccounts().add(paa);
                     }
                 }

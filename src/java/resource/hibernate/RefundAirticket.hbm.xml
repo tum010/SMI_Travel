@@ -46,6 +46,9 @@
         <property name="otherReason" type="string">
             <column name="other_reason" length="100" />
         </property>
+        <property name="refundByName" type="string">
+            <column name="refund_by_name" />
+        </property>
         <bag name="refundAirticketDetails" table="refund_airticket_detail" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="refund_id" />

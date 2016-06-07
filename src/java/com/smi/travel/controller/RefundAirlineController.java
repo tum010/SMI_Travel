@@ -78,13 +78,13 @@ public class RefundAirlineController extends SMITravelController {
                 e.printStackTrace();
             }
         }
-        if(null != refundByCode &&refundByCode != ""){
-            List<CustomerAgentInfo> refundByList = getUtilityService().SearchListCustomerAgentInfo(refundByCode);
-            if(null != refundByList && refundByList.size() > 0){
-                CustomerAgentInfo refundBy = refundByList.get(0);
-                request.setAttribute("refundByName", refundBy.getBillName());
-            }
-        }
+//        if(null != refundByCode &&refundByCode != ""){
+//            List<CustomerAgentInfo> refundByList = getUtilityService().SearchListCustomerAgentInfo(refundByCode);
+//            if(null != refundByList && refundByList.size() > 0){
+//                CustomerAgentInfo refundBy = refundByList.get(0);
+//                request.setAttribute("refundByName", refundBy.getBillName());
+//            }
+//        }
         return RefundAirline;
     }
 
@@ -128,7 +128,8 @@ public class RefundAirlineController extends SMITravelController {
             String agentCode = request.getParameter("agentCode");
             String agenName = request.getParameter("agentName");
             String remark = request.getParameter("remark");
-            String refundBy = request.getParameter("refundBy");
+            String refundBy = request.getParameter("refundBy");            
+            String refundByName = request.getParameter("refundByName");
             String receiveBy = request.getParameter("receiveBy");
             String receiveDate = uf.covertStringDateToFormatYMD(request.getParameter("receiveDate"));
             String status = request.getParameter("status");
@@ -158,6 +159,7 @@ public class RefundAirlineController extends SMITravelController {
             airticket.setRefundDate(uf.convertStringToDate(refundDate));
             airticket.setReceiveDate(uf.convertStringToDate(receiveDate));
             airticket.setRefundBy(refundBy);
+            airticket.setRefundByName(refundByName);
             airticket.setReceiveBy(receiveBy);
             airticket.setRemark(remark);
             if(!"".equalsIgnoreCase(status) && !"null".equalsIgnoreCase(status)){

@@ -712,9 +712,10 @@
                             <table class="display" id="PaymentAccountTable" style="margin-top: -10px">
                                 <thead class="datatable-header">
                                     <tr>
-                                        <th style="width:10%;">No</th>
+                                        <th style="width:4%;">No</th>
                                         <th style="width:10%;">Accno</th>
-                                        <th style="width:25%;">Detail</th>
+                                        <th style="width:15%;">Booking Date</th>
+                                        <th style="width:20%;">Detail</th>
                                         <th style="width:15;">Department</th>
                                         <th style="width:20;">DR Amount</th>
                                         <th style="width:20;">CR Amount</th>
@@ -785,6 +786,15 @@
                                                     <option value="2120-03" ${selected10}>2120-03</option>
                                                     <option value="5370-06" ${selected11}>5370-06</option>  
                                                 </select>
+                                            </td>
+                                            <td>      
+                                                <div class="input-group datetime" >
+                                                    <c:set var="bookingDate" value="${table.bookingDate}" />
+                                                    <fmt:parseDate value="${bookingDate}" var="bookingDateTemp" pattern="yyyy-MM-dd" />
+                                                    <fmt:formatDate value="${bookingDateTemp}" var="bookingDates" pattern="dd-MM-yyyy" />
+                                                    <input style="width: 100%" type="text" class="form-control" id="bookingDate${i.count}" name="bookingDate${i.count}" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${bookingDates}">
+                                                    <span class="input-group-addon" style="padding : 1px 10px;"><span class="glyphicon-calendar glyphicon"></span></span>
+                                                </div>
                                             </td>
                                             <td><input maxlength="255" id="detail${i.count}" name="detail${i.count}" type="text" class="form-control" value="${table.detail}"></td>
                                             <td>
@@ -1314,6 +1324,8 @@ for(var i = 0; i < rad.length; i++) {
     $(document).ready(function() {
         $('.datemask').mask('00-00-0000');
         $('.date').datetimepicker();
+        $(".datetime").datetimepicker({
+        });
         $(".moneyformat").mask('000,000,000', {reverse: true});
         $(".money").mask('000,000,000.00', {reverse: true});
         $("#countRow").val("0");
@@ -2527,6 +2539,7 @@ function AddRowPaymentAccount(row) {
         '<option value="2120-03" >2120-03</option>'+
         '<option value="5370-06" >5370-06</option>'+
         '</select></td>' +
+        '<td><div class="input-group date"><input style="width: 100%" type="text" class="form-control"  id="bookingDate' + row + '" name="bookingDate' + row + '" data-date-format="DD-MM-YYYY"/><span class="input-group-addon" style="padding : 1px 10px;"><span class="glyphicon glyphicon-calendar"></span></span></div></td>' +
         '<td><input maxlength="255" id="detail' + row + '" name="detail' + row + '" type="text" class="form-control" value=""></td>' +
         '<td>' +
         '<select class="form-control" name="department' + row + '" id="department' + row + '" ><option value="">---------</option><option value="Wendy" >Wendy</option><option value="Outbound">Outbound</option><option value="Inbound" >Inbound</option></select>' +

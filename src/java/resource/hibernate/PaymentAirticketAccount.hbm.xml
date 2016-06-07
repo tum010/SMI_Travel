@@ -25,5 +25,8 @@
         <property name="crAmount" type="big_decimal">
             <column name="cr_amount" precision="10" />
         </property>
+        <property name="bookDate" type="date">
+            <column name="book_date" length="10" />
+        </property>
     </class>
 </hibernate-mapping>
