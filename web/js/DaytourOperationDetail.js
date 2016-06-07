@@ -486,7 +486,24 @@ function setGuideName(name,no){
                     value: name2,
                     text: name2
                 }));
-            }    
+            }
+            
+            var driverTableTr = $("#BookingDriverTable tbody tr").length;
+            var driverList = [];
+            for(var i = 1; i <= driverTableTr; i++){
+                if($("#SelectTableDriveShow" + i).val() !== undefined){
+                    driverList.push($("#SelectTableDriveShow" + i).text());
+                }
+            }
+            
+            if(driverList.length > 0){
+                for(var i = 0; i < driverList.length; i++){
+                    $('#InvoiceSupGuideBill').append($('<option>', {
+                        value: driverList[i],
+                        text: driverList[i]
+                    }));
+                }
+            }
 
             if(guideName !== ""){           
                 if(name1 === guideName){
@@ -497,6 +514,14 @@ function setGuideName(name,no){
                     $('[name=InvoiceSupGuideBill] option').filter(function() { 
                         return ($(this).text() === name2);
                     }).prop('selected', true);
+                } else if(driverList.length > 0){
+                    for(var i = 0; i < driverList.length; i++){
+                        if(driverList[i] === guideName){
+                            $('[name=InvoiceSupGuideBill] option').filter(function() { 
+                                return ($(this).text() === driverList[i]);
+                            }).prop('selected', true);
+                        }
+                    }                
                 } else {
                     $('[name=InvoiceSupGuideBill] option').filter(function() { 
                         return ($(this).text() === '');
