@@ -612,7 +612,7 @@
                                     return null;
                                 }
                             });
-                            filteredArray = filteredArray.slice(0,10);
+//                            filteredArray = filteredArray.slice(0,50);
                             response(filteredArray);
                         },
                            select: function(event, ui) {
