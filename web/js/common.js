@@ -220,7 +220,15 @@ function convertFormatDateAndTime(date){
 function generateSpecialCharacter(name){
     var specialChar = [{char : "+",encode : "%2B"},
                         {char : "-",encode : "%2D"},
-                        {char : "&",encode : "%26"}];
+                        {char : "&",encode : "%26"},
+                        {char : "<",encode : "%3C"},
+                        {char : ">",encode : "%3E"},
+                        {char : "\"",encode : "%22"},
+                        {char : "#",encode : "%23"},
+                        {char : "@",encode : "%40"},
+                        {char : "[",encode : "%5B"},
+                        {char : "]",encode : "%5D"}
+                        ];
     for(var i = 0; i < specialChar.length ; i++){
         while(name.indexOf(specialChar[i].char) !== -1){
             name = name.replace(specialChar[i].char,specialChar[i].encode);

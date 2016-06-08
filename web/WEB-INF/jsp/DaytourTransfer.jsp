@@ -548,14 +548,14 @@
                 }
                 if ($(this).hasClass('tourplacename')) {
                     tourPlaceName = $(this).html();
-                    replaceTourPlaceName = tourPlaceName.replace(/\s/gi, "_");
+                    replaceTourPlaceName = generateSpecialCharacter(tourPlaceName.replace(/\s/gi, "_"));
                 }
                 if ($(this).hasClass('tourname')) {
                     tourName = $(this).html();
-                    replaceTourName = tourName.replace(/\s/gi, "_");
+                    replaceTourName = generateSpecialCharacter(tourName.replace(/\s/gi, "_"));
                 }
                 if ($(this).hasClass('tourcode')) {
-                    tourCode = $(this).html();
+                    tourCode = generateSpecialCharacter($(this).html());
                 }
                 var eachCheckbox = $(this).children();
                 if ($(eachCheckbox).is(':checked')) { //element checked winit
@@ -736,7 +736,7 @@
                 }
                 if ($(this).hasClass('placename')) {
                     hotelName = $(this).html();
-                    replaceHotelName = hotelName.replace(/\s/gi, "_"); // for delete
+                    replaceHotelName = generateSpecialCharacter(hotelName.replace(/\s/gi, "_")); // for delete
 
                 }
                 var eachCheckbox = $(this).children();
@@ -1088,7 +1088,7 @@
                 }
                 if ($(this).hasClass('othername')) {
                     name = $(this).html();
-                    replaceName = name.replace(/\s/gi, "_");
+                    replaceName = generateSpecialCharacter(name.replace(/\s/gi, "_"));
                 }
                 var eachCheckbox = $(this).children();
                 if ($(eachCheckbox).is(':checked')) { //element checked
@@ -1114,7 +1114,11 @@
         $("#OtherModal").modal('hide');
 
     }
-
+    
+    function replaceAll(find, replace, str) {
+        return str.replace(new RegExp(find, 'g'), replace);
+    }
+    
     function deleteOther(id, name) {
         $("#deleteOtherId").val(id);
         $("#delOtherContent").html("Are you sure to delete Other : " + name + " ?");
