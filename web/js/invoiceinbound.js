@@ -928,8 +928,7 @@ function validFromInvoiceInbound() {
         var different = 0;
         var first = 0;
         var checkcur1 = false;
-
-        for(var i=1; i<=counter; i++){
+        for(var i=1; i<counter; i++){
             if($('#SelectCurrencyAmount' + i).val() !== undefined){
                 var cur1 = $('#SelectCurrencyAmount' + i).find(":selected").text();
                 var billDescriptionTemp1 = $('#BillDescriptionTemp' + i).val();
@@ -938,7 +937,7 @@ function validFromInvoiceInbound() {
                     checkcur1 = true;
                     first++;
                 }
-                for(var j=i+1; j<=counter; j++){
+                for(var j=i+1; j<counter; j++){
                     if($('#SelectCurrencyAmount' + j).val() !== undefined){
                         var cur2 = $('#SelectCurrencyAmount' + j).find(":selected").text(); 
                         var billDescriptionTemp2 = $('#BillDescriptionTemp' + j).val();

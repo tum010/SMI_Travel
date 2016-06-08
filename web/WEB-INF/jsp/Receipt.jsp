@@ -388,10 +388,7 @@
                                         <option value="">--- Status ---</option> 
                                         <c:forEach var="table" items="${statusList}" >
                                             <c:set var="select" value="" />
-                                            <c:set var="selectedId" value="7" />
-                                            <c:if test="${receipt.MAccpay.id != null}">
-                                                <c:set var="selectedId" value="${receipt.MAccpay.id}" />
-                                            </c:if>
+                                            <c:set var="selectedId" value="${receipt.MAccpay.id}" />
                                             <c:if test="${table.id == selectedId}">
                                                 <c:set var="select" value="selected" />
                                             </c:if>
