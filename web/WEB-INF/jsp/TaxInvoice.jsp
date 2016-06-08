@@ -1529,6 +1529,7 @@
     }
     
     function searchCustomerAgentList(name) {
+        name = generateSpecialCharacter(name);
         var servletName = 'BillableServlet';
         var servicesName = 'AJAXBean';
         var param = 'action=' + 'text' +
@@ -1576,6 +1577,7 @@
     }
     
     function searchCustomerAgentAutoList(billTo){
+        billTo = generateSpecialCharacter(billTo);
         var servletName = 'BillableServlet';
         var servicesName = 'AJAXBean';
         var param = 'action=' + 'text' +

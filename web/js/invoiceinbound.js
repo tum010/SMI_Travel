@@ -183,6 +183,7 @@ function searchInvoiceFromInvoiceNo() {
 }
 
 function searchCustomerAgentList(name) {
+    name = generateSpecialCharacter(name);
     var servletName = 'BillableServlet';
     var servicesName = 'AJAXBean';
     var param = 'action=' + 'text' +
@@ -229,6 +230,7 @@ function CallAjax(param) {
 }
 
 function searchCustomerAutoList(name) {
+    name = generateSpecialCharacter(name);
     var servletName = 'BillableServlet';
     var servicesName = 'AJAXBean';
     var param = 'action=' + 'text' +

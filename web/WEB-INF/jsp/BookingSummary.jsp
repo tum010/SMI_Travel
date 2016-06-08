@@ -613,6 +613,7 @@ function setBillValue(billto, billname, address, term, pay) {
 }
    
 function searchCustomerAutoList(name) {
+    name = generateSpecialCharacter(name);
     var servletName = 'BillableServlet';
     var servicesName = 'AJAXBean';
     var param = 'action=' + 'text' +
@@ -699,6 +700,7 @@ function searchCustomerAutoList(name) {
 }
 
 function searchBillTo(name){
+    name = generateSpecialCharacter(name);
     var servletName = 'BillableServlet';
     var servicesName = 'AJAXBean';
     var param = 'action=' + 'text' +
