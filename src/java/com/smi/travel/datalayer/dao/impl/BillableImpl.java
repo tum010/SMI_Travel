@@ -358,6 +358,8 @@ public class BillableImpl implements BillableDao {
         String description = "";
         Session session = this.sessionFactory.openSession();
         String airlineQuery = QUERY_AIRTICKET + "(" + refno +")";
+        System.out.println("airlineQuery : "+airlineQuery);
+        int firstline = 0;
         List<AirticketAirline> list = session.createQuery(airlineQuery).list();
         
         if (list.isEmpty()) {
@@ -365,14 +367,18 @@ public class BillableImpl implements BillableDao {
         }else{
             UtilityFunction utility = new UtilityFunction();
             String LeaderName = "";
+            System.out.println("list.size : "+ list.size());
+            
             for(int k =0;k<list.size();k++){
+                
                 String FlightDescription ="";
                 String FlightShort ="";
                 AirticketAirline  airline = list.get(k);
+                System.out.println("airline id : "+airline.getId());
                 int isgroup = 0;
                 //get group pax
                 isgroup = (airline.getAirticketPnr().getAirticketBooking().getGroupPax() == null) ? 0:airline.getAirticketPnr().getAirticketBooking().getGroupPax();
-                
+                System.out.println("group pax "+isgroup);
                 String ticketlife = "";
                 DecimalFormat df = new DecimalFormat("###,##0.00");
                 String DepartDateAndFlight = "";
@@ -386,6 +392,7 @@ public class BillableImpl implements BillableDao {
 //                BigDecimal tax = new BigDecimal(BigInteger.ZERO);
                 //Ref No. {Ref NO}
                 if(k ==0){
+                    System.out.println("Line 1");
                     FlightDescription += "Ref No. "+airline.getAirticketPnr().getAirticketBooking().getMaster().getReferenceNo()+" : "+"\n";                    
                 }
 
@@ -393,8 +400,10 @@ public class BillableImpl implements BillableDao {
                 List<AirticketFlight> flight = new ArrayList<AirticketFlight>(airline.getAirticketFlights()); 
             
                 for(int f =0;f<flight.size();f++){
+                    
                     AirticketFlight flightDetail = flight.get(f);
                     //get Ticket Type
+          
                     if(flight.get(f).getMTicketType() != null){
                         if(ticketlife.indexOf(flightDetail.getMTicketType().getName()) == -1){
                             ticketlife += flightDetail.getMTicketType().getName()+",";
@@ -402,8 +411,9 @@ public class BillableImpl implements BillableDao {
                     }
                 
                 //get Depart date and flight
-                
-                DepartDateAndFlight += "                     "+new SimpleDateFormat("ddMMMyyyy", new Locale("us", "us")).format(flightDetail.getDepartDate()) + " / "+flightDetail.getFlightNo() +"\n";
+                if(!"3".equalsIgnoreCase(flightDetail.getMItemstatus().getId())){
+                    DepartDateAndFlight += "                     "+new SimpleDateFormat("ddMMMyyyy", new Locale("us", "us")).format(flightDetail.getDepartDate()) + " / "+flightDetail.getFlightNo() +"\n";
+                }
                 
                 //PRICE
 //                if(flightDetail.getAdPrice() != null){
@@ -458,16 +468,30 @@ public class BillableImpl implements BillableDao {
                 
 //                tax = tax.add((adtax.add(chtax)).add(intax));
 //                tax += (flightDetail.getAdTax() != null ? flightDetail.getAdTax() : 0) + (flightDetail.getChTax() != null ? flightDetail.getChTax() : 0) + (flightDetail.getInTax() != null ? flightDetail.getInTax() : 0);
+            
             }
             if(ticketlife.length() > 0){
                     ticketlife = ticketlife.substring(0, ticketlife.length()-1);
             }
             if(k ==0){
-                FlightDescription += "AIR TICKET"+"    "+utility.GetRounting(flight)
+                System.out.println("Line 2");
+                String flightline = utility.GetRounting(flight);
+                if(flightline.equalsIgnoreCase("")){
+                    firstline = 1;
+                }else{
+                    FlightDescription += "AIR TICKET"+"    "+utility.GetRounting(flight)
                         + " Ticket Type: "+ticketlife+"\n";     
+                }
+                
             }else{
-                FlightDescription += "                     "+utility.GetRounting(flight)
+                if(firstline == 1){
+                    FlightDescription += "AIR TICKET"+"    "+utility.GetRounting(flight)
+                        + " Ticket Type: "+ticketlife+"\n";   
+                }else{
+                    FlightDescription += "                     "+utility.GetRounting(flight)
                         + " Ticket Type: "+ticketlife+"\n"; 
+                }
+                
             }
             FlightShort += "                     "+utility.GetRounting(flight)
                         + " Ticket Type: "+ticketlife+"\n";
@@ -479,9 +503,11 @@ public class BillableImpl implements BillableDao {
             List<AirticketPassenger>  passengerList = new ArrayList<AirticketPassenger>(airline.getAirticketPassengers());
             String name = "";
             String ticketno = "";
-            
+            System.out.println("passengerList size : "+passengerList.size());
             for(int p =0;p<passengerList.size();p++){
+                
                 AirticketPassenger passenger = passengerList.get(p);
+                System.out.println("passengerList first : "+passenger.getFirstName());
                 BigDecimal price = new BigDecimal(BigInteger.ZERO);
                 BigDecimal tax = new BigDecimal(BigInteger.ZERO);
                 if("ADT".equalsIgnoreCase(passenger.getMPricecategory().getCode())){
@@ -506,6 +532,7 @@ public class BillableImpl implements BillableDao {
                 System.out.println("Passenger Type : " + passenger.getMPricecategory().getCode());
                 
                 if(p == 0){
+                    System.out.println("Line 3");
                     description += FlightDescription +"";
                 }else{
                     description += FlightShort +"";
@@ -528,24 +555,50 @@ public class BillableImpl implements BillableDao {
                 }
                 description += ticketno;
                 ticketno = "";
+                System.out.println(description);
             }
             
-            String MInitialname = "";
-            if(passengerList.get(0).getMInitialname() != null){
-                MInitialname = passengerList.get(0).getMInitialname().getName();
+            if((passengerList.size() == 0)&& (k==0)){
+                System.out.println("Line 4");
+                description += FlightDescription +"";
             }
+ 
+            String MInitialname = "";
+
+            try{
+                if(passengerList.size() != 0){
+                    if(passengerList.get(0).getMInitialname() != null){
+                        MInitialname = passengerList.get(0).getMInitialname().getName();
+                    }
+                }
             if(format == 1){
-             if(k ==0){
-                LeaderName = "|"+ MInitialname +" "+ passengerList.get(0).getFirstName() +" "+ passengerList.get(0).getLastName() ;
                 
+             if(k ==0){
+                 if(passengerList.size() != 0){
+                    LeaderName = "|"+ MInitialname +" "+ passengerList.get(0).getFirstName() +" "+ passengerList.get(0).getLastName() ;
+                 }  
              }
             }
-             
+            
+            }catch(Exception ex){
+                ex.printStackTrace();
+            }
+            
              if(isgroup == 1){
+                 System.out.println("test group");
                  k += list.size();
              }
+             System.out.println("K K : "+k);
+             
+             
             }
-            description += LeaderName;  
+            try{
+                description += LeaderName;  
+            }catch(Exception ex){
+                System.out.println("dsdsdsdsd");
+                ex.printStackTrace();
+            }
+            
         }
         
         System.out.println("description : "+description);

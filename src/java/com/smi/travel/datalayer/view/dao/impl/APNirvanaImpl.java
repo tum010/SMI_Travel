@@ -466,6 +466,7 @@ System.out.println("query ap_nirvana : "+query);
                 .addScalar("payment_detail_id", Hibernate.STRING) //88
                 .addScalar("rowid", Hibernate.STRING) //89
                 .addScalar("payno", Hibernate.STRING) //89
+                .addScalar("accno", Hibernate.INTEGER)
                 .list();
 
         for (Object[] B : QueryList) {
@@ -483,6 +484,7 @@ System.out.println("query ap_nirvana : "+query);
             apNirvana.setPayment_detail_id(util.ConvertString(B[88]));
             apNirvana.setRowid(util.ConvertString(B[89]));
             apNirvana.setPayno(util.ConvertString(B[90]));
+            apNirvana.setAccno(util.ConvertString(B[91]));
             apNirvanaList.add(apNirvana);
         }
 
