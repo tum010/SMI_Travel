@@ -766,6 +766,21 @@ $(document).on('keydown','.arrivalcodeVal',function (event) {
             $(".ui-widget").css("top", -1000);
             showflagArrDum = 1;
         }
+        
+    codeDeparture = [];
+    $.each(a, function (key, value) {
+        codeDeparture.push(value.code);
+        if ( !(value.name in codeDeparture) ){
+           codeDeparture.push(value.name);
+        }
+    });
+    console.log(codeDeparture);
+    $("#departure-" + id + "-code").autocomplete({
+        source: codeDeparture,
+        close:function( event, ui ) {
+           $("#departure-" + id + "-code").trigger('keyup');
+        }
+    });
     
 });
 //End Arraival***********************************
