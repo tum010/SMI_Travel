@@ -70,6 +70,7 @@ $(document).ready(function() {
 });
 
 function searchCustomerAutoList(name){
+    name = generateSpecialCharacter(name);
     var servletName = 'BillableServlet';
     var servicesName = 'AJAXBean';
     var param = 'action=' + 'text' +
@@ -163,6 +164,7 @@ function CallAjaxAuto(param){
 }
 
 function searchCustomerAgentList(name) {
+    name = generateSpecialCharacter(name);
     var servletName = 'BillableServlet';
     var servicesName = 'AJAXBean';
     var param = 'action=' + 'text' +

@@ -337,6 +337,7 @@ function setEnvironment() {
 
 //Auto Complete
 function searchCustomerAgentAutoList(billTo) {
+    billTo = generateSpecialCharacter(billTo);
     var servletName = 'BillableServlet';
     var servicesName = 'AJAXBean';
     var param = 'action=' + 'text' +
