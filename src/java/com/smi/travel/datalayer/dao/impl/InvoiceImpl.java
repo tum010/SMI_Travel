@@ -709,7 +709,7 @@ public class InvoiceImpl implements InvoiceDao{
                 .list();
         if(invoiceList != null){
             for (int i = 0; i < invoiceList.size(); i++) {
-                amountInt = amountInt.subtract(invoiceList.get(i).getAmount() == null ? BigDecimal.ZERO : invoiceList.get(i).getAmount());
+                amountInt = amountInt.subtract(invoiceList.get(i).getAmountLocal()== null ? BigDecimal.ZERO : invoiceList.get(i).getAmountLocal());
                 costInt = costInt.subtract(invoiceList.get(i).getCost() == null ? BigDecimal.ZERO : invoiceList.get(i).getCost());
             }
         }
@@ -761,8 +761,8 @@ public class InvoiceImpl implements InvoiceDao{
                         InvoiceCost = InvoiceCost.add(BigDecimal.ZERO);
                     }
                     
-                    if(invoiceList.get(j).getAmount() != null && !"".equalsIgnoreCase(String.valueOf(invoiceList.get(j).getAmount()))){
-                        InvoicePrice = InvoicePrice.add(invoiceList.get(j).getAmount());
+                    if(invoiceList.get(j).getAmountLocal()!= null && !"".equalsIgnoreCase(String.valueOf(invoiceList.get(j).getAmountLocal()))){
+                        InvoicePrice = InvoicePrice.add(invoiceList.get(j).getAmountLocal());
                     }else{
                         InvoicePrice = InvoicePrice.add(BigDecimal.ZERO);
                     }
@@ -770,8 +770,8 @@ public class InvoiceImpl implements InvoiceDao{
                 }
                 System.out.println("InvoiceCost : "+InvoiceCost +"InvoicePrice : "+InvoicePrice);
                 
-                if(detail.getAmount() != null && !"".equals(detail.getAmount())){
-                    InvoicePrice = InvoicePrice.add(detail.getAmount());
+                if(detail.getAmountLocal()!= null && !"".equals(detail.getAmountLocal())){
+                    InvoicePrice = InvoicePrice.add(detail.getAmountLocal());
                 }
                 if(detail.getCost() != null && !"".equals(detail.getCost())){
                     InvoiceCost = InvoiceCost.add(detail.getCost());
@@ -780,19 +780,19 @@ public class InvoiceImpl implements InvoiceDao{
                 System.out.println("SumInvoiceCost : "+InvoiceCost +"SumInvoicePrice : "+InvoicePrice);
                 System.out.println("Compare price : "+price.compareTo(InvoicePrice));
                     if((price.compareTo(InvoicePrice) == -1)){
-//                        result = "moreMoney";
+                        result = "moreMoney";
                     }else{
-//                        result = "okMoney";
+                        result = "okMoney";
                     }
                 }else{
-//                    result = "okMoney";
+                    result = "okMoney";
                 }
             }else{
-//                result = "okMoney";
+                result = "okMoney";
             }
         }
         }else{
-//            result = "okMoney";
+            result = "okMoney";
         }
         this.sessionFactory.close();
         session.close();
