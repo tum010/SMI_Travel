@@ -113,7 +113,7 @@ public class DaytourTransferController extends SMITravelController {
             job.setRemark(remark);
             job.setTour(tourCodeList);
             job.setPlace(hotelList);
-            job.setPlaceOther(otherList);
+            job.setPlaceOther(util.generateSpecialCharacterEncode(otherList));
             
            
             String result = daytourTransferJobService.saveTransferjob(job);

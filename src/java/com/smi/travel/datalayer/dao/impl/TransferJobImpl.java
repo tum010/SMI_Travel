@@ -108,7 +108,7 @@ public class TransferJobImpl implements TransferJobDao {
         UtilityFunction util = new UtilityFunction();
         SimpleDateFormat df = new SimpleDateFormat();
         df.applyPattern("yyyy-MM-dd");   
-        
+        List<TransferJob> listdata = new LinkedList<TransferJob>();
         String start = String.valueOf(df.format(util.convertStringToDate(StartDate)));
         String end = String.valueOf(df.format(util.convertStringToDate(EndDate)));
         String query = "from TransferJob tr where tr.transferDate >= '"+start+"' and tr.transferDate <= '"+end+"'";
@@ -120,10 +120,16 @@ public class TransferJobImpl implements TransferJobDao {
         List<TransferJob> list = session.createQuery(query).list();
         if (list.isEmpty()) {
             return null;
+        }else{
+            for(int i = 0;i<list.size();i++){
+                TransferJob tj = list.get(i);
+                tj.setPlaceOther(util.generateSpecialCharacter(list.get(i).getPlaceOther()));
+                listdata.add(tj);
+            }
         }
         //this.sessionFactory.close();
         //session.close();
-        return list;
+        return listdata;
     }
 
     @Override

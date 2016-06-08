@@ -555,7 +555,7 @@
                     replaceTourName = generateSpecialCharacter(tourName.replace(/\s/gi, "_"));
                 }
                 if ($(this).hasClass('tourcode')) {
-                    tourCode = generateSpecialCharacter($(this).html());
+                    tourCode = $(this).html();
                 }
                 var eachCheckbox = $(this).children();
                 if ($(eachCheckbox).is(':checked')) { //element checked winit
@@ -737,7 +737,6 @@
                 if ($(this).hasClass('placename')) {
                     hotelName = $(this).html();
                     replaceHotelName = generateSpecialCharacter(hotelName.replace(/\s/gi, "_")); // for delete
-
                 }
                 var eachCheckbox = $(this).children();
                 if ($(eachCheckbox).is(':checked')) { //element checked 
@@ -1037,7 +1036,7 @@
         var activeOtherList = "";
         $('#transferOtherTable tbody').find('tr').each(function () {
 //        console.log("hotel - " + $(this).html());
-            var name = $(this).find('.name').html();
+            var name = $(this).find('.nametemp').html();
             if (activeOtherList.length === 0) {
                 activeOtherList += name;
             } else {
@@ -1056,9 +1055,9 @@
         console.log("other nameArray length = " + nameArray.length);
         $("#otherTable tbody").find("tr").each(function () {
             var objId = $(this).find('td.otherid').html();
-            var objElem = $(this).find('td.othername');
+            var objElem = $(this).find('td.othernametemp');
             for (i = 0; i < nameArray.length; i++) {
-                if (nameArray[i].trim() === objElem.html()) {
+                if (generateSpecialCharacter(nameArray[i].trim()) === objElem.html().trim()) {
                     matchedFlag = true;
                     if (objId === $("#transferOtherTable tbody tr > td:contains('" + objId + "')").html()) {
                         $("#row-" + objId + "-other").prop("checked", false);
@@ -1080,9 +1079,9 @@
         var id;
         var name;
         var replaceName;
+        var nametemp;
         $('#otherTable').find('tr').each(function () {
             $(this).find('td').each(function () {
-
                 if ($(this).hasClass('otherid')) {
                     id = $(this).html();
                 }
@@ -1090,12 +1089,16 @@
                     name = $(this).html();
                     replaceName = generateSpecialCharacter(name.replace(/\s/gi, "_"));
                 }
+                if ($(this).hasClass('othernametemp')) {
+                    nametemp = $(this).html();
+                }
                 var eachCheckbox = $(this).children();
                 if ($(eachCheckbox).is(':checked')) { //element checked
                     $("#transferOtherTable tbody").append(
                             '<tr class="TrOther-' + id + '">' +
                             '<td class="id hidden">' + id + '</td>' +
                             '<td class="name">' + name + '</td>' +
+                            '<td class="nametemp hidden">' + nametemp + '</td>' +
                             '<td class="text-center">' +
                             '<a id="RowButtonRemove-"' + $(eachCheckbox).attr('id') + '" name="RowButtonRemove-"' + $(eachCheckbox).attr('id') + '" chkId="' + $(eachCheckbox).attr('id') + '" class="RemoveRow">' +
                             '<span id="RowSpanRemove-"' + $(eachCheckbox).attr('id') + '" name="RowSpanRemove-"' + $(eachCheckbox).attr('id') + '" ' +

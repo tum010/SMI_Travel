@@ -2870,16 +2870,19 @@ public class AJAXBean extends AbstractBean implements
     }
 
     public String buildTourPlaceOtherListHTML(List<String> ListOther) {
+        UtilityFunction util = new UtilityFunction();
         String result = "";
         if (ListOther == null) {
             return result;
         }
+        
         for (int i = 0; i < ListOther.size(); i++) {
             String other = ListOther.get(i);
             if ((other != null) && (!"".equalsIgnoreCase(other))) {
                 result += "<tr id='trOtherId" + i + "'>"
                         + "<td class='otherid hidden'>" + i + "</td>"
                         + "<td class='othername'>" + other + "</td>"
+                        + "<td class='othernametemp hidden' >" + util.generateSpecialCharacter(other) + "</td>"
                         + "<td class='text-center'><input type='checkbox' id='row-" + i + "-other'></td>"
                         + "</tr>";
             }

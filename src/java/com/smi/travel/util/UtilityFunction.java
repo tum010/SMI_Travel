@@ -694,5 +694,27 @@ public class UtilityFunction {
             
         return result;
     }
+    
+    public String generateSpecialCharacter(String name) {
+        String specialchar1[] = {"+","-","&","<",">","\"","#","@","[","]"};
+        String specialchar2[] = {"%2B","%2D","%26","%3C","%3E","%22","%23","%40","%5B","%5D"};
+        for(int i = 0; i < specialchar1.length ; i++){
+            while(name.indexOf(specialchar1[i]) != -1){
+                name = name.replaceAll(specialchar1[i],specialchar2[i]);
+            }
+        }
+        return name;
+    }
+    
+    public String generateSpecialCharacterEncode(String name) {
+        String specialchar2[] = {"+","-","&","<",">","\"","#","@","[","]"};
+        String specialchar1[] = {"%2B","%2D","%26","%3C","%3E","%22","%23","%40","%5B","%5D"};
+        for(int i = 0; i < specialchar1.length ; i++){
+            while(name.indexOf(specialchar1[i]) != -1){
+                name = name.replaceAll(specialchar1[i],specialchar2[i]);
+            }
+        }
+        return name;
+    }
 
 }
