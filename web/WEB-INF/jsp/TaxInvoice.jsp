@@ -2213,7 +2213,7 @@
             if(fromAjax === 'invoice'){
                 $("#description" + count).val(description);
                 $("#amount" + count).val(formatNumber(parseFloat(amount)));
-            } else if (fromAjax){
+            } else if (fromAjax === 'refNo'){
                 if(curCost === 'THB' && curAmount === 'THB'){
                     $("#amount" + count).val(formatNumber(parseFloat(amount)));
                 }

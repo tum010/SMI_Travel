@@ -1753,7 +1753,20 @@ public class AJAXBean extends AbstractBean implements
             String isProfit = taxInvoiceDao.checkIsProfitForSearchInvoice(invDetailId);
             System.out.println("===== Is Profit ===== : "+isProfit);
             String billableDescId = (invoiceDetail.getBillableDesc() != null ? invoiceDetail.getBillableDesc().getId() : "");
-            description = (invoiceDetail.getDescription() != null && !"".equalsIgnoreCase(invoiceDetail.getDescription()) ? invoiceDetail.getDescription() : "");
+            
+            if(invoiceDetail.getBillableDesc() != null 
+                && invoiceDetail.getBillableDesc().getBillable() != null 
+                && invoiceDetail.getBillableDesc().getBillable().getMaster() != null
+                && invoiceDetail.getBillableDesc().getBillable().getMaster().getCustomer() != null    
+                ){
+                if(invoiceDetail.getBillableDesc().getBillable().getMaster().getCustomer().getMInitialname() != null){
+                    description = " "+invoiceDetail.getBillableDesc().getBillable().getMaster().getCustomer().getMInitialname().getName();
+                }
+                description += " " + invoiceDetail.getBillableDesc().getBillable().getMaster().getCustomer().getLastName() 
+                        + " " + invoiceDetail.getBillableDesc().getBillable().getMaster().getCustomer().getFirstName() ;
+            }else{
+                description = (invoiceDetail.getDescription() != null && !"".equalsIgnoreCase(invoiceDetail.getDescription()) ? invoiceDetail.getDescription() : "");
+            }
             alertMessage += (!"".equalsIgnoreCase(alertMessage) ? "<br>" : "");
             List<TaxInvoice> taxInvoiceList = taxInvoiceDao.checkRefNoAlready(billableDescId);           
             System.out.println("===== taxInvoiceList ===== : "+taxInvoiceList == null ? "null" : "not null");
@@ -2194,10 +2207,24 @@ public class AJAXBean extends AbstractBean implements
             
             invId = invoiceDetaill.get(i).getId();
             if(!"null".equalsIgnoreCase(String.valueOf(invoiceDetaill.get(i).getDescription())) && invoiceDetaill.get(i).getDescription() != null){
-                description = invoiceDetaill.get(i).getDescription();
+//                description = invoiceDetaill.get(i).getDescription();
+                if(invoiceDetaill.get(i).getBillableDesc() != null 
+                    && invoiceDetaill.get(i).getBillableDesc().getBillable() != null 
+                    && invoiceDetaill.get(i).getBillableDesc().getBillable().getMaster() != null
+                    && invoiceDetaill.get(i).getBillableDesc().getBillable().getMaster().getCustomer() != null    
+                    ){
+                    if(invoiceDetaill.get(i).getBillableDesc().getBillable().getMaster().getCustomer().getMInitialname() != null){
+                        description = " "+invoiceDetaill.get(i).getBillableDesc().getBillable().getMaster().getCustomer().getMInitialname().getName();
+                    }
+                    description += " " + invoiceDetaill.get(i).getBillableDesc().getBillable().getMaster().getCustomer().getLastName() 
+                            + " " + invoiceDetaill.get(i).getBillableDesc().getBillable().getMaster().getCustomer().getFirstName() ;
+                }else{
+                    description = (invoiceDetaill.get(i).getDescription() != null && !"".equalsIgnoreCase(invoiceDetaill.get(i).getDescription()) ? invoiceDetaill.get(i).getDescription() : "");
+                }                
             }else{
                 description = "";
             }
+            
             if(invoiceDetaill.get(i).getAmount() != null){
                 amountinvoice = invoiceDetaill.get(i).getAmount().compareTo(BigDecimal.ZERO) == 0 ? BigDecimal.ZERO : invoiceDetaill.get(i).getAmount();
             }
@@ -2397,7 +2424,8 @@ public class AJAXBean extends AbstractBean implements
             String displaydesTemp = "";
             String displaydescriptionother = "";
             String displaydescriptioncoupon = "";
-            description = refNo + " " +leader +" " + billTypeName ;
+//            description = refNo + " " +leader +" " + billTypeName ;
+            description = " "+leader +" ";
             if ("1".equals(product)) {
                 displaydescription = billTypeName;
             } else if ("2".equals(product) || "8".equals(product)) {
