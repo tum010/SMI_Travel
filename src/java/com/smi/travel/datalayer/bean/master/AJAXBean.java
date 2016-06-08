@@ -2447,7 +2447,10 @@ public class AJAXBean extends AbstractBean implements
                             displaydescriptionother = parts[4] + " : " + parts[5];
                             displaydescription = displaydescriptionother;
                         }
-                        displaydescriptioncoupon += parts[4] + " : " + parts[5];
+                        if("8".equals(product)){
+                            displaydescriptioncoupon += parts[4] + " : " + parts[5];
+                            displaydescription = displaydescriptioncoupon;
+                        }
                     }
                 }
             } 
