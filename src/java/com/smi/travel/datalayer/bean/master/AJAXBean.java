@@ -2261,7 +2261,7 @@ public class AJAXBean extends AbstractBean implements
 
             String displaydescription = "";
             String displaydesTemp = "";
-            if ("1".equals(product)) {                
+            if ("1".equals(product) || "3".equals(product) || "4".equals(product) || "7".equals(product)) {                
                 displaydescription = billTypeName;
             } else if ("2".equals(product)) {
                 if (!"".equals(refItemId)) {
@@ -2281,7 +2281,7 @@ public class AJAXBean extends AbstractBean implements
                 }
             } else if ("8".equals(product)) {
                 if (!"".equals(refItemId)) {
-//                    displaydescription += billTypeName + " :- ";
+                    displaydescription += billTypeName + " -- ";
                     displaydesTemp = billableDao.getDescriptionInvoiceOthersFromRefId(refItemId);
                     System.out.println("displaydesTemp" + displaydesTemp);
                     if(displaydesTemp != null && !"".equalsIgnoreCase(displaydesTemp)){
@@ -2290,13 +2290,16 @@ public class AJAXBean extends AbstractBean implements
                         displaydescription += parts[4] + " : " + parts[5];
                     }
                 }else{
-                    displaydescription = billTypeName + " : "+description;
+                    displaydescription = billTypeName ;
                 }
-            } else if ("3".equals(product)) {
-                displaydescription = billTypeName + " : "+description;
-            } else if ("4".equals(product)) {
-                displaydescription = billTypeName + " : "+description;
-            } else if ("6".equals(product)) {
+            } 
+//            else if ("3".equals(product)) {
+//                displaydescription = billTypeName + " : "+description;
+//            } 
+//            else if ("4".equals(product)) {
+//                displaydescription = billTypeName + " : "+description;
+//            }
+            else if ("6".equals(product)) {
                 if (!"".equals(refItemId)) {
                     displaydescription += billTypeName + " : ";
                     displaydesTemp = billableDao.getDescriptionInvoiceDayTourFromRefId(refItemId);
@@ -2426,7 +2429,7 @@ public class AJAXBean extends AbstractBean implements
             String displaydescriptioncoupon = "";
 //            description = refNo + " " +leader +" " + billTypeName ;
             description = " "+leader +" ";
-            if ("1".equals(product)) {
+            if ("1".equals(product) || "3".equals(product) || "4".equals(product) || "7".equals(product)) {      
                 displaydescription = billTypeName;
             } else if ("2".equals(product) || "8".equals(product)) {
                 if (!"".equals(refItemId)) {
@@ -2444,14 +2447,16 @@ public class AJAXBean extends AbstractBean implements
                             displaydescriptionother = parts[4] + " : " + parts[5];
                             displaydescription = displaydescriptionother;
                         }
-                        displaydescriptioncoupon += parts[9] + " : " + parts[4] + " : " + parts[5];
+                        displaydescriptioncoupon += parts[4] + " : " + parts[5];
                     }
                 }
-            } else if ("3".equals(product)) {
-                displaydescription = billTypeName;
-            } else if ("4".equals(product)) {
-                displaydescription = billTypeName;
-            } else if ("6".equals(product)) {
+            } 
+//            else if ("3".equals(product)) {
+//                displaydescription = billTypeName;
+//            } else if ("4".equals(product)) {
+//                displaydescription = billTypeName;
+//            } 
+            else if ("6".equals(product)) {
                 if (!"".equals(refItemId)) {
                     displaydescription += billTypeName + " ";
                     displaydesTemp = billableDao.getDescriptionInvoiceDayTourFromRefId(refItemId);
