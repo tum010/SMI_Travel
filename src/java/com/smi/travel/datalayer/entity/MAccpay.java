@@ -14,15 +14,17 @@ public class MAccpay  {
      private String id;
      private String code;
      private String name;
+     private Integer orderNo;
      private Set billables = new HashSet(0);
 
     public MAccpay() {
     }
 
 	
-    public MAccpay(String code, String name) {
+    public MAccpay(String code, String name, int orderNo) {
         this.code = code;
         this.name = name;
+        this.orderNo = orderNo;
     }
     public MAccpay(String code, String name, Set billables) {
        this.code = code;
@@ -57,6 +59,14 @@ public class MAccpay  {
     
     public void setBillables(Set billables) {
         this.billables = billables;
+    }
+
+    public Integer getOrderNo() {
+        return orderNo;
+    }
+
+    public void setOrderNo(Integer orderNo) {
+        this.orderNo = orderNo;
     }
 
 

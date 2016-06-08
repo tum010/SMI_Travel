@@ -52,7 +52,7 @@ public class MListItemImpl implements MListItemDao {
 
     @Override
     public List<MAccpay> getListMAccpay() {
-        String query = "from MAccpay pay order by pay.id";
+        String query = "from MAccpay pay order by pay.orderNo ";
         Session session = this.sessionFactory.openSession();
 
         List<MAccpay> AccpaylList = session.createQuery(query).list();
