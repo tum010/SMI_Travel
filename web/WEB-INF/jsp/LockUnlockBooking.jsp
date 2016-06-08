@@ -83,7 +83,7 @@
             </div><!-- End Row 1-->
             <div class="row" style="padding-left: 30px">
                 <div class="col-xs-4 text-left">
-                    <input type="checkbox" data-label="STRAFF PERSONAL"/>  STRAFF PERSONAL 
+                    <input type="checkbox" data-label="STRAFF PERSONAL"/>  STAFF PERSONAL 
                 </div>      
             </div>
             <div class="row" style="padding-left: 30px">

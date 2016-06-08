@@ -105,8 +105,10 @@ public class InvoiceImpl implements InvoiceReportDao{
         int count = 0;
         int vat = 0;
         int itemNo = 1;
+        int index = 0;
         for (Object[] B : QueryInvoiceList) {
             boolean isVat = false;
+            boolean isRemark = true;
             count++;
             InvoiceReport invoice = new InvoiceReport();
             invoice.setItemno(String.valueOf(itemNo));
@@ -144,6 +146,8 @@ public class InvoiceImpl implements InvoiceReportDao{
             invoice.setStaff(util.ConvertString(B[2]));
             invoice.setPayment(util.ConvertString(B[3]));
             
+            String Description = "";
+            String remark = "";
             if(count == QueryInvoiceList.size()){
                 String[] desc = util.getTagPDescription(util.ConvertString(B[4]));
                 invoice.setDescription(desc[0]);
@@ -151,11 +155,11 @@ public class InvoiceImpl implements InvoiceReportDao{
                 invoice.setIsHide(desc[0].indexOf("\n") == -1 ? "0" : "1");
                 System.out.println("===== Index of ===== : "+desc[0].indexOf("\n"));
 //                invoice.setDescription(util.ConvertString(B[4]));
-                String Description = invoice.getDescription();
-                String remark = util.ConvertString(B[19]) == null ? "" : util.ConvertString(B[19]);
-                if(!"".equalsIgnoreCase(remark)){
-                    invoice.setDescription(Description + "\n"+remark);
-                }
+//                Description = invoice.getDescription();
+//                remark = util.ConvertString(B[19]) == null ? "" : util.ConvertString(B[19]);
+//                if(!"".equalsIgnoreCase(remark)){
+//                    invoice.setDescription(Description + "\n"+remark);
+//                }
                 
                 
                 System.out.println("Remark : " + remark);
@@ -246,6 +250,7 @@ public class InvoiceImpl implements InvoiceReportDao{
             
             data.add(invoice);
             itemNo += 1;
+            index += 1;
             
             String billableDescId = (B[22] != null ? util.ConvertString(B[22]) : "");
             if(!"".equalsIgnoreCase(billableDescId)){
@@ -298,24 +303,46 @@ public class InvoiceImpl implements InvoiceReportDao{
 
                             }
                         }
-                        data.add(invoiceReportTemp);
+                        if(count == QueryInvoiceList.size()){
+                            Description = invoiceReportTemp.getDescription();
+                            remark = util.ConvertString(B[19]) == null ? "" : util.ConvertString(B[19]);
+                            if(!"".equalsIgnoreCase(remark)){
+                                invoiceReportTemp.setDescription(Description + "\n\n"+remark+"\n");
+                                System.out.println("Check Remark : "+remark.indexOf("\n"));
+                            }
+                            isRemark = false;
+                        }
                         
-                        InvoiceReport invoiceReportPrevious = (InvoiceReport) data.get(count-1);
-                        BigDecimal gross1 = new BigDecimal(invoiceReportPrevious.getGross().replaceAll(",", ""));
+                        data.add(invoiceReportTemp);
+
+                        System.out.println("Index : " + index);
+                        InvoiceReport invoiceReportPrevious = (InvoiceReport) data.get(index-1);
+                        BigDecimal gross1 = (invoiceReportPrevious.getGross() != null ? new BigDecimal(invoiceReportPrevious.getGross().replaceAll(",", "")) : new BigDecimal("0.00"));
                         BigDecimal vat1 = (invoiceReportPrevious.getVat() != null ? new BigDecimal(invoiceReportPrevious.getVat().replaceAll(",", "")) : new BigDecimal("0.00"));
-                        BigDecimal amount1 = new BigDecimal(invoiceReportPrevious.getAmount().replaceAll(",", ""));
-                        BigDecimal gross2 = new BigDecimal(invoiceReportTemp.getGrossadd().replaceAll(",", ""));
-                        BigDecimal vat2 = new BigDecimal(invoiceReportTemp.getVatadd().replaceAll(",", ""));
-                        BigDecimal amount2 = new BigDecimal(invoiceReportTemp.getAmountadd().replaceAll(",", ""));
+                        BigDecimal amount1 = (invoiceReportPrevious.getAmount() != null ? new BigDecimal(invoiceReportPrevious.getAmount().replaceAll(",", "")) : new BigDecimal("0.00"));
+                        BigDecimal gross2 = (invoiceReportTemp.getGrossadd() != null ? new BigDecimal(invoiceReportTemp.getGrossadd().replaceAll(",", "")) : new BigDecimal("0.00"));
+                        BigDecimal vat2 = (invoiceReportTemp.getVatadd() != null ? new BigDecimal(invoiceReportTemp.getVatadd().replaceAll(",", "")) : new BigDecimal("0.00"));
+                        BigDecimal amount2 = (invoiceReportTemp.getAmountadd() != null ? new BigDecimal(invoiceReportTemp.getAmountadd().replaceAll(",", "")) : new BigDecimal("0.00"));
+                        System.out.println("Amount 1 : " + amount1);
+                        System.out.println("Amount 2 : " + amount2);
                         invoiceReportPrevious.setGross(df.format(gross1.subtract(gross2)));
                         invoiceReportPrevious.setVat(df.format(vat1.subtract(vat2)));
                         invoiceReportPrevious.setAmount(df.format(amount1.subtract(amount2)));
-                        
+                                                                                         
                     }
                     
                 }
+                index += invoiceReportAdditionalList.size();
             }
             
+            if(count == QueryInvoiceList.size() && isRemark){
+                Description = invoice.getDescription();
+                remark = util.ConvertString(B[19]) == null ? "" : util.ConvertString(B[19]);
+                if(!"".equalsIgnoreCase(remark)){
+                    invoice.setDescription(Description + "\n\n"+remark+"\n");
+                    System.out.println("Check Remark : "+remark.indexOf("\n"));
+                }
+            }
             
         }
         session.close();
@@ -583,7 +610,7 @@ public class InvoiceImpl implements InvoiceReportDao{
         UtilityFunction util = new UtilityFunction();
         List<InvoiceReport> invoiceReportList = new ArrayList<InvoiceReport>();
         String query = "from BillableDesc bd where bd.id = :billableDescId ";
-         
+        System.out.println("Billable Desc Id : " + billableDescId); 
         List<BillableDesc> billableDescList = session.createQuery(query)
                 .setParameter("billableDescId", billableDescId)
                 .list();
@@ -594,16 +621,17 @@ public class InvoiceImpl implements InvoiceReportDao{
         
         String mBillType = billableDescList.get(0).getMBilltype().getName();
         String refNo = billableDescList.get(0).getBillable().getMaster().getReferenceNo();
+        String refItemId = billableDescList.get(0).getRefItemId();
         if("HOTEL".equalsIgnoreCase(mBillType.toUpperCase())){
-            invoiceReportList = getHotelAdditional(refNo,mVat,isVat,session);
+            invoiceReportList = getHotelAdditional(refNo,refItemId,mVat,isVat,session);
         }
          
         return invoiceReportList;
     }
 
-    private List<InvoiceReport> getHotelAdditional(String refNo, int mVat, boolean isVat, Session session) {
+    private List<InvoiceReport> getHotelAdditional(String refNo, String refItemId, int mVat, boolean isVat, Session session) {
         UtilityFunction util = new UtilityFunction();
-        List<Object[]> hotelAdditionalList = session.createSQLQuery(" SELECT * FROM `invoice_view_hotel_additional` WHERE ref_no = '" + refNo + "' ")      
+        List<Object[]> hotelAdditionalList = session.createSQLQuery(" SELECT * FROM `invoice_view_hotel_additional` WHERE ref_no = '" + refNo + "' AND id = '" + refItemId + "' ")      
                 .addScalar("ref_no", Hibernate.STRING)
                 .addScalar("cate_desc", Hibernate.STRING)
                 .addScalar("cost", Hibernate.STRING)
