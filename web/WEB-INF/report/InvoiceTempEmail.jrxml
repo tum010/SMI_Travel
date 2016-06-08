@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="InvoiceTempEmail" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="cd8bfceb-88e3-46d6-b967-516fc07ba6ea">
 	<property name="ireport.zoom" value="2.420000000000002"/>
-	<property name="ireport.x" value="299"/>
-	<property name="ireport.y" value="649"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="409"/>
 	<field name="invto" class="java.lang.String"/>
 	<field name="co" class="java.lang.String"/>
 	<field name="invno" class="java.lang.String"/>
@@ -74,11 +74,11 @@
 				</graphicElement>
 			</rectangle>
 			<staticText>
-				<reportElement x="8" y="207" width="27" height="20" uuid="3519eb47-5a16-4b43-8c6c-cd7e78caf5ad">
+				<reportElement positionType="Float" x="8" y="168" width="27" height="20" uuid="3519eb47-5a16-4b43-8c6c-cd7e78caf5ad">
 					<printWhenExpression><![CDATA[$F{showleader}.equalsIgnoreCase("1")]]></printWhenExpression>
 				</reportElement>
 				<textElement>
-					<font fontName="Cordia New" size="16" isBold="true" pdfFontName="resource/fonts/Cordia.ttf " pdfEncoding="Identity-H"/>
+					<font fontName="Cordia New" size="14" isBold="true" pdfFontName="resource/fonts/Cordia.ttf " pdfEncoding="Identity-H"/>
 				</textElement>
 				<text><![CDATA[C/O :]]></text>
 			</staticText>
@@ -156,9 +156,9 @@
 				</graphicElement>
 			</rectangle>
 			<staticText>
-				<reportElement x="8" y="127" width="24" height="20" uuid="92f9d9bb-a8e2-4a3c-867e-04921722786c"/>
+				<reportElement x="8" y="129" width="24" height="20" uuid="92f9d9bb-a8e2-4a3c-867e-04921722786c"/>
 				<textElement>
-					<font fontName="Cordia New" size="16" isBold="true" pdfFontName="resource/fonts/Cordia.ttf " pdfEncoding="Identity-H"/>
+					<font fontName="Cordia New" size="14" isBold="true" pdfFontName="resource/fonts/Cordia.ttf " pdfEncoding="Identity-H"/>
 				</textElement>
 				<text><![CDATA[TO :]]></text>
 			</staticText>
@@ -172,9 +172,9 @@
 				<textFieldExpression><![CDATA[$F{staff}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="32" y="127" width="297" height="20" uuid="9dadfa4e-1f56-4c67-9458-185dda6b320e"/>
+				<reportElement x="32" y="128" width="297" height="20" uuid="9dadfa4e-1f56-4c67-9458-185dda6b320e"/>
 				<textElement>
-					<font fontName="Cordia New" size="16" pdfFontName="resource/fonts/Cordia.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<font fontName="Cordia New" size="14" pdfFontName="resource/fonts/Cordia.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{invto}]]></textFieldExpression>
 			</textField>
@@ -193,11 +193,11 @@
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="35" y="207" width="297" height="20" uuid="01044a50-6bbe-4d1c-aeec-cc3358a5770f">
+				<reportElement positionType="Float" x="35" y="168" width="297" height="20" uuid="01044a50-6bbe-4d1c-aeec-cc3358a5770f">
 					<printWhenExpression><![CDATA[$F{showleader}.equalsIgnoreCase("1")]]></printWhenExpression>
 				</reportElement>
 				<textElement>
-					<font fontName="Cordia New" size="16" pdfFontName="resource/fonts/Cordia.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<font fontName="Cordia New" size="14" pdfFontName="resource/fonts/Cordia.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{co}]]></textFieldExpression>
 			</textField>
@@ -229,10 +229,10 @@
 				</textElement>
 				<text><![CDATA[Ref No.]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="32" y="147" width="297" height="59" uuid="ec1cb16e-92c2-45ea-b6dc-e81d2e25e9bd"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="32" y="146" width="297" height="21" uuid="ec1cb16e-92c2-45ea-b6dc-e81d2e25e9bd"/>
 				<textElement>
-					<font fontName="Cordia New" size="16" pdfFontName="resource/fonts/Cordia.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<font fontName="Cordia New" size="14" pdfFontName="resource/fonts/Cordia.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{address}]]></textFieldExpression>
 			</textField>
@@ -264,6 +264,12 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{duedate}]]></textFieldExpression>
 			</textField>
+			<line>
+				<reportElement positionType="Float" x="3" y="167" width="337" height="1" isPrintWhenDetailOverflows="true" uuid="f136a633-c332-4ed8-8d41-791276d7a4d4"/>
+				<graphicElement>
+					<pen lineWidth="0.25" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</graphicElement>
+			</line>
 		</band>
 	</pageHeader>
 	<columnHeader>
