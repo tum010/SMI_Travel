@@ -123,6 +123,10 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
         Date updateDate = new Date(); 
         updateDate = utilfunction.convertStringToDateS(updateDateTemp);
         tax.setUpdateDate(new Date());
+        TaxInvoice mTaxInvoice = getExportData(tax);
+        tax.setIsExport(mTaxInvoice.getIsExport() != null ? mTaxInvoice.getIsExport() : 0);
+        tax.setExportDate(mTaxInvoice.getExportDate());
+        tax.setDataNo(mTaxInvoice.getDataNo() != null && !"".equalsIgnoreCase(mTaxInvoice.getDataNo()) ? mTaxInvoice.getDataNo() : null);
         try {
             Session session = this.getSessionFactory().openSession();
             setTransaction(session.beginTransaction());
@@ -133,10 +137,6 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
                 if (taxInvoiceDetail.get(i).getId() == null) {
                     session.save(taxInvoiceDetail.get(i));
                 } else {
-                    TaxInvoiceDetail mTaxInvoiceDetail = getExportData(taxInvoiceDetail.get(i));
-                    taxInvoiceDetail.get(i).setIsExport(mTaxInvoiceDetail.getIsExport());
-                    taxInvoiceDetail.get(i).setExportDate(mTaxInvoiceDetail.getExportDate());
-                    taxInvoiceDetail.get(i).setDataNo(mTaxInvoiceDetail.getDataNo() != null && !"".equalsIgnoreCase(mTaxInvoiceDetail.getDataNo()) ? mTaxInvoiceDetail.getDataNo() : "");
                     session.update(taxInvoiceDetail.get(i));
                 }
             }
@@ -878,15 +878,15 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
         return amountLocal.subtract(amount);
     }
 
-    private TaxInvoiceDetail getExportData(TaxInvoiceDetail taxInvoiceDetail) {
+    private TaxInvoice getExportData(TaxInvoice taxInvoice) {
         Session session = this.sessionFactory.openSession();
-        List<TaxInvoiceDetail> taxInvoiceDetailList = session.createQuery("FROM TaxInvoiceDetail tax where tax.id = :id ")
-            .setParameter("id", taxInvoiceDetail.getId())
+        List<TaxInvoice> taxInvoiceList = session.createQuery("FROM TaxInvoice tax where tax.id = :id ")
+            .setParameter("id", taxInvoice.getId())
             .list();
 
         session.close();
         
-        return taxInvoiceDetailList.get(0);
+        return taxInvoiceList.get(0);
     }
 
 }

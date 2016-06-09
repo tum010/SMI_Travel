@@ -372,7 +372,7 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
                 if(nirvanaInterfaceList.get(i).getRowid().indexOf("TAX") != -1){
                     id = nirvanaInterfaceList.get(i).getRowid().substring(3);
                     dataNo = nirvanaInterfaceList.get(i).getDatano();
-                    hql = "update TaxInvoiceDetail taxd set taxd.isExport = 1 , taxd.exportDate = :date , taxd.dataNo = :dataNo where taxd.id = :invDetailId";
+                    hql = "update TaxInvoice tax set tax.isExport = 1 , tax.exportDate = :date , tax.dataNo = :dataNo where tax.id = :invDetailId";
                 
                 }else{
                     id = nirvanaInterfaceList.get(i).getRowid().substring(1);
@@ -910,8 +910,8 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
     public List<SsDataexchTr> setArNirvanaDetail(ARNirvana ar,String datano){
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
-        String invId = String.valueOf(ar.getInvid());
-        String query = " SELECT * FROM `ar_nirvana_sale_detail` where id = '"+invId+"'" ;
+        String intreference = String.valueOf(ar.getIntreference());
+        String query = " SELECT * FROM `ar_nirvana_sale_detail` where inv_no = '"+intreference+"'" ;
         
         List<Object[]> ARNirvanaList = session.createSQLQuery(query)
                 .addScalar("id", Hibernate.STRING)
