@@ -38,6 +38,7 @@ public class RefundAirReportImpl implements RefundAirReportDao{
         BigDecimal SumReceive = new BigDecimal(0);
         BigDecimal SumPayCus = new BigDecimal(0);
         BigDecimal SumClient = new BigDecimal(0);
+        BigDecimal SumAirlineCharge = new BigDecimal(0);
          List<Object[]> QueryRefundList = session.createSQLQuery("SELECT * FROM `refund_ticket_view` where refundid = " + refundId)
                  .addScalar("refundno", Hibernate.STRING)
                  .addScalar("ticketdate", Hibernate.DATE)
@@ -57,6 +58,7 @@ public class RefundAirReportImpl implements RefundAirReportDao{
                  .addScalar("totalclientcharge", Hibernate.BIG_DECIMAL)
                  .addScalar("refundtype", Hibernate.STRING)
                  .addScalar("otherreason", Hibernate.STRING)
+                 .addScalar("totalairlinecharge", Hibernate.BIG_DECIMAL)
                  .list();
          
         for (Object[] B : QueryRefundList) {
@@ -74,10 +76,11 @@ public class RefundAirReportImpl implements RefundAirReportDao{
              report.setReceivedate(util.SetFormatDate((Date)B[10], "dd-MM-YYYY"));
              //report.setTicketamount(util.setFormatMoney(B[11]));
              report.setAddress(util.ConvertString(B[12]));
-             SumTicketAmount = SumTicketAmount.add((BigDecimal) B[11]);
-             SumReceive = SumReceive.add((BigDecimal) B[13]);
-             SumPayCus = SumPayCus.add((BigDecimal) B[14]);
-             SumClient = SumClient.add((BigDecimal) B[15]);
+             SumTicketAmount = SumTicketAmount.add(B[11] != null ? (BigDecimal) B[11] : new BigDecimal(0));
+             SumReceive = SumReceive.add(B[13] != null ? (BigDecimal) B[13] : new BigDecimal(0));
+             SumPayCus = SumPayCus.add(B[14] != null ? (BigDecimal) B[14] : new BigDecimal(0));
+             SumClient = SumClient.add(B[15] != null ? (BigDecimal) B[15] : new BigDecimal(0));
+             SumAirlineCharge = SumAirlineCharge.add(B[18] != null ? (BigDecimal) B[18] : new BigDecimal(0));
              report.setRefundtype(util.ConvertString(B[16]));
              report.setOtherreason(util.ConvertString(B[17]));
              
@@ -91,7 +94,7 @@ public class RefundAirReportImpl implements RefundAirReportDao{
         if(QueryRefundList != null){
             for(int i=0; i<data.size(); i++){
                 RefundAirReport refundAirReportTemp = (RefundAirReport) data.get(i);
-                refundAirReportTemp.setTotalreceive(util.setFormatMoney(SumReceive) != null && !"0.00".equals(util.setFormatMoney(SumReceive)) ? util.setFormatMoney(SumReceive) : "");
+                refundAirReportTemp.setTotalreceive(util.setFormatMoney(SumAirlineCharge) != null && !"0.00".equals(util.setFormatMoney(SumAirlineCharge)) ? util.setFormatMoney(SumAirlineCharge) : "");
                 refundAirReportTemp.setTotalpay(util.setFormatMoney(SumPayCus) != null && !"0.00".equals(util.setFormatMoney(SumPayCus)) ? util.setFormatMoney(SumPayCus) : "");
                 refundAirReportTemp.setTotalclientcharge(util.setFormatMoney(SumClient) != null && !"0.00".equals(util.setFormatMoney(SumClient)) ? util.setFormatMoney(SumClient) : "");
             }    
