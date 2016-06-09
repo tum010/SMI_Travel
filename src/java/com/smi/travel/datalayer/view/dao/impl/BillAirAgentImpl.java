@@ -226,6 +226,15 @@ public class BillAirAgentImpl implements BillAirAgentDao{
                  query += " invm.owner  = '" + salebyUser + "' ";
             }
         }
+        
+        if ((paymentType != null )&&(!"".equalsIgnoreCase(paymentType))) {
+            if(checkQuery == 1){
+                 query += " and invm.paymenttype  = '" + paymentType + "' ";
+            }else{
+                checkQuery = 1;
+                 query += " invm.paymenttype  = '" + paymentType + "' ";
+            }
+        }
            
         if ((refundFrom != null )&&(!"".equalsIgnoreCase(refundFrom))) {
             if ((refundTo != null )&&(!"".equalsIgnoreCase(refundTo))) {

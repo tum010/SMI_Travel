@@ -464,18 +464,21 @@ public class UtilityFunction {
     public String GetRounting( List<AirticketFlight> FlightList){
         String rounting = "";
         for(int i =0;i<FlightList.size();i++){
-            System.out.println(FlightList.get(i).getSourceCode()+"-"+FlightList.get(i).getDesCode());
-            String source = FlightList.get(i).getSourceCode();
-            String des = FlightList.get(i).getDesCode();
-            if(i == 0){
+            if(FlightList.get(i).getMItemstatus().getId().equalsIgnoreCase("1")){
+                System.out.println(FlightList.get(i).getSourceCode()+"-"+FlightList.get(i).getDesCode());
+                String source = FlightList.get(i).getSourceCode();
+                String des = FlightList.get(i).getDesCode();
+                if(i == 0){
                 rounting += source + "-" + des;
-            }else{
+                }else{
                 if (!rounting.substring(rounting.lastIndexOf("-") + 1).equalsIgnoreCase(source)) {
                     rounting += "," + source + "-" + des;
                 } else {
                     rounting += "-" + des;
                 }
+                }
             }
+            
             
         }
         return rounting;
