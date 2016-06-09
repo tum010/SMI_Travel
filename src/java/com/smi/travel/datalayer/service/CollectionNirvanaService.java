@@ -5,6 +5,7 @@
  */
 package com.smi.travel.datalayer.service;
 
+import com.smi.travel.datalayer.entity.Receipt;
 import com.smi.travel.datalayer.view.dao.CollectionNirvanaDao;
 import com.smi.travel.datalayer.view.entity.CollectionNirvana;
 import com.smi.travel.datalayer.view.entity.NirvanaInterface;
@@ -28,7 +29,9 @@ public class CollectionNirvanaService {
     public String MappingCollectionNirvana(List<CollectionNirvana> cnData){
         return collectionNirvanaDao.MappingCollectionNirvana(cnData);
     }
-    
+    public String UpdateBankCodeToReceipt(List<Receipt> receiptList){
+        return collectionNirvanaDao.UpdateBankCodeToReceipt(receiptList);
+    }
     public CollectionNirvanaDao getCollectionNirvanaDao() {
         return collectionNirvanaDao;
     }

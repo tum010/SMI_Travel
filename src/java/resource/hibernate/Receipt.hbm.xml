@@ -113,8 +113,11 @@
         <property name="operationUser" type="string">
             <column name="operation_user" length="20" />
         </property>
-		<property name="dataNo" type="string">
+        <property name="dataNo" type="string">
             <column name="data_no" length="10" />
+        </property>
+        <property name="bankCode" type="string">
+            <column name="bank_code" length="21" />
         </property>		
         <bag name="receiptDetails" table="receipt_detail" inverse="true" lazy="true" fetch="select">
             <key>

@@ -9,6 +9,8 @@
 <c:set var="CollectionList" value="${requestScope['CollectionList']}" />
 <c:set var="status_update" value="${requestScope['status_update']}" />
 <input type="hidden" id="statusUpdate" name="statusUpdate" value="${status_update}">
+<c:set var="bankNirvanaList" value="${requestScope['bankNirvanaList']}" />
+
 <section class="content-header" >
     <h1>
         Nirvana Interface
@@ -23,7 +25,7 @@
     <div class="col-sm-1" style="border-right:  solid 1px #01C632;padding-top: 10px;width: 150px">
         <div ng-include="'WebContent/Accounting/NirvanaInterfaceMenu.html'"></div>
     </div>
-    <div class="col-sm-10">
+    <div class="col-sm-10" style="width: 88%">
         <div class="row" style="padding-left: 15px">  
             <div class="col-sm-6 " style="padding-right: 15px">
                 <h4><b>Collection Monitor</b></h4>                  
@@ -47,6 +49,18 @@
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                    <strong>Update Status Unsuccess!</strong> 
                 </div>
+                </c:if>
+                <c:if test="${requestScope['saveresult'] =='success'}">                                            
+                    <div id="textAlertDivReceipSave"  style="" class="alert alert-success alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <strong>Save Success!</strong> 
+                    </div>
+                </c:if>
+                <c:if test="${requestScope['saveresult'] =='fail'}">                                            
+                    <div id="textAlertDivReceipNotSave"  style="" class="alert alert-danger alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                       <strong>Save Unsuccess!</strong> 
+                    </div>
                 </c:if>
                 <div id="textAlertDivNotChoose"  style="display: none" class="alert alert-danger alert-dismissible" role="alert">
                     <button type="button" class="close" aria-label="Close" onclick="hideDiv()"><span aria-hidden="true">&times;</span></button>
@@ -201,17 +215,17 @@
                                 <th style="width: 12%">Inv No.</th>
                                 <th style="width: 10%">AR Code</th>
                                 <th style="width: 10%">Inv To</th>
-                                <th style="width: 9%">Acc Code</th>
                                 <th style="width: 10%">Inv Amount</th>
                                 <th style="width: 10%">Sum Inv</th>
                                 <th style="width: 10%">Diff</th>
                                 <th style="width: 10%">Sum Rec</th>
                                 <th style="width: 5%">Cur</th>
                                 <th style="width: 10%">Collection</th>
+                                <th style="width: 12%">Bank Code</th>
                                 <th style="width: 8%">Status</th>
                             </tr>
                         </thead>
-                        <tbody>               
+                        <tbody>
                             <c:forEach var="table" items="${CollectionList}" varStatus="dataStatus">
                                 <tr>
                                     <td class="hidden"><input class="form-control" type="text" id="inputId${dataStatus.count}" name="inputId${dataStatus.count}" value="${table.rowid}"></td>
@@ -230,13 +244,50 @@
                                     <td>${table.invno}</td>
                                     <td>${table.arcode}</td>
                                     <td>${table.invto}</td>
-                                    <td>${table.acccode}</td>
                                     <td align="right">${table.invoiceamount}</td>
                                     <td align="right"><fmt:formatNumber type="currency" pattern="#,##0.00;-#,##0.00" value="${table.invamount}" /></td>
                                     <td align="right"><fmt:formatNumber type="currency" pattern="#,##0.00;-#,##0.00" value="${table.diff}" /></td>
                                     <td align="right"><fmt:formatNumber type="currency" pattern="#,##0.00;-#,##0.00" value="${table.recamount}" /></td>
                                     <td align="left">${table.cur}</td>
                                     <td align="center">${table.collectionStatus}</td>
+                                    <td align="center" >
+                                        <c:choose>
+                                            <c:when test="${table.bankcode == 'CASH'}">
+                                                <select class="form-control" name="bankcodeTemp${dataStatus.count}" id="bankcode${dataStatus.count}" disabled>
+                                                    <option  value="" >---------</option>
+                                                    <c:forEach var="banknir" items="${bankNirvanaList}" varStatus="status">                                       
+                                                        <c:set var="select" value="" />
+                                                        <c:if test="${banknir.code == table.bankcode}">
+                                                            <c:set var="select" value="selected" />
+                                                        </c:if>
+                                                        <option  value="${banknir.code}" ${select}>${banknir.code}</option>
+                                                    </c:forEach>
+                                                </select>
+                                                <select class="form-control hidden" name="bankcode${dataStatus.count}" id="bankcode${dataStatus.count}">
+                                                    <option  value="" >---------</option>
+                                                    <c:forEach var="banknir" items="${bankNirvanaList}" varStatus="status">                                       
+                                                        <c:set var="select" value="" />
+                                                        <c:if test="${banknir.code == table.bankcode}">
+                                                            <c:set var="select" value="selected" />
+                                                        </c:if>
+                                                        <option  value="${banknir.code}" ${select}>${banknir.code}</option>
+                                                    </c:forEach>
+                                                </select>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <select class="form-control" name="bankcode${dataStatus.count}" id="bankcode${dataStatus.count}" >
+                                                    <option  value="" >---------</option>
+                                                    <c:forEach var="banknir" items="${bankNirvanaList}" varStatus="status">                                       
+                                                        <c:set var="select" value="" />
+                                                        <c:if test="${banknir.code == table.bankcode}">
+                                                            <c:set var="select" value="selected" />
+                                                        </c:if>
+                                                        <option  value="${banknir.code}" ${select}>${banknir.code}</option>
+                                                    </c:forEach>
+                                                </select>
+                                            </c:otherwise>
+                                        </c:choose> 
+                                    </td>
                                     <td align="center">${table.status}</td>
                                 </tr>
                             </c:forEach>
@@ -246,10 +297,15 @@
             </div>
             <div class="col-xs-12"><br></div>
             <div class="col-xs-12">
-                <div class="col-xs-1 text-right" style="width: 665px"></div>
-                <div class="col-xs-1 text-right" style="width: 210px">
+                <div class="col-xs-1 text-right" style="width: 580px"></div>
+                <div class="col-xs-1 text-right" style="width: 200px">
                     <button type="button" class="btn btn-default" data-dismiss="modal" onclick="printCollectionReport()">
                         <span id="btnDownloadAP" class="glyphicon glyphicon-print" ></span> Print Collection Report
+                    </button>
+                </div>
+                <div class="col-xs-1 text-right" style="width: 90px">
+                    <button type="button" class="btn btn-success" onclick="saveCollection()"  data-dismiss="modal">
+                        <span class="fa fa-save" ></span> Save
                     </button>
                 </div>
                 <div class="col-xs-1 text-right" style="">
@@ -707,6 +763,11 @@ function validateDate(date,option){
         } else {
             $('#textAlertDivNotChoose').show();
         }    
+    }
+    
+    function saveCollection(){
+        $('#action').val('updatereceipt');
+        document.getElementById('collectionMonitorForm').submit();
     }
     
     function hideDiv(){

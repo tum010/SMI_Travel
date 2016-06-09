@@ -8,6 +8,7 @@ package com.smi.travel.datalayer.dao.impl;
 
 import com.smi.travel.datalayer.dao.MBankDao;
 import com.smi.travel.datalayer.entity.MBank;
+import com.smi.travel.datalayer.entity.MBankNirvana;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -157,5 +158,19 @@ public class MBankImpl  implements MBankDao{
 
     public void setTransaction(Transaction transaction) {
         this.transaction = transaction;
+    }
+
+    @Override
+    public List<MBankNirvana> getListBankNirvana() {
+        String query = "from MBankNirvana bank";
+        Session session = this.sessionFactory.openSession();
+        List<MBankNirvana> bankList = session.createQuery(query).list();
+        System.out.println("query : " + query );
+        if (bankList.isEmpty()) {
+            return null;
+        }
+        session.close();
+        this.sessionFactory.close();
+        return bankList;
     }
 }
