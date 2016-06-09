@@ -50,9 +50,11 @@ public class Receipt {
      private Date operationDate;
      private String operationUser;
      private String dataNo;
+     private String bankCode;
      private List receiptDetails = new LinkedList<ReceiptDetail>();
      private List receiptCredits = new LinkedList<ReceiptCredit>();
-
+     
+     
     public Receipt() {
     }
 
@@ -94,6 +96,7 @@ public class Receipt {
        this.operationDate = operationDate;
        this.operationUser = operationUser;
        this.dataNo = dataNo;
+       
     }
    
     public String getId() {
@@ -383,6 +386,14 @@ public class Receipt {
 
     public void setDataNo(String dataNo) {
         this.dataNo = dataNo;
+    }
+
+    public String getBankCode() {
+        return bankCode;
+    }
+
+    public void setBankCode(String bankCode) {
+        this.bankCode = bankCode;
     }
 
 

@@ -1,4 +1,5 @@
 package com.smi.travel.controller;
+import com.smi.travel.datalayer.entity.Receipt;
 import com.smi.travel.datalayer.service.CollectionNirvanaService;
 import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.datalayer.view.entity.CollectionNirvana;
@@ -22,6 +23,7 @@ public class CollectionMonitorController extends SMITravelController {
     private static final String INVNO = "invno";
     private static final String CollectionList = "CollectionList";
     private static final String STATUSUPDATE = "status_update";
+    private static final String BANKNIRVANALIST = "bankNirvanaList";
     private CollectionNirvanaService collectionNirvanaService;
     private UtilityService utilityService;
     
@@ -42,6 +44,7 @@ public class CollectionMonitorController extends SMITravelController {
         request.setAttribute(DATEFROM,from);
         request.setAttribute(DATETO,to);
         request.setAttribute(INVNO,invno);
+        request.setAttribute(BANKNIRVANALIST,utilityService.getListBankNirvana());
         
         if ("search".equalsIgnoreCase(action)){
             List<CollectionNirvana>  collectionNirvanas = collectionNirvanaService.getCollectionNirvanaFromFilter(department, type, status, from, to, invno, "");
@@ -81,6 +84,27 @@ public class CollectionMonitorController extends SMITravelController {
            }else{
                request.setAttribute(CollectionList, null);
            }
+        }else if("updatereceipt".equals(action)){
+            String coCount = request.getParameter("coCount");
+            List<CollectionNirvana> listCo = new LinkedList<CollectionNirvana>();
+            int count = Integer.parseInt(coCount);
+            List<Receipt> receiptList = new LinkedList<Receipt>();
+            for(int i=1;i<=count;i++){
+                String inputId = request.getParameter("inputId"+i);
+                String bankcode = request.getParameter("bankcode"+i);
+                if(!"".equalsIgnoreCase(inputId)){
+                    System.out.println(" inputId :: " + inputId);
+                    System.out.println(" bankcode :: " + bankcode);
+                    Receipt rec = new Receipt();
+                    rec.setId(inputId);
+                    rec.setBankCode(!"".equalsIgnoreCase(bankcode) && !"null".equalsIgnoreCase(bankcode) && bankcode != null ? bankcode : "");
+                    receiptList.add(rec);
+                }
+            }
+            String resultsave = collectionNirvanaService.UpdateBankCodeToReceipt(receiptList);
+            request.setAttribute("saveresult", resultsave);
+            listCo = collectionNirvanaService.getCollectionNirvanaFromFilter(department, type, status, from, to, invno, "");
+            request.setAttribute(CollectionList, listCo);
         }
 //        System.out.println(" action " + action);
 //        System.out.println(" collectionDepartment " + collectionDepartment);

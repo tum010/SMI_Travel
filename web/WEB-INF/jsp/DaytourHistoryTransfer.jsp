@@ -204,10 +204,10 @@
         var param = 'action=' + 'text' +
                 '&servletName=' + servletName +
                 '&servicesName=' + servicesName +
-                '&tourcode=' + tourCode +
+                '&tourcode=' + generateSpecialCharacter(tourCode)+
                 '&date=' + tourDate +
-                '&place=' + place +
-                '&other=' + other +
+                '&place=' + generateSpecialCharacter(place) +
+                '&other=' + generateSpecialCharacter(other) +
                 '&type=' + 'getjobDetail';
         console.log("Ajax param [" + param + "]");
         CallAjax(param);

@@ -7,6 +7,7 @@
 package com.smi.travel.datalayer.dao;
 
 import com.smi.travel.datalayer.entity.MBank;
+import com.smi.travel.datalayer.entity.MBankNirvana;
 import java.util.List;
 
 /**
@@ -19,4 +20,5 @@ public interface MBankDao {
     public int insertBank(MBank bank);
     public int updateBank(MBank bank);
     public int DeleteBank(MBank bank);
+    public List<MBankNirvana> getListBankNirvana();
 }

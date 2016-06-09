@@ -6,6 +6,7 @@
 package com.smi.travel.datalayer.view.dao.impl;
 
 import com.smi.travel.datalayer.entity.MRunningCode;
+import com.smi.travel.datalayer.entity.Receipt;
 import com.smi.travel.datalayer.view.dao.CollectionNirvanaDao;
 import com.smi.travel.datalayer.view.entity.CollectionNirvana;
 import com.smi.travel.datalayer.view.entity.CollectionNirvanaCashReceipt;
@@ -251,7 +252,7 @@ public class CollectionNirvanaImpl implements CollectionNirvanaDao{
             collectionNirvana.setComid(util.ConvertString(CN[39]));
             collectionNirvana.setInvname(util.ConvertString(CN[40]));
             collectionNirvana.setTransdate(util.convertStringToDate(util.ConvertString(CN[41])));
-            collectionNirvana.setBankid(util.ConvertString(CN[42]));
+            collectionNirvana.setBankcode(util.ConvertString(CN[42]));
             collectionNirvanaList.add(collectionNirvana);
         }
         
@@ -431,7 +432,7 @@ public class CollectionNirvanaImpl implements CollectionNirvanaDao{
         String period = (col.getPeriod() != null ? String.valueOf(col.getPeriod()) : "");
         dataArea += util.generateDataAreaNirvana(period,2);
         
-        String bankid = (col.getBankid() != null ? String.valueOf(col.getBankid()) : "");
+        String bankid = (col.getBankcode() != null ? String.valueOf(col.getBankcode()) : "");
         dataArea += util.generateDataAreaNirvana(bankid,6);
         
         String transdate = (col.getTransdate()!= null && !"".equalsIgnoreCase(String.valueOf(col.getTransdate())) ? sf.format(col.getTransdate()) : "");
@@ -667,7 +668,7 @@ public class CollectionNirvanaImpl implements CollectionNirvanaDao{
             collectionNirvana.setComid(util.ConvertString(CN[39]));
             collectionNirvana.setInvname(util.ConvertString(CN[40]));
             collectionNirvana.setTransdate(util.convertStringToDate(util.ConvertString(CN[41])));
-            collectionNirvana.setBankid(util.ConvertString(CN[42]));
+            collectionNirvana.setBankcode(util.ConvertString(CN[42]));
             collectionNirvanaList.add(collectionNirvana);
         }
         
@@ -858,6 +859,39 @@ public class CollectionNirvanaImpl implements CollectionNirvanaDao{
         System.out.println(" note   :::  " + note); 
 
         return dataArea;
+    }
+
+    @Override
+    public String UpdateBankCodeToReceipt(List<Receipt> receiptList) {
+        String result = "";
+        Session session = this.sessionFactory.openSession();
+        try {
+            transaction = session.beginTransaction();
+            for(int i = 0 ; i < receiptList.size() ; i++){
+                Receipt rec = receiptList.get(i);
+                String queryupdate = " UPDATE Receipt rec Set rec.bankCode = "+(rec.getBankCode() != null & !"".equalsIgnoreCase(rec.getBankCode()) ? "'"+rec.getBankCode()+"'" : null )+" where rec.id = '"+rec.getId()+"'" ;
+                
+                System.out.println("queryupdate : "+queryupdate);
+                Query query = session.createQuery(queryupdate);
+                int UpdateResult = query.executeUpdate();
+                if (UpdateResult == 0) {
+                    result = "fail";
+                    transaction.rollback();
+                    session.close();
+                    this.sessionFactory.close();
+                    return result;
+                }
+            }            
+            transaction.commit();
+            result = "success";
+        } catch (Exception ex) {
+           ex.printStackTrace();
+           transaction.rollback();
+           result = "fail";
+       }
+        session.close();
+        this.sessionFactory.close();
+        return result;
     }
 
 }

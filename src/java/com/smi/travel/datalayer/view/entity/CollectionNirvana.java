@@ -72,6 +72,8 @@ public class CollectionNirvana {
     private Date transdate;
     private String bankid;
     
+    private String bankcode;
+    
     public String getInvno() {
         return invno;
     }
@@ -502,6 +504,14 @@ public class CollectionNirvana {
 
     public void setTransdate(Date transdate) {
         this.transdate = transdate;
+    }
+
+    public String getBankcode() {
+        return bankcode;
+    }
+
+    public void setBankcode(String bankcode) {
+        this.bankcode = bankcode;
     }
     
     

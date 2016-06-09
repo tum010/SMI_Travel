@@ -1762,7 +1762,7 @@ function copyInvoice() {
 
 function setBillValue(billto, billname, address, term, pay, type) {
     $("#InvTo").val(billto);
-    $("#InvToName").val(billname);alert(billname+" : "+$("#InvToName").val());
+    $("#InvToName").val(billname); 
     $("#InvToAddress").val(address);
     $("#ARCode").val(type !== 'C' ? billto : 'DUMMY');
 

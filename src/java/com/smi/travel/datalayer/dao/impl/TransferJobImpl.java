@@ -219,21 +219,37 @@ public class TransferJobImpl implements TransferJobDao {
     @Override
     public List<DaytourBooking> getTransferjobData(String TourId, String TourDate, String Place, String Other) {
         String getJobDetailQuery = "from DaytourBooking DB where DB.tourDate = '" + TourDate + "'"
-                + " and DB.daytour.code in ('" + TourId.replaceAll(" ", "").replaceAll("\\|\\|", "','").trim() + "') ";
+                + " and DB.daytour.code in ('" + TourId.replaceAll(" ", "").replaceAll("\\|\\|", "','").trim() + "') and DB.MItemstatus.id <> 2 ";
         String open = "";
         String close = "";
+        List Transferjoblist = new ArrayList();
+        boolean checkplace = false;
         if (Place != null) {
             if (Other != null) {
                 open = "(";
                 close = ")";
             }
-            getJobDetailQuery += " and " + open + " DB.place.place in ('" + Place.replaceAll("\\|\\|", "','").replaceAll(" '", "'").replaceAll("' ", "'") + "')";
+            String PlaceTemp = "";
+            String placetemp[] = Place.replaceAll("OTHERS", "").split("\\|\\|");
+            for(int i = 0 ; i<placetemp.length;i++){
+                PlaceTemp += ",'"+placetemp[i]+"'";
+            }
+            if(!"".equalsIgnoreCase(PlaceTemp.substring(1))){
+                getJobDetailQuery += " and " + open + " DB.place.place in (" + PlaceTemp.substring(1).replaceAll(" '", "'").replaceAll("' ", "'").replaceAll(",''", "") + ")";
+                checkplace = true;
+            }
         }
-        if (Other != null) {
-            getJobDetailQuery += " or DB.pickupDetail in ('" + Other.replaceAll("\\|\\|", "','") + "') " + close;
+        if (Other != null && !"".equalsIgnoreCase(Other)) {
+            if(checkplace){
+                getJobDetailQuery += " or DB.pickupDetail in ('" + Other.replaceAll("\\|\\|", "','").replaceAll(" '", "'").replaceAll("' ", "'") + "') " + close;
+            }else{
+                getJobDetailQuery += " and DB.pickupDetail in ('" + Other.replaceAll("\\|\\|", "','").replaceAll(" '", "'").replaceAll("' ", "'") + "') " ;
+            }
+        }else{
+            getJobDetailQuery += close;
         }
-        getJobDetailQuery += "  ORDER BY DB.pickupTime";
-
+        getJobDetailQuery += "  ORDER BY DB.pickupTime , DB.place.place , DB.pickupDetail ";
+        
         System.out.println("getJobDetailQuery : " + getJobDetailQuery);
 
         Session session = this.sessionFactory.openSession();

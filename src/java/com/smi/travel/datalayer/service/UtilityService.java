@@ -56,6 +56,7 @@ import com.smi.travel.datalayer.view.entity.InvoiceSupplier;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import com.smi.travel.datalayer.entity.BillableDesc;
+import com.smi.travel.datalayer.entity.MBankNirvana;
 import com.smi.travel.datalayer.entity.PackageTour;
 /**
  *
@@ -181,6 +182,10 @@ public class UtilityService {
 
     public List<MBank> getListBank(){
         return mbankdao.getListBank();
+    }
+    
+    public List<MBankNirvana> getListBankNirvana(){
+        return mbankdao.getListBankNirvana();
     }
     
     public MInitialname getMInitialnameFromName(String name) {

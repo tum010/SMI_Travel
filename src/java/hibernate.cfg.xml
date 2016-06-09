@@ -106,5 +106,6 @@
     <mapping resource="resource/hibernate/AirTicketRefund.hbm.xml"/>
     <mapping resource="resource/hibernate/MExchangeRate.hbm.xml"/>
     <mapping resource="resource/hibernate/PaymentAirticketAccount.hbm.xml"/>
+    <mapping resource="resource/hibernate/MBankNirvana.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

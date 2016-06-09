@@ -115,33 +115,32 @@ public class SsDataexch {
                         while (rs.next()) {    
                             String status = rs.getString("rcv_sta_cd") == null ? "" : rs.getString("rcv_sta_cd");
                             String rcvcommment = rs.getString("rcv_comment") == null ? "" : rs.getString("rcv_comment");
-                            if("9".equalsIgnoreCase(status)){
-                                //AP
-                                String datano = (ssDataexch.getDataNo() != null && !"".equalsIgnoreCase(ssDataexch.getDataNo()) ? ssDataexch.getDataNo() : "");
-                                String paymentDetailId = (ssDataexch.getPayment_detail_id() != null && !"".equalsIgnoreCase(ssDataexch.getPayment_detail_id()) ? ssDataexch.getPayment_detail_id() : "");
-                                String paymentType = (ssDataexch.getPaymenttype() != null && !"".equalsIgnoreCase(ssDataexch.getPaymenttype()) ? ssDataexch.getPaymenttype() : "");
-                                //AR
-                                String rowid = (ssDataexch.getRowid() != null && !"".equalsIgnoreCase(ssDataexch.getRowid()) ? ssDataexch.getRowid() : "");
-                                NirvanaInterface nirvanaInterface = new NirvanaInterface();
-                                nirvanaInterface.setDatano(datano);
-                                nirvanaInterface.setPayment_detail_id(paymentDetailId);
-                                nirvanaInterface.setPaymenttype(paymentType);
-                                nirvanaInterface.setRowid(rowid);
-                                nirvanaInterface.setResult("success");
-                                nirvanaInterfaceList.add(nirvanaInterface);
-                            }else {
-                                String refinvoice = (ssDataexch.getRefinvoice()!= null && !"".equalsIgnoreCase(ssDataexch.getRefinvoice()) ? ssDataexch.getRefinvoice() : "");
-                                String interference = (ssDataexch.getInterference()!= null && !"".equalsIgnoreCase(ssDataexch.getInterference()) ? ssDataexch.getInterference() : "");
-                                String rowid = (ssDataexch.getRowid() != null && !"".equalsIgnoreCase(ssDataexch.getRowid()) ? ssDataexch.getRowid() : "");
-                                
-                                NirvanaInterface nirvanaInterface = new NirvanaInterface();
-                                nirvanaInterface.setRefinvoice(refinvoice);
-                                nirvanaInterface.setInterference(interference);
-                                nirvanaInterface.setComment(rcvcommment);
-                                nirvanaInterface.setRowid(rowid);
-                                nirvanaInterface.setResult("fail");
-                                nirvanaInterfaceList.add(nirvanaInterface);
-                            }
+                            String refinvoice = (ssDataexch.getRefinvoice()!= null && !"".equalsIgnoreCase(ssDataexch.getRefinvoice()) ? ssDataexch.getRefinvoice() : "");
+                            String interference = (ssDataexch.getInterference()!= null && !"".equalsIgnoreCase(ssDataexch.getInterference()) ? ssDataexch.getInterference() : "");
+                            String rowid = (ssDataexch.getRowid() != null && !"".equalsIgnoreCase(ssDataexch.getRowid()) ? ssDataexch.getRowid() : "");
+
+                            NirvanaInterface nirvanaInterface = new NirvanaInterface();
+                            nirvanaInterface.setRefinvoice(refinvoice);
+                            nirvanaInterface.setInterference(interference);
+                            nirvanaInterface.setComment(rcvcommment);
+                            nirvanaInterface.setRowid(rowid);
+                            nirvanaInterface.setResult("fail");
+                            nirvanaInterfaceList.add(nirvanaInterface);
+                        }
+                        ResultSet rslog = stmt.executeQuery("select * from ss_dataexch2log where data_no = '" + Integer.parseInt(ssDataexch.getDataNo()) + "' and data_cd = '240020' ");
+                        while (rslog.next()) {    
+                            String datano = (ssDataexch.getDataNo() != null && !"".equalsIgnoreCase(ssDataexch.getDataNo()) ? ssDataexch.getDataNo() : "");
+                            String paymentDetailId = (ssDataexch.getPayment_detail_id() != null && !"".equalsIgnoreCase(ssDataexch.getPayment_detail_id()) ? ssDataexch.getPayment_detail_id() : "");
+                            String paymentType = (ssDataexch.getPaymenttype() != null && !"".equalsIgnoreCase(ssDataexch.getPaymenttype()) ? ssDataexch.getPaymenttype() : "");
+                            //AR
+                            String rowid = (ssDataexch.getRowid() != null && !"".equalsIgnoreCase(ssDataexch.getRowid()) ? ssDataexch.getRowid() : "");
+                            NirvanaInterface nirvanaInterface = new NirvanaInterface();
+                            nirvanaInterface.setDatano(datano);
+                            nirvanaInterface.setPayment_detail_id(paymentDetailId);
+                            nirvanaInterface.setPaymenttype(paymentType);
+                            nirvanaInterface.setRowid(rowid);
+                            nirvanaInterface.setResult("success");
+                            nirvanaInterfaceList.add(nirvanaInterface);
                         }
                     }
                 }
@@ -179,37 +178,38 @@ public class SsDataexch {
                         SsDataexch ssDataexch = ssDataexchList.get(i);
                         System.out.println("===== Data No ===== : "+ssDataexch.getDataNo());
                         ResultSet rs = stmt.executeQuery("select * from ss_dataexch2 where data_no = '" + ssDataexch.getDataNo() + "' and data_cd = '240010' ");
-                        while (rs.next()) {    
-                            String status = rs.getString("rcv_sta_cd") == null ? "" : rs.getString("rcv_sta_cd");
+                        while (rs.next()) {   
+                            System.out.println(" fail !!!!!!!!!!!!!!!!! ");
                             String rcvcommment = rs.getString("rcv_comment") == null ? "" : rs.getString("rcv_comment");
-                            if("9".equalsIgnoreCase(status)){
-//                                result = "fail";
-                                //AP
-                                String datano = (ssDataexch.getDataNo() != null && !"".equalsIgnoreCase(ssDataexch.getDataNo()) ? ssDataexch.getDataNo() : "");
-                                String paymentDetailId = (ssDataexch.getPayment_detail_id() != null && !"".equalsIgnoreCase(ssDataexch.getPayment_detail_id()) ? ssDataexch.getPayment_detail_id() : "");
-                                String paymentType = (ssDataexch.getPaymenttype() != null && !"".equalsIgnoreCase(ssDataexch.getPaymenttype()) ? ssDataexch.getPaymenttype() : "");
+                            String interference = (ssDataexch.getInterference()!= null && !"".equalsIgnoreCase(ssDataexch.getInterference()) ? ssDataexch.getInterference() : "");
+                            String rowid = (ssDataexch.getRowid() != null && !"".equalsIgnoreCase(ssDataexch.getRowid()) ? ssDataexch.getRowid() : "");
 
-                                //AR
-                                String rowid = (ssDataexch.getRowid() != null && !"".equalsIgnoreCase(ssDataexch.getRowid()) ? ssDataexch.getRowid() : "");
+                            NirvanaInterface nirvanaInterface = new NirvanaInterface();
+                            nirvanaInterface.setInterference(interference);
+                            nirvanaInterface.setComment(rcvcommment);
+                            nirvanaInterface.setRowid(rowid);
+                            nirvanaInterface.setResult("fail");
+                            nirvanaInterfaceList.add(nirvanaInterface);
+                        }
+                        
+                        ResultSet rslog = stmt.executeQuery("select * from ss_dataexch2log where data_no = '" + Integer.parseInt(ssDataexch.getDataNo()) + "' and data_cd = '240010' ");
+                        while (rslog.next()) {    
+                            System.out.println(" success !!!!!!!!!!!!!!!!! ");
+                            //AP
+                            String datano = (ssDataexch.getDataNo() != null && !"".equalsIgnoreCase(ssDataexch.getDataNo()) ? ssDataexch.getDataNo() : "");
+                            String paymentDetailId = (ssDataexch.getPayment_detail_id() != null && !"".equalsIgnoreCase(ssDataexch.getPayment_detail_id()) ? ssDataexch.getPayment_detail_id() : "");
+                            String paymentType = (ssDataexch.getPaymenttype() != null && !"".equalsIgnoreCase(ssDataexch.getPaymenttype()) ? ssDataexch.getPaymenttype() : "");
+                            //AR
+                            String rowid = (ssDataexch.getRowid() != null && !"".equalsIgnoreCase(ssDataexch.getRowid()) ? ssDataexch.getRowid() : "");
 
-                                NirvanaInterface nirvanaInterface = new NirvanaInterface();
-                                nirvanaInterface.setDatano(datano);
-                                nirvanaInterface.setPayment_detail_id(paymentDetailId);
-                                nirvanaInterface.setPaymenttype(paymentType);
-                                nirvanaInterface.setRowid(rowid);
-                                nirvanaInterface.setResult("success");
-                                nirvanaInterfaceList.add(nirvanaInterface);
-                            }else {
-                                String interference = (ssDataexch.getInterference()!= null && !"".equalsIgnoreCase(ssDataexch.getInterference()) ? ssDataexch.getInterference() : "");
-                                String rowid = (ssDataexch.getRowid() != null && !"".equalsIgnoreCase(ssDataexch.getRowid()) ? ssDataexch.getRowid() : "");
-                                
-                                NirvanaInterface nirvanaInterface = new NirvanaInterface();
-                                nirvanaInterface.setInterference(interference);
-                                nirvanaInterface.setComment(rcvcommment);
-                                nirvanaInterface.setRowid(rowid);
-                                nirvanaInterface.setResult("fail");
-                                nirvanaInterfaceList.add(nirvanaInterface);
-                            }
+                            NirvanaInterface nirvanaInterface = new NirvanaInterface();
+                            nirvanaInterface.setDatano(datano);
+                            nirvanaInterface.setPayment_detail_id(paymentDetailId);
+                            nirvanaInterface.setPaymenttype(paymentType);
+                            nirvanaInterface.setRowid(rowid);
+                            nirvanaInterface.setResult("success");
+                            nirvanaInterfaceList.add(nirvanaInterface);
+
                         }
                     }
                 }
@@ -245,9 +245,21 @@ public class SsDataexch {
                         System.out.println("===== Data Cd ===== : "+ ssDataexch.getDataCd());
                         ResultSet rs = stmt.executeQuery("select * from ss_dataexch2 where data_no = '" + ssDataexch.getDataNo() + "' and data_cd = '" + ssDataexch.getDataCd() + "'" );
                         while (rs.next()) {    
-                            String status = rs.getString("rcv_sta_cd") == null ? "" : rs.getString("rcv_sta_cd");
                             String rcvcommment = rs.getString("rcv_comment") == null ? "" : rs.getString("rcv_comment");
-                            if("9".equalsIgnoreCase(status)){
+                            String recno = (ssDataexch.getRecno() != null && !"".equalsIgnoreCase(ssDataexch.getRecno()) ? ssDataexch.getRecno() : "");
+                            String rowid = (ssDataexch.getRowid() != null && !"".equalsIgnoreCase(ssDataexch.getRowid()) ? ssDataexch.getRowid() : "");
+
+                            NirvanaInterface nirvanaInterface = new NirvanaInterface();
+                            nirvanaInterface.setRecno(recno);
+                            nirvanaInterface.setComment(rcvcommment);
+                            nirvanaInterface.setRowid(rowid);
+                            nirvanaInterface.setResult("fail");
+                            nirvanaInterfaceList.add(nirvanaInterface);
+                        }
+                        
+                        ResultSet rslog = stmt.executeQuery("select * from ss_dataexch2log where data_no = '" + ssDataexch.getDataNo() + "' and data_cd = '" + ssDataexch.getDataCd() + "'" );
+                        while (rslog.next()) {    
+
                                 String datano = (ssDataexch.getDataNo() != null && !"".equalsIgnoreCase(ssDataexch.getDataNo()) ? ssDataexch.getDataNo() : "");
                                 String rowid = (ssDataexch.getRowid() != null && !"".equalsIgnoreCase(ssDataexch.getRowid()) ? ssDataexch.getRowid() : "");
                                 NirvanaInterface nirvanaInterface = new NirvanaInterface();
@@ -255,17 +267,7 @@ public class SsDataexch {
                                 nirvanaInterface.setRowid(rowid);
                                 nirvanaInterface.setResult("success");
                                 nirvanaInterfaceList.add(nirvanaInterface);
-                            }else {
-                                String recno = (ssDataexch.getRecno() != null && !"".equalsIgnoreCase(ssDataexch.getRecno()) ? ssDataexch.getRecno() : "");
-                                String rowid = (ssDataexch.getRowid() != null && !"".equalsIgnoreCase(ssDataexch.getRowid()) ? ssDataexch.getRowid() : "");
-                                
-                                NirvanaInterface nirvanaInterface = new NirvanaInterface();
-                                nirvanaInterface.setRecno(recno);
-                                nirvanaInterface.setComment(rcvcommment);
-                                nirvanaInterface.setRowid(rowid);
-                                nirvanaInterface.setResult("fail");
-                                nirvanaInterfaceList.add(nirvanaInterface);
-                            }
+
                         }
                     }
                 }
