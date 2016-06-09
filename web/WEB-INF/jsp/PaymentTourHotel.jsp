@@ -1912,7 +1912,8 @@
             var invoiceSup = $("#InputInvoiceSupCode").val();
             var apCode = $("#InputAPCode").val();
             var status = $("#itemStatus").val();
-            if(invoiceSup === '' || apCode === '' || status === ''){
+            var currency = $("#InputCurrency").val();
+            if(invoiceSup === '' || apCode === '' || status === '' || currency === ''){
                 $('#PaymentTourHotelForm').bootstrapValidator('revalidateField', 'InputInvoiceSupCode');
                 $('#PaymentTourHotelForm').bootstrapValidator('revalidateField', 'InputAPCode');
                 $('#PaymentTourHotelForm').bootstrapValidator('revalidateField', 'itemStatus');
@@ -1927,7 +1928,8 @@
             var status = $("#itemStatus").val();
             var account1 = $("#account1").is(":checked");
             var account2 = $("#account2").is(":checked");
-            if(invoiceSup === '' || apCode === '' || status === '' || !(account1 || account2)){
+            var currency = $("#InputCurrency").val();
+            if(invoiceSup === '' || apCode === '' || status === '' || !(account1 || account2) || currency === ''){
                 $('#PaymentTourHotelForm').bootstrapValidator('revalidateField', 'InputInvoiceSupCode');
                 $('#PaymentTourHotelForm').bootstrapValidator('revalidateField', 'InputAPCode');
                 $('#PaymentTourHotelForm').bootstrapValidator('revalidateField', 'itemStatus');

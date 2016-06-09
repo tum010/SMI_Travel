@@ -63,7 +63,16 @@
         </property>
         <property name="operationUser" type="string">
             <column name="operation_user" length="20" />
-        </property>       
+        </property>
+        <property name="isExport" type="java.lang.Integer">
+            <column name="is_export" />
+        </property>   
+        <property name="exportDate" type="timestamp">
+            <column name="export_date" length="20" />
+        </property>   
+        <property name="dataNo" type="string">
+            <column name="data_no" length="10" />
+        </property>          
         <bag name="creditNoteDetails" table="credit_note_detail" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="tax_invoice_id" />

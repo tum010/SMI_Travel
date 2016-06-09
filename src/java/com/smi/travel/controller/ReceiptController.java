@@ -554,6 +554,7 @@ public class ReceiptController extends SMITravelController {
                 Receipt receiptTemp = receiptService.getSaleVatData(receipt.getId());
                 receipt.setExportDate(receiptTemp.getExportDate() != null ? receiptTemp.getExportDate() : null);
                 receipt.setIsExport(receiptTemp.getIsExport() != null ? receiptTemp.getIsExport() : 0);
+                receipt.setDataNo(receiptTemp.getDataNo() != null && !"".equalsIgnoreCase(receiptTemp.getDataNo()) ? receiptTemp.getDataNo() : null);
                 result = receiptService.updateReceipt(receipt);
             }
             

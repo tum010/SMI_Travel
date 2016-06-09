@@ -205,6 +205,7 @@ public class TaxInvoiceController extends SMITravelController {
                 date = utilty.convertStringToDate(createDate);
                 taxInvoice.setCreateDate(date);
                 taxInvoice.setOutputTaxStatus(0);
+                taxInvoice.setIsExport(0);
                 
             } else {
                 taxInvoice.setTaxNo(taxInvNo);               

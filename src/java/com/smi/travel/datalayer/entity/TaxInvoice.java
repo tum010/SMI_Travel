@@ -36,13 +36,16 @@ public class TaxInvoice   {
      private Integer isProfit;
      private Date operationDate;
      private String operationUser;
+     private Integer isExport;
+     private Date exportDate;
+     private String dataNo;
      private List creditNoteDetails = new LinkedList<CreditNoteDetail>();
      private List taxInvoiceDetails = new LinkedList<TaxInvoiceDetail>();
 
     public TaxInvoice() {
     }
 
-    public TaxInvoice(MFinanceItemstatus MFinanceItemstatus, Passenger passenger, String taxNo, Date taxInvDate, String taxInvTo, String taxInvName, String taxInvAddr, String arCode, String invoiceType, String createBy, Date createDate, String remark, String department, List creditNoteDetails, List taxInvoiceDetails, Date updateDate , Date postDate , Integer outputTaxStatus, Integer isProfit, Date operationDate, String operationUser) {
+    public TaxInvoice(MFinanceItemstatus MFinanceItemstatus, Passenger passenger, String taxNo, Date taxInvDate, String taxInvTo, String taxInvName, String taxInvAddr, String arCode, String invoiceType, String createBy, Date createDate, String remark, String department, List creditNoteDetails, List taxInvoiceDetails, Date updateDate , Date postDate , Integer outputTaxStatus, Integer isProfit, Date operationDate, String operationUser, Integer isExport, Date exportDate, String dataNo) {
        this.MFinanceItemstatus = MFinanceItemstatus;
        this.passenger = passenger;
        this.taxNo = taxNo;
@@ -64,6 +67,9 @@ public class TaxInvoice   {
        this.isProfit = isProfit;
        this.operationDate = operationDate;
        this.operationUser = operationUser;
+       this.isExport = isExport;
+       this.exportDate = exportDate;
+       this.dataNo = dataNo;
     }
    
     public String getId() {
@@ -259,6 +265,30 @@ public class TaxInvoice   {
 
     public void setOperationUser(String operationUser) {
         this.operationUser = operationUser;
+    }
+
+    public Integer getIsExport() {
+        return isExport;
+    }
+
+    public void setIsExport(Integer isExport) {
+        this.isExport = isExport;
+    }
+
+    public Date getExportDate() {
+        return exportDate;
+    }
+
+    public void setExportDate(Date exportDate) {
+        this.exportDate = exportDate;
+    }
+
+    public String getDataNo() {
+        return dataNo;
+    }
+
+    public void setDataNo(String dataNo) {
+        this.dataNo = dataNo;
     }
 
 }

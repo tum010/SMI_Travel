@@ -173,9 +173,9 @@ public class InvoiceImpl implements InvoiceDao{
         try {
             Session session = this.sessionFactory.openSession();
             transaction = session.beginTransaction();
-            invoice.setIsExport(mInvoice.getIsExport());
+            invoice.setIsExport(mInvoice.getIsExport() != null ? mInvoice.getIsExport() : 0);
             invoice.setExportDate(mInvoice.getExportDate());
-            invoice.setDataNo(mInvoice.getDataNo() != null && !"".equalsIgnoreCase(mInvoice.getDataNo()) ? mInvoice.getDataNo() : "");
+            invoice.setDataNo(mInvoice.getDataNo() != null && !"".equalsIgnoreCase(mInvoice.getDataNo()) ? mInvoice.getDataNo() : null);
             session.update(invoice);
             
             List<InvoiceDetail> invoiceDetail = invoice.getInvoiceDetails();
