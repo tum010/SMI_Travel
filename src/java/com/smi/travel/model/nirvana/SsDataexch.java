@@ -22,7 +22,7 @@ import java.util.List;
  * @author chonnasith
  */
 public class SsDataexch {
-    private static final String ip = "192.168.1.185";
+    private static final String ip = "192.168.129.147";
     private static final String port = "2638";
     private static final String username = "ICONEXT";
     private static final String password = "iconext";
@@ -45,6 +45,11 @@ public class SsDataexch {
     private String traStaCd;
     private String traSysDate;
     private String dataArea;
+    
+    private String refinvoice;
+    private String interference;
+    private String recno;
+    
     private List ssDataexchTrList = new ArrayList<SsDataexchTr>();
     //Collection
     private List ssDataexchTr2List = new ArrayList<SsDataexchTr>();
@@ -109,23 +114,32 @@ public class SsDataexch {
                         ResultSet rs = stmt.executeQuery("select * from ss_dataexch2 where data_no = '" + ssDataexch.getDataNo() + "' and data_cd = '240020' ");
                         while (rs.next()) {    
                             String status = rs.getString("rcv_sta_cd") == null ? "" : rs.getString("rcv_sta_cd");
-                            
+                            String rcvcommment = rs.getString("rcv_comment") == null ? "" : rs.getString("rcv_comment");
                             if("9".equalsIgnoreCase(status)){
-//                                result = "fail";
                                 //AP
                                 String datano = (ssDataexch.getDataNo() != null && !"".equalsIgnoreCase(ssDataexch.getDataNo()) ? ssDataexch.getDataNo() : "");
                                 String paymentDetailId = (ssDataexch.getPayment_detail_id() != null && !"".equalsIgnoreCase(ssDataexch.getPayment_detail_id()) ? ssDataexch.getPayment_detail_id() : "");
                                 String paymentType = (ssDataexch.getPaymenttype() != null && !"".equalsIgnoreCase(ssDataexch.getPaymenttype()) ? ssDataexch.getPaymenttype() : "");
-
                                 //AR
                                 String rowid = (ssDataexch.getRowid() != null && !"".equalsIgnoreCase(ssDataexch.getRowid()) ? ssDataexch.getRowid() : "");
-
                                 NirvanaInterface nirvanaInterface = new NirvanaInterface();
                                 nirvanaInterface.setDatano(datano);
                                 nirvanaInterface.setPayment_detail_id(paymentDetailId);
                                 nirvanaInterface.setPaymenttype(paymentType);
                                 nirvanaInterface.setRowid(rowid);
+                                nirvanaInterface.setResult("success");
+                                nirvanaInterfaceList.add(nirvanaInterface);
+                            }else {
+                                String refinvoice = (ssDataexch.getRefinvoice()!= null && !"".equalsIgnoreCase(ssDataexch.getRefinvoice()) ? ssDataexch.getRefinvoice() : "");
+                                String interference = (ssDataexch.getInterference()!= null && !"".equalsIgnoreCase(ssDataexch.getInterference()) ? ssDataexch.getInterference() : "");
+                                String rowid = (ssDataexch.getRowid() != null && !"".equalsIgnoreCase(ssDataexch.getRowid()) ? ssDataexch.getRowid() : "");
                                 
+                                NirvanaInterface nirvanaInterface = new NirvanaInterface();
+                                nirvanaInterface.setRefinvoice(refinvoice);
+                                nirvanaInterface.setInterference(interference);
+                                nirvanaInterface.setComment(rcvcommment);
+                                nirvanaInterface.setRowid(rowid);
+                                nirvanaInterface.setResult("fail");
                                 nirvanaInterfaceList.add(nirvanaInterface);
                             }
                         }
@@ -167,7 +181,7 @@ public class SsDataexch {
                         ResultSet rs = stmt.executeQuery("select * from ss_dataexch2 where data_no = '" + ssDataexch.getDataNo() + "' and data_cd = '240010' ");
                         while (rs.next()) {    
                             String status = rs.getString("rcv_sta_cd") == null ? "" : rs.getString("rcv_sta_cd");
-                            
+                            String rcvcommment = rs.getString("rcv_comment") == null ? "" : rs.getString("rcv_comment");
                             if("9".equalsIgnoreCase(status)){
 //                                result = "fail";
                                 //AP
@@ -183,7 +197,17 @@ public class SsDataexch {
                                 nirvanaInterface.setPayment_detail_id(paymentDetailId);
                                 nirvanaInterface.setPaymenttype(paymentType);
                                 nirvanaInterface.setRowid(rowid);
+                                nirvanaInterface.setResult("success");
+                                nirvanaInterfaceList.add(nirvanaInterface);
+                            }else {
+                                String interference = (ssDataexch.getInterference()!= null && !"".equalsIgnoreCase(ssDataexch.getInterference()) ? ssDataexch.getInterference() : "");
+                                String rowid = (ssDataexch.getRowid() != null && !"".equalsIgnoreCase(ssDataexch.getRowid()) ? ssDataexch.getRowid() : "");
                                 
+                                NirvanaInterface nirvanaInterface = new NirvanaInterface();
+                                nirvanaInterface.setInterference(interference);
+                                nirvanaInterface.setComment(rcvcommment);
+                                nirvanaInterface.setRowid(rowid);
+                                nirvanaInterface.setResult("fail");
                                 nirvanaInterfaceList.add(nirvanaInterface);
                             }
                         }
@@ -222,12 +246,24 @@ public class SsDataexch {
                         ResultSet rs = stmt.executeQuery("select * from ss_dataexch2 where data_no = '" + ssDataexch.getDataNo() + "' and data_cd = '" + ssDataexch.getDataCd() + "'" );
                         while (rs.next()) {    
                             String status = rs.getString("rcv_sta_cd") == null ? "" : rs.getString("rcv_sta_cd");
+                            String rcvcommment = rs.getString("rcv_comment") == null ? "" : rs.getString("rcv_comment");
                             if("9".equalsIgnoreCase(status)){
                                 String datano = (ssDataexch.getDataNo() != null && !"".equalsIgnoreCase(ssDataexch.getDataNo()) ? ssDataexch.getDataNo() : "");
                                 String rowid = (ssDataexch.getRowid() != null && !"".equalsIgnoreCase(ssDataexch.getRowid()) ? ssDataexch.getRowid() : "");
                                 NirvanaInterface nirvanaInterface = new NirvanaInterface();
                                 nirvanaInterface.setDatano(datano);
                                 nirvanaInterface.setRowid(rowid);
+                                nirvanaInterface.setResult("success");
+                                nirvanaInterfaceList.add(nirvanaInterface);
+                            }else {
+                                String recno = (ssDataexch.getRecno() != null && !"".equalsIgnoreCase(ssDataexch.getRecno()) ? ssDataexch.getRecno() : "");
+                                String rowid = (ssDataexch.getRowid() != null && !"".equalsIgnoreCase(ssDataexch.getRowid()) ? ssDataexch.getRowid() : "");
+                                
+                                NirvanaInterface nirvanaInterface = new NirvanaInterface();
+                                nirvanaInterface.setRecno(recno);
+                                nirvanaInterface.setComment(rcvcommment);
+                                nirvanaInterface.setRowid(rowid);
+                                nirvanaInterface.setResult("fail");
                                 nirvanaInterfaceList.add(nirvanaInterface);
                             }
                         }
@@ -257,13 +293,12 @@ public class SsDataexch {
                 + ",'" + ssDataexch.getDataArea()+ "' );";
         
         try {
+            System.out.println(" sql :: " + sql);
             stmt.executeUpdate(sql);
-            
         } catch (Exception e) {
             e.printStackTrace();
             
         }     
-
         String datanodetail = insertDetail(ssDataexch.getSsDataexchTrList());
         System.out.println(" datanodetail ::: " +datanodetail);
         
@@ -453,6 +488,30 @@ public class SsDataexch {
 
     public void setSsDataexchTr3List(List ssDataexchTr3List) {
         this.ssDataexchTr3List = ssDataexchTr3List;
+    }
+
+    public String getRefinvoice() {
+        return refinvoice;
+    }
+
+    public void setRefinvoice(String refinvoice) {
+        this.refinvoice = refinvoice;
+    }
+
+    public String getInterference() {
+        return interference;
+    }
+
+    public void setInterference(String interference) {
+        this.interference = interference;
+    }
+
+    public String getRecno() {
+        return recno;
+    }
+
+    public void setRecno(String recno) {
+        this.recno = recno;
     }
     
 }

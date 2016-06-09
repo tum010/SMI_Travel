@@ -329,6 +329,7 @@ public class CollectionNirvanaImpl implements CollectionNirvanaDao{
     @Override
     public String MappingCollectionNirvana(List<CollectionNirvana> cnData) {
         String result = "fail";
+        String resultfail = "";
         SimpleDateFormat sf = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd.HHmmss", Locale.US);
         UtilityFunction util = new UtilityFunction();
@@ -354,7 +355,7 @@ public class CollectionNirvanaImpl implements CollectionNirvanaDao{
             //Ss_dataextrchtr2
             List<SsDataexchTr> ssDataexchTrList = setCollectionNirvanaCashReceipt(co.getRowid() , colNirvanaNo); 
             ssDataexchTemp.setSsDataexchTrList(ssDataexchTrList);
-            
+            ssDataexchTemp.setRecno(co.getRecno() != null && !"".equalsIgnoreCase(co.getRecno()) ? co.getRecno() : "");
             //Ss_dataextrchtr3
 //            List<SsDataexchTr> ssDataexchTr3List = setCollectionNirvanaExpenseReceipt(co.getRowid() , colNirvanaNo); 
 //            ssDataexchTemp.setSsDataexchTr3List(ssDataexchTr3List);
@@ -372,9 +373,22 @@ public class CollectionNirvanaImpl implements CollectionNirvanaDao{
             if(i == cnData.size()-1){
                 try {
                     List<NirvanaInterface> nirvanaInterfaceList = ssDataexchTemp.callStoredProcedureCollection(ssDataexchList);
+//                    if(nirvanaInterfaceList != null){
+//                        System.out.println("===== UpdateStatusCollectionInterface =====");
+//                        result = UpdateStatusCollection(nirvanaInterfaceList);
+//                    }
+                    List<NirvanaInterface> nirvanaInterfaceListTemp = new ArrayList<NirvanaInterface>();
                     if(nirvanaInterfaceList != null){
                         System.out.println("===== UpdateStatusCollectionInterface =====");
-                        result = UpdateStatusCollection(nirvanaInterfaceList);
+                        for(int j = 0 ; j < nirvanaInterfaceList.size() ; j++){
+                            NirvanaInterface nir = nirvanaInterfaceList.get(j);
+                            if("success".equalsIgnoreCase(nir.getResult())){
+                                nirvanaInterfaceListTemp.add(nir);
+                            }else if("fail".equalsIgnoreCase(nir.getResult())){
+                                resultfail +=  "," + nir.getRecno() + "||" + nir.getComment() ;
+                            }
+                        }
+                        result = UpdateStatusCollection(nirvanaInterfaceListTemp);
                     }
                 } catch (Exception ex) {
                     Logger.getLogger(APNirvanaImpl.class.getName()).log(Level.SEVERE, null, ex);
@@ -382,7 +396,7 @@ public class CollectionNirvanaImpl implements CollectionNirvanaDao{
             }
             
         }
-        return result;
+        return resultfail;
     }
     private String setDataArea(CollectionNirvana col){
         SimpleDateFormat sf = new SimpleDateFormat("dd/MM/yyyy", Locale.US);

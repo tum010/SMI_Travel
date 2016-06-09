@@ -868,6 +868,7 @@ System.out.println("query ap_nirvana : "+query);
     @Override
     public String MappingAPNirvana(List<APNirvana> APList) {
         String result = "fail";
+        String resultfail = "";
         SimpleDateFormat sf = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
         UtilityFunction util = new UtilityFunction();
         List<APNirvana> apDataList = this.SearchApNirvanaFromPaymentDetailId(APList);
@@ -1014,6 +1015,9 @@ System.out.println("query ap_nirvana : "+query);
             String paymentType = (apNirvana.getPaymenttype()!= null ? String.valueOf(apNirvana.getPaymenttype()) : "");
             ssDataexchTemp.setPaymenttype(paymentType);
             
+            ssDataexchTemp.setRefinvoice(refInvoiceNo);
+            ssDataexchTemp.setInterference(intReference);
+            
             List<SsDataexchTr> ssDataexchTrList = setApNirvanaDetail(apNirvana,apNirvanaNo,paymentType);
             ssDataexchTemp.setSsDataexchTrList(ssDataexchTrList);
 
@@ -1030,9 +1034,18 @@ System.out.println("query ap_nirvana : "+query);
             if(i == APList.size()-1){
                 try {
                     List<NirvanaInterface> nirvanaInterfaceList = ssDataexchTemp.callStoredProcedureAP(ssDataexchList);
+                    List<NirvanaInterface> nirvanaInterfaceListTemp = new ArrayList<NirvanaInterface>();
                     if(nirvanaInterfaceList != null){
                         System.out.println("===== UpdateStatusAPInterface =====");
-                        result = UpdateStatusAPInterface(nirvanaInterfaceList);
+                        for(int j = 0 ; j < nirvanaInterfaceList.size() ; j++){
+                            NirvanaInterface nir = nirvanaInterfaceList.get(j);
+                            if("success".equalsIgnoreCase(nir.getResult())){
+                                nirvanaInterfaceListTemp.add(nir);
+                            }else if("fail".equalsIgnoreCase(nir.getResult())){
+                                resultfail +=  "," + nir.getRefinvoice() + "||" + nir.getInterference() + "||" + nir.getComment() ;
+                            }
+                        }
+                        result = UpdateStatusAPInterface(nirvanaInterfaceListTemp);
                     }
                
                 } catch (Exception ex) {
@@ -1043,7 +1056,7 @@ System.out.println("query ap_nirvana : "+query);
             }
         }
         
-        return result;
+        return resultfail;
     }
     
     private String gennarateAPNirvanaNo(String type){

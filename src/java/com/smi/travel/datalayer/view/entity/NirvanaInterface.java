@@ -15,7 +15,11 @@ public class NirvanaInterface {
     private String datano;
     private String payment_detail_id;
     private String paymenttype;
-    
+    private String refinvoice;
+    private String interference;
+    private String recno;
+    private String comment;
+    private String result;
     //AR
     private String rowid;
 
@@ -49,6 +53,46 @@ public class NirvanaInterface {
 
     public void setRowid(String rowid) {
         this.rowid = rowid;
+    }
+
+    public String getRefinvoice() {
+        return refinvoice;
+    }
+
+    public void setRefinvoice(String refinvoice) {
+        this.refinvoice = refinvoice;
+    }
+
+    public String getInterference() {
+        return interference;
+    }
+
+    public void setInterference(String interference) {
+        this.interference = interference;
+    }
+
+    public String getRecno() {
+        return recno;
+    }
+
+    public void setRecno(String recno) {
+        this.recno = recno;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public String getResult() {
+        return result;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
     }
     
 }

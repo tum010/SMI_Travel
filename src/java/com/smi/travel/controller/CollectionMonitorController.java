@@ -21,6 +21,7 @@ public class CollectionMonitorController extends SMITravelController {
     private static final String DATETO = "collectionToDate";
     private static final String INVNO = "invno";
     private static final String CollectionList = "CollectionList";
+    private static final String STATUSUPDATE = "status_update";
     private CollectionNirvanaService collectionNirvanaService;
     private UtilityService utilityService;
     
@@ -65,10 +66,16 @@ public class CollectionMonitorController extends SMITravelController {
 //             String isExport = arMonitorService.ExportARFileInterface(listAr,arMonitorService.GetPartFileExport());
 //               String result = "success";
                String result = collectionNirvanaService.MappingCollectionNirvana(listCo);
-               if("success".equals(result)){
+               request.setAttribute(STATUSUPDATE, result);
+               if("".equalsIgnoreCase(result)){
+                    request.setAttribute("update", "updatesuccess");
+                }else{
+                    request.setAttribute("update", "updatefail");
+                }
+//               if("success".equals(result)){
 //                   String isUpdate = collectionNirvanaService.UpdateStatusCollection(listCo);
-                   request.setAttribute("update", result);
-               }               
+                   
+//               }               
                listCo = collectionNirvanaService.getCollectionNirvanaFromFilter(department, type, status, from, to, invno, "");
                request.setAttribute(CollectionList, listCo);
            }else{

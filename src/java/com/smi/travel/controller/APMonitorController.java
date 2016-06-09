@@ -17,6 +17,8 @@ public class APMonitorController extends SMITravelController {
     private static final ModelAndView APMonitor_REFRESH = new ModelAndView(new RedirectView("APMonitor.smi", true));
     private static final String MPAYTYPELIST = "mpaytype_list";
     private static final String DATALIST = "data_list";
+    private static final String STATUSUPDATE = "status_update";
+    
     private APNirvanaService apNirvanaService;
     private UtilityService utilservice;
     
@@ -57,11 +59,18 @@ public class APMonitorController extends SMITravelController {
             }
 //            String result = apNirvanaService.ExportAPFileInterface(apNirvanaData,apNirvanaService.GetPartFileExport()); 
             String result = apNirvanaService.MappingAPNirvana(apNirvanaData);
-            if(!"fail".equalsIgnoreCase(result)){             
-//                String update = apNirvanaService.UpdateStatusAPInterface(apNirvanaData,result);
-//                System.out.println("Update Result : "+update);                
-                request.setAttribute("update", "success".equalsIgnoreCase(result) ? 1 : 0);
+            request.setAttribute(STATUSUPDATE, result);
+            if("".equalsIgnoreCase(result)){
+                request.setAttribute("update", 1 );
+            }else{
+                request.setAttribute("update", 0 );
             }
+            
+//            if(!"fail".equalsIgnoreCase(result)){             
+////                String update = apNirvanaService.UpdateStatusAPInterface(apNirvanaData,result);
+////                System.out.println("Update Result : "+update);                
+//                request.setAttribute("update", "success".equalsIgnoreCase(result) ? 1 : 0);
+//            }
             List<APNirvana> apNirvanaList = apNirvanaService.SearchApNirvanaFromFilter(apPayment, apType, apStatus, apFromDate, apToDate, apAccno);
             request.setAttribute(DATALIST, apNirvanaList);
         }

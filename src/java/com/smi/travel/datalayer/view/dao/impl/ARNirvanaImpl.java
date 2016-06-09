@@ -642,6 +642,7 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
     @Override
     public String MappingARNirvana(List<ARNirvana> ARList) {
         String result = "fail";
+        String resultfail = "";
         SimpleDateFormat sf = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd.HHmmss", Locale.US);
         UtilityFunction util = new UtilityFunction();
@@ -832,6 +833,8 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
             
             ssDataexchTemp.setDataArea(dataArea);
             
+            ssDataexchTemp.setInterference(intreference);
+            
             List<SsDataexchTr> ssDataexchTrList = setArNirvanaDetail(arNirvana,arNirvanaNo);
             ssDataexchTemp.setSsDataexchTrList(ssDataexchTrList);
             
@@ -848,10 +851,25 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
             if(i == ARList.size()-1){
                 try {
                     List<NirvanaInterface> nirvanaInterfaceList = ssDataexchTemp.callStoredProcedureAR(ssDataexchList);
+//                    if(nirvanaInterfaceList != null){
+//                        System.out.println("===== UpdateStatusAPInterface =====");
+//                        result = UpdateStatusARInterface(nirvanaInterfaceList);
+//                    }
+                    
+                    List<NirvanaInterface> nirvanaInterfaceListTemp = new ArrayList<NirvanaInterface>();
                     if(nirvanaInterfaceList != null){
-                        System.out.println("===== UpdateStatusAPInterface =====");
-                        result = UpdateStatusARInterface(nirvanaInterfaceList);
-                    }
+                        System.out.println("===== UpdateStatusARInterface =====");
+                        for(int j = 0 ; j < nirvanaInterfaceList.size() ; j++){
+                            NirvanaInterface nir = nirvanaInterfaceList.get(j);
+                            if("success".equalsIgnoreCase(nir.getResult())){
+                                nirvanaInterfaceListTemp.add(nir);
+                            }else if("fail".equalsIgnoreCase(nir.getResult())){
+                                resultfail +=  "," + nir.getInterference() + "||" + nir.getComment() ;
+                            }
+                        }
+                        result = UpdateStatusARInterface(nirvanaInterfaceListTemp);
+                    }                  
+                    
 //                    result = ssDataexchTemp.callStoredProcedure(ssDataexchList);
                
                 } catch (Exception ex) {
@@ -862,7 +880,7 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
             }
         }
         
-        return result;
+        return resultfail;
     }
 
     private String gennarateARNirvanaNo(String type) {

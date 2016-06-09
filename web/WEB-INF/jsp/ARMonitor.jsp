@@ -11,6 +11,8 @@
 <c:set var="from" value="${requestScope['from']}" />
 <c:set var="to" value="${requestScope['to']}" />
 <c:set var="status" value="${requestScope['status']}" />
+<c:set var="status_update" value="${requestScope['status_update']}" />
+<input type="hidden" id="statusUpdate" name="statusUpdate" value="${status_update}">
 <section class="content-header" >
     <h1>
         Nirvana Interface
@@ -217,10 +219,11 @@
                     </select>
                 </div>
                 <div class="col-xs-1 text-right" style="width: 715px">
+                    <a id="ButtonStatus" class="btn btn-primary" data-toggle="modal" data-target="#UpdateStatusModal"  style="height: 34px"><i class="glyphicon glyphicon-th-list"></i>&nbsp;Status Export</a>&nbsp;
                     <button type="submit"  id="btnSearchAR"  name="btnSearchAR"  onclick="searchArmonitor()"  class="btn btn-primary btn-primary">
                         <span id="SpanSearch" class="glyphicon glyphicon-print fa fa-search"></span> Search
                     </button>
-                </div>
+                </div>        
             </div>
             <div class="col-xs-12"><br></div>
             <div class="col-xs-12">
@@ -320,9 +323,37 @@
         </div>
     </div>
 </div>
-
+<!-- MODAL-->
+<div class="modal fade" id="UpdateStatusModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"  id="Titlemodel">Status Export AP</h4>
+            </div>
+            <!--<div class="modal-body" id="statusUpdateAlert">-->
+            <div class="modal-body">
+                <table class="display" id="StatusExportTable">
+                    <thead class="datatable-header">
+                        <tr>
+                            <th style="width:10%;">Interference</th>
+                            <th style="width:15%;">Comment</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <!--<button type="button" onclick="selectTicketNo()" class="btn btn-danger">OK</button>-->
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>               
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
 <script language="javascript">
     $(document).ready(function () {
+        setAlertModalUpdateDetail();
         $('.date').datetimepicker();
         $('.datemask').mask('00-00-0000');
         $('.spandate').click(function() {
@@ -735,4 +766,22 @@
             }            
         }
     }
+    
+    function setAlertModalUpdateDetail(){
+        var statusUpdate = $("#statusUpdate").val();
+        if(statusUpdate != ""){
+            statusUpdate = statusUpdate.substring(1);
+            var status = statusUpdate.split(",");
+            for(var i = 0 ; i < status.length ; i++){
+                var detail = status[i].split("||");
+                $("#StatusExportTable tbody").append(
+                    '<tr style="higth 100px">' +
+                    '<td class="text-left">' + detail[0] + '</td>' +
+                    '<td class="text-left">' + detail[1] + '</td>' +
+                    '</tr>'
+                );
+            }
+            $('#UpdateStatusModal').modal('show');
+        }
+    } 
 </script>
