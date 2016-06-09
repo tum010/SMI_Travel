@@ -1152,7 +1152,7 @@
                     </thead>
                     <tbody>
                         <c:forEach var="item" items="${listCustomerAgentInfo}">
-                            <tr onclick="setBillValue('${item.billTo}', '${item.billName}', '${item.address}', '${item.term}', '${item.pay}');">                                
+                            <tr onclick="setBillValue('${item.billTo}', '${item.billName}', '${item.address}', '${item.term}', '${item.pay}', '${item.type}');">                                
                                 <td class="item-billto">${item.billTo}</td>
                                 <td class="item-name">${item.billName}</td>                                
                                 <td class="item-address hidden">${item.address}</td>
@@ -1276,7 +1276,7 @@
             $(".arrowReservstion").removeClass("glyphicon glyphicon-chevron-up").addClass("glyphicon glyphicon-chevron-down");
         });
     });
-
+    
     $("#InvoiceForm")
             .bootstrapValidator({
                 framework: 'bootstrap',

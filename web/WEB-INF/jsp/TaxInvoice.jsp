@@ -1490,10 +1490,10 @@
         document.getElementById('TaxInvoiceForm').submit();
     }
     
-    function setBillValue(billTo,billName,address,term,pay){      
+    function setBillValue(billTo,billName,address,term,pay,type){      
         document.getElementById('TaxInvTo').value = billTo;
         document.getElementById('InvToName').value = billName;
-        document.getElementById('ARCode').value = billTo;
+        document.getElementById('ARCode').value = (type !== 'C' ? billTo : 'DUMMY');
         if(address === null){
             document.getElementById('InvToAddress').value = '';
         } else {
@@ -1594,7 +1594,8 @@
         var billListId= [];
         var billListName= [];
         var billListAddress= [];
-        var billid , billname ,billaddr;
+        var billListType = [];
+        var billid , billname , billaddr , billtype;
         $("#TaxInvTo").autocomplete("destroy");
         try {
             $.ajax({
@@ -1612,17 +1613,19 @@
                            billid = billJson[i].id;
                            billname = billJson[i].name;
                            billaddr = billJson[i].address;
+                           billtype = billJson[i].type;
                            billArray.push(billid);
                            billArray.push(billname);
                            billListId.push(billid);
                            billListName.push(billname);
                            billListAddress.push(billaddr);
+                           billListType.push(billtype);
                        }                 
                         $("#dataload").addClass("hidden"); 
                    }
 //                   $("#InvTo_Id").val(billid);
 //                   $("#TaxInvTo").val(billid);
-                   $("#ARCode").val(billid);
+                   $("#ARCode").val(billtype !== 'C' ? billid : 'DUMMY');
                    $("#InvToName").val(billname);
                    $("#InvToAddress").val(billaddr);
 
@@ -1634,7 +1637,7 @@
                             for(var i =0;i<billListId.length;i++){
                                 if((billselect==billListName[i])||(billselect==billListId[i])){      
                                    $("#TaxInvTo").val(billListId[i]);
-                                   $("#ARCode").val(billListId[i]);
+                                   $("#ARCode").val(billListType[i] !== 'C' ? billListId[i] : 'DUMMY');
                                    $("#InvToName").val(billListName[i]);
                                    $("#InvToAddress").val(billListAddress[i]);
                                    
@@ -1650,7 +1653,7 @@
                    for(var i =0;i<billListId.length;i++){
                        if(billval==billListName[i]){
                            $("#TaxInvTo").val(billListId[i]);
-                           $("#ARCode").val(billListId[i]);
+                           $("#ARCode").val(billListType[i] !== 'C' ? billListId[i] : 'DUMMY');
                            $('#TaxInvoiceForm').bootstrapValidator('revalidateField', 'TaxInvTo');
                            $('#TaxInvoiceForm').bootstrapValidator('revalidateField', 'ARCode');
                            $('#TaxInvoiceForm').bootstrapValidator('revalidateField', 'InvToAddress');
@@ -1659,7 +1662,7 @@
                    if(billListId.length == 1){
                        showflag = 0;
                        $("#TaxInvTo").val(billListId[0]);
-                       $("#ARCode").val(billListId[0]);
+                       $("#ARCode").val(billListType[0] !== 'C' ? billListId[0] : 'DUMMY');
                        $('#TaxInvoiceForm').bootstrapValidator('revalidateField', 'TaxInvTo');
                        $('#TaxInvoiceForm').bootstrapValidator('revalidateField', 'ARCode');
                        $('#TaxInvoiceForm').bootstrapValidator('revalidateField', 'InvToAddress');

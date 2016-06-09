@@ -64,7 +64,7 @@ $(document).ready(function() {
             $("#InvTo").val(staff_code);
             $("#InvToName").val(staff_name);
             $("#InvToAddress").val(staff_dress);
-            $("#ARCode").val(staff_code);
+//            $("#ARCode").val(staff_code);
             $(this).addClass('row_selected');
         }
     });
@@ -87,6 +87,7 @@ $(document).ready(function() {
             $("#InvToId").val("");
             $("#InvToName").val("");
             $("#InvToAddress").val("");
+            $("#ARCode").val("");
         } else {
             if (event.keyCode === 13) {
                 searchCustomerAutoList(this.value);
@@ -1116,7 +1117,8 @@ function CallAjaxAuto(param) {
     var billListId = [];
     var billListName = [];
     var billListAddress = [];
-    var billid, billname, billaddr;
+    var billListType = [];
+    var billid, billname, billaddr, billtype;
     $("#InvTo").autocomplete("destroy");
     try {
         $.ajax({
@@ -1134,16 +1136,19 @@ function CallAjaxAuto(param) {
                         billid = billJson[i].id;
                         billname = billJson[i].name;
                         billaddr = billJson[i].address;
+                        billtype = billJson[i].type
                         billArray.push(billid);
                         billArray.push(billname);
                         billListId.push(billid);
                         billListName.push(billname);
                         billListAddress.push(billaddr);
+                        billListType.push(billtype);
+                        
                     }
                     $("#dataload").addClass("hidden");
                 }
                 $("#InvTo_Id").val(billid);
-                $("#ARCode").val(billid);
+                $("#ARCode").val(billtype !== 'C' ? billid : 'DUMMY');
                 $("#InvToName").val(billname);
                 $("#InvToAddress").val(billaddr);
 
@@ -1155,7 +1160,7 @@ function CallAjaxAuto(param) {
                         for (var i = 0; i < billListId.length; i++) {
                             if ((billselect == billListName[i]) || (billselect == billListId[i])) {
                                 $("#InvTo").val(billListId[i]);
-                                $("#ARCode").val(billListId[i]);
+                                $("#ARCode").val(billListType[i] !== 'C' ? billListId[i] : 'DUMMY');
                                 $("#InvToName").val(billListName[i]);
                                 $("#InvToAddress").val(billListAddress[i]);
                             }
@@ -1755,11 +1760,11 @@ function copyInvoice() {
     document.getElementById('InvoiceForm').submit();
 }
 
-function setBillValue(billto, billname, address, term, pay) {
+function setBillValue(billto, billname, address, term, pay, type) {
     $("#InvTo").val(billto);
-    $("#InvToName").val(billname);
+    $("#InvToName").val(billname);alert(billname+" : "+$("#InvToName").val());
     $("#InvToAddress").val(address);
-    $("#ARCode").val(billto);
+    $("#ARCode").val(type !== 'C' ? billto : 'DUMMY');
 
     if ($("#InvTo").val() !== "" && $("#InvToName").val() !== "" && $("#ARCode").val() !== "" && $("#InputInvDate").val() !== "") {
 //        alert("1");
