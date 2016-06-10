@@ -62,12 +62,12 @@ public class RefundController extends SMITravelController {
 
         }
         // Refund By
-        List<CustomerAgentInfo> listRefundBy = utilservice.getListCustomerAgentInfo();
-        if(listRefundBy != null){
-            request.setAttribute("listRefundBy", listRefundBy);
-        }else{
-            request.setAttribute("listRefundBy", null);
-        }
+//        List<CustomerAgentInfo> listRefundBy = utilservice.getListCustomerAgentInfo();
+//        if(listRefundBy != null){
+//            request.setAttribute("listRefundBy", listRefundBy);
+//        }else{
+//            request.setAttribute("listRefundBy", null);
+//        }
         
         // Receive by
         List<SystemUser> listReceiveBy = utilservice.getUserList();

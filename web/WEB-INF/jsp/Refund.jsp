@@ -525,7 +525,7 @@
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <div class='input-group date' id='datetimepicker3'>
-                                                <input type='text' class="form-control" name="refundDate" id="refundDate" data-date-format="YYYY-MM-DD" value="${booking.deadline}"  placeholder="YYYY-MM-DD"/>
+                                                <input type='text' class="form-control datemask" name="refundDate" id="refundDate" data-date-format="DD-MM-YYYY" value="${booking.deadline}"  placeholder="DD-MM-YYYY"/>
                                                 <span class="input-group-addon">
                                                     <span class="glyphicon glyphicon-calendar"></span>
                                                 </span>
@@ -558,7 +558,9 @@
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <div class='input-group date' id='datetimepicker4'>
-                                                <input type='text' class="form-control" name="receiveDate" id="receiveDate" data-date-format="YYYY-MM-DD" value="${create}"  placeholder="YYYY-MM-DD"/>
+                                                <fmt:parseDate value="${create}" var="creates" pattern="yyyy-MM-dd" />
+                                                <fmt:formatDate value="${creates}" var="createdate" pattern="dd-MM-yyyy" />
+                                                <input type='text' class="form-control datemask" name="receiveDate" id="receiveDate" data-date-format="DD-MM-YYYY" value="${createdate}"  placeholder="DD-MM-YYYY"/>
                                                 <span class="input-group-addon">
                                                     <span class="glyphicon glyphicon-calendar"></span>
                                                 </span>
