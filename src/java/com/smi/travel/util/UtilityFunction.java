@@ -673,7 +673,7 @@ public class UtilityFunction {
 
     public String getTaxBranch(String invTo, String taxBranch) {
         String result = "";
-        if(taxBranch != null && !"".equalsIgnoreCase(taxBranch)){
+        if(taxBranch != null && !"".equalsIgnoreCase(taxBranch) && "Head Office".equalsIgnoreCase(taxBranch)){
             String[] characterList = {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
             boolean isEng = false;
             String invToFirstChar = invTo.substring(0, 1);
@@ -693,6 +693,9 @@ public class UtilityFunction {
                 result = "สำนักงานใหญ่";
 
             }
+        
+        } else { 
+            result = taxBranch;
         }
             
         return result;

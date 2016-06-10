@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="InvoiceEmail" language="groovy" pageWidth="595" pageHeight="843" columnWidth="522" leftMargin="45" rightMargin="28" topMargin="59" bottomMargin="56" uuid="573bfe06-de4f-4adc-b5b3-76cb68d89d08">
-	<property name="ireport.zoom" value="6.892459479535845"/>
-	<property name="ireport.x" value="251"/>
-	<property name="ireport.y" value="1614"/>
+	<property name="ireport.zoom" value="1.996500000000005"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="275"/>
 	<field name="invto" class="java.lang.String"/>
 	<field name="invno" class="java.lang.String"/>
 	<field name="invdate" class="java.lang.String"/>
@@ -275,7 +275,7 @@
 				<textFieldExpression><![CDATA[$F{payment}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement positionType="Float" x="7" y="181" width="24" height="20" uuid="34762e55-9615-438e-aed6-8aea8f9d61ef">
+				<reportElement positionType="Float" x="31" y="181" width="24" height="20" uuid="34762e55-9615-438e-aed6-8aea8f9d61ef">
 					<printWhenExpression><![CDATA[$F{showleader}.equalsIgnoreCase("1")]]></printWhenExpression>
 				</reportElement>
 				<textElement>
@@ -284,7 +284,7 @@
 				<text><![CDATA[C/O]]></text>
 			</staticText>
 			<textField>
-				<reportElement positionType="Float" x="31" y="181" width="278" height="20" uuid="af3e6016-b747-441e-b71e-ae792993d3fe">
+				<reportElement positionType="Float" x="55" y="181" width="262" height="20" uuid="af3e6016-b747-441e-b71e-ae792993d3fe">
 					<printWhenExpression><![CDATA[$F{showleader}.equalsIgnoreCase("1")]]></printWhenExpression>
 				</reportElement>
 				<textElement>
@@ -293,7 +293,7 @@
 				<textFieldExpression><![CDATA[$F{co}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement positionType="Float" x="7" y="162" width="65" height="19" uuid="7bda4652-2ee2-4d36-9862-2e15530d24d6">
+				<reportElement positionType="Float" x="31" y="162" width="65" height="19" uuid="7bda4652-2ee2-4d36-9862-2e15530d24d6">
 					<printWhenExpression><![CDATA[!("").equalsIgnoreCase($F{taxid}) && $F{taxid} != null && "0".equalsIgnoreCase($F{isTemp})]]></printWhenExpression>
 				</reportElement>
 				<textElement>
@@ -302,7 +302,7 @@
 				<text><![CDATA[Tax.ID NO :]]></text>
 			</staticText>
 			<textField>
-				<reportElement positionType="Float" x="65" y="162" width="93" height="19" uuid="305eb9ee-72ef-417e-907a-5d86350ecb59">
+				<reportElement positionType="Float" x="89" y="162" width="93" height="19" uuid="305eb9ee-72ef-417e-907a-5d86350ecb59">
 					<printWhenExpression><![CDATA[!("").equalsIgnoreCase($F{taxid}) && $F{taxid} != null && "0".equalsIgnoreCase($F{isTemp})]]></printWhenExpression>
 				</reportElement>
 				<textElement>
@@ -311,7 +311,7 @@
 				<textFieldExpression><![CDATA[$F{taxid}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement positionType="Float" x="206" y="162" width="100" height="20" uuid="dc0fa53f-8cc2-4458-b505-a2a0d8ff02b0">
+				<reportElement positionType="Float" x="223" y="162" width="94" height="20" uuid="dc0fa53f-8cc2-4458-b505-a2a0d8ff02b0">
 					<printWhenExpression><![CDATA[!("").equalsIgnoreCase($F{taxid}) && $F{taxid} != null && "0".equalsIgnoreCase($F{isTemp})]]></printWhenExpression>
 				</reportElement>
 				<textElement>
@@ -320,7 +320,7 @@
 				<textFieldExpression><![CDATA[$F{taxbranch}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement positionType="Float" x="165" y="162" width="52" height="19" uuid="e8b72584-f087-42e3-a251-80ba9699d77c">
+				<reportElement positionType="Float" x="182" y="162" width="52" height="19" uuid="e8b72584-f087-42e3-a251-80ba9699d77c">
 					<printWhenExpression><![CDATA[!("").equalsIgnoreCase($F{taxid}) && $F{taxid} != null && "0".equalsIgnoreCase($F{isTemp})]]></printWhenExpression>
 				</reportElement>
 				<textElement>
