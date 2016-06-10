@@ -395,28 +395,35 @@ public class PaymentWendytourImpl implements PaymentWendytourDao{
     }
 
     @Override
-    public String getAccountCode(String PayType) {
-        String acc_code = "";
-        if("1".equalsIgnoreCase(PayType)){
-            acc_code = "51010";
-            
-        } else if ("2".equalsIgnoreCase(PayType)){
-            acc_code = "51040";
-                    
-        } else if ("3".equalsIgnoreCase(PayType)){
-            acc_code = "51020";
-            
-        } else if ("4".equalsIgnoreCase(PayType)){
-            acc_code = "51023";
-            
-        } else if ("5".equalsIgnoreCase(PayType)){
-            acc_code = "51030";
-            
-        } else if ("6".equalsIgnoreCase(PayType)){
-            acc_code = "51035";
+    public MPaytype getAccountCode(String PayType) {
+        String query = "from MPaytype m where m.name = :payType";
+        Session session = this.sessionFactory.openSession();
+        List<MPaytype> List = session.createQuery(query).setParameter("payType", PayType).list();
+        if (List.isEmpty()) {
+            session.close();
+            return null;
         }
         
-        return acc_code;
+//        if("1".equalsIgnoreCase(PayType)){
+//            acc_code = "51010";
+//            
+//        } else if ("2".equalsIgnoreCase(PayType)){
+//            acc_code = "51040";
+//                    
+//        } else if ("3".equalsIgnoreCase(PayType)){
+//            acc_code = "51020";
+//            
+//        } else if ("4".equalsIgnoreCase(PayType)){
+//            acc_code = "51023";
+//            
+//        } else if ("5".equalsIgnoreCase(PayType)){
+//            acc_code = "51030";
+//            
+//        } else if ("6".equalsIgnoreCase(PayType)){
+//            acc_code = "51035";
+//        }
+        session.close();
+        return List.get(0);
     }
     
     @Override
