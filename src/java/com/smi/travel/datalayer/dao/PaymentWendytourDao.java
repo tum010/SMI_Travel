@@ -33,7 +33,7 @@ public interface PaymentWendytourDao {
     public Master getMasterFromRefno(String refno);
     public List<String> getMasterAll();
     public List<PaymentDetailWendy> getPaymentDetailWendyList(String paymentId);
-    public String getAccountCode(String PayType);
+    public MPaytype getAccountCode(String PayType);
     public String getPaymentRefernenceCode(String from,String to,List<String> tour);
     public String getTourListFromDate(String from,String to);
     public PaymentWendy getInvoiceSupCodeByGuideName(String guideName);
