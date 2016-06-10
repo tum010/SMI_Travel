@@ -1703,7 +1703,7 @@
         var product = $("#select-product"+row+" option:selected").text();
         var refNo = $("#refNo"+row).val();
         if((id !== '') && (refNo !== '') && (productVal !== '')){
-            if(product === 'Others'){
+            if(product === 'Others' || product === 'Coupon'){
                 window.open("Other.smi?referenceNo="+refNo+"&action=edit");
             }else if(product === 'Land'){
                 window.open("Land.smi?referenceNo="+refNo+"&action=edit");
@@ -1713,7 +1713,7 @@
                 window.open("Daytour.smi?referenceNo="+refNo+"&action=edit");
             }
         }else if((refNoField === 'green') && (productVal !== '')){           
-            if(product === 'Others'){
+            if(product === 'Others' || product === 'Coupon'){
                 window.open("Other.smi?referenceNo="+refNo+"&action=edit");
             }else if(product === 'Land'){
                 window.open("Land.smi?referenceNo="+refNo+"&action=edit");
