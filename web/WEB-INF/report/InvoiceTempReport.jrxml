@@ -85,7 +85,7 @@
 				<textFieldExpression><![CDATA[$F{invto}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="8" y="60" width="24" height="20" uuid="ff1f224a-27ee-4a3c-a38b-24c92f68e0e7"/>
+				<reportElement x="8" y="59" width="24" height="20" uuid="ff1f224a-27ee-4a3c-a38b-24c92f68e0e7"/>
 				<textElement>
 					<font fontName="Cordia New" size="14" isBold="true" pdfFontName="resource/fonts/Cordia.ttf " pdfEncoding="Identity-H"/>
 				</textElement>

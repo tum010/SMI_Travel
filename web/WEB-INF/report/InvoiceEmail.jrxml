@@ -143,7 +143,7 @@
 				</graphicElement>
 			</rectangle>
 			<staticText>
-				<reportElement x="7" y="127" width="24" height="20" uuid="2e4ba684-d417-4553-af70-2f75bf0fa89a"/>
+				<reportElement x="7" y="126" width="24" height="20" uuid="2e4ba684-d417-4553-af70-2f75bf0fa89a"/>
 				<textElement>
 					<font fontName="Cordia New" size="14" isBold="true" pdfFontName="resource/fonts/Cordia.ttf " pdfEncoding="Identity-H"/>
 				</textElement>

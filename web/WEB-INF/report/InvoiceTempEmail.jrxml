@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="InvoiceTempEmail" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="cd8bfceb-88e3-46d6-b967-516fc07ba6ea">
-	<property name="ireport.zoom" value="2.420000000000002"/>
-	<property name="ireport.x" value="17"/>
-	<property name="ireport.y" value="313"/>
+	<property name="ireport.zoom" value="1.6528925619834725"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="168"/>
 	<field name="invto" class="java.lang.String"/>
 	<field name="co" class="java.lang.String"/>
 	<field name="invno" class="java.lang.String"/>
@@ -147,7 +147,7 @@
 				</graphicElement>
 			</rectangle>
 			<staticText>
-				<reportElement x="8" y="129" width="24" height="20" uuid="92f9d9bb-a8e2-4a3c-867e-04921722786c"/>
+				<reportElement x="8" y="128" width="24" height="20" uuid="92f9d9bb-a8e2-4a3c-867e-04921722786c"/>
 				<textElement>
 					<font fontName="Cordia New" size="14" isBold="true" pdfFontName="resource/fonts/Cordia.ttf " pdfEncoding="Identity-H"/>
 				</textElement>
