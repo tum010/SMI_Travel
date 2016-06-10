@@ -148,6 +148,7 @@ public class PassengerDetailController extends SMITravelController {
             return new ModelAndView("redirect:Passenger.smi?referenceNo=" + refNo + "&result=" + result + "&action=edit");
 
         } else if ("edit".equalsIgnoreCase(action)) {
+            request.setAttribute("EXISTCODE", existCode);
             System.out.println("action edit");
             Passenger passengersList = passengerService.getPassengerFromID(id);
             request.setAttribute(PassengerList, passengersList);
