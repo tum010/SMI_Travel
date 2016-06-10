@@ -148,7 +148,17 @@
                     <td>${passenger.customer.nationality}</td>
 
                     <td class="text-center">
-                        <a id="ButtonEdit${varPassenger.count}" href="PassengerDetail.smi?referenceNo=${param.referenceNo}&id=${passenger.id}&action=edit">
+                        <script type="text/javascript">
+                            $(document).ready(function(){
+                                var keepcode = "";
+                                $("#Passenger .codeCustomer").each(function(){
+                                    keepcode += "||"+$(this).html();
+                                });
+                                $("#ButtonEdit${varPassenger.count}").prop('href',"PassengerDetail.smi?referenceNo=${param.referenceNo}&id=${passenger.id}&existcode="+keepcode+"&action=edit");
+                            });
+
+                        </script>
+                        <a id="ButtonEdit${varPassenger.count}" >
                             <i id="IEdit${varPassenger.count}" class="glyphicon glyphicon-edit editicon"></i>
                         </a>
                         <c:if test="${lockUnlockBooking == 0}">
