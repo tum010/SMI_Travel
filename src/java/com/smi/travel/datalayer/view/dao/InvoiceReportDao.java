@@ -13,6 +13,6 @@ import java.util.List;
  * @author chonnasith
  */
 public interface InvoiceReportDao {
-    public List getInvoice(String InvoiceId,String BankId,String showStaff,String showLeader,String sign,String printBy,String isTemp);
+    public List getInvoice(String InvoiceId,String BankId,String showStaff,String showLeader,String sign,String printBy,String isTemp,int typeInvoice);
     public List getInvoiceMonthly(String BillTo,String ClientName,String Accno,String vattype,String from,String to,String department,String billingAttn,String billingFrom,String billingTel,String billingFax,String billingMail,String billingDate);
 }

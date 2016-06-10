@@ -34,7 +34,7 @@ public class InvoiceImpl implements InvoiceReportDao{
     private static final String GET_INVOICE_FROMID = "FROM InvoiceDetail invD where invD.invoice.id = :invId";
 
     @Override
-    public List getInvoice(String InvoiceId,String BankId,String showStaff,String showLeader,String sign,String printBy,String isTemp) {
+    public List getInvoice(String InvoiceId,String BankId,String showStaff,String showLeader,String sign,String printBy,String isTemp,int typeInvoice) {
         Session session = this.sessionFactory.openSession();
         System.out.println("Sign : " + sign + "Print By : " + printBy);
         UtilityFunction util = new UtilityFunction();  
@@ -130,9 +130,9 @@ public class InvoiceImpl implements InvoiceReportDao{
             invoice.setInvto(util.ConvertString(B[0]));
             invoice.setInvno(util.ConvertString(B[13]));
             invoice.setBankid(BankId);          
-            invoice.setTaxid(util.ConvertString(B[14]));
-            String taxBranch = util.getTaxBranch(util.ConvertString(B[0]),util.ConvertString(B[15]));
-            invoice.setTaxbranch(taxBranch);
+//            invoice.setTaxid(util.ConvertString(B[14]));
+//            String taxBranch = util.getTaxBranch(util.ConvertString(B[0]),util.ConvertString(B[15]));
+//            invoice.setTaxbranch(taxBranch);
             if(B[1] != null){
                 invoice.setInvdate(new SimpleDateFormat("dd-MM-yyyy", new Locale("us", "us")).format((Date)B[1]));
             }
@@ -192,7 +192,29 @@ public class InvoiceImpl implements InvoiceReportDao{
             invoice.setCo(getLeaderNameFromInvoiceID(util.ConvertString(B[12])));
             invoice.setGrtotal(df.format(B[9]));
             invoice.setUser(util.ConvertString(B[10]));
-            invoice.setAddress(util.ConvertString(B[18]));
+            
+            
+            
+            invoice.setTaxid(util.ConvertString(B[14]));
+            String taxBranch = util.getTaxBranch(util.ConvertString(B[0]),util.ConvertString(B[15]));
+            invoice.setTaxbranch(taxBranch);
+            
+            String address = util.ConvertString(B[18]);
+            
+            if(typeInvoice == 0){
+                if(!"".equalsIgnoreCase(util.ConvertString(B[14])) && B[14] != null ){
+                    address += "\n" + "<b>Tax. ID NO. : </b>" + util.ConvertString(B[14]) + "\t Branch : "+taxBranch;
+                }
+                if("1".equalsIgnoreCase(showLeader)){
+                    address += "\n" + "C/O " + getLeaderNameFromInvoiceID(util.ConvertString(B[12]));
+                }
+            }else if(typeInvoice == 1){
+                if("1".equalsIgnoreCase(showLeader)){
+                    address += "\n" + "C/O " + getLeaderNameFromInvoiceID(util.ConvertString(B[12]));
+                }
+            }
+            
+            invoice.setAddress(address);
             
             // Set Text Amount 
 //            System.out.println("B9 : " + B[9]);

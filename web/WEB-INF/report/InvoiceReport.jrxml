@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Invoice" language="groovy" pageWidth="595" pageHeight="842" columnWidth="563" leftMargin="12" rightMargin="20" topMargin="40" bottomMargin="0" uuid="59f0ec99-8109-4367-975c-dc17aad92f4d">
-	<property name="ireport.zoom" value="2.928200000000024"/>
-	<property name="ireport.x" value="308"/>
-	<property name="ireport.y" value="338"/>
+	<property name="ireport.zoom" value="1.1289478601075638"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="11"/>
 	<field name="invto" class="java.lang.String"/>
 	<field name="invno" class="java.lang.String"/>
 	<field name="invdate" class="java.lang.String"/>
@@ -131,15 +131,6 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement positionType="Float" x="32" y="146" width="24" height="17" uuid="1072bd3d-1410-4fe5-8929-f9cf0cf54697">
-					<printWhenExpression><![CDATA[$F{showleader}.equalsIgnoreCase("1")]]></printWhenExpression>
-				</reportElement>
-				<textElement>
-					<font fontName="Cordia New" size="14" isBold="true" pdfFontName="resource/fonts/Cordia.ttf " pdfEncoding="Identity-H"/>
-				</textElement>
-				<text><![CDATA[C/O]]></text>
-			</staticText>
 			<textField>
 				<reportElement x="421" y="171" width="133" height="20" uuid="95356f8d-551c-4d8a-9da6-bf640398d28c"/>
 				<textElement>
@@ -148,70 +139,13 @@
 				<textFieldExpression><![CDATA[$F{payment}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement positionType="Float" x="55" y="146" width="278" height="17" uuid="3b830e12-9961-41bb-a27e-0e5910137ef3">
-					<printWhenExpression><![CDATA[$F{showleader}.equalsIgnoreCase("1")]]></printWhenExpression>
-				</reportElement>
-				<textElement>
-					<font fontName="Cordia New" size="14" pdfFontName="resource/fonts/Cordia.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{co}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement positionType="Float" x="32" y="129" width="64" height="17" uuid="ee0c79fa-417c-4cf0-b4e0-af1bcd4ebd5c">
-					<printWhenExpression><![CDATA[!("").equalsIgnoreCase($F{taxid}) && $F{taxid} != null && "0".equalsIgnoreCase($F{isTemp})]]></printWhenExpression>
-				</reportElement>
-				<textElement>
-					<font fontName="Cordia New" size="14" isBold="true" pdfFontName="resource/fonts/Cordia.ttf " pdfEncoding="Identity-H"/>
-				</textElement>
-				<text><![CDATA[Tax.ID NO : ]]></text>
-			</staticText>
-			<textField>
-				<reportElement positionType="Float" x="90" y="129" width="89" height="17" uuid="b61e4b97-9c3e-4ed0-bb59-fc5513a89b7f">
-					<printWhenExpression><![CDATA[!("").equalsIgnoreCase($F{taxid}) && $F{taxid} != null && "0".equalsIgnoreCase($F{isTemp})]]></printWhenExpression>
-				</reportElement>
-				<textElement>
-					<font fontName="Cordia New" size="14" pdfFontName="resource/fonts/Cordia.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{taxid}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement positionType="Float" x="178" y="129" width="57" height="17" uuid="c1c6068c-4dba-40ac-bcd4-e54da796bae4">
-					<printWhenExpression><![CDATA[!("").equalsIgnoreCase($F{taxid}) && $F{taxid} != null && "0".equalsIgnoreCase($F{isTemp})]]></printWhenExpression>
-				</reportElement>
-				<textElement>
-					<font fontName="Cordia New" size="14" isBold="true" pdfFontName="resource/fonts/Cordia.ttf " pdfEncoding="Identity-H"/>
-				</textElement>
-				<text><![CDATA[ Branch : ]]></text>
-			</staticText>
-			<textField>
-				<reportElement positionType="Float" x="222" y="129" width="103" height="17" uuid="64ec884c-deb0-4d6c-9ac1-b50a64719374">
-					<printWhenExpression><![CDATA[!("").equalsIgnoreCase($F{taxid}) && $F{taxid} != null && "0".equalsIgnoreCase($F{isTemp})]]></printWhenExpression>
-				</reportElement>
-				<textElement>
-					<font fontName="Cordia New" size="14" pdfFontName="resource/fonts/Cordia.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{taxbranch}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true">
-				<reportElement stretchType="RelativeToBandHeight" x="32" y="109" width="322" height="19" uuid="a44d120e-1afc-47d0-bc9d-e7bc4556de2c"/>
+				<reportElement x="32" y="109" width="322" height="96" uuid="a44d120e-1afc-47d0-bc9d-e7bc4556de2c"/>
 				<textElement>
 					<font fontName="Cordia New" size="14" isBold="false" pdfFontName="resource/fonts/Cordia.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 					<paragraph lineSpacing="Fixed" lineSpacingSize="11.0"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{address}]]></textFieldExpression>
 			</textField>
-			<line>
-				<reportElement positionType="Float" x="0" y="127" width="409" height="1" isPrintWhenDetailOverflows="true" uuid="dd48e263-2c71-434d-a038-1e75a1cb84d1"/>
-				<graphicElement>
-					<pen lineWidth="0.25" lineStyle="Solid" lineColor="#FFFFFF"/>
-				</graphicElement>
-			</line>
-			<line>
-				<reportElement positionType="Float" x="0" y="145" width="409" height="1" isPrintWhenDetailOverflows="true" uuid="13cf4de4-0644-45aa-8b51-ccc09857ece5"/>
-				<graphicElement>
-					<pen lineWidth="0.25" lineStyle="Solid" lineColor="#FFFFFF"/>
-				</graphicElement>
-			</line>
 		</band>
 	</pageHeader>
 	<columnHeader>

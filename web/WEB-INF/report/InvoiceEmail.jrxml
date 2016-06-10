@@ -275,60 +275,6 @@
 				<textFieldExpression><![CDATA[$F{payment}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement positionType="Float" x="31" y="181" width="24" height="20" uuid="34762e55-9615-438e-aed6-8aea8f9d61ef">
-					<printWhenExpression><![CDATA[$F{showleader}.equalsIgnoreCase("1")]]></printWhenExpression>
-				</reportElement>
-				<textElement>
-					<font fontName="Cordia New" size="14" isBold="true" pdfFontName="resource/fonts/Cordia.ttf " pdfEncoding="Identity-H"/>
-				</textElement>
-				<text><![CDATA[C/O]]></text>
-			</staticText>
-			<textField>
-				<reportElement positionType="Float" x="55" y="181" width="262" height="20" uuid="af3e6016-b747-441e-b71e-ae792993d3fe">
-					<printWhenExpression><![CDATA[$F{showleader}.equalsIgnoreCase("1")]]></printWhenExpression>
-				</reportElement>
-				<textElement>
-					<font fontName="Cordia New" size="14" pdfFontName="resource/fonts/Cordia.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{co}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement positionType="Float" x="31" y="162" width="65" height="19" uuid="7bda4652-2ee2-4d36-9862-2e15530d24d6">
-					<printWhenExpression><![CDATA[!("").equalsIgnoreCase($F{taxid}) && $F{taxid} != null && "0".equalsIgnoreCase($F{isTemp})]]></printWhenExpression>
-				</reportElement>
-				<textElement>
-					<font fontName="Cordia New" size="14" isBold="true" pdfFontName="resource/fonts/Cordia.ttf " pdfEncoding="Identity-H"/>
-				</textElement>
-				<text><![CDATA[Tax.ID NO :]]></text>
-			</staticText>
-			<textField>
-				<reportElement positionType="Float" x="89" y="162" width="93" height="19" uuid="305eb9ee-72ef-417e-907a-5d86350ecb59">
-					<printWhenExpression><![CDATA[!("").equalsIgnoreCase($F{taxid}) && $F{taxid} != null && "0".equalsIgnoreCase($F{isTemp})]]></printWhenExpression>
-				</reportElement>
-				<textElement>
-					<font fontName="Cordia New" size="14" pdfFontName="resource/fonts/Cordia.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{taxid}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement positionType="Float" x="223" y="162" width="94" height="20" uuid="dc0fa53f-8cc2-4458-b505-a2a0d8ff02b0">
-					<printWhenExpression><![CDATA[!("").equalsIgnoreCase($F{taxid}) && $F{taxid} != null && "0".equalsIgnoreCase($F{isTemp})]]></printWhenExpression>
-				</reportElement>
-				<textElement>
-					<font fontName="Cordia New" size="14" pdfFontName="resource/fonts/Cordia.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{taxbranch}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement positionType="Float" x="182" y="162" width="52" height="19" uuid="e8b72584-f087-42e3-a251-80ba9699d77c">
-					<printWhenExpression><![CDATA[!("").equalsIgnoreCase($F{taxid}) && $F{taxid} != null && "0".equalsIgnoreCase($F{isTemp})]]></printWhenExpression>
-				</reportElement>
-				<textElement>
-					<font fontName="Cordia New" size="14" isBold="true" pdfFontName="resource/fonts/Cordia.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[Branch :]]></text>
-			</staticText>
-			<staticText>
 				<reportElement x="299" y="56" width="221" height="24" isRemoveLineWhenBlank="true" uuid="3907cd69-1269-43bc-afcc-2ca342c3b913"/>
 				<textElement textAlignment="Right" verticalAlignment="Top">
 					<font fontName="Angsana New" size="18" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="true"/>
@@ -374,26 +320,14 @@
 				</textElement>
 				<text><![CDATA[E-Mail : yoyaku@wendytour.com]]></text>
 			</staticText>
-			<textField isStretchWithOverflow="true">
-				<reportElement stretchType="RelativeToBandHeight" x="31" y="143" width="286" height="18" uuid="08c1c36e-97df-4407-9662-f18543accfdb"/>
+			<textField>
+				<reportElement x="31" y="143" width="286" height="84" uuid="08c1c36e-97df-4407-9662-f18543accfdb"/>
 				<textElement>
 					<font fontName="Cordia New" size="14" isBold="false" pdfFontName="resource/fonts/Cordia.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 					<paragraph lineSpacing="Fixed" lineSpacingSize="11.0"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{address}]]></textFieldExpression>
 			</textField>
-			<line>
-				<reportElement positionType="Float" x="0" y="161" width="317" height="1" isPrintWhenDetailOverflows="true" uuid="d5252d2f-ce03-4256-b2d6-41c4c086e437"/>
-				<graphicElement>
-					<pen lineWidth="0.25" lineStyle="Solid" lineColor="#FFFFFF"/>
-				</graphicElement>
-			</line>
-			<line>
-				<reportElement positionType="Float" x="-2" y="180" width="317" height="1" isPrintWhenDetailOverflows="true" uuid="da14f6e1-e5c2-437c-a67b-8e31fb09ee23"/>
-				<graphicElement>
-					<pen lineWidth="0.25" lineStyle="Solid" lineColor="#FFFFFF"/>
-				</graphicElement>
-			</line>
 		</band>
 	</pageHeader>
 	<columnHeader>

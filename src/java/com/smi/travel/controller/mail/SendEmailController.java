@@ -97,7 +97,7 @@ public class SendEmailController extends SMITravelController {
 
         if ((recipientAddress != null) && (!"".equalsIgnoreCase(recipientAddress))) {
             if (InvoiceReport.equalsIgnoreCase(name)) {
-                data = reportservice.getInvoice(reportid,bankid,showstaff,showleader,sign,user.getName(),"0");
+                data = reportservice.getInvoice(reportid,bankid,showstaff,showleader,sign,user.getName(),"0",0);
                 JRDataSource dataSource = new JRBeanCollectionDataSource(data);
                 jasperFileName = "InvoiceEmail.jasper";
                 pdfFileName = "invoice.pdf";
@@ -152,7 +152,7 @@ public class SendEmailController extends SMITravelController {
                 }
              }
             if (InvoiceInboundRevenueEmail.equalsIgnoreCase(name)) {
-                data = reportservice.getInvoice(reportid,bankid,showstaff,showleader,sign,user.getName(),"0");
+                data = reportservice.getInvoice(reportid,bankid,showstaff,showleader,sign,user.getName(),"0",0);
                 JRDataSource dataSource = new JRBeanCollectionDataSource(data);
                 jasperFileName = "InvoiceInboundRevenueEmail.jasper";
                 pdfFileName = "InvoiceInboundRevenueEmail.pdf";
@@ -163,7 +163,7 @@ public class SendEmailController extends SMITravelController {
                 }
             }
             if (InvoiceInboundPerformaEmail.equalsIgnoreCase(name)) {
-                data = reportservice.getInvoice(reportid,bankid,showstaff,showleader,sign,user.getName(),"0");
+                data = reportservice.getInvoice(reportid,bankid,showstaff,showleader,sign,user.getName(),"0",2);
                 JRDataSource dataSource = new JRBeanCollectionDataSource(data);
                 jasperFileName = "InvoiceInboundEmail.jasper";
                 pdfFileName = "InvoiceInboundProformaEmail.pdf";
@@ -174,7 +174,7 @@ public class SendEmailController extends SMITravelController {
                 }
             }
             if (InvoiceTempEmail.equalsIgnoreCase(name)) {
-                data = reportservice.getInvoice(reportid,bankid,showstaff,showleader,sign,user.getName(),"1");
+                data = reportservice.getInvoice(reportid,bankid,showstaff,showleader,sign,user.getName(),"1",1);
                 JRDataSource dataSource = new JRBeanCollectionDataSource(data);
                 jasperFileName = "InvoiceTempEmail.jasper";
                 pdfFileName = "InvoiceTempEmail.pdf";

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="InvoiceTempEmail" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="cd8bfceb-88e3-46d6-b967-516fc07ba6ea">
 	<property name="ireport.zoom" value="2.420000000000002"/>
-	<property name="ireport.x" value="50"/>
+	<property name="ireport.x" value="17"/>
 	<property name="ireport.y" value="313"/>
 	<field name="invto" class="java.lang.String"/>
 	<field name="co" class="java.lang.String"/>
@@ -73,15 +73,6 @@
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</rectangle>
-			<staticText>
-				<reportElement positionType="Float" x="32" y="168" width="27" height="20" uuid="3519eb47-5a16-4b43-8c6c-cd7e78caf5ad">
-					<printWhenExpression><![CDATA[$F{showleader}.equalsIgnoreCase("1")]]></printWhenExpression>
-				</reportElement>
-				<textElement>
-					<font fontName="Cordia New" size="14" isBold="true" pdfFontName="resource/fonts/Cordia.ttf " pdfEncoding="Identity-H"/>
-				</textElement>
-				<text><![CDATA[C/O ]]></text>
-			</staticText>
 			<staticText>
 				<reportElement x="350" y="188" width="26" height="19" uuid="3d2d3091-d3d8-42d9-bba1-5d0a9a679196">
 					<printWhenExpression><![CDATA[$F{showstaff}.equalsIgnoreCase("1")]]></printWhenExpression>
@@ -192,15 +183,6 @@
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
-			<textField>
-				<reportElement positionType="Float" x="59" y="168" width="270" height="20" uuid="01044a50-6bbe-4d1c-aeec-cc3358a5770f">
-					<printWhenExpression><![CDATA[$F{showleader}.equalsIgnoreCase("1")]]></printWhenExpression>
-				</reportElement>
-				<textElement>
-					<font fontName="Cordia New" size="14" pdfFontName="resource/fonts/Cordia.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{co}]]></textFieldExpression>
-			</textField>
 			<staticText>
 				<reportElement x="1" y="75" width="554" height="44" uuid="0381caa8-fc1f-421a-8d4e-79793b4040b7"/>
 				<textElement textAlignment="Center">
@@ -229,8 +211,8 @@
 				</textElement>
 				<text><![CDATA[Ref No.]]></text>
 			</staticText>
-			<textField isStretchWithOverflow="true">
-				<reportElement stretchType="RelativeToBandHeight" x="32" y="146" width="297" height="21" uuid="ec1cb16e-92c2-45ea-b6dc-e81d2e25e9bd"/>
+			<textField>
+				<reportElement x="32" y="146" width="297" height="83" uuid="ec1cb16e-92c2-45ea-b6dc-e81d2e25e9bd"/>
 				<textElement>
 					<font fontName="Cordia New" size="14" pdfFontName="resource/fonts/Cordia.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
@@ -264,12 +246,6 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{duedate}]]></textFieldExpression>
 			</textField>
-			<line>
-				<reportElement positionType="Float" x="3" y="167" width="337" height="1" isPrintWhenDetailOverflows="true" uuid="f136a633-c332-4ed8-8d41-791276d7a4d4"/>
-				<graphicElement>
-					<pen lineWidth="0.25" lineStyle="Solid" lineColor="#FFFFFF"/>
-				</graphicElement>
-			</line>
 		</band>
 	</pageHeader>
 	<columnHeader>

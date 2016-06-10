@@ -126,7 +126,7 @@
 				<textFieldExpression><![CDATA[$F{staff}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="32" y="113" width="322" height="52" uuid="a44d120e-1afc-47d0-bc9d-e7bc4556de2c"/>
+				<reportElement x="32" y="113" width="322" height="67" uuid="a44d120e-1afc-47d0-bc9d-e7bc4556de2c"/>
 				<textElement>
 					<font fontName="Cordia New" size="16" pdfFontName="resource/fonts/Cordia.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 					<paragraph lineSpacing="Fixed" lineSpacingSize="11.0"/>
