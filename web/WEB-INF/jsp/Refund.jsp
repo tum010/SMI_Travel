@@ -1995,7 +1995,14 @@ function setSectorRefund(row){
             alert(e);
         }
     }
+    var ticketNo = '';
     if(txtNo !== ''){
+        ticketNo = txtNo;
+    }
+    if(txt !== ''){
+        ticketNo = txt;
+    }
+    if(ticketNo !== ''){
         var url = 'AJAXServlet';
         var servletName = 'RefundAirlineServlet';
         var servicesName = 'AJAXBean';
@@ -2004,7 +2011,7 @@ function setSectorRefund(row){
                 '&servicesName=' + servicesName +
                 '&type=getTicketFareBooking' +
                 '&AirBooking=' + airbook + 
-                '&ticketNo=' + txtNo ;         
+                '&ticketNo=' + ticketNo ;         
         try {
             $.ajax({
                 type: "POST",
@@ -2019,6 +2026,8 @@ function setSectorRefund(row){
                         var fare = JSON.parse(msg);
                         console.log("Sector : "+fare.Sector);
                         $("#inputSector" + row).val(fare.Sector);
+                        document.getElementById("refundBy").value = fare.InvTo;
+                        document.getElementById("refundByName").value = fare.InvName;
                         var inputSectorRefund = document.getElementById("inputSectorRefund"+row);
                         if(inputSectorRefund.value !== ''){
                             checkRefund(inputSectorRefund,row);

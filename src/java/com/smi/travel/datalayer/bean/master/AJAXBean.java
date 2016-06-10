@@ -1307,7 +1307,7 @@ public class AJAXBean extends AbstractBean implements
                 chuSession.setOperationUser(operationUser);               
                 
                 CheckDuplicateUser cdu = checkDuplicateUserDao.CheckAndUpdateOperationDetail(chuSession, 2);
-                if(cdu.getIsDuplicateUser() == 0){
+                if(cdu != null && cdu.getIsDuplicateUser() == 0){
                     result = "success";          
                 }else{
                     result = cdu.getOperationUser();        
@@ -1328,7 +1328,7 @@ public class AJAXBean extends AbstractBean implements
                 chuSession.setOperationUser(operationUser);               
                 
                 CheckDuplicateUser cdu = checkDuplicateUserDao.CheckAndUpdateOperationDetail(chuSession, 1);
-                if(cdu.getIsDuplicateUser() == 0){
+                if(cdu != null && cdu.getIsDuplicateUser() == 0){
                     result = "success";          
                 }else{
                     result = cdu.getOperationUser();        
@@ -1349,7 +1349,7 @@ public class AJAXBean extends AbstractBean implements
                 chuSession.setOperationUser(operationUser);               
                 
                 CheckDuplicateUser cdu = checkDuplicateUserDao.CheckAndUpdateOperationDetail(chuSession, 3);
-                if(cdu.getIsDuplicateUser() == 0){
+                if(cdu != null && cdu.getIsDuplicateUser() == 0){
                     result = "success";          
                 }else{
                     result = cdu.getOperationUser();        
