@@ -208,6 +208,7 @@ public class MonitorGalileo extends MonitorScheduler {
         gali = galileoMap.get("currency");
         ArrayList<String> lines = (ArrayList<String>) sectionData.get(gali.getSection());
         line = lines.get(0);
+        System.out.println(" line ::::::::::::::::::::; " + line);
         currency = line.substring(gali.getStartlength() - 1, gali.getStartlength() - 1 + gali.getLength());
 
         BookingPnr bPnr = new BookingPnr(GDS, pnr, filename);
@@ -422,10 +423,10 @@ public class MonitorGalileo extends MonitorScheduler {
 
             if (!passengerTypes.contains(passengerType)) {
                 passengerTypes = passengerTypes + "," + passengerType;
-                String costS = getField("cost", costRefIndex).trim();
-                String priceS = getField("price", costRefIndex).trim();
-                BigDecimal cost = util.convertStringToBigDecimal(costS);
-                BigDecimal price = util.convertStringToBigDecimal(priceS);
+                String costS = getField("cost", costRefIndex);
+                String priceS = getField("price", costRefIndex);
+                BigDecimal cost = util.convertStringToBigDecimal(costS == null ? "0" : costS.trim());
+                BigDecimal price = util.convertStringToBigDecimal(priceS == null ? "0" : priceS.trim());
                 costRefIndex++;
                 //Update cost,price,tax according to passengertype
                 BookingFlight bf = this.getMostEarlyFlight(bAir.getBookingPnr());
@@ -503,6 +504,7 @@ public class MonitorGalileo extends MonitorScheduler {
         } else {
             targetLine = lineData.get(lineNo);
         }
+        System.out.println(" targetLine :::: " + targetLine);
         return getField(fldName, targetLine);
     }
 
