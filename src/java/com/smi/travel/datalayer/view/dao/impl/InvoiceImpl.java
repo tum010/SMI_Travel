@@ -203,7 +203,7 @@ public class InvoiceImpl implements InvoiceReportDao{
             
             if(typeInvoice == 0){
                 if(!"".equalsIgnoreCase(util.ConvertString(B[14])) && B[14] != null ){
-                    address += "\n" + "Tax. ID NO. : " + util.ConvertString(B[14]) + "\t Branch : "+taxBranch;
+                    address += "\n" + "Tax. ID NO. : " + util.ConvertString(B[14]) + "     Branch : "+taxBranch;
                 }
                 if("1".equalsIgnoreCase(showLeader)){
                     address += "\n" + "C/O " + getLeaderNameFromInvoiceID(util.ConvertString(B[12]));
