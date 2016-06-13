@@ -177,7 +177,7 @@ public class TransferJobReportImpl implements TransferJobReportDao {
             String mInitialname = (cus.getMInitialname() != null ? cus.getMInitialname().getName() : "");
             String lastName = (cus.getLastName() != null && !"".equalsIgnoreCase(cus.getLastName()) ? cus.getLastName() : "");
             String firstName = (cus.getFirstName() != null && !"".equalsIgnoreCase(cus.getFirstName()) ? cus.getFirstName() : "");
-            String tel = (cus.getTel() != null && !"".equalsIgnoreCase(cus.getTel()) ? cus.getTel() : "");
+            String tel = "";//(cus.getTel() != null && !"".equalsIgnoreCase(cus.getTel()) ? cus.getTel() : "");
             String name = (!"".equalsIgnoreCase(tel) ? mInitialname +" "+ lastName +" "+ firstName +"<br>"+ tel : mInitialname +" "+ lastName +" "+ firstName);
             report.setName(name);
             report.setAd(Integer.parseInt(passenger[0]));
