@@ -72,6 +72,13 @@ public class TaxInvoiceSummaryReportImpl implements TaxInvoiceSummaryReportDao {
                 departmentshow = "WO";
             }           
             haveCondition = true;          
+        } else {
+            query.append(haveCondition ? " and" : " where");
+            query.append(" `taxinvoice_summary`.department in ('Wendy','Outbound','Inbound') ");
+        }
+        
+        if("WO".equalsIgnoreCase(departmentshow) || "ALL".equalsIgnoreCase(departmentshow)){
+            query.append(" order by taxinvoice_summary.taxno ");
         }
 
         List<Object[]> QueryList =  session.createSQLQuery(query.toString())
@@ -101,7 +108,15 @@ public class TaxInvoiceSummaryReportImpl implements TaxInvoiceSummaryReportDao {
             taxInvoiceSummaryReport.setTaxto(util.ConvertString(B[3]));
             taxInvoiceSummaryReport.setTaxname(util.ConvertString(B[4]));                           
             taxInvoiceSummaryReport.setStatus(util.ConvertString(B[11]));
-            taxInvoiceSummaryReport.setDepartment(util.ConvertString(B[12]));
+            String departmentTemp = util.ConvertString(B[12]); 
+            if("Wendy".equalsIgnoreCase(departmentTemp) || "Outbound".equalsIgnoreCase(departmentTemp)){
+                taxInvoiceSummaryReport.setDepartment("Wendy + Outbound");
+
+            } else {
+                taxInvoiceSummaryReport.setDepartment(departmentTemp);
+            }            
+//            taxInvoiceSummaryReport.setDepartment(util.ConvertString(B[12]));
+//            taxInvoiceSummaryReport.setDepartment("WO".equalsIgnoreCase(departmentshow) ? "Wendy + Outbound" : util.ConvertString(B[12]));
             taxInvoiceSummaryReport.setSystemdate(String.valueOf(dateformat.format(new Date())));
             taxInvoiceSummaryReport.setFrom(!"".equalsIgnoreCase(from) ? String.valueOf(df.format(util.convertStringToDate(from))) : "");
             taxInvoiceSummaryReport.setTo(!"".equalsIgnoreCase(to) ? String.valueOf(df.format(util.convertStringToDate(to))) : "");
