@@ -2551,7 +2551,7 @@ function AddRowPaymentAccount(row) {
         '<span id="SpanRemove' + row + '"class="glyphicon glyphicon-remove deleteicon"></span></a></td>' +
         '</tr>'
     );
-    
+    $('.date').datetimepicker();
     $("#drAmount"+row).focusout(function(){
         var drAmount = replaceAll(",","",$('#drAmount'+row).val()); 
         if (drAmount == ""){

@@ -395,8 +395,10 @@
                                 </script>
                             </c:if>
                         </tr>
-                        <c:set var="totalCost"  value="${totalCost + b.cost}"/> 
-                        <c:set var="totalPrice"  value="${totalPrice + b.price}"/> 
+                        <c:if test="${b.isBill == 1}">
+                            <c:set var="totalCost"  value="${totalCost + b.cost}"/> 
+                            <c:set var="totalPrice"  value="${totalPrice + b.price}"/> 
+                        </c:if>
                     </c:forEach>
 
                     <tr>
