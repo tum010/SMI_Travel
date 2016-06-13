@@ -174,7 +174,12 @@ public class TransferJobReportImpl implements TransferJobReportDao {
             }
             
             report.setTime(util.convertTimeToString(book.getPickupTime()));
-            report.setName(cus.getMInitialname().getName() +" "+ cus.getLastName() +" "+ cus.getFirstName()+"<br>"+cus.getTel());
+            String mInitialname = (cus.getMInitialname() != null ? cus.getMInitialname().getName() : "");
+            String lastName = (cus.getLastName() != null && !"".equalsIgnoreCase(cus.getLastName()) ? cus.getLastName() : "");
+            String firstName = (cus.getFirstName() != null && !"".equalsIgnoreCase(cus.getFirstName()) ? cus.getFirstName() : "");
+            String tel = (cus.getTel() != null && !"".equalsIgnoreCase(cus.getTel()) ? cus.getTel() : "");
+            String name = (!"".equalsIgnoreCase(tel) ? mInitialname +" "+ lastName +" "+ firstName +"<br>"+ tel : mInitialname +" "+ lastName +" "+ firstName);
+            report.setName(name);
             report.setAd(Integer.parseInt(passenger[0]));
             report.setCh(Integer.parseInt(passenger[1]));
             report.setIn(Integer.parseInt(passenger[2]));
