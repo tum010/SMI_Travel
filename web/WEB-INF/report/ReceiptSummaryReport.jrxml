@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReceiptSummaryReport" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="5" bottomMargin="20" uuid="058d4e5f-08d6-4dca-b53c-91fb30f0f189">
-	<property name="ireport.zoom" value="3.630000000000031"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="333"/>
+	<property name="ireport.zoom" value="2.2539444027047524"/>
+	<property name="ireport.x" value="98"/>
+	<property name="ireport.y" value="300"/>
 	<field name="systemdate" class="java.lang.String"/>
 	<field name="user" class="java.lang.String"/>
 	<field name="from" class="java.lang.String"/>
@@ -68,6 +68,9 @@ new BigDecimal($F{recamount}) : new BigDecimal("0.00")]]></variableExpression>
 	<variable name="totalcashminus" class="java.math.BigDecimal" calculation="Sum">
 		<variableExpression><![CDATA[($F{payby} != null && !"null".equals($F{payby}) && !"Wait".equals($F{payby}) && !"Void".equals($F{payby}) && $F{status} != null && !"null".equals($F{status}) && !"VOID".equals($F{status}))
 ? new BigDecimal($F{cashminus}) : new BigDecimal("0.00")]]></variableExpression>
+	</variable>
+	<variable name="totalcashtotalcashminus" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[$V{totalcash}.subtract($V{totalcashminus})]]></variableExpression>
 	</variable>
 	<background>
 		<band splitType="Stretch"/>
@@ -748,7 +751,7 @@ new BigDecimal($F{recamount}) : new BigDecimal("0.00")]]></variableExpression>
 				<textElement textAlignment="Left">
 					<font fontName="Tahoma" size="10" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{totalcash}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{totalcashtotalcashminus}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00">
 				<reportElement x="106" y="38" width="124" height="16" uuid="e2a1bca2-7dce-4b9b-b95b-92a5ba961baf"/>
