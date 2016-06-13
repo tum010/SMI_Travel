@@ -405,12 +405,7 @@ public class DaytourBookingImpl implements DaytourBookingDao {
         List data = new ArrayList();
         
         boolean condition = false;
-        String query = "SELECT db.tour_id AS tourid, dt.`code` AS tourcode, dt.`name` AS tourname, db.tour_date AS tourdate, db.adult AS ad, db.child AS ch, "
-                + "db.infant AS Inf, sum(dp.price * dp.qty) AS sell, sum( ifnull( GET_COST_DAYTOUR_FROM_TOURDATE (db.tour_id, db.tour_date), 0 )) AS net, "
-                + "sum(dp.price * dp.qty) - sum( ifnull( GET_COST_DAYTOUR_FROM_TOURDATE (db.tour_id, db.tour_date), 0 )) AS balance, "
-                + " CASE WHEN db.adult + db.child + db.infant = 0 THEN 0 ELSE round(( sum(dp.price * dp.qty) - sum( ifnull( GET_COST_DAYTOUR_FROM_TOURDATE (db.tour_id, db.tour_date), 0 ))) / ( db.adult + db.child + db.infant ), 2 ) END AS average  "
-                + "FROM `daytour_booking` db INNER JOIN daytour dt ON dt.id = db.tour_id INNER JOIN daytour_booking_price dp ON dp.daytour_booking_id = db.id "
-                + "JOIN `master` `mt` ON (`mt`.`id` = `db`.`master_id`) ";
+        String query = " SELECT db.tour_id AS tourid, dt.`code` AS tourcode, dt.`name` AS tourname, db.tour_date AS tourdate, sum(db.adult) AS ad, sum(db.child) AS ch, sum(db.infant) AS Inf, sum( GET_PRICE_DAYTOUR_BOOK (db.id)) AS sell, sum( ifnull( GET_COST_DAYTOUR_FROM_TOURDATE (db.tour_id, db.tour_date), 0 )) AS net, sum( GET_PRICE_DAYTOUR_BOOK (db.id)) - sum( ifnull( GET_COST_DAYTOUR_FROM_TOURDATE (db.tour_id, db.tour_date), 0 )) AS balance, CASE WHEN ifnull(sum(db.adult), 0) + ifnull(sum(db.child), 0) + ifnull(sum(db.infant), 0) = 0 THEN 0 ELSE round(( sum( GET_PRICE_DAYTOUR_BOOK (db.id)) - sum( ifnull( GET_COST_DAYTOUR_FROM_TOURDATE (db.tour_id, db.tour_date), 0 ))) / ( ifnull(sum(db.adult), 0) + ifnull(sum(db.child), 0) + ifnull(sum(db.infant), 0)), 2 ) END AS average FROM `daytour_booking` db INNER JOIN daytour dt ON dt.id = db.tour_id JOIN `master` `mt` ON (`mt`.`id` = `db`.`master_id`)  ";
                
         if((!"".equalsIgnoreCase(from)) && (from != null)){
             query += (condition ? " AND " : " WHERE "); 
@@ -428,7 +423,7 @@ public class DaytourBookingImpl implements DaytourBookingDao {
             condition = true;
         }
         
-        query += " AND mt.`Status` <> 3 and mt.`Status` <> 4 and db.`status` <> 2 and  db.`status` <> 3 GROUP BY db.tour_id, db.tour_date having sum(dp.price * dp.qty) <>0 ORDER BY dt.`code`";
+        query += " AND mt.`Status` <> 3 AND mt.`Status` <> 4 AND db.`status` <> 2 AND db.`status` <> 3 AND GET_PRICE_DAYTOUR_BOOK (db.id) <> 0 GROUP BY db.tour_id, db.tour_date ORDER BY dt.`code` ";
         
         List<Object[]> QueryList =  session.createSQLQuery(query)
                 .addScalar("tourcode",Hibernate.STRING)

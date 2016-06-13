@@ -213,7 +213,7 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
     public String getTicketFareBookingFromTicketNo(String TicketNo) {
         String result ="";
         AirticketPassenger ticketPass = new AirticketPassenger();
-        String query = "from AirticketPassenger pass where pass.series1||pass.series2||pass.series3 = :ticketNo";
+        String query = "from AirticketPassenger pass where pass.series1||pass.series2||pass.series3 = :ticketNo ";
         Session session = this.sessionFactory.openSession();
         List<AirticketPassenger> ticketPassList = session.createQuery(query).setParameter("ticketNo", TicketNo).list();
         String ticketAirline = "";
@@ -300,26 +300,28 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
                     if(airticketAirline.getAirticketFlights() != null){
                         List<AirticketFlight> flightList = new ArrayList<AirticketFlight>(airticketAirline.getAirticketFlights());
                         for(int j = 0 ; j < flightList.size() ; j++ ){
-                            if("ADULT".equals(mpricecategoryname)){
-                                if(flightList.get(j).getAdCost() != null){
-                                   ticketfare = ticketfare.add(flightList.get(j).getAdCost() == null ? new BigDecimal(0) : flightList.get(j).getAdCost());
-                                }
-                                if(flightList.get(j).getAdTaxCost() != null){
-                                    tickettax = tickettax.add(flightList.get(j).getAdTaxCost() == null ? new BigDecimal(0) : flightList.get(j).getAdTaxCost());
-                                }
-                            }else if("CHILD".equals(mpricecategoryname)){
-                                if(flightList.get(j).getChCost()!= null){
-                                   ticketfare = ticketfare.add(flightList.get(j).getChCost() == null ? new BigDecimal(0) : flightList.get(j).getChCost());
-                                }
-                                if(flightList.get(j).getChTaxCost() != null){
-                                    tickettax = tickettax.add(flightList.get(j).getChTaxCost() == null ? new BigDecimal(0) : flightList.get(j).getChTaxCost());
-                                }
-                            }else if("INFANT".equals(mpricecategoryname)){
-                                if(flightList.get(j).getInCost() != null){
-                                   ticketfare = ticketfare.add(flightList.get(j).getInCost() == null ? new BigDecimal(0) : flightList.get(j).getInCost());
-                                }
-                                if(flightList.get(j).getInTaxCost() != null){
-                                    tickettax = tickettax.add(flightList.get(j).getInTaxCost() == null ? new BigDecimal(0) : flightList.get(j).getInTaxCost());
+                            if("1".equalsIgnoreCase(flightList.get(j).getMItemstatus().getId())){
+                                if("ADULT".equals(mpricecategoryname)){
+                                    if(flightList.get(j).getAdCost() != null){
+                                       ticketfare = ticketfare.add(flightList.get(j).getAdCost() == null ? new BigDecimal(0) : flightList.get(j).getAdCost());
+                                    }
+                                    if(flightList.get(j).getAdTaxCost() != null){
+                                        tickettax = tickettax.add(flightList.get(j).getAdTaxCost() == null ? new BigDecimal(0) : flightList.get(j).getAdTaxCost());
+                                    }
+                                }else if("CHILD".equals(mpricecategoryname)){
+                                    if(flightList.get(j).getChCost()!= null){
+                                       ticketfare = ticketfare.add(flightList.get(j).getChCost() == null ? new BigDecimal(0) : flightList.get(j).getChCost());
+                                    }
+                                    if(flightList.get(j).getChTaxCost() != null){
+                                        tickettax = tickettax.add(flightList.get(j).getChTaxCost() == null ? new BigDecimal(0) : flightList.get(j).getChTaxCost());
+                                    }
+                                }else if("INFANT".equals(mpricecategoryname)){
+                                    if(flightList.get(j).getInCost() != null){
+                                       ticketfare = ticketfare.add(flightList.get(j).getInCost() == null ? new BigDecimal(0) : flightList.get(j).getInCost());
+                                    }
+                                    if(flightList.get(j).getInTaxCost() != null){
+                                        tickettax = tickettax.add(flightList.get(j).getInTaxCost() == null ? new BigDecimal(0) : flightList.get(j).getInTaxCost());
+                                    }
                                 }
                             }
                         }
@@ -400,26 +402,28 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
                 if(airlines.get(j).getMFlight() != null){
                     ticketClass = airlines.get(j).getMFlight().getName();
                 }
-                if("ADULT".equals(mpricecategoryname)){
-                    if(airlines.get(j).getAdCost() != null){
-                       ticketfare = ticketfare.add(airlines.get(j).getAdCost()== null ? new BigDecimal(0) : airlines.get(j).getAdCost());
-                    }
-                    if(airlines.get(j).getAdTaxCost() != null){
-                        tickettax = tickettax.add(airlines.get(j).getAdTaxCost()== null ? new BigDecimal(0) : airlines.get(j).getAdTaxCost());
-                    }
-                }else if("CHILD".equals(mpricecategoryname)){
-                    if(airlines.get(j).getChCost()!= null){
-                        ticketfare = ticketfare.add(airlines.get(j).getChCost()== null ? new BigDecimal(0) : airlines.get(j).getChCost());
-                    }    
-                    if(airlines.get(j).getChTaxCost() != null){
-                        tickettax = tickettax.add(airlines.get(j).getChTaxCost()== null ? new BigDecimal(0) : airlines.get(j).getChTaxCost());
-                    }
-                }else if("INFANT".equals(mpricecategoryname)){
-                    if(airlines.get(j).getInCost() != null){
-                       ticketfare = ticketfare.add(airlines.get(j).getInCost()== null ? new BigDecimal(0) : airlines.get(j).getInCost());
-                    }
-                    if(airlines.get(j).getInTaxCost() != null){
-                        tickettax = tickettax.add(airlines.get(j).getInTaxCost()== null ? new BigDecimal(0) : airlines.get(j).getInTaxCost());
+                if("1".equalsIgnoreCase(airlines.get(j).getMItemstatus().getId())){
+                    if("ADULT".equals(mpricecategoryname)){
+                        if(airlines.get(j).getAdCost() != null){
+                           ticketfare = ticketfare.add(airlines.get(j).getAdCost()== null ? new BigDecimal(0) : airlines.get(j).getAdCost());
+                        }
+                        if(airlines.get(j).getAdTaxCost() != null){
+                            tickettax = tickettax.add(airlines.get(j).getAdTaxCost()== null ? new BigDecimal(0) : airlines.get(j).getAdTaxCost());
+                        }
+                    }else if("CHILD".equals(mpricecategoryname)){
+                        if(airlines.get(j).getChCost()!= null){
+                            ticketfare = ticketfare.add(airlines.get(j).getChCost()== null ? new BigDecimal(0) : airlines.get(j).getChCost());
+                        }    
+                        if(airlines.get(j).getChTaxCost() != null){
+                            tickettax = tickettax.add(airlines.get(j).getChTaxCost()== null ? new BigDecimal(0) : airlines.get(j).getChTaxCost());
+                        }
+                    }else if("INFANT".equals(mpricecategoryname)){
+                        if(airlines.get(j).getInCost() != null){
+                           ticketfare = ticketfare.add(airlines.get(j).getInCost()== null ? new BigDecimal(0) : airlines.get(j).getInCost());
+                        }
+                        if(airlines.get(j).getInTaxCost() != null){
+                            tickettax = tickettax.add(airlines.get(j).getInTaxCost()== null ? new BigDecimal(0) : airlines.get(j).getInTaxCost());
+                        }
                     }
                 }
 //                if(airlines.get(j).getAdTaxCost() != null){
@@ -1096,21 +1100,24 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         if(airticketPassList.get(0).getAirticketAirline() != null){
             List<AirticketFlight> flightList = new ArrayList<AirticketFlight>(airticketPassList.get(0).getAirticketAirline().getAirticketFlights());
             if(!flightList.isEmpty()){
-                if("ADULT".equals(priceType)){
-                    price = (!"".equalsIgnoreCase(String.valueOf(flightList.get(0).getAdPrice())) && flightList.get(0).getAdPrice() != null ? flightList.get(0).getAdPrice() : new BigDecimal(BigInteger.ZERO));
-                    tax = (!"".equalsIgnoreCase(String.valueOf(flightList.get(0).getAdTax())) && flightList.get(0).getAdTax() != null ? flightList.get(0).getAdTax() : new BigDecimal(BigInteger.ZERO) );
-                    invamount = price.add(tax);
-                }else if("CHILD".equals(priceType)){
-                    price = (!"".equalsIgnoreCase(String.valueOf(flightList.get(0).getChPrice())) && flightList.get(0).getChPrice() != null? flightList.get(0).getChPrice() : new BigDecimal(BigInteger.ZERO) );
-                    tax = (!"".equalsIgnoreCase(String.valueOf(flightList.get(0).getChTax())) && flightList.get(0).getChTax() != null? flightList.get(0).getChTax() : new BigDecimal(BigInteger.ZERO) );
-                    invamount = price.add(tax);
-                }else if("INFANT".equals(priceType)){
-                    price = (!"".equalsIgnoreCase(String.valueOf(flightList.get(0).getInPrice())) && flightList.get(0).getInPrice() != null ? flightList.get(0).getInPrice() : new BigDecimal(BigInteger.ZERO) );
-                    tax = (!"".equalsIgnoreCase(String.valueOf(flightList.get(0).getInTax())) && flightList.get(0).getInTax() != null ? flightList.get(0).getInTax() : new BigDecimal(BigInteger.ZERO) );
-                    invamount = price.add(tax);
+                if("1".equalsIgnoreCase(flightList.get(0).getMItemstatus().getId())){
+                    if("ADULT".equals(priceType)){
+                        price = (!"".equalsIgnoreCase(String.valueOf(flightList.get(0).getAdPrice())) && flightList.get(0).getAdPrice() != null ? flightList.get(0).getAdPrice() : new BigDecimal(BigInteger.ZERO));
+                        tax = (!"".equalsIgnoreCase(String.valueOf(flightList.get(0).getAdTax())) && flightList.get(0).getAdTax() != null ? flightList.get(0).getAdTax() : new BigDecimal(BigInteger.ZERO) );
+                        invamount = price.add(tax);
+                    }else if("CHILD".equals(priceType)){
+                        price = (!"".equalsIgnoreCase(String.valueOf(flightList.get(0).getChPrice())) && flightList.get(0).getChPrice() != null? flightList.get(0).getChPrice() : new BigDecimal(BigInteger.ZERO) );
+                        tax = (!"".equalsIgnoreCase(String.valueOf(flightList.get(0).getChTax())) && flightList.get(0).getChTax() != null? flightList.get(0).getChTax() : new BigDecimal(BigInteger.ZERO) );
+                        invamount = price.add(tax);
+                    }else if("INFANT".equals(priceType)){
+                        price = (!"".equalsIgnoreCase(String.valueOf(flightList.get(0).getInPrice())) && flightList.get(0).getInPrice() != null ? flightList.get(0).getInPrice() : new BigDecimal(BigInteger.ZERO) );
+                        tax = (!"".equalsIgnoreCase(String.valueOf(flightList.get(0).getInTax())) && flightList.get(0).getInTax() != null ? flightList.get(0).getInTax() : new BigDecimal(BigInteger.ZERO) );
+                        invamount = price.add(tax);
+                    }
                 }
                 System.out.println(" invamount " + invamount);
                 routing = util.GetRounting(flightList);
+                
             }
         }
         if(airticketPassList!=null && !airticketPassList.isEmpty()){
