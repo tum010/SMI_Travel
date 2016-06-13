@@ -365,7 +365,7 @@ public class DaytourBookingImpl implements DaytourBookingDao {
             condition = true;
         }
         
-        query += " and  GET_PRICE_DAYTOUR_BOOK (db.id) <> 0 ";
+        query += " and  GET_PRICE_DAYTOUR_BOOK (db.id) <> 0 AND mt.`Status` <> 3 and mt.`Status` <> 4 and db.`status` <> 2 and  db.`status` <> 3 ";
         query += " GROUP BY db.tour_id ORDER BY dt.`code`";
         
         List<Object[]> QueryList =  session.createSQLQuery(query)
@@ -428,7 +428,7 @@ public class DaytourBookingImpl implements DaytourBookingDao {
             condition = true;
         }
         
-        query += " GROUP BY db.tour_id, db.tour_date having sum(dp.price * dp.qty) <>0 ORDER BY dt.`code`";
+        query += " AND mt.`Status` <> 3 and mt.`Status` <> 4 and db.`status` <> 2 and  db.`status` <> 3 GROUP BY db.tour_id, db.tour_date having sum(dp.price * dp.qty) <>0 ORDER BY dt.`code`";
         
         List<Object[]> QueryList =  session.createSQLQuery(query)
                 .addScalar("tourcode",Hibernate.STRING)

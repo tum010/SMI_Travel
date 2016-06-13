@@ -58,15 +58,7 @@
 </section>
 <div class ="container"  style="padding-top: 15px;" ng-app=""> 
     <div class="row">
-        <!--Alert Save and Update-->
-        <div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <strong>Save Success!</strong> 
-        </div>
-        <div id="textAlertDivNotSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <strong>Save Unsuccess!</strong> 
-        </div>
+        
         <!-- side bar -->
         <div class="col-sm-2" style="border-right:  solid 1px #01C632;padding-top: 10px">
             <div ng-include="'WebContent/Book/DaytourMenu.html'"></div>
@@ -76,6 +68,17 @@
             <input hidden="" value="${booking_size[3]}" id="input-land_size">
             <input hidden="" value="${booking_size[4]}" id="input-passenger_size">
             <input hidden="" value="${booking_size[5]}" id="input-billable_size">
+        </div>
+        <div class="col-sm-10">
+            <!--Alert Save and Update-->
+            <div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Save Success!</strong> 
+            </div>
+            <div id="textAlertDivNotSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Save Unsuccess!</strong> 
+            </div>
         </div>
         <div class="col-sm-10">
             <div class="row" style="padding-left: 15px">  
@@ -385,7 +388,11 @@
                                                     <c:forEach var="dayTourDetai" items="${dayTourDetailList}" varStatus="status">
                                                         <tr>
                                                             <td>
-                                                                <input type="text" id="InputPu${status.count}" name="InputPu${status.count}" class="form-control money" value="${dayTourDetai.pickupOrder}" />
+                                                                <c:set var="pickupOrder" value="${dayTourDetai.pickupOrder}" />
+                                                                <c:if test="${dayTourDetai.pickupOrder == 0 || dayTourDetai.pickupOrder == null}">
+                                                                    <c:set var="pickupOrder" value="" />
+                                                                </c:if>
+                                                                <input type="text" id="InputPu${status.count}" name="InputPu${status.count}" class="form-control money" value="${pickupOrder}" />
                                                                 <input type="hidden" id="countPu${status.count}" name="countPu"  value="${status.count}" />
                                                                 <input type="hidden" id="refBookId${status.count}" name="refBookId${status.count}"  value="${dayTourDetai.id}" />
                                                                 <input type="hidden" id="masterId${status.count}" name="masterId${status.count}"  value="${dayTourDetai.master.id}" />
