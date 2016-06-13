@@ -1100,22 +1100,25 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         if(airticketPassList.get(0).getAirticketAirline() != null){
             List<AirticketFlight> flightList = new ArrayList<AirticketFlight>(airticketPassList.get(0).getAirticketAirline().getAirticketFlights());
             if(!flightList.isEmpty()){
-                if("1".equalsIgnoreCase(flightList.get(0).getMItemstatus().getId())){
-                    if("ADULT".equals(priceType)){
-                        price = (!"".equalsIgnoreCase(String.valueOf(flightList.get(0).getAdPrice())) && flightList.get(0).getAdPrice() != null ? flightList.get(0).getAdPrice() : new BigDecimal(BigInteger.ZERO));
-                        tax = (!"".equalsIgnoreCase(String.valueOf(flightList.get(0).getAdTax())) && flightList.get(0).getAdTax() != null ? flightList.get(0).getAdTax() : new BigDecimal(BigInteger.ZERO) );
-                        invamount = price.add(tax);
-                    }else if("CHILD".equals(priceType)){
-                        price = (!"".equalsIgnoreCase(String.valueOf(flightList.get(0).getChPrice())) && flightList.get(0).getChPrice() != null? flightList.get(0).getChPrice() : new BigDecimal(BigInteger.ZERO) );
-                        tax = (!"".equalsIgnoreCase(String.valueOf(flightList.get(0).getChTax())) && flightList.get(0).getChTax() != null? flightList.get(0).getChTax() : new BigDecimal(BigInteger.ZERO) );
-                        invamount = price.add(tax);
-                    }else if("INFANT".equals(priceType)){
-                        price = (!"".equalsIgnoreCase(String.valueOf(flightList.get(0).getInPrice())) && flightList.get(0).getInPrice() != null ? flightList.get(0).getInPrice() : new BigDecimal(BigInteger.ZERO) );
-                        tax = (!"".equalsIgnoreCase(String.valueOf(flightList.get(0).getInTax())) && flightList.get(0).getInTax() != null ? flightList.get(0).getInTax() : new BigDecimal(BigInteger.ZERO) );
-                        invamount = price.add(tax);
+                for(int x = 0 ; x < flightList.size() ; x++){
+                    AirticketFlight airF = flightList.get(x) ;
+                    if("1".equalsIgnoreCase(airF.getMItemstatus().getId())){
+                        if("ADULT".equals(priceType)){
+                            price = (!"".equalsIgnoreCase(String.valueOf(airF.getAdPrice())) && airF.getAdPrice() != null ? airF.getAdPrice() : new BigDecimal(BigInteger.ZERO));
+                            tax = (!"".equalsIgnoreCase(String.valueOf(airF.getAdTax())) && airF.getAdTax() != null ? airF.getAdTax() : new BigDecimal(BigInteger.ZERO) );
+                            invamount = invamount.add(price.add(tax));
+                        }else if("CHILD".equals(priceType)){
+                            price = (!"".equalsIgnoreCase(String.valueOf(airF.getChPrice())) && airF.getChPrice() != null? airF.getChPrice() : new BigDecimal(BigInteger.ZERO) );
+                            tax = (!"".equalsIgnoreCase(String.valueOf(airF.getChTax())) && airF.getChTax() != null? airF.getChTax() : new BigDecimal(BigInteger.ZERO) );
+                            invamount = invamount.add(price.add(tax));
+                        }else if("INFANT".equals(priceType)){
+                            price = (!"".equalsIgnoreCase(String.valueOf(airF.getInPrice())) && airF.getInPrice() != null ? airF.getInPrice() : new BigDecimal(BigInteger.ZERO) );
+                            tax = (!"".equalsIgnoreCase(String.valueOf(airF.getInTax())) && airF.getInTax() != null ? airF.getInTax() : new BigDecimal(BigInteger.ZERO) );
+                            invamount = invamount.add(price.add(tax));
+                        }
                     }
+                    System.out.println(" invamount " + invamount);
                 }
-                System.out.println(" invamount " + invamount);
                 routing = util.GetRounting(flightList);
                 
             }
