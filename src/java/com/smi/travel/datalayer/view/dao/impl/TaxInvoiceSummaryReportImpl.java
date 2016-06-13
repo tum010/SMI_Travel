@@ -109,7 +109,8 @@ public class TaxInvoiceSummaryReportImpl implements TaxInvoiceSummaryReportDao {
             taxInvoiceSummaryReport.setTaxname(util.ConvertString(B[4]));                           
             taxInvoiceSummaryReport.setStatus(util.ConvertString(B[11]));
             String departmentTemp = util.ConvertString(B[12]); 
-            if("Wendy".equalsIgnoreCase(departmentTemp) || "Outbound".equalsIgnoreCase(departmentTemp)){
+            System.out.println("departmentTemp : "+departmentTemp);
+            if(("Wendy".equalsIgnoreCase(departmentTemp) || "Outbound".equalsIgnoreCase(departmentTemp))&&(("".equalsIgnoreCase(department)||("Wendy,Outbound".equalsIgnoreCase(department))))){
                 taxInvoiceSummaryReport.setDepartment("Wendy + Outbound");
 
             } else {
