@@ -2314,6 +2314,9 @@ public class AJAXBean extends AbstractBean implements
             } else {
                 displaydescription = billTypeName + " : "+description;
             }
+            
+            String displaydescriptionScript = displaydescription.replaceAll("'", "\\\\'");
+            System.out.println("displaydescriptionScript" + displaydescriptionScript);
 
             if (amount.compareTo(BigDecimal.ZERO) != 0) {
                 newrow = "";
@@ -2328,7 +2331,7 @@ public class AJAXBean extends AbstractBean implements
                         + "<td class='money'>" + amountinvoice + "</td>"
                         + "<td class='money'>" + amount + "</td>"
                         + "<td>" + currency + "</td>"
-                        + "<td><center><a href=\"#/inv\"><span onclick=\"addProduct('" + product + "','" + description + "','" + cost + "','" + cur + "','" + isVat + "','" + vat + "','" + amount + "','" + "THB" + "','" + invId + "','','','','1','" + displaydescription + "','" + invNo + "','','','','' ,'" + invoice.getId() + "','" + invoice.getInvNo()+ "')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
+                        + "<td><center><a href=\"#/inv\"><span onclick=\"addProduct('" + product + "','" + description + "','" + cost + "','" + cur + "','" + isVat + "','" + vat + "','" + amount + "','" + "THB" + "','" + invId + "','','','','1','" + displaydescriptionScript + "','" + invNo + "','','','','' ,'" + invoice.getId() + "','" + invoice.getInvNo()+ "')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
                         + "</tr>";
                 html.append(newrow);
                 No++;
@@ -2475,6 +2478,8 @@ public class AJAXBean extends AbstractBean implements
             }
 
             System.out.println("displaydescription" + displaydescription);
+            String displaydescriptionScript = displaydescription.replaceAll("'", "\\\\'");
+            System.out.println("displaydescriptionScript" + displaydescriptionScript);
             
 //            MDefaultData mDefaultData = getMDefaultDataFromType("vat");
 //            vat = mDefaultData.getValue();
@@ -2501,7 +2506,7 @@ public class AJAXBean extends AbstractBean implements
                         }
                 newrow += "<td class='money'>" + amount + "</td>"
                         + "<td>" + currency + "</td>"
-                        + "<td><center><a href=\"#/ref\"><span onclick=\"addProduct('" + product + "','" + description + "','" + cost + "','" + cur + "','','','" + amount + "','" + currency + "','','" + billableDescId + "','','','2','" + displaydescription + "','" + refNo + "','','','','','','')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
+                        + "<td><center><a href=\"#/ref\"><span onclick=\"addProduct('" + product + "','" + description + "','" + cost + "','" + cur + "','','','" + amount + "','" + currency + "','','" + billableDescId + "','','','2','" + displaydescriptionScript + "','" + refNo + "','','','','','','')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
                         + "</tr>";
                 html.append(newrow);
                 No++;
