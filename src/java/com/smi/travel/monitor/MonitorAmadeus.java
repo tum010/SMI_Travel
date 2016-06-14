@@ -469,7 +469,7 @@ public class MonitorAmadeus extends MonitorScheduler {
                             costS = ticket_fare;
                         }
                     }
-                    cost = util.convertStringToBigDecimal(costS).multiply(new BigDecimal("0.95"));
+                    cost = util.calculateRoundUp(util.convertStringToBigDecimal(costS).multiply(new BigDecimal("0.95")));
                     price = util.convertStringToBigDecimal(costS);
                     
                 } else if (isInternationalTicket(ticketType)) {
@@ -490,12 +490,12 @@ public class MonitorAmadeus extends MonitorScheduler {
                     }
                     
                     if(haveAInFareCommission(getField("fare commission", fareLine).trim())){
-                        cost = util.convertStringToBigDecimal(costS);
+                        cost = util.calculateRoundUp(util.convertStringToBigDecimal(costS));
                         System.out.println("cost [" + cost +"]");
                         price = cost.add(util.convertStringToBigDecimal(fareCommission));
                         
                     } else {
-                        cost = util.convertStringToBigDecimal(costS).multiply((new BigDecimal("100.00").subtract(new BigDecimal(fareCommission))).divide(new BigDecimal("100.00")));
+                        cost = util.calculateRoundUp(util.convertStringToBigDecimal(costS).multiply((new BigDecimal("100.00").subtract(new BigDecimal(fareCommission))).divide(new BigDecimal("100.00"))));
                         System.out.println("cost [" + cost +"]");
                         price = util.convertStringToBigDecimal(costS);
                     }
@@ -504,12 +504,12 @@ public class MonitorAmadeus extends MonitorScheduler {
 //                    price = util.convertStringToBigDecimal(ticket_fare);
 //                    cost = (price.multiply((new BigDecimal(100)).subtract(new BigDecimal(fareCommission)))).divide(new BigDecimal(100));
                     if(haveAInFareCommission(getField("fare commission", fareLine).trim())){
-                        cost = util.convertStringToBigDecimal(costS);
+                        cost = util.calculateRoundUp(util.convertStringToBigDecimal(costS));
                         System.out.println("cost [" + cost +"]");
                         price = cost.add(util.convertStringToBigDecimal(fareCommission));
                         
                     } else {
-                        cost = util.convertStringToBigDecimal(costS).multiply((new BigDecimal("100.00").subtract(new BigDecimal(fareCommission))).divide(new BigDecimal("100.00")));
+                        cost = util.calculateRoundUp(util.convertStringToBigDecimal(costS).multiply((new BigDecimal("100.00").subtract(new BigDecimal(fareCommission))).divide(new BigDecimal("100.00"))));
                         System.out.println("cost [" + cost +"]");
                         price = util.convertStringToBigDecimal(costS);
                     }

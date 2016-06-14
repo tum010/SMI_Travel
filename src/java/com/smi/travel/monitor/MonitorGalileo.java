@@ -431,19 +431,19 @@ public class MonitorGalileo extends MonitorScheduler {
                 //Update cost,price,tax according to passengertype
                 BookingFlight bf = this.getMostEarlyFlight(bAir.getBookingPnr());
                 if ("ADT".equalsIgnoreCase(passengerType) || (passengerType.indexOf("A") != -1)) {
-                    bf.setAdCost(cost);
+                    bf.setAdCost(util.calculateRoundUp(cost));
                     bf.setAdPrice(price);
                     bf.setAdTax(tax);
                 } else if ("CHD".equalsIgnoreCase(passengerType) || (passengerType.indexOf("C") != -1)) {
-                    bf.setChCost(cost);
+                    bf.setChCost(util.calculateRoundUp(cost));
                     bf.setChPrice(price);
                     bf.setChTax(tax);
                 } else if ("INF".equalsIgnoreCase(passengerType) || (passengerType.indexOf("I") != -1)) {
-                    bf.setInCost(cost);
+                    bf.setInCost(util.calculateRoundUp(cost));
                     bf.setInPrice(price);
                     bf.setInTax(tax);
                 } else {
-                    bf.setAdCost(cost);
+                    bf.setAdCost(util.calculateRoundUp(cost));
                     bf.setAdPrice(price);
                     bf.setAdTax(tax);
                 }

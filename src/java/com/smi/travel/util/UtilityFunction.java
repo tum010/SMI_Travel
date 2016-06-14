@@ -723,4 +723,58 @@ public class UtilityFunction {
         return name;
     }
 
+    public BigDecimal calculateRoundUp(BigDecimal price) {
+        BigDecimal result = new BigDecimal(BigInteger.ZERO);
+        
+        //Remove Dot       
+        String[] priceArray = (String.valueOf(price)).split("\\.");
+        System.out.println("Price Array[0] : " + priceArray[0]);
+        System.out.println("Price Array[1] : " + priceArray[1]);
+        
+        //Convert to String
+        String priceStr = String.valueOf(priceArray[0].substring(0, priceArray[0].length()- 1));
+        System.out.println("Price String : " + priceStr);
+        
+        //Cut last number for check with numberList
+        int lastNumber = Integer.parseInt(priceArray[0].substring(priceArray[0].length() - 1, priceArray[0].length()));
+        System.out.println("Last Number : " + lastNumber);
+          
+        if(lastNumber == 1 || lastNumber == 2 || lastNumber == 3 || lastNumber == 4) {
+            priceStr += "5";
+            System.out.println("Round up to five : "+priceStr);
+            result = new BigDecimal(priceStr);
+
+        } else if(lastNumber == 6 || lastNumber == 7 || lastNumber == 8 || lastNumber == 9) {
+            int countNine = 0;           
+            
+            loopCountNine:           
+            for(int i = 1; i < priceStr.length(); i++){
+                String priceTemp = priceStr.substring(priceStr.length() - i, priceStr.length() - (i - 1));
+                System.out.println("Price Temp ["+i+"] : " + priceTemp);
+                lastNumber = Integer.parseInt(priceTemp);
+                System.out.println("Last number ["+i+"] : " + lastNumber);
+                
+                if(lastNumber == 9){
+                    countNine += 1;
+                
+                } else {
+                    break loopCountNine;
+                }
+            }
+
+            priceStr = String.valueOf(Integer.parseInt(priceStr.substring(0,priceStr.length() - countNine)) + 1);
+            
+            for(int i = 0; i <= countNine; i++){
+                priceStr += "0";
+            }
+            
+            result = new BigDecimal(priceStr);
+
+        } 
+        
+        System.out.println("Result : " + result);
+        
+        return result;
+    }
+
 }
