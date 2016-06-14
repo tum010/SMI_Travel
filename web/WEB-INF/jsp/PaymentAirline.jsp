@@ -1734,8 +1734,7 @@ for(var i = 0; i < rad.length; i++) {
         
         $('#PaymentAirlineListTable').dataTable({bJQueryUI: true,
             "sPaginationType": "full_numbers",
-            "bAutoWidth": false,
-            "bFilter": false,
+            "bAutoWidth": false,       
             "bPaginate": true,
             "bInfo": false,
             "bLengthChange": false,
