@@ -8,6 +8,7 @@ package com.smi.travel.controller;
 import com.smi.travel.datalayer.entity.Agent;
 import com.smi.travel.datalayer.entity.OtherBooking;
 import com.smi.travel.datalayer.entity.SystemUser;
+import com.smi.travel.datalayer.service.BookingDetailService;
 import com.smi.travel.datalayer.service.BookingOtherService;
 import com.smi.travel.datalayer.service.DaytourCommissionService;
 import com.smi.travel.datalayer.service.UtilityService;
@@ -38,6 +39,7 @@ public class DaytourOtherComissionController extends SMITravelController {
     private UtilityService utilservice;
     private DaytourCommissionService daytourCommissionService;
     private BookingOtherService bookingOtherService;
+    private BookingDetailService bookingDetailService;
     private static final String GUIDELIST = "GuideList";
     private static final String AGENTLIST = "AgentList";
     private static final String BookingList = "BookingList";
@@ -60,7 +62,7 @@ public class DaytourOtherComissionController extends SMITravelController {
         String dateFromS = util.covertStringDateToFormatYMD(request.getParameter("InputDateFrom"));
         String dateToS = util.covertStringDateToFormatYMD(request.getParameter("InputDateTo"));
         String selectGuideId = request.getParameter("SelectGuide");
-        String selectAgentId = request.getParameter("SelectAgent");
+        String selectAgentId = request.getParameter("agent_id");
         String dayCommRows = request.getParameter("dayCommRows");
     
         
@@ -160,7 +162,7 @@ public class DaytourOtherComissionController extends SMITravelController {
         request.setAttribute(DateFrom, dateFromS);
         request.setAttribute(DateTo, dateToS);
         request.setAttribute(SelectGuide, selectGuideId);
-        request.setAttribute(SelectAgent, selectAgentId);
+        request.setAttribute(SelectAgent, bookingDetailService.getAgentdao().getAgentFromID(selectAgentId));
         setGeneralResponseAttribute(request);
 
         return DaytourOtherCommission;
@@ -270,5 +272,13 @@ public class DaytourOtherComissionController extends SMITravelController {
             log.info("DaytourBookingId = " + daytourBookingId);
         }
         return updateBooking;
+    }
+
+    public BookingDetailService getBookingDetailService() {
+        return bookingDetailService;
+    }
+
+    public void setBookingDetailService(BookingDetailService bookingDetailService) {
+        this.bookingDetailService = bookingDetailService;
     }
 }

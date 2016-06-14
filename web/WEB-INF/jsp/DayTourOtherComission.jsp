@@ -107,18 +107,17 @@
                     <div class="col-xs-1 text-right">
                         <label class="control-label text-right">Agent</label>
                     </div>
-                    <div class="col-xs-6">
-                        <select name="SelectAgent" id="SelectAgent"  class="form-control"   >
-                            <option value="">- - AGENT - -</option>
-                            <c:forEach var="item" items="${agentList}" >
-                                <c:set var="select" value="" />
-                                <c:set var="selectedGuideId" value="${selectAgent}" />
-                                <c:if test="${item.id == selectedGuideId}">
-                                    <c:set var="select" value="selected" />
-                                </c:if>
-                                <option value="<c:out value="${item.id}" />" ${select}><c:out value="${item.name}" /></option>   
-                            </c:forEach>
-                        </select>                    
+                    <div class="col-xs-2"> 
+                        <div class="input-group" id="gr">
+                            <input type="hidden" class="form-control" id="agent_id" name="agent_id" value="${selectAgent.id}" />
+                            <input type="text" class="form-control" id="agent_code" name="agent_code" value="${selectAgent.code}" />
+                            <span class="input-group-addon" id="agen_modal"  data-toggle="modal" data-target="#AgentHeaderModal">
+                                <span class="glyphicon-search glyphicon"></span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-xs-4"> 
+                        <input type="text" class="form-control" id="agent_name" name="agent_name" value="${selectAgent.name}" readonly="">
                     </div>
                 </div>
                 <div class="col-xs-12 form-group" style="margin-top: -10px">
@@ -257,7 +256,7 @@
                     <input type="hidden" id="dateFromSearch" name="InputDateFrom" >                        
                     <input type="hidden" id="dateToSearch" name="InputDateTo" >                        
                     <input type="hidden" id="filterGuide" name="SelectGuide" >                        
-                    <input type="hidden" id="filterAgent" name="SelectAgent" >                       
+                    <input type="hidden" id="filterAgent" name="agent_id" >                       
                     <input type="hidden" id="action" name="action" value="save"> 
 <!--                    <a id="ButtonPrintGuide" name="ButtonPrintGuide" class="btn btn-primary" data-toggle="modal" data-target="#GuideModal" ><i class="fa fa-print"></i> Print Guide</a>
                     <a id="ButtonPrintAgent" name="ButtonPrintAgent" class="btn btn-primary" data-toggle="modal" data-target="#AgentModal"><i class="fa fa-print"></i> Print Agent</a>-->
@@ -421,7 +420,49 @@
                       </form>
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-
+<!--Modal  Agent-->
+<div class="modal fade" id="AgentHeaderModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Agent</h4>
+            </div>
+            <div class="modal-body">
+                <!--Agent List Table-->
+                <table class="display" id="AgentTable">
+                    <thead>                        
+                        <tr class="datatable-header">
+                            <th class="hidden">ID</th>
+                            <th>Code</th>
+                            <th>Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <script>
+                        agent = [];
+                    </script>
+                    <c:forEach var="a" items="${agentList}">
+                        <tr>
+                            <td class="agent-id hidden">${a.id}</td>
+                            <td class="agent-code">${a.code}</td>
+                            <td class="agent-name">${a.name}</td>
+                        </tr>
+                        <script>
+                            agent.push({id: "${a.id}", code: "${a.code}", name: "${a.name}"});
+                        </script>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <div class="text-right">
+                    <button id="AgentHeaderModalClose" type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
 <script type="text/javascript" charset="uts-8">
     $(document).ready(function () { 
         jQuery.curCSS = jQuery.css;
@@ -677,7 +718,7 @@
     function setValueInModalGuide(){
         var fromdate = $('#InputDateFrom').val();
         var todate = $('#InputDateTo').val();
-        var agent = $('#SelectAgent').val();
+        var agent = $('#agent_id').val();
         var guide = $('#SelectGuide').val();
         $('#fromdateAdd').val(fromdate);
         $('#todateAdd').val(todate);
@@ -837,7 +878,7 @@
     //    var selAgentReport = document.getElementById("selAgentReport").value;
         var agentPrintFrom = document.getElementById("InputDateFrom").value;
         var agentPrintTo = document.getElementById("InputDateTo").value;
-        var selAgentReport = document.getElementById("SelectAgent").value;
+        var selAgentReport = document.getElementById("agent_id").value;
         if ((agentPrintFrom !== '') && (agentPrintTo !== '')) {
             window.open("report.smi?name=OtherAgentCommission&startdate=" + agentPrintFrom + "&enddate=" + agentPrintTo + "&agentID=" + selAgentReport);
         } else {
@@ -845,6 +886,72 @@
         }    
     }
     
+        // AGENT 
+$(document).ready(function () {
+    var agentCode = [];
+    $.each(agent, function (key, value) {
+        console.log("agentCount=="+agent.length);
+        agentCode.push(value.code);
+           agentCode.push(value.name);
+    });
+
+    $("#agent_code").autocomplete({
+        source: agentCode,
+        close:function( event, ui ) {
+           $("#agent_code").trigger('keyup');
+
+        }
+    });
+       
+        
+    $("#agent_code").on('keyup',function(){
+        var position = $(this).offset();
+        $(".ui-widget").css("top", position.top + 30);
+        $(".ui-widget").css("left", position.left);
+        var code = this.value.toUpperCase();
+        var name = this.value.toUpperCase();
+        $("#agent_id,#agent_name").val(null);
+        $.each(agent, function (key, value) {
+            if (value.code.toUpperCase() === code ) {  
+                $("#agent_id").val(value.id);
+                $("#agent_name").val(value.name);
+                $("#agent_code").val(value.code);
+            }
+            else if(value.name.toUpperCase() === name){
+                $("#agent_code").val(value.code);
+                $("#agent_id").val(value.id);
+                $("#agent_name").val(value.name);
+            }
+        }); 
+
+    }); 
+       
+        
+    $("#AgentTable tr").on('click', function () {
+        var agent_id = $(this).find(".agent-id").text();
+        var agent_code = $(this).find(".agent-code").text();
+        var agent_name = $(this).find(".agent-name").text();
+        $("#agent_id").val(agent_id);
+        $("#agent_code").val(agent_code);
+        $("#agent_name").val(agent_name);
+        $("#AgentHeaderModal").modal('hide');
+    });
+    // AGENT TABLE
+    $('#AgentTable').dataTable({bJQueryUI: true,
+        "sPaginationType": "full_numbers",
+        "bAutoWidth": false,
+        "bFilter": true,
+        "bPaginate": true,
+        "bInfo": false,
+        "bLengthChange": false,
+        "iDisplayLength": 10,
+        "aaSorting": [[ 1, "asc" ]]
+    });
+    $('#AgentTable tbody').on('click', 'tr', function () {
+        $(this).addClass('row_selected').siblings().removeClass('row_selected');
+    });
+});
+
 </script>
 <style>
 /* .bootstrap-datetimepicker-widget { 

@@ -3,6 +3,7 @@ package com.smi.travel.controller;
 import com.smi.travel.datalayer.entity.Agent;
 import com.smi.travel.datalayer.entity.DaytourBooking;
 import com.smi.travel.datalayer.entity.SystemUser;
+import com.smi.travel.datalayer.service.BookingDetailService;
 import com.smi.travel.datalayer.service.DaytourCommissionService;
 import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.master.controller.SMITravelController;
@@ -40,6 +41,7 @@ public class DaytourComissionController extends SMITravelController {
     private static final String SelectAgent = "SelectAgent";
     private static final String TransactionResult = "TransactionResult";
     UtilityFunction utility = new UtilityFunction();
+    private BookingDetailService bookingDetailService;
     
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
@@ -54,7 +56,7 @@ public class DaytourComissionController extends SMITravelController {
         String dateFromS = util.covertStringDateToFormatYMD(request.getParameter("InputDateFrom"));
         String dateToS = util.covertStringDateToFormatYMD(request.getParameter("InputDateTo"));
         String selectGuideId = request.getParameter("SelectGuide");
-        String selectAgentId = request.getParameter("SelectAgent");
+        String selectAgentId = request.getParameter("agent_id");
         String dayCommRows = request.getParameter("dayCommRows");
     
         
@@ -127,12 +129,12 @@ public class DaytourComissionController extends SMITravelController {
         request.setAttribute(DateFrom, dateFromS);
         request.setAttribute(DateTo, dateToS);
         request.setAttribute(SelectGuide, selectGuideId);
-        request.setAttribute(SelectAgent, selectAgentId);
+        request.setAttribute(SelectAgent, bookingDetailService.getAgentdao().getAgentFromID(selectAgentId));
         setGeneralResponseAttribute(request);
 
         return DaytourCommission;
     }
-
+    
     public void setGeneralResponseAttribute(HttpServletRequest request) {
 
         List<SystemUser> guideList = utilservice.getGuildeList();
@@ -226,6 +228,14 @@ public class DaytourComissionController extends SMITravelController {
             log.info("DaytourBookingId = " + daytourBookingId);
         }
         return updateBooking;
+    }
+
+    public BookingDetailService getBookingDetailService() {
+        return bookingDetailService;
+    }
+
+    public void setBookingDetailService(BookingDetailService bookingDetailService) {
+        this.bookingDetailService = bookingDetailService;
     }
 
 }

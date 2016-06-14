@@ -34,11 +34,11 @@ $(document).ready(function() {
     
     $(".money").mask('000,000,000', {reverse: true});
 
-    var $selectAgent = $('#SelectAgent').selectize({
-        create: false,
-        sortField: 'text'
-    });
-    controlAgent = $selectAgent[0].selectize;
+//    var $selectAgent = $('#SelectAgent').selectize({
+//        create: false,
+//        sortField: 'text'
+//    });
+//    controlAgent = $selectAgent[0].selectize;
 
     $('#selAgentReport').selectize({
         create: false,
@@ -374,10 +374,12 @@ function saveDaytourCommission() {
     console.log("saveDaytourCommission");
     var dateTo = $("#InputDateTo").val();
     var dateFrom = $("#InputDateFrom").val();
+    var agent_id = $("#agent_id").val();
+    $("#filterAgent").val(agent_id);
     $("#dateFromSearch").val(dateFrom);
     $("#dateToSearch").val(dateTo);
     $("#filterGuide").val(controlGuide.getValue());
-    $("#filterAgent").val(controlAgent.getValue());
+    
     var counter = 1;
     $("#CommissionTable tbody").find("tr").each(function(){
         var checkbox = $(this).find("td.edited").children();
@@ -436,7 +438,7 @@ function printAgentCommission() {
 //    var selAgentReport = document.getElementById("selAgentReport").value;
     var agentPrintFrom = document.getElementById("InputDateFrom").value;
     var agentPrintTo = document.getElementById("InputDateTo").value;
-    var selAgentReport = document.getElementById("SelectAgent").value;
+    var selAgentReport = document.getElementById("agent_id").value;
     if ((agentPrintFrom !== '') && (agentPrintTo !== '')) {
         window.open("report.smi?name=AgentCommission&startdate=" + agentPrintFrom + "&enddate=" + agentPrintTo + "&agentID=" + selAgentReport);
     } else {
