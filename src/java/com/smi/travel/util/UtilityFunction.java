@@ -729,7 +729,7 @@ public class UtilityFunction {
         //Remove Dot       
         String[] priceArray = (String.valueOf(price)).split("\\.");
         System.out.println("Price Array[0] : " + priceArray[0]);
-        System.out.println("Price Array[1] : " + priceArray[1]);
+//        System.out.println("Price Array[1] : " + priceArray[1]);
         
         //Convert to String
         String priceStr = String.valueOf(priceArray[0].substring(0, priceArray[0].length()- 1));
