@@ -111,6 +111,7 @@ public class ReceiptController extends SMITravelController {
         String invoiceTableId = request.getParameter("invoiceTableId1");
         String isref = request.getParameter("isref");
         String createBy = request.getParameter("createBy");
+        String termidinvoice = request.getParameter("termidinvoice");
         
         //** For Duplicate User
         String recNoForCheckUser = request.getParameter("recNoForCheckUser");
@@ -293,11 +294,14 @@ public class ReceiptController extends SMITravelController {
             invoice.setIsLock(1);
             invoice.setCreateBy(user.getUsername());
             invoice.setCreateDate(new Date());
-            if(StringUtils.isNotEmpty(inputStatus)){
+            
+            if(termidinvoice != null && !"null".equalsIgnoreCase(String.valueOf(termidinvoice)) && !"".equalsIgnoreCase(String.valueOf(termidinvoice))){
+                System.out.println(" termidinvoice ::: :" + termidinvoice);
                 MAccterm mAccpay = new MAccterm();
-                mAccpay.setId(inputStatus);
+                mAccpay.setId(termidinvoice);
                 invoice.setMAccTerm(mAccpay);
             }
+            
             invoice.setStaff(user);
             MFinanceItemstatus mFinanceItemstatus = new MFinanceItemstatus();
             mFinanceItemstatus.setId("1"); // 1 = Normal

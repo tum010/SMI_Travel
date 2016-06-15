@@ -617,6 +617,8 @@ public class InvoiceController extends SMITravelController {
             if(termPay != null && !termPay.equals("")){
                 type.setId(termPay);
                 invoice.setMAccTerm(type);
+            }else{
+                invoice.setMAccTerm(null);
             }
             
             if(dueDate != null){

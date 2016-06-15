@@ -22,6 +22,7 @@ public class TicketAircommissionView {
     private String agentcode;
     private String agentname;
     private String agentaddress;
+    private String termid;
     
     public String getPaymentId() {
         return paymentId;
@@ -93,6 +94,14 @@ public class TicketAircommissionView {
 
     public void setAgentaddress(String agentaddress) {
         this.agentaddress = agentaddress;
+    }
+
+    public String getTermid() {
+        return termid;
+    }
+
+    public void setTermid(String termid) {
+        this.termid = termid;
     }
     
 }

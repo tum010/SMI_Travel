@@ -36,6 +36,7 @@ public class TicketAircommissionViewImpl implements TicketAircommissionViewDao{
                 .addScalar("agentcode",Hibernate.STRING)
                 .addScalar("agentname",Hibernate.STRING)
                 .addScalar("agentaddress",Hibernate.STRING)
+                .addScalar("termid",Hibernate.STRING)
                 .list();
               
         List<TicketAircommissionView> ticketAircommissionViewList =  new LinkedList<TicketAircommissionView>();
@@ -50,6 +51,7 @@ public class TicketAircommissionViewImpl implements TicketAircommissionViewDao{
             TicketAirView.setAgentcode(String.valueOf(T[6]));
             TicketAirView.setAgentname(String.valueOf(T[7]));
             TicketAirView.setAgentaddress(String.valueOf(T[8]));
+            TicketAirView.setTermid(String.valueOf(T[9]));
             ticketAircommissionViewList.add(TicketAirView);  
         }
        

@@ -2652,7 +2652,7 @@
         $('#invoicenopanel').removeClass('has-error');
     }
 
-    function addProduct(product, description, cost, cur, isVat, vat, amount, currency, invId, billDescId, paymentId, airlineCode, checkadd, disdescription, number, paymentTourId, receiveFrom, receiveName, receiveAddress, invTableId, invTableNo) {
+    function addProduct(product, description, cost, cur, isVat, vat, amount, currency, invId, billDescId, paymentId, airlineCode, checkadd, disdescription, number, paymentTourId, receiveFrom, receiveName, receiveAddress, invTableId, invTableNo , termid) {
         var receiveAddressTemp = replaceAll("<br>", "\n", receiveAddress.toString());
         $('#textAlertDivSave').hide();
         $('#textAlertDivNotSave').hide();
@@ -2728,12 +2728,12 @@
 
         }
         if (!checkAddDuplicate) {
-            AddDataRowProduct(tempCount, product, description, cost, cur, isVat, vat, amount, currency, invId, billDescId, paymentId, airlineCode, disdescription, number, paymentTourId, receiveFrom, receiveName, receiveAddressTemp, invTableId, invTableNo);
+            AddDataRowProduct(tempCount, product, description, cost, cur, isVat, vat, amount, currency, invId, billDescId, paymentId, airlineCode, disdescription, number, paymentTourId, receiveFrom, receiveName, receiveAddressTemp, invTableId, invTableNo , termid);
         } else {
             $('#textAlertDuplicateProduct').show();
         }
     }
-    function AddDataRowProduct(row, product, description, cost, cur, isVat, vat, amount, currency, invId, billDescId, paymentId, airlineCode, disdescription, number, paymentTourId, receiveFrom, receiveName, receiveAddress, invTableId, invTableNo) {
+    function AddDataRowProduct(row, product, description, cost, cur, isVat, vat, amount, currency, invId, billDescId, paymentId, airlineCode, disdescription, number, paymentTourId, receiveFrom, receiveName, receiveAddress, invTableId, invTableNo , termid) {
         var grossinv = 0;
         if (vat !== '' && isVat !== '0') {
             var x = parseFloat(amount);
@@ -2770,6 +2770,7 @@
         if (typeRec === "V") {
             $("#ReceiptListTable tbody").append(
                     '<tr style="higth 100px">' +
+                    '<input id="termidinvoice"  name="termidinvoice"   type="hidden" value="" >' +
                     '<input id="invoiceTableNo' + row + '"  name="invoiceTableNo' + row + '"   type="hidden" value="' + invTableNo + '" >' +
                     '<input id="invoiceTableId' + row + '"  name="invoiceTableId' + row + '"   type="hidden" value="' + invTableId + '" >' +
                     '<input id="grossInvoice' + row + '"  name="grossInvoice' + row + '"   type="hidden" value="' + grossinv + '" >' +
@@ -2812,6 +2813,7 @@
         } else {
             $("#ReceiptListTable tbody").append(
                     '<tr style="higth 100px">' +
+                    '<input id="termidinvoice"  name="termidinvoice"   type="hidden" value="" >' +
                     '<input id="invoiceTableNo' + row + '"  name="invoiceTableNo' + row + '"   type="hidden" value="' + invTableNo + '" >' +
                     '<input id="invoiceTableId' + row + '"  name="invoiceTableId' + row + '"   type="hidden" value="' + invTableId + '" >' +
                     '<input id="grossInvoice' + row + '"  name="grossInvoice' + row + '"   type="hidden" value="' + grossinv + '" >' +
