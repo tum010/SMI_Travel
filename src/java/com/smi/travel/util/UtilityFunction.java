@@ -770,6 +770,9 @@ public class UtilityFunction {
             
             result = new BigDecimal(priceStr);
 
+        } else {
+            result = new BigDecimal(priceArray[0]);
+            
         } 
         
         System.out.println("Result : " + result);
