@@ -198,7 +198,7 @@
                                 <td>${refno1}-${refno2}</td>
                                 <td>${item.master.customer.MInitialname.name} ${item.master.customer.lastName} ${item.master.customer.firstName}</td>
                                 <td class="selectGuide form-group">  
-                                    <select class="guidename"  id="selectGuide-${status.count}" name="selectGuide-" onchange="getGuideCommission('${item.daytour.code}','guideComm-${status.count}');" class="selectize"   >
+                                    <select class="guidename"  id="selectGuide-${status.count}" name="selectGuide-" onchange="getGuideCommission('${item.daytour.code}','guideComm-${status.count}');" onfocus="setDecimalFormat();" class="selectize"   >
                                         <option value="" >--- select ---</option>
                                         <c:forEach var="guide" items="${guideList}" >
                                             <c:set var="select" value="" />
@@ -212,22 +212,22 @@
                                 </td>
                                 <td class="form-group" >
                                     <input type="text" class="form-control decimal guidecom" id="guideComm-${status.count}" name="guideComm-" 
-                                           value="${item.guideCommission}" maxlength="14">
+                                           value="${item.guideCommission}" maxlength="14" onfocus="setDecimalFormat();">
                                 </td>
                                 <td class="form-group">
                                     <input type="text" class="form-control" id="guideRemark-${status.count}" name="guideRemark-" 
-                                           value="${item.remarkGuideCom}" maxlength="255">
+                                           value="${item.remarkGuideCom}" maxlength="255" onfocus="setDecimalFormat();">
                                 </td>
                                 <td class="form-group">
-                                    <input type="text" class="form-control agentname" id="AgentName-${status.count}" name="AgentName-"  valHidden="${item.agent.id}" value="${item.agent.name}"  /> 
+                                    <input type="text" class="form-control agentname" id="AgentName-${status.count}" name="AgentName-"  valHidden="${item.agent.id}" value="${item.agent.name}" onkeyup="getAgentName('${status.count}')" onfocus="setDecimalFormat();"/> 
                                 </td>
                                 <td class="form-group">
                                     <input type="text" class="form-control decimal agentcom" id="agentComm-${status.count}" name="agentComm-" 
-                                           value="${item.agentComission}" maxlength="14">
+                                           value="${item.agentComission}" maxlength="14" onfocus="setDecimalFormat();">
                                 </td>
                                 <td class="agentRemark form-group">
                                     <input type="text" class="form-control" id="agentRemark-${status.count}" name="agentRemark-" 
-                                           value="${item.remarkAgentCom}" maxlength="255">
+                                           value="${item.remarkAgentCom}" maxlength="255" onfocus="setDecimalFormat();">
                                 </td>
                                 <td class="hidden edited">
                                     <input type="checkbox" class="form-control" id="hasEdit-${status.count}" name="hasEdit-" >
@@ -513,12 +513,68 @@
         });
         
  
+//        var dataAgent = [];
+//        dataAgent = agentName;
+//        var agentcount= 0 ; 
+
+//        $("#CommissionTable tbody").find("tr").each(function(){ 
+//            agentcount++;
+//            $("#AgentName-"+agentcount).autocomplete({
+//                source: dataAgent,
+//                focus: function( event, ui ) {
+//                    event.preventDefault();
+//                    $(this).val(ui.item.label);
+//                },
+//                select: function( event, ui ) {
+//                    event.preventDefault();
+//                    $(this).val(ui.item.label);
+//                    $(this).attr("valHidden",ui.item.value);
+//                },
+//                close:function( event, ui ) {
+//                   var editCheckBox = $(this).closest('tr').find('td.edited').children();
+//                   $(editCheckBox).attr("checked", true);
+//                   $("#AgentName-"+agentcount).trigger('keyup');
+//                } 
+//            });
+//        
+//            $("#AgentName-"+agentcount).keyup(function () {
+//                var position = $(this).offset();
+//                $(".ui-widget").css("top", position.top + 30);
+//                $(".ui-widget").css("left", position.left);
+//                $(".ui-widget").css("font-size", 10);
+//                if($(this).val() == ''){
+//                    $(this).attr("valHidden",'');
+//                }
+//            }); 
+//        });
+      
+
+        $("#CommissionTable").on('change', 'input,select', function (e) {
+            var editCheckBox = $(this).closest('tr').find('td.edited').children();
+            $(editCheckBox).attr("checked", true);
+        });
+        
+        
+        
+    });
+    
+    function setDecimalFormat(){
+        $(".decimal").inputmask({
+            alias: "decimal",
+            integerDigits: 8,
+            groupSeparator: ',',
+            autoGroup: true,
+            digits: 2,
+            allowMinus: false,
+            digitsOptional: false,
+            placeholder: "0.00",
+        });
+    }
+    
+    function getAgentName(agentcount){
         var dataAgent = [];
         dataAgent = agentName;
-        var agentcount= 0 ; 
-
         $("#CommissionTable tbody").find("tr").each(function(){ 
-            agentcount++;
             $("#AgentName-"+agentcount).autocomplete({
                 source: dataAgent,
                 focus: function( event, ui ) {
@@ -547,16 +603,7 @@
                 }
             }); 
         });
-      
-
-        $("#CommissionTable").on('change', 'input,select', function (e) {
-            var editCheckBox = $(this).closest('tr').find('td.edited').children();
-            $(editCheckBox).attr("checked", true);
-        });
-        
-        
-        
-    });
+    }
     
     
     // AGENT 

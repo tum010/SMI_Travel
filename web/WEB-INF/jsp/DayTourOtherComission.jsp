@@ -205,7 +205,7 @@
                                 <td><center>${refno1}-${refno2}</center></td>
                                 <td>${item.master.customer.firstName} ${item.master.customer.lastName}</td>
                                 <td class="selectGuide form-group">  
-                                    <select class="guidename"  id="selectGuide-${status.count}" name="selectGuide-" onchange="getGuideCommission('${item.guide.name}','guideComm-${status.count}');getGuideComm(${status.count});" class="selectize"   >
+                                    <select class="guidename"  id="selectGuide-${status.count}" name="selectGuide-" onchange="getGuideCommission('${item.guide.name}','guideComm-${status.count}');getGuideComm(${status.count});" onfocus="setDecimalFormat();" class="selectize"   >
                                         <option value="" ></option>
                                         <c:forEach var="guide" items="${guideList}" >
                                             <c:set var="select" value="" />
@@ -219,23 +219,23 @@
                                 </td>
                                 <td class="form-group" >
                                     <input type="text" class="form-control decimal guidecom" id="guideComm-${status.count}" name="guideComm-" 
-                                           value="${item.guideCommission}" maxlength="14">
+                                           value="${item.guideCommission}" maxlength="14" onfocus="setDecimalFormat();">
                                 </td>
                                 <td class="form-group">
                                     <input type="text" class="form-control" id="guideRemark-${status.count}" name="guideRemark-" 
-                                           value="${item.remarkGuideCommission}" maxlength="255">
+                                           value="${item.remarkGuideCommission}" maxlength="255" onfocus="setDecimalFormat();">
                                 </td>
                                 <td class="form-group">
                                     <input type="text" onkeyup="getAgentCommission('${status.count}')" class="form-control agentname" id="AgentName-${status.count}" name="AgentName-" 
-                                           valHidden="${item.agent.id}" value="${item.agent.name}" /> 
+                                           valHidden="${item.agent.id}" value="${item.agent.name}" onfocus="setDecimalFormat();"/> 
                                 </td>
                                 <td class="form-group">
                                     <input type="text" class="form-control decimal agentcom" id="agentComm-${status.count}" name="agentComm-" 
-                                           value="${item.agentCommission}" maxlength="14">
+                                           value="${item.agentCommission}" maxlength="14" onfocus="setDecimalFormat();">
                                 </td>
                                 <td class="agentRemark form-group">
                                     <input type="text" class="form-control" id="agentRemark-${status.count}" name="agentRemark-" 
-                                           value="${item.remarkAgentCommission}" maxlength="255">
+                                           value="${item.remarkAgentCommission}" maxlength="255" onfocus="setDecimalFormat();">
                                 </td>
                                 <td class="hidden edited">
                                     <input type="checkbox" class="form-control" id="hasEdit-${status.count}" name="hasEdit-" >
@@ -727,56 +727,101 @@
         console.log("Add Guide : " + fromdate + " " + todate + " " + agent + " " + guide );
     }
     
-    function getAgentCommission(row){
-        var otherDate = $('#otherDate-'+row).val(); 
-        var adPrice = parseFloat($('#adPrice-'+row).val());
-        var adQty = parseFloat($('#adQty-'+row).val());
-        var chPrice = parseFloat($('#chPrice-'+row).val());
-        var chQty = parseFloat($('#chQty-'+row).val());
-        var inPrice = parseFloat($('#inPrice-'+row).val());
-        var inQty = parseFloat($('#inQty-'+row).val());
-        var price = (adPrice*adQty) + (chPrice*chQty)  + (inPrice*inQty) ;
-        var agentId = '';
+    function setDecimalFormat(){
+        $(".decimal").inputmask({
+            alias: "decimal",
+            integerDigits: 8,
+            groupSeparator: ',',
+            autoGroup: true,
+            digits: 2,
+            allowMinus: false,
+            digitsOptional: false,
+            placeholder: "0.00",
+        });
+    }
+    
+    function getAgentCommission(agentcount){
         var dataAgent = [];
         dataAgent = agentName;
-        var agentcount= 0 ; 
+        $("#CommissionTable tbody").find("tr").each(function(){ 
+            $("#AgentName-"+agentcount).autocomplete({
+                source: dataAgent,
+                focus: function( event, ui ) {
+                    event.preventDefault();
+                    $(this).val(ui.item.label);
+                },
+                select: function( event, ui ) {
+                    event.preventDefault();
+                    $(this).val(ui.item.label);
+                    $(this).attr("valHidden",ui.item.value);
+                },
+                close:function( event, ui ) {
+                   var editCheckBox = $(this).closest('tr').find('td.edited').children();
+                   $(editCheckBox).attr("checked", true);
+                   $("#AgentName-"+agentcount).trigger('keyup');
+                } 
+            });
         
-        $("#AgentName-"+row).autocomplete({
-            source: dataAgent,
-            focus: function( event, ui ) {
-                event.preventDefault();
-                $(this).val(ui.item.label);
-                agentId = ui.item.value;
-            },
-            select: function( event, ui ) {
-                event.preventDefault();
-                $(this).val(ui.item.label);
-                $(this).attr("valHidden",ui.item.value);
-                agentId = ui.item.value;
-                
-            },
-            close:function( event, ui ) {
-               var editCheckBox = $(this).closest('tr').find('td.edited').children();
-               $(editCheckBox).attr("checked", true);
-               $("#AgentName-"+agentcount).trigger('keyup');
-            } 
+            $("#AgentName-"+agentcount).keyup(function () {
+                var position = $(this).offset();
+                $(".ui-widget").css("top", position.top + 30);
+                $(".ui-widget").css("left", position.left);
+                $(".ui-widget").css("font-size", 10);
+                if($(this).val() == ''){
+                    $(this).attr("valHidden",'');
+                }
+            }); 
         });
-
-        $("#AgentName-"+row).keyup(function () {
-            if (event.keyCode === 13) {
-                var servletName = 'BookOtherServlet';
-                var servicesName = 'AJAXBean';
-                var param = 'action=' + 'text' +
-                        '&servletName=' + servletName +
-                        '&servicesName=' + servicesName +
-                        '&otherDate=' + otherDate +
-                        '&row=' + row +
-                        '&agentId=' + agentId +
-                        '&price=' + price +
-                        '&type=' + 'getAgentCommission';
-                CallAjaxSearchAgentCom(param,row);
-            }
-        }); 
+        
+//        var otherDate = $('#otherDate-'+row).val(); 
+//        var adPrice = parseFloat($('#adPrice-'+row).val());
+//        var adQty = parseFloat($('#adQty-'+row).val());
+//        var chPrice = parseFloat($('#chPrice-'+row).val());
+//        var chQty = parseFloat($('#chQty-'+row).val());
+//        var inPrice = parseFloat($('#inPrice-'+row).val());
+//        var inQty = parseFloat($('#inQty-'+row).val());
+//        var price = (adPrice*adQty) + (chPrice*chQty)  + (inPrice*inQty) ;
+//        var agentId = '';
+//        var dataAgent = [];
+//        dataAgent = agentName;
+//        var agentcount= 0 ; 
+//        
+//        $("#AgentName-"+row).autocomplete({
+//            source: dataAgent,
+//            focus: function( event, ui ) {
+//                event.preventDefault();
+//                $(this).val(ui.item.label);
+//                agentId = ui.item.value;
+//            },
+//            select: function( event, ui ) {
+//                event.preventDefault();
+//                $(this).val(ui.item.label);
+//                $(this).attr("valHidden",ui.item.value);
+//                agentId = ui.item.value;
+//                
+//            },
+//            close:function( event, ui ) {
+//               var editCheckBox = $(this).closest('tr').find('td.edited').children();
+//               $(editCheckBox).attr("checked", true);
+//               $("#AgentName-"+agentcount).trigger('keyup');
+//            } 
+//        });
+//
+//        $("#AgentName-"+row).keyup(function () {
+//            if (event.keyCode === 13) {
+//                var servletName = 'BookOtherServlet';
+//                var servicesName = 'AJAXBean';
+//                var param = 'action=' + 'text' +
+//                        '&servletName=' + servletName +
+//                        '&servicesName=' + servicesName +
+//                        '&otherDate=' + otherDate +
+//                        '&row=' + row +
+//                        '&agentId=' + agentId +
+//                        '&price=' + price +
+//                        '&type=' + 'getAgentCommission';
+//                CallAjaxSearchAgentCom(param,row);
+//            }
+//        }); 
     }
     
     function CallAjaxSearchAgentCom(param,row) {

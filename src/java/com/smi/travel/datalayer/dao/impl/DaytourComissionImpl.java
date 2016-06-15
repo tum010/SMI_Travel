@@ -27,7 +27,7 @@ public class DaytourComissionImpl implements DaytourComissionDao {
 
     private SessionFactory sessionFactory;
     private Transaction transaction;
-    private static final String GET_BOOKCOMISSION_QUERY = "from DaytourBooking DB where DB.tourDate >= :startdate and DB.tourDate <= :enddate ";
+    private static final String GET_BOOKCOMISSION_QUERY = "from DaytourBooking DB where DB.tourDate >= :startdate and DB.tourDate <= :enddate and DB.MItemstatus.id = 1 and DB.master.MBookingstatus.id != 3 and DB.master.MBookingstatus.id != 4 ";
     private static final String SAVE_COMISSION = "UPDATE DaytourBooking DB set DB.guide.id = :guide , DB.agent.id = :agent, DB.agentComission = :agentcom"
             + " , DB.guideCommission = :guidecom , DB.remarkGuideCom = :remarkguide , DB.remarkAgentCom = :remarkagent "
             + " Where DB.id = :bookdaytourid";
