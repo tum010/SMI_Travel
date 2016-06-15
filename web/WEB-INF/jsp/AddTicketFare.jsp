@@ -270,19 +270,19 @@
                         </div>
                         <div class="col-xs-1 text-right" style="width: 150px">
                             <div class="col-xs-1 text-right" style="width: 50px">
-                                <c:choose>
-                                    <c:when test="${ticketFare.enablePvCode == 1}">
-                                        <input type="checkbox" class="form-control" id="enablePvCode" name="enablePvCode" onclick="checkboxEnablePvCode(this)" value="1" checked/>
-                                    </c:when>
-                                    <c:otherwise>
+                                <%--<c:choose>--%>
+                                    <%--<c:when test="${ticketFare.enablePvCode == 1}">--%>
+                                        <!--<input type="checkbox" class="form-control" id="enablePvCode" name="enablePvCode" onclick="checkboxEnablePvCode(this)" value="1" checked/>-->
+                                    <%--</c:when>--%>
+                                    <%--<c:otherwise>--%>
                                         <input type="checkbox" class="form-control" id="enablePvCode" name="enablePvCode" onclick="checkboxEnablePvCode(this)" value="0"/>
-                                    </c:otherwise>
-                                </c:choose> 
+                                    <%--</c:otherwise>--%>
+                                <%--</c:choose>--%> 
                             </div>
                             <label class="control-label text-right">PV Code</label>
                         </div>
                         <div class="col-xs-1" style="width: 200px">
-                            <input id="pvCode" name="pvCode" type="text" class="form-control" maxlength="20" value="${ticketFare.pvCode}" disabled="disabled">
+                            <input id="pvCode" name="pvCode" type="text" class="form-control" maxlength="20" value="${ticketFare.pvCode}" readonly="">
                         </div>
                         <div class="col-xs-1 text-right"  style="width: 150px">
                            <label class="control-label text-right">Due Date </label>
@@ -1003,11 +1003,11 @@
 //            FilterTicketList($("#filtercus").val());
 //        }
     
-        if(document.getElementById("enablePvCode").value == '1'){
-            $("#pvCode").removeAttr("disabled");
-        }else{
-            $("#pvCode").attr("disabled", "disabled");
-        }
+//        if(document.getElementById("enablePvCode").value == '1'){
+//            $('#pvCode').prop('readonly', false);
+//        }else{
+//            $('#pvCode').prop('readonly', true);
+//        }
         
         $(".money").mask('000,000,000.00', {reverse: true});
         $('.date').datetimepicker();
@@ -2099,10 +2099,12 @@ function checkboxIsWaitPay(e) {
 function checkboxEnablePvCode(e) {
     if(e.checked) {
         document.getElementById("enablePvCode").value = "1";
-        $("#pvCode").removeAttr("disabled");
+//        $("#pvCode").attr("readonly", false);
+        $('#pvCode').prop('readonly', false);
     }else{
         document.getElementById("enablePvCode").value = "0";
-        $("#pvCode").attr("disabled", "disabled");
+//        $("#pvCode").attr('readonly', true);
+        $('#pvCode').prop('readonly', true);
     }
 }
 function checkboxEnableInvNo(e) {

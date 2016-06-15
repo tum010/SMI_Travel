@@ -31,7 +31,7 @@ public class TransferJobImpl implements TransferJobDao {
     private SessionFactory sessionFactory;
     private Transaction transaction;
     private static final int MAX_JOB = 100;
-    private static final String FILTERTOUR_FROM_DATE_QUERY = "from DaytourBooking DB where DB.tourDate = :date GROUP BY DB.daytour.code ";
+    private static final String FILTERTOUR_FROM_DATE_QUERY = "from DaytourBooking DB where DB.tourDate = :date and DB.master.MBookingstatus.id <> 3 and DB.master.MBookingstatus.id <> 4  and DB.MItemstatus.id = 1 GROUP BY DB.daytour.code ";
     private static final String GET_JOB_QUERY = "from TransferJob tr where tr.transferDate >= :startdate and tr.transferDate <= :enddate";
     private static final String GET_LASTDOCNO_QUERY = "from TransferJob tr where tr.documentNo Like :docno Order by tr.id desc ";
     private static final String GET_DOCNOFROMID_QUERY = "from TransferJob tr where tr.documentNo = :docno";
@@ -60,7 +60,7 @@ public class TransferJobImpl implements TransferJobDao {
     @Override
     public List<Place> filterPlaceFromDateAndTour(String TourDate, String TourID) {
         String filterPlaceQuery = "from DaytourBooking DB where DB.tourDate = '" + TourDate + "'"
-                + " and DB.daytour.id in (" + TourID + ") GROUP BY DB.place.id order by DB.place.place ";
+                + " and DB.daytour.id in (" + TourID + ") and DB.master.MBookingstatus.id <> 3 and DB.master.MBookingstatus.id <> 4  and DB.MItemstatus.id = 1 GROUP BY DB.place.id order by DB.place.place ";
         Session session = this.sessionFactory.openSession();
         List<Place> placeList = new LinkedList<Place>();
         List<DaytourBooking> list = session.createQuery(filterPlaceQuery)
@@ -82,7 +82,7 @@ public class TransferJobImpl implements TransferJobDao {
     @Override
     public List<String> filterPlaceOtherFromDateAndTour(String TourDate, String TourID) {
         String filterPlaceOtherQuery = "from DaytourBooking DB where DB.tourDate = '" + TourDate + "'"
-                + " and DB.place.place = 'OTHERS' and DB.daytour.id in (" + TourID + ") ";
+                + " and DB.place.place = 'OTHERS' and DB.daytour.id in (" + TourID + ") and DB.master.MBookingstatus.id <> 3 and DB.master.MBookingstatus.id <> 4  and DB.MItemstatus.id = 1 ";
         System.out.println("filterPlaceOtherQuery : " + filterPlaceOtherQuery);
         Session session = this.sessionFactory.openSession();
         List<String> otherList = new LinkedList<String>();
@@ -219,7 +219,7 @@ public class TransferJobImpl implements TransferJobDao {
     @Override
     public List<DaytourBooking> getTransferjobData(String TourId, String TourDate, String Place, String Other) {
         String getJobDetailQuery = "from DaytourBooking DB where DB.tourDate = '" + TourDate + "'"
-                + " and DB.daytour.code in ('" + TourId.replaceAll(" ", "").replaceAll("\\|\\|", "','").trim() + "') and DB.MItemstatus.id <> 2 and DB.MItemstatus.id <> 3 and DB.master.MBookingstatus.id <> 3  and DB.master.MBookingstatus.id <> 4  ";
+                + " and DB.daytour.code in ('" + TourId.replaceAll(" ", "").replaceAll("\\|\\|", "','").trim() + "') and DB.MItemstatus.id = 1 and DB.master.MBookingstatus.id <> 3  and DB.master.MBookingstatus.id <> 4  ";
         String open = "";
         String close = "";
         List Transferjoblist = new ArrayList();
