@@ -58,7 +58,7 @@ public class OtherMonthlyImpl implements OtherMonthlyDao{
         String query = "SELECT pro.`code` AS CODE, pro.`name` AS tour, sum(ot.ad_qty) AS paxad, sum(ot.ch_qty) AS paxch, sum(ot.in_qty) AS paxinf, sum(ot.ad_price) AS sellad, sum(ot.ch_price) AS sellch, sum(ot.in_price) AS sellinf, sum(( ifnull((ot.ad_qty * ot.ad_price), 0) + ifnull((ot.ch_qty * ot.ch_price), 0) + ifnull((ot.in_qty * ot.in_price), 0))) AS totalsell, sum(ot.ad_cost) AS netad, sum(ot.ch_cost) AS netch, sum(ot.in_cost) AS netinf, sum( ifnull((ot.ad_qty * ot.ad_cost), 0) + ifnull((ot.ch_qty * ot.ch_cost), 0) + ifnull((ot.in_qty * ot.in_cost), 0)) AS totalnet, sum(( ifnull((ot.ad_qty * ot.ad_price), 0) + ifnull((ot.ch_qty * ot.ch_price), 0) + ifnull((ot.in_qty * ot.in_price), 0))) - sum(( ifnull((ot.ad_qty * ot.ad_cost), 0) + ifnull((ot.ch_qty * ot.ch_cost), 0) + ifnull((ot.in_qty * ot.in_cost), 0))) AS balance FROM `other_booking` ot INNER JOIN product pro ON pro.id = ot.product_id JOIN `master` `mt` ON (`mt`.`id` = `ot`.`master_id`) WHERE ";
         int check = 0;
         if(((datefrom != null) &&(!"".equalsIgnoreCase(datefrom))) && ((dateto != null) &&(!"".equalsIgnoreCase(dateto)))){
-             query += " mt.Create_date BETWEEN '"+ datefrom +"' and '" + dateto +"'" ;
+             query += " ot.other_date BETWEEN '"+ datefrom +"' and '" + dateto +"'" ;
              check =1;
         }
         if((department != null) &&(!"".equalsIgnoreCase(department))){
@@ -122,7 +122,7 @@ public class OtherMonthlyImpl implements OtherMonthlyDao{
         String query = "SELECT * FROM `other_monthly_detail` ot WHERE ";
         int check = 0;
         if(((datefrom != null) &&(!"".equalsIgnoreCase(datefrom))) && ((dateto != null) &&(!"".equalsIgnoreCase(dateto)))){
-             query += " ot.create_date BETWEEN '"+ datefrom +"' and '" + dateto +"'" ;
+             query += " ot.other_date BETWEEN '"+ datefrom +"' and '" + dateto +"'" ;
              check =1;
         }
         if((department != null) &&(!"".equalsIgnoreCase(department))){
