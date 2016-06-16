@@ -1171,7 +1171,7 @@ function calculateTotalCom(commtemp,row) {
                 comm = 0;
             }
             totalComm += parseFloat(comm);
-            if ($("#isComVat" + i).val() === '1') {
+            if ($("#isComVat").is(':checked')) {
                 totalCommTempForWht += parseFloat(comm) * (100 / (100+vatwhtcom));
             }else{
                 totalCommTempForWht += parseFloat(comm);

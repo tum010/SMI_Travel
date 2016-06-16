@@ -953,8 +953,6 @@ function calculateGross(row) {
     }
     calculateWhtAmount();
     calculateGrossTotal();
-    var comm = ($("#comm").val() !== '' ? parseFloat(($("#comm").val()).replace(/,/g, "")) : 0.00);
-    calculateTotalCom(formatNumber(comm),row);
 }
 
 
@@ -1546,9 +1544,9 @@ function calculateVatRecComAmount() {
         }
         calculateTotalCom(formatNumber(comm),rowCommEdit);
     } else {
+        calculateTotalCom(formatNumber($("#comm").val() !== '' ? parseFloat(($("#comm").val()).replace(/,/g, "")) : 0.00),rowCommEdit);
         $("#vatRecCom").val('');
         $("#vatRecComAmount").val('');
-        calculateTotalCom(formatNumber(0),rowCommEdit);
     }
 }
 function showSearchStock() {
