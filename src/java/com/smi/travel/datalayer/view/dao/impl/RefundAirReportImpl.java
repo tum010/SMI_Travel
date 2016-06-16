@@ -271,8 +271,9 @@ public class RefundAirReportImpl implements RefundAirReportDao{
             
             refund.setPrintbyPage(printby);
             
+            SimpleDateFormat rc = new SimpleDateFormat("dd-MM-yyyy");
             if(receivefrom != null && !"".equals(receivefrom)){
-                String receive = ""+ receivefrom +" To " + receiveto;
+                String receive = ""+ util.convertStringToDateFormat(receivefrom) +" To " + util.convertStringToDateFormat(receiveto);
                 refund.setReceivePage(receive);
             }else{
                 refund.setReceivePage("ALL");

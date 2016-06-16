@@ -589,7 +589,7 @@ public class PaymentWendytourImpl implements PaymentWendytourDao{
             paymentTourHotelSummary.setSupplier(util.ConvertString(B[3]));
             paymentTourHotelSummary.setRefno(util.ConvertString(B[4]));                           
             paymentTourHotelSummary.setInvno(util.ConvertString(B[5]));
-            paymentTourHotelSummary.setAmount(util.ConvertString(B[6]) != null ? util.ConvertString(B[6]) : "0");
+            paymentTourHotelSummary.setAmount(B[6] != null ? util.ConvertString(B[6]) : "0");
             paymentTourHotelSummary.setCur(util.ConvertString(B[7]));
             paymentTourHotelSummary.setStatus(util.ConvertString(B[8]));
             paymentTourHotelSummary.setDescription(util.ConvertString(B[9]));
