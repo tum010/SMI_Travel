@@ -1160,7 +1160,7 @@ function calculateTotalCom(commtemp,row) {
                 comm = 0;
             }
             totalComm += parseFloat(comm);
-            if($("#isVat"+i).is(':checked')){
+            if ($("#isComVat").is(':checked')) {
                 totalCommTempForWht += parseFloat(comm) * (100 / (100+vatwhtcom));
             }else{
                 totalCommTempForWht += parseFloat(comm);
@@ -1171,7 +1171,7 @@ function calculateTotalCom(commtemp,row) {
                 comm = 0;
             }
             totalComm += parseFloat(comm);
-            if($("#isVat"+i).is(':checked')){
+            if ($("#isComVat").is(':checked')) {
                 totalCommTempForWht += parseFloat(comm) * (100 / (100+vatwhtcom));
             }else{
                 totalCommTempForWht += parseFloat(comm);
