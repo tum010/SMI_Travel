@@ -842,8 +842,10 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
             
             try {
                 result = ssDataexchTemp.connectSybase(ssDataexchTemp);
-            } catch (Exception ex) {
+            } catch (Exception ex) {              
                 java.util.logging.Logger.getLogger(APNirvanaImpl.class.getName()).log(Level.SEVERE, null, ex);
+                resultfail = "cannotconnect";
+                return resultfail;
             }
             
             ssDataexchList.add(ssDataexchTemp);

@@ -245,6 +245,8 @@ public class TicketFareSummary extends AbstractExcelView {
         styleC25.setBorderRight(HSSFCellStyle.BORDER_THIN);
         styleC25.setDataFormat(currency.getFormat("#,##0.00"));
         for(int i=0;i<TicketFare.size();i++){
+            
+            System.out.println("get size : "+ i);
              TicketFareReport data = (TicketFareReport)TicketFare.get(i);
              HSSFRow row = sheet.createRow(count + i);
              HSSFCell cell0 = row.createCell(0);
@@ -314,7 +316,7 @@ public class TicketFareSummary extends AbstractExcelView {
                 styleSum.setBorderBottom(HSSFCellStyle.BORDER_THIN);
                 styleSum.setDataFormat(currency.getFormat("#,##0.00"));
                 
-                String sumTax = "SUM(H" + 10+":H"+(count + i + 1)+")";
+                String sumTax =  "SUM(H" + 10+":H"+(count + i + 1)+")";
                 String sumActComm = "SUM(I" + 10+":I"+(count + i + 1)+")";
                 String sumInsurance = "SUM(J" + 10+":J"+(count + i + 1)+")";
                 String sumNetSales = "SUM(K" + 10+":K"+(count + i + 1)+")";
@@ -355,10 +357,13 @@ public class TicketFareSummary extends AbstractExcelView {
                     cell13Sum.setCellFormula(sumBalance);
                     cell13Sum.setCellStyle(styleSum);      
              }
-             for(int j =0;j<15;j++){
-                 sheet.autoSizeColumn(j);
-             }
+
         }
+        for(int j =0;j<15;j++){
+           sheet.autoSizeColumn(j);
+        }
+        
+        
     }
     
     public void genTicketFareInvoiceReport(HSSFWorkbook wb, List TicketFare) {
