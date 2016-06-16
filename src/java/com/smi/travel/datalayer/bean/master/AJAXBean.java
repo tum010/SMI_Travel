@@ -33,7 +33,6 @@ import com.smi.travel.datalayer.dao.RefundAirticketDao;
 import com.smi.travel.datalayer.dao.TaxInvoiceDao;
 import com.smi.travel.datalayer.dao.TicketFareAirlineDao;
 import com.smi.travel.datalayer.dao.TransferJobDao;
-import com.smi.travel.datalayer.entity.AdvanceReceive;
 import com.smi.travel.datalayer.entity.AdvanceReceivePeriod;
 import com.smi.travel.datalayer.entity.Billable;
 import com.smi.travel.datalayer.entity.BillableDesc;
@@ -51,7 +50,6 @@ import com.smi.travel.datalayer.entity.MExchangeRate;
 import com.smi.travel.datalayer.entity.MFlightservice;
 import com.smi.travel.datalayer.entity.MInitialname;
 import com.smi.travel.datalayer.entity.Master;
-import com.smi.travel.datalayer.entity.OtherBooking;
 import com.smi.travel.datalayer.entity.PackageItinerary;
 import com.smi.travel.datalayer.entity.PackagePrice;
 import com.smi.travel.datalayer.entity.PackageTour;
@@ -60,7 +58,6 @@ import com.smi.travel.datalayer.entity.PaymentOutboundDetailView;
 import com.smi.travel.datalayer.entity.PaymentStock;
 import com.smi.travel.datalayer.entity.PaymentStockItem;
 import com.smi.travel.datalayer.entity.Place;
-import com.smi.travel.datalayer.entity.Product;
 import com.smi.travel.datalayer.entity.ProductDetail;
 import com.smi.travel.datalayer.entity.ReceiptDetail;
 import com.smi.travel.datalayer.entity.StockDetail;
@@ -83,7 +80,6 @@ import com.smi.travel.util.Mail;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.math.MathContext;
 import java.math.RoundingMode;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -99,7 +95,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-import javax.swing.text.Document;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -2801,13 +2796,13 @@ public class AJAXBean extends AbstractBean implements
                         + "<td>" + row + "</td>"
                         + "<td>" + pickupPlace + "</td>"
                         + "<td class='text-center'>" + (daytour.getPickupRoom() == null ? "" : daytour.getPickupRoom()) + "</td>"
-                        + "<td class='text-center'>" + (daytour.getPickupTime() == null ? "" : daytour.getPickupTime()) + "</td>"
+                        + "<td class='text-center'>" + (daytour.getPickupTime() == null ? "" : String.valueOf(daytour.getPickupTime())).substring(0,5) + "</td>"
                         + "<td>" + Initialname + " " + cus.getLastName() + " " + cus.getFirstName() + "</td>"
                         + "<td class='text-center'>" + passenger[0] + "</td>"
                         + "<td class='text-center'>" + passenger[1] + "</td>"
                         + "<td class='text-center'>" + passenger[2] + "</td>"
                         + "<td style='text-align: right' >" + calculatePriceDaytour(PriceList) + "</td>"
-                        + "<td>" + (daytour.getGuide() == null ? "" : daytour.getGuide().getName()) + "</td>"
+                        + "<td>" + (daytour.getGuideTour() == null ? "" : daytour.getGuideTour()) + "</td>"
                         + "</tr>";
                 row += 1;
                 ad += Integer.parseInt(passenger[0]);

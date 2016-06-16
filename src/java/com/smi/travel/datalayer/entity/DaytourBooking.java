@@ -37,6 +37,7 @@ public class DaytourBooking   {
      private String remarkGuideCom;
      private String remarkAgentCom;
      private Integer pickupOrder;
+     private String guideTour;
      private Set coupons = new HashSet(0);
      private Set daytourBookingPrices = new HashSet(0);
 
@@ -265,6 +266,14 @@ public class DaytourBooking   {
 
     public void setGuideCommission(BigDecimal guideCommission) {
         this.guideCommission = guideCommission;
+    }
+
+    public String getGuideTour() {
+        return guideTour;
+    }
+
+    public void setGuideTour(String guideTour) {
+        this.guideTour = guideTour;
     }
 
     

@@ -9,6 +9,7 @@ import com.smi.travel.datalayer.dao.TransferJobDao;
 import com.smi.travel.datalayer.entity.Daytour;
 import com.smi.travel.datalayer.entity.DaytourBooking;
 import com.smi.travel.datalayer.entity.Place;
+import com.smi.travel.datalayer.entity.TourOperationDesc;
 import com.smi.travel.datalayer.entity.TransferJob;
 import com.smi.travel.util.UtilityFunction;
 import java.text.SimpleDateFormat;
@@ -222,7 +223,8 @@ public class TransferJobImpl implements TransferJobDao {
                 + " and DB.daytour.code in ('" + TourId.replaceAll(" ", "").replaceAll("\\|\\|", "','").trim() + "') and DB.MItemstatus.id = 1 and DB.master.MBookingstatus.id <> 3  and DB.master.MBookingstatus.id <> 4  ";
         String open = "";
         String close = "";
-        List Transferjoblist = new ArrayList();
+//        List Transferjoblist = new ArrayList();
+        List<DaytourBooking> dblist = new LinkedList<DaytourBooking>();
         boolean checkplace = false;
         if (Place != null) {
             if (Other != null) {
@@ -258,10 +260,36 @@ public class TransferJobImpl implements TransferJobDao {
         if (list.isEmpty()) {
             return null;
         }
-
-        return list;
+        for(int i = 0 ; i < list.size() ; i ++){
+            DaytourBooking db = list.get(i);
+            db.setGuideTour(getGuideTour(db.getDaytour().getId(), db.getTourDate()));
+            dblist.add(db);
+        }
+        return dblist;
     }
-
+        
+    private String getGuideTour(String tourid , Date tourdate) {
+        String GuideTour = "";
+        Session session = this.sessionFactory.openSession();
+       
+        System.out.println("getGuideTour query: "+GuideTour);
+        List<TourOperationDesc> jobList = session.createQuery("from TourOperationDesc tod where tod.daytour.id = :tourid and tod.tourDate = :tourdate")
+                .setParameter("tourid", tourid)
+                .setParameter("tourdate", tourdate)
+                .list();
+        if (jobList.isEmpty()) {
+            return "";
+        }else{
+            if(jobList.get(0).getStaffByGuide1() != null){
+                GuideTour = jobList.get(0).getStaffByGuide1().getName();        
+            }   
+        }    
+        System.out.println("getGuideTour : "+GuideTour);
+        this.sessionFactory.close();
+        session.close();
+        return GuideTour;
+    }
+    
     public SessionFactory getSessionFactory() {
         return sessionFactory;
     }
