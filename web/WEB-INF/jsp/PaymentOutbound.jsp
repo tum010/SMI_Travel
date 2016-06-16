@@ -444,7 +444,7 @@
                                             <input type="text" name="vatRecComAmount${i.count}" id="vatRecComAmount${i.count}" class="form-control" value="${detail.vatRecComAmount}"/>
                                             <input type="text" name="value${i.count}" id="value${i.count}" class="form-control" value="${detail.value}"/>
                                             <input type="text" name="payStockId${i.count}" id="payStockId${i.count}" class="form-control" value="${detail.payStockId}"/>
-                                            <input type="text" name="comm${i.count}" id="comm${i.count}" class="form-control" value="${detail.comm}"/>
+                                            <input type="text" name="comm${i.count}" id="comm${i.count}" class="form-control" value="${detail.comm}" onfocusout="onfocusoutComm(this,'${i.count}')"/>
                                             <input type="text" name="isNewWht${i.count}" id="isNewWht${i.count}" class="form-control" value="0"/>
                                             <textarea rows="3" cols="255" class="form-control" id="descriptionTemp${i.count}" name="descriptionTemp${i.count}" maxlength="255" data-bv-field="detail">${detail.description}</textarea>                                        
                                         </td>
@@ -642,7 +642,7 @@
                     </div>
                     <div class="col-xs-1 text-right" style="width: 200px;">
                         <input type="hidden" class="form-control text-right" id="rowCommEdit" name="rowCommEdit" value=""/>
-                        <input type="text" class="form-control decimal" id="comm" name="comm" value="" />
+                        <input type="text" class="form-control decimal" id="comm" name="comm" value="" onfocusout="onfocusoutComm(this,0);"/>
                     </div>                       
                 </div>
                 <div class="row" style="padding-left: 25px; padding-top: 10px;">
@@ -670,6 +670,7 @@
                                 <label class="control-label">Total Comm</lable>
                             </div>
                             <div class="col-md-1 text-right" style="width: 160px">
+                                <input name="totalCommTempForWht" id="totalCommTempForWht" type="hidden" class="form-control text-right" value="" readonly=""/>
                                 <input name="totalComm" id="totalComm" type="text" class="form-control text-right" value="" readonly=""/>
                             </div>
                             <div class="col-md-1 text-right" style="width: 115px">
@@ -1073,20 +1074,15 @@ function calculateWhtComAmount(newWhtCom) {
         }
 //        wht_com_amt =  Total Comm * (100 / (100+vat_wht_com)) * wht_com/100
 
-        var totalComm = replaceAll(",","",$('#totalComm').val()); 
+        var totalComm = replaceAll(",","",$('#totalCommTempForWht').val()); 
         if (totalComm === ""){
             totalComm = 0;
         }
         totalComm = parseFloat(totalComm);
         
-        var vatwhtcom = replaceAll(",","",$('#mVat').val()); 
-        if (vatwhtcom === ""){
-            vatwhtcom = 0;
-        }
-        vatwhtcom = parseFloat(vatwhtcom);
-        var whtcomamt = totalComm * (100 / (100+vatwhtcom)) * whtCom /100 ;
+
+        var whtcomamt = totalComm * whtCom /100 ;
         
-        document.getElementById('vatWhtCom').value = formatNumber(vatwhtcom);
         document.getElementById('whtCom').value = formatNumber(whtCom);
         document.getElementById('whtComAmt').value = formatNumber(whtcomamt);
         $("#isWhtCom").val(($("#isWhtCom").is(':checked') ? '1' : '0'));
@@ -1132,10 +1128,31 @@ function calculateTotalPayment() {
     document.getElementById('totalPayment').value = formatNumber(totalPayment);
 }
 
+function onfocusoutComm(comm,row){
+    if(row === 0){
+        row = $('#rowCommEdit').val();
+        if(comm != null){
+            calculateTotalCom(comm.value,row);
+        }
+    }else{
+        if(comm != null){
+            calculateTotalCom(comm.value,row);
+        }
+    }
+}
 
 function calculateTotalCom(commtemp,row) {
     var count = parseInt(document.getElementById('countPaymentDetail').value);
     var totalComm = 0;
+    var totalCommTempForWht = 0;
+    
+    var vatwhtcom = replaceAll(",","",$('#mVat').val()); 
+    if (vatwhtcom === ""){
+        vatwhtcom = 0;
+    }
+    vatwhtcom = parseFloat(vatwhtcom);
+    document.getElementById('vatWhtCom').value = formatNumber(vatwhtcom);
+    
     for(var i = 1 ; i < count-1 ; i ++){
         if(row != i){
             var comm = replaceAll(",","",$('#comm'+i).val()); 
@@ -1143,14 +1160,25 @@ function calculateTotalCom(commtemp,row) {
                 comm = 0;
             }
             totalComm += parseFloat(comm);
+            if($("#isVat"+i).is(':checked')){
+                totalCommTempForWht += parseFloat(comm) * (100 / (100+vatwhtcom));
+            }else{
+                totalCommTempForWht += parseFloat(comm);
+            }
         }else if(row == i){
             var comm = replaceAll(",","",commtemp); 
             if (comm === ''){
                 comm = 0;
             }
             totalComm += parseFloat(comm);
+            if($("#isVat"+i).is(':checked')){
+                totalCommTempForWht += parseFloat(comm) * (100 / (100+vatwhtcom));
+            }else{
+                totalCommTempForWht += parseFloat(comm);
+            }
         }
     }
+    document.getElementById('totalCommTempForWht').value = formatNumber(totalCommTempForWht);
     document.getElementById('totalComm').value = formatNumber(totalComm);
     calculateTotalPayment();
 }

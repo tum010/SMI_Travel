@@ -690,7 +690,7 @@ function addRowPaymentDetailTable(row) {
             '<input type="text" name="vatRecComAmount' + row + '" id="vatRecComAmount' + row + '" class="form-control" value=""/>' +
             '<input type="text" name="value' + row + '" id="value' + row + '" class="form-control" value=""/>' +
             '<input type="text" name="payStockId' + row + '" id="payStockId' + row + '" class="form-control" value=""/>' +
-            '<input type="text" name="comm' + row + '" id="comm' + row + '" class="form-control" value=""/>' +
+            '<input type="text" name="comm' + row + '" id="comm' + row + '" class="form-control" value="" onfocusout="onfocusoutComm(this,' + row + ');"/>' +
             '<input type="text" name="isNewWht' + row + '" id="isNewWht' + row + '" class="form-control" value="0"/>' +
             '</td>' +
             '<td>' +
@@ -953,6 +953,8 @@ function calculateGross(row) {
     }
     calculateWhtAmount();
     calculateGrossTotal();
+    var comm = ($("#comm").val() !== '' ? parseFloat(($("#comm").val()).replace(/,/g, "")) : 0.00);
+    calculateTotalCom(formatNumber(comm),row);
 }
 
 
