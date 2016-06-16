@@ -2770,7 +2770,7 @@
         if (typeRec === "V") {
             $("#ReceiptListTable tbody").append(
                     '<tr style="higth 100px">' +
-                    '<input id="termidinvoice"  name="termidinvoice"   type="hidden" value="" >' +
+                    '<input id="termidinvoice"  name="termidinvoice"   type="hidden" value="1" >' +
                     '<input id="invoiceTableNo' + row + '"  name="invoiceTableNo' + row + '"   type="hidden" value="' + invTableNo + '" >' +
                     '<input id="invoiceTableId' + row + '"  name="invoiceTableId' + row + '"   type="hidden" value="' + invTableId + '" >' +
                     '<input id="grossInvoice' + row + '"  name="grossInvoice' + row + '"   type="hidden" value="' + grossinv + '" >' +
@@ -2813,7 +2813,7 @@
         } else {
             $("#ReceiptListTable tbody").append(
                     '<tr style="higth 100px">' +
-                    '<input id="termidinvoice"  name="termidinvoice"   type="hidden" value="" >' +
+                    '<input id="termidinvoice"  name="termidinvoice"   type="hidden" value="1" >' +
                     '<input id="invoiceTableNo' + row + '"  name="invoiceTableNo' + row + '"   type="hidden" value="' + invTableNo + '" >' +
                     '<input id="invoiceTableId' + row + '"  name="invoiceTableId' + row + '"   type="hidden" value="' + invTableId + '" >' +
                     '<input id="grossInvoice' + row + '"  name="grossInvoice' + row + '"   type="hidden" value="' + grossinv + '" >' +
