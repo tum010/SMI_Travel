@@ -635,3 +635,38 @@ function selectMInitialname(){
         $("input[name=sex][value=w]").prop('checked', true);
     }
 }
+
+function checkDuplicatePassenger(){
+    var passengerIdVal = $("#passengerIdVal").val();
+    var code = $("#existCode").val();
+    var subcode  = code.split("||");
+    for(var i = 0 ;i< subcode.length ; i++){
+        console.log("subcode["+i+"]="+subcode[i]);
+        if(passengerIdVal == subcode[i] && passengerIdVal !="" ){
+            alert("Profile Code  นี้ ถูกใช้ไปแล้ว");
+            $("#passengerIdVal").val("");
+            $("#customerId").val("");
+            $("#MInitialname").val("");
+            $("#firstName").val("");
+            $("#lastName").val("");
+            $("#firstNameJapan").val("");
+            $("#lastNameJapan").val("");
+            $("#birthDate").val("");
+            $("input[name=sex]").prop('checked', false);
+            $("#address").val("");
+            $("#tel").val("");
+            $("#phone").val("");
+            $("#postalCode").val("");
+            $("#email").val("");
+            $("#remark").val("");
+            $("#Passport").val("");
+            $("#Nationnality").val("");
+            $("#personalId").val("");
+            $("#passengerId").val("");
+            return;
+        }else if(passengerIdVal == ""){
+            return ;
+        }
+    }
+//    document.getElementById("PassengerForm").submit();
+}

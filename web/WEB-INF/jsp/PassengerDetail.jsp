@@ -129,7 +129,7 @@
                                             <div class="input-group" id="PassengerInput">
                                                 <input type="hidden" id="passengerId"  name="code" placeholder="test"  value="${passenger.getCustomer().getCode()}"/>
                                                 <input type="text" class="form-control" id="passengerIdVal" name="passengerIdVal"   
-                                                       value="${passenger.getCustomer().getCode()}" />
+                                                       value="${passenger.getCustomer().getCode()}" onfocusout="checkDuplicatePassenger();"/>
                                                 <span id="SpanGroupAddon" class="input-group-addon"   data-toggle="modal" data-target="#CustomerModal">
                                                     <i id="dataload" class="fa fa-spinner fa-spin hidden"></i>
                                                     <span class="glyphicon-search glyphicon"></span>
