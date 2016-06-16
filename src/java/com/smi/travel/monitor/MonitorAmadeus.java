@@ -488,8 +488,8 @@ public class MonitorAmadeus extends MonitorScheduler {
                             costS = ticket_fare;
                         }
                     }
-                    
-                    if(haveAInFareCommission(getField("fare commission", fareLine).trim())){
+                    String haveFareCommission = (fareLine != null ? getField("fare commission", fareLine).trim() : "");
+                    if(haveAInFareCommission(haveFareCommission)){
                         cost = util.calculateRoundUp(util.convertStringToBigDecimal(costS));
                         System.out.println("cost [" + cost +"]");
                         price = cost.add(util.convertStringToBigDecimal(fareCommission));
@@ -503,7 +503,8 @@ public class MonitorAmadeus extends MonitorScheduler {
                 } else {
 //                    price = util.convertStringToBigDecimal(ticket_fare);
 //                    cost = (price.multiply((new BigDecimal(100)).subtract(new BigDecimal(fareCommission)))).divide(new BigDecimal(100));
-                    if(haveAInFareCommission(getField("fare commission", fareLine).trim())){
+                    String haveFareCommission = (fareLine != null ? getField("fare commission", fareLine).trim() : "");
+                    if(haveAInFareCommission(haveFareCommission)){
                         cost = util.calculateRoundUp(util.convertStringToBigDecimal(costS));
                         System.out.println("cost [" + cost +"]");
                         price = cost.add(util.convertStringToBigDecimal(fareCommission));
