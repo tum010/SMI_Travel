@@ -78,6 +78,8 @@ public class ARMonitorController extends SMITravelController {
                request.setAttribute(STATUSUPDATE, result);
                 if("".equalsIgnoreCase(result)){
                     request.setAttribute("update", "success");
+                }else if("cannotconnect".equalsIgnoreCase(result)){
+                    request.setAttribute("update", "cannotconnect");    
                 }else{
                     request.setAttribute("update", "fail");
                 }

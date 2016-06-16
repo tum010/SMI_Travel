@@ -53,6 +53,12 @@
                    <strong>Update Status Unsuccess!</strong> 
                 </div>
                 </c:if>
+                <c:if test="${requestScope['update'] == 'cannotconnect'}">
+                <div id="textAlertDivSave"  style="" class="alert alert-danger alert-dismissible" role="alert">
+                   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                   <strong>Can't Connect to Sybase !</strong> 
+                </div>
+                </c:if>
                 <div id="textAlertDivNotChoose"  style="display: none" class="alert alert-danger alert-dismissible" role="alert">
                     <button type="button" class="close" aria-label="Close" onclick="hideDiv()"><span aria-hidden="true">&times;</span></button>
                    <strong>Please choose the ar monitor list.!</strong> 

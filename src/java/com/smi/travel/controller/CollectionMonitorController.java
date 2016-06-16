@@ -70,8 +70,10 @@ public class CollectionMonitorController extends SMITravelController {
 //               String result = "success";
                String result = collectionNirvanaService.MappingCollectionNirvana(listCo);
                request.setAttribute(STATUSUPDATE, result);
-               if("".equalsIgnoreCase(result)){
+                if("".equalsIgnoreCase(result)){
                     request.setAttribute("update", "updatesuccess");
+                }else if("cannotconnect".equalsIgnoreCase(result)){
+                    request.setAttribute("update", "cannotconnect");    
                 }else{
                     request.setAttribute("update", "updatefail");
                 }

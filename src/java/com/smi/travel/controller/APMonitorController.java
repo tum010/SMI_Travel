@@ -62,6 +62,8 @@ public class APMonitorController extends SMITravelController {
             request.setAttribute(STATUSUPDATE, result);
             if("".equalsIgnoreCase(result)){
                 request.setAttribute("update", 1 );
+            }else if("cannotconnect".equalsIgnoreCase(result)){
+                request.setAttribute("update", 2);    
             }else{
                 request.setAttribute("update", 0 );
             }
