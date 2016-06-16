@@ -1027,6 +1027,8 @@ System.out.println("query ap_nirvana : "+query);
                 result = ssDataexchTemp.connectSybase(ssDataexchTemp);
             } catch (Exception ex) {
                 Logger.getLogger(APNirvanaImpl.class.getName()).log(Level.SEVERE, null, ex);
+                resultfail = "cannotconnect";
+                return resultfail;
             }
             
             ssDataexchList.add(ssDataexchTemp);

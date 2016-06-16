@@ -367,6 +367,8 @@ public class CollectionNirvanaImpl implements CollectionNirvanaDao{
                 result = ssDataexchTemp.connectSybase(ssDataexchTemp); // insert header & insert detail
             } catch (Exception ex) {
                 Logger.getLogger(APNirvanaImpl.class.getName()).log(Level.SEVERE, null, ex);
+                resultfail = "cannot connect";
+                return resultfail;
             }
             
             ssDataexchList.add(ssDataexchTemp);
