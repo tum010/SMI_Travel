@@ -775,7 +775,7 @@
     
     function setAlertModalUpdateDetail(){
         var statusUpdate = $("#statusUpdate").val();
-        if(statusUpdate != ""){
+        if(statusUpdate !== "" && statusUpdate !== "cannotconnect"){
             statusUpdate = statusUpdate.substring(1);
             var status = statusUpdate.split(",");
             for(var i = 0 ; i < status.length ; i++){
