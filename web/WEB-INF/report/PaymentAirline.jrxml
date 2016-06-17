@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PaymentAirline" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="947e158a-2a11-4854-a1da-0289b188ee79">
-	<property name="ireport.zoom" value="1.0514816984441773"/>
+	<property name="ireport.zoom" value="1.272292855117455"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
@@ -21,22 +21,22 @@
 				<subreportExpression><![CDATA[$F{subReportDir} + "/PaymentAirlineReport.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement x="0" y="88" width="595" height="76" uuid="8e60d9b6-af5f-411a-bf5c-a12ca68b1642"/>
+				<reportElement positionType="Float" x="0" y="88" width="595" height="76" uuid="8e60d9b6-af5f-411a-bf5c-a12ca68b1642"/>
 				<dataSourceExpression><![CDATA[$F{paymentAirlineListReportDataSource}]]></dataSourceExpression>
 				<subreportExpression><![CDATA[$F{subReportDir} + "/PaymentAirlineListReport.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement x="0" y="174" width="595" height="76" uuid="ef121f2b-4739-46be-b62d-0357ae11b64b"/>
+				<reportElement positionType="Float" x="0" y="174" width="595" height="76" uuid="ef121f2b-4739-46be-b62d-0357ae11b64b"/>
 				<dataSourceExpression><![CDATA[$F{paymentAirlineRefundReportDataSource}]]></dataSourceExpression>
 				<subreportExpression><![CDATA[$F{subReportDir} + "/PaymentAirlineRefundReport.jasper"]]></subreportExpression>
 			</subreport>
 			<break>
-				<reportElement x="0" y="82" width="100" height="1" uuid="7542ef36-82b1-4afd-9994-50ef570c9293">
+				<reportElement positionType="Float" x="0" y="82" width="100" height="1" uuid="7542ef36-82b1-4afd-9994-50ef570c9293">
 					<printWhenExpression><![CDATA[$F{paymentAirlineListReportDataSource} != null]]></printWhenExpression>
 				</reportElement>
 			</break>
 			<break>
-				<reportElement x="0" y="169" width="100" height="1" uuid="41f5f2e2-ce9f-491e-810c-c3567871700b">
+				<reportElement positionType="Float" x="0" y="169" width="100" height="1" uuid="41f5f2e2-ce9f-491e-810c-c3567871700b">
 					<printWhenExpression><![CDATA[$F{paymentAirlineRefundReportDataSource} != null]]></printWhenExpression>
 				</reportElement>
 			</break>
