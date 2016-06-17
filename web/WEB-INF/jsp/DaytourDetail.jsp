@@ -296,12 +296,20 @@
                         <label class="control-label text-right">Value&nbsp;List</lable>
                     </div>
                     <div class="col-md-10 text-right" >
-                        <c:if test="${isBillStatus == 0}">
-                            <a name="ButtonPriceList" id="ButtonPriceList" class="btn btn-primary btn-sm"  data-toggle="modal" data-target="#PriceModal" >Price List</a>
+                        <c:if test="${lockUnlockBooking == 0}">
+                            <c:if test="${isBillStatus == 0}">
+                                <a name="ButtonPriceList" id="ButtonPriceList" class="btn btn-primary btn-sm"  data-toggle="modal" data-target="#PriceModal" >Price List</a>
+                            </c:if>
+                            <c:if test="${isBillStatus == 1}">
+                                <a name="ButtonPriceList" id="ButtonPriceList" class="btn btn-primary btn-sm disabled"  data-toggle="modal" data-target="#" >Price List</a>
+                            </c:if>
                         </c:if>
-                        <c:if test="${isBillStatus == 1}">
+                        <c:if test="${lockUnlockBooking == 1}">
                             <a name="ButtonPriceList" id="ButtonPriceList" class="btn btn-primary btn-sm disabled"  data-toggle="modal" data-target="#" >Price List</a>
                         </c:if>
+                        <c:if test="${lockUnlockBooking == 2}">
+                            <a name="ButtonPriceList" id="ButtonPriceList" class="btn btn-primary btn-sm"  data-toggle="modal" data-target="#PriceModal" >Price List</a>
+                        </c:if>  
                     </div>
                     <!--</div>-->
                 </div>
