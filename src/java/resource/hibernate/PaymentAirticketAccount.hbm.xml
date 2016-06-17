@@ -14,7 +14,7 @@
             <column name="acc_no" length="20" />
         </property>
         <property name="detail" type="string">
-            <column name="detail" length="25" />
+            <column name="detail" />
         </property>
         <property name="department" type="string">
             <column name="department" length="10" />

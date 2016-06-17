@@ -729,7 +729,7 @@
                                             <td align="center">${i.count}</td>
                                             <td>                                   
                                                 <select class="form-control" name="accno${i.count}" id="accno${i.count}" value="${table.accNo}" >
-                                                    <option value="">>---------</option>
+                                                    <option value="">---------</option>
                                                     <c:set var="selected1" value="" />
                                                     <c:set var="selected2" value="" />
                                                     <c:set var="selected3" value="" />
