@@ -55,6 +55,7 @@ public class TaxInvoiceImpl implements TaxInvoiceReportDao{
                 .addScalar("curamount",Hibernate.STRING)
                 .addScalar("tax_no",Hibernate.STRING)
                 .addScalar("branch",Hibernate.STRING)
+                .addScalar("profit",Hibernate.STRING)
                 .list();
         
         String invdescTemp = "";
@@ -138,9 +139,19 @@ public class TaxInvoiceImpl implements TaxInvoiceReportDao{
             
             if(option == 1){
                 taxInvoiceView.setDescription(taxInvoiceView.getNondescription());
+                if("1".equalsIgnoreCase(util.ConvertString(B[19]))){
+                    taxInvoiceView.setInvoice(util.ConvertString(B[10]));
+                } else if("0".equalsIgnoreCase(util.ConvertString(B[19]))) {
+                    taxInvoiceView.setInvoice("");
+                }
                 data.add(taxInvoiceView);
             }else if(option == 2 ){
                 taxInvoiceView.setInvoice("");
+                if("1".equalsIgnoreCase(util.ConvertString(B[19]))){
+                    taxInvoiceView.setInvoice(util.ConvertString(B[10]));
+                } else if("0".equalsIgnoreCase(util.ConvertString(B[19]))) {
+                    taxInvoiceView.setInvoice("");
+                }
                 data.add(taxInvoiceView);
             }else if(option == 3 ){
                 taxInvoiceView.setAmount(taxInvoiceView.getGrandtotal());
