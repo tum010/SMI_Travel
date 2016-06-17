@@ -2601,7 +2601,7 @@ function AddRowCredit(row) {
     $("#CreditDetailTable tbody").append(
         '<tr style="higth 100px">' +
         '<td class="text-center">' + row + '</td>' +
-        '<td><input maxlength="20" id="creditNote' + row + '" name="creditNote' + row + '" type="text" class="form-control" ></td>' +
+        '<td><input maxlength="255" id="creditNote' + row + '" name="creditNote' + row + '" type="text" class="form-control" ></td>' +
         '<td><input id="creditAmount' + row + '" name="creditAmount' + row + '" type="text" class="form-control text-right" onkeyup="insertCommas(this)"></td>' +
         '<td class="text-center">' +
         '<a class="remCF" onclick="deleteCreditList(\'\', \''+row+'\')">  '+
@@ -2644,7 +2644,7 @@ function AddRowDebit(row) {
     $("#DebitDetailTable tbody").append(
         '<tr style="higth 100px">' +
         '<td class="text-center">' + row + '</td>' +
-        '<td><input maxlength="20" id="debitNote' + row + '" name="debitNote' + row + '" type="text" class="form-control" ></td>' +
+        '<td><input maxlength="255" id="debitNote' + row + '" name="debitNote' + row + '" type="text" class="form-control" ></td>' +
         '<td><input id="debitAmount' + row + '" name="debitAmount' + row + '" type="text" class="form-control text-right" onkeyup="insertCommas(this)"></td>' +
         '<td class="text-center">' +
         '<a class="remCF" onclick="deleteDebitList(\'\', \''+row+'\')">  '+
