@@ -133,14 +133,16 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         SimpleDateFormat df = new SimpleDateFormat();
         df.applyPattern("yyMM");
         Query query = session.createQuery("from TicketFareAirline tr where tr.pvCode Like :pvCode Order by tr.pvCode desc");
-        query.setParameter("pvCode", "%"+ df.format(thisdate) + "%");
+        query.setParameter("pvCode", "%IB"+ df.format(thisdate) + "%");
         query.setMaxResults(1);
         list = query.list();
         if (list.isEmpty()) {
             PVCode = "IB"+ df.format(thisdate) + "-" + "0001";
         } else {
             PVCode = String.valueOf(list.get(0).getPvCode());
-            if (!PVCode.equalsIgnoreCase("")) {
+            
+            if ((!PVCode.equals(null))&&(!PVCode.equalsIgnoreCase(""))) {
+                System.out.println("PVCODE : "+PVCode);
                 System.out.println("PVCode.substring(6,10) " + PVCode.substring(6,10) + "/////");
                 int running = Integer.parseInt(PVCode.substring(6,10)) + 1;
                 String temp = String.valueOf(running);
