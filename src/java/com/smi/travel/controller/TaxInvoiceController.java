@@ -67,9 +67,18 @@ public class TaxInvoiceController extends SMITravelController {
            Department =  callPageFrom;
         }
         request.setAttribute("page", callPageFrom);
+        System.out.println("Call page from : " + callPageFrom);
         
-        List<MBilltype> billTypeList = utilservice.getListMBilltype();
+        List<MBilltype> billTypeList = new ArrayList<MBilltype>();
+        if(!"I".equalsIgnoreCase(callPageFrom)){
+            billTypeList = utilservice.getListMBilltype();
+            
+        } else {
+            billTypeList = utilservice.getListMBilltypeInbound("V");
+        }
         request.setAttribute(PRODUCTLIST, billTypeList);
+        
+        
         List<MCurrency> currencyList = utilservice.getListMCurrency();
         request.setAttribute(CURRENCYLIST, currencyList);
 //        List<CustomerAgentInfo> customerAgentList = utilservice.getListCustomerAgentInfo();
