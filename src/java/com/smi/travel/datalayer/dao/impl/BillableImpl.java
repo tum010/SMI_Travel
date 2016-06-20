@@ -370,7 +370,7 @@ public class BillableImpl implements BillableDao {
             System.out.println("list.size : "+ list.size());
             
             for(int k =0;k<list.size();k++){
-                
+                System.out.println("list.size[" + k + "] : "+ list.size());
                 String FlightDescription ="";
                 String FlightShort ="";
                 AirticketAirline  airline = list.get(k);
@@ -504,6 +504,7 @@ public class BillableImpl implements BillableDao {
             String name = "";
             String ticketno = "";
             System.out.println("passengerList size : "+passengerList.size());
+            int passengerCount = 0;
             for(int p =0;p<passengerList.size();p++){
                 
                 AirticketPassenger passenger = passengerList.get(p);
@@ -543,11 +544,17 @@ public class BillableImpl implements BillableDao {
                     Initname = passenger.getMInitialname().getName();
                 }
                 if(isgroup == 1){
-                    //FOR  {INITNAME} {LAST NAME}/{FIRST NAME}        {PRICE} + {TAX}(PAX)
-                    description += "FOR" +"               " + Initname +" "+passenger.getFirstName() +" / "+passenger.getLastName() +"<P>"+ utility.setFormatMoney(price) +" + "+utility.setFormatMoney(tax)+" ("+passengerList.size()+")</P>\n";
-                    ticketno+= "                   "+"  TICKET NO. "+ passenger.getSeries1() +" - "+passenger.getSeries2()+" - "+passenger.getSeries3()+"\n\n";
                     //Break Loop
-                    p +=  passengerList.size(); 
+                    p +=  passengerList.size();
+                    for(int i = 0; i < list.size(); i++){
+                        AirticketAirline  airlineTemp = list.get(i);
+                        List<AirticketPassenger>  passengerListTemp = new ArrayList<AirticketPassenger>(airlineTemp.getAirticketPassengers());
+                        passengerCount += passengerListTemp.size();
+                    }
+                    //FOR  {INITNAME} {LAST NAME}/{FIRST NAME}        {PRICE} + {TAX}(PAX)
+                    description += "FOR" +"               " + Initname +" "+passenger.getFirstName() +" / "+passenger.getLastName() +"<P>"+ utility.setFormatMoney(price) +" + "+utility.setFormatMoney(tax)+" ("+passengerCount+")</P>\n";
+                    ticketno+= "                   "+"  TICKET NO. "+ passenger.getSeries1() +" - "+passenger.getSeries2()+" - "+passenger.getSeries3()+"\n\n";
+                   
                 }else{
                     //FOR  {INITNAME} {LAST NAME}/{FIRST NAME}        {PRICE} + {TAX}
                     description += "FOR" +"               " + Initname +" "+passenger.getFirstName() +" / "+passenger.getLastName() +"<P>"+ utility.setFormatMoney(price) +" + "+utility.setFormatMoney(tax)+"</P>\n";
