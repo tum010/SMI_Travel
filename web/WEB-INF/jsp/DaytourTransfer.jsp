@@ -32,18 +32,20 @@
 
 <div class ="container"  style="padding-top: 15px;" ng-app=""> 
     <div class="row">
-        <!--Alert Save and Update-->
-        <div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <strong>Save Success!</strong> 
-        </div>
-        <div id="textAlertDivNotSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <strong>Save Unsuccess!</strong> 
-        </div>
         <!-- side bar -->
         <div class="col-sm-2" style="border-right:  solid 1px #01C632;padding-top: 10px">
             <div ng-include="'WebContent/Book/DaytourMenu.html'"></div>
+        </div> 
+        <div class="col-sm-10">
+            <!--Alert Save and Update-->
+            <div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Save Success!</strong> 
+            </div>
+            <div id="textAlertDivNotSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Save Unsuccess!</strong> 
+            </div>
         </div>
         <div class="col-sm-10">
             <form action="DaytourTransfer.smi" id="saveDaytourTransferForm" name="saveDaytourTransferForm" method="post" role="form" >
@@ -702,10 +704,10 @@
         $("#hotelTable tbody").find("tr").each(function () {
             console.log("elem -" + $(this).html());
             var objId = $(this).find('td.placeid').html();
-            var objElem = $(this).find('td.placename');
+            var objElem = $(this).find('td.placenametemp');
             for (i = 0; i < hotelNameArray.length; i++) {
                 console.log("hotelName - " + objElem.html());
-                if (hotelNameArray[i].trim() === objElem.html()) {
+                if (generateSpecialCharacter(hotelNameArray[i].trim()) === objElem.html()) {
                     matchedFlag = true;
                     if (objId === $("#transferHotelTable tbody tr > td:contains('" + objId + "')").html()) {
                         $("#row-" + objId + "-place").prop("checked", false);
@@ -729,6 +731,7 @@
         var hotelId;
         var hotelName;
         var replaceHotelName;
+        var hotelNameTemp;
         $('#hotelTable').find('tr').each(function () {
             $(this).find('td').each(function () {
                 if ($(this).hasClass('placeid')) {
@@ -738,12 +741,16 @@
                     hotelName = $(this).html();
                     replaceHotelName = generateSpecialCharacter(hotelName.replace(/\s/gi, "_")); // for delete
                 }
+                if ($(this).hasClass('placenametemp')) {
+                    hotelNameTemp = $(this).html();
+                }
                 var eachCheckbox = $(this).children();
                 if ($(eachCheckbox).is(':checked')) { //element checked 
                     $("#transferHotelTable tbody").append(
                             '<tr class="Tr-' + hotelId + '">' +
                             '<td class="id hide">' + hotelId + '</td>' +
                             '<td class="name">' + hotelName + '</td>' +
+                            '<td class="nametemp hidden">' + hotelNameTemp + '</td>' +
                             '<td class="text-center">' +
                             '<a id="RowButtonRemove-"' + $(eachCheckbox).attr('id') + '" name="RowButtonRemove-"' + $(eachCheckbox).attr('id') + '" chkId="' + $(eachCheckbox).attr('id') + '" class="RemoveRow">' +
                             '<span id="RowSpanRemove-"' + $(eachCheckbox).attr('id') + '" name="RowSpanRemove-"' + $(eachCheckbox).attr('id') + '" ' +
@@ -1026,7 +1033,7 @@
         var activeHotelList = "";
         $('#transferHotelTable tbody').find('tr').each(function () {
 //        console.log("hotel - " + $(this).html());
-            var hotel = $(this).find('.name').html();
+            var hotel = $(this).find('.nametemp').html();
             if (activeHotelList.length === 0) {
                 activeHotelList += hotel;
             } else {

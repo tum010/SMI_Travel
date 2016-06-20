@@ -2747,6 +2747,7 @@ public class AJAXBean extends AbstractBean implements
     }
 
     public String buildTourPlaceListHTML(List<Place> ListPlace) {
+        UtilityFunction util = new UtilityFunction();
         String result = "";
         if (ListPlace == null) {
             result = "<input type='hidden' id='placeSize' name='placeSize' value='0'>";
@@ -2758,6 +2759,7 @@ public class AJAXBean extends AbstractBean implements
             result += "<tr id='trPlaceId" + place.getId() + "'>"
                     + "<td class='placeid hidden '>" + place.getId() + "</td>"
                     + "<td class='placename'>" + place.getPlace() + "</td>"
+                    + "<td class='placenametemp hidden'>" + util.generateSpecialCharacter(place.getPlace()) + "</td>"
                     + "<td class='text-center'><input type='checkbox' id='row-" + place.getId() + "-place'</td>"
                     + "</tr>";
         }
