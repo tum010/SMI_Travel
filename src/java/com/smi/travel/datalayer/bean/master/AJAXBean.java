@@ -2794,22 +2794,34 @@ public class AJAXBean extends AbstractBean implements
 
                 List<DaytourBookingPrice> PriceList = new ArrayList<DaytourBookingPrice>(daytour.getDaytourBookingPrices());
                 String[] passenger = calculatePassengerDaytour(PriceList);
+                int adtemp = 0;
+                int chtemp = 0;
+                int intemp = 0;
+                if(!PriceList.isEmpty() && PriceList != null ){
+                    adtemp = Integer.parseInt(passenger[0]);
+                    chtemp = Integer.parseInt(passenger[1]);
+                    intemp = Integer.parseInt(passenger[2]);
+                }else{
+                    adtemp = daytour.getAdult();
+                    chtemp = daytour.getChild();
+                    intemp = daytour.getInfant();
+                }
                 result += "<tr>"
                         + "<td>" + row + "</td>"
                         + "<td>" + pickupPlace + "</td>"
                         + "<td class='text-center'>" + (daytour.getPickupRoom() == null ? "" : daytour.getPickupRoom()) + "</td>"
                         + "<td class='text-center'>" + (daytour.getPickupTime() == null ? "" : String.valueOf(daytour.getPickupTime())).substring(0,5) + "</td>"
                         + "<td>" + Initialname + " " + cus.getLastName() + " " + cus.getFirstName() + "</td>"
-                        + "<td class='text-center'>" + passenger[0] + "</td>"
-                        + "<td class='text-center'>" + passenger[1] + "</td>"
-                        + "<td class='text-center'>" + passenger[2] + "</td>"
+                        + "<td class='text-center'>" + adtemp + "</td>"
+                        + "<td class='text-center'>" + chtemp + "</td>"
+                        + "<td class='text-center'>" + intemp + "</td>"
                         + "<td style='text-align: right' >" + calculatePriceDaytour(PriceList) + "</td>"
                         + "<td>" + (daytour.getGuideTour() == null ? "" : daytour.getGuideTour()) + "</td>"
                         + "</tr>";
                 row += 1;
-                ad += Integer.parseInt(passenger[0]);
-                ch += Integer.parseInt(passenger[1]);
-                inf += Integer.parseInt(passenger[2]);
+                ad += adtemp;
+                ch += chtemp;
+                inf += intemp;
             } catch (Exception ex) {
                 ex.printStackTrace();
             }

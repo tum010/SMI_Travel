@@ -161,18 +161,15 @@ public class TransferJobReportImpl implements TransferJobReportDao {
 //                    indexPlaceOther += 1;
                 }
                 report.setMemo(memo);
-                System.out.println("place : "+place);
+//                System.out.println("place : "+place);
             }else{
                 report.setPlace("");
             }
-            
-            
             if(book.getPickupRoom() == null){
                 report.setRoom("");
             }else{
                 report.setRoom(book.getPickupRoom());
             }
-            
             report.setTime(util.convertTimeToString(book.getPickupTime()));
             String mInitialname = (cus.getMInitialname() != null ? cus.getMInitialname().getName() : "");
             String lastName = (cus.getLastName() != null && !"".equalsIgnoreCase(cus.getLastName()) ? cus.getLastName() : "");
@@ -180,9 +177,15 @@ public class TransferJobReportImpl implements TransferJobReportDao {
             String tel = "";//(cus.getTel() != null && !"".equalsIgnoreCase(cus.getTel()) ? cus.getTel() : "");
             String name = (!"".equalsIgnoreCase(tel) ? mInitialname +" "+ lastName +" "+ firstName +"<br>"+ tel : mInitialname +" "+ lastName +" "+ firstName);
             report.setName(name);
-            report.setAd(Integer.parseInt(passenger[0]));
-            report.setCh(Integer.parseInt(passenger[1]));
-            report.setIn(Integer.parseInt(passenger[2]));
+            if(!PriceList.isEmpty() && PriceList != null ){
+                report.setAd(Integer.parseInt(passenger[0]));
+                report.setCh(Integer.parseInt(passenger[1]));
+                report.setIn(Integer.parseInt(passenger[2]));
+            }else{
+                report.setAd(book.getAdult());
+                report.setCh(book.getChild());
+                report.setIn(book.getInfant());
+            }
             
             if(!PriceList.isEmpty()){
                 if(PriceList.get(0).getDetail() != null){
@@ -220,8 +223,6 @@ public class TransferJobReportImpl implements TransferJobReportDao {
             
             report.setSystemdate(new SimpleDateFormat("dd MMM yy hh:mm", new Locale("us", "us")).format(new Date()));
             report.setTourdate(new SimpleDateFormat("dd MMM yy", new Locale("us", "us")).format(book.getTourDate()));
-            
-           
             list.add(report);
         }
         return list;
@@ -236,7 +237,6 @@ public class TransferJobReportImpl implements TransferJobReportDao {
         int Pricesum = 0;
         for (int i = 0; i < DriverList.size(); i++) {
             DaytourBookingPrice price = DriverList.get(i);
-
             if (price.getMPricecategory() != null) {
                 String passType = price.getMPricecategory().getName();
                 if ("ADULT".equalsIgnoreCase(passType)) {
@@ -247,8 +247,11 @@ public class TransferJobReportImpl implements TransferJobReportDao {
                     infant += (price.getQty() == null ? 0 : price.getQty());
                 }
             }
-
         }
+        
+        System.out.println(" adult ::: " + adult);
+        System.out.println(" child ::: " + child);
+        System.out.println(" infant ::: " + infant);
         result[0] = String.valueOf(adult);
         result[1] = String.valueOf(child);
         result[2] = String.valueOf(infant);
