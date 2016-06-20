@@ -631,7 +631,7 @@ import org.hibernate.Transaction;
     public List<ReceiptDetailView> getReceiptDetailViewFromBillableId(String billableId) {
         Session session = this.sessionFactory.openSession();
         List<ReceiptDetailView> receiptDetailViewList = new ArrayList<ReceiptDetailView>();
-        List<ReceiptDetail> list = session.createQuery("from ReceiptDetail rec where  rec.invoiceDetail.billableDesc.billable.id = :billableId").setParameter("billableId", billableId).list();
+        List<ReceiptDetail> list = session.createQuery("from ReceiptDetail rec where  rec.invoiceDetail.billableDesc.billable.id = :billableId and rec.receipt.MFinanceItemstatus.id = 1 ").setParameter("billableId", billableId).list();
         if(list.isEmpty()){
             System.out.println("ReceiptDetail empty ");
             return null;
