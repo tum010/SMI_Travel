@@ -455,7 +455,8 @@ public class MonitorAmadeus extends MonitorScheduler {
                 BigDecimal price = new BigDecimal(BigInteger.ZERO);
                 String costS = getField("cost").trim();
                 String costS2 = getField("cost2").trim();
-                
+                System.out.println("===== Costs : ===== " + costS);
+                System.out.println("===== Costs2 : ===== " + costS2);
                 if(isDomestic(ticketType,ticketNo1)){
 //                    String costS = getField("cost").trim();
 //                    String costS2 = getField("cost2").trim();
@@ -469,8 +470,24 @@ public class MonitorAmadeus extends MonitorScheduler {
                             costS = ticket_fare;
                         }
                     }
-                    cost = util.calculateRoundUp(util.convertStringToBigDecimal(costS).multiply(new BigDecimal("0.95")));
-                    price = util.convertStringToBigDecimal(costS);
+                    
+                    if(!"217".equalsIgnoreCase(ticketNo1)){
+                        String haveFareCommission = (fareLine != null ? getField("fare commission", fareLine).trim() : "");
+                        if(haveAInFareCommission(haveFareCommission)){
+                            cost = util.calculateRoundUp(util.convertStringToBigDecimal(costS));
+                            System.out.println("cost [" + cost +"]");
+                            price = cost.add(util.convertStringToBigDecimal(fareCommission));
+
+                        } else {
+                            cost = util.calculateRoundUp(util.convertStringToBigDecimal(costS).multiply((new BigDecimal("100.00").subtract(new BigDecimal(fareCommission))).divide(new BigDecimal("100.00"))));
+                            System.out.println("cost [" + cost +"]");
+                            price = util.convertStringToBigDecimal(costS);
+                        }
+                    
+                    } else {
+                        cost = util.calculateRoundUp(util.convertStringToBigDecimal(costS).multiply(new BigDecimal("0.95")));
+                        price = util.convertStringToBigDecimal(costS);
+                    }
                     
                 } else if (isInternationalTicket(ticketType)) {
 //                    String costS = getField("cost").trim();
@@ -713,7 +730,7 @@ public class MonitorAmadeus extends MonitorScheduler {
     }
 
     private boolean isDomestic(String ticketType, String ticketNo1) {
-        boolean isDomistic = ("".equalsIgnoreCase(ticketType) && "217".equalsIgnoreCase(ticketNo1) ? true : false);
+        boolean isDomistic = ("".equalsIgnoreCase(ticketType) ? true : false);
         System.out.println("Ticket Type : "+ticketType);
         System.out.println("Ticket No 1 : "+ticketNo1);
         System.out.println("isDomistic : "+isDomistic);
