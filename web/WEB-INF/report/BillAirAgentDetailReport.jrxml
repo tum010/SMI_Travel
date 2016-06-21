@@ -394,7 +394,7 @@
 				</graphicElement>
 			</rectangle>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement positionType="Float" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="0" y="0" width="57" height="20" uuid="ca6d1cea-7ca4-4c56-825b-14748f175159"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="57" height="20" uuid="ca6d1cea-7ca4-4c56-825b-14748f175159"/>
 				<textElement textAlignment="Center">
 					<font fontName="TH SarabunPSK" size="13" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
@@ -407,7 +407,7 @@
 				</graphicElement>
 			</rectangle>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement positionType="Float" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="57" y="0" width="61" height="20" uuid="7febbf25-cbc6-4d33-8e71-d91c2cc5bcb9"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="57" y="0" width="61" height="20" uuid="7febbf25-cbc6-4d33-8e71-d91c2cc5bcb9"/>
 				<textElement textAlignment="Center">
 					<font fontName="TH SarabunPSK" size="13" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
@@ -420,7 +420,7 @@
 				</graphicElement>
 			</rectangle>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement positionType="Float" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="120" y="0" width="97" height="20" uuid="7e103d82-71fb-4676-a000-58faaab1e7b2"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="120" y="0" width="97" height="20" uuid="7e103d82-71fb-4676-a000-58faaab1e7b2"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="13" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
@@ -433,7 +433,7 @@
 				</graphicElement>
 			</rectangle>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement positionType="Float" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="217" y="0" width="72" height="20" uuid="7d08c938-cb08-48e6-8ad8-f9f2cb0059fd"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="217" y="0" width="72" height="20" uuid="7d08c938-cb08-48e6-8ad8-f9f2cb0059fd"/>
 				<textElement textAlignment="Center">
 					<font fontName="TH SarabunPSK" size="13" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
@@ -446,14 +446,14 @@
 				</graphicElement>
 			</rectangle>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement positionType="Float" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="291" y="0" width="82" height="20" uuid="3d8b0bd0-7bb8-4716-9db5-a0d6cc0c40eb"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="291" y="0" width="82" height="20" uuid="3d8b0bd0-7bb8-4716-9db5-a0d6cc0c40eb"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="13" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{rounting}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement positionType="Float" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="373" y="0" width="61" height="20" uuid="d6cb8f8b-cca8-4c95-8a38-c0c23339132b"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="373" y="0" width="61" height="20" uuid="d6cb8f8b-cca8-4c95-8a38-c0c23339132b"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="13" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
@@ -472,7 +472,7 @@
 				</graphicElement>
 			</rectangle>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement positionType="Float" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="436" y="0" width="55" height="20" uuid="1b2eb9c3-8b7d-4c3d-bf36-986326d8358b"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="436" y="0" width="55" height="20" uuid="1b2eb9c3-8b7d-4c3d-bf36-986326d8358b"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="13" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
@@ -485,7 +485,7 @@
 				</graphicElement>
 			</rectangle>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement positionType="Float" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="493" y="0" width="61" height="20" uuid="6c307504-86ba-459e-af27-848a927e41de"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="493" y="0" width="61" height="20" uuid="6c307504-86ba-459e-af27-848a927e41de"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="13" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
@@ -498,7 +498,7 @@
 				</graphicElement>
 			</rectangle>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement positionType="Float" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="556" y="0" width="31" height="20" uuid="62628307-cb2d-41a1-98d2-6687769a654d"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="556" y="0" width="31" height="20" uuid="62628307-cb2d-41a1-98d2-6687769a654d"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="13" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
@@ -511,7 +511,7 @@
 				</graphicElement>
 			</rectangle>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement positionType="Float" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="589" y="0" width="62" height="20" uuid="d956d1e7-9ba3-4d39-adfa-a4fde96f8404"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="589" y="0" width="62" height="20" uuid="d956d1e7-9ba3-4d39-adfa-a4fde96f8404"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="13" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
@@ -524,7 +524,7 @@
 				</graphicElement>
 			</rectangle>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement positionType="Float" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="653" y="0" width="57" height="20" uuid="dee7e341-8de2-464f-b7c2-0419e90d437b"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="653" y="0" width="57" height="20" uuid="dee7e341-8de2-464f-b7c2-0419e90d437b"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="13" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
@@ -537,7 +537,7 @@
 				</graphicElement>
 			</rectangle>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement positionType="Float" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="712" y="0" width="31" height="20" uuid="3d47722a-555e-46b0-8f25-b18209a3370e"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="712" y="0" width="31" height="20" uuid="3d47722a-555e-46b0-8f25-b18209a3370e"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="13" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
@@ -550,7 +550,7 @@
 				</graphicElement>
 			</rectangle>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement positionType="Float" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="745" y="0" width="55" height="20" uuid="1b0ee3c7-4ce1-4be6-bd83-80a9bd3b5e9d"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="745" y="0" width="55" height="20" uuid="1b0ee3c7-4ce1-4be6-bd83-80a9bd3b5e9d"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="13" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
