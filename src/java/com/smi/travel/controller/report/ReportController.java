@@ -392,7 +392,7 @@ public class ReportController extends SMITravelController {
         }else if (InvoiceInboundPerformaEmail.equalsIgnoreCase(name)) {
             data = reportservice.getInvoice(invoiceid,bankid,showStaff,showLeader,sign,user.getName(),"0",2);
         }else if (InvoiceInboundRevenueReport.equalsIgnoreCase(name)) {
-            data = reportservice.getInvoice(invoiceid,bankid,showStaff,showLeader,sign,user.getName(),"0",2);
+            data = reportservice.getInvoice(invoiceid,bankid,showStaff,showLeader,sign,user.getName(),"0",0);
         }else if (InvoiceInboundRevenueEmail.equalsIgnoreCase(name)) {
             data = reportservice.getInvoice(invoiceid,bankid,showStaff,showLeader,sign,user.getName(),"0",0);
         }else if (InvoiceInboundPerformaReport.equalsIgnoreCase(name)) {

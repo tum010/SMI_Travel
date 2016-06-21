@@ -1803,6 +1803,7 @@ public class AJAXBean extends AbstractBean implements
                 BigDecimal amountTemp = value[1];
                 cost = costInvoice.subtract(costTemp);
                 amount = amountInvoice.subtract(amountTemp);
+                String descriptionScript = description.replaceAll("'", "\\\\'");
 
                 if (amount.compareTo(BigDecimal.ZERO) > 0) {                    
                     newrow += "<tr>"
@@ -1814,7 +1815,7 @@ public class AJAXBean extends AbstractBean implements
                             + "<td style=\"text-align:center;\">" + curCost + "</td>"
                             + "<td class='money' style=\"text-align:right;\">" + amount + "</td>"
                             + "<td style=\"text-align:center;\">" + "THB" + "</td>"
-                            + "<td><center><a href=\"\"><span onclick=\"AddProduct('"+invDetailId+"','"+product+"','"+description+"','"+cost+"','"+curCost+"','"+amount+"','THB','"+isVat+"','"+refNo+"','"+vat+"')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
+                            + "<td><center><a href=\"\"><span onclick=\"AddProduct('"+invDetailId+"','"+product+"','"+descriptionScript+"','"+cost+"','"+curCost+"','"+amount+"','THB','"+isVat+"','"+refNo+"','"+vat+"')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
                             + "</tr>";
 //                        html.append(newrow);
                     isTable = true;
@@ -2314,6 +2315,7 @@ public class AJAXBean extends AbstractBean implements
             
             String displaydescriptionScript = displaydescription.replaceAll("'", "\\\\'");
             System.out.println("displaydescriptionScript" + displaydescriptionScript);
+            description = description.replaceAll("'", "\\\\'");
 
             if (amount.compareTo(BigDecimal.ZERO) != 0) {
                 newrow = "";

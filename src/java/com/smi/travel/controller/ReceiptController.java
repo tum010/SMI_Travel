@@ -863,16 +863,29 @@ public class ReceiptController extends SMITravelController {
             }
         }
         
-        setResponseAttribute(request);
+        setResponseAttribute(request,callPageFrom);
         request.setAttribute("page", callPageFrom);
         return Receipt;
     }
     
-    public void setResponseAttribute(HttpServletRequest request) {
+    public void setResponseAttribute(HttpServletRequest request, String callPageFrom) {
 //        List<CustomerAgentInfo> customerAgentInfo = utilityService.getListCustomerAgentInfo();
 //        request.setAttribute(CUSTOMERAGENT, customerAgentInfo);
-        List<MBilltype> mBilltypes = utilityService.getListMBilltype();
+        List<MBilltype> mBilltypes = new ArrayList<MBilltype>();
+        String department = "";
+        if(!"".equals(callPageFrom)){
+           //String[] type = callPageFrom.split("\\?");
+           department =  callPageFrom.substring(0,1);
+        }
+        if(!"I".equalsIgnoreCase(department)){
+            mBilltypes = utilityService.getListMBilltype();
+            
+        } else {
+            mBilltypes = utilityService.getListMBilltypeInbound("V");
+        }
+//        List<MBilltype> mBilltypes = utilityService.getListMBilltype();
         request.setAttribute(MBILLTYPELIST, mBilltypes); //receiveProduct
+        
         MDefaultData mDefaultData = utilityService.getMDefaultDataFromType("vat");
         request.setAttribute(VAT,mDefaultData.getValue()); //vat
         List<MCurrency> mCurrencys = utilityService.getListMCurrency();

@@ -552,10 +552,11 @@ public class ReceiveTableImpl implements ReceiveTableDao{
         CollectionView receiptSummary = new CollectionView();
         if(advanceReceivePeriod != null){
             receiptSummary.setObanktransfer(advanceReceivePeriod.getBankTransfer() != null ? String.valueOf(advanceReceivePeriod.getBankTransfer()) : "0.00");
-            receiptSummary.setOcash(advanceReceivePeriod.getCashAmount()!= null ? String.valueOf(advanceReceivePeriod.getCashAmount()) : "0.00");
-            receiptSummary.setOchq(advanceReceivePeriod.getChqAmount()!= null ? String.valueOf(advanceReceivePeriod.getChqAmount()) : "0.00");
-            receiptSummary.setOcredit(advanceReceivePeriod.getCreditAmount()!= null ? String.valueOf(advanceReceivePeriod.getCreditAmount()) : "0.00");
-            receiptSummary.setOcashminus(advanceReceivePeriod.getCashMinusAmount()!= null ? String.valueOf(advanceReceivePeriod.getCashMinusAmount()) : "0.00");
+            BigDecimal cashAmount = (advanceReceivePeriod.getCashAmount().subtract(advanceReceivePeriod.getCashMinusAmount()));
+            receiptSummary.setOcash(String.valueOf(cashAmount));
+            receiptSummary.setOchq(advanceReceivePeriod.getChqAmount() != null ? String.valueOf(advanceReceivePeriod.getChqAmount()) : "0.00");
+            receiptSummary.setOcredit(advanceReceivePeriod.getCreditAmount() != null ? String.valueOf(advanceReceivePeriod.getCreditAmount()) : "0.00");
+            receiptSummary.setOcashminus(advanceReceivePeriod.getCashMinusAmount() != null ? String.valueOf(advanceReceivePeriod.getCashMinusAmount()) : "0.00");
         }else{
             receiptSummary.setObanktransfer("0.00");
             receiptSummary.setOcash("0.00");
