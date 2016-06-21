@@ -141,17 +141,15 @@ public class TaxInvoiceImpl implements TaxInvoiceReportDao{
                 taxInvoiceView.setDescription(taxInvoiceView.getNondescription());
                 if("1".equalsIgnoreCase(util.ConvertString(B[19]))){
                     taxInvoiceView.setInvoice(util.ConvertString(B[10]));
-                } else if("0".equalsIgnoreCase(util.ConvertString(B[19]))) {
-                    taxInvoiceView.setInvoice("");
-                }
+                } 
+                
                 data.add(taxInvoiceView);
             }else if(option == 2 ){
                 taxInvoiceView.setInvoice("");
                 if("1".equalsIgnoreCase(util.ConvertString(B[19]))){
                     taxInvoiceView.setInvoice(util.ConvertString(B[10]));
-                } else if("0".equalsIgnoreCase(util.ConvertString(B[19]))) {
-                    taxInvoiceView.setInvoice("");
-                }
+                } 
+                
                 data.add(taxInvoiceView);
             }else if(option == 3 ){
                 taxInvoiceView.setAmount(taxInvoiceView.getGrandtotal());

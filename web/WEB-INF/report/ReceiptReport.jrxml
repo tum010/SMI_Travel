@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReceiptReport" language="groovy" pageWidth="648" pageHeight="396" columnWidth="604" leftMargin="16" rightMargin="28" topMargin="62" bottomMargin="0" uuid="dc4cbcaf-4345-4a4d-b4b9-fb43ae05e9b5">
 	<property name="ireport.zoom" value="2.4793388429752086"/>
-	<property name="ireport.x" value="118"/>
+	<property name="ireport.x" value="4"/>
 	<property name="ireport.y" value="351"/>
 	<field name="recto" class="java.lang.String"/>
 	<field name="recadd" class="java.lang.String"/>
@@ -398,7 +398,7 @@
 				<textFieldExpression><![CDATA[$F{credit}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00">
-				<reportElement x="74" y="12" width="61" height="12" uuid="566bfd04-e7a2-44c4-a29f-d11504310fa4"/>
+				<reportElement x="125" y="12" width="96" height="12" uuid="566bfd04-e7a2-44c4-a29f-d11504310fa4"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="8" isBold="false" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
@@ -498,13 +498,13 @@
 				<textFieldExpression><![CDATA[$F{chqdate2}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00">
-				<reportElement x="74" y="23" width="61" height="12" uuid="6fbb4b23-a666-48af-b22e-51abe3d92721">
+				<reportElement x="125" y="23" width="96" height="12" uuid="6fbb4b23-a666-48af-b22e-51abe3d92721">
 					<printWhenExpression><![CDATA[($F{chqvalue2} != null && !"null".equals($F{chqvalue2}) && $F{chqvalue2}.length() > 0)]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="8" isBold="false" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($F{chqvalue2} != null && !"null".equals($F{chqvalue2}) && $F{chqvalue2}.length() > 0) ? new BigDecimal($F{chqvalue2}) : ""]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{chqvalue2} != null && !"null".equals($F{chqvalue2}) && $F{chqvalue2}.length() > 0) ? $F{chqbank2} + " " + new BigDecimal($F{chqvalue2}) : ""]]></textFieldExpression>
 			</textField>
 			<image>
 				<reportElement x="4" y="25" width="12" height="10" uuid="dd8945fa-61f3-486c-82a9-ba66f6c565b1">
@@ -554,6 +554,20 @@
 					<font fontName="Tahoma" size="8" isBold="false" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{signname}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="74" y="12" width="48" height="12" uuid="732c341d-ff23-4308-a7f0-8d8a7e84721c"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8" isBold="false" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{chqbank} != null && !"".equals($F{chqbank})) ? $F{chqbank} : ""]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="74" y="24" width="48" height="12" uuid="96e4577b-4226-44e2-8520-6faa9352951f"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8" isBold="false" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{chqbank2} != null && !"".equals($F{chqbank2})) ? $F{chqbank2} : ""]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>

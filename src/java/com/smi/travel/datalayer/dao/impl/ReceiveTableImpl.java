@@ -386,8 +386,19 @@ public class ReceiveTableImpl implements ReceiveTableDao{
         HqlQuery.setMaxResults(MAX_ROW);
         List<AdvanceReceivePeriod> advanceReceivePeriodList = HqlQuery.list();
         if (advanceReceivePeriodList.isEmpty()) {
+            this.sessionFactory.close();
+            session.close();
             return null;
         }
+        
+//        AdvanceReceivePeriod advanceReceivePeriod = advanceReceivePeriodList.get(0);
+//        if(advanceReceivePeriod.getCashMinusAmount() != null && !"0".equalsIgnoreCase(String.valueOf(advanceReceivePeriod.getCashMinusAmount()))
+//                && !"0.00".equalsIgnoreCase(String.valueOf(advanceReceivePeriod.getCashMinusAmount()))){
+//            BigDecimal cashAmount = advanceReceivePeriod.getCashAmount().subtract(advanceReceivePeriod.getCashMinusAmount());
+//            System.out.println("Cash Amount : " + advanceReceivePeriod.getCashAmount() + " - " + advanceReceivePeriod.getCashMinusAmount() + " = " + advanceReceivePeriod.getCashAmount().subtract(advanceReceivePeriod.getCashMinusAmount()));
+//            advanceReceivePeriod.setCashAmount(cashAmount);
+//        }
+        
         this.sessionFactory.close();
         session.close();
         return advanceReceivePeriodList.get(0);
