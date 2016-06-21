@@ -1497,12 +1497,12 @@ for(var i = 0; i < rad.length; i++) {
             $("#invoiceSupId,#invoiceSupName,#apCode").val(null);
             $.each(invoiceSup, function (key, value) {
                 
-                if (value.code.toUpperCase() === code ) {  
+                if (value.code.toUpperCase() === code && code.length > 1) {  
                     $("#invoiceSupId").val(value.id);
                     $("#invoiceSupName").val(value.name);
                     $("#apCode").val(value.apcode);
                 }
-                else if(value.name.toUpperCase() === name){
+                else if(value.name.toUpperCase() === name && name.length > 1){
                     $("#invoiceSupCode").val(value.code);
                     $("#invoiceSupId").val(value.id);
                     $("#invoiceSupName").val(value.name);

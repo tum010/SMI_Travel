@@ -791,12 +791,12 @@
         console.log("Name :" + name);
         $("#agent_id,#agent_name,#agent_addr,#agent_tel").val(null);
         $.each(agent, function (key, value) {
-            if (value.code.toUpperCase() === code) {
+            if (value.code.toUpperCase() === code && code.length > 1) {
                 $("#refundAgentId").val(value.id);
                 $("#refundAgentName").val(value.name);
                 $("#refundAgentCode").val(value.code);
             }
-            else if (value.name.toUpperCase() === name) {
+            else if (value.name.toUpperCase() === name && name.length > 1) {
                 $("#refundAgentCode").val(value.code);
                 $("#refundAgentId").val(value.id);
                 $("#refundAgentName").val(value.name);

@@ -278,11 +278,11 @@ $(document).ready(function () {
         $("#agent_id,#agent_name").val(null);
                  
        $.each(agent, function (key, value) {
-            if (value.code.toUpperCase() === code) {           
+            if (value.code.toUpperCase() === code && code.length > 1) {           
                 $("#agent_id").val(value.id);
                 $("#agent_name").val(value.name);
             }
-            if(name === value.name){
+            if(name === value.name && name.length > 1){
                 $("#agent_code").val(value.code);
                 code = $("#agent_code").val().toUpperCase();
             }

@@ -315,12 +315,12 @@
             $("#InputInvoiceSupId,#InputInvoiceSupName,#InputAPCode").val(null);
 
             $.each(invoiceSup, function (key, value) {
-                if (value.code.toUpperCase() === code) {           
+                if (value.code.toUpperCase() === code && code.length > 1) {           
                     $("#InputInvoiceSupId").val(value.id);
                     $("#InputInvoiceSupName").val(value.name);
                     $("#InputAPCode").val(value.apcode);
                 }
-                if(name === value.name){
+                if(name === value.name && name.length > 1){
                     $("#InputInvoiceSupCode").val(value.code);
                     $("#InputInvoiceSupId").val(value.id);
                     $("#InputInvoiceSupName").val(value.name);

@@ -927,11 +927,11 @@
                             var code = this.value.toUpperCase();
                             $("#tourName").val(null);
                             $.each(tourCode, function (key, value) {
-                                if (name === value.name) {
+                                if (name === value.name && name.length > 1)  {
                                     $("#tourCode").val(value.code);
                                     code = $("#tourCode").val().toUpperCase();
                                 }
-                                if (value.code.toUpperCase() === code) {
+                                if (value.code.toUpperCase() === code && code.length > 1) {
                                     $("#tourId").val(value.id);
                                     $("#tourName").val(value.name);
                                 }

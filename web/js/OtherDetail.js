@@ -92,11 +92,11 @@ $(document).ready(function() {
         var code = this.value.toUpperCase();
         var name = this.value;
         $.each(product, function(key, value) {
-            if (value.code.toUpperCase() === code) {
+            if (value.code.toUpperCase() === code && code.length > 1) {
                 $("#product_id").val(value.id);
                 $("#product_name").val(value.name);
             }
-            if (name === value.name) {
+            if (name === value.name && name.length > 1) {
                 $("#product_code").val(value.code);
                 $("#product_name").val(value.name);
                 $("#product_id").val(value.id);

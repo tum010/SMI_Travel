@@ -614,12 +614,12 @@ $(document).ready(function() {
        // console.log("Name :"+ name);
         $("#salebyId,#salebyName").val(null);
         $.each(saleby, function (key, value) {
-            if (value.username.toUpperCase() === username ) {  
+            if (value.username.toUpperCase() === username && username.length > 1) {  
                 $("#salebyId").val(value.id);
                 $("#salebyUser").val(value.username);
                 $("#salebyName").val(value.name);
             }
-            else if(value.name.toUpperCase() === name){
+            else if(value.name.toUpperCase() === name && name.length > 1){
                 $("#salebyUser").val(value.username);
                 $("#salebyId").val(value.id);
                 $("#salebyName").val(value.name);
@@ -675,13 +675,13 @@ $(document).ready(function() {
         $("#agentId,#agentName").val(null);
         $.each(agent, function (key, value) {
             console.log("Name 1:"+ value.username.toUpperCase() + " Username1 : " + username);
-            if (value.username.toUpperCase() === username ) { 
+            if (value.username.toUpperCase() === username && username.length > 1) { 
                 console.log("Name 2:"+ name + " Username2 : " + username);
                 $("#agentId").val(value.id);
                 $("#agentCode").val(value.username);
                 $("#agentName").val(value.name);
             }
-            else if(value.name.toUpperCase() === name){
+            else if(value.name.toUpperCase() === name && name.length > 1){
                 console.log("Name 3:"+ name + " Username3 : " + username);
                 $("#agentCode").val(value.username);
                 $("#agentId").val(value.id);

@@ -294,14 +294,14 @@
             $(".ui-widget").css("top", position.top + 30);
             $(".ui-widget").css("left", position.left);
             var username = this.value.toUpperCase();
-            var name = this.value;
+            var name = this.value.toUpperCase();
             $("#refundAgentId,#refundAgentName").val(null);
             $.each(staff, function (key, value) {
-                if (value.username.toUpperCase() === username) {
+                if (value.username.toUpperCase() === username && username.length > 1) {
                     $("#refundAgentId").val(value.id);
                     $("#refundAgentName").val(value.name);
                 }
-                if(name === value.name){
+                if(name === value.name.toUpperCase() && name.length > 1){
                     $("#refundAgentId").val(value.id);
                     $("#refundAgentCode").val(value.username);
                     $("#refundAgentName").val(value.name);

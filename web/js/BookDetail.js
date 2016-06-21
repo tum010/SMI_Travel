@@ -337,8 +337,7 @@ $(document).ready(function () {
             console.log("Name :"+ name);
             $("#agent_id,#agent_name,#agent_addr,#agent_tel").val(null);
             $.each(agent, function (key, value) {
-                
-                if (value.code.toUpperCase() === code ) {  
+                if (value.code.toUpperCase() === code && code.length > 1) {  
 //                   console.log("Code2 :"+ name);
                     $("#agent_id").val(value.id);
                     $("#agent_name").val(value.name);
@@ -346,7 +345,7 @@ $(document).ready(function () {
                     $("#agent_tel").val(value.tel);
                     $("#agent_user").val(value.code);
                 }
-                else if(value.name.toUpperCase() === name){
+                else if(value.name.toUpperCase() === name && name.length > 1){
 //                    console.log("Name2 :"+ name);
                     $("#agent_user").val(value.code);
                     $("#agent_id").val(value.id);

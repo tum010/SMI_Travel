@@ -138,13 +138,13 @@ $(document).ready(function() {
         $('#PaymentOutboundForm').bootstrapValidator('revalidateField', 'invSupApCode');
 
         $.each(invoiceSup, function(key, value) {
-            if (value.code.toUpperCase() === code) {
+            if (value.code.toUpperCase() === code && code.length > 1) {
                 $("#invSupId").val(value.id);
                 $("#invSupName").val(value.name);
                 $("#invSupApCode").val(value.apcode);
                 $('#PaymentOutboundForm').bootstrapValidator('revalidateField', 'invSupApCode');
             }
-            if (name === value.name) {
+            if (name === value.name && name.length > 1) {
                 $("#invSupCode").val(value.code);
                 $("#invSupId").val(value.id);
                 $("#invSupName").val(value.name);
