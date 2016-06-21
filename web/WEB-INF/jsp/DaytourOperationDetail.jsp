@@ -1076,7 +1076,7 @@
                                                     </td>
                                                     <td style="width: 100px">
                                                         <input id="expenAmount${i.count}" name="expenAmount${i.count}" 
-                                                               class="form-control decimal" value="${expen.amount}" onfocusout="calculateGuideBill()" onkeyup="insertCommas(this)">
+                                                               class="form-control decimal" value="${expen.amount}" onfocusout="calculateGuideBill()" >
                                                     </td>
         <!--                                            <td>                            
                                                         <select name="expenSelectCur${i.count}" id="expenSelectCur${i.count}" class="form-control">
