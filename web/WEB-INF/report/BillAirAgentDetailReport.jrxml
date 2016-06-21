@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="BillAirAgentDetailReport" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="2" bottomMargin="2" uuid="5e2b3024-f132-4538-b444-f02d2927a173">
-	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.zoom" value="8.140274938684021"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="361"/>
 	<field name="agentname" class="java.lang.String"/>
 	<field name="invoiceno" class="java.lang.String"/>
 	<field name="invoicedate" class="java.lang.String"/>
@@ -62,7 +62,7 @@
 					</graphicElement>
 				</rectangle>
 				<staticText>
-					<reportElement x="224" y="36" width="72" height="18" backcolor="#FFFFFF" uuid="5efaabda-7499-441e-b39e-9362f244338a"/>
+					<reportElement x="217" y="36" width="72" height="18" backcolor="#FFFFFF" uuid="5efaabda-7499-441e-b39e-9362f244338a"/>
 					<box>
 						<topPen lineWidth="0.25" lineColor="#CCCCFF"/>
 						<leftPen lineWidth="0.25" lineColor="#CCCCFF"/>
@@ -75,7 +75,7 @@
 					<text><![CDATA[Ticket No]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="2" y="36" width="55" height="18" uuid="5269b18d-7ab4-4334-ad67-ffd9874b850c"/>
+					<reportElement x="0" y="36" width="57" height="18" uuid="5269b18d-7ab4-4334-ad67-ffd9874b850c"/>
 					<box>
 						<topPen lineWidth="0.25" lineColor="#CCCCFF"/>
 						<leftPen lineWidth="0.25" lineColor="#CCCCFF"/>
@@ -88,7 +88,7 @@
 					<text><![CDATA[Invoice No]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="57" y="36" width="65" height="18" uuid="759f864a-96cc-4bd8-a3ba-a2f45ee6fc6b"/>
+					<reportElement x="57" y="36" width="61" height="18" uuid="759f864a-96cc-4bd8-a3ba-a2f45ee6fc6b"/>
 					<box>
 						<topPen lineWidth="0.25" lineColor="#CCCCFF"/>
 						<leftPen lineWidth="0.25" lineColor="#CCCCFF"/>
@@ -101,7 +101,7 @@
 					<text><![CDATA[Invoice Date]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="122" y="36" width="102" height="18" uuid="6088f90d-b66d-43f8-936e-caa5557d270b"/>
+					<reportElement x="118" y="36" width="99" height="18" uuid="6088f90d-b66d-43f8-936e-caa5557d270b"/>
 					<box>
 						<pen lineColor="#CCCCFF"/>
 						<topPen lineWidth="0.25" lineColor="#CCCCFF"/>
@@ -115,7 +115,7 @@
 					<text><![CDATA[Customer]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="296" y="36" width="84" height="18" backcolor="#FFFFFF" uuid="fa466739-6d7b-4f84-bdaf-58aa9a4277e3"/>
+					<reportElement x="289" y="36" width="84" height="18" backcolor="#FFFFFF" uuid="fa466739-6d7b-4f84-bdaf-58aa9a4277e3"/>
 					<box>
 						<topPen lineWidth="0.25" lineColor="#CCCCFF"/>
 						<leftPen lineWidth="0.25" lineColor="#CCCCFF"/>
@@ -128,7 +128,7 @@
 					<text><![CDATA[Rounting]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="380" y="36" width="63" height="18" backcolor="#FFFFFF" uuid="b4d70e90-c834-42af-82ce-1b879880d936"/>
+					<reportElement x="373" y="36" width="63" height="18" backcolor="#FFFFFF" uuid="b4d70e90-c834-42af-82ce-1b879880d936"/>
 					<box>
 						<topPen lineWidth="0.25" lineColor="#CCCCFF"/>
 						<leftPen lineWidth="0.25" lineColor="#CCCCFF"/>
@@ -141,7 +141,7 @@
 					<text><![CDATA[Sale Price]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="443" y="36" width="57" height="18" backcolor="#FFFFFF" uuid="4a555be9-3fb2-4202-84cf-92066764f8ae"/>
+					<reportElement x="436" y="36" width="57" height="18" backcolor="#FFFFFF" uuid="4a555be9-3fb2-4202-84cf-92066764f8ae"/>
 					<box>
 						<topPen lineWidth="0.25" lineColor="#CCCCFF"/>
 						<leftPen lineWidth="0.25" lineColor="#CCCCFF"/>
@@ -154,7 +154,7 @@
 					<text><![CDATA[Net]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="500" y="36" width="63" height="18" backcolor="#FFFFFF" uuid="c79031fb-199f-49cd-b337-e908309de075"/>
+					<reportElement x="493" y="36" width="63" height="18" backcolor="#FFFFFF" uuid="c79031fb-199f-49cd-b337-e908309de075"/>
 					<box>
 						<topPen lineWidth="0.25" lineColor="#CCCCFF"/>
 						<leftPen lineWidth="0.25" lineColor="#CCCCFF"/>
@@ -167,7 +167,7 @@
 					<text><![CDATA[Service]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="563" y="37" width="28" height="18" backcolor="#FFFFFF" uuid="d67bf915-3976-451c-87fe-65d872bf0776"/>
+					<reportElement x="556" y="37" width="33" height="18" backcolor="#FFFFFF" uuid="d67bf915-3976-451c-87fe-65d872bf0776"/>
 					<box>
 						<topPen lineWidth="0.25" lineColor="#CCCCFF"/>
 						<leftPen lineWidth="0.25" lineColor="#CCCCFF"/>
@@ -180,7 +180,7 @@
 					<text><![CDATA[Vat]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="591" y="37" width="64" height="18" backcolor="#FFFFFF" uuid="605de39a-fedb-42f8-a345-a8272e34fd3f"/>
+					<reportElement x="589" y="37" width="64" height="18" backcolor="#FFFFFF" uuid="605de39a-fedb-42f8-a345-a8272e34fd3f"/>
 					<box>
 						<topPen lineWidth="0.25" lineColor="#CCCCFF"/>
 						<leftPen lineWidth="0.25" lineColor="#CCCCFF"/>
@@ -193,7 +193,7 @@
 					<text><![CDATA[Amount Air]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="655" y="37" width="59" height="18" backcolor="#FFFFFF" uuid="2b85d267-6ecb-450f-98b1-d68729b0be66"/>
+					<reportElement x="653" y="37" width="59" height="18" backcolor="#FFFFFF" uuid="2b85d267-6ecb-450f-98b1-d68729b0be66"/>
 					<box>
 						<topPen lineWidth="0.25" lineColor="#CCCCFF"/>
 						<leftPen lineWidth="0.25" lineColor="#CCCCFF"/>
@@ -206,7 +206,7 @@
 					<text><![CDATA[Com Pay]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="714" y="37" width="28" height="18" backcolor="#FFFFFF" uuid="ec15c094-36f7-4b4a-bda1-507e2c921628"/>
+					<reportElement x="712" y="37" width="33" height="18" backcolor="#FFFFFF" uuid="ec15c094-36f7-4b4a-bda1-507e2c921628"/>
 					<box>
 						<topPen lineWidth="0.25" lineColor="#CCCCFF"/>
 						<leftPen lineWidth="0.25" lineColor="#CCCCFF"/>
@@ -219,7 +219,7 @@
 					<text><![CDATA[Vat]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="742" y="37" width="60" height="18" backcolor="#FFFFFF" uuid="5be5cb7e-047e-4906-8147-87d3b4dd92a4"/>
+					<reportElement x="745" y="37" width="57" height="18" backcolor="#FFFFFF" uuid="5be5cb7e-047e-4906-8147-87d3b4dd92a4"/>
 					<box>
 						<topPen lineWidth="0.25" lineColor="#CCCCFF"/>
 						<leftPen lineWidth="0.25" lineColor="#CCCCFF"/>
@@ -242,94 +242,94 @@
 					</graphicElement>
 				</rectangle>
 				<rectangle>
-					<reportElement mode="Transparent" x="655" y="0" width="59" height="14" forecolor="#CCCCCC" uuid="505fb19d-263c-4eda-85c9-9571840459f2"/>
+					<reportElement mode="Transparent" x="653" y="0" width="59" height="14" forecolor="#CCCCCC" uuid="505fb19d-263c-4eda-85c9-9571840459f2"/>
 					<graphicElement>
 						<pen lineWidth="0.25"/>
 					</graphicElement>
 				</rectangle>
 				<textField pattern="#,##0.00" isBlankWhenNull="true">
-					<reportElement x="744" y="0" width="57" height="14" uuid="76c26e4e-0cbd-4079-af00-1640f77f9056"/>
+					<reportElement x="745" y="0" width="55" height="14" uuid="76c26e4e-0cbd-4079-af00-1640f77f9056"/>
 					<textElement textAlignment="Right">
 						<font size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{totalreceive}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00" isBlankWhenNull="true">
-					<reportElement x="655" y="0" width="54" height="14" uuid="10360d59-5cfa-4c7a-8af6-49d735479f7b"/>
+					<reportElement x="653" y="0" width="57" height="14" uuid="10360d59-5cfa-4c7a-8af6-49d735479f7b"/>
 					<textElement textAlignment="Right">
 						<font size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{totalcompay}]]></textFieldExpression>
 				</textField>
 				<rectangle>
-					<reportElement mode="Transparent" x="743" y="0" width="59" height="14" forecolor="#CCCCCC" uuid="d61eb5f4-ed17-496c-ad54-2135289a5f79"/>
+					<reportElement mode="Transparent" x="745" y="0" width="57" height="14" forecolor="#CCCCCC" uuid="d61eb5f4-ed17-496c-ad54-2135289a5f79"/>
 					<graphicElement>
 						<pen lineWidth="0.25"/>
 					</graphicElement>
 				</rectangle>
 				<rectangle>
-					<reportElement mode="Transparent" x="714" y="0" width="28" height="14" forecolor="#CCCCCC" uuid="b7401376-a742-4fb9-83a8-99593d929075"/>
+					<reportElement mode="Transparent" x="712" y="0" width="33" height="14" forecolor="#CCCCCC" uuid="b7401376-a742-4fb9-83a8-99593d929075"/>
 					<graphicElement>
 						<pen lineWidth="0.25"/>
 					</graphicElement>
 				</rectangle>
 				<textField pattern="#,##0.00" isBlankWhenNull="true">
-					<reportElement x="714" y="0" width="23" height="14" uuid="b94874c7-12ad-4900-a06b-a00f49ea1bd4"/>
+					<reportElement x="712" y="0" width="31" height="14" uuid="b94874c7-12ad-4900-a06b-a00f49ea1bd4"/>
 					<textElement textAlignment="Right">
 						<font size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{totalvatreceive}]]></textFieldExpression>
 				</textField>
 				<rectangle>
-					<reportElement mode="Transparent" x="592" y="0" width="63" height="14" forecolor="#CCCCCC" uuid="eb235eae-eb4f-413d-89fe-df22732ec45b"/>
+					<reportElement mode="Transparent" x="589" y="0" width="64" height="14" forecolor="#CCCCCC" uuid="eb235eae-eb4f-413d-89fe-df22732ec45b"/>
 					<graphicElement>
 						<pen lineWidth="0.25"/>
 					</graphicElement>
 				</rectangle>
 				<rectangle>
-					<reportElement mode="Transparent" x="563" y="0" width="28" height="14" forecolor="#CCCCCC" uuid="a136e69f-ac9e-4b33-9823-59cae61c8716"/>
+					<reportElement mode="Transparent" x="556" y="0" width="33" height="14" forecolor="#CCCCCC" uuid="a136e69f-ac9e-4b33-9823-59cae61c8716"/>
 					<graphicElement>
 						<pen lineWidth="0.25"/>
 					</graphicElement>
 				</rectangle>
 				<rectangle>
-					<reportElement mode="Transparent" x="500" y="0" width="63" height="14" forecolor="#CCCCCC" uuid="7e001c20-b6a4-4781-b7dc-0354592c0768"/>
+					<reportElement mode="Transparent" x="493" y="0" width="63" height="14" forecolor="#CCCCCC" uuid="7e001c20-b6a4-4781-b7dc-0354592c0768"/>
 					<graphicElement>
 						<pen lineWidth="0.25"/>
 					</graphicElement>
 				</rectangle>
 				<rectangle>
-					<reportElement mode="Transparent" x="448" y="0" width="52" height="14" forecolor="#CCCCCC" uuid="bc16db05-4809-4d85-90c2-7b62fce9b7e9"/>
+					<reportElement mode="Transparent" x="436" y="0" width="57" height="14" forecolor="#CCCCCC" uuid="bc16db05-4809-4d85-90c2-7b62fce9b7e9"/>
 					<graphicElement>
 						<pen lineWidth="0.25"/>
 					</graphicElement>
 				</rectangle>
 				<rectangle>
-					<reportElement mode="Transparent" x="380" y="0" width="63" height="14" forecolor="#CCCCCC" uuid="73a7bb70-86f6-46fd-b8ca-dc961df6f1e2"/>
+					<reportElement mode="Transparent" x="373" y="0" width="63" height="14" forecolor="#CCCCCC" uuid="73a7bb70-86f6-46fd-b8ca-dc961df6f1e2"/>
 					<graphicElement>
 						<pen lineWidth="0.25"/>
 					</graphicElement>
 				</rectangle>
 				<rectangle>
-					<reportElement mode="Transparent" x="296" y="0" width="84" height="14" forecolor="#CCCCCC" uuid="abeb788d-1bcf-484d-9839-ee79c44f7377"/>
+					<reportElement mode="Transparent" x="289" y="0" width="84" height="14" forecolor="#CCCCCC" uuid="abeb788d-1bcf-484d-9839-ee79c44f7377"/>
 					<graphicElement>
 						<pen lineWidth="0.25"/>
 					</graphicElement>
 				</rectangle>
 				<rectangle>
-					<reportElement mode="Transparent" x="224" y="0" width="72" height="14" forecolor="#CCCCCC" uuid="db0d1785-5ebb-499d-a036-333818d805c7"/>
+					<reportElement mode="Transparent" x="217" y="0" width="72" height="14" forecolor="#CCCCCC" uuid="db0d1785-5ebb-499d-a036-333818d805c7"/>
 					<graphicElement>
 						<pen lineWidth="0.25"/>
 					</graphicElement>
 				</rectangle>
 				<rectangle>
-					<reportElement mode="Transparent" x="122" y="0" width="102" height="14" forecolor="#CCCCCC" uuid="d2275c10-40da-4d07-a398-202618a6edc4"/>
+					<reportElement mode="Transparent" x="118" y="0" width="99" height="14" forecolor="#CCCCCC" uuid="d2275c10-40da-4d07-a398-202618a6edc4"/>
 					<graphicElement>
 						<pen lineWidth="0.25"/>
 					</graphicElement>
 				</rectangle>
 				<rectangle>
-					<reportElement mode="Transparent" x="57" y="0" width="65" height="14" forecolor="#CCCCCC" uuid="9a0d71c7-564e-4c99-8ed2-46812a54aea8"/>
+					<reportElement mode="Transparent" x="57" y="0" width="61" height="14" forecolor="#CCCCCC" uuid="9a0d71c7-564e-4c99-8ed2-46812a54aea8"/>
 					<graphicElement>
 						<pen lineWidth="0.25"/>
 					</graphicElement>
@@ -341,42 +341,42 @@
 					</graphicElement>
 				</rectangle>
 				<textField pattern="#,##0.00" isBlankWhenNull="true">
-					<reportElement x="592" y="0" width="58" height="14" uuid="33aa0661-1a0e-4586-a8e5-8651e2ac652f"/>
+					<reportElement x="589" y="0" width="62" height="14" uuid="33aa0661-1a0e-4586-a8e5-8651e2ac652f"/>
 					<textElement textAlignment="Right">
 						<font size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{totalamountair}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00" isBlankWhenNull="true">
-					<reportElement x="563" y="0" width="23" height="14" uuid="e5970830-0b75-4b70-922d-3d78ac4dcbab"/>
+					<reportElement x="556" y="0" width="31" height="14" uuid="e5970830-0b75-4b70-922d-3d78ac4dcbab"/>
 					<textElement textAlignment="Right">
 						<font size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{totalvatamount}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00" isBlankWhenNull="true">
-					<reportElement x="500" y="0" width="58" height="14" uuid="cc102708-23d2-4409-9e65-3e0f611a9d44"/>
+					<reportElement x="493" y="0" width="61" height="14" uuid="cc102708-23d2-4409-9e65-3e0f611a9d44"/>
 					<textElement textAlignment="Right">
 						<font size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{totalservice}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00" isBlankWhenNull="true">
-					<reportElement x="448" y="0" width="47" height="14" uuid="192b6030-f915-4d42-ba61-4a13e0bab60f"/>
+					<reportElement x="436" y="0" width="55" height="14" uuid="192b6030-f915-4d42-ba61-4a13e0bab60f"/>
 					<textElement textAlignment="Right">
 						<font size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{totalnet}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00" isBlankWhenNull="true">
-					<reportElement x="380" y="0" width="58" height="14" uuid="c03f883e-9a9d-4638-b547-0c3d27a9bf08"/>
+					<reportElement x="373" y="0" width="61" height="14" uuid="c03f883e-9a9d-4638-b547-0c3d27a9bf08"/>
 					<textElement textAlignment="Right">
 						<font size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{totalsaleprice}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="302" y="0" width="66" height="14" uuid="18f04220-1903-4169-a068-7019e2833b8f"/>
+					<reportElement x="307" y="0" width="66" height="14" uuid="18f04220-1903-4169-a068-7019e2833b8f"/>
 					<text><![CDATA[Total]]></text>
 				</staticText>
 			</band>
@@ -388,169 +388,169 @@
 	<detail>
 		<band height="20" splitType="Stretch">
 			<rectangle>
-				<reportElement mode="Transparent" x="224" y="0" width="72" height="20" forecolor="#CCCCCC" uuid="aaab37b4-79e2-4ec6-9df1-9a984c2d1512"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="217" y="0" width="72" height="20" forecolor="#CCCCCC" uuid="aaab37b4-79e2-4ec6-9df1-9a984c2d1512"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</rectangle>
-			<textField isBlankWhenNull="true">
-				<reportElement x="0" y="0" width="57" height="20" uuid="ca6d1cea-7ca4-4c56-825b-14748f175159"/>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="0" y="0" width="57" height="20" uuid="ca6d1cea-7ca4-4c56-825b-14748f175159"/>
 				<textElement textAlignment="Center">
 					<font fontName="TH SarabunPSK" size="13" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{invoiceno}]]></textFieldExpression>
 			</textField>
 			<rectangle>
-				<reportElement mode="Transparent" x="0" y="0" width="57" height="20" forecolor="#CCCCCC" uuid="dd297a6e-d375-43f6-8610-5fcfde7f7d86"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="0" width="57" height="20" forecolor="#CCCCCC" uuid="dd297a6e-d375-43f6-8610-5fcfde7f7d86"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</rectangle>
-			<textField isBlankWhenNull="true">
-				<reportElement x="57" y="0" width="65" height="20" uuid="7febbf25-cbc6-4d33-8e71-d91c2cc5bcb9"/>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="57" y="0" width="61" height="20" uuid="7febbf25-cbc6-4d33-8e71-d91c2cc5bcb9"/>
 				<textElement textAlignment="Center">
 					<font fontName="TH SarabunPSK" size="13" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{invoicedate}]]></textFieldExpression>
 			</textField>
 			<rectangle>
-				<reportElement mode="Transparent" x="57" y="0" width="65" height="20" forecolor="#CCCCCC" uuid="16b16307-b1ca-4fea-8be1-d3423eba47b4"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="57" y="0" width="61" height="20" forecolor="#CCCCCC" uuid="16b16307-b1ca-4fea-8be1-d3423eba47b4"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</rectangle>
-			<textField isBlankWhenNull="true">
-				<reportElement x="128" y="0" width="96" height="20" uuid="7e103d82-71fb-4676-a000-58faaab1e7b2"/>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="120" y="0" width="97" height="20" uuid="7e103d82-71fb-4676-a000-58faaab1e7b2"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="13" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{customer}]]></textFieldExpression>
 			</textField>
 			<rectangle>
-				<reportElement mode="Transparent" x="122" y="0" width="102" height="20" forecolor="#CCCCCC" uuid="874cc837-34fc-475c-8c3e-22771df4349e"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="118" y="0" width="99" height="20" forecolor="#CCCCCC" uuid="874cc837-34fc-475c-8c3e-22771df4349e"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</rectangle>
-			<textField isBlankWhenNull="true">
-				<reportElement x="224" y="0" width="72" height="20" uuid="7d08c938-cb08-48e6-8ad8-f9f2cb0059fd"/>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="217" y="0" width="72" height="20" uuid="7d08c938-cb08-48e6-8ad8-f9f2cb0059fd"/>
 				<textElement textAlignment="Center">
 					<font fontName="TH SarabunPSK" size="13" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{ticketno}]]></textFieldExpression>
 			</textField>
 			<rectangle>
-				<reportElement mode="Transparent" x="296" y="0" width="84" height="20" forecolor="#CCCCCC" uuid="842b849f-3d40-4faf-b85c-8667942ea4bf"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="289" y="0" width="84" height="20" forecolor="#CCCCCC" uuid="842b849f-3d40-4faf-b85c-8667942ea4bf"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</rectangle>
-			<textField isBlankWhenNull="true">
-				<reportElement x="302" y="0" width="78" height="20" uuid="3d8b0bd0-7bb8-4716-9db5-a0d6cc0c40eb"/>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="291" y="0" width="82" height="20" uuid="3d8b0bd0-7bb8-4716-9db5-a0d6cc0c40eb"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="13" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{rounting}]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="380" y="0" width="58" height="20" uuid="d6cb8f8b-cca8-4c95-8a38-c0c23339132b"/>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="373" y="0" width="61" height="20" uuid="d6cb8f8b-cca8-4c95-8a38-c0c23339132b"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="13" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{saleprice}]]></textFieldExpression>
 			</textField>
 			<rectangle>
-				<reportElement mode="Transparent" x="380" y="0" width="63" height="20" forecolor="#CCCCCC" uuid="68722f8d-a220-4f18-9cd1-3a840dec3465"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="373" y="0" width="63" height="20" forecolor="#CCCCCC" uuid="68722f8d-a220-4f18-9cd1-3a840dec3465"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</rectangle>
 			<rectangle>
-				<reportElement mode="Transparent" x="444" y="0" width="56" height="20" forecolor="#CCCCCC" uuid="35314b3e-9976-4631-be2d-f02369d5dad9"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="436" y="0" width="57" height="20" forecolor="#CCCCCC" uuid="35314b3e-9976-4631-be2d-f02369d5dad9"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</rectangle>
-			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="444" y="0" width="51" height="20" uuid="1b2eb9c3-8b7d-4c3d-bf36-986326d8358b"/>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="436" y="0" width="55" height="20" uuid="1b2eb9c3-8b7d-4c3d-bf36-986326d8358b"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="13" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{net}]]></textFieldExpression>
 			</textField>
 			<rectangle>
-				<reportElement mode="Transparent" x="500" y="0" width="63" height="20" forecolor="#CCCCCC" uuid="fac57af0-687d-43e6-acd3-e344032fa47a"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="493" y="0" width="63" height="20" forecolor="#CCCCCC" uuid="fac57af0-687d-43e6-acd3-e344032fa47a"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</rectangle>
-			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="500" y="0" width="58" height="20" uuid="6c307504-86ba-459e-af27-848a927e41de"/>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="493" y="0" width="61" height="20" uuid="6c307504-86ba-459e-af27-848a927e41de"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="13" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{service}]]></textFieldExpression>
 			</textField>
 			<rectangle>
-				<reportElement mode="Transparent" x="563" y="0" width="28" height="20" forecolor="#CCCCCC" uuid="febf38b2-a176-485c-9946-7723922ac5e6"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="556" y="0" width="33" height="20" forecolor="#CCCCCC" uuid="febf38b2-a176-485c-9946-7723922ac5e6"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</rectangle>
-			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="563" y="0" width="23" height="20" uuid="62628307-cb2d-41a1-98d2-6687769a654d"/>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="556" y="0" width="31" height="20" uuid="62628307-cb2d-41a1-98d2-6687769a654d"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="13" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{vatamount}]]></textFieldExpression>
 			</textField>
 			<rectangle>
-				<reportElement mode="Transparent" x="592" y="0" width="63" height="20" forecolor="#CCCCCC" uuid="daf40d2d-9e5d-4271-bd40-4738fa7c8598"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="589" y="0" width="64" height="20" forecolor="#CCCCCC" uuid="daf40d2d-9e5d-4271-bd40-4738fa7c8598"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</rectangle>
-			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="592" y="0" width="58" height="20" uuid="d956d1e7-9ba3-4d39-adfa-a4fde96f8404"/>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="589" y="0" width="62" height="20" uuid="d956d1e7-9ba3-4d39-adfa-a4fde96f8404"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="13" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{amountair}]]></textFieldExpression>
 			</textField>
 			<rectangle>
-				<reportElement mode="Transparent" x="655" y="0" width="59" height="20" forecolor="#CCCCCC" uuid="9c216ad5-ce5c-489c-9aa6-afda4f1ed558"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="653" y="0" width="59" height="20" forecolor="#CCCCCC" uuid="9c216ad5-ce5c-489c-9aa6-afda4f1ed558"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</rectangle>
-			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="655" y="0" width="54" height="20" uuid="dee7e341-8de2-464f-b7c2-0419e90d437b"/>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="653" y="0" width="57" height="20" uuid="dee7e341-8de2-464f-b7c2-0419e90d437b"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="13" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{compay}]]></textFieldExpression>
 			</textField>
 			<rectangle>
-				<reportElement mode="Transparent" x="714" y="0" width="28" height="20" forecolor="#CCCCCC" uuid="f305543f-bd78-49c5-8b38-eda3496bb17d"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="712" y="0" width="33" height="20" forecolor="#CCCCCC" uuid="f305543f-bd78-49c5-8b38-eda3496bb17d"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</rectangle>
-			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="714" y="0" width="23" height="20" uuid="3d47722a-555e-46b0-8f25-b18209a3370e"/>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="712" y="0" width="31" height="20" uuid="3d47722a-555e-46b0-8f25-b18209a3370e"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="13" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{vatreceive}]]></textFieldExpression>
 			</textField>
 			<rectangle>
-				<reportElement mode="Transparent" x="742" y="0" width="60" height="20" forecolor="#CCCCCC" uuid="1d33b5a7-0c17-4d05-a3d5-e579121b9b3e"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="745" y="0" width="57" height="20" forecolor="#CCCCCC" uuid="1d33b5a7-0c17-4d05-a3d5-e579121b9b3e"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</rectangle>
-			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="742" y="0" width="57" height="20" uuid="1b0ee3c7-4ce1-4be6-bd83-80a9bd3b5e9d"/>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="745" y="0" width="55" height="20" uuid="1b0ee3c7-4ce1-4be6-bd83-80a9bd3b5e9d"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="13" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>

@@ -336,7 +336,7 @@ public class BillAirAgentImpl implements BillAirAgentDao{
             }else{
                 bil.setIssuedatePage("ALL");
             }
-            System.out.println("Invoice Date : " + invoiceFromDate);
+//            System.out.println("Invoice Date : " + invoiceFromDate);
             if(invoiceFromDate != null && !"".equals(invoiceFromDate)){
                 String invoice = ""+ String.valueOf(sf.format(util.convertStringToDate(invoiceFromDate)))  + " To " + String.valueOf(sf.format(util.convertStringToDate(InvoiceToDate))) ;
                 bil.setInvoicedatePage(invoice);
@@ -414,7 +414,7 @@ public class BillAirAgentImpl implements BillAirAgentDao{
             }else{
                 bil.setPaycusrefund("0.00");
             }
-            System.out.println("Temp Vat : " +  vat  + " Wht : " + wht);
+//            System.out.println("Temp Vat : " +  vat  + " Wht : " + wht);
             bil.setVattemp(vat);
             bil.setWhttemp(wht);
             dataAgent.add(bil);
@@ -510,7 +510,7 @@ public class BillAirAgentImpl implements BillAirAgentDao{
         
         List<BillAirAgent> list2 = data.get(0).getBillAirAgent();
         for (int i = 0; i < list2.size(); i++) {
-            System.out.println("Vat : " + list2.get(i).getVattemp() + " Wht : " + list2.get(i).getWhttemp());
+//            System.out.println("Vat : " + list2.get(i).getVattemp() + " Wht : " + list2.get(i).getWhttemp());
         }
         return data;
     }
@@ -574,11 +574,11 @@ public class BillAirAgentImpl implements BillAirAgentDao{
             sumVatComPay = sumVatComPay.add(new BigDecimal(listAgent.get(i).getCompayvat()));
             sumTotalComRefundReceive = sumTotalComRefundReceive.add(new BigDecimal(listAgent.get(i).getAgentcomrefund()));
             
-            System.out.println("Sale Price : " + listAgent.get(i).getSaleprice() + "  Sum Sale Price : " + sumSalePrice);
-            System.out.println("Amount Air : " + listAgent.get(i).getAmountair() + "  Sum Amount Air : " + sumAmountAir);
-            System.out.println("Com Pay : " + listAgent.get(i).getCompay() + "  Sum Com Pay : " + sumComPay);
-            System.out.println("Com Reefund Receive : " + listAgent.get(i).getAgentcomrefund() + "  Sum Reefund Receive : " + sumTotalComRefundReceive);
-            System.out.println("Pay Refund Amount : " + listAgent.get(i).getPaycusrefund() + "  Sum Refund Amount : " + sumPayRefundAmount);
+//            System.out.println("Sale Price : " + listAgent.get(i).getSaleprice() + "  Sum Sale Price : " + sumSalePrice);
+//            System.out.println("Amount Air : " + listAgent.get(i).getAmountair() + "  Sum Amount Air : " + sumAmountAir);
+//            System.out.println("Com Pay : " + listAgent.get(i).getCompay() + "  Sum Com Pay : " + sumComPay);
+//            System.out.println("Com Reefund Receive : " + listAgent.get(i).getAgentcomrefund() + "  Sum Reefund Receive : " + sumTotalComRefundReceive);
+//            System.out.println("Pay Refund Amount : " + listAgent.get(i).getPaycusrefund() + "  Sum Refund Amount : " + sumPayRefundAmount);
         }
         for (int i = 0; i < listAgentRefund.size(); i++) {
             sumComReceive = sumComReceive.add(new BigDecimal(listAgentRefund.get(i).getComm_rec()));
@@ -587,7 +587,7 @@ public class BillAirAgentImpl implements BillAirAgentDao{
         }
         vatMDE = listAgent.get(0).getVattemp();
         whtMDE = listAgent.get(0).getWhttemp();
-        System.out.println("Vat : " + vatMDE + "Wht  :" + whtMDE);
+//        System.out.println("Vat : " + vatMDE + "Wht  :" + whtMDE);
         
         DecimalFormat df = new DecimalFormat("#,###.00");
         sumTotalPayment = sumSalePrice.add(sumComReceive);
@@ -613,7 +613,7 @@ public class BillAirAgentImpl implements BillAirAgentDao{
         
         withHoldingTax = sumTotalCompay.add(vatComPay);
         withHoldingTax = withHoldingTax.multiply(new BigDecimal(100));
-        System.out.println("Vat :::: " + vatMDE + "Wht :::: " + whtMDE);
+//        System.out.println("Vat :::: " + vatMDE + "Wht :::: " + whtMDE);
         BigDecimal vatTemp =  new BigDecimal(vatMDE );
         BigDecimal whtTemp =  new BigDecimal(whtMDE );
         vatTemp = vatTemp.add(new BigDecimal(100));
