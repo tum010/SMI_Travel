@@ -174,9 +174,9 @@ public class GuideJobImpl implements GuideJobDao{
             if((GuideRemark != null)&&(!"".equalsIgnoreCase(GuideRemark))){
                 GuideRemark +=  "\n";
             }
-            if((Guide2Detail != null)&&(!"".equalsIgnoreCase(Guide2Detail))){
-                Guide2Detail +=  "\n";
-            }
+//            if((Guide2Detail != null)&&(!"".equalsIgnoreCase(Guide2Detail))){
+//                Guide2Detail +=  "\n";
+//            }
             if((OperationRemark != null)&&(!"".equalsIgnoreCase(OperationRemark))){
                 OperationRemark +=  "\n";
             }
