@@ -232,11 +232,11 @@ public class InvoiceImpl implements InvoiceReportDao{
             String textmoneypoint = (utilityFunction.changPoint(String.valueOf(part2)));
             String currency = util.ConvertString(B[17]);
             if("JPY".equals(currency)){
-//                currency = " YEN" ;
+                currency = " JPY" ;
             }else if("THB".equals(currency)){
                 currency = " BAHT" ;
             }else if("USD".equals(currency)){
-//                currency = " DOLLAR" ;
+                currency = " USD" ;
             }else{
                 currency = " BAHT" ;
             }        
