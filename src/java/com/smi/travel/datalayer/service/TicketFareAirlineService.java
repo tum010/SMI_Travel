@@ -52,8 +52,8 @@ public class TicketFareAirlineService {
         return ticketFareAirlineDao.validateSaveTicket(ticket);
     }
     
-    public String getTicketFareBookingFromTicketNo(String TicketNo){
-        return ticketFareAirlineDao.getTicketFareBookingFromTicketNo(TicketNo);
+    public String getTicketFareBookingFromTicketNo(String TicketNo,String masterid){
+        return ticketFareAirlineDao.getTicketFareBookingFromTicketNo(TicketNo,masterid);
     }
     
     public String getListTicketFareFromRefno(String Refno){

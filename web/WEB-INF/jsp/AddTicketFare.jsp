@@ -1855,8 +1855,9 @@ function selectTicketNo(){
     }
 }
 
-function setTicketFareDetail(ticket,refno,invno){
+function setTicketFareDetail(ticket,refno,invno,masterid){
     setTicketDetailTemp.push({no:ticket,refno:refno,invno:invno});
+    $("#masterId").val(masterid);
     var ticketNo = $("#ticketNo").val();
     if(ticketNo != ""){
         $("#ticketNoAlert").text('Are you sure to edit Ticket No. ?');

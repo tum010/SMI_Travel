@@ -212,10 +212,13 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
     }
 
     @Override
-    public String getTicketFareBookingFromTicketNo(String TicketNo) {
+    public String getTicketFareBookingFromTicketNo(String TicketNo,String masterid) {
         String result ="";
         AirticketPassenger ticketPass = new AirticketPassenger();
         String query = "from AirticketPassenger pass where pass.series1||pass.series2||pass.series3 = :ticketNo ";
+        if(masterid != null && !"".equalsIgnoreCase(masterid)){
+           query += " and pass.airticketAirline.airticketPnr.airticketBooking.master.id = '"+masterid+"' ";
+        }
         Session session = this.sessionFactory.openSession();
         List<AirticketPassenger> ticketPassList = session.createQuery(query).setParameter("ticketNo", TicketNo).list();
         String ticketAirline = "";
@@ -508,7 +511,7 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
                     + "<td class='money'>"+ (ticketFare == "null" ? "" : ticketFare )+"</td>" 
                     + "<td class='money'>" + (ticketTax == "null" ? "" : ticketTax ) +"</td>" 
     //                    + "<td class=\"text-center\" onclick=\"setTicketDetail('" + ticket + "','" + ticketFare + "','" + ticketTax + "','" + issueDate + "','" + ticketRouting + "','" + airline + "','" + ticketBy + "','" + name + "','" + department + "','" + masterId + "','" + ticketId + "')\">"
-                    + "<td class=\"text-center\" onclick=\"setTicketFareDetail('" + ticket + "','" + refno + "','')\">"
+                    + "<td class=\"text-center\" onclick=\"setTicketFareDetail('" + ticket + "','" + refno + "','','" + masterId + "')\">"
                     + "<a href=\"\"><span class=\"glyphicon glyphicon-check\"></span></a>" + "</td>"
                     + "</tr>";
                 System.out.println("newrow [[[[[[[ "+newrow +" ]]]]");
@@ -526,7 +529,7 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
                     + "<td class='money'>"+ (ticketFare == "null" ? "" : ticketFare )+"</td>" 
                     + "<td class='money'>" + (ticketTax == "null" ? "" : ticketTax ) +"</td>" 
     //                    + "<td class=\"text-center\" onclick=\"setTicketDetail('" + ticket + "','" + ticketFare + "','" + ticketTax + "','" + issueDate + "','" + ticketRouting + "','" + airline + "','" + ticketBy + "','" + name + "','" + department + "','" + masterId + "','" + ticketId + "')\">"
-                    + "<td class=\"text-center\" onclick=\"setTicketFareDetail('" + ticket + "','','" + invno + "')\">"
+                    + "<td class=\"text-center\" onclick=\"setTicketFareDetail('" + ticket + "','','" + invno + "','" + masterId + "')\">"
                     + "<a href=\"\"><span class=\"glyphicon glyphicon-check\"></span></a>" + "</td>"
                     + "</tr>";
                 System.out.println("newrow [[[[[[[ "+newrow +" ]]]]");

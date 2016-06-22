@@ -717,7 +717,7 @@ public class AddTicketFareController extends SMITravelController {
                     request.setAttribute(FLIGHTDETAILFLAG,"notdummy");
                 }
                 if(ticketFareAirline == null){
-                    String airticketPass = ticketFareAirlineService.getTicketFareBookingFromTicketNo(ticketNo);
+                    String airticketPass = ticketFareAirlineService.getTicketFareBookingFromTicketNo(ticketNo,masterId);
                     TicketFareAirline ticketFareAirlines = new TicketFareAirline();
                     request.setAttribute(TICKETFAREFLAG,"dummy");
                     if(StringUtils.isNotEmpty(airticketPass)){
@@ -840,6 +840,7 @@ public class AddTicketFareController extends SMITravelController {
             if("".equals(ticketNo) || ticketNo == null ){
                 System.out.print("ticketNo is null");
             }else{
+                System.out.println("masterId : "+ masterId);
                 List<BookingFlight> bookingFlights = new ArrayList<BookingFlight>();
                 List<AirticketFlightView> airticketFlightView = new ArrayList<AirticketFlightView>();
                 bookingFlights = ticketFareAirlineService.getListFlightFromTicketNo(ticketNo);
@@ -918,7 +919,7 @@ public class AddTicketFareController extends SMITravelController {
                     request.setAttribute(FLIGHTDETAILFLAG,"notdummy");
                 }
                 
-                String airticketPass = ticketFareAirlineService.getTicketFareBookingFromTicketNo(ticketNo);
+                String airticketPass = ticketFareAirlineService.getTicketFareBookingFromTicketNo(ticketNo,masterId);
                 TicketFareAirline ticketFareAirlines = new TicketFareAirline();
                 request.setAttribute(TICKETFAREFLAG,"dummy");
                 if(StringUtils.isNotEmpty(airticketPass)){
