@@ -590,7 +590,7 @@ public class InvoiceImpl implements InvoiceReportDao{
             invM.setHeaddepartment((!"".equalsIgnoreCase(department)) && (department != null) ? department : "ALL");
             if(!"".equals(util.ConvertString(B[2]))){
                 String dayy[] = util.ConvertString(B[2]).split("-");
-                System.out.println("Date : " + util.ConvertString(B[2]));
+//                System.out.println("Date : " + util.ConvertString(B[2]));
                 String date = ""+dayy[2]+"/"+dayy[1]+"/"+dayy[0];
                 try {
                     SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");

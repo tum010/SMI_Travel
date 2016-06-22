@@ -349,15 +349,15 @@
                             </div>
                             <div class="col-md-2 form-group">
                                 <div class='input-group date' id='InputDatePicker'>
-                                    <c:if test='${invoice.dueDate != null}'>
-                                        <c:set var="InputDueDate" value="${invoice.dueDate}" />
+                                    <c:if test='${duedate != null}'>
+                                        <c:set var="InputDueDate" value="${duedate}" />
                                         <fmt:parseDate value="${InputDueDate}" var="InputDueDate" pattern="yyyy-MM-dd" />
                                         <fmt:formatDate value="${InputDueDate}" var="InputDueDate" pattern="dd-MM-yyyy" />
                                         <input id="InputDueDate" name="InputDueDate"  type="text" 
                                                class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${InputDueDate}">
                                         <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>                         
                                         </c:if>
-                                        <c:if test='${invoice.dueDate == null}'>
+                                        <c:if test='${duedate == null}'>
                                         <c:set var="InputDueDate" value="${requestScope['']}" />
                                         <fmt:parseDate value="${InputDueDate}" var="InputDueDate" pattern="yyyy-MM-dd" />
                                         <fmt:formatDate value="${InputDueDate}" var="InputDueDate" pattern="dd-MM-yyyy" />
