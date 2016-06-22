@@ -44,6 +44,7 @@ public class TicketSummaryCommissionView {
     private String amountbusinesstrip;
     private String amountannualleave;
     private String amountnoinvoice;
+    private String rounting;
     //air
     private String typepayment;
     private String typerounting;
@@ -721,6 +722,14 @@ public class TicketSummaryCommissionView {
 
     public void setAmountannualleave(String amountannualleave) {
         this.amountannualleave = amountannualleave;
+    }
+
+    public String getRounting() {
+        return rounting;
+    }
+
+    public void setRounting(String rounting) {
+        this.rounting = rounting;
     }
 
 }

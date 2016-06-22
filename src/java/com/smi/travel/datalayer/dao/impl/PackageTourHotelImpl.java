@@ -96,7 +96,7 @@ public class PackageTourHotelImpl implements PackageTourHotelDao {
         
         query += "GROUP BY ht.id " +
                  "having  sum((select sum(IFNULL(hr.price,0)) from hotel_room hr where hr.booking_hotel_id = hb.id))  is not null " +
-                 "and sum((select sum(IFNULL(hr.cost,0)) from hotel_room hr where hr.booking_hotel_id = hb.id)) is not null  ";
+                 "and sum((select sum(IFNULL(hr.cost,0)) from hotel_room hr where hr.booking_hotel_id = hb.id)) is not null order by ci.`code` ";
         
         List<Object[]> QueryList =  session.createSQLQuery(query)
                 .addScalar("city",Hibernate.STRING)		
