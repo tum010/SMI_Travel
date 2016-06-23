@@ -287,7 +287,7 @@
         } else {
             page = 'W';
         }
-        window.location = ("TaxInvoice"+page+".smi?action=edit&TaxInvId="+taxId+"&TaxInvNo="+taxNo+"&department="+department);
+        window.location = ("TaxInvoice"+page+".smi?action=search&TaxInvId="+taxId+"&TaxInvNo="+taxNo+"&department="+department);
     }
     
     function printTaxInvoiceReportSummary(){
