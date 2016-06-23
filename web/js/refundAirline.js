@@ -779,12 +779,20 @@ function calculateProfitReady(){
             if (pay === ""){
                 pay = 0;
             }
-
+            
+            var profittemps = replaceAll(",","",$("#profittemps"+i).val());
+            if (profittemps === ""){
+                profittemps = 0;
+            }
+            
             var paytemp = parseFloat(pay);
+            var profittemp = parseFloat(profittemps);
             if((receivetemp-paytemp) === 0){
                 document.getElementById("profit"+i).value = (0);
                 document.getElementById("profit"+i).placeholder = "0.00";
-
+            }else{
+                document.getElementById("profit"+i).placeholder = "";
+                document.getElementById("profit"+i).value = profittemp;
             }
         }      
     }    

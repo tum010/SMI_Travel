@@ -234,7 +234,7 @@
                                 <td style="text-align:center"> <input id="refund${index}" name="refund${index}" colName="refund" type="text" class="form-control" value="${detail.sectorRefund}" ></td>
                                 <td style="text-align:center"> <input id="receive${index}" name="receive${index}" colName="receive" onfocusout="calculateProfit(this)" type="text" class="form-control text-right decimal" style="text-align: right" value="${detail.receiveAirline}"></td>
                                 <td style="text-align:center"> <input id="pay${index}" name="pay${index}" colName="pay" type="text" onfocusout="calculateProfit(this)" class="form-control text-right decimal" style="text-align: right" value="${detail.payCustomer}"></td>
-                                <td style="text-align:center"> <input id="profit${index}" name="profit${index}" colName="profit" type="text" class="form-control text-right decimal" style="text-align: right" value="${detail.profit}" ></td>
+                                <td style="text-align:center"> <input id="profittemps${index}" name="profittemps${index}" colName="profittemps" type="hidden" class="form-control text-right" style="text-align: right" value="${detail.profit}" ><input id="profit${index}" name="profit${index}" colName="profit" type="text" class="form-control text-right decimal" style="text-align: right" value="${detail.profit}" ></td>
                                 <td style="text-align:center"> <input id="AirCom${index}" name="airCom${index}" colName="airCom" type="text" class="form-control text-right decimal" style="text-align: right" value="${detail.airComission}"></td>
                                 <td style="text-align:center"> <input id="AgentCom${index}" name="agentCom${index}" colName="agentCom" type="text" class="form-control text-right decimal" style="text-align: right" value="${detail.agentComission}"></td>
                                 <td> 
@@ -531,7 +531,7 @@
         <td style="text-align:center"> <input id="refund" name="refund" colName="refund" type="text" maxlength="255" class="form-control" value="" ></td>
         <td style="text-align:center"> <input id="receive" name="receive" colName="receive" onfocusout="calculateProfit(this)" type="text" class="form-control text-right decimal" value=""></td>
         <td style="text-align:center"> <input id="pay" name="pay" type="text" colName="pay" onfocusout="calculateProfit(this)"  class="form-control text-right decimal"></td>
-        <td style="text-align:center"> <input id="profit" name="profit" colName="profit" type="text" class="form-control text-right decimal"></td>
+        <td style="text-align:center"> <input id="profittemps" name="profittemps" colName="profittemps" type="hidden" class="form-control text-right"><input id="profit" name="profit" colName="profit" type="text" class="form-control text-right decimal"></td>
         <td style="text-align:center"> <input id="airCom" name="airCom" colName="airCom" type="text" class="form-control text-right decimal"></td>
         <td style="text-align:center"> <input id="agentCom" name="agentCom" colName="agentCom" type="text" class="form-control text-right decimal"></td>
         <td> 
