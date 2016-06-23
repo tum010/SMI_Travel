@@ -176,17 +176,17 @@
                                     <td> 
                                         <center>
                                             <c:if test="${table.department == 'Wendy'}">
-                                                <a  href="ReceiptW${table.recType}.smi?Id=${table.recId}">
+                                                <a  href="ReceiptW${table.recType}.smi?action=searchReceiveNo&receiveNo=${table.recNo}">
                                                     <span class="glyphicon glyphicon-edit editicon"  ></span>
                                                 </a>
                                             </c:if>
                                             <c:if test="${table.department == 'Inbound'}">
-                                                <a  href="ReceiptI${table.recType}.smi?Id=${table.recId}">
+                                                <a  href="ReceiptI${table.recType}.smi?action=searchReceiveNo&receiveNo=${table.recNo}">
                                                     <span class="glyphicon glyphicon-edit editicon"  ></span>
                                                 </a>
                                             </c:if>
                                             <c:if test="${table.department == 'Outbound'}">
-                                                <a  href="ReceiptO${table.recType}.smi?Id=${table.recId}">
+                                                <a  href="ReceiptO${table.recType}.smi?action=searchReceiveNo&receiveNo=${table.recNo}">
                                                     <span class="glyphicon glyphicon-edit editicon"  ></span>
                                                 </a>
                                             </c:if>
