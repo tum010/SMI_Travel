@@ -10,7 +10,7 @@ $(document).ready(function () {
         groupSeparator: ',',
         autoGroup: true,
         digits: 2,
-        allowMinus: false,
+        allowMinus: true,
         digitsOptional: false,
         placeholder: "0.00"
     });
@@ -808,22 +808,22 @@ function calculateProfit(e){
     
     var paytemp = parseFloat(pay);
     
-    if(paytemp > receivetemp){
-       
-        var receiveField = document.getElementById('receive'+row);
-        receiveField.style.borderColor = "Red";
-        var payField = document.getElementById('pay'+row);
-        payField.style.borderColor = "Red";
-        
-        $("#buttonSave").addClass("disabled");
-        $("#ButtonSaveAndNew").addClass("disabled");
-        $("#buttonPrint").addClass("disabled");
-        
-        document.getElementById("profit"+row).value = (0);
-        document.getElementById("profit"+row).placeholder = "0.00";
-//        $("#pay"+row).attr("placeholder", "0.00");
-        
-    }else{
+//    if(paytemp > receivetemp){
+//       
+//        var receiveField = document.getElementById('receive'+row);
+//        receiveField.style.borderColor = "Red";
+//        var payField = document.getElementById('pay'+row);
+//        payField.style.borderColor = "Red";
+//        
+//        $("#buttonSave").addClass("disabled");
+//        $("#ButtonSaveAndNew").addClass("disabled");
+//        $("#buttonPrint").addClass("disabled");
+//        
+//        document.getElementById("profit"+row).value = (0);
+//        document.getElementById("profit"+row).placeholder = "0.00";
+////        $("#pay"+row).attr("placeholder", "0.00");
+//        
+//    }else{
         
         var receiveField = document.getElementById('receive'+row);
         receiveField.style.borderColor = "";
@@ -838,34 +838,33 @@ function calculateProfit(e){
 //            $("#pay"+row).removeAttr("placeholder", "0.00");
             document.getElementById("profit"+row).placeholder = "";
             document.getElementById("profit"+row).value = (profit);
-        
         }else if(profit === 0){
 //           $("#pay"+row).attr("placeholder", "0.00");
             document.getElementById("profit"+row).value = (profit);
             document.getElementById("profit"+row).placeholder = "0.00";
         }    
-    }
+//    }
     
     
     var count = parseInt(document.getElementById('counter').value);
     var checksave = false;
-    for(var i=1;i<count+1;i++){
-        var tempreceive = document.getElementById("receive" + i);
-        var temppay = document.getElementById("pay" + i);
-        if (tempreceive !== null && temppay !== null){
-            var valuereceive = tempreceive.value;
-            var valuepay = temppay.value;
-            if(valuereceive !== '' && valuepay !== ''){
-                valuereceive = parseFloat(valuereceive.replace(/,/g,""));
-                valuepay = parseFloat(valuepay.replace(/,/g,""));
-               
-                if(valuepay > valuereceive){
-                   
-                    checksave = true;
-                }
-            }
-        }
-    }
+//    for(var i=1;i<count+1;i++){
+//        var tempreceive = document.getElementById("receive" + i);
+//        var temppay = document.getElementById("pay" + i);
+//        if (tempreceive !== null && temppay !== null){
+//            var valuereceive = tempreceive.value;
+//            var valuepay = temppay.value;
+//            if(valuereceive !== '' && valuepay !== ''){
+//                valuereceive = parseFloat(valuereceive.replace(/,/g,""));
+//                valuepay = parseFloat(valuepay.replace(/,/g,""));
+//               
+//                if(valuepay > valuereceive){
+//                   
+//                    checksave = true;
+//                }
+//            }
+//        }
+//    }
     
     if(checksave){
      
