@@ -66,6 +66,7 @@ public class GuideJobImpl implements GuideJobDao{
                 .addScalar("stafftour", Hibernate.STRING)
                 .addScalar("coupon", Hibernate.STRING)
                 .addScalar("coup_name", Hibernate.STRING)
+                .addScalar("driverid", Hibernate.STRING)
                 .list();
         
          for (Object[] B : QueryGuideJobList) {
@@ -100,7 +101,8 @@ public class GuideJobImpl implements GuideJobDao{
              guidejob.setAmount(B[18]== null ? "0.00" : util.ConvertString(B[18]));
              guidejob.setPay(util.ConvertString(B[19]));
              guidejob.setMeal(util.ConvertString(B[20]));
-             guidejob.setRemark(getremark(tourdate,tourID));
+             String driverid = util.ConvertString(B[26]);
+             guidejob.setRemark(getremark(tourdate,tourID,driverid));
              if(B[22] != null){
                 String coup = (B[25] != null ? "\n"+util.ConvertString(B[25]) : "");
                 if(B[25] != null){
@@ -143,13 +145,13 @@ public class GuideJobImpl implements GuideJobDao{
         return coupNew;
     }
     
-    public String getremark(String tourdate ,String tourid){
+    public String getremark(String tourdate ,String tourid,String driverid){
         Session session = this.sessionFactory.openSession();
         String remark = "";
         UtilityFunction util = new UtilityFunction();
         SimpleDateFormat df = new SimpleDateFormat();
         df.applyPattern("yyyy-MM-dd"); 
-        String query = "SELECT remark,guide2,operation_remark FROM `guide_job_remark` gr where  gr.tour_date ='"+String.valueOf(df.format(util.convertStringToDate(tourdate)))+"' and gr.tour_id = '"+tourid+"'";
+        String query = "SELECT `tde`.`tour_date` AS `tour_date`, `dt`.`code` AS `tour_id`, group_concat( `st`.`name`, ' Tel:', `st`.`tel`, ' Car No.:', `tdr`.`car_no`, ' Gas:', `tdr`.`gas_value`, ':', `tdr`.`gas_fee`, ' Tip:', `tdr`.`tip_value`, ':', `tdr`.`tip_fee`, '\\n' SEPARATOR '' ) AS `remark`, ifnull( concat( `gui2`.`name`, ',', 'Tel:', `gui2`.`tel`, '\\n' ), '' ) AS `guide2`, `tde`.`remark` AS `operation_remark` FROM (((( `tour_operation_desc` `tde` LEFT JOIN `tour_operation_driver` `tdr` ON (( `tdr`.`tour_desc_id` = `tde`.`id` ))) LEFT JOIN `staff` `st` ON (( `st`.`id` = `tdr`.`driver_id` ))) LEFT JOIN `staff` `gui2` ON (( `gui2`.`id` = `tde`.`guide_2` ))) LEFT JOIN `daytour` `dt` ON ((`dt`.`id` = `tde`.`tour_id`))) where  tde.tour_date ='"+String.valueOf(df.format(util.convertStringToDate(tourdate)))+"' and dt.code = '"+tourid+"'  and tdr.driver_id <> '"+driverid+"' GROUP BY `tde`.`tour_date`, `tde`.`tour_id` ";
         System.out.println("query : "+query);
         List<Object[]> QueryRemarkList = session.createSQLQuery(query)
                 .addScalar("remark", Hibernate.STRING)
