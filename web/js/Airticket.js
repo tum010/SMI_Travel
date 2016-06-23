@@ -264,6 +264,16 @@ function AddRow(row) {
     
     $("#select-currency option").clone().appendTo("#row-" + row + "-currency");
     $("#select-currency option").clone().appendTo("#row-" + row + "-currencycost");
+    $(".decimal").inputmask({
+        alias: "decimal",
+        integerDigits: 8,
+        groupSeparator: ',',
+        autoGroup: true,
+        digits: 2,
+        allowMinus: false,
+        digitsOptional: false,
+        placeholder: "0"
+    });
     var tempCount = parseInt($("#counter").val()) + 1;
     $("#counter").val(tempCount);
 }
