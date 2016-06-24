@@ -95,10 +95,14 @@
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <strong>Save Success!</strong> 
                 </div>
-                <div id="textAlertDivNotSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+<!--                <div id="textAlertDivNotSave"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <strong>Save Unsuccess!</strong> 
-                </div>                 
+                </div> -->
+                <div id="textAlertDivNotSave"  style="display:none;" class="alert alert-danger">
+                    <button type="button" class="close" aria-label="Close" onclick="hideTextAlertDiv()"><span aria-hidden="true">&times;</span></button>
+                    <strong>Save Unsuccess!</strong> 
+                </div>
                 <input id="now-status" type="hidden" value="${master.getMBookingstatus().getName()}"/>
 
                 <div class="row-fluid">  
@@ -293,7 +297,7 @@
                                         <c:if test="${flight.MItemstatus.id != 3}">
                                             <c:if test="${lockUnlockBooking == 0}"> 
                                                 <c:if test="${flight.isBill == 0}">
-                                                    <span id="SpanRemove${i.count}" class="glyphicon glyphicon-remove deleteicon" onclick="setDisableFlight('${flight.id}', '${flight.flightNo}');" data-toggle="modal" data-target="#DisableFlight" ></span>
+                                                    <span id="SpanRemove${i.count}" class="glyphicon glyphicon-remove deleteicon" onclick="setDisableFlight('${flight.id}', '${flight.flightNo}', '${i.count}');" data-toggle="modal" data-target="#DisableFlight" ></span>
                                                 </c:if>
                                                 <c:if test="${flight.isBill == 1}">
                                                     <span class="glyphicon glyphicon-remove deleteicon" ></span>
@@ -303,7 +307,7 @@
                                                 <span class="glyphicon glyphicon-remove deleteicon" ></span>
                                             </c:if>
                                             <c:if test="${lockUnlockBooking == 2}"> 
-                                                <span id="SpanRemove${i.count}" class="glyphicon glyphicon-remove deleteicon" onclick="setDisableFlight('${flight.id}', '${flight.flightNo}');" data-toggle="modal" data-target="#DisableFlight" ></span>
+                                                <span id="SpanRemove${i.count}" class="glyphicon glyphicon-remove deleteicon" onclick="setDisableFlight('${flight.id}', '${flight.flightNo}', '${i.count}');" data-toggle="modal" data-target="#DisableFlight" ></span>
                                             </c:if>
                                         </c:if>
                                         <c:if test="${flight.MItemstatus.id == 3}">
@@ -395,10 +399,10 @@
 
                                     <label class="col-sm-1 control-label text-right">Date<strong style="color: red">*</strong></label>
                                     <div class="col-sm-2">
-                                        <div class="form-group">
+                                        <div class="form-group" id="dapartureDatePanel${fStatus.count}">
                                             <div class="input-group date" id="DepartureDate">
                                                 <fmt:formatDate value="${flight.departDate}" var="departDate" pattern="dd-MM-yyyy" />
-                                                <input type="text" class="form-control" value="${departDate}" 
+                                                <input type="text" class="form-control datemask" value="${departDate}" 
                                                        name="flight-${fStatus.count}-departDate" id="flight-${fStatus.count}-departDate" 
                                                        data-date-format="DD-MM-YYYY" maxlength="10"  
                                                        data-bv-notempty />
@@ -423,7 +427,7 @@
                                                     <c:set value="00:00" var="dateDepartTimeTemp" />
                                                 </c:if>
                                                 <fmt:parseDate value="${dateDepartTimeTemp}" var="dateDepartTime" pattern="HH:mm" />
-                                                <input id="flight-${fStatus.count}-departTime" name="flight-${fStatus.count}-departTime" class="form-control time" maxlength="255" style="width: 60px" placeholder="HH:MM" value="<fmt:formatDate value="${dateDepartTime}" pattern="HH:mm" />" onkeyup="validateTimeDepart(this,${fStatus.count});" >
+                                                <input id="flight-${fStatus.count}-departTime" name="flight-${fStatus.count}-departTime" class="form-control time" maxlength="255" style="width: 60px" placeholder="HH:MM" value="<fmt:formatDate value="${dateDepartTime}" pattern="HH:mm" />" >
                                             </div>
                                         </div>
                                     </div>
@@ -451,11 +455,11 @@
                                     </div>
                                     <label class="col-sm-1 control-label text-right">Date<strong style="color: red">*</strong></label>
                                     <div class="col-sm-2">
-                                        <div class="form-group">
+                                        <div class="form-group" id="arrivalDatePanel${fStatus.count}">
                                             <div class="input-group date" id="ArrivalDate">
                                                 <fmt:formatDate value="${flight.arriveDate}" var="arriveDate" pattern="dd-MM-yyyy" />
                                                 <input name="flight-${fStatus.count}-arriveDate" id="flight-${fStatus.count}-arriveDate"  
-                                                       type="text" class="form-control" value="${arriveDate}" 
+                                                       type="text" class="form-control datemask" value="${arriveDate}" 
                                                        data-date-format="DD-MM-YYYY" maxlength="10"
                                                        data-bv-notempty />
                                                 <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
@@ -481,7 +485,7 @@
                                                 </c:if>
                                                 <fmt:parseDate value="${dateArriveTimeTemp}" var="dateArriveTime"
                                                 pattern="HH:mm" />
-                                                <input id="flight-${fStatus.count}-arriveTime" name="flight-${fStatus.count}-arriveTime" class="form-control time" maxlength="255" style="width: 60px" placeholder="HH:MM" value="<fmt:formatDate value="${dateArriveTime}" pattern="HH:mm" />" onkeyup="validateTimeArrive(this,${fStatus.count});">
+                                                <input id="flight-${fStatus.count}-arriveTime" name="flight-${fStatus.count}-arriveTime" class="form-control time" maxlength="255" style="width: 60px" placeholder="HH:MM" value="<fmt:formatDate value="${dateArriveTime}" pattern="HH:mm" />" >
                                                 
                                                 <!--<input id="flight-${fStatus.count}-arriveTime" name="flight-${fStatus.count}-arriveTime" class="form-control time" maxlength="255" style="width: 60px" placeholder="HH:MM" value="${flight.arriveTime}">-->
                                             </div>
@@ -1038,23 +1042,23 @@
 
                             // SET FIX DATE START AND STOP
                             $('#flight-${fStatus.count}-departDate,#flight-${fStatus.count}-arriveDate').on('focusout', function () {
-                                console.log('on input');
-////                                alert($("#flight-1-departDate").val());
-                                var start = new Date(convertFormatDate($("#flight-${fStatus.count}-departDate").val()));
-                                var stop = new Date(convertFormatDate($("#flight-${fStatus.count}-arriveDate").val()));
-                                var check = getDate(start, stop);
-                                if (!check) {
-                                    alert('Arrival date must over Departure date');
-                                }
+//                                console.log('on input');
+//////                                alert($("#flight-1-departDate").val());
+//                                var start = new Date(convertFormatDate($("#flight-${fStatus.count}-departDate").val()));
+//                                var stop = new Date(convertFormatDate($("#flight-${fStatus.count}-arriveDate").val()));
+//                                var check = getDate(start, stop);
+//                                if (!check) {
+//                                    alert('Arrival date must over Departure date');
+//                                }
                             });
                             $("body").not('.date').on('click', function () {
-                                console.log('on input');
-                                var start = new Date(convertFormatDate($("#flight-${fStatus.count}-departDate").val()));
-                                var stop = new Date(convertFormatDate($("#flight-${fStatus.count}-arriveDate").val()));
-                                var check = getDate(start, stop);
-                                if (!check) {
-                                    alert('Arrival date must over Departure date');
-                                }
+//                                console.log('on input');
+//                                var start = new Date(convertFormatDate($("#flight-${fStatus.count}-departDate").val()));
+//                                var stop = new Date(convertFormatDate($("#flight-${fStatus.count}-arriveDate").val()));
+//                                var check = getDate(start, stop);
+//                                if (!check) {
+//                                    alert('Arrival date must over Departure date');
+//                                }
                             });
 
                         });
@@ -1962,7 +1966,8 @@
 </div>
 
 <form role="form" id="disableFlight" method="post" action="AirTicketDetail.smi" class="form-horizontal">
-    <input type="hidden" class="form-control" id="disableFlightId"   name="disableFlightId"  >     
+    <input type="hidden" class="form-control" id="disableFlightId"   name="disableFlightId"  >
+    <input type="hidden" class="form-control" id="disableFlightRow"   name="disableFlightRow"  >  
     <input type="hidden" class="form-control" id="action"   name="action"  value="disableFlight">     
     <input type="hidden" class="form-control" id="referenceNo"   name="referenceNo"  value="${param.referenceNo}" >     
     <input name="pnr" value="${param.pnr}" type="hidden"/>
@@ -2095,6 +2100,7 @@
     var tabindex = 1; //start tabindex || 150 is last tabindex
     $(document).keypress(function(event) {     
         $('.time').mask('00:00');
+        $('.datemask').mask('00-00-0000');
         var keycode = (event.keyCode ? event.keyCode : event.which);
         if(keycode == '13') { //onEnter
             tabindex++;
@@ -2113,51 +2119,63 @@
         tabindex = input.attr("tabindex");
     })
     
-    function validateTimeDepart(el,row){
+    function validateTimeDepart(row){
+        var el = $("#flight-" + row + "-departTime").val();
         var result;
         // first, check if input is fully correct
-        if (el.value.match(/^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/)){
-            result = "OK";
+        if (el.match(/^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/)){
+//            result = "OK";
             $("#departtimepanel"+row).removeClass("has-error");
             $("#departtimepanel"+row).addClass("has-success");
-            $("#ButtonSave").removeClass("disabled");
+//            $("#ButtonSave").removeClass("disabled");
+//            validateTimeArrive(row);
+            return true;
         }
         // then, check if it is not wrong
-        else if (el.value.match(/^([0-9]|0[0-9]|1[0-9]|2[0-3])?(:([0-5]|[0-5][0-9])?)?$/)){
+        else if (el.match(/^([0-9]|0[0-9]|1[0-9]|2[0-3])?(:([0-5]|[0-5][0-9])?)?$/)){
             result=""; // don't bother user with excess messages
             $("#departtimepanel"+row).removeClass("has-error");
             $("#departtimepanel"+row).addClass("has-success");
-            $("#ButtonSave").removeClass("disabled");
+//            $("#ButtonSave").removeClass("disabled");
+//            validateTimeArrive(row);
+            return true;
         }
         else{
-            result="Please, correct your input";
+//            result="Please, correct your input";
             $("#departtimepanel"+row).removeClass("has-success");
             $("#departtimepanel"+row).addClass("has-error");
-            $("#ButtonSave").addClass("disabled"); 
+//            $("#ButtonSave").addClass("disabled");
+            return false;
         }
     }
     
-    function validateTimeArrive(el,row){
+    function validateTimeArrive(row){
+        var el = $("#flight-" + row + "-arriveTime").val();
         var result;
         // first, check if input is fully correct
-        if (el.value.match(/^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/)){
-            result = "OK";
+        if (el.match(/^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/)){
+//            result = "OK";
             $("#arrivetimepanel"+row).removeClass("has-error");
             $("#arrivetimepanel"+row).addClass("has-success");
-            $("#ButtonSave").removeClass("disabled");
+//            $("#ButtonSave").removeClass("disabled");
+//            validateTimeDepart(row);
+            return true;
         }
         // then, check if it is not wrong
-        else if (el.value.match(/^([0-9]|0[0-9]|1[0-9]|2[0-3])?(:([0-5]|[0-5][0-9])?)?$/)){
+        else if (el.match(/^([0-9]|0[0-9]|1[0-9]|2[0-3])?(:([0-5]|[0-5][0-9])?)?$/)){
             result=""; // don't bother user with excess messages
             $("#arrivetimepanel"+row).removeClass("has-error");
             $("#arrivetimepanel"+row).addClass("has-success");
-            $("#ButtonSave").removeClass("disabled");
+//            $("#ButtonSave").removeClass("disabled");
+//            validateTimeDepart(row);
+            return true;
         }
         else{
             result="Please, correct your input";
             $("#arrivetimepanel"+row).removeClass("has-success");
             $("#arrivetimepanel"+row).addClass("has-error");
-            $("#ButtonSave").addClass("disabled"); 
+//            $("#ButtonSave").addClass("disabled"); 
+            return false;
         }
     }
     

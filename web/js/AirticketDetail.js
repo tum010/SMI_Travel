@@ -1,10 +1,42 @@
 
 function disableFlight() {
-    $("#disableFlight").submit();
+    if($("#disableFlightId").val() !== ''){
+        $("#disableFlight").submit();
+    
+    } else {
+        var row = $("#disableFlightRow").val();
+//        $("#airlineName" + row).parent().parent().remove();
+//        TableAir.$('tr.row_selected').remove();
+//        $('#TableAir tr.row_selected').each(function () {       
+//        });
+        $('#TableAir tr.row_selected').addClass('hidden');
+        $('#flight' + row + ' div').empty();
+        $('#TableAir').dataTable().fnDestroy();
+//        document.getElementById("TableAir").deleteRow(row);       
+        $('#TableAir').dataTable({bJQueryUI: true,
+            "sPaginationType": "full_numbers",
+            "bAutoWidth": false,
+            "bFilter": false,
+            "bPaginate": false,
+            "bInfo": false
+        });
+        $('#TableAir tbody').on('click', 'tr', function () {
+            if ($(this).hasClass('row_selected')) {
+//                $(this).removeClass('row_selected');
+            } else {
+                TableAir.$('tr.row_selected').removeClass('row_selected');
+                $(this).addClass('row_selected');
+            }
+
+        });
+        $("#DisableFlight").modal('hide');
+    }
+    
 }
 
-function setDisableFlight(id, flightNo) {
+function setDisableFlight(id, flightNo, row) {
     $("#disableFlightId").val(id);
+    $("#disableFlightRow").val(row);
     document.getElementById('disableCode').innerHTML = "Are you sure to disable flight no.: " + flightNo + " ?";
 }
 
@@ -17,7 +49,9 @@ function setEnableFlight(id, flightNo) {
     document.getElementById('enableCode').innerHTML = "Are you sure to enable flight no.: " + flightNo + " ?";
 }
 
-function getDate(start, stop) {
+function getDate(departDate, arriveDate) {
+    var start = new Date(departDate);
+    var stop = new Date(arriveDate);
     var diff = new Date(stop - start);
     var days = diff / 1000 / 60 / 60 / 24;
     if (days >= 0) {
@@ -138,7 +172,7 @@ $(document).ready(function () {
     $bookForm
             .bootstrapValidator({
                 container: 'tooltip',
-                excluded: [':disabled'],
+//                excluded: [':disabled'],
                 feedbackIcons: {
                     valid: 'uk-icon-check',
                     invalid: 'uk-icon-times',
@@ -161,17 +195,45 @@ $(document).ready(function () {
         var countNow = parseInt($("#countRow").val());
         console.log('countNow ' + countNow);
         var row = $("#TableAir tr:last td:first").text();
+//        var test =  row.replace(/ /g, '+');
+//        alert(isNaN(parseInt(row)));
+//        if(row.replace(/ /g, "") === ''){alert('a');}
+//        var rowTr = ($('#TableAir tr').length)-1;
         console.log('row ' + row);
         var empty = $('#TableAir tbody td').hasClass('dataTables_empty');
         if (empty) {
+//            var no = 0;
+//            $('#TableAir tr').each(function() {
+//                no = $(this).find("td:first").text();
+//            });
+//            alert(countNow + " : " + no);
+//            if(countNow >= 1 && no !== undefined){
+            if(countNow > 1){
+                $('#flight' + (countNow-1) + ' div').empty();
+            }
             addFight(countNow);
             $("#flight" + countNow).collapse();
             $("#countRow").val(countNow + 1);
+//            }
+//            if (countNow == 1) {
+//                addFight(countNow);
+//                $("#flight" + countNow).collapse();
+//                $("#countRow").val(countNow + 1);
+//            } else {
+//                $("#flight" + (countNow)).collapse('show');
+//            }
         } else {
+//            alert(countNow + " : " + row);
             if ((countNow - row) == 1) {
                 addFight(countNow);
                 $("#flight" + countNow).collapse();
                 $("#countRow").val(countNow + 1);
+            
+            } else if(isNaN(parseInt(row))){
+                addFight(countNow);
+                $("#flight" + countNow).collapse();
+                $("#countRow").val(countNow + 1);
+            
             } else {
                 $("#flight" + (countNow - 1)).collapse('show');
             }
@@ -182,6 +244,7 @@ $(document).ready(function () {
     // ON  SUBMIT 
     $("#AirticketForm").submit(function (e) {
         // count passenger_table
+        var check = true;
         var rowCount = $('#passenger_table tr').length;
         console.log('rowCount' + rowCount);
         var empty = $('#passenger_table tbody td').hasClass('dataTables_empty');
@@ -189,14 +252,111 @@ $(document).ready(function () {
             e.preventDefault();
             console.log('alert');
             alert('please add Passengers...');
-            return false;
-        } else {
-            document.getElementById('AirticketForm').submit();
-            console.log('submit');
-//            return true;
+            check = false;
+        } 
+        
+        var countRow = parseInt($("#countRow").val());      
+        for(var i = 1; i <= countRow; i++){
+            if($("#flight-" + i + "-flightNo").val() !== undefined){
+                //Flight
+                var flight = $("#flight-" + i + "-flightNo").val();
+//                $("#flightNoPanel" + i).removeClass("has-error");
+//                $("#flightNoPanel" + i).removeClass("has-success");
+                if(flight === ''){
+                    alert('1');
+                    $("#flightNoPanel" + i).addClass("has-error");
+                    check = false;
+                } else {
+//                    $("#flightNoPanel" + i).addClass("has-success");
+                }
+
+                //Airline
+                var airlineId = $("#airlineId" + i).val();
+                var airlineCode = $("#airlineCode" + i).val();
+                if((airlineId === '') || (airlineCode === '')){
+                    alert('2');
+                    $("#airlineCodePanel" + i).addClass("has-error");
+                    check = false;
+                }
+
+                //Derparture
+                var departureId = $("#departure-" + i + "-id").val();
+                var departureCode = $("#departure-" + i + "-code").val();
+                if((departureId === '') || (departureCode === '')){
+                    alert('3');
+                    $("#departureCodePanel" + i).addClass("has-error");
+                    check = false;
+                }
+
+                var departureDate = $("#flight-" + i + "-departDate").val();
+                if((departureDate === '')){
+                    alert('4');
+                    $("#dapartureDatePanel" + i).addClass("has-error");
+                    check = false;
+                }
+
+                //Arrival
+                var arrivalId = $("#arrival-" + i + "-code").val();
+                var arrivalCode = $("#arrival-" + i + "-code").val();
+                if((arrivalId === '') || (arrivalCode === '')){
+                    alert('5');
+                    $("#arrivalCodePanel" + i).addClass("has-error");
+                    check = false;
+                }
+
+                var arrivalDate = $("#flight-" + i + "-arriveDate").val();
+                if((arrivalDate === '')){
+                    alert('6');
+                    $("#arrivalDatePanel" + i).addClass("has-error");
+                    check = false;
+                }
+
+                //Date
+                if(departureDate !== '' && arrivalDate !== ''){
+                    var date = getDate(convertFormatDate(departureDate), convertFormatDate(arrivalDate));
+                    if (!date) {
+                        alert('7');
+                        $("#dapartureDatePanel" + i).addClass("has-error");
+                        $("#arrivalDatePanel" + i).addClass("has-error");
+                        check = false;
+                    }
+                }
+
+                //Time
+                var departTime = validateTimeDepart(i);
+                if(!departTime){
+                    alert('8');
+                    check = false;
+                }
+
+                var arriveTime = validateTimeArrive(i);
+                if(!arriveTime){
+                    alert('9');
+                    check = false;
+                }
+            }
         }
+        
+//        if(check){
+//            document.getElementById("AirticketForm").submit();
+//        }
+        if(!check){
+            $("#textAlertDivSave").hide();
+            $("#textAlertDivNotSave").show();          
+        }
+        
+        return check;
+        
     });
 
+});
+
+function hideTextAlertDiv(){
+    $("#textAlertDivSave").hide();
+    $("#textAlertDivNotSave").hide();
+}
+$( document.body ).click(function() {
+    $("#ButtonSave").removeAttr("disabled");
 });
 // ADD FLIGHT
 function addFight(rowId) {
@@ -214,12 +374,12 @@ function addFight(rowId) {
             + '<input name="flight-' + rowId + '-id" id="flight-' + rowId + '-id" type="hidden" class="form-control" value="' + rowId + '" readonly="">'
             + '</div>'
             + '<label class="col-sm-1 control-label text-right">Flight<strong style="color: red">*</strong></label>'
-            + '<div class="col-sm-2">'
+            + '<div class="col-sm-2" id="flightNoPanel' + rowId + '">'
             + '<input type="text" class="form-control flight-no" data-id="' + rowId + '" name="flight-' + rowId + '-flightNo" id="flight-' + rowId + '-flightNo" maxlength="10" data-bv-notempty data-bv-notempty-message="The flight is required">'
             + '</div>'
             + '<label class="col-sm-1 control-label text-right">Airline<strong style="color: red">*</strong></label>'
             + '<div class = "col-sm-2">'
-            + '<div class = "form-group">'
+            + '<div class = "form-group" id="airlineCodePanel' + rowId + '">'
             + '<div class = "input-group">'
             + '<input type = "hidden" class = "form-control" id = "airlineId' + rowId + '" name = "airlineId' + rowId + '" >'
             + '<input name = "airlineCode' + rowId + '" id = "airlineCode' + rowId + '"  class = "form-control airline" data-id="' + rowId + '"  data-bv-notempty data-bv-notempty-message="The airline is required">'
@@ -236,8 +396,8 @@ function addFight(rowId) {
             + '<div class="row">'
             + '<label class="col-sm-1 control-label text-right">Departure<strong style="color: red">*</strong></label>'
             + '<div class="col-sm-2">'
-            + '<div class="form-group">'
-            + '<div class="input-group ">'
+            + '<div class="form-group" id="departureCodePanel' + rowId + '">'
+            + '<div class="input-group " >'
             + '<input type="hidden" class="form-control departureid" id="departure-' + rowId + '-id" name="departure-' + rowId + '-id">'
             + '<input type="hidden" class="form-control departurecode" data-id="' + rowId + '" id="departure-' + rowId + '-code" name="departure-' + rowId + '-code" >'
             + '<input type="text" class="form-control departurecodeVal" data-id="' + rowId + '" id="departure-' + rowId + '-codeVal" name="departure-' + rowId + '-codeVal" >'
@@ -253,9 +413,9 @@ function addFight(rowId) {
             + '</div>'
             + '<label class="col-sm-1 control-label text-right">Date<strong style="color: red">*</strong></label>'
             + '<div class="col-sm-2">'
-            + '<div class="form-group">'
+            + '<div class="form-group" id="dapartureDatePanel' + rowId + '">'
             + '<div class="input-group date" id="DepartureDate">'
-            + '<input type="text" class="form-control"  name="flight-' + rowId + '-departDate" id="flight-' + rowId + '-departDate" data-date-format="DD-MM-YYYY" maxlength="10" />'
+            + '<input type="text" class="form-control datemask"  name="flight-' + rowId + '-departDate" id="flight-' + rowId + '-departDate" data-date-format="DD-MM-YYYY" maxlength="10" />'
             + '<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>'
             + '</span>'
             + '</div>'
@@ -264,8 +424,8 @@ function addFight(rowId) {
             + '<label class="col-sm-1 control-label text-right">Time</label>'
             + '<div class="col-sm-2">'
             + '<div class="form-group">'
-            + '<div class="input-group times">'
-            + '<input name="flight-' + rowId + '-departTime" id="flight-' + rowId + '-departTime" type="text" class="form-control time" maxlength="255" style="width: 60px" placeholder="HH:MM" />'
+            + '<div class="input-group times" id="departtimepanel' + rowId + '">'
+            + '<input name="flight-' + rowId + '-departTime" id="flight-' + rowId + '-departTime" type="text" class="form-control time" maxlength="255" style="width: 60px" placeholder="HH:MM" pattern="HH:mm" />'
             + '</div>'
             + '</div>'
             + '</div>'
@@ -273,7 +433,7 @@ function addFight(rowId) {
             + '<div class="row">'
             + '<label class="col-sm-1 control-label text-right">Arrival<strong style="color: red">*</strong></label>'
             + '<div class="col-sm-2">  '
-            + '<div class="form-group">'
+            + '<div class="form-group" id="arrivalCodePanel' + rowId + '">'
             + '<div class="input-group ">'
             + '<input type="hidden" class="form-control arrivalid" id="arrival-' + rowId + '-id" name="arrival-' + rowId + '-id">'
             + '<input type="hidden" class="form-control arrivalcode" data-id="' + rowId + '" id="arrival-' + rowId + '-code" name="arrival-' + rowId + '-code" >'
@@ -290,9 +450,9 @@ function addFight(rowId) {
             + '</div>'
             + '<label class="col-sm-1 control-label text-right">Date<strong style="color: red">*</strong></label>'
             + '<div class="col-sm-2">'
-            + '<div class="form-group">'
+            + '<div class="form-group" id="arrivalDatePanel' + rowId + '">'
             + '<div class="input-group date" id="ArrivalDate">'
-            + '<input name="flight-' + rowId + '-arriveDate" id="flight-' + rowId + '-arriveDate"  type="text" class="form-control" data-date-format="DD-MM-YYYY" maxlength="10" />'
+            + '<input name="flight-' + rowId + '-arriveDate" id="flight-' + rowId + '-arriveDate"  type="text" class="form-control datemask" data-date-format="DD-MM-YYYY" pattern="HH:mm" maxlength="10" />'
             + '<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>'
             + '</span>'
             + '</div>'
@@ -301,8 +461,8 @@ function addFight(rowId) {
             + '<label class="col-sm-1 control-label text-right">Time</label>'
             + '<div class="col-sm-2">'
             + '<div class="form-group">'
-            + '<div class="input-group times">'
-            + '<input name="flight-' + rowId + '-arriveTime" id="flight-' + rowId + '-arriveTime" type="text" class="form-control time" maxlength="255" style="width: 60px" placeholder="HH:MM" />'
+            + '<div class="input-group times" id="arrivetimepanel' + rowId + '">'
+            + '<input name="flight-' + rowId + '-arriveTime" id="flight-' + rowId + '-arriveTime" type="text" class="form-control time" maxlength="255" style="width: 60px" placeholder="HH:MM" pattern="HH:mm" />'
             + '</div>'
             + '</div>'
             + '</div>'
@@ -451,6 +611,17 @@ function addFight(rowId) {
     $("#flight-0-status option").clone().appendTo("#flight-" + rowId + "-status");
     $("#flight-0-ticketType option").clone().appendTo("#flight-" + rowId + "-ticketType");
     $("#flight-0-class option").clone().appendTo("#flight-" + rowId + "-class");
+    // SET FIX DATE START AND STOP
+    $('#flight-' + rowId + '-departDate,#flight-' + rowId + '-arriveDate').on('focusout', function () {
+        console.log('on input');
+//        var start = new Date(convertFormatDate($("#flight-" + rowId + "-departDate").val()));
+//        var stop = new Date(convertFormatDate($("#flight-" + rowId + "-arriveDate").val()));
+//        var check = getDate(start, stop);
+//        if (!check) {
+//            alert('Arrival date must over Departure date');
+//        }
+    });
+   
 //     $.each(tickettype, function(key, value) { 
 //     $("#flight-"+rowId+"-ticketTypeCom")
 //         .append($("<option></option>")
@@ -875,11 +1046,12 @@ function setId(rowId) {
 // ADD FLIGHT TO TABLE
 function addRowTable() {//winit
     var counter = nId;
-   
+    
     console.log('addRowTable');
     TableAir.fnAddData([
-        counter, //order 1
-        $("#airlineName" + counter).val(), //name 1
+//        counter, //order 1
+        '<input type="text" id="flight-' + counter + '-flightOrder" name="flight-' + counter + '-flightOrder" class="form-control money2" maxlength="11" value="" />',  
+        $("#airlineCode" + counter).val(), //name 1
         $("#flight-" + counter + "-flightNo").val(),
         $("#departure-" + counter + "-code").val(),
         $("#arrival-" + counter + "-code").val(),
@@ -896,7 +1068,7 @@ function addRowTable() {//winit
         $("#adPrice-" + counter).val(),
         $("#flight-" + counter + "-status").val(),
         '<div class="text-center"><a class="carousel" data-toggle="collapse" data-parent="#accordion"data-target="#flight' + counter + '" aria-expanded="true" aria-controls="collapseExample"><span class="glyphicon glyphicon-edit editicon"></span></a>'
-                + ' <span class="glyphicon glyphicon-remove deleteicon" onclick="setDisableFlight(' + counter + ',2);" data-toggle="modal" data-target="#DisableFlight"></span></div>'
+                + ' <span class="glyphicon glyphicon-remove deleteicon" onclick="setDisableFlight(\'\','+ counter +','+ counter +');" data-toggle="modal" data-target="#DisableFlight"></span></div>'
     ]);
     $("div").find($('.collapse')).collapse('hide');
     $("#btnConfirmAdd-" + counter).prop('class', 'hidden');

@@ -677,6 +677,10 @@ public class AirTicketDetailController extends SMITravelController {
         Id = request.getParameter("flight-" + i + "-id");
         String status = request.getParameter("flight-" + i + "-status");
         String flightNo = request.getParameter("flight-" + i + "-flightNo");
+        System.out.println("Flight No ["+i+"] : "+flightNo);
+        if(flightNo == null){
+            return result;
+        }
         String departureId = request.getParameter("departure-" + i + "-id");
         String departureCode = request.getParameter("departure-" + i + "-code");
         String departDateS = request.getParameter("flight-" + i + "-departDate");
