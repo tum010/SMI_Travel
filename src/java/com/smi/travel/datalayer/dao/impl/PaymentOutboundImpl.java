@@ -569,7 +569,7 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
     }
 
     @Override
-    public List getPaymentSummaryReport(String fromDate, String toDate, String saleby, String invSupCode, String refNo, String username) {
+    public List getPaymentSummaryReport(String fromDate, String toDate, String saleby, String invSupCode, String refNo, String username,String invto,String invfrom,String billname,String productid,String country,String city,String paytype,String billnamedetail,String Productname) {
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
         Date thisDate = new Date();
@@ -577,7 +577,28 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
         String invSupCodeTemp = "ALL";
         String refNoTemp = "ALL";
         String saleByTemp = "ALL";
-        String Query = "SELECT * FROM `payment_outbound_alldetail` where paydate BETWEEN '"+fromDate+"' and '"+toDate+"' ";
+        String invDateTemp = "";
+        String paytypeTemp = "ALL";
+        String billnameTemp = "";
+        String countryTemp = "";
+        String cityTemp = "";
+        String productTemp = "";
+        int first = 0;
+        String Query = "SELECT * FROM `payment_outbound_alldetail` where ";
+        
+        if (((fromDate != null) && (!"".equalsIgnoreCase(fromDate)))&&((toDate != null) && (!"".equalsIgnoreCase(toDate))) ) {
+            Query += " paydate BETWEEN '"+fromDate+"' and '"+toDate+"'";   
+            first = 1;
+        }
+        
+        if (((invto != null) && (!"".equalsIgnoreCase(invto)))&&((invfrom != null) && (!"".equalsIgnoreCase(invfrom))) ) {
+            if(first == 1){
+                Query += " and invdate BETWEEN '"+invfrom+"' and '"+invto+"'";   
+            }else{
+                Query += " invdate BETWEEN '"+invfrom+"' and '"+invto+"'";   
+                first = 1;
+            }  
+        }
         
         if ((invSupCode != null) && (!"".equalsIgnoreCase(invSupCode))) {
             Query += "  and invsupcode = '" + invSupCode + "'";
@@ -593,6 +614,34 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
             Query += "  and staffusername = '" + saleby + "'";
             saleByTemp = saleby;
         } 
+
+        if ((billname != null) && (!"".equalsIgnoreCase(billname))) {
+            Query += "  and billto = '" + billname + "'";
+            billnameTemp = billnamedetail;
+        } 
+        
+        if ((productid != null) && (!"".equalsIgnoreCase(productid))) {
+            Query += "  and productid = '" + productid + "'";
+            productTemp = Productname;
+        } 
+        
+    
+        if ((country != null) && (!"".equalsIgnoreCase(country))) {
+            Query += "  and country like '%" + country + "%'";
+            countryTemp = country;
+        } 
+        
+        if ((city != null) && (!"".equalsIgnoreCase(city))) {
+            Query += "  and city like '%" + city + "%'";
+            cityTemp = city;
+        } 
+        
+        if ((paytype != null) && (!"".equalsIgnoreCase(paytype))) {
+            Query += "  and producttype = '" + paytype + "'";
+            paytypeTemp = paytype;
+        } 
+ 
+        
         
         Query += " order by refno ";        
         System.out.println("Query : "+Query);
@@ -660,8 +709,28 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
             PaymentOutboundAllDetail sum = new PaymentOutboundAllDetail();
             sum.setSystemdate(util.ConvertString(new SimpleDateFormat("dd MMM yyyy hh:mm:ss", new Locale("us", "us")).format(thisDate)));
             sum.setUser(username);
-            sum.setHeaderfromdate(util.ConvertString(dateformat.format(util.convertStringToDate(fromDate))));
-            sum.setHeadertodate(util.ConvertString(dateformat.format(util.convertStringToDate(toDate))));
+            if (((fromDate != null) && (!"".equalsIgnoreCase(fromDate)))&&((toDate != null) && (!"".equalsIgnoreCase(toDate))) ) {
+                sum.setHeaderfromdate(util.ConvertString(dateformat.format(util.convertStringToDate(fromDate))));
+                sum.setHeadertodate(util.ConvertString(dateformat.format(util.convertStringToDate(toDate))));
+            }else{
+                sum.setHeaderfromdate("");
+                sum.setHeadertodate("");
+            }
+            
+            if (((invto != null) && (!"".equalsIgnoreCase(invto)))&&((invfrom != null) && (!"".equalsIgnoreCase(invfrom))) ) {
+                sum.setHeaderinvfromdate(util.ConvertString(dateformat.format(util.convertStringToDate(invfrom))));
+                sum.setHeaderinvtodate(util.ConvertString(dateformat.format(util.convertStringToDate(invto))));
+            }else{
+                sum.setHeaderinvfromdate("");
+                sum.setHeaderinvtodate("");
+            }
+            sum.setHeadercity(cityTemp);
+            sum.setHeadercountry(countryTemp);
+            sum.setHeaderproductname(productTemp);
+            sum.setHeaderproducttype(paytypeTemp);
+            sum.setHeaderinvname(billnameTemp);
+            sum.setInvdatefromto(sum.getHeaderinvfromdate() + " To " + sum.getHeaderinvtodate());
+            
             sum.setHeaderrefno(refNoTemp);
             sum.setHeaderinvoicesupcode(invSupCodeTemp);
             sum.setDatefromto(sum.getHeaderfromdate() + " To " + sum.getHeadertodate());

@@ -337,7 +337,16 @@ public class ExportDataToExcelController  extends SMITravelController{
             String invSupCode = request.getParameter("invSupCode");
             String saleby = request.getParameter("salebyUser");
             String refno = request.getParameter("refno");
-            data = reportservice.getPaymentSummaryReport(from_payments, to_payments,saleby,invSupCode, refno, user.getRole().getName());
+            String invto = request.getParameter("invto");
+            String invfrom = request.getParameter("invfrom");
+            String billname = request.getParameter("billname");
+            String billnamedetail = request.getParameter("billnamedetail");
+            String productid = request.getParameter("productid");
+            String country = request.getParameter("country");
+            String city = request.getParameter("city");
+            String paytype = request.getParameter("paytype");
+            String productname = request.getParameter("productname");
+            data = reportservice.getPaymentSummaryReport(from_payments, to_payments,saleby,invSupCode, refno, user.getRole().getName(),invto,invfrom,billname,productid,country,city,paytype,billnamedetail,productname);
             return new ModelAndView("OutboundProduct",name,data).addObject(ReportName, name);
         }else if(BookingInvoiceSummary.equals(name)){
             String owner = request.getParameter("owner");

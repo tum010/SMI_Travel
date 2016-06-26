@@ -1426,7 +1426,7 @@ public class OutboundProductSummary extends AbstractExcelView  {
         if(paymentSummaryList != null && paymentSummaryList.size() != 0){
             PaymentOutboundAllDetail poad = new PaymentOutboundAllDetail();
             poad = paymentSummaryList.get(0);
-            
+            // ROW 1
             HSSFRow row2 = sheet.createRow(1);
             HSSFCell cell21 = row2.createCell(0);
                 cell21.setCellValue("Invoice Sup : ");
@@ -1436,6 +1436,7 @@ public class OutboundProductSummary extends AbstractExcelView  {
                 cell22.setCellValue(poad.getHeaderinvoicesupcode());
                 cell22.setCellStyle(styleAlignLeft);
                 sheet.autoSizeColumn(1);
+                
             HSSFCell cell23 = row2.createCell(2);
                 cell23.setCellValue("Staff : ");
                 cell23.setCellStyle(styleAlignRight);
@@ -1445,6 +1446,8 @@ public class OutboundProductSummary extends AbstractExcelView  {
                 cell24.setCellStyle(styleAlignLeft);
                 sheet.autoSizeColumn(3);
                 
+                
+            // ROW 2   
             HSSFRow row3 = sheet.createRow(2);
             HSSFCell cell31 = row3.createCell(0);
                 cell31.setCellValue("Pay Date : ");
@@ -1454,16 +1457,72 @@ public class OutboundProductSummary extends AbstractExcelView  {
                 cell32.setCellValue(poad.getDatefromto());
                 cell32.setCellStyle(styleAlignLeft);
                 sheet.autoSizeColumn(1);
-                           
-            HSSFRow row4 = sheet.createRow(3);
+          
+            HSSFCell cell33 = row3.createCell(2);
+                cell33.setCellValue("Ref No : ");
+                cell33.setCellStyle(styleAlignRight);
+                sheet.autoSizeColumn(2);
+            HSSFCell cell34 = row3.createCell(3);
+                cell34.setCellValue(poad.getHeaderrefno());
+                cell34.setCellStyle(styleAlignLeft);
+                sheet.autoSizeColumn(3);
+                
+                
+            HSSFRow row4 = sheet.createRow(3);          
             HSSFCell cell41 = row4.createCell(0);
-                cell41.setCellValue("Ref No : ");
+                cell41.setCellValue("Inv Date : ");
                 cell41.setCellStyle(styleAlignRight);
                 sheet.autoSizeColumn(0);
             HSSFCell cell42 = row4.createCell(1);
-                cell42.setCellValue(poad.getHeaderrefno());
+                cell42.setCellValue(poad.getInvdatefromto());
                 cell42.setCellStyle(styleAlignLeft);
                 sheet.autoSizeColumn(1);
+            HSSFCell cell43 = row4.createCell(2);
+                cell43.setCellValue("Inv Name : ");
+                cell43.setCellStyle(styleAlignRight);
+                sheet.autoSizeColumn(0);
+            HSSFCell cell44 = row4.createCell(3);
+                cell44.setCellValue(poad.getHeaderinvname());
+                cell44.setCellStyle(styleAlignLeft);
+                sheet.autoSizeColumn(1); 
+                
+                
+            HSSFRow row5 = sheet.createRow(4);          
+            HSSFCell cell51 = row5.createCell(0);
+                cell51.setCellValue("Country : ");
+                cell51.setCellStyle(styleAlignRight);
+                sheet.autoSizeColumn(0);
+            HSSFCell cell52 = row5.createCell(1);
+                cell52.setCellValue(poad.getHeadercountry());
+                cell52.setCellStyle(styleAlignLeft);
+                sheet.autoSizeColumn(1);
+            HSSFCell cell53 = row5.createCell(2);
+                cell53.setCellValue("City : ");
+                cell53.setCellStyle(styleAlignRight);
+                sheet.autoSizeColumn(0);
+            HSSFCell cell54 = row5.createCell(3);
+                cell54.setCellValue(poad.getHeadercity());
+                cell54.setCellStyle(styleAlignLeft);
+                sheet.autoSizeColumn(1);   
+            
+            HSSFRow row6 = sheet.createRow(5);          
+            HSSFCell cell61 = row6.createCell(0);
+                cell61.setCellValue("Product Type : ");
+                cell61.setCellStyle(styleAlignRight);
+                sheet.autoSizeColumn(0);
+            HSSFCell cell62 = row6.createCell(1);
+                cell62.setCellValue(poad.getHeaderproducttype());
+                cell62.setCellStyle(styleAlignLeft);
+                sheet.autoSizeColumn(1);
+            HSSFCell cell63 = row6.createCell(2);
+                cell63.setCellValue("Product : ");
+                cell63.setCellStyle(styleAlignRight);
+                sheet.autoSizeColumn(0);
+            HSSFCell cell64 = row6.createCell(3);
+                cell64.setCellValue(poad.getHeaderproductname());
+                cell64.setCellStyle(styleAlignLeft);
+                sheet.autoSizeColumn(1);      
+                
         }
         
         // Header Table

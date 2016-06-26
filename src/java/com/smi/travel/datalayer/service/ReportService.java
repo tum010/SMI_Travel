@@ -311,8 +311,8 @@ public class ReportService {
         return paymentOutboundDao.getPaymentOutboundSummaryReport(fromDate, toDate, status, invSup, refNo, username,payno,duedatefrom,duedateto);
     }
     
-    public List getPaymentSummaryReport(String fromDate,String toDate,String saleby,String invSupCode,String refNo,String username){
-        return paymentOutboundDao.getPaymentSummaryReport(fromDate, toDate, saleby, invSupCode, refNo, username);
+    public List getPaymentSummaryReport(String fromDate,String toDate,String saleby,String invSupCode,String refNo,String username,String invto,String invfrom,String billname,String productid,String country,String city,String paytype,String billnamedetail,String Productname){
+        return paymentOutboundDao.getPaymentSummaryReport(fromDate, toDate, saleby, invSupCode, refNo, username,invto,invfrom,billname,productid,country,city,paytype,billnamedetail,Productname);
     }
     
     public List getPaymentProfitLossReport(String departFromDate,String departToDate,String invFromDate,String invToDate,String ownercode,String city,String producttypeid,String invsupcode,String payFromDate,String payToDate,String groupby){

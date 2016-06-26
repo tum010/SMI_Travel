@@ -14,10 +14,18 @@ public class PaymentOutboundAllDetail {
     private String user;
     private String headerfromdate;
     private String headertodate;
+    private String headerinvfromdate;
+    private String headerinvtodate;
     private String headerinvoicesupcode;
     private String headerrefno;
     private String datefromto;
+    private String invdatefromto;
     private String headerstaff;
+    private String headercity;
+    private String headercountry;
+    private String headerinvname;
+    private String headerproductname;
+    private String headerproducttype;
 
     private String refno;
     private String issuedate;
@@ -535,6 +543,70 @@ public class PaymentOutboundAllDetail {
         this.payinvdate = payinvdate;
     }
 
+    public String getHeaderinvfromdate() {
+        return headerinvfromdate;
+    }
 
+    public void setHeaderinvfromdate(String headerinvfromdate) {
+        this.headerinvfromdate = headerinvfromdate;
+    }
+
+    public String getHeaderinvtodate() {
+        return headerinvtodate;
+    }
+
+    public void setHeaderinvtodate(String headerinvtodate) {
+        this.headerinvtodate = headerinvtodate;
+    }
+
+    public String getHeadercity() {
+        return headercity;
+    }
+
+    public void setHeadercity(String headercity) {
+        this.headercity = headercity;
+    }
+
+    public String getHeadercountry() {
+        return headercountry;
+    }
+
+    public void setHeadercountry(String headercountry) {
+        this.headercountry = headercountry;
+    }
+
+    public String getHeaderinvname() {
+        return headerinvname;
+    }
+
+    public void setHeaderinvname(String headerinvname) {
+        this.headerinvname = headerinvname;
+    }
+
+    public String getHeaderproductname() {
+        return headerproductname;
+    }
+
+    public void setHeaderproductname(String headerproductname) {
+        this.headerproductname = headerproductname;
+    }
+
+    public String getHeaderproducttype() {
+        return headerproducttype;
+    }
+
+    public void setHeaderproducttype(String headerproducttype) {
+        this.headerproducttype = headerproducttype;
+    }
+
+    public String getInvdatefromto() {
+        return invdatefromto;
+    }
+
+    public void setInvdatefromto(String invdatefromto) {
+        this.invdatefromto = invdatefromto;
+    }
+
+    
   
 }
