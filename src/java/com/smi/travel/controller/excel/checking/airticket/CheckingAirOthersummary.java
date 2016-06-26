@@ -840,10 +840,11 @@ public class CheckingAirOthersummary extends AbstractExcelView {
                         cell26.setCellValue((comm != null) ? comm.doubleValue() : new BigDecimal("0").doubleValue());
                         cell26.setCellStyle(styleDetailTableNumber);
 
-                for (int i = 0; i < 33; i++) {
+               
+            }
+             for (int i = 0; i < 33; i++) {
                     sheet.autoSizeColumn(i);
                 }
-            }
         }else{
             HSSFRow row = sheet.createRow(12);
             HSSFCell cell1 = row.createCell(0);
@@ -1345,9 +1346,10 @@ public class CheckingAirOthersummary extends AbstractExcelView {
                             BigDecimal comm = new BigDecimal("".equals(listAir.get(r-10).getComm()) ? "0" : listAir.get(r-10).getComm());
                             cell18.setCellValue((comm != null) ? comm.doubleValue() : new BigDecimal("0").doubleValue());
                             cell18.setCellStyle(styleDetailTableNumber);
-                for (int i = 0; i < 25; i++) {
+               
+            }
+            for (int i = 0; i < 25; i++) {
                     sheet1.autoSizeColumn(i);
-                }
             }
         }
         
@@ -1786,10 +1788,11 @@ public class CheckingAirOthersummary extends AbstractExcelView {
                         cell25.setCellStyle(styleDetailTableNumber);
      
                         
-            for (int i = 0; i < 25; i++) {
+           
+        }
+             for (int i = 0; i < 25; i++) {
                 sheet2.autoSizeColumn(i);
             }
-        }
       }
          
         for (int i = 0; i < 30; i++) {
