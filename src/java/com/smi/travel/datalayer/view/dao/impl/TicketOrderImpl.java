@@ -236,5 +236,120 @@ public class TicketOrderImpl implements TicketOrderDao{
         this.sessionFactory.close();
         return ticket;
     }
+
+    @Override
+    public TicketOrder getTicketOrderAddition(String refno) {
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();
+        TicketOrder ticket = new TicketOrder();
+
+        BigDecimal price = new BigDecimal(BigInteger.ZERO);
+        BigDecimal priceTax = new BigDecimal(BigInteger.ZERO);
+        BigDecimal cost = new BigDecimal(BigInteger.ZERO);
+        BigDecimal costtax = new BigDecimal(BigInteger.ZERO);
+         List<Object[]> QueryTicketInfo = session.createSQLQuery(" SELECT * FROM `ticket_order_addition`  where  `ticket_order_addition`.refno = '" + refno + "'")
+                .addScalar("ref_no", Hibernate.STRING)
+                .addScalar("leader_name", Hibernate.STRING)
+                .addScalar("bill_date", Hibernate.DATE)
+                .addScalar("company_name", Hibernate.STRING)
+                .addScalar("tel", Hibernate.STRING)
+                .addScalar("pnr", Hibernate.STRING)
+                .addScalar("inv", Hibernate.STRING)
+                .addScalar("sell", Hibernate.STRING)
+                .addScalar("sell_tax", Hibernate.STRING)
+                .addScalar("net", Hibernate.STRING)
+                .addScalar("net_tax", Hibernate.STRING)
+                .addScalar("term_of_payment", Hibernate.STRING)
+                .addScalar("remark", Hibernate.STRING)
+                .addScalar("prepare_by", Hibernate.STRING) 
+                .addScalar("issue_by", Hibernate.STRING)  
+                .addScalar("pickup", Hibernate.STRING)
+                .addScalar("company_address", Hibernate.STRING)
+                .list();
+         int check =1;
+         List info = new ArrayList();
+         for (Object[] B : QueryTicketInfo) {
+            ticket.setRefno(util.ConvertString(B[0]));
+            ticket.setLeadername(util.ConvertString(B[1]));
+            ticket.setPrepareby(util.ConvertString(B[13]));
+            ticket.setIssueby(util.ConvertString(B[14]));
+            
+            price = price.add((B[7]) == null ? new BigDecimal(BigInteger.ZERO) : new BigDecimal(util.ConvertString(B[7])));
+            priceTax = priceTax.add((B[8]) == null ? new BigDecimal(BigInteger.ZERO) : new BigDecimal(util.ConvertString(B[8])));
+            cost = cost.add((B[9]) == null ? new BigDecimal(BigInteger.ZERO) : new BigDecimal(util.ConvertString(B[9])));
+            costtax = costtax.add((B[10]) == null ? new BigDecimal(BigInteger.ZERO) : new BigDecimal(util.ConvertString(B[10])));
+                        
+            if(check == QueryTicketInfo.size()){
+               TicketOrderInfo ticketOrderInfo = new TicketOrderInfo();
+                if(B[2] != null){
+                    ticketOrderInfo.setIssuedate(new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(((Date)B[2])));
+                }else{
+                    ticketOrderInfo.setIssuedate("");
+                }
+                
+                ticketOrderInfo.setCompanyname(!"".equalsIgnoreCase(String.valueOf(util.ConvertString(B[3]))) ? util.ConvertString(B[3]) : "");
+                ticketOrderInfo.setTel(!"".equalsIgnoreCase(String.valueOf(util.ConvertString(B[4]))) ? util.ConvertString(B[4]) : "");
+                ticketOrderInfo.setPnr(!"".equalsIgnoreCase(String.valueOf(util.ConvertString(B[5]))) ? util.ConvertString(B[5]) : "");
+                ticketOrderInfo.setInv(!"".equalsIgnoreCase(String.valueOf(util.ConvertString(B[6]))) ? util.ConvertString(B[3]) : "");
+                ticketOrderInfo.setTermpay(!"".equalsIgnoreCase(String.valueOf(util.ConvertString(B[11]))) ? util.ConvertString(B[11]) : "");
+                ticketOrderInfo.setRemark(!"".equalsIgnoreCase(String.valueOf(util.ConvertString(B[12]))) ? util.ConvertString(B[12]) : "");
+                ticketOrderInfo.setPrice(util.ConvertString(price));
+                ticketOrderInfo.setPricetax(util.ConvertString(priceTax));
+                ticketOrderInfo.setCost(util.ConvertString(cost));
+                ticketOrderInfo.setCosttax(util.ConvertString(costtax));
+                ticketOrderInfo.setIspickup(!"".equalsIgnoreCase(String.valueOf(util.ConvertString(B[15]))) ? util.ConvertString(B[15]) : "");
+                ticketOrderInfo.setCompanyaddress(!"".equalsIgnoreCase(String.valueOf(util.ConvertString(B[16]))) ? util.ConvertString(B[16]) : "");
+                info.add(ticketOrderInfo);
+            }
+            check++;                        
+
+        }
+//        
+//        if(QueryTicketInfo.size() == 0){
+//            TicketOrderInfo ticketOrderInfo = new TicketOrderInfo();
+//            ticketOrderInfo.setCompanyname("");
+//            ticketOrderInfo.setCost("");
+//            ticketOrderInfo.setCosttax("");
+//            ticketOrderInfo.setInv("");
+//            ticketOrderInfo.setIssuedate("");
+//            ticketOrderInfo.setPnr("");
+//            ticketOrderInfo.setPrice("");
+//            ticketOrderInfo.setPricetax("");
+//            ticketOrderInfo.setRemark("");
+//            ticketOrderInfo.setTel("");
+//            ticketOrderInfo.setTermpay("");
+//            info.add(ticketOrderInfo);
+//        }
+        ticket.setInfoDataSource(new JRBeanCollectionDataSource(info));
+         
+        List flights = new ArrayList();
+        ticket.setFlightDataSource(new JRBeanCollectionDataSource(flights));
+
+        List<Object[]> QueryDescList = session.createSQLQuery("SELECT * FROM `ticket_order_desc` where `ticket_order_desc`.ref_no = " + refno)
+                .addScalar("description", Hibernate.STRING)
+                .addScalar("net", Hibernate.STRING)
+                .addScalar("sell", Hibernate.STRING)
+                .list();
+        
+        List description = new ArrayList();
+        
+        for (int i = 0; i < QueryDescList.size(); i++) {
+            Object[] data = QueryDescList.get(i);
+            TicketOrderDescription ticketOrderDescription = new TicketOrderDescription();
+            ticketOrderDescription.setDescription1(!"".equalsIgnoreCase(String.valueOf(util.ConvertString(data[0]))) ? util.ConvertString(data[0]) : "");
+            ticketOrderDescription.setNet1(!"".equalsIgnoreCase(String.valueOf(util.ConvertString(data[1]))) ? util.ConvertString(data[1]) : "");
+            ticketOrderDescription.setSell1(!"".equalsIgnoreCase(String.valueOf(util.ConvertString(data[2]))) ? util.ConvertString(data[2]) : "");
+            description.add(ticketOrderDescription);
+        }
+        
+        ticket.setDescriptionDataSource(new JRBeanCollectionDataSource(description));
+                 
+        List passengers = new ArrayList();      
+        ticket.setPassengerNameAndTicketDataSource(new JRBeanCollectionDataSource(passengers));
+        
+        session.close();
+        this.sessionFactory.close();
+        return ticket;
+    }
     
 }

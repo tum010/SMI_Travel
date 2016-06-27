@@ -43,6 +43,7 @@
 <input type="hidden" value="${master.createBy}" id="master-createBy">
 <input type="hidden" value="${master.departmentNo}" id="departmentNo">
 <input type="hidden" value="${master.id}" id="master-id">
+<c:set var="isExistingAirlineCode" value="${requestScope['isExistingAirlineCode']}" />
 <c:set var="enableSave" value="${requestScope['EnableSave']}" />
 <c:set var="readonly" value="" />
 
@@ -102,6 +103,10 @@
                 <div id="textAlertDivNotSave"  style="display:none;" class="alert alert-danger">
                     <button type="button" class="close" aria-label="Close" onclick="hideTextAlertDiv()"><span aria-hidden="true">&times;</span></button>
                     <strong>Save Unsuccess!</strong> 
+                </div>
+                <div id="textAlertDivIsExistingAirlineCode"  style="display:none;" class="alert alert-danger">
+                    <button type="button" class="close" aria-label="Close" onclick="hideTextAlertDiv()"><span aria-hidden="true">&times;</span></button>
+                    <strong>Not have Airline ${isExistingAirlineCode} in system.</strong> 
                 </div>
                 <input id="now-status" type="hidden" value="${master.getMBookingstatus().getName()}"/>
 
@@ -2083,7 +2088,12 @@
             $('#textAlertDivNotSave').show();
         </script>
         <!--<META HTTP-EQUIV="Refresh" CONTENT="0;URL=AirTicketDetail.smi?referenceNo=${param.referenceNo}&pnr=${param.pnr}&action=edit">-->
-    </c:if>
+    </c:if>   
+</c:if>
+<c:if test="${isExistingAirlineCode != null}"> 
+    <script language="javascript">
+        $('#textAlertDivIsExistingAirlineCode').show();
+    </script>
 </c:if>
 
 <style>

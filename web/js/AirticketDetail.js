@@ -263,7 +263,7 @@ $(document).ready(function () {
 //                $("#flightNoPanel" + i).removeClass("has-error");
 //                $("#flightNoPanel" + i).removeClass("has-success");
                 if(flight === ''){
-                    alert('1');
+//                    alert('1');
                     $("#flightNoPanel" + i).addClass("has-error");
                     check = false;
                 } else {
@@ -274,7 +274,7 @@ $(document).ready(function () {
                 var airlineId = $("#airlineId" + i).val();
                 var airlineCode = $("#airlineCode" + i).val();
                 if((airlineId === '') || (airlineCode === '')){
-                    alert('2');
+//                    alert('2');
                     $("#airlineCodePanel" + i).addClass("has-error");
                     check = false;
                 }
@@ -283,14 +283,14 @@ $(document).ready(function () {
                 var departureId = $("#departure-" + i + "-id").val();
                 var departureCode = $("#departure-" + i + "-code").val();
                 if((departureId === '') || (departureCode === '')){
-                    alert('3');
+//                    alert('3');
                     $("#departureCodePanel" + i).addClass("has-error");
                     check = false;
                 }
 
                 var departureDate = $("#flight-" + i + "-departDate").val();
                 if((departureDate === '')){
-                    alert('4');
+//                    alert('4');
                     $("#dapartureDatePanel" + i).addClass("has-error");
                     check = false;
                 }
@@ -299,14 +299,14 @@ $(document).ready(function () {
                 var arrivalId = $("#arrival-" + i + "-code").val();
                 var arrivalCode = $("#arrival-" + i + "-code").val();
                 if((arrivalId === '') || (arrivalCode === '')){
-                    alert('5');
+//                    alert('5');
                     $("#arrivalCodePanel" + i).addClass("has-error");
                     check = false;
                 }
 
                 var arrivalDate = $("#flight-" + i + "-arriveDate").val();
                 if((arrivalDate === '')){
-                    alert('6');
+//                    alert('6');
                     $("#arrivalDatePanel" + i).addClass("has-error");
                     check = false;
                 }
@@ -315,7 +315,7 @@ $(document).ready(function () {
                 if(departureDate !== '' && arrivalDate !== ''){
                     var date = getDate(convertFormatDate(departureDate), convertFormatDate(arrivalDate));
                     if (!date) {
-                        alert('7');
+//                        alert('7');
                         $("#dapartureDatePanel" + i).addClass("has-error");
                         $("#arrivalDatePanel" + i).addClass("has-error");
                         check = false;
@@ -325,13 +325,13 @@ $(document).ready(function () {
                 //Time
                 var departTime = validateTimeDepart(i);
                 if(!departTime){
-                    alert('8');
+//                    alert('8');
                     check = false;
                 }
 
                 var arriveTime = validateTimeArrive(i);
                 if(!arriveTime){
-                    alert('9');
+//                    alert('9');
                     check = false;
                 }
             }

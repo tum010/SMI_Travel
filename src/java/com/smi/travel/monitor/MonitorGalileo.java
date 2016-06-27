@@ -230,7 +230,7 @@ public class MonitorGalileo extends MonitorScheduler {
         int lineNo = Integer.parseInt(gali.getLine());
         String line = lineData.get(lineNo);
         airlineCode = line.substring(gali.getStartlength() - 1, gali.getStartlength() - 1 + gali.getLength());
-
+        System.out.println("===== Airline Code ===== : " + airlineCode);
         MAirline mAir = new MAirline();
         mAir.setCode(airlineCode);
         List<MAirline> res = mAirticketService.searchAirline(mAir, 1);
@@ -278,7 +278,8 @@ public class MonitorGalileo extends MonitorScheduler {
         while (iterator.hasNext()) {
             String line = iterator.next();
             System.out.println("BookingFlingt input line[" + line + "]");
-            String flightNo = bAir.getAirlineCode() + getField("flight number", line).trim();
+            System.out.println("===== BookingFlight Flight Code ===== : " + getField("flight prefix", line).trim());
+            String flightNo = getField("flight prefix", line).trim() + getField("flight number", line).trim();
 //            String flightNo = line.substring(flightNumber.getStartlength() - 1, flightNumber.getStartlength() - 1 + flightNumber.getLength());
             String sourceCode = line.substring(source.getStartlength() - 1, source.getStartlength() - 1 + source.getLength());
             String desCode = line.substring(destination.getStartlength() - 1, destination.getStartlength() - 1 + destination.getLength());

@@ -94,6 +94,7 @@ public class AirTicketDetailController extends SMITravelController {
     private static final String CHECKPNR = "checkPnr_list";
     private static final String ISBILLSTATUS = "IsBillStatus";
     private static final String EnableSave = "EnableSave";
+    private static final String ISEXISTINGAIRLINECODE = "isExistingAirlineCode";
 
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
@@ -144,6 +145,10 @@ public class AirTicketDetailController extends SMITravelController {
             request.setAttribute(Action, "update");
             
             setResponseAttribute(request, newAirPnr, referenceNo);
+            
+            if("isExistingAirlineCode".equals(newAirPnr.getId())){
+                return AirTicketDetail;
+            }
             
             saveHistoryBooking(newAirPnr,"IMPORT",referenceNo,user);
             System.out.println(" ==================== pnrIdTemp ==================== "+ pnrIdTemp);
@@ -365,6 +370,13 @@ public class AirTicketDetailController extends SMITravelController {
         List<MInitialname> listInitialName = utilservice.getListMInitialname();
         request.setAttribute(InitialName, listInitialName);
         request.setAttribute(List_BookingPnrs, listBookingPnr);
+        
+        if(airticketPnr != null){
+            if("isExistingAirlineCode".equalsIgnoreCase(airticketPnr.getId())){
+                request.setAttribute(ISEXISTINGAIRLINECODE, airticketPnr.getPnr());
+                return;
+            }           
+        }
 
         calculateTotalEachFlightInPnr(airticketPnr);
         TreeSet<AirticketFlight> sortedFlight = new TreeSet<AirticketFlight>(new AirticketFlightComparator());
@@ -392,7 +404,8 @@ public class AirTicketDetailController extends SMITravelController {
             request.setAttribute(Airline, airlines);
             request.setAttribute(AllFlights, allFlights);
             request.setAttribute(AllPassengers, allPassengers);
-        }
+        
+        } 
     }
 
     private int updateAirticketPassenger(HttpServletRequest request, AirticketPnr airPnr) throws NonExistAirlineException {
@@ -708,6 +721,7 @@ public class AirTicketDetailController extends SMITravelController {
         String inTaxCost = request.getParameter("inTaxCost-" + i);
         
         String airlineCode = request.getParameter("airlineCode" + i);
+        System.out.println("===== Airline Code ===== : " + airlineCode);
         String flightOrder = request.getParameter("flight-" + i + "-flightOrder");
         AirticketFlight airFlight = getAirFlight(Id, airPnr);
         if (airFlight == null) {
@@ -1006,14 +1020,24 @@ public class AirTicketDetailController extends SMITravelController {
         // Build AirticketAirlines
         Set<BookingAirline> listBookingAirline = bPnr.getBookingAirlines();
         Iterator iteratorBookingAirline = listBookingAirline.iterator();
+        String existingAirlineCode = "";
+        boolean isExistingAirlineCode = false;
         while (iteratorBookingAirline.hasNext()) {
             BookingAirline bAirline = (BookingAirline) iteratorBookingAirline.next();
             AirticketAirline airAirline = new AirticketAirline();
 
             MAirline airline = new MAirline();
             airline.setCode(bAirline.getAirlineCode());
+            System.out.println("===== Airline Code ===== : " +bAirline.getAirlineCode());
             List<MAirline> listAirline = bookingAirticketService.getmAirlineDao().getListAirLine(airline, 1);
-            airAirline.setMAirline(listAirline.get(0));
+            if(listAirline != null){
+                airAirline.setMAirline(listAirline.get(0));
+                
+            } else {
+                existingAirlineCode += ("".equalsIgnoreCase(existingAirlineCode) ? bAirline.getAirlineCode() : "," + bAirline.getAirlineCode());
+                isExistingAirlineCode = true;
+            }
+            
             airAirline.setTicketDate(bAirline.getTicketDate());
 
             airAirline.setAirticketPnr(airPnr);
@@ -1022,6 +1046,12 @@ public class AirTicketDetailController extends SMITravelController {
             buildAirticketFlights(bAirline, airAirline);
             buildAirticketPassenger(bAirline, airAirline);
 
+        }
+        if(isExistingAirlineCode){
+            AirticketPnr airPnrExistingAirlineCode = new AirticketPnr();
+            airPnrExistingAirlineCode.setId("isExistingAirlineCode");
+            airPnrExistingAirlineCode.setPnr(existingAirlineCode);
+            return airPnrExistingAirlineCode;
         }
         AirticketBooking AirBook = bookingAirticketService.getBookDetailAir(refNo);
         airPnr.setAirticketBooking(AirBook);

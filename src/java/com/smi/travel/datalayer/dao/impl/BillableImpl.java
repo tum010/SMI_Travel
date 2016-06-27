@@ -1288,6 +1288,15 @@ public class BillableImpl implements BillableDao {
             if(airticketPnrList.get(0).getId() != null){
                 result = airticketPnrList.get(0).getId();
             }          
+        
+        } else {
+            query = " From AirticketBooking ab where ab.master.referenceNo = :refno ";
+            List<AirticketBooking> airticketBookingList = session.createQuery(query).setParameter("refno",refNo).list();
+            if(!airticketBookingList.isEmpty()){
+                if(airticketBookingList.get(0).getId() != null){
+                    result = "isAddition";
+                }
+            }
         }
         session.close();
         return result;

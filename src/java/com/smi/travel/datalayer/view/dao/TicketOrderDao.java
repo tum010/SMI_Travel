@@ -15,4 +15,5 @@ import java.util.List;
  */
 public interface TicketOrderDao {
     public TicketOrder getTicketOrder(String refno,String pnrID);
+    public TicketOrder getTicketOrderAddition(String refno);
 }
