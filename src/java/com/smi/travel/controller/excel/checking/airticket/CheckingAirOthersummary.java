@@ -272,16 +272,38 @@ public class CheckingAirOthersummary extends AbstractExcelView {
                 cell16.setCellStyle(styleC25);
                 sheet.autoSizeColumn(16);
                 
-//            if(i == (TicketProfitLoss.size()-1)){
-//                row = sheet.createRow(count + i + 1);
+            if(i == (ticketProfitLoss.size()-1)){
+                row = sheet.createRow(count + i + 1);
+                int count2 = count + i + 1;
+                
+                HSSFRow rowtotal= sheet.createRow(count2);
+                String sumComm = "SUM(O" + 7+":O"+(count2)+")";
+                String sumVat = "SUM(P" + 7+":P"+(count2)+")";
+                String sumTotal = "SUM(Q" + 7+":Q"+(count2)+")";
+                sheet.addMergedRegion(CellRangeAddress.valueOf("A"+(count2+1)+":N"+(count2+1)));
+                HSSFCell cellTotal0 = rowtotal.createCell(0);
+                cellTotal0.setCellValue("Total");
+                cellTotal0.setCellStyle(styleC25);
+                HSSFCell cellTotal = rowtotal.createCell(14);
+                cellTotal.setCellFormula(sumComm);
+                cellTotal.setCellStyle(styleC25);
+                HSSFCell cellTotal2 = rowtotal.createCell(15);
+                cellTotal2.setCellFormula(sumVat);
+                cellTotal2.setCellStyle(styleC25);
+                HSSFCell cellTotal3 = rowtotal.createCell(16);
+                cellTotal3.setCellFormula(sumTotal);
+                cellTotal3.setCellStyle(styleC25);
+                for(int k=1;k<14;k++){
+                    HSSFCell cellTotal1 = rowtotal.createCell(k);
+                    cellTotal1.setCellStyle(styleC25);
+                }
 //                for(int k=0;k<16;k++){
 //                    HSSFCellStyle styleSum = wb.createCellStyle();
 //                    styleSum.setBorderTop(HSSFCellStyle.BORDER_THIN);
 //                    HSSFCell cellSum = row.createCell(k);                   
 //                    cellSum.setCellStyle(styleSum);
 //                }
-//            }    
-               
+            }    
 //            for(int j =0;j<15;j++){
 //                if(j==4){
 //                    sheet.addMergedRegion(CellRangeAddress.valueOf("E"+(count + i)+":G"+(count + i))); 

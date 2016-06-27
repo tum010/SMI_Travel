@@ -434,9 +434,9 @@ public class AirlineSummaryImpl implements AirlineSummaryDao {
                 ticket.setHeaderair(airtemp);
                 ticket.setHeaderpassenger(passenger);
                 ticket.setHeaderagentname(agent.getName());
-//                ticket.setHeaderdepartment(departmenttemp);
-//                ticket.setHeadersalestaff(saleBytemp);
-//                ticket.setHeadertermpay(termPaytemp);
+                ticket.setHeaderdepartment(departmenttemp);
+                ticket.setHeadersalestaff(saleBytemp);
+                ticket.setHeadertermpay(termPaytemp);
 
                 if(i == 0){ // inv
                     ticket.setInvnoPax(util.ConvertString(B[0]));

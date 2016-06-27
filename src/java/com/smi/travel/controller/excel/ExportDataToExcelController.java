@@ -200,13 +200,14 @@ public class ExportDataToExcelController  extends SMITravelController{
             data = reportservice.listSummaryAirline();
             return new ModelAndView("AirlineSummaryReport",name,data).addObject(ReportName, name);
         }else if(TicketFareSummaryAirline.equals(name)){
-            String staffss = request.getParameter("salebyUser");        
-            System.out.println("get excel data TicketFareSummaryAirline" + staffss);
+            String staffss = request.getParameter("salebyUser");         
+            System.out.println("get excel data TicketFareSummaryAirline " + staffss);
             data = reportservice.getTicketFareSumAirline(typeRouting,routingDetail,issuedateFrom,issuedateTo,invdateFrom,invdateTo,airlineCode,passenger,agentId,department,staffss,termPay,printby);
             return new ModelAndView("AirlineSummaryReport",name,data).addObject(ReportName, name);
         }else if(SummaryAirlinePax.equals(name)){
-            System.out.println("get excel data SummaryAirlinePax");
-            data = reportservice.getSumAirlinePax(typeRouting,routingDetail,issuedateFrom,issuedateTo,invdateFrom,invdateTo,airlineCode,passenger,agentId,department,staff,termPay,printby);
+            String staffss = request.getParameter("salebyUser");        
+            System.out.println("get excel data SummaryAirlinePax " + staffss);
+            data = reportservice.getSumAirlinePax(typeRouting,routingDetail,issuedateFrom,issuedateTo,invdateFrom,invdateTo,airlineCode,passenger,agentId,department,staffss,termPay,printby);
             return new ModelAndView("AirlineSummaryReport",name,data).addObject(ReportName, name);
         }else if(SummaryTicketAdjustCostAndIncome.equals(name)){
             System.out.println("get excel data ap SummaryTicketAdjustCostAndIncome");

@@ -22,6 +22,10 @@ public class SummaryAirlinePaxView {
     private String headerprinton;
     private String headerroutingdetail;
     private String headerpassenger;
+    private String headertermpay;
+    private String headersalestaff;
+    private String headerdepartment;
+
     //page 1
     private String invnoPax;
     private String amountwendy;
@@ -291,6 +295,30 @@ public class SummaryAirlinePaxView {
 
     public void setNoinvamount(String noinvamount) {
         this.noinvamount = noinvamount;
+    }
+
+    public String getHeadertermpay() {
+        return headertermpay;
+    }
+
+    public void setHeadertermpay(String headertermpay) {
+        this.headertermpay = headertermpay;
+    }
+
+    public String getHeadersalestaff() {
+        return headersalestaff;
+    }
+
+    public void setHeadersalestaff(String headersalestaff) {
+        this.headersalestaff = headersalestaff;
+    }
+
+    public String getHeaderdepartment() {
+        return headerdepartment;
+    }
+
+    public void setHeaderdepartment(String headerdepartment) {
+        this.headerdepartment = headerdepartment;
     }
     
     

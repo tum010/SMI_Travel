@@ -26,7 +26,8 @@ public class TicketSummaryAirlineView {
     private String headerpassenger;
     private String headersalestaff;
     private String headerdepartment;
-    
+    private String headerissuedatefrom ;
+    private String headerissuedateto;
     //routing
     private String routingR;
     private String paxR;
@@ -561,5 +562,21 @@ public class TicketSummaryAirlineView {
 
     public void setAmountoutboundD(String amountoutboundD) {
         this.amountoutboundD = amountoutboundD;
+    }
+
+    public String getHeaderissuedatefrom() {
+        return headerissuedatefrom;
+    }
+
+    public void setHeaderissuedatefrom(String headerissuedatefrom) {
+        this.headerissuedatefrom = headerissuedatefrom;
+    }
+
+    public String getHeaderissuedateto() {
+        return headerissuedateto;
+    }
+
+    public void setHeaderissuedateto(String headerissuedateto) {
+        this.headerissuedateto = headerissuedateto;
     }
 }

@@ -688,6 +688,8 @@ public class TicketFareReportImpl implements TicketFareReportDao {
                 //set header
                 ticket.setHeaderdatefrom("".equals(String.valueOf(invdateForm)) ? "" : util.ConvertString(dateformat.format(util.convertStringToDate(invdateForm))));
                 ticket.setHeaderdateto("".equals(String.valueOf(invdateTo)) ? "" : util.ConvertString(dateformat.format(util.convertStringToDate(invdateTo))));
+                ticket.setHeaderissuedatefrom("".equals(String.valueOf(dateFrom)) ? "" : util.ConvertString(dateformat.format(util.convertStringToDate(dateFrom))));
+                ticket.setHeaderissuedateto("".equals(String.valueOf(dateTo)) ? "" : util.ConvertString(dateformat.format(util.convertStringToDate(dateTo))));
                 ticket.setHeaderprinton(String.valueOf(df.format(new Date())));
                 ticket.setHeaderprintby(printby);
                 ticket.setHeadertyperouting(typeRoutingtemp);
