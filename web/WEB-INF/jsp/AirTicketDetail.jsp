@@ -742,7 +742,7 @@
                             console.log("Ajax param [" + param + "]");
                             CallAjaxDepartureAirport(param, count,option);
                         }
-
+                                               
                         function getArrivalAirport(name, count,option) {
                             var servletName = 'AirTicketServlet';
                             var servicesName = 'AJAXBean';
@@ -753,6 +753,18 @@
                                     '&type=' + 'getautoairport';
                             console.log("Ajax param [" + param + "]");
                             CallAjaxArrivalAirport(param, count,option);
+                        }
+                        
+                        function getAirportStart(name, count,option) {//winit
+                            var servletName = 'AirTicketServlet';
+                            var servicesName = 'AJAXBean';
+                            var param = 'action=' + 'text' +
+                                    '&servletName=' + servletName +
+                                    '&servicesName=' + servicesName +
+                                    '&name=' + name +
+                                    '&type=' + 'getautoairportstart';
+                            console.log("Ajax param [" + param + "]");
+                            CallAjaxAirportStart(param, count,option);
                         }
 
                         function CallAjaxDepartureAirport(param,count,option){
@@ -834,86 +846,127 @@
                            }
                        }
 
-                    function CallAjaxArrivalAirport(param,count,option){
-                        var url = 'AJAXServlet';
-                        var arrArray = [];
-                        var arrListId= [];
-                        var arrListCode= [];
-                        var arrListName= [];
-                        var arrid , arrcode ,arrname;
-                        $("#arrival-"+count+"-codeVal").autocomplete("destroy");
-                        try {
-                           $.ajax({
-                               type: "POST",
-                               url: url,
-                               cache: false,
-                               data: param,
-                               beforeSend: function() {
-                                  $("#dataarri_load-"+count).removeClass("hidden");    
-                               },
-                               success: function(msg) {     
-                                   console.log("getArrivalAirport =="+msg);
-                                   var arrJson =  JSON.parse(msg);
-                                   for (var i in arrJson){
-                                       if (arrJson.hasOwnProperty(i)){
-                                           arrid = arrJson[i].id;
-                                           arrcode = arrJson[i].code;
-                                           arrname = arrJson[i].name;
-                                           arrArray.push(arrcode);
-                                           arrArray.push(arrname);
-                                           arrListId.push(arrid);
-                                           arrListCode.push(arrcode);
-                                           arrListName.push(arrname);
-                                       }                 
-                                       $("#dataarri_load-"+count).addClass("hidden"); 
-                                   }
-                                   $("#arrival-"+count+"-id").val(arrid);
-//                                   $("#arrival-"+count+"-code").val(arrcode);
-                                   $("#arrival-"+count+"-name").val(arrname);
-
-                                   $("#arrival-"+count+"-codeVal").autocomplete({
-                                       source: arrArray,
-                                       close: function(){
-                                           $("#arrival-"+count+"-codeVal").trigger("keyup");
-                                           var arrselect = $("#arrival-"+count+"-codeVal").val();
-                                           for(var i =0;i<arrListId.length;i++){
-                                               if((arrselect==arrListName[i])||(arrselect==arrListCode[i])){      
-                                                   $("#arrival-"+count+"-id").val(arrListId[i]);
-                                                   $("#arrival-"+count+"-code").val(arrListCode[i]);
-                                                   $("#arrival-"+count+"-codeVal").val(arrListCode[i]);
-                                                   $("#arrival-"+count+"-name").val(arrListName[i]);
-                                               }                 
-                                           }   
+                        function CallAjaxArrivalAirport(param,count,option){
+                            var url = 'AJAXServlet';
+                            var arrArray = [];
+                            var arrListId= [];
+                            var arrListCode= [];
+                            var arrListName= [];
+                            var arrid , arrcode ,arrname;
+                            $("#arrival-"+count+"-codeVal").autocomplete("destroy");
+                            try {
+                               $.ajax({
+                                   type: "POST",
+                                   url: url,
+                                   cache: false,
+                                   data: param,
+                                   beforeSend: function() {
+                                      $("#dataarri_load-"+count).removeClass("hidden");    
+                                   },
+                                   success: function(msg) {     
+                                       console.log("getArrivalAirport =="+msg);
+                                       var arrJson =  JSON.parse(msg);
+                                       for (var i in arrJson){
+                                           if (arrJson.hasOwnProperty(i)){
+                                               arrid = arrJson[i].id;
+                                               arrcode = arrJson[i].code;
+                                               arrname = arrJson[i].name;
+                                               arrArray.push(arrcode);
+                                               arrArray.push(arrname);
+                                               arrListId.push(arrid);
+                                               arrListCode.push(arrcode);
+                                               arrListName.push(arrname);
+                                           }                 
+                                           $("#dataarri_load-"+count).addClass("hidden"); 
                                        }
-                                    });
+                                       $("#arrival-"+count+"-id").val(arrid);
+    //                                   $("#arrival-"+count+"-code").val(arrcode);
+                                       $("#arrival-"+count+"-name").val(arrname);
 
-                                   var selectval = $("#arrival-"+count+"-codeVal").val();
-                                   for(var i =0;i<arrListId.length;i++){
-                                       if(selectval==arrListName[i]){
-                                           $("#arrival-"+count+"-codeVal").val(arrListCode[i]);
+                                       $("#arrival-"+count+"-codeVal").autocomplete({
+                                           source: arrArray,
+                                           close: function(){
+                                               $("#arrival-"+count+"-codeVal").trigger("keyup");
+                                               var arrselect = $("#arrival-"+count+"-codeVal").val();
+                                               for(var i =0;i<arrListId.length;i++){
+                                                   if((arrselect==arrListName[i])||(arrselect==arrListCode[i])){      
+                                                       $("#arrival-"+count+"-id").val(arrListId[i]);
+                                                       $("#arrival-"+count+"-code").val(arrListCode[i]);
+                                                       $("#arrival-"+count+"-codeVal").val(arrListCode[i]);
+                                                       $("#arrival-"+count+"-name").val(arrListName[i]);
+                                                   }                 
+                                               }   
+                                           }
+                                        });
+
+                                       var selectval = $("#arrival-"+count+"-codeVal").val();
+                                       for(var i =0;i<arrListId.length;i++){
+                                           if(selectval==arrListName[i]){
+                                               $("#arrival-"+count+"-codeVal").val(arrListCode[i]);
+                                           }
                                        }
+                                       if(arrListCode.length === 1){
+                                           showflagArr = 0;
+                                           $("#arrival-"+count+"-codeVal").val(arrListCode[0]);
+                                       }
+                                       if(option == 1){
+                                           return;
+                                       }else{
+                                           var event = jQuery.Event('keydown');
+                                            event.keyCode = 40;
+                                            $("#arrival-"+count+"-codeVal").trigger(event);
+                                       }
+
+                                   }, error: function(msg) {
+                                       console.log('auto Arrival ERROR');
+                                       $("#dataarri_load-"+count).addClass("hidden");
                                    }
-                                   if(arrListCode.length === 1){
-                                       showflagArr = 0;
-                                       $("#arrival-"+count+"-codeVal").val(arrListCode[0]);
-                                   }
-                                   if(option == 1){
-                                       return;
-                                   }else{
-                                       var event = jQuery.Event('keydown');
-                                        event.keyCode = 40;
-                                        $("#arrival-"+count+"-codeVal").trigger(event);
-                                   }
-                                   
-                               }, error: function(msg) {
-                                   console.log('auto Arrival ERROR');
-                                   $("#dataarri_load-"+count).addClass("hidden");
-                               }
-                           });
-                       } catch (e) {
-                           alert(e);
+                               });
+                           } catch (e) {
+                               alert(e);
+                           }
                        }
-                   }
+                       
+                       function CallAjaxAirportStart(param,count,option){
+                            var url = 'AJAXServlet';
+                            var id , code ,name;
+                            try {
+                               $.ajax({
+                                   type: "POST",
+                                   url: url,
+                                   cache: false,
+                                   data: param,
+                                   beforeSend: function() {
+//                                      $("#datadep_load-"+count).removeClass("hidden");    
+                                   },
+                                   success: function(msg) {
+                                       var Json =  JSON.parse(msg);
+                                       for (var i in Json){
+                                           if (Json.hasOwnProperty(i)){
+                                               id = Json[i].id;
+                                               code = Json[i].code;
+                                               name = Json[i].name;
+                                           }                 
+//                                           $("#dataarri_load-"+count).addClass("hidden"); 
+                                       }
+                                       console.log("getDepartureAirport =="+msg);
+//                                       $("#departure-" + count + "-id").val(depid);
+//                                       $("#departure-" + count + "-code").val(depcode);
+                                        if(option === 1){
+                                            $("#departure-" + count + "-name").val(name);
+                                        }else{
+                                            $("#arrival-" + count + "-name").val(name);
+                                        }
+                                       
+                                   }, error: function(msg) {
+                                       console.log('auto Departure  ERROR');
+//                                       $("#datadep_load-"+count).addClass("hidden");
+                                   }
+                               });
+                           } catch (e) {
+                               alert(e);
+                           }
+                       }
 
                         flight.push({id: "${fStatus.count}",
                             air_id: "${flight.airticketAirline.MAirline.id}",
@@ -1641,7 +1694,8 @@
 
                         $.each(flight, function (index_flight, value_flight) {
                             var flightCode = $("#departure-" + value_flight.id + "-code").val();
-                            getDepartureAirport(flightCode, value_flight.id,1);
+//                            getDepartureAirport(flightCode, value_flight.id,1);
+                            getAirportStart(flightCode, value_flight.id,1);
                         });
 //                        $.each(a, function (index, value) {
 //                            $.each(flight, function (index_flight, value_flight) {
@@ -1784,7 +1838,8 @@
                         
                         $.each(flight, function (index_flight, value_flight) {
                             var flightCode = $("#arrival-" + value_flight.id + "-code").val();
-                            getArrivalAirport(flightCode, value_flight.id,1);
+//                            getArrivalAirport(flightCode, value_flight.id,1);
+                            getAirportStart(flightCode, value_flight.id,2);
                         });
 //                        $.each(a, function (index, value) {
 //                            $.each(flight, function (index_flight, value_flight) {

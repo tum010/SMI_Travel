@@ -124,4 +124,19 @@ public class MAirportImpl extends HibernateDaoSupport implements MAirportDao {
         return list;
     }
 
+    @Override
+    public MAirport searchAirportStart(String airportCode) {
+        System.out.println("===== search airport start =====");
+        String query = "from MAirport a  ";
+        if ((airportCode != null) && (!"".equalsIgnoreCase(airportCode))) {
+            query += "where a.code = '"+airportCode+"' "; 
+        }    
+        System.out.println("query : " + query);
+        List<MAirport> list = getHibernateTemplate().find(query); 
+        if (list.isEmpty()) {
+            return null;
+        }
+        return list.get(0);
+    }
+
 }

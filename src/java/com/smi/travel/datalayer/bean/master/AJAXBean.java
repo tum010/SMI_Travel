@@ -655,12 +655,15 @@ public class AJAXBean extends AbstractBean implements
             }
         } else if (AIRTICKET.equalsIgnoreCase(servletName)) {
             String name = map.get("name").toString();
+            System.out.println("===== Type ===== : " + type);
             if ("searchairportDeparture".equalsIgnoreCase(type)) {
                 result = buildAirportListHTMLDeparture(airportdao.searchAirport(name));
             } else if ("searchairportArrive".equalsIgnoreCase(type)) {
                 result = buildAirportListHTMLArrive(airportdao.searchAirport(name));
             } else if ("getautoairport".equalsIgnoreCase(type)) {//winit
                 result = buildAirportListJSON(airportdao.searchAirport(name));
+            } else if ("getautoairportstart".equalsIgnoreCase(type)) {
+                result = buildAirportJSON(airportdao.searchAirportStart(name));
             } else if ("getairportname".equalsIgnoreCase(type)) {
                 List<MAirport> data = airportdao.searchAirport(name);
                 String result2 = "";
@@ -672,7 +675,7 @@ public class AJAXBean extends AbstractBean implements
                 }
                 System.out.println("result2 =" + result2);
                 System.out.println(result);
-            }
+            } 
         } else if (PASSENGER.equalsIgnoreCase(servletName)) {
             String name = map.get("name").toString();
             if ("searchPassenger".equalsIgnoreCase(type)) {
@@ -2579,6 +2582,16 @@ public class AJAXBean extends AbstractBean implements
         }
         return record;
     }
+    
+    private JSONArray buildAirportJSON(MAirport mAirport) {
+        JSONArray record = new JSONArray();
+        JSONObject field = new JSONObject();
+        field.put("id", mAirport.getId());
+        field.put("code", mAirport.getCode());
+        field.put("name", mAirport.getName());
+        record.add(field);
+        return record;
+    }
 
     public JSONArray buildPassengerListJSON(List<Customer> listCutomer) {
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
@@ -3596,5 +3609,5 @@ public class AJAXBean extends AbstractBean implements
             return "null";
         }
         return htmlList.toString();
-    }    
+    }       
 }
