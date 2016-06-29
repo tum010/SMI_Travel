@@ -213,13 +213,16 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
 
     @Override
     public String getTicketFareBookingFromTicketNo(String TicketNo,String masterid) {
+        System.out.println("===== TicketNo ===== : " + TicketNo);
+        System.out.println("===== masterid ===== : " + masterid);
         String result ="";
-        AirticketPassenger ticketPass = new AirticketPassenger();
-        String query = "from AirticketPassenger pass where pass.series1||pass.series2||pass.series3 = :ticketNo ";
-        if(masterid != null && !"".equalsIgnoreCase(masterid)){
-           query += " and pass.airticketAirline.airticketPnr.airticketBooking.master.id = '"+masterid+"' ";
-        }
         Session session = this.sessionFactory.openSession();
+        AirticketPassenger ticketPass = new AirticketPassenger();
+        String query = "from AirticketPassenger pass where pass.series1||pass.series2||pass.series3 = :ticketNo ";       
+        if(masterid != null && !"".equalsIgnoreCase(masterid)){
+           boolean isMaster = checkTicketNoAndMasterId(TicketNo,masterid,session);
+           if(isMaster) query += " and pass.airticketAirline.airticketPnr.airticketBooking.master.id = '"+masterid+"' ";
+        }       
         List<AirticketPassenger> ticketPassList = session.createQuery(query).setParameter("ticketNo", TicketNo).list();
         String ticketAirline = "";
         String initialname = "";
@@ -1355,6 +1358,21 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         }
         session.close();
         this.sessionFactory.close();
+        return result;
+    }
+
+    private boolean checkTicketNoAndMasterId(String ticketNo, String masterId, Session session) {
+        boolean result = false;
+        String query = "from AirticketPassenger pass where pass.series1||pass.series2||pass.series3 = :ticketNo and pass.airticketAirline.airticketPnr.airticketBooking.master.id = :masterId ";       
+        List<AirticketPassenger> ticketPassList = session.createQuery(query)
+                .setParameter("ticketNo", ticketNo)
+                .setParameter("masterId", masterId)
+                .list();
+        
+        if(!ticketPassList.isEmpty()){
+            result = true;
+        }
+        
         return result;
     }
 }

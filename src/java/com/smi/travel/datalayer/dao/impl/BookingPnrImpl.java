@@ -191,6 +191,7 @@ public class BookingPnrImpl implements BookingPnrDao {
                                 while(iteratorFlight.hasNext()){
                                     BookingFlight flight = iteratorFlight.next();
                                     for(int j=0;j<newflight.size();j++){
+                                        System.out.println(newflight.get(j).getFlightNo() + " = " + flight.getFlightNo());
                                         if(newflight.get(j).getFlightNo().equalsIgnoreCase(flight.getFlightNo())){
                                             System.out.println("get this Airline : "+ AirPasslist.get(i).getId());
                                             airlinePass =  AirPasslist.get(i); 
@@ -198,7 +199,15 @@ public class BookingPnrImpl implements BookingPnrDao {
                                         }
                                     }
                                 }
-                                
+                                if(airlinePass.getId() == null){
+                                    System.out.println("===== Airline Pass is NULL =====");
+                                    List<BookingAirline> AirPasslistTemp = session.createQuery("from BookingAirline ba where ba.id = :id")
+                                                                            .setParameter("id", AirPasslist.get(i).getId())
+                                                                            .list();
+                                    if(!AirPasslistTemp.isEmpty()){
+                                        airlinePass = AirPasslistTemp.get(0);
+                                    }
+                                }
                             }
                         }
                         
