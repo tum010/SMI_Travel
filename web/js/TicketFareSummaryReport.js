@@ -16,6 +16,8 @@ function printTicketFareSummary(){
     var ticketType = document.getElementById("ticketType").value;
     var ticketBuy = document.getElementById("ticketBuy").value;
     var airline = document.getElementById("airline").value;
+    var airlineC = $( "#airline option:selected" ).text();
+    if(airlineC === '-- ALL --') airlineC = 'ALL';
     var airlineCode = document.getElementById("airlineCode").value;
 //    var from = document.getElementById("startdate").value;
 //    var to = document.getElementById("enddate").value;
@@ -27,12 +29,13 @@ function printTicketFareSummary(){
     var invFrom = convertFormatDates(document.getElementById("invoiceFromDate").value);
     var invTo = convertFormatDates(document.getElementById("invoiceToDate").value);
     var salebyName = document.getElementById("salebyName").value;
-    
+
     if((invFrom !== '') && (invTo !== '')){
         if(reportType == 1){
             window.open("Excel.smi?name=TicketFareAirlineReport&ticketType=" + ticketType + 
                     "&ticketBuy=" + ticketBuy + 
                     "&airline=" + airline + 
+                    "&airlineC=" + airlineC + 
                     "&airlineCode=" + airlineCode + 
                     "&issuedateFrom=" + issuefrom +
                     "&issuedateTo=" + issueto +
@@ -44,7 +47,8 @@ function printTicketFareSummary(){
         }else if(reportType == 2){
             window.open("Excel.smi?name=TicketFareInvoicReport&ticketType=" + ticketType + 
                     "&ticketBuy=" + ticketBuy + 
-                    "&airline=" + airline + 
+                    "&airline=" + airline +
+                    "&airlineC=" + airlineC + 
                     "&airlineCode=" + airlineCode + 
                     "&issuedateFrom=" + issuefrom +
                     "&issuedateTo=" + issueto +
@@ -56,7 +60,8 @@ function printTicketFareSummary(){
         }else if(reportType == 3){
             window.open("Excel.smi?name=TicketFareAgentReport&ticketType=" + ticketType + 
                     "&ticketBuy=" + ticketBuy + 
-                    "&airline=" + airline + 
+                    "&airline=" + airline +
+                    "&airlineC=" + airlineC + 
                     "&airlineCode=" + airlineCode + 
                     "&issuedateFrom=" + issuefrom +
                     "&issuedateTo=" + issueto +
@@ -74,7 +79,8 @@ function printTicketFareSummary(){
         if(reportType == 1){
             window.open("Excel.smi?name=TicketFareAirlineReport&ticketType=" + ticketType + 
                     "&ticketBuy=" + ticketBuy + 
-                    "&airline=" + airline + 
+                    "&airline=" + airline +
+                    "&airlineC=" + airlineC + 
                     "&airlineCode=" + airlineCode + 
                     "&issuedateFrom=" + issuefrom +
                     "&issuedateTo=" + issueto +
@@ -86,7 +92,8 @@ function printTicketFareSummary(){
         }else if(reportType == 2){
             window.open("Excel.smi?name=TicketFareInvoicReport&ticketType=" + ticketType + 
                     "&ticketBuy=" + ticketBuy + 
-                    "&airline=" + airline + 
+                    "&airline=" + airline +
+                    "&airlineC=" + airlineC + 
                     "&airlineCode=" + airlineCode + 
                     "&issuedateFrom=" + issuefrom +
                     "&issuedateTo=" + issueto +
@@ -98,7 +105,8 @@ function printTicketFareSummary(){
         }else if(reportType == 3){
             window.open("Excel.smi?name=TicketFareAgentReport&ticketType=" + ticketType + 
                     "&ticketBuy=" + ticketBuy + 
-                    "&airline=" + airline + 
+                    "&airline=" + airline +
+                    "&airlineC=" + airlineC + 
                     "&airlineCode=" + airlineCode + 
                     "&issuedateFrom=" + issuefrom +
                     "&issuedateTo=" + issueto +

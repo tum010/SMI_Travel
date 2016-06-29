@@ -447,7 +447,7 @@ public class TicketFareSummary extends AbstractExcelView {
         cell51.setCellStyle(styleC21);
         sheet.addMergedRegion(CellRangeAddress.valueOf("A5:E5"));
         HSSFCell cell52 = row5.createCell(5);
-        cell52.setCellValue(dataheader.getStaff());
+        cell52.setCellValue(dataheader.getHeadstaff());
         cell52.setCellStyle(styleC22);
         
         // Row 6
@@ -685,11 +685,10 @@ public class TicketFareSummary extends AbstractExcelView {
                 HSSFCell cellTotal05 = row.createCell(15);
                 cellTotal05.setCellFormula(invamountTotal);
                 cellTotal05.setCellStyle(styleSum);
-             }
-             
-             for(int j =0;j<15;j++){
-                 sheet.autoSizeColumn(j);
-             }
+             }                        
+        }
+        for(int j =0;j<15;j++){
+            sheet.autoSizeColumn(j);
         }
     }
     
@@ -969,11 +968,11 @@ public class TicketFareSummary extends AbstractExcelView {
                     cell11Sum.setCellFormula(sumProfit);
                     cell11Sum.setCellStyle(styleSum); 
                     sheet.autoSizeColumn(14);
-             }
-             for(int j =0;j<15;j++){
-                 sheet.autoSizeColumn(j);
-             }
-        }     
+             }            
+        }
+        for(int j =0;j<15;j++){
+            sheet.autoSizeColumn(j);
+        }
     }
     
     public void genTicketFareSummaryByStaff(HSSFWorkbook wb, List ticketSumByStaff) {
@@ -1498,10 +1497,10 @@ public class TicketFareSummary extends AbstractExcelView {
                 celldataWI08.setCellFormula(totalProfitWI);
                 celldataWI08.setCellStyle(styleC27);
                 
-            }
-            for(int j =0;j<8;j++){
-                sheet.autoSizeColumn(j);
-            }
+            }           
+        }
+        for(int j =0;j<8;j++){
+            sheet.autoSizeColumn(j);
         }
     }
     
@@ -1990,10 +1989,10 @@ public class TicketFareSummary extends AbstractExcelView {
                 celldataWI08.setCellFormula(totalProfitWI);
                 celldataWI08.setCellStyle(styleC27);
                 
-            }
-            for(int j =0;j<8;j++){
-                sheet.autoSizeColumn(j);
-            }
+            }           
+        }
+        for(int j =0;j<8;j++){
+            sheet.autoSizeColumn(j);
         }
     }
 }

@@ -33,13 +33,14 @@ public class TicketFareReportImpl implements TicketFareReportDao {
     private UtilityFunction utilityFunction;
     
     @Override
-    public List getTicketFareReport(String ticketType,String ticketBuy,String airline,String airlineCode,String dateFrom,String dateTo,String department,String staff,String termPay,String printby,String invdateFrom,String invdateTo,String reportType){
+    public List getTicketFareReport(String ticketType,String ticketBuy,String airline,String airlineC,String airlineCode,String dateFrom,String dateTo,String department,String staff,String termPay,String printby,String invdateFrom,String invdateTo,String reportType){
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
         List data = new ArrayList<TicketFareReport>();
         System.out.println(" ticketType " + ticketType);
         System.out.println(" ticketBuy " + ticketBuy);
         System.out.println(" airline " + airline);
+        System.out.println(" airlineC " + airlineC);
         System.out.println(" airlineCode " + airlineCode);
         System.out.println(" dateFrom " + dateFrom);
         System.out.println(" dateTo " + dateTo);
@@ -109,7 +110,7 @@ public class TicketFareReportImpl implements TicketFareReportDao {
         }else{
             department = "ALL";
         }
-
+                
         if((staff != null) &&(!"".equalsIgnoreCase(staff))){
             if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
             query += prefix+ " staff = '"+staff+"'";
@@ -177,6 +178,8 @@ public class TicketFareReportImpl implements TicketFareReportDao {
             airline = "IATA";
         }else if("2".equalsIgnoreCase(airline)){
             airline = "TG";
+        }else{
+            airline = airlineC;
         }
 			
 	if("C".equalsIgnoreCase(ticketBuy)){
