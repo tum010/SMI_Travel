@@ -169,7 +169,7 @@ public class SaleVatReportImpl implements SaleVatReportDao{
             query += " and department = '" + department + "'" ;
         }
         
-        query += " ORDER BY department desc , taxno , taxdate , type ";
+        query += " ORDER BY taxno , taxdate , type ";
         
         System.out.println(" query : "+query);
         

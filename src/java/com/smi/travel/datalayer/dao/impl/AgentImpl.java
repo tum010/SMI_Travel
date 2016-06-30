@@ -92,18 +92,29 @@ public class AgentImpl implements AgentDao{
     private String generateAgentCode(String name) {
         String agentCode = "";
         String no = "";
+        String code = "";
         Session session = this.sessionFactory.openSession();
-        List<String> listAgentCode = new LinkedList<String>();
         String firstChar = name.substring(0, 1);
-        Query query = session.createSQLQuery("SELECT code FROM `agent` WHERE CHARACTER_LENGTH(code) = 6 AND code LIKE '" + firstChar + "%' ORDER BY code DESC");
-        query.setMaxResults(1);
-        listAgentCode = query.list();   
+                
+        List<String> listAgentCode = new LinkedList<String>();
+        Query queryAgent = session.createSQLQuery("SELECT code FROM `agent` WHERE CHARACTER_LENGTH(code) = 6 AND code LIKE '" + firstChar + "%' ORDER BY code DESC");
+        queryAgent.setMaxResults(1);
+        listAgentCode = queryAgent.list();
         
-        if (listAgentCode.isEmpty()) {
+        List<String> listSupplierCode = new LinkedList<String>();
+        Query querySupplier = session.createSQLQuery("SELECT ap_code FROM `supplier` WHERE CHARACTER_LENGTH(ap_code) = 6 AND ap_code LIKE '" + firstChar + "%' ORDER BY ap_code DESC");
+        querySupplier.setMaxResults(1);
+        listSupplierCode = querySupplier.list();
+        
+        if (listAgentCode.isEmpty() && listSupplierCode.isEmpty()) {
             agentCode = firstChar + "00001";
         } else {
-            agentCode = listAgentCode.get(0).substring(0, 1);
-            no = listAgentCode.get(0).substring(1);
+            int no1 = Integer.parseInt(listAgentCode.get(0).substring(1));
+            int no2 = Integer.parseInt(listSupplierCode.get(0).substring(1));
+            System.out.println("no1 : " + no1);
+            System.out.println("no2 : " + no2);
+            agentCode = firstChar;
+            no = (no1 > no2 ? String.valueOf(no1) : String.valueOf(no2));
             int running = Integer.parseInt(no) + 1;
             String temp = String.valueOf(running);
             for (int i = temp.length(); i < 5; i++) {

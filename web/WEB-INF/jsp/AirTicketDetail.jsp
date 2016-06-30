@@ -953,8 +953,10 @@
 //                                       $("#departure-" + count + "-id").val(depid);
 //                                       $("#departure-" + count + "-code").val(depcode);
                                         if(option === 1){
+                                            $("#departure-" + count + "-id").val(id);
                                             $("#departure-" + count + "-name").val(name);
                                         }else{
+                                            $("#arrival-" + count + "-id").val(id);
                                             $("#arrival-" + count + "-name").val(name);
                                         }
                                        
