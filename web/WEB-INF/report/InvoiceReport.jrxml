@@ -226,7 +226,7 @@
 				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Transparent" x="242" y="1" width="95" height="23" uuid="5622861f-79ee-4329-a52d-c994623463ed"/>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Transparent" x="242" y="1" width="95" height="20" uuid="5622861f-79ee-4329-a52d-c994623463ed"/>
 				<textElement textAlignment="Right" markup="none">
 					<font fontName="Cordia New" size="12" pdfFontName="resource/fonts/Cordia.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 					<paragraph lineSpacing="Fixed" lineSpacingSize="7.0"/>

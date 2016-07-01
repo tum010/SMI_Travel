@@ -53,6 +53,7 @@ public class MAgentDetailController extends SMITravelController {
         
         Agent agent = new Agent();
         agent.setCode((String.valueOf(code)).toUpperCase());
+        agent.setApCode(String.valueOf(code).toUpperCase());
         agent.setName((String.valueOf(name)).toUpperCase());
         agent.setAddress((String.valueOf(Address)).toUpperCase());
         agent.setTaxNo(Tax);

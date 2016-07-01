@@ -110,6 +110,7 @@ public class GuideJobImpl implements GuideJobDao{
 //                    String coupNew = splitIndexCoupon(coup);
                     System.out.println("coup : "+coup);
                     coup = coup.replaceAll("\n", "\nCoupon : ");
+                    coup = coup.replaceAll("<br>", "\n");
                     guidejob.setCoup_name(coup);
                 }else{
                     guidejob.setCoup_name("");
