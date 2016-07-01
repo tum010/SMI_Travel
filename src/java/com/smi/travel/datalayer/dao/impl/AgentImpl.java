@@ -109,12 +109,18 @@ public class AgentImpl implements AgentDao{
         if (listAgentCode.isEmpty() && listSupplierCode.isEmpty()) {
             agentCode = firstChar + "00001";
         } else {
-            int no1 = Integer.parseInt(listAgentCode.get(0).substring(1));
-            int no2 = Integer.parseInt(listSupplierCode.get(0).substring(1));
+            int no1 = 0;
+            int no2 = 0;
+            try {
+                no1 = Integer.parseInt(listAgentCode.get(0).substring(1));
+                no2 = Integer.parseInt(listSupplierCode.get(0).substring(1));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }           
             System.out.println("no1 : " + no1);
             System.out.println("no2 : " + no2);
             agentCode = firstChar;
-            no = (no1 > no2 ? String.valueOf(no1) : String.valueOf(no2));
+            no = (no1 >= no2 ? String.valueOf(no1) : String.valueOf(no2));
             int running = Integer.parseInt(no) + 1;
             String temp = String.valueOf(running);
             for (int i = temp.length(); i < 5; i++) {
