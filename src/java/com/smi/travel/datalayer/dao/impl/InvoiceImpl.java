@@ -65,7 +65,7 @@ public class InvoiceImpl implements InvoiceDao{
         Session session = this.sessionFactory.openSession();
         try { 
             transaction = session.beginTransaction();
-            invNo = generateInvoiceNo(invoice.getDepartment() , invoice.getInvType());
+            invNo = generateInvoiceNo(invoice.getDepartment() , invoice.getInvType() , invoice.getInvDate());
 //            result = invoice.getInvNo();
             invoice.setInvNo(invNo);
             session.save(invoice);
@@ -91,15 +91,16 @@ public class InvoiceImpl implements InvoiceDao{
         return result;
     }
 
-    private String generateInvoiceNo(String department, String invoiceType){
+    private String generateInvoiceNo(String department, String invoiceType, Date invoiceDate){
         String invNo = "";
         String invType = "";
         Session session = this.sessionFactory.openSession();
         List<String> list = new LinkedList<String>();
         Date thisdate = new Date();
         SimpleDateFormat df = new SimpleDateFormat("yyMM",Locale.US);
+        System.out.println("===== invoice date ===== : " + df.format(invoiceDate));
         Query query = session.createSQLQuery("SELECT RIGHT(inv_no, 4) as invnum  FROM invoice where department = :department and inv_type = :invoiceType and inv_no Like :invno  ORDER BY RIGHT(inv_no, 4) desc");
-        query.setParameter("invno", "%"+ df.format(thisdate) + "%");
+        query.setParameter("invno", "%"+ df.format(invoiceDate) + "%");
         query.setParameter("department", department);
         query.setParameter("invoiceType", invoiceType);
         query.setMaxResults(1);
@@ -136,7 +137,7 @@ public class InvoiceImpl implements InvoiceDao{
         }
         
         if (list.isEmpty()) {
-            invNo = departtype + df.format(thisdate) + "-" + "0001";
+            invNo = departtype + df.format(invoiceDate) + "-" + "0001";
         } else {
             invNo = list.get(0);
             System.out.println("invNo === " + invNo + " === ");
@@ -149,14 +150,14 @@ public class InvoiceImpl implements InvoiceDao{
                     for (int i = temp.length(); i < 4; i++) {
                         temp = "0" + temp;
                     }
-                    invNo = departtype + "-" + df.format(thisdate) + "-" + temp;
+                    invNo = departtype + "-" + df.format(invoiceDate) + "-" + temp;
                 }else{
                     int running = Integer.parseInt(invNo) + 1;
                     String temp = String.valueOf(running);
                     for (int i = temp.length(); i < 4; i++) {
                         temp = "0" + temp;
                     }
-                    invNo = departtype + "-" + df.format(thisdate) + "-" + temp;
+                    invNo = departtype + "-" + df.format(invoiceDate) + "-" + temp;
                 }
             }
         }
@@ -806,7 +807,7 @@ public class InvoiceImpl implements InvoiceDao{
         try { 
             transaction = session.beginTransaction();
             System.out.println("generateInvoiceNo : "+invoice.getDepartment() +" : "+invoice.getInvType());
-            result = generateInvoiceNo(invoice.getDepartment() , invoice.getInvType());
+            result = generateInvoiceNo(invoice.getDepartment() , invoice.getInvType() , invoice.getInvDate());
 //            result = invoice.getInvNo();
             invoice.setInvNo(result);
             session.save(invoice);

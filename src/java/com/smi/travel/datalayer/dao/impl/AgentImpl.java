@@ -112,11 +112,15 @@ public class AgentImpl implements AgentDao{
             int no1 = 0;
             int no2 = 0;
             try {
-                no1 = Integer.parseInt(listAgentCode.get(0).substring(1));
+                no1 = Integer.parseInt(listAgentCode.get(0).substring(1));               
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            try {
                 no2 = Integer.parseInt(listSupplierCode.get(0).substring(1));
             } catch (Exception e) {
                 e.printStackTrace();
-            }           
+            }
             System.out.println("no1 : " + no1);
             System.out.println("no2 : " + no2);
             agentCode = firstChar;
