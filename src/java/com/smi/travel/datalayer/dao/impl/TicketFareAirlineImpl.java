@@ -642,9 +642,12 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
                 query += " t.id in ("+ticketfareid.trim()+")";
                 check =1;
             }else{
-                if(check == 1){query += " and ";}
-                query += " t.id in ('XXXXXXXXXX')";
-                check =1;
+                if((ticket.getReferenceNo()!= null) &&(!"".equalsIgnoreCase(ticket.getReferenceNo()))){
+                    if(check == 1){query += " and ";}
+                    query += " t.Master.referenceNo = "+ticket.getReferenceNo();
+                    check =1;
+                }
+  
             }
         }
         
