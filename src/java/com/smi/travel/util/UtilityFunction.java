@@ -702,7 +702,7 @@ public class UtilityFunction {
     }
     
     public String generateSpecialCharacter(String name) {
-        String specialchar1[] = {"+","-","&","<",">","\"","#","@","[","]"};
+        String specialchar1[] = {"\\+","-","&","<",">","\"","#","@","[","]"};
         String specialchar2[] = {"%2B","%2D","%26","%3C","%3E","%22","%23","%40","%5B","%5D"};
         for(int i = 0; i < specialchar1.length ; i++){
             while(name.indexOf(specialchar1[i]) != -1){
