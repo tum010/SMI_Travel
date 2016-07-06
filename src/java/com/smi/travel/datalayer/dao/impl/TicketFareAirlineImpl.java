@@ -56,6 +56,14 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         try {
             Session session = this.sessionFactory.openSession();
             transaction = session.beginTransaction();
+            if(ticket.getIsTempTicket() == null){
+                TicketFareAirline tk = getTicketFareFromTicketNo(ticket.getTicketNo(),"");
+                if(tk != null){
+                    ticket.setIsTempTicket(0);
+                }else{
+                    ticket.setIsTempTicket(1);
+                }
+            }
             if(ticket.getMPaymentDoctype() != null){
                 if((ticket.getMPaymentDoctype().getId() != null || !"".equals(ticket.getMPaymentDoctype().getId())) 
                     && ((ticket.getPvCode() == null)||("".equalsIgnoreCase(ticket.getPvCode())))){
@@ -72,9 +80,6 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
                    session.save(ticketFareInvoices.get(i));
                 }
             }
-            
-            
-            
             transaction.commit();
             session.close();
             this.sessionFactory.close();
