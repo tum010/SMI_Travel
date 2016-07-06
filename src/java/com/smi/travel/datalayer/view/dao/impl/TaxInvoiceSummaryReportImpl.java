@@ -99,56 +99,63 @@ public class TaxInvoiceSummaryReportImpl implements TaxInvoiceSummaryReportDao {
         
         int no = 1;
         SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
-        for (Object[] B : QueryList) {
-            TaxInvoiceSummaryReport taxInvoiceSummaryReport = new TaxInvoiceSummaryReport();
-            taxInvoiceSummaryReport.setNo(String.valueOf(no));
-            taxInvoiceSummaryReport.setId(util.ConvertString(B[0]));
-            taxInvoiceSummaryReport.setTaxno(util.ConvertString(B[1]));
-            taxInvoiceSummaryReport.setTaxdate((("null".equals(String.valueOf(B[2])) ? "" : String.valueOf(df.format(util.convertStringToDate(String.valueOf(B[2])))))));
-            taxInvoiceSummaryReport.setTaxto(util.ConvertString(B[3]));
-            taxInvoiceSummaryReport.setTaxname(util.ConvertString(B[4]));                           
-            taxInvoiceSummaryReport.setStatus(util.ConvertString(B[11]));
-            String departmentTemp = util.ConvertString(B[12]); 
-            System.out.println("departmentTemp : "+departmentTemp);
-            if(("Wendy".equalsIgnoreCase(departmentTemp) || "Outbound".equalsIgnoreCase(departmentTemp))&&(("".equalsIgnoreCase(department)||("Wendy,Outbound".equalsIgnoreCase(department))))){
-                taxInvoiceSummaryReport.setDepartment("Wendy + Outbound");
+        String[] departmentList = {"Wendy,Outbound","Inbound"};
+        for(String departmentListValue : departmentList){
+            for (Object[] B : QueryList) {
+                String departmentTemp = util.ConvertString(B[12]); 
+                System.out.println(departmentListValue + " : " + departmentTemp);
+                if(departmentListValue.indexOf(departmentTemp) != -1){
+                    TaxInvoiceSummaryReport taxInvoiceSummaryReport = new TaxInvoiceSummaryReport();
+                    taxInvoiceSummaryReport.setNo(String.valueOf(no));
+                    taxInvoiceSummaryReport.setId(util.ConvertString(B[0]));
+                    taxInvoiceSummaryReport.setTaxno(util.ConvertString(B[1]));
+                    taxInvoiceSummaryReport.setTaxdate((("null".equals(String.valueOf(B[2])) ? "" : String.valueOf(df.format(util.convertStringToDate(String.valueOf(B[2])))))));
+                    taxInvoiceSummaryReport.setTaxto(util.ConvertString(B[3]));
+                    taxInvoiceSummaryReport.setTaxname(util.ConvertString(B[4]));                           
+                    taxInvoiceSummaryReport.setStatus(util.ConvertString(B[11]));
 
-            } else {
-                taxInvoiceSummaryReport.setDepartment(departmentTemp);
-            }            
-//            taxInvoiceSummaryReport.setDepartment(util.ConvertString(B[12]));
-//            taxInvoiceSummaryReport.setDepartment("WO".equalsIgnoreCase(departmentshow) ? "Wendy + Outbound" : util.ConvertString(B[12]));
-            taxInvoiceSummaryReport.setSystemdate(String.valueOf(dateformat.format(new Date())));
-            taxInvoiceSummaryReport.setFrom(!"".equalsIgnoreCase(from) ? String.valueOf(df.format(util.convertStringToDate(from))) : "");
-            taxInvoiceSummaryReport.setTo(!"".equalsIgnoreCase(to) ? String.valueOf(df.format(util.convertStringToDate(to))) : "");
-            taxInvoiceSummaryReport.setUser(systemuser);
-            taxInvoiceSummaryReport.setDepartmentshow(departmentshow);
-            
-            if(!"".equalsIgnoreCase(util.ConvertString(B[8]))){
-                taxInvoiceSummaryReport.setGross(util.ConvertString(B[8]));
-            } else {
-                taxInvoiceSummaryReport.setGross("0");
+                    System.out.println("departmentTemp : "+departmentTemp);
+                    if(("Wendy".equalsIgnoreCase(departmentTemp) || "Outbound".equalsIgnoreCase(departmentTemp))&&(("".equalsIgnoreCase(department)||("Wendy,Outbound".equalsIgnoreCase(department))))){
+                        taxInvoiceSummaryReport.setDepartment("Wendy + Outbound");
+
+                    } else {
+                        taxInvoiceSummaryReport.setDepartment(departmentTemp);
+                    }            
+        //            taxInvoiceSummaryReport.setDepartment(util.ConvertString(B[12]));
+        //            taxInvoiceSummaryReport.setDepartment("WO".equalsIgnoreCase(departmentshow) ? "Wendy + Outbound" : util.ConvertString(B[12]));
+                    taxInvoiceSummaryReport.setSystemdate(String.valueOf(dateformat.format(new Date())));
+                    taxInvoiceSummaryReport.setFrom(!"".equalsIgnoreCase(from) ? String.valueOf(df.format(util.convertStringToDate(from))) : "");
+                    taxInvoiceSummaryReport.setTo(!"".equalsIgnoreCase(to) ? String.valueOf(df.format(util.convertStringToDate(to))) : "");
+                    taxInvoiceSummaryReport.setUser(systemuser);
+                    taxInvoiceSummaryReport.setDepartmentshow(departmentshow);
+
+                    if(!"".equalsIgnoreCase(util.ConvertString(B[8]))){
+                        taxInvoiceSummaryReport.setGross(util.ConvertString(B[8]));
+                    } else {
+                        taxInvoiceSummaryReport.setGross("0");
+                    }
+                    if(!"".equalsIgnoreCase(util.ConvertString(B[9]))){
+                        taxInvoiceSummaryReport.setVat(util.ConvertString(B[9]));
+                    } else {
+                        taxInvoiceSummaryReport.setVat("0");
+                    }
+                    if(!"".equalsIgnoreCase(util.ConvertString(B[10]))){
+                        taxInvoiceSummaryReport.setAmount(util.ConvertString(B[10]));
+                    } else {
+                        taxInvoiceSummaryReport.setAmount("0");
+                    }
+
+                    String invoiceNo = checkInvoiceNo((util.ConvertString(B[6])));
+                    taxInvoiceSummaryReport.setInvoiceno(invoiceNo);
+                    String receipt = checkReceiptNo((util.ConvertString(B[7])));
+                    taxInvoiceSummaryReport.setReceiptno(receipt);
+                    String taxDetail = checkTaxDetail(util.ConvertString(B[5]));
+                    taxInvoiceSummaryReport.setTaxdetail(taxDetail);      
+
+                    data.add(taxInvoiceSummaryReport);
+                    no++;
+                }
             }
-            if(!"".equalsIgnoreCase(util.ConvertString(B[9]))){
-                taxInvoiceSummaryReport.setVat(util.ConvertString(B[9]));
-            } else {
-                taxInvoiceSummaryReport.setVat("0");
-            }
-            if(!"".equalsIgnoreCase(util.ConvertString(B[10]))){
-                taxInvoiceSummaryReport.setAmount(util.ConvertString(B[10]));
-            } else {
-                taxInvoiceSummaryReport.setAmount("0");
-            }
-            
-            String invoiceNo = checkInvoiceNo((util.ConvertString(B[6])));
-            taxInvoiceSummaryReport.setInvoiceno(invoiceNo);
-            String receipt = checkReceiptNo((util.ConvertString(B[7])));
-            taxInvoiceSummaryReport.setReceiptno(receipt);
-            String taxDetail = checkTaxDetail(util.ConvertString(B[5]));
-            taxInvoiceSummaryReport.setTaxdetail(taxDetail);      
-            
-            data.add(taxInvoiceSummaryReport);
-            no++;
         }
         
         return data;

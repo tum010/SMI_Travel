@@ -124,7 +124,7 @@ public class OtherBookingImpl implements OtherBookingDao{
             Session session = this.sessionFactory.openSession();
 //            transaction = session.beginTransaction();
             String date = util.convertDateToString(otherbook.getOtherDate());
-            String productId = otherbook.getProduct().getId();
+            String productId = otherbook.getStockId() != null ? String.valueOf(otherbook.getStockId()) : "";
             List<Stock> stockList = getIsStock(productId, date, session);
             if(stockList.isEmpty()){
                 result = "notStock";

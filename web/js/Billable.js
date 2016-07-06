@@ -35,6 +35,7 @@ $(document).ready(function() {
         $(".ui-widget").css("left", position.left); 
         if($(this).val() === ""){
             $("#billto").val("");
+            $("#billtoVal").val("");
             $("#billtype").val("");
             $("#billname").val("");
             $("#address").val("");
@@ -118,6 +119,7 @@ function CallAjaxAuto(param){
                      $("#dataload").addClass("hidden"); 
                 }
                 $("#billto").val(billid);
+                $("#billtoVal").val(billid);
                 $("#billname").val(billname);
                 $("#address").val(billaddr);
                 $("#billtype").val(billtype);
@@ -129,7 +131,8 @@ function CallAjaxAuto(param){
                          $("#billtoVal").trigger("keyup");
                          var billselect = $("#billtoVal").val();
                         for(var i =0;i<billListId.length;i++){
-                            if((billselect==billListName[i])||(billselect==billListId[i])){      
+                            if((billselect==billListName[i])||(billselect==billListId[i])){
+                                $("#billto").val(billListId[i]);
                                 $("#billtoVal").val(billListId[i]);
                                 $("#billname").val(billListName[i]);
                                 $("#address").val(billListAddress[i]);
@@ -142,11 +145,13 @@ function CallAjaxAuto(param){
                 var billval = $("#billtoVal").val();
                 for(var i =0;i<billListId.length;i++){
                     if(billval==billListName[i]){
+                        $("#billto").val(billListId[i]);
                         $("#billtoVal").val(billListId[i]);
                     }
                 }
                 if(billListId.length == 1){
                     showflag = 0;
+                    $("#billto").val(billListId[0]);
                     $("#billtoVal").val(billListId[0]);
                 }
                 var event = jQuery.Event('keydown');
@@ -214,6 +219,7 @@ function CallAjax(param) {
 }
 
 function setBillValue(billto, billname, address, term, pay, type) {
+    $("#billto").val(billto);
     $("#billtoVal").val(billto);
     $("#billname").val(billname);
     if (address == 'null') {

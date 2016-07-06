@@ -45,6 +45,7 @@ public class OtherBooking  {
      private String remarkGuideCommission;
      private String remarkAgentCommission;
      private Date otherDateTo;
+     private Integer stockId;
      private Set coupons = new HashSet(0);
 
     public OtherBooking() {
@@ -56,7 +57,7 @@ public class OtherBooking  {
         this.master = master;
         this.status = status;
     }
-    public OtherBooking(Product product,SystemUser guide, Master master,Agent agent, BigDecimal adCost, BigDecimal adPrice, Integer adQty, BigDecimal chCost, BigDecimal chPrice, Integer chQty, BigDecimal inCost, BigDecimal inPrice, Integer inQty,Integer isBill, MItemstatus status, Date otherDate, Date otherTime, Date createDate, String updateBy, Date updateDate, String createBy, String remark,String currency,Date cancelDate, BigDecimal agentCommission,BigDecimal guideCommission,String remarkGuideCommission,String remarkAgentCommission,String remarkTicket,Set coupons,String curAmount,String curCost,String memo) {
+    public OtherBooking(Product product,SystemUser guide, Master master,Agent agent, BigDecimal adCost, BigDecimal adPrice, Integer adQty, BigDecimal chCost, BigDecimal chPrice, Integer chQty, BigDecimal inCost, BigDecimal inPrice, Integer inQty,Integer isBill, MItemstatus status, Date otherDate, Date otherTime, Date createDate, String updateBy, Date updateDate, String createBy, String remark,String currency,Date cancelDate, BigDecimal agentCommission,BigDecimal guideCommission,String remarkGuideCommission,String remarkAgentCommission,String remarkTicket,Set coupons,String curAmount,String curCost,String memo,Integer stockId) {
        this.product = product;
        this.master = master;
        this.agent = agent;
@@ -88,6 +89,7 @@ public class OtherBooking  {
        this.remarkGuideCommission = remarkGuideCommission;
        this.coupons = coupons;
        this.memo = memo;
+       this.stockId = stockId;
     }
    
     public String getId() {
@@ -354,6 +356,14 @@ public class OtherBooking  {
 
     public void setMemo(String memo) {
         this.memo = memo;
+    }
+
+    public Integer getStockId() {
+        return stockId;
+    }
+
+    public void setStockId(Integer stockId) {
+        this.stockId = stockId;
     }
 
    

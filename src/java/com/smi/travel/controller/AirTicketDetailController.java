@@ -95,6 +95,7 @@ public class AirTicketDetailController extends SMITravelController {
     private static final String ISBILLSTATUS = "IsBillStatus";
     private static final String EnableSave = "EnableSave";
     private static final String ISEXISTINGAIRLINECODE = "isExistingAirlineCode";
+    private String existingAirlineCode = "";
 
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
@@ -146,9 +147,12 @@ public class AirTicketDetailController extends SMITravelController {
             
             setResponseAttribute(request, newAirPnr, referenceNo);
             
-            if("isExistingAirlineCode".equals(newAirPnr.getId())){
-                return AirTicketDetail;
-            }
+            if((pnrIdTemp == null) || (pnrIdTemp.equalsIgnoreCase(""))){
+                if("isExistingAirlineCode".equals(newAirPnr.getId())){
+                    request.setAttribute(ISEXISTINGAIRLINECODE, existingAirlineCode);
+                    return AirTicketDetail;
+                }           
+            } 
             
             saveHistoryBooking(newAirPnr,"IMPORT",referenceNo,user);
             System.out.println(" ==================== pnrIdTemp ==================== "+ pnrIdTemp);
@@ -373,7 +377,8 @@ public class AirTicketDetailController extends SMITravelController {
         
         if(airticketPnr != null){
             if("isExistingAirlineCode".equalsIgnoreCase(airticketPnr.getId())){
-                request.setAttribute(ISEXISTINGAIRLINECODE, airticketPnr.getPnr());
+//                request.setAttribute(ISEXISTINGAIRLINECODE, airticketPnr.getPnr());
+                existingAirlineCode = airticketPnr.getPnr();
                 return;
             }           
         }

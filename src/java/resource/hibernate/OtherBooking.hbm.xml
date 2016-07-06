@@ -99,9 +99,12 @@
         </property>
         <property name="otherDateTo" type="date">
             <column name="other_date_to" length="10"/>
-        </property>
-		<property name="memo" type="string">
+        </property>        
+        <property name="memo" type="string">
             <column name="memo" />
+        </property>
+        <property name="stockId" type="java.lang.Integer">
+            <column name="stock_id" />
         </property>
          <set name="coupons" table="coupon" inverse="true" lazy="true" fetch="select">
             <key>

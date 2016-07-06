@@ -11,9 +11,11 @@ import com.smi.travel.datalayer.entity.MStockStatus;
 import com.smi.travel.datalayer.entity.Product;
 import com.smi.travel.datalayer.entity.Stock;
 import com.smi.travel.datalayer.entity.StockDetail;
+import com.smi.travel.datalayer.view.entity.OtherTicketView;
 import com.smi.travel.datalayer.view.entity.StockView;
 import com.smi.travel.datalayer.view.entity.StockViewSummary;
 import com.smi.travel.util.UtilityFunction;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -522,6 +524,34 @@ public class StockImpl implements StockDao{
         }else{
             return null;
         }
+    }
+
+    @Override
+    public List<OtherTicketView> getStockByProductId(String productId, String otherId) {
+        Session session = this.sessionFactory.openSession();
+        List<StockDetail> stockDetailList = session.createQuery("from StockDetail sd where sd.otherBooking.id = :otherId order by stock.id , sd.code ")
+                .setParameter("otherId", otherId)
+                .list();
+
+        if (stockDetailList.isEmpty()) {
+            session.close();
+            return null;
+        }
+        
+        List<OtherTicketView> ticketList = new ArrayList<OtherTicketView>();
+        for(int i=0;i<stockDetailList.size();i++){
+            StockDetail stockDetail = stockDetailList.get(i);
+            OtherTicketView otherTicketView = new OtherTicketView();
+            otherTicketView.setId(stockDetail.getId());
+            otherTicketView.setAddDate(stockDetail.getPickupDate() != null ? stockDetail.getPickupDate() : null);
+            otherTicketView.setTicketCode(stockDetail.getCode());
+            otherTicketView.setTypeName(stockDetail.getTypeId().getName());
+            otherTicketView.setStatus(stockDetail.getMStockStatus().getName());
+            ticketList.add(otherTicketView);
+        }
+
+        session.close();
+        return ticketList;
     }
 
 }

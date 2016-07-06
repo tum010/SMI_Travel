@@ -1534,7 +1534,7 @@ function calculateVatRecComAmount() {
     if ($("#isComVat").is(':checked')) {
         var vatRecCom = ($("#vatRecCom" + row).val() === '' ? parseFloat($("#mVat").val()) : parseFloat($("#vatRecCom" + row).val()));
         var comm = ($("#comm").val() !== '' ? parseFloat(($("#comm").val()).replace(/,/g, "")) : 0.00);
-        var vatRecComAmount = comm * ( (100-vatRecCom) / 100);
+        var vatRecComAmount = (comm * 100)/(100 + vatRecCom);
         $("#vatRecComAmount").val(formatNumber(vatRecComAmount));
         $("#vatRecCom").val(vatRecCom);
         if ($("#vatRecComTemp" + row).val() === '') {

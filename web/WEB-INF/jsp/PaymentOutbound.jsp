@@ -1081,8 +1081,7 @@ function calculateWhtComAmount(newWhtCom) {
         totalComm = parseFloat(totalComm);
         
 
-        var whtcomamt = totalComm * whtCom /100 ;
-        
+        var whtcomamt = totalComm * whtCom ;
         document.getElementById('whtCom').value = formatNumber(whtCom);
         document.getElementById('whtComAmt').value = formatNumber(whtcomamt);
         $("#isWhtCom").val(($("#isWhtCom").is(':checked') ? '1' : '0'));

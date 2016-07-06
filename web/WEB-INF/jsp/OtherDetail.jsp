@@ -24,6 +24,7 @@
 <c:set var="booktype" value="${requestScope['BOOKING_TYPE']}" />
 <c:set var="ticketList" value="${requestScope['ticketList']}" />
 <c:set var="isBillStatus" value="${requestScope['IsBillStatus']}" />
+<c:set var="stockList" value="${requestScope['stockList']}" />
 <input type="hidden" value="${master.departmentNo}" id="departmentNo">
 <input type="hidden" value="${master.id}" id="master-id">
 <input type="hidden" value="${requestScope['passengerId']}" id="passengerId">
@@ -484,36 +485,61 @@
             </div>
             <div class="panel panel-default">
                 <div class="panel-heading">Ticket</div>
-                <div class="panel-body">                    
-                    <div class="form-group col-md-1" style="width: 200px">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-sm-6" style="margin-top: -5px;">
+                            <label  class="col-sm-2 control-label" >Product<font style="color: red">*</font></label>
+                            <div class="col-sm-3">  
+                                <div class="form-group">
+                                    <div class="input-group " style="padding-left: 5px">
+                                        <input type="hidden"  class="form-control" name="product_id_stock" id="product_id_stock" value="${requestScope['productStockId']}" >
+                                        <input type="text"  class="form-control" name="product_code_stock" id="product_code_stock" value="">
+                                        <span class="input-group-addon" id="product_modal"  data-toggle="modal" data-target="#ProductModalStock">
+                                            <span class="glyphicon-search glyphicon"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6" style="padding-left: 20px">  
+                                <input type="text" class="form-control" style="width: 250px" id="product_name_stock" name="product_name_stock" value="" readonly="">
+                            </div>
+                        </div>    
+                    </div>
+                    <div class="form-group col-md-1" style="width: 100px; margin-top: -5px;">
                         <label class="col-sm-3 control-label">Adult</label>
+                    </div>
+                    <div class="form-group col-md-1" style="width: 150px; margin-top: -5px;">
                         <div class="col-sm-1" style="width: 100px">
                             <input type="text" class="form-control decimalticket text-right" id="adTicket" name="adTicket" value="0">  
                         </div>
                     </div>
-                    <div class="form-group col-md-1" style="width: 200px">
+                    <div class="form-group col-md-1" style="width: 100px; margin-top: -5px;">
                         <label class="col-sm-3 control-label">Child</label>
+                    </div>
+                    <div class="form-group col-md-1" style="width: 150px; margin-top: -5px;">
                         <div class="col-sm-1" style="width: 100px">
                             <input type="text" class="form-control decimalticket text-right" id="chTicket" name="chTicket" value="0">  
-                        </div>
+                        </div>                    
                     </div>    
-                    <div class="form-group col-md-1" style="width: 200px">
+                    <div class="form-group col-md-1" style="width: 100px; margin-top: -5px;">
                         <label class="col-sm-3 control-label">Infant</label>
+                    </div>
+                    <div class="form-group col-md-1" style="width: 150px; margin-top: -5px;">
                         <div class="col-sm-1" style="width: 100px">
                             <input type="text" class="form-control decimalticket text-right" id="infTicket" name="infTicket" value="0">  
                         </div>
                     </div>
-                    <div class="form-group col-md-1" style="width: 200px">
+                    <div class="form-group col-md-1" style="width: 140px; margin-top: -5px;">
                         <button type="button"  class="btn btn-success duplicate" onclick="addStockTicket()" id="addTicketButton" name="addTicketButton" ${disabled}>
                             <span class="glyphicon glyphicon-plus"></span> Add
                         </button>
                     </div>
-                    <div class="form-group col-md-1 text-right" style="padding-left: 190px">
+                    <div class="form-group col-md-1 text-right" style="padding-left: 190px; margin-top: -5px;">
                         <button type="button" class="btn btn-danger duplicate" onclick="setStockTicket()" id="changeStatusButton" name="changeStatusButton" ${disabled}>
                             <span id="SpanDisableVoid" class="glyphicon glyphicon-remove" ></span> Change Status
                         </button>
                     </div> 
-                    <div class="row" style="padding: 50px 0px 0px 30px">
+                    <div class="row" style="padding: 50px 0px 0px 30px; margin-top: -5px;">
                         <font style="color: red" id="alertCheckbox"></font>
                     </div>
                     <input type="hidden"  id="ticketListSize" name="ticketListSize" value="${requestScope['ticketListSize']}"/>
@@ -747,6 +773,72 @@
     </div><!-- /.modal-dialog -->
 </div>
 
+<div class="modal fade" id="ProductModalStock" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Product</h4>
+            </div>
+            <div class="modal-body">
+                <!--Airline List Table-->
+                <table class="display" id="ProductStockTable">
+                    <thead>
+                        <script>
+                            stock = [];                      
+                        </script>
+                        <tr class="datatable-header">
+                            <th class="hidden">ID</th>
+                            <th class="">Code</th>
+                            <th class="">Name</th>
+                            <th class="">Detail</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach var="table" items="${stockList}">
+                            <tr onclick ="setupproductvaluestock('${table.id}', '${table.code}', '${table.name}' , '${booktype}');" >
+                                <td class="hidden">${table.id}</td>
+                                <td>${table.code} </td>
+                                <c:set var="name1" value="${table.name}"/>
+                                <c:set var="name2" value="${fn:replace(name1, '\\\\', '')}" />
+                                <td>${name2}</td>
+                                <c:set var="description1" value="${table.description}"/>
+                                <c:set var="description2" value="${fn:replace(description1, '\\\\', '')}" />
+                                <td>${description2} </td>
+                            </tr>
+                            <script>
+                            stock.push({id: "${table.id}",code: "${table.code}",name: "${table.name}"});
+                            </script>
+                        </c:forEach>
+
+                    </tbody>
+
+                </table>
+                <!--Script Airline List Table-->
+                <script type="text/javascript" charset="utf-8">
+                    $(document).ready(function() {
+                        var tableStock = $('#ProductStockTable').dataTable({bJQueryUI: true,
+                            "sPaginationType": "full_numbers",
+                            "bAutoWidth": false,
+                            "bFilter": true,
+                            "bPaginate": true,
+                            "bInfo": false,
+                            "bLengthChange": false,
+                            "iDisplayLength": 10,
+                            "aaSorting": [[ 1, "asc" ]]
+                        });
+                    });
+                </script>
+
+            </div>
+            <div class="modal-footer">
+                <div class="text-right">
+                    <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
 
 <div class="modal fade" id="AgentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">

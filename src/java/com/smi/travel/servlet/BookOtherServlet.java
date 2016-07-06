@@ -32,6 +32,7 @@ public class BookOtherServlet implements AbstractAJAXServlet {
         String agentId = request.getParameter("agentId");
         String price = request.getParameter("price");
         String name = request.getParameter("name");
+        String otherId = request.getParameter("otherId");
         
         System.out.print("set parameter mapping");
         Map result = new HashMap();
@@ -45,6 +46,7 @@ public class BookOtherServlet implements AbstractAJAXServlet {
         result.put("agentId", agentId);
         result.put("price", price);
         result.put("name", name);
+        result.put("otherId",otherId);
         return result;
     }
     

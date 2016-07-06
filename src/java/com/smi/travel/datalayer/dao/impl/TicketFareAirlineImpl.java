@@ -641,6 +641,7 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
              query += " t.ticketType "+queryOperation+" '"+Prefix_Subfix+ticket.getType()+Prefix_Subfix+"'";
              check =1;
         }
+        boolean isINS = false;
         if(checktemp){
             if(!"".equalsIgnoreCase(ticketfareid)){
                 if(check == 1){query += " and ";}
@@ -651,6 +652,12 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
                     if(check == 1){query += " and ";}
                     query += " t.Master.referenceNo = "+ticket.getReferenceNo();
                     check =1;
+                
+                } else if((ticket.getInvoiceNo()!= null) &&(!"".equalsIgnoreCase(ticket.getInvoiceNo()))){
+                    if(check == 1){query += " and ";}
+                    query += " t.remark = '"+ticket.getInvoiceNo()+"'";
+                    check =1;
+                    isINS = true;
                 }
   
             }
@@ -734,6 +741,8 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
                 List<TicketFareInvoice> ticketFareInvoices = new ArrayList<TicketFareInvoice>(listAirline.get(i).getTicketFareInvoices());
                 if(ticketFareInvoices != null && ticketFareInvoices.size() != 0 ){
                     ticketFareView.setInvoiceNo(ticketFareInvoices.get(0).getInvoice() != null ? ticketFareInvoices.get(0).getInvoice().getInvNo() : "");
+                } else if(isINS) {
+                    ticketFareView.setInvoiceNo(ticket.getInvoiceNo());
                 }
                 ticketFareView.setDepartment(listAirline.get(i).getDepartment());
                 ticketFareView.setFare(listAirline.get(i).getTicketFare());

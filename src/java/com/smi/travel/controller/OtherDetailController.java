@@ -12,6 +12,7 @@ import com.smi.travel.datalayer.entity.Product;
 import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.service.BookingOtherService;
 import com.smi.travel.datalayer.service.PassengerService;
+import com.smi.travel.datalayer.service.StockService;
 import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.datalayer.view.entity.BillableView;
 import com.smi.travel.datalayer.view.entity.OtherTicketView;
@@ -42,9 +43,11 @@ public class OtherDetailController extends SMITravelController {
     private static final String ISBILLSTATUS = "IsBillStatus";
     private static final String EnableSave = "EnableSave";
     private static final String PASSENGERID = "passengerId";
+    private static final String STOCKLIST = "stockList";
     private UtilityService utilservice;
     private BookingOtherService OtherService;
     private PassengerService passsengerService;
+    private StockService stockService;
     private UtilityFunction util;
 
     @Override
@@ -88,6 +91,9 @@ public class OtherDetailController extends SMITravelController {
         String counter = request.getParameter("counter");
         String memo = request.getParameter("memo");
         String resultsave = request.getParameter("resultsave");
+        String productStockId = request.getParameter("product_id_stock");
+        String productStockCode = request.getParameter("product_code_stock");
+        String productStockName = request.getParameter("product_name_stock");
                          
         SystemUser user = (SystemUser) session.getAttribute("USER");
         
@@ -203,6 +209,9 @@ public class OtherDetailController extends SMITravelController {
             }
             if(!"".equalsIgnoreCase(otherdateTo)){
                 Other.setOtherDateTo(util.convertStringToDate(otherdateTo));
+            }
+            if(!"".equalsIgnoreCase(productStockId)){
+                Other.setStockId(Integer.parseInt(productStockId));
             }
             if(Other.getId() != null){
                 saveHistoryBooking(refno,user,Other,"UPDATE");
@@ -386,6 +395,7 @@ public class OtherDetailController extends SMITravelController {
             status = Other.getStatus().getId();
             createdate = String.valueOf(Other.getCreateDate());
             isbill = String.valueOf(Other.getIsBill());
+            productStockId = Other.getStockId() != null ? String.valueOf(Other.getStockId()) : "";
             request.setAttribute("currency", currency);
             request.setAttribute("currencycost", currencycost);
             getTicket(request, Other.getId());
@@ -442,11 +452,13 @@ public class OtherDetailController extends SMITravelController {
         request.setAttribute("remark", remark);
         request.setAttribute("memo", memo);
         request.setAttribute("createby", createby);
-        request.setAttribute("createdate", createdate);       
+        request.setAttribute("createdate", createdate);
+        request.setAttribute("productStockId", productStockId);   
         request.setAttribute(PRODUCTLIST, OtherService.getListMasterProductWithBookType(BookType));
         request.setAttribute(AGENTLIST, utilservice.getListAgent());
         List<MCurrency> mCurrency = utilservice.getListMCurrency();
         request.setAttribute(CurrencyList, mCurrency);
+        request.setAttribute(STOCKLIST, stockService.getListStockProduct());
         System.out.println("OtherController");
         if(("2").equals(String.valueOf(master.getFlagOther()))) {
             request.setAttribute(LockUnlockBooking,2);
@@ -531,5 +543,13 @@ public class OtherDetailController extends SMITravelController {
 
     public void setPasssengerService(PassengerService passsengerService) {
         this.passsengerService = passsengerService;
+    }
+
+    public StockService getStockService() {
+        return stockService;
+    }
+
+    public void setStockService(StockService stockService) {
+        this.stockService = stockService;
     }
 }

@@ -34,6 +34,22 @@ function setupproductvalue(id, code, name, booktype) {
 
 }
 
+function setupproductvaluestock(id, code, name, booktype) {
+    $('#ProductModalStock').modal('hide');
+    document.getElementById('product_id_stock').value = id;
+    document.getElementById('product_code_stock').value = code;
+    document.getElementById('product_name_stock').value = name;
+    document.getElementById('product_code_stock').focus();
+    
+    var product_id = document.getElementById('product_id_stock').value;
+    var product_code = document.getElementById('product_code_stock').value;
+
+    if (product_id !== '' && product_code !== '') {
+        getvalueStock(id);
+    } 
+}
+
+
 function setupagentvalue(id, code, name) {
     $('#AgentModal').modal('hide');
     document.getElementById('agent_id').value = id;
@@ -67,7 +83,7 @@ function setupotherdatevalue(booktype) {
 
 $(document).ready(function() {
     
-    checkStock()
+    checkStock();
     var codeProduct = [];
     $.each(product, function(key, value) {
         codeProduct.push(value.code);
@@ -138,6 +154,89 @@ $(document).ready(function() {
         if (keyCode == 9) {
             if ($('#product_code').val() != '') {
                 getvalueProduct('product', $('#bookingtype').val());
+            }
+
+        }
+    });
+    
+    getStock();
+    var codeStock = [];
+    $.each(stock, function(key, value) {
+        codeStock.push(value.code);
+        if (!(value.name in codeStock)) {
+            if (value.code !== value.name) {
+                codeStock.push(value.name);
+            }
+        }
+    });
+    
+    $("#product_code_stock").focusout(function() {
+        var productIdStock = $("#product_id_stock").val();
+        var productCodeStock = $("#product_code_stock").val();
+        if(productCodeStock !== '') getvalueStock(productIdStock);
+    });
+    
+    $("#product_code_stock").autocomplete({
+        source: codeStock,
+        close: function(event, ui) {
+            $("#product_code_stock").trigger('keyup');
+        }
+    });
+    $("#product_code_stock").on('keyup', function() {
+        var position = $(this).offset();
+        $(".ui-widget").css("top", position.top + 30);
+        $(".ui-widget").css("left", position.left);
+        $("#product_id_stock").val(null);
+        var code = this.value.toUpperCase();
+        var name = this.value;
+        $.each(stock, function(key, value) {
+            if (value.code.toUpperCase() === code && code.length > 1) {
+                $("#product_id_stock").val(value.id);
+                $("#product_name_stock").val(value.name);
+            }
+            if (name === value.name && name.length > 1) {
+                $("#product_code_stock").val(value.code);
+                $("#product_name_stock").val(value.name);
+                $("#product_id_stock").val(value.id);
+                code = $("#product_code_stock").val().toUpperCase();
+
+            }
+            if(code === ''){
+                $("#product_id_stock").val('');
+                $("#product_code_stock").val('');
+                $("#product_name_stock").val('');
+            }
+        });
+
+        var code = event.keyCode || event.which;
+
+        if (code == 13) {
+//            getvalueProduct('product', $('#bookingtype').val());
+        }
+
+    });
+
+    $("#product_code_stock").on('blur', function() {
+        var delay = 500;//1 seconds
+        setTimeout(function() {
+            $.each(stock, function(key, value) {
+                if ($("#product_code_stock").val() == value.code) {
+                    $("#product_id_stock").val(value.id);
+                    $("#product_name_stock").val(value.name);
+//                    getvalueProduct('product', $('#bookingtype').val());
+                }
+            });
+
+        }, delay);
+
+    });
+
+    $("#product_code_stock").on('keyup', function(e) {
+        var keyCode = e.keyCode || e.which;
+
+        if (keyCode == 9) {
+            if ($('#product_code_stock').val() != '') {
+//                getvalueProduct('product', $('#bookingtype').val());
             }
 
         }
@@ -252,6 +351,19 @@ function setTodayDate(){
     }
 }
 
+function getvalueStock(id){
+    var servletName = 'BookOtherServlet';
+    var servicesName = 'AJAXBean';
+    var otherId = $("#itemid").val();
+    var param = 'action=' + 'text' +
+            '&servletName=' + servletName +
+            '&servicesName=' + servicesName +
+            '&productid=' + id +
+            '&otherId=' + otherId +
+            '&type=' + 'getvalueStock';
+    CallAjaxStock(param);
+}
+
 function getvalueProduct(order, booktype) {
     $("#btnCheckStock").addClass("disabled");
     var product_code = document.getElementById('product_code').value;
@@ -363,6 +475,77 @@ function returnvat(input) {
         return null;
     }
 }
+
+function CallAjaxStock(param) {
+    var url = 'AJAXServlet';
+    try {
+        $.ajax({
+            type: "POST",
+            url: url,
+            cache: false,
+            data: param,
+            success: function(msg) {
+                if(msg !== 'fail'){
+                    var result = msg.split("//");
+                    $('#TicketTable').dataTable().fnClearTable();
+                    $('#TicketTable').dataTable().fnDestroy();
+                    $("#TicketTable tbody").empty().append(result[0]);
+                    var table = $('#TicketTable').dataTable({bJQueryUI: true,
+                        "bJQueryUI": true,
+                        "sPaginationType": "full_numbers",
+                        "bAutoWidth": false,
+                        "bFilter": false,
+                        "bInfo": true,
+                        "bSort": false
+
+                    });
+                    $('#TicketTable tbody').on('click', 'tr', function() {
+                        if ($(this).hasClass('row_selected')) {
+                            $(this).removeClass('row_selected');
+                            $('#hdGridSelected').val('');
+                        }
+                        else {
+                            table.$('tr.row_selected').removeClass('row_selected');
+                            $(this).addClass('row_selected');
+                            $('#hdGridSelected').val($('#TicketTable tbody tr.row_selected').attr("id"));
+                        }
+                    });
+                    $("#ticketListSize").val(result[1]);
+                
+                } else if(msg === 'fail') {
+                    $('#TicketTable').dataTable().fnClearTable();
+                    $('#TicketTable').dataTable().fnDestroy();
+                    var table = $('#TicketTable').dataTable({bJQueryUI: true,
+                        "bJQueryUI": true,
+                        "sPaginationType": "full_numbers",
+                        "bAutoWidth": false,
+                        "bFilter": false,
+                        "bInfo": true,
+                        "bSort": false
+
+                    });
+                    $('#TicketTable tbody').on('click', 'tr', function() {
+                        if ($(this).hasClass('row_selected')) {
+                            $(this).removeClass('row_selected');
+                            $('#hdGridSelected').val('');
+                        }
+                        else {
+                            table.$('tr.row_selected').removeClass('row_selected');
+                            $(this).addClass('row_selected');
+                            $('#hdGridSelected').val($('#TicketTable tbody tr.row_selected').attr("id"));
+                        }
+                    });
+                    $("#ticketListSize").val(0);
+                }
+            }, error: function(msg) {
+                //alert('error');
+            }
+        });
+    } catch (e) {
+        alert(e);
+    }
+}
+
 function CallAjaxCheckStock(param) {
     var url = 'AJAXServlet';
     try {
@@ -385,6 +568,29 @@ function CallAjaxCheckStock(param) {
                             '</tr>'
                             );
                     $("#btnCheckStock").removeClass("disabled");
+                    if($("#product_id_stock").val() === ''){
+                        $("#product_id_stock").val($("#product_id").val());
+                        $("#product_code_stock").val($("#product_code").val());
+                        $("#product_name_stock").val($("#product_name").val());
+                    }
+                    getvalueStock($("#product_id").val());
+                } else {
+                    $('#TicketTable').dataTable().fnClearTable();
+                    $('#TicketTable').dataTable().fnDestroy();
+                    var table = $('#TicketTable').dataTable({bJQueryUI: true,
+                        "bJQueryUI": true,
+                        "sPaginationType": "full_numbers",
+                        "bAutoWidth": false,
+                        "bFilter": false,
+                        "bInfo": true,
+                        "bSort": false
+                    });
+                    if($("#product_id_stock").val() === ''){
+                        $("#product_id_stock").val('');
+                        $("#product_code_stock").val('');
+                        $("#product_name_stock").val('');
+                    }
+                    getvalueStock($("#product_id").val());
                 }
             }, error: function(msg) {
                 //alert('error');
@@ -589,7 +795,7 @@ function cancelStockTicket() {
     var check = 0;
     for (var i = 1; i < row; i++) {
         var selectAll = document.getElementById("selectAll" + i);
-        if (selectAll !== null && selectAll !== '') {
+        if (selectAll !== null && selectAll !== '') {           
             if (document.getElementById("selectAll" + i).checked) {
                 check++;
             }
@@ -633,12 +839,13 @@ function selectAll() {
     var row = parseInt($('#ticketListSize').val())+1;
     var check = 0;
     var unCheck = 0;
+
     for (var i = 1; i < row; i++) {
         var selectAll = document.getElementById("selectAll" + i);
         if (selectAll !== null && selectAll !== '') {
-            if (document.getElementById("selectAll" + i).checked) {
+            if (document.getElementById("selectAll" + i).checked && !$("#selectAll" + i).is(':disabled')) {
                 check++;
-            } else {
+            } else if(!$("#selectAll" + i).is(':disabled')){
                 unCheck++;
             }
         }
@@ -651,7 +858,7 @@ function selectAll() {
                 if (document.getElementById("selectAll" + i).checked) {
 
                 } else {
-                    document.getElementById("selectAll" + i).checked = true;
+                    document.getElementById("selectAll" + i).checked = $("#selectAll" + i).is(':disabled') ? false : true;
                 }
             }
         }
@@ -673,7 +880,7 @@ function selectAll() {
                 if (document.getElementById("selectAll" + i).checked) {
 
                 } else {
-                    document.getElementById("selectAll" + i).checked = true;
+                    document.getElementById("selectAll" + i).checked = $("#selectAll" + i).is(':disabled') ? false : true;
 
                 }
             }
@@ -696,7 +903,7 @@ function selectAll() {
                 if (document.getElementById("selectAll" + i).checked) {
 
                 } else {
-                    document.getElementById("selectAll" + i).checked = true;
+                    document.getElementById("selectAll" + i).checked = $("#selectAll" + i).is(':disabled') ? false : true;
                 }
             }
         }
@@ -759,6 +966,18 @@ function printOther(){
     }else{
         window.open("report.smi?name=OtherVouncherEmail&otherId=" + otherId + "&passengerId=" + passengerId + "&refNo=" + InputRefNo + "&comfirm="+status);
     }
+}
+
+function getStock(){
+    var stockId = $("#product_id_stock").val();
+    for(var i = 0; i < stock.length; i++){
+        if(stockId === stock[i].id){
+            $("#product_code_stock").val(stock[i].code);
+            $("#product_name_stock").val(stock[i].name);
+            i = stock.length;
+        }
+    }
+    getvalueStock(stockId);
 }
 
 

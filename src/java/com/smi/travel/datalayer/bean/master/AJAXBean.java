@@ -30,6 +30,7 @@ import com.smi.travel.datalayer.dao.ProductDetailDao;
 import com.smi.travel.datalayer.dao.ReceiptDao;
 import com.smi.travel.datalayer.dao.ReceiveTableDao;
 import com.smi.travel.datalayer.dao.RefundAirticketDao;
+import com.smi.travel.datalayer.dao.StockDao;
 import com.smi.travel.datalayer.dao.TaxInvoiceDao;
 import com.smi.travel.datalayer.dao.TicketFareAirlineDao;
 import com.smi.travel.datalayer.dao.TransferJobDao;
@@ -73,6 +74,7 @@ import com.smi.travel.datalayer.view.entity.BookingOutboundView;
 import com.smi.travel.datalayer.view.entity.CheckDuplicateUser;
 import com.smi.travel.datalayer.view.entity.CustomerAgentInfo;
 import com.smi.travel.datalayer.view.entity.OtherBookingView;
+import com.smi.travel.datalayer.view.entity.OtherTicketView;
 import com.smi.travel.datalayer.view.entity.PaymentOutboundInvSummaryView;
 import com.smi.travel.datalayer.view.entity.PaymentTourCommissionView;
 import com.smi.travel.datalayer.view.entity.TicketAircommissionView;
@@ -160,6 +162,7 @@ public class AJAXBean extends AbstractBean implements
     private PaymentStockDao paymentStockDao;
     private CheckDuplicateUserDao checkDuplicateUserDao;
     private MExchangeRateDao mExchangeRateDao;
+    private StockDao stockDao;
     
     public AJAXBean(List queryList) {
         super(queryList);
@@ -227,6 +230,8 @@ public class AJAXBean extends AbstractBean implements
                     checkDuplicateUserDao = (CheckDuplicateUserDao) obj;
                 } else if (obj instanceof MExchangeRateDao) {
                     mExchangeRateDao = (MExchangeRateDao) obj;
+                } else if (obj instanceof StockDao) {
+                    stockDao = (StockDao) obj;
                 }
             }
         }
@@ -449,6 +454,16 @@ public class AJAXBean extends AbstractBean implements
                 System.out.println(" agentId :: "+ agentId);
                 System.out.println(" price :: "+ price);
                 result = otherBookingDao.getAgentCommission(otherDate, row, agentId,price);
+            }
+            if("getvalueStock".equalsIgnoreCase(type)){
+                String productId = map.get("productid").toString();
+                String otherId = map.get("otherId").toString();
+                List<OtherTicketView> otherTicketViewList = stockDao.getStockByProductId(productId,otherId);
+                if(otherTicketViewList != null){
+                    result = buildStockToHTML(otherTicketViewList);
+                } else {
+                    result = "fail";
+                }
             }
         } else if (BOOKLAND.equalsIgnoreCase(servletName)) {
             //result = customerdao.isExistCustomer(initialID, first, last);
@@ -3610,4 +3625,42 @@ public class AJAXBean extends AbstractBean implements
         }
         return htmlList.toString();
     }       
+
+    private String buildStockToHTML(List<OtherTicketView> otherTicketViewList) {
+        StringBuffer html = new StringBuffer();
+        SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy", new Locale("us", "us"));
+        int count = 1;
+        for(OtherTicketView a : otherTicketViewList){
+            String id = a.getId();
+            String ticketCode = a.getTicketCode();
+            String typeName = a.getTypeName();
+            Date date = a.getAddDate();
+            String addDate = (date != null ? sf.format(date) : "");
+            String disabled = ("".equalsIgnoreCase(addDate) ? "disabled" : "");
+            String status = a.getStatus();
+            if("REFUND".equalsIgnoreCase(status)) status = "<font style='color: red;'>" + status + "</font>";
+            
+            String newrow
+                    = "<tr>"
+                    + "<td class='hidden'>"
+                    + "<input type='hidden' class='form-control' name='stockticketid" + count + "' id='stockticketid" + count + "' value='" + id + "'>"
+                    + "</td>"
+                    + "<td align='center'>"
+                    + "<input type='checkbox' class='form-control' name='selectAll" + count + "' id='selectAll" + count + "' value='1' onclick='removeAlertCheckbox();setSelectCheckBox('" + count + "');' " + disabled + ">"
+                    + "</td>"
+                    + "<td align='center'>" + count + "</td>"
+                    + "<td align='center'>" + addDate + "</td>"
+                    + "<td align='center'>" + ticketCode + "</td>"
+                    + "<td class='center'>" + typeName + "</td>"
+                    + "<td class='center'>" + status + "</td>"
+                    + "</tr>";
+            
+            count += 1;
+            html.append(newrow);
+        }
+        String countRow = "//" + count;
+        html.append(countRow);
+        
+        return html.toString();
+    }
 }
