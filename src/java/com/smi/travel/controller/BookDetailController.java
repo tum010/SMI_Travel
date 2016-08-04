@@ -230,7 +230,7 @@ public class BookDetailController extends SMITravelController {
 
             setMasterNumberPassenger(request, dbMaster);
             List<SystemUser> users = bookingDetailService.getSystemUserDao().searchSystemUser(user, 1);
-            dbMaster.setStaff(users.get(0));
+//            dbMaster.setStaff(users.get(0));
             dbMaster.setRevisedBy(users.get(0).getUsername());
             dbMaster.setRevisedDate(new Date());
             dbMaster.setCurrency(currency);
