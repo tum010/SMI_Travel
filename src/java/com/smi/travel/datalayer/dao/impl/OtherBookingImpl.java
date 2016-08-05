@@ -1015,7 +1015,7 @@ public class OtherBookingImpl implements OtherBookingDao{
         }
         
         query += "  GROUP BY ot.guide_id ";     
-        query += "  having  sum(ifnull(ot.guide_commission,0))  <> 0 ";
+        query += "  having  sum(ifnull(ot.guide_commission,0))  <> 0  order by ot.other_date ";
         System.out.println("query : "+ query);
         List<Object[]> QueryGuideComList = session.createSQLQuery(query)
                 .addScalar("name", Hibernate.STRING)
@@ -1161,6 +1161,7 @@ public class OtherBookingImpl implements OtherBookingDao{
                  query += " gc.id = "+agentid;
             }
         }
+        query += " order by gc.otherdate ";
         List<Object[]> QueryAgentComList = session.createSQLQuery(query)
                 .addScalar("otherdate", Hibernate.DATE)
                 .addScalar("code", Hibernate.STRING)
@@ -1233,6 +1234,8 @@ public class OtherBookingImpl implements OtherBookingDao{
         " ( " +
         " sum(`ot`.`agent_commission`) <> 0 " +
         " )";
+        
+        query += " order by  ot.other_date  ";
         System.out.println("sql :" +query);
         List<Object[]> QueryAgentComSummaryList = session.createSQLQuery(query)
                 .addScalar("code", Hibernate.STRING)

@@ -147,7 +147,7 @@ public class GuideCommissionReportImpl implements GuideCommissionReportDao{
             query += " and  st.id = "+guideid;
         }
         query += " GROUP BY  `st`.`id`";
-        query += " ORDER BY `st`.name ";
+        query += " ORDER BY `st`.name , db.tour_date ";
         System.out.println("query : "+ query);
         List<Object[]> QueryGuideComList = session.createSQLQuery(query)
                 .addScalar("guide", Hibernate.STRING)
