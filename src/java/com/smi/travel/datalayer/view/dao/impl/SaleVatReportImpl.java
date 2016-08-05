@@ -241,29 +241,24 @@ public class SaleVatReportImpl implements SaleVatReportDao{
         int countWendy = 0;
         int countOutbound = 0;
         int countInbound = 0;
+        int countWendyOutbound = 0;
         for (Object[] B : QueryList){
             OutputTaxView otv = new OutputTaxView();
             
-            if("".equalsIgnoreCase(departmentTemp) || !departmentTemp.equalsIgnoreCase(util.ConvertString(B[8]))){
-                orderNo = "0001";
-            }else{
-                int running = Integer.parseInt(orderNo) + 1;
-                String temp = String.valueOf(running);
-                for (int i = temp.length(); i < 4; i++) {
-                    temp = "0" + temp;
-                }
-                orderNo = temp;
-            }
-            
             if("Wendy".equalsIgnoreCase(util.ConvertString(B[8]))){
+                orderNo = generateOrderNo(countWendyOutbound);
                 departmentTemp = "Wendy" ;
                 countWendy++;
+                countWendyOutbound++;
             }
             if("Outbound".equalsIgnoreCase(util.ConvertString(B[8]))){
+                orderNo = generateOrderNo(countWendyOutbound);
                 departmentTemp = "Outbound" ;
                 countOutbound++;
+                countWendyOutbound++;
             }
             if("Inbound".equalsIgnoreCase(util.ConvertString(B[8]))){
+                orderNo = generateOrderNo(countInbound);
                 departmentTemp = "Inbound" ;
                 countInbound++;
             }
@@ -311,5 +306,21 @@ public class SaleVatReportImpl implements SaleVatReportDao{
         this.sessionFactory.close();
         session.close();
         return data;
+    }
+
+    private String generateOrderNo(int count) {
+        String orderNo = "";
+        if(count == 0){
+            orderNo = "0001";
+        }else{
+            int running = count + 1;
+            String temp = String.valueOf(running);
+            for (int i = temp.length(); i < 4; i++) {
+                temp = "0" + temp;
+            }
+            orderNo = temp;
+        }
+        
+        return orderNo;
     }
 }
