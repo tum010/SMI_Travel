@@ -16,6 +16,7 @@ import com.smi.travel.datalayer.view.entity.BookingLandSummaryView;
 import com.smi.travel.datalayer.view.entity.BookingOtherSummaryView;
 import com.smi.travel.datalayer.view.entity.BookingPackageSummaryView;
 import com.smi.travel.datalayer.view.entity.BookingView;
+import com.smi.travel.datalayer.view.entity.BookingViewMin;
 import com.smi.travel.util.UtilityFunction;
 import java.util.ArrayList;
 import java.util.Date;
@@ -35,8 +36,20 @@ public class BookingViewImpl implements BookingViewDao{
     private SessionFactory sessionFactory;
     private static final int MAX_ROW = 200;
     @Override
-    public List<BookingView> getBookingList(String refno,String passFirst,String passLast,String username,String departmentID,String Bookdate,String status,String pnr,String ticketNo,String payBy, String bankTransfer, String transferDateFrom, String transferDateTo) {
-        String query = "from BookingView book where ";
+    public List<BookingView> getBookingList(String refno,String passFirst,String passLast,String username,String departmentID,
+            String Bookdate,String status,String pnr,String ticketNo,String payBy, String bankTransfer, String transferDateFrom, String transferDateTo) {
+        
+        String query = "";
+        boolean isBookingViewMin = false;
+        if((pnr == null || "".equals(pnr)) && (ticketNo == null || "".equals(ticketNo)) && (payBy == null || "".equals(payBy)) && (bankTransfer == null || "".equals(bankTransfer)) 
+                && (transferDateFrom == null || "".equals(transferDateFrom)) && (transferDateTo == null || "".equals(transferDateTo))){
+            query = "from BookingViewMin book where ";
+            isBookingViewMin = true;
+        
+        } else {
+            query = "from BookingView book where ";
+        }
+        
         String subquery = " book.refno in (select master.referenceNo from Passenger p ";
         Session session = this.sessionFactory.openSession();
         int check = 0;
@@ -138,11 +151,24 @@ public class BookingViewImpl implements BookingViewDao{
        // List<BookingView> BookingList = session.createQuery(query).list();
         Query HqlQuery = session.createQuery(query);
         HqlQuery.setMaxResults(MAX_ROW);
-        List<BookingView> BookingList = HqlQuery.list();
         
-        if (BookingList.isEmpty()) {
-            return null;
+        List<BookingView> BookingList = new ArrayList<>();
+        if(isBookingViewMin){
+            List<BookingViewMin> BookingMinList = HqlQuery.list();      
+            if (BookingMinList.isEmpty()) {
+                return null;
+            }         
+            for(BookingViewMin A : BookingMinList){
+                BookingList.add((mappingBookingViewMinToBookingView(A)));
+            }
+                      
+        } else {
+            BookingList = HqlQuery.list();      
+            if (BookingList.isEmpty()) {
+                return null;
+            }
         }
+        
         return BookingList;
     }
 
@@ -684,6 +710,30 @@ public class BookingViewImpl implements BookingViewDao{
         this.sessionFactory.close();
         session.close();
         return bookingLandSummaryViewList;
+    }
+
+    private BookingView mappingBookingViewMinToBookingView(BookingViewMin bookingViewMin) {
+        BookingView bookingView = new BookingView();
+        bookingView.setRefno(bookingViewMin.getRefno() != null && !"".equals(bookingViewMin.getRefno()) ? bookingViewMin.getRefno() : "");
+        bookingView.setAgentCode(bookingViewMin.getAgentCode() != null && !"".equals(bookingViewMin.getAgentCode()) ? bookingViewMin.getAgentCode() : "");
+        bookingView.setLeaderName(bookingViewMin.getLeaderName() != null && !"".equals(bookingViewMin.getLeaderName()) ? bookingViewMin.getLeaderName() : "");
+        bookingView.setStatusName(bookingViewMin.getStatusName() != null && !"".equals(bookingViewMin.getStatusName()) ? bookingViewMin.getStatusName() : "");
+        bookingView.setPnr(bookingViewMin.getPnr() != null && !"".equals(bookingViewMin.getPnr()) ? bookingViewMin.getPnr() : "");
+        bookingView.setHotelName(bookingViewMin.getHotelName() != null && !"".equals(bookingViewMin.getHotelName()) ? bookingViewMin.getHotelName() : "");
+        bookingView.setCreateDate(bookingViewMin.getCreateDate() != null ? bookingViewMin.getCreateDate() : null);
+        bookingView.setCreateBy(bookingViewMin.getCreateBy() != null && !"".equals(bookingViewMin.getCreateBy()) ? bookingViewMin.getCreateBy() : "");
+        bookingView.setDepartmentName(bookingViewMin.getDepartmentName() != null && !"".equals(bookingViewMin.getDepartmentName()) ? bookingViewMin.getDepartmentName() : "");
+        bookingView.setDepartmentId(bookingViewMin.getDepartmentId() != null && !"".equals(bookingViewMin.getDepartmentId()) ? bookingViewMin.getDepartmentId() : "");
+        bookingView.setStatusId(bookingViewMin.getStatusId() != null && !"".equals(bookingViewMin.getStatusId()) ? bookingViewMin.getStatusId() : "");
+        bookingView.setTel(bookingViewMin.getTel() != null && !"".equals(bookingViewMin.getTel()) ? bookingViewMin.getTel() : "");
+        bookingView.setRemark(bookingViewMin.getRemark() != null && !"".equals(bookingViewMin.getRemark()) ? bookingViewMin.getRemark() : "");
+        bookingView.setEmail(bookingViewMin.getEmail() != null && !"".equals(bookingViewMin.getEmail()) ? bookingViewMin.getEmail() : "");
+        bookingView.setTicketNo(bookingViewMin.getTicketNo() != null && !"".equals(bookingViewMin.getTicketNo()) ? bookingViewMin.getTicketNo() : "");
+        bookingView.setPayBy(bookingViewMin.getPayBy() != null && !"".equals(bookingViewMin.getPayBy()) ? bookingViewMin.getPayBy() : "");
+        bookingView.setAccId(bookingViewMin.getAccId() != null && !"".equals(bookingViewMin.getAccId()) ? bookingViewMin.getAccId() : "");
+        bookingView.setTourCode(bookingViewMin.getTourCode() != null && !"".equals(bookingViewMin.getTourCode()) ? bookingViewMin.getTourCode() : "");
+        
+        return bookingView;
     }
    
 }
