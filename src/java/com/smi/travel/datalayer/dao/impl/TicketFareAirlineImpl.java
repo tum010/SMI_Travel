@@ -17,9 +17,7 @@ import com.smi.travel.datalayer.entity.Invoice;
 import com.smi.travel.datalayer.entity.InvoiceDetail;
 import com.smi.travel.datalayer.entity.MAirlineAgent;
 import com.smi.travel.datalayer.entity.MInitialname;
-import com.smi.travel.datalayer.entity.MRunningCode;
 import com.smi.travel.datalayer.entity.PaymentAirticketFare;
-import com.smi.travel.datalayer.entity.PaymentAirticketRefund;
 import com.smi.travel.datalayer.entity.RefundAirticketDetail;
 import com.smi.travel.datalayer.entity.TicketFareAirline;
 import com.smi.travel.datalayer.entity.TicketFareInvoice;
@@ -35,7 +33,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
-import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -1106,8 +1103,8 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         List<InvoiceDetailView> invoiceDetailViewList = new ArrayList<InvoiceDetailView>();
         System.out.println("ticketNo : "+ticketNo);
         String AirticketPassengerQuery  = "from AirticketPassenger pass where pass.series1||pass.series2||pass.series3 = :ticketNo";
-        String InvoiceDetailQuery  = "from InvoiceDetail invd where invd.billableDesc.billable.master.id = :masterId and invd.billableDesc.MBilltype.name = 'Air Ticket' GROUP BY invd.invoice.id";
-        String InvDetailQuery  = "from InvoiceDetail invd where  invd.invoice.id = :invoiceId";
+        String InvoiceDetailQuery  = "from InvoiceDetail invd where invd.billableDesc.billable.master.id = :masterId and invd.billableDesc.MBilltype.name = 'Air Ticket' and invd.invoice.MFinanceItemstatus.id <> 2 GROUP BY invd.invoice.id";
+        String InvDetailQuery  = "from InvoiceDetail invd where  invd.invoice.id = :invoiceId and invd.invoice.MFinanceItemstatus.id <> 2 ";
         Session session = this.sessionFactory.openSession();
         List<AirticketPassenger> airticketPassList = session.createQuery(AirticketPassengerQuery).setParameter("ticketNo", ticketNo).list();
         
@@ -1158,7 +1155,7 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
             if(!"".equalsIgnoreCase(masterId)){
                 masterId = masterId.substring(1);
                 System.out.println(" masterId " + masterId);
-                invoiceDetailList = session.createQuery("from InvoiceDetail invd where invd.billableDesc.billable.master.id in ("+masterId+") and invd.billableDesc.MBilltype.name = 'Air Ticket' GROUP BY invd.invoice.id").list();
+                invoiceDetailList = session.createQuery("from InvoiceDetail invd where invd.billableDesc.billable.master.id in ("+masterId+") and invd.billableDesc.MBilltype.name = 'Air Ticket' and invd.invoice.MFinanceItemstatus.id <> 2 GROUP BY invd.invoice.id").list();
             }
         }
         
@@ -1235,7 +1232,7 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
     public String getListTicketFareFromInvno(String invNo) {
         String result ="";
         System.out.println(" invNo ::: "+invNo);
-        String query = " From InvoiceDetail inv where inv.invoice.invNo = :invNo and inv.billableDesc.MBilltype.id = 1";
+        String query = " From InvoiceDetail inv where inv.invoice.invNo = :invNo and inv.billableDesc.MBilltype.id = 1 and invd.invoice.MFinanceItemstatus.id <> 2 ";
         Session session = this.sessionFactory.openSession();
         List<InvoiceDetail> invoiceDetails = session.createQuery(query).setParameter("invNo", invNo).list();
         System.out.println(" invoiceDetails.size() " + invoiceDetails.size());
@@ -1364,7 +1361,7 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
     public String searchInvoiceFromInvoiceNumber(String invNo) {
         String result = "";
         System.out.println(" invNo ::: " + invNo);
-        String query = " From Invoice inv where inv.invNo = :invNo ";
+        String query = " From Invoice inv where inv.invNo = :invNo and inv.MFinanceItemstatus.id <> 2 ";
         Session session = this.sessionFactory.openSession();
         List<Invoice> invoices = session.createQuery(query).setParameter("invNo", invNo).list();
         System.out.println(" invoices.size() " + invoices.size());
