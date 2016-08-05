@@ -60,12 +60,12 @@ public class AgentCommissionReportImpl implements AgentCommissionReportDao {
         List data = new ArrayList();
         Date thisdate = new Date();
         UtilityFunction util = new UtilityFunction();
-        String sql = AGENTCOM_SUMMARY_QUERY+" where db.tour_date >= '"+datefrom+"' and db.tour_date <= '"+dateto+"'" ;
+        String sql = AGENTCOM_SUMMARY_QUERY+" where db.tour_date >= '"+datefrom+"' and db.tour_date <= '"+dateto+"' " ;
         
         if((agentid != null)&&(!"".equalsIgnoreCase(agentid))){
             sql += " and agt.id ="+agentid;
         }
-        sql += " GROUP BY agt.`code`,agt.`name` HAVING  comission <> 0 ORDER BY `agt`.`name`";
+        sql += " GROUP BY agt.`code`,agt.`name` HAVING  comission <> 0 ORDER BY `agt`.`name` , db.tour_date ";
         System.out.println("sql :" +sql);
         List<Object[]> QueryAgentComSummaryList = session.createSQLQuery(sql)
                 .addScalar("code", Hibernate.STRING)
@@ -96,10 +96,11 @@ public class AgentCommissionReportImpl implements AgentCommissionReportDao {
         List data = new ArrayList();
         Date thisdate = new Date();
         UtilityFunction util = new UtilityFunction();
-        String query ="SELECT * FROM `agent_commission_info` where tourdate >= '"+datefrom+"' and tourdate <= '"+dateto+"'";
+        String query ="SELECT * FROM `agent_commission_info` where tourdate >= '"+datefrom+"' and tourdate <= '"+dateto+"' ";
         if((agentid != null)&&(!"".equalsIgnoreCase(agentid))){
             query += " and agentid = "+agentid;
         }
+        query += " order by tourdate ";
         List<Object[]> QueryAgentComList = session.createSQLQuery(query)
                 .addScalar("tourdate", Hibernate.DATE)
                 .addScalar("tourcode", Hibernate.STRING)
