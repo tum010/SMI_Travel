@@ -887,7 +887,7 @@ public class AccountReportSummary extends AbstractExcelView {
         
         HSSFFont fontTaxNo = wb.createFont();
         fontTaxNo.setFontName("Arial");
-        fontTaxNo.setFontHeightInPoints((short) 12);
+        fontTaxNo.setFontHeightInPoints((short) 11);
         
         HSSFDataFormat currency = wb.createDataFormat();
         // Set align Text
