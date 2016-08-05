@@ -207,6 +207,9 @@
                                         <c:when test="${table.status == 'Normal'}">
                                             <input type="checkbox" class="form-control" id="selectAll${counter.count}" name="selectAll${counter.count}" value="${counter.count}"/>
                                         </c:when>
+                                        <c:when test="${table.status == 'Void'}">
+                                            <input type="checkbox" class="form-control" id="selectAll${counter.count}" name="selectAll${counter.count}" value="${counter.count}"/>
+                                        </c:when>
                                         <c:otherwise>
                                             <input type="checkbox" class="form-control" id="selectAll" name="selectAll" value="" disabled=""/>
                                         </c:otherwise>
