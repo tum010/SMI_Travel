@@ -17,7 +17,6 @@ import com.smi.travel.datalayer.view.entity.ConfirmSlipHeaderReport;
 import com.smi.travel.datalayer.view.entity.OutboundStaffSummaryReport;
 import com.smi.travel.datalayer.view.entity.OutboundStaffSummarySubReport;
 import com.smi.travel.util.UtilityFunction;
-import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -134,8 +133,7 @@ public class BookingSummaryImpl implements BookingSummaryDao{
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
         List data = new ArrayList();
-        
-        String query = "SELECT * FROM `booking_air_summary` a JOIN booking_air_value_summary b ON a.refno = b.ref_no WHERE a.refno = '"+refno+"'";
+        String query = " SELECT * FROM `booking_air_summary_min` a JOIN booking_air_value_summary b ON a.refno = b.ref_no WHERE a.refno = '"+refno+"'";
         
         List<Object[]> QueryStaffList = session.createSQLQuery(query)
                 .addScalar("flight", Hibernate.STRING)

@@ -23,6 +23,7 @@ public class BookingAirSummaryView {
     private String flight;
     private String invoice;
     private String receipt;
+    private String billid;
 
     public String getRefno() {
         return refno;
@@ -118,5 +119,13 @@ public class BookingAirSummaryView {
 
     public void setDepartdate(String departdate) {
         this.departdate = departdate;
+    }
+
+    public String getBillid() {
+        return billid;
+    }
+
+    public void setBillid(String billid) {
+        this.billid = billid;
     }
 }

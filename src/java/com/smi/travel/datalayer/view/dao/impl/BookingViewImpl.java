@@ -20,8 +20,10 @@ import com.smi.travel.datalayer.view.entity.BookingViewMin;
 import com.smi.travel.util.UtilityFunction;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -315,42 +317,41 @@ public class BookingViewImpl implements BookingViewDao{
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
         List<BookingAirSummaryView> bookingAirSummaryViewList = new ArrayList<BookingAirSummaryView>();
-        
-        String query = " SELECT * FROM `booking_air_summary` ";
+//        String query = " SELECT tt.* FROM (SELECT `mt`.`Reference No` AS `refno`, date_format( `mt`.`Create_date`, '%d-%m-%Y' ) AS `refdate`, `agt`.`name` AS `agent`, `GET_LEADER_NAME` (`mt`.`id`) AS `leader`, ( SELECT count(0) FROM `airticket_passenger` `ap` WHERE ( `ap`.`airline_id` = `aa`.`id` )) AS `pax`, `pnr`.`pnr` AS `pnr`, `af`.`des_code` AS `arrv`, `af`.`source_code` AS `dept`, date_format( `af`.`depart_date`, '%d-%m-%Y' ) AS `depart_date`, ( CASE WHEN ( `af`.`depart_time` IS NOT NULL ) THEN concat( substr(`af`.`depart_time`, 1, 2), ':', substr(`af`.`depart_time`, 3, 4)) ELSE NULL END ) AS `depart_time`, date_format( `af`.`arrive_date`, '%d-%m-%Y' ) AS `arrive_date`, ( CASE WHEN ( `af`.`arrive_time` IS NOT NULL ) THEN concat( substr(`af`.`arrive_time`, 1, 2), ':', substr(`af`.`arrive_time`, 3, 4)) ELSE NULL END ) AS `arrive_time`, ( CASE WHEN (( `af`.`filght_class` IS NOT NULL ) AND ( `af`.`sub_flight_class` IS NOT NULL )) THEN concat( `mfli`.`name`, ' (', `af`.`sub_flight_class`, ')' ) ELSE `mfli`.`name` END ) AS `class`, `af`.`flight_no` AS `flight`, `billd`.`id` AS `billid` FROM ((((((( `master` `mt` JOIN `agent` `agt` ON ((`agt`.`id` = `mt`.`Agent_id`))) JOIN `airticket_booking` `ab` ON ((`ab`.`master_id` = `mt`.`id`))) JOIN `airticket_pnr` `pnr` ON (( `pnr`.`booking_id` = `ab`.`id` ))) JOIN `airticket_airline` `aa` ON ((`aa`.`pnr_id` = `pnr`.`id`))) JOIN `airticket_flight` `af` ON (( `af`.`airline_id` = `aa`.`id` ))) LEFT JOIN `billable_desc` `billd` ON ((( `billd`.`ref_item_id` = `aa`.`id` ) AND (`billd`.`bill_type` = 1)))) LEFT JOIN `m_flight` `mfli` ON (( `mfli`.`id` = `af`.`filght_class` )))) tt ";
+        String query = " SELECT tt.* FROM booking_air_summary_min tt ";
         boolean condition = false;
         
         if((bookRefNo != null) && (!"".equalsIgnoreCase(bookRefNo))){
             query += (condition ? " and " : " where ");
-            query += " refno = '" + bookRefNo + "' " ;
+            query += " tt.refno = '" + bookRefNo + "' " ;
             condition = true;
         }
         if((bookLeader != null) &&(!"".equalsIgnoreCase(bookLeader))){
             query += (condition ? " and " : " where ");
-            query += " leader LIKE '%" + bookLeader + "%' " ;
+            query += " tt.leader LIKE '%" + bookLeader + "%' " ;
             condition = true;
         }
         if((bookDate != null) &&(!"".equalsIgnoreCase(bookDate))){
             query += (condition ? " and " : " where ");
-            query += " refdate = '" + bookDate + "' " ;
+            query += " tt.refdate = '" + bookDate + "' " ;
             condition = true;
         }
         if((airPnr != null) &&(!"".equalsIgnoreCase(airPnr))){
             query += (condition ? " and " : " where ");
-            query += " pnr = '" + airPnr + "' " ;
+            query += " tt.pnr = '" + airPnr + "' " ;
             condition = true;
         }
         if((airDeptDate != null) &&(!"".equalsIgnoreCase(airDeptDate))){
             query += (condition ? " and " : " where ");
-            query += " depart_date = '" + airDeptDate + "' " ;
+            query += " tt.depart_date = '" + airDeptDate + "' " ;
             condition = true;
         }
         if((airFlight != null) &&(!"".equalsIgnoreCase(airFlight))){
             query += (condition ? " and " : " where ");
-            query += " flight = '" + airFlight + "' " ;
+            query += " tt.flight = '" + airFlight + "' " ;
             condition = true;
         }       
-        query += " ORDER BY refno DESC ";
-
+        query += " ORDER BY tt.refno DESC ";
         List<Object[]> QueryAir = session.createSQLQuery(query)
                 .addScalar("refno", Hibernate.STRING)
                 .addScalar("refdate", Hibernate.STRING)
@@ -362,10 +363,29 @@ public class BookingViewImpl implements BookingViewDao{
                 .addScalar("arrv", Hibernate.STRING)
                 .addScalar("depart_date", Hibernate.STRING)
                 .addScalar("flight", Hibernate.STRING)
-                .addScalar("invoice", Hibernate.STRING)
-                .addScalar("receipt", Hibernate.STRING)
+                .addScalar("billid", Hibernate.STRING)
                 .setMaxResults(500)
                 .list();
+        
+        String billdescid = "";
+        for (Object[] B : QueryAir) {
+            billdescid += ",";
+            billdescid += B[10] == null ? null : util.ConvertString(B[10]);
+        }
+        
+        String querybookingbill = " SELECT bs.* FROM `booking_billable_summary` bs where bs.id in ("+billdescid.substring(1)+") ";
+        List<Object[]> QueryBill = session.createSQLQuery(querybookingbill)
+                .addScalar("id", Hibernate.STRING)
+                .addScalar("invoice", Hibernate.STRING)
+                .addScalar("receipt", Hibernate.STRING)
+                .list();
+        
+        Map<String, String> mapInvoice = new HashMap<String, String>();
+        Map<String, String> mapReceipt = new HashMap<String, String>();
+        for (Object[] B : QueryBill) {
+            mapInvoice.put(B[0]== null ? "" : util.ConvertString(B[0]), B[1]== null ? "" : util.ConvertString(B[1]));
+            mapReceipt.put(B[0]== null ? "" : util.ConvertString(B[0]), B[2]== null ? "" : util.ConvertString(B[2]));
+        }
         
         for (Object[] B : QueryAir) {
             BookingAirSummaryView bookingAirSummaryView = new BookingAirSummaryView();
@@ -379,11 +399,11 @@ public class BookingViewImpl implements BookingViewDao{
             bookingAirSummaryView.setArrv(B[7]== null ? "" :util.ConvertString(B[7]));
             bookingAirSummaryView.setDepartdate(B[8]== null ? "" :util.ConvertString(B[8]));
             bookingAirSummaryView.setFlight(B[9]== null ? "" :util.ConvertString(B[9]));
-            bookingAirSummaryView.setInvoice(B[10]== null ? "" :util.ConvertString(B[10]));
-            bookingAirSummaryView.setReceipt(B[11]== null ? "" :util.ConvertString(B[11]));
+            bookingAirSummaryView.setBillid(B[10]== null ? "" :util.ConvertString(B[10]));
+            bookingAirSummaryView.setInvoice(mapInvoice.get(B[10]== null ? "" :util.ConvertString(B[10])));
+            bookingAirSummaryView.setReceipt(mapReceipt.get(B[10]== null ? "" :util.ConvertString(B[10])));
             bookingAirSummaryViewList.add(bookingAirSummaryView);
         }
-        
         this.sessionFactory.close();
         session.close();
         return bookingAirSummaryViewList;
