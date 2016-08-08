@@ -236,7 +236,7 @@ public class BookingViewImpl implements BookingViewDao{
         UtilityFunction util = new UtilityFunction();
         List<BookingHotelSummaryView> bookingHotelSummaryViewList = new ArrayList<BookingHotelSummaryView>();
         
-        String query = " SELECT * FROM `booking_hotel_summary` ";
+        String query = " SELECT * FROM `booking_hotel_summary_min` ";
         boolean condition = false;
         
         if((bookRefNo != null) && (!"".equalsIgnoreCase(bookRefNo))){
@@ -282,11 +282,19 @@ public class BookingViewImpl implements BookingViewDao{
                 .addScalar("curcost", Hibernate.STRING)
                 .addScalar("Total_price", Hibernate.STRING)
                 .addScalar("curamount", Hibernate.STRING)
-                .addScalar("invoice", Hibernate.STRING)
-                .addScalar("receipt", Hibernate.STRING)
                 .addScalar("id", Hibernate.STRING)
+                .addScalar("billid", Hibernate.STRING)
                 .setMaxResults(500)
                 .list();
+        
+        String billdescid = "";
+        for (Object[] B : QueryHotel) {
+            billdescid += ",";
+            billdescid += B[12] == null ? null : util.ConvertString(B[12]);
+        }
+        
+        Map<String, String> mapInvoice = getInvoiceMap(session, billdescid);
+        Map<String, String> mapReceipt = getReceiptMap(session, billdescid);
         
         for (Object[] B : QueryHotel) {
             BookingHotelSummaryView bookingHotelSummaryView = new BookingHotelSummaryView();
@@ -301,9 +309,10 @@ public class BookingViewImpl implements BookingViewDao{
             bookingHotelSummaryView.setCurcost(B[8]== null ? "" :util.ConvertString(B[8]));
             bookingHotelSummaryView.setTotalprice(B[9]== null ? "" :util.ConvertString(B[9]));
             bookingHotelSummaryView.setCuramount(B[10]== null ? "" :util.ConvertString(B[10]));
-            bookingHotelSummaryView.setInvoice(B[11]== null ? "" :util.ConvertString(B[11]));
-            bookingHotelSummaryView.setReceipt(B[12]== null ? "" :util.ConvertString(B[12]));
-            bookingHotelSummaryView.setId(B[13]== null ? "" :util.ConvertString(B[13]));
+            bookingHotelSummaryView.setId(B[11]== null ? "" :util.ConvertString(B[11]));
+            bookingHotelSummaryView.setInvoice(mapInvoice.get(B[12]== null ? "" :util.ConvertString(B[12])));
+            bookingHotelSummaryView.setReceipt(mapReceipt.get(B[12]== null ? "" :util.ConvertString(B[12])));
+            
             bookingHotelSummaryViewList.add(bookingHotelSummaryView);
         }
         
@@ -373,19 +382,8 @@ public class BookingViewImpl implements BookingViewDao{
             billdescid += B[10] == null ? null : util.ConvertString(B[10]);
         }
         
-        String querybookingbill = " SELECT bs.* FROM `booking_billable_summary` bs where bs.id in ("+billdescid.substring(1)+") ";
-        List<Object[]> QueryBill = session.createSQLQuery(querybookingbill)
-                .addScalar("id", Hibernate.STRING)
-                .addScalar("invoice", Hibernate.STRING)
-                .addScalar("receipt", Hibernate.STRING)
-                .list();
-        
-        Map<String, String> mapInvoice = new HashMap<String, String>();
-        Map<String, String> mapReceipt = new HashMap<String, String>();
-        for (Object[] B : QueryBill) {
-            mapInvoice.put(B[0]== null ? "" : util.ConvertString(B[0]), B[1]== null ? "" : util.ConvertString(B[1]));
-            mapReceipt.put(B[0]== null ? "" : util.ConvertString(B[0]), B[2]== null ? "" : util.ConvertString(B[2]));
-        }
+        Map<String, String> mapInvoice = getInvoiceMap(session, billdescid);
+        Map<String, String> mapReceipt = getReceiptMap(session, billdescid);
         
         for (Object[] B : QueryAir) {
             BookingAirSummaryView bookingAirSummaryView = new BookingAirSummaryView();
@@ -415,7 +413,7 @@ public class BookingViewImpl implements BookingViewDao{
         UtilityFunction util = new UtilityFunction();
         List<BookingPackageSummaryView> bookingPackageSummaryViewList = new ArrayList<BookingPackageSummaryView>();
         
-        String query = " SELECT *,GROUP_CONCAT(DISTINCT b.invoice SEPARATOR '<br>') AS invoiceno, GROUP_CONCAT(DISTINCT b.receipt SEPARATOR '<br>') AS receiptno FROM `booking_package_summary` b ";
+        String query = " SELECT *,GROUP_CONCAT(DISTINCT b.invoice SEPARATOR '<br>') AS invoiceno, GROUP_CONCAT(DISTINCT b.receipt SEPARATOR '<br>') AS receiptno FROM `booking_package_summary_min` b ";
         boolean condition = false;
         
         if((bookRefNo != null) && (!"".equalsIgnoreCase(bookRefNo))){
@@ -453,10 +451,18 @@ public class BookingViewImpl implements BookingViewDao{
                 .addScalar("leader", Hibernate.STRING)
                 .addScalar("code", Hibernate.STRING)
                 .addScalar("name", Hibernate.STRING)
-                .addScalar("invoiceno", Hibernate.STRING)
-                .addScalar("receiptno", Hibernate.STRING)
+                .addScalar("billid", Hibernate.STRING)
                 .setMaxResults(500)
                 .list();
+        
+        String billdescid = "";
+        for (Object[] B : QueryPackage) {
+            billdescid += ",";
+            billdescid += B[6] == null ? null : util.ConvertString(B[6]);
+        }
+        
+        Map<String, String> mapInvoice = getInvoiceMap(session, billdescid);
+        Map<String, String> mapReceipt = getReceiptMap(session, billdescid);
         
         for (Object[] B : QueryPackage) {
             BookingPackageSummaryView bookingPackageSummaryView = new BookingPackageSummaryView();
@@ -466,8 +472,8 @@ public class BookingViewImpl implements BookingViewDao{
             bookingPackageSummaryView.setLeader(B[3]== null ? "" :util.ConvertString(B[3]));
             bookingPackageSummaryView.setCode(B[4]== null ? "" :util.ConvertString(B[4]));
             bookingPackageSummaryView.setName(B[5]== null ? "" :util.ConvertString(B[5]));
-            bookingPackageSummaryView.setInvoice(B[6]== null ? "" :util.ConvertString(B[6]));
-            bookingPackageSummaryView.setReceipt(B[7]== null ? "" :util.ConvertString(B[7]));
+            bookingPackageSummaryView.setInvoice(mapInvoice.get(B[6]== null ? "" :util.ConvertString(B[6])));
+            bookingPackageSummaryView.setReceipt(mapReceipt.get(B[6]== null ? "" :util.ConvertString(B[6])));
             bookingPackageSummaryViewList.add(bookingPackageSummaryView);
         }
         
@@ -482,7 +488,7 @@ public class BookingViewImpl implements BookingViewDao{
         UtilityFunction util = new UtilityFunction();
         List<BookingDayTourSummaryView> bookingDayTourSummaryViewList = new ArrayList<BookingDayTourSummaryView>();
         
-        String query = " SELECT * FROM `booking_daytour_summary` ";
+        String query = " SELECT * FROM `booking_daytour_summary_min` ";
         boolean condition = false;
         
         if((bookRefNo != null) && (!"".equalsIgnoreCase(bookRefNo))){
@@ -542,11 +548,19 @@ public class BookingViewImpl implements BookingViewDao{
                 .addScalar("child", Hibernate.STRING)
                 .addScalar("infant", Hibernate.STRING)
                 .addScalar("remark", Hibernate.STRING)
-                .addScalar("invoice", Hibernate.STRING)
-                .addScalar("receipt", Hibernate.STRING)
                 .addScalar("id", Hibernate.STRING)
+                .addScalar("billid", Hibernate.STRING)
                 .setMaxResults(500)
                 .list();
+        
+        String billdescid = "";
+        for (Object[] B : QueryDayTour) {
+            billdescid += ",";
+            billdescid += B[15] == null ? null : util.ConvertString(B[15]);
+        }
+        
+        Map<String, String> mapInvoice = getInvoiceMap(session, billdescid);
+        Map<String, String> mapReceipt = getReceiptMap(session, billdescid);
         
         for (Object[] B : QueryDayTour) {
             BookingDayTourSummaryView bookingDayTourSummaryView = new BookingDayTourSummaryView();
@@ -564,9 +578,9 @@ public class BookingViewImpl implements BookingViewDao{
             bookingDayTourSummaryView.setChild(B[11]== null ? "" :util.ConvertString(B[11]));
             bookingDayTourSummaryView.setInfant(B[12]== null ? "" :util.ConvertString(B[12]));
             bookingDayTourSummaryView.setRemark(B[13]== null ? "" :util.ConvertString(B[13]));
-            bookingDayTourSummaryView.setInvoice(B[14]== null ? "" :util.ConvertString(B[14]));
-            bookingDayTourSummaryView.setReceipt(B[15]== null ? "" :util.ConvertString(B[15]));
-            bookingDayTourSummaryView.setId(B[16]== null ? "" :util.ConvertString(B[16]));
+            bookingDayTourSummaryView.setId(B[14]== null ? "" :util.ConvertString(B[14]));
+            bookingDayTourSummaryView.setInvoice(mapInvoice.get(B[15]== null ? "" :util.ConvertString(B[15])));
+            bookingDayTourSummaryView.setReceipt(mapReceipt.get(B[15]== null ? "" :util.ConvertString(B[15])));
             bookingDayTourSummaryViewList.add(bookingDayTourSummaryView);
         }
         
@@ -581,7 +595,7 @@ public class BookingViewImpl implements BookingViewDao{
         UtilityFunction util = new UtilityFunction();
         List<BookingOtherSummaryView> bookingOtherSummaryViewList = new ArrayList<BookingOtherSummaryView>();
         
-        String query = " SELECT * FROM `booking_other_summary` ";
+        String query = " SELECT * FROM `booking_other_summary_min` ";
         boolean condition = false;
         
         if((bookRefNo != null) && (!"".equalsIgnoreCase(bookRefNo))){
@@ -629,11 +643,19 @@ public class BookingViewImpl implements BookingViewDao{
                 .addScalar("code", Hibernate.STRING)
                 .addScalar("name", Hibernate.STRING)
                 .addScalar("other_date", Hibernate.STRING)
-                .addScalar("invoice", Hibernate.STRING)
-                .addScalar("receipt", Hibernate.STRING)
                 .addScalar("id", Hibernate.STRING)
+                .addScalar("billid", Hibernate.STRING)
                 .setMaxResults(500)
                 .list();
+        
+        String billdescid = "";
+        for (Object[] B : QueryOther) {
+            billdescid += ",";
+            billdescid += B[8] == null ? null : util.ConvertString(B[8]);
+        }
+        
+        Map<String, String> mapInvoice = getInvoiceMap(session, billdescid);
+        Map<String, String> mapReceipt = getReceiptMap(session, billdescid);    
         
         for (Object[] B : QueryOther) {
             BookingOtherSummaryView bookingOtherSummaryView = new BookingOtherSummaryView();
@@ -644,9 +666,9 @@ public class BookingViewImpl implements BookingViewDao{
             bookingOtherSummaryView.setCode(B[4]== null ? "" :util.ConvertString(B[4]));
             bookingOtherSummaryView.setName(B[5]== null ? "" :util.ConvertString(B[5]));
             bookingOtherSummaryView.setOtherdate(B[6]== null ? "" :util.ConvertString(B[6]));
-            bookingOtherSummaryView.setInvoice(B[7]== null ? "" :util.ConvertString(B[7]));
-            bookingOtherSummaryView.setReceipt(B[8]== null ? "" :util.ConvertString(B[8]));
-            bookingOtherSummaryView.setId(B[9]== null ? "" :util.ConvertString(B[9])); 
+            bookingOtherSummaryView.setId(B[7]== null ? "" :util.ConvertString(B[7]));
+            bookingOtherSummaryView.setInvoice(mapInvoice.get(B[8]== null ? "" :util.ConvertString(B[8])));
+            bookingOtherSummaryView.setReceipt(mapReceipt.get(B[8]== null ? "" :util.ConvertString(B[8])));
             bookingOtherSummaryViewList.add(bookingOtherSummaryView);
         }
         
@@ -661,7 +683,7 @@ public class BookingViewImpl implements BookingViewDao{
         UtilityFunction util = new UtilityFunction();
         List<BookingLandSummaryView> bookingLandSummaryViewList = new ArrayList<BookingLandSummaryView>();
         
-        String query = " SELECT * FROM `booking_land_summary` ";
+        String query = " SELECT * FROM `booking_land_summary_min` ";
         boolean condition = false;
         
         if((bookRefNo != null) && (!"".equalsIgnoreCase(bookRefNo))){
@@ -705,12 +727,20 @@ public class BookingViewImpl implements BookingViewDao{
                 .addScalar("description", Hibernate.STRING)
                 .addScalar("category", Hibernate.STRING)
                 .addScalar("qty", Hibernate.STRING)
-                .addScalar("invoice", Hibernate.STRING)
-                .addScalar("receipt", Hibernate.STRING)
                 .addScalar("id", Hibernate.STRING)
+                .addScalar("billid", Hibernate.STRING)
                 .setMaxResults(500)
-                .list();
+                .list();        
         
+        String billdescid = "";
+        for (Object[] B : QueryLand) {
+            billdescid += ",";
+            billdescid += B[9] == null ? null : util.ConvertString(B[9]);
+        }
+        
+        Map<String, String> mapInvoice = getInvoiceMap(session, billdescid);
+        Map<String, String> mapReceipt = getReceiptMap(session, billdescid);
+		
         for (Object[] B : QueryLand) {
             BookingLandSummaryView bookingLandSummaryView = new BookingLandSummaryView();
             bookingLandSummaryView.setRefno(B[0]== null ? "" : util.ConvertString(B[0]));
@@ -721,9 +751,9 @@ public class BookingViewImpl implements BookingViewDao{
             bookingLandSummaryView.setDescription(B[5]== null ? "" :util.ConvertString(B[5]));
             bookingLandSummaryView.setCategory(B[6]== null ? "" :util.ConvertString(B[6]));
             bookingLandSummaryView.setQty(B[7]== null ? "" :util.ConvertString(B[7]));
-            bookingLandSummaryView.setInvoice(B[8]== null ? "" :util.ConvertString(B[8]));     
-            bookingLandSummaryView.setReceipt(B[9]== null ? "" :util.ConvertString(B[9]));
-            bookingLandSummaryView.setId(B[10]== null ? "" :util.ConvertString(B[10])); 
+            bookingLandSummaryView.setId(B[8]== null ? "" :util.ConvertString(B[8]));     
+            bookingLandSummaryView.setInvoice(mapInvoice.get(B[9]== null ? "" :util.ConvertString(B[9])));
+            bookingLandSummaryView.setReceipt(mapReceipt.get(B[9]== null ? "" :util.ConvertString(B[9])));
             bookingLandSummaryViewList.add(bookingLandSummaryView);
         }
         
@@ -756,4 +786,36 @@ public class BookingViewImpl implements BookingViewDao{
         return bookingView;
     }
    
+    private Map<String, String> getInvoiceMap(Session session,String billdescid){
+        UtilityFunction util = new UtilityFunction();
+        String querybookingbill = " SELECT bs.* FROM `booking_billable_summary` bs where bs.id in ("+billdescid.substring(1)+") ";
+        List<Object[]> QueryBill = session.createSQLQuery(querybookingbill)
+                .addScalar("id", Hibernate.STRING)
+                .addScalar("invoice", Hibernate.STRING)
+                .addScalar("receipt", Hibernate.STRING)
+                .list();
+        
+        Map<String, String> mapInvoice = new HashMap<String, String>();
+        for (Object[] B : QueryBill) {
+            mapInvoice.put(B[0]== null ? "" : util.ConvertString(B[0]), B[1]== null ? "" : util.ConvertString(B[1]));
+        }
+        return mapInvoice;
+    }
+    
+    private Map<String, String> getReceiptMap(Session session,String billdescid){
+        UtilityFunction util = new UtilityFunction();
+        String querybookingbill = " SELECT bs.* FROM `booking_billable_summary` bs where bs.id in ("+billdescid.substring(1)+") ";
+        List<Object[]> QueryBill = session.createSQLQuery(querybookingbill)
+                .addScalar("id", Hibernate.STRING)
+                .addScalar("invoice", Hibernate.STRING)
+                .addScalar("receipt", Hibernate.STRING)
+                .list();
+
+        Map<String, String> mapReceipt = new HashMap<String, String>();
+        for (Object[] B : QueryBill) {
+            mapReceipt.put(B[0]== null ? "" : util.ConvertString(B[0]), B[2]== null ? "" : util.ConvertString(B[2]));
+        }
+        return mapReceipt;
+    }
+    
 }
