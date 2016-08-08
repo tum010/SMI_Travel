@@ -66,8 +66,9 @@ public class PaymentTourHotelController extends SMITravelController {
         request.setAttribute(PVTYPE, mPaymentList);
         List<MAccpay> mAccpayList = utilservice.getListMAccpay();
         request.setAttribute(PAYMENTLIST, mAccpayList);
-        List<InvoiceSupplier> invoiceSupplierList = paymentTourHotelService.getListInvoiceSuppiler();
-        request.setAttribute(INVOICESUPLIST, invoiceSupplierList);
+//        List<InvoiceSupplier> invoiceSupplierList = paymentTourHotelService.getListInvoiceSuppiler();
+//        List<InvoiceSupplier> invoiceSupplierList = paymentTourHotelService.getListInvoiceSuppilerBySQLQuery();
+//        request.setAttribute(INVOICESUPLIST, invoiceSupplierList);
         List<MPaytype> mProdictList = utilservice.getListMPayType();
         request.setAttribute(PRODUCTLIST, mProdictList);
         List<MCurrency> mCurrencyList = utilservice.getListMCurrency();

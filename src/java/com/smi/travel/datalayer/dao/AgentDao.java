@@ -23,4 +23,5 @@ public interface AgentDao {
     public List<Agent> getListAgent();
     public List<Agent> getListAgentForBookingDetail();
     public Agent getAgentFromCode(String code); 
+    public List<Agent> getListAgentBySQLQuery();
 }

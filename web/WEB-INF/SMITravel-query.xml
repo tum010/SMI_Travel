@@ -503,6 +503,7 @@
                 <ref local="CheckDuplicateUserDao" />
                 <ref local="MExchangeRateDao" />
                 <ref local="StockDao" />
+                <ref local="MListItemDao" />
             </list>
         </constructor-arg>
     </bean>
@@ -534,6 +535,7 @@
     <bean id="PaymentOutboundServlet" class="com.smi.travel.servlet.PaymentOutboundServlet" />
     <bean id="PaymentStockServlet" class="com.smi.travel.servlet.PaymentStockServlet" />
     <bean id="CheckDuplicateUserServlet" class="com.smi.travel.servlet.CheckDuplicateUserServlet" />
+    <bean id="MListItemServlet" class="com.smi.travel.servlet.MListItemServlet" />
 	<!--<add data>-->
 	
 </beans>

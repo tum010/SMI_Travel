@@ -19,6 +19,7 @@ import com.smi.travel.datalayer.dao.InvoiceDao;
 import com.smi.travel.datalayer.dao.MAirportDao;
 import com.smi.travel.datalayer.dao.MExchangeRateDao;
 import com.smi.travel.datalayer.dao.MFilghtDao;
+import com.smi.travel.datalayer.dao.MListItemDao;
 import com.smi.travel.datalayer.dao.MasterDao;
 import com.smi.travel.datalayer.dao.OtherBookingDao;
 import com.smi.travel.datalayer.dao.PackageTourDao;
@@ -73,6 +74,7 @@ import com.smi.travel.datalayer.view.entity.BookSummary;
 import com.smi.travel.datalayer.view.entity.BookingOutboundView;
 import com.smi.travel.datalayer.view.entity.CheckDuplicateUser;
 import com.smi.travel.datalayer.view.entity.CustomerAgentInfo;
+import com.smi.travel.datalayer.view.entity.InvoiceSupplier;
 import com.smi.travel.datalayer.view.entity.OtherBookingView;
 import com.smi.travel.datalayer.view.entity.OtherTicketView;
 import com.smi.travel.datalayer.view.entity.PaymentOutboundInvSummaryView;
@@ -131,7 +133,8 @@ public class AJAXBean extends AbstractBean implements
     private static final String RECEIVETABLE = "ReceiveTableServlet";
     private static final String PAYMENTOUTBOUND = "PaymentOutboundServlet"; 
     private static final String PAYMENTSTOCK = "PaymentStockServlet";
-    private static final String CHECKDUPLICATEUSER = "CheckDuplicateUserServlet"; 
+    private static final String CHECKDUPLICATEUSER = "CheckDuplicateUserServlet";
+    private static final String MLISTITEM = "MListItemServlet"; 
     private CustomerDao customerdao;
     private ProductDetailDao productDetailDao;
     private BookingSummaryDao bookingsummarydao;
@@ -163,6 +166,7 @@ public class AJAXBean extends AbstractBean implements
     private CheckDuplicateUserDao checkDuplicateUserDao;
     private MExchangeRateDao mExchangeRateDao;
     private StockDao stockDao;
+    private MListItemDao mListItemDao;
     
     public AJAXBean(List queryList) {
         super(queryList);
@@ -232,7 +236,9 @@ public class AJAXBean extends AbstractBean implements
                     mExchangeRateDao = (MExchangeRateDao) obj;
                 } else if (obj instanceof StockDao) {
                     stockDao = (StockDao) obj;
-                }
+                } else if (obj instanceof MListItemDao) {
+                    mListItemDao = (MListItemDao) obj;
+                } 
             }
         }
     }
@@ -1369,7 +1375,28 @@ public class AJAXBean extends AbstractBean implements
                 }  
             }
               
+        }else if(MLISTITEM.equalsIgnoreCase(servletName)){
+            if("getInvoiceSupplierList".equalsIgnoreCase(type)){
+                String name = map.get("name").toString();
+                List<InvoiceSupplier> invoiceSupplierList = paymentWendytourDao.getListInvoiceSuppilerBySQLQuery(name);
+                String tableData = "";
+                if (invoiceSupplierList != null) {
+                    for (InvoiceSupplier a : invoiceSupplierList) {
+                        tableData += "<tr onclick=\"setupInvSupValue('" + a.getId() + "','" + a.getCode() + "','" + a.getName() + "','" + a.getApcode() + "');\">";
+                        tableData += "<td>" + a.getCode() + "</td>";
+                        tableData += "<td>" + a.getName() + "</td>";
+                        tableData += "<td>" + a.getApcode() + "</td>";
+                        tableData += "</tr>";
+                    }
+                    result = tableData;
+                
+                } else {
+                    result = "fail";
+                }
+                
+            }
         }
+        
         return result;
     }
 

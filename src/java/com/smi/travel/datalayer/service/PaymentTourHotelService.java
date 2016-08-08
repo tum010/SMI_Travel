@@ -119,4 +119,8 @@ public class PaymentTourHotelService {
     public PaymentStock getPaymentStockFromPayStockNo(String payStock) {
         return this.paymentWendytourDao.getPaymentStockFromPayStockNo(payStock);
     }
+
+    public List<InvoiceSupplier> getListInvoiceSuppilerBySQLQuery(String name) {
+        return this.paymentWendytourDao.getListInvoiceSuppilerBySQLQuery(name);
+    }
 }

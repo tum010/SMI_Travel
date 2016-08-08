@@ -395,8 +395,8 @@ public class BookDetailController extends SMITravelController {
         request.setAttribute(BookingstatuseList, mBookingstatuses);
         List<MInitialname> mInitial = utilservice.getListMInitialname();
         request.setAttribute(initialList, mInitial);
-        List<Customer> customerList = utilservice.getListCustomer();
-        request.setAttribute(CustomerList, customerList);
+//        List<Customer> customerList = utilservice.getListCustomer();
+//        request.setAttribute(CustomerList, customerList);
         List<PackageTour> PackList = bookingDetailService.getListLandPackage();
         request.setAttribute(PackageList, PackList);
     }

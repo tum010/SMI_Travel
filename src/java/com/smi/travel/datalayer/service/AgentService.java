@@ -104,6 +104,10 @@ public class AgentService {
     public void setListItemDao(MListItemDao listItemDao) {
         this.listItemDao = listItemDao;
     }
+
+    public List<Agent> getListAgentBySQLQuery() {
+        return agentDao.getListAgentBySQLQuery();
+    }
     
     
 

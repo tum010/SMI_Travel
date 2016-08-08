@@ -793,32 +793,34 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                 <h4 class="modal-title"  id="Titlemodel">Invoice Supplier</h4>
-            </div>
+            </div>          
             <div class="modal-body">
+                <div style="text-align: right"> 
+                    <i id="ajaxload"  class="fa fa-spinner fa-spin hidden"></i> Search : <input type="text" style="width: 175px" id="searchInvoiceSupplier" name="searchInvoiceSupplier"/> 
+                </div> 
+                <script>
+                    var invoiceSup = [];
+                </script>
                 <table class="display" id="SearchInvoicSupTable">
-                    <thead class="datatable-header">
-                        <script>
-                            var invoiceSup = [];
-                        </script>
-                        <tr>
-                            <th class="hidden">Id</th>
+                    <thead class="datatable-header">                      
+                        <tr>     
                             <th>Code</th>
                             <th>Name</th>
                             <th>AP code</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach var="invSup" items="${invoiceSup_list}">
-                            <tr onclick ="setupInvSupValue('${invSup.id}', '${invSup.code}', '${invSup.name}', '${invSup.apcode}')" >
+                        <%--<c:forEach var="invSup" items="${invoiceSup_list}">--%>
+<!--                            <tr onclick ="setupInvSupValue('${invSup.id}', '${invSup.code}', '${invSup.name}', '${invSup.apcode}')" >
                                 <td class="hidden">${invSup.id}</td>
-                                <td>${invSup.code}</td>
-                                <td>${invSup.name}</td>
-                                <td>${invSup.apcode}</td> 
+                                <td style="width: 30%;">${invSup.code}</td>
+                                <td style="width: 40%;">${invSup.name}</td>
+                                <td style="width: 30%;">${invSup.apcode}</td> 
                             </tr>
                             <script>
                                 invoiceSup.push({id: "${invSup.id}", code: "${invSup.code}", name: "${invSup.name}", apcode: "${invSup.apcode}"});
-                            </script>
-                        </c:forEach>    
+                            </script>-->
+                        <%--</c:forEach>--%>    
                     </tbody>
                 </table>
             </div>
@@ -1091,12 +1093,11 @@
         $('#SearchInvoicSupTable').dataTable({bJQueryUI: true,
             "sPaginationType": "full_numbers",
             "bAutoWidth": true,
-            "bFilter": true,
+            "bFilter": false,
             "bPaginate": true,
             "bInfo": false,
             "bLengthChange": false,
-            "iDisplayLength": 10,
-            "aaSorting": [[ 1, "asc" ]]
+            "iDisplayLength": 10
         });
             
         $('#SearchAPCodeTable').dataTable({bJQueryUI: true,
@@ -1381,6 +1382,12 @@
 
         });
         
+        $("#searchInvoiceSupplier").keyup(function() {
+            if ($("#searchInvoiceSupplier").val() !== '') {
+                searchInvoiceSupplierList($("#searchInvoiceSupplier").val());          
+            }
+        });
+        
 //        ON KEY INPUT AUTO SELECT TOURCODE-TOURNAME
 //        $(function () {
 //            var availableTags = [];
@@ -1449,6 +1456,54 @@
 //        });
 
     });
+    
+    function searchInvoiceSupplierList(name) {
+	name = generateSpecialCharacter(name);
+	var servletName = 'MListItemServlet';
+	var servicesName = 'AJAXBean';
+	var param = 'action=' + 'text' +
+			'&servletName=' + servletName +
+			'&servicesName=' + servicesName +
+			'&name=' + name +
+			'&type=' + 'getInvoiceSupplierList';
+	CallAjaxGetInvoiceSuplierList(param);
+    }
+    
+    function CallAjaxGetInvoiceSuplierList(param) {
+	var url = 'AJAXServlet';
+	$("#ajaxload").removeClass("hidden");
+        try {
+            $.ajax({
+                type: "POST",
+                url: url,
+                cache: false,
+                data: param,
+                success: function(msg) {
+                    if(msg !== 'fail'){
+                        $('#SearchInvoicSupTable').dataTable().fnClearTable();
+                        $('#SearchInvoicSupTable').dataTable().fnDestroy();
+                        $("#SearchInvoicSupTable tbody").empty().append(msg);
+
+                        $('#SearchInvoicSupTable').dataTable({bJQueryUI: true,
+                            "sPaginationType": "full_numbers",
+                            "bAutoWidth": false,
+                            "bFilter": false,
+                            "bPaginate": true,
+                            "bInfo": false,
+                            "bLengthChange": false,
+                            "iDisplayLength": 10
+                        });
+                        $("#ajaxload").addClass("hidden");
+                    }
+
+                }, error: function(msg) {
+                    $("#ajaxload").addClass("hidden");
+                }
+            });
+        } catch (e) {
+            $("#ajaxload").addClass("hidden");
+        }
+    }
     
     function setEnvironment(){
         var count = parseInt($("#counter").val());

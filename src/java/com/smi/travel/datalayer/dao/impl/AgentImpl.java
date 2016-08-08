@@ -285,5 +285,24 @@ public class AgentImpl implements AgentDao{
 
         return agent;
     }
+
+    @Override
+    public List<Agent> getListAgentBySQLQuery() {
+        UtilityFunction util = new UtilityFunction();
+        Session session = this.sessionFactory.openSession();
+        String query = " SELECT a.id, a.code , a.name FROM agent a ";      
+        List<Object[]> queryList = session.createSQLQuery(query).list();
+        
+        List<Agent> agentList = new ArrayList<Agent>();
+        for (Object[] A: queryList) {
+            Agent agent = new Agent();
+            agent.setId(A[0] != null ? util.ConvertString(A[0]) : "");
+            agent.setCode(A[1] != null ? util.ConvertString(A[1]) : "");
+            agent.setName(A[2] != null ? util.ConvertString(A[2]) : "");
+            agentList.add(agent);
+        }
+
+        return agentList;
+    }
        
 }

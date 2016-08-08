@@ -15,6 +15,7 @@ import com.smi.travel.datalayer.entity.PaymentWendy;
 import com.smi.travel.datalayer.entity.PaymentWendyReference;
 import com.smi.travel.datalayer.entity.TourOperationDesc;
 import com.smi.travel.datalayer.view.entity.CustomerAgentInfo;
+import com.smi.travel.datalayer.view.entity.InvoiceSupplier;
 import com.smi.travel.datalayer.view.entity.PaymentWendytourView;
 import java.util.List;
 
@@ -45,4 +46,5 @@ public interface PaymentWendytourDao {
     public List<Daytour> searchListTourCode(String name);
     public MPaytype getMPayTypeFromPayTypeId(String payTypeId);
     public PaymentStock getPaymentStockFromPayStockNo(String payStock);
+    public List<InvoiceSupplier> getListInvoiceSuppilerBySQLQuery(String name);
 }

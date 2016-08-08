@@ -676,5 +676,31 @@ public class PaymentWendytourImpl implements PaymentWendytourDao{
         }
         return paymentStockList.get(0);   
     }
+
+    @Override
+    public List<InvoiceSupplier> getListInvoiceSuppilerBySQLQuery(String name) {
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();
+        
+        String query = " SELECT s.id, s.code, s.name, s.apcode FROM `invoice_supplier` s ";
+        boolean hasCondition = false;
+        if(name != null && !"".equalsIgnoreCase(name)){
+            query += (hasCondition ? " AND " : " WHERE ");
+            query += " (s.code LIKE '%" + name + "%' OR s.name LIKE '%" + name + "%')";
+        }
+        
+        List<Object[]> invoiceSupplierList = session.createSQLQuery(query).list();
+        
+        List<InvoiceSupplier> result = new ArrayList<InvoiceSupplier>();
+        for (Object[] A : invoiceSupplierList) {
+            InvoiceSupplier invoiceSupplier = new InvoiceSupplier();
+            invoiceSupplier.setId(util.ConvertString(A[0]));
+            invoiceSupplier.setCode(util.ConvertString(A[1]));
+            invoiceSupplier.setName(util.ConvertString(A[2]));
+            invoiceSupplier.setApcode(util.ConvertString(A[3]));
+            result.add(invoiceSupplier);
+        }       
+        return result;
+    }
     
 }
