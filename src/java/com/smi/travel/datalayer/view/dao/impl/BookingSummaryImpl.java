@@ -183,7 +183,7 @@ public class BookingSummaryImpl implements BookingSummaryDao{
         UtilityFunction util = new UtilityFunction();
         List data = new ArrayList();
 
-        String query = "SELECT * FROM `booking_hotel_summary` where refno = '"+refno+"'";
+        String query = "SELECT * FROM `booking_hotel_summary_min` where refno = '"+refno+"'";
         
         List<Object[]> QueryStaffList = session.createSQLQuery(query)
                 .addScalar("hotel", Hibernate.STRING)
