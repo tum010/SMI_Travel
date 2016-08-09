@@ -11,6 +11,7 @@ import com.smi.travel.datalayer.dao.SystemUserDao;
 import com.smi.travel.datalayer.entity.DaytourBooking;
 import com.smi.travel.datalayer.entity.DaytourBookingPrice;
 import com.smi.travel.datalayer.entity.SystemUser;
+import com.smi.travel.datalayer.view.entity.DaytourBookingViewMin;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +24,7 @@ public class DaytourCommissionService {
     private DaytourComissionDao daytourComissiondao;
     private SystemUserDao systemUser;
     
-    public List<DaytourBooking> getListBookingDaytourComission(String StartDate,String EndDate,String agentID,String guideID){
+    public List<DaytourBookingViewMin> getListBookingDaytourComission(String StartDate,String EndDate,String agentID,String guideID){
         return daytourComissiondao.getListBookingDaytourComission(StartDate, EndDate,agentID,guideID);
     }
     
@@ -41,22 +42,16 @@ public class DaytourCommissionService {
                  List<DaytourBookingPrice> priceList = new ArrayList<DaytourBookingPrice>(Book.getDaytourBookingPrices());
                  for(int j =0;j<priceList.size();j++){
                      DaytourBookingPrice myprice = priceList.get(j);
-                     System.out.println(myprice.getQty() +","+myprice.getPrice());
+//                     System.out.println(myprice.getQty() +","+myprice.getPrice());
 //                     price += (myprice.getQty()==null? 0:myprice.getQty()) * (myprice.getPrice()==null? 0:myprice.getPrice());
                     BigDecimal pricetemp = myprice.getPrice() == null ? new BigDecimal(0) : myprice.getPrice();
                     BigDecimal qtytemp = myprice.getQty() == null ? new BigDecimal(0) : new BigDecimal(myprice.getQty());
                     BigDecimal p = pricetemp.multiply(qtytemp);
                     price = price.add(p);
-                     
-                     
-                     
                  }
-                 System.out.println("price : "+price);
                  dBookingList.get(i).setAdult(price.intValueExact());
             }           
         }
-
-        
     }
     
 

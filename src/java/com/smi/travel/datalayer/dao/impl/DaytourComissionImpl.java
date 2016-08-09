@@ -9,11 +9,12 @@ import com.smi.travel.datalayer.dao.DaytourComissionDao;
 import com.smi.travel.datalayer.entity.AgentTourComission;
 import com.smi.travel.datalayer.entity.Daytour;
 import com.smi.travel.datalayer.entity.DaytourBooking;
+import com.smi.travel.datalayer.view.entity.DaytourBookingViewMin;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -36,28 +37,101 @@ public class DaytourComissionImpl implements DaytourComissionDao {
     public static final String GET_AGENT_COMMISSION = "from AgentTourComission ac where (ac.from <= :tourDate and ac.to >= :tourDate) and ac.daytour.code = :tourCode and ac.agentComission.agent.id = :agentId  ";
     
     @Override
-    public List<DaytourBooking> getListBookingDaytourComission(String StartDate, String EndDate,String agentID,String guideID) {
+    public List<DaytourBookingViewMin> getListBookingDaytourComission(String StartDate, String EndDate,String agentID,String guideID) {
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
-        String query = GET_BOOKCOMISSION_QUERY;
-        System.out.println("agentID + "+agentID);
-        System.out.println("guideID + "+guideID);
+//        String query = GET_BOOKCOMISSION_QUERY;
+        String query = " SELECT * FROM daytour_booking_view_min db WHERE db.tourdate >= '"+ StartDate +"' AND db.tourdate <= '"+ EndDate +"' AND db.`status` = 1 AND db.`bookingstatus` <> 3 AND db.`bookingstatus` <> 4 " ;
         if((agentID != null) &&(!"".equalsIgnoreCase(agentID))){
-            query += " and DB.agent.id = "+agentID;
+            query += " and db.agentid = "+agentID;
         }
         if((guideID != null) &&(!"".equalsIgnoreCase(guideID))){
-            query += " and DB.guide.id = "+guideID;
+            query += " and db.guideid = "+guideID;
         }
-        query += " order by DB.tourDate,DB.daytour.code,DB.master.referenceNo";
+        query += " order by db.tourdate , db.`daytourcode` , db.refno ";
         System.out.println("query : "+query);
-        List<DaytourBooking> list = session.createQuery(query)
-                .setParameter("startdate", util.convertStringToDate(StartDate))
-                .setParameter("enddate", util.convertStringToDate(EndDate))
-                .list();
-        if (list.isEmpty()) {
-            return null;
-        }
+//        List<DaytourBooking> list = session.createQuery(query)
+//                .setParameter("startdate", util.convertStringToDate(StartDate))
+//                .setParameter("enddate", util.convertStringToDate(EndDate))
+//                .list();
+//        if (list.isEmpty()) {
+//            return null;
+//        }
+        
+        List<DaytourBookingViewMin> list = new ArrayList<DaytourBookingViewMin>();
 
+        List<Object[]> QueryStaffList = session.createSQLQuery(query)
+                .addScalar("id", Hibernate.STRING)
+                .addScalar("masterid", Hibernate.STRING)
+                .addScalar("tourid", Hibernate.STRING)
+                .addScalar("tourdate", Hibernate.DATE)
+                .addScalar("pickup", Hibernate.STRING)
+                .addScalar("pickupdetail", Hibernate.STRING)
+                .addScalar("pickuproom", Hibernate.STRING)
+                .addScalar("pickuptime", Hibernate.STRING)
+                .addScalar("requirement", Hibernate.STRING)
+                .addScalar("remark", Hibernate.STRING)
+                .addScalar("memo", Hibernate.STRING)
+                .addScalar("guideid", Hibernate.STRING)
+                .addScalar("agentid", Hibernate.STRING)
+                .addScalar("ispay", Hibernate.STRING)
+                .addScalar("adult", Hibernate.STRING)
+                .addScalar("child", Hibernate.STRING)
+                .addScalar("infant", Hibernate.STRING)
+                .addScalar("isbill", Hibernate.STRING)
+                .addScalar("status", Hibernate.STRING)
+                .addScalar("agentcomission", Hibernate.STRING)
+                .addScalar("guidecommission", Hibernate.STRING)
+                .addScalar("remarkguidecom", Hibernate.STRING)
+                .addScalar("remarkagentcom", Hibernate.STRING)
+                .addScalar("pickuporder", Hibernate.STRING)
+                .addScalar("tempid", Hibernate.STRING)
+                .addScalar("bookingstatus", Hibernate.STRING)
+                .addScalar("daytourcode", Hibernate.STRING)
+                .addScalar("refno", Hibernate.STRING)
+                .addScalar("agentname", Hibernate.STRING)
+                .addScalar("initialname", Hibernate.STRING)
+                .addScalar("lastname", Hibernate.STRING)
+                .addScalar("firstname", Hibernate.STRING)
+                .list();
+        
+        for (Object[] B : QueryStaffList) {
+            DaytourBookingViewMin db = new DaytourBookingViewMin();
+            db.setId(B[0]== null ? "" :util.ConvertString(B[0]));
+            db.setMasterid(B[1]== null ? "" :util.ConvertString(B[1]));
+            db.setTourid(B[2]== null ? "" :util.ConvertString(B[2]));
+            db.setTourdate(B[3]== null ? null : util.convertStringToDate(util.ConvertString(B[3])));
+            db.setPickup(B[4]== null ? "" :util.ConvertString(B[4]));
+            db.setPickupdetail(B[5]== null ? "" :util.ConvertString(B[5]));
+            db.setPickup_room(B[6]== null ? "" :util.ConvertString(B[6]));
+            db.setPickup_time(B[7]== null ? "" :util.ConvertString(B[7]));
+            db.setRequirement(B[8]== null ? "" :util.ConvertString(B[8]));
+            db.setRemark(B[9]== null ? "" :util.ConvertString(B[9]));
+            db.setMemo(B[10]== null ? "" :util.ConvertString(B[10]));
+            db.setGuideid(B[11]== null ? "" :util.ConvertString(B[11]));
+            db.setAgentid(B[12]== null ? "" :util.ConvertString(B[12]));
+            db.setIspay(B[13]== null ? "" :util.ConvertString(B[13]));
+            db.setAdult(B[14]== null ? "" :util.ConvertString(B[14]));
+            db.setChild(B[15]== null ? "" :util.ConvertString(B[15]));
+            db.setInfant(B[16]== null ? "" :util.ConvertString(B[16]));
+            db.setIsbill(B[17]== null ? "" :util.ConvertString(B[17]));
+            db.setStatus(B[18]== null ? "" :util.ConvertString(B[18]));
+            db.setAgentcomission(B[19]== null ? "" :util.ConvertString(B[19]));
+            db.setGuidecommission(B[20]== null ? "" :util.ConvertString(B[20]));
+            db.setRemarkguidecom(B[21]== null ? "" :util.ConvertString(B[21]));
+            db.setRemarkagentcom(B[22]== null ? "" :util.ConvertString(B[22]));
+            db.setPickuporder(B[23]== null ? "" :util.ConvertString(B[23]));
+            db.setTempid(B[24]== null ? "" :util.ConvertString(B[24]));
+            db.setBookingstatus(B[25]== null ? "" :util.ConvertString(B[25]));
+            db.setDaytourcode(B[26]== null ? "" :util.ConvertString(B[26]));
+            db.setRefno(B[27]== null ? "" :util.ConvertString(B[27]));
+            db.setAgentname(B[28]== null ? "" :util.ConvertString(B[28]));
+            db.setInitialname(B[29]== null ? "" :util.ConvertString(B[29]));
+            db.setLastname(B[30]== null ? "" :util.ConvertString(B[30]));
+            db.setFirstname(B[31]== null ? "" :util.ConvertString(B[31]));
+            list.add(db);
+        }
+        
         return list;
     }
 

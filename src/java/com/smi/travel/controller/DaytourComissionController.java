@@ -6,6 +6,7 @@ import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.service.BookingDetailService;
 import com.smi.travel.datalayer.service.DaytourCommissionService;
 import com.smi.travel.datalayer.service.UtilityService;
+import com.smi.travel.datalayer.view.entity.DaytourBookingViewMin;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
@@ -72,13 +73,13 @@ public class DaytourComissionController extends SMITravelController {
             String result = daytourCommissionService.SaveDaytourComission(saveDaytourBookingList);
             request.setAttribute(TransactionResult, result);
 
-            List<DaytourBooking> dBookingList = daytourCommissionService.getListBookingDaytourComission(dateFromS, dateToS, selectAgentId, selectGuideId);
+            List<DaytourBookingViewMin> dBookingList = daytourCommissionService.getListBookingDaytourComission(dateFromS, dateToS, selectAgentId, selectGuideId);
             request.setAttribute(BookingList, dBookingList);
         } else if ("search".equalsIgnoreCase(action)) {
            
             if (StringUtils.isNotEmpty(dateFromS) && StringUtils.isNotEmpty(dateToS)) {
-                List<DaytourBooking> dBookingList = daytourCommissionService.getListBookingDaytourComission(dateFromS, dateToS, selectAgentId, selectGuideId);
-                daytourCommissionService.CalculateDaytourPrice(dBookingList);
+                List<DaytourBookingViewMin> dBookingList = daytourCommissionService.getListBookingDaytourComission(dateFromS, dateToS, selectAgentId, selectGuideId);
+//                daytourCommissionService.CalculateDaytourPrice(dBookingList);
                 request.setAttribute(BookingList, dBookingList);
                 
                 if (dBookingList!=null) {
