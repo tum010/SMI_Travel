@@ -1533,8 +1533,6 @@
                             "iDisplayLength": 10
                         });
                         
-                        $('#SearchInvoicSupTable').attr('width', 500);
-                        
                         $("#ajaxload").addClass("hidden");
                     }
 
@@ -1610,10 +1608,7 @@
                                    $("#InputInvoiceSupCode").val(invCodeList[i]);
                                    $("#InputInvoiceSupName").val(invNameList[i]);
                                    $("#InputAPCode").val(invARCodeList[i]);
-                                   
-                                   $('#TaxInvoiceForm').bootstrapValidator('revalidateField', 'TaxInvTo');
-                                   $('#TaxInvoiceForm').bootstrapValidator('revalidateField', 'ARCode');
-                                   $('#TaxInvoiceForm').bootstrapValidator('revalidateField', 'InvToAddress');
+                                   validateForm();
                                 }                 
                             }   
                        }
@@ -1626,10 +1621,7 @@
                            $("#InputInvoiceSupCode").val(invCodeList[i]);
                            $("#InputInvoiceSupName").val(invNameList[i]);
                            $("#InputAPCode").val(invARCodeList[i]);
-                           
-                           $('#TaxInvoiceForm').bootstrapValidator('revalidateField', 'TaxInvTo');
-                           $('#TaxInvoiceForm').bootstrapValidator('revalidateField', 'ARCode');
-                           $('#TaxInvoiceForm').bootstrapValidator('revalidateField', 'InvToAddress');
+                           validateForm();
                        }
                    }
                    if(invIdList.length == 1){
@@ -1638,10 +1630,6 @@
                        $("#InputInvoiceSupCode").val(invCodeList[0]);
                        $("#InputInvoiceSupName").val(invNameList[0]);
                        $("#InputAPCode").val(invARCodeList[0]);
-                           
-                       $('#TaxInvoiceForm').bootstrapValidator('revalidateField', 'TaxInvTo');
-                       $('#TaxInvoiceForm').bootstrapValidator('revalidateField', 'ARCode');
-                       $('#TaxInvoiceForm').bootstrapValidator('revalidateField', 'InvToAddress');
                    }
                    var event = jQuery.Event('keydown');
                    event.keyCode = 40;

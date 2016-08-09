@@ -964,8 +964,8 @@ public class PaymentAirlineController extends SMITravelController {
         request.setAttribute(AIRLINELIST,mAirlineAgentsList);
         List<MAccpay> mAccpayList = utilityService.getListMAccpay();
         request.setAttribute(PAYBYLIST,mAccpayList);
-        List<InvoiceSupplier> invoiceSupplierList = utilityService.getListInvoiceSuppiler();
-        request.setAttribute(INVOICESUPLIST,invoiceSupplierList);
+//        List<InvoiceSupplier> invoiceSupplierList = utilityService.getListInvoiceSuppiler();
+//        request.setAttribute(INVOICESUPLIST,invoiceSupplierList);
         MDefaultData mDefaultData = utilityService.getMDefaultDataFromType("vat");
         request.setAttribute(VAT,mDefaultData.getValue());
         MDefaultData mDefault = utilityService.getMDefaultDataFromType("withholding tax");

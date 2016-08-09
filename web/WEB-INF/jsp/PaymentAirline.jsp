@@ -876,21 +876,23 @@
                 <h4 class="modal-title"  id="Titlemodel">Invoice Sup</h4>
             </div>
             <div class="modal-body">
+                <div style="text-align: right"> 
+                    <i id="dataload"  class="fa fa-spinner fa-spin hidden"></i> Search : <input type="text" style="width: 175px" id="searchInvoiceSupplier" name="searchInvoiceSupplier"/> 
+                </div> 
                  <table class="display" id="InvoiceSupTable">
                     <thead class="datatable-header">                     
                         <tr>
-                            <th class="hidden">ID</th>
                             <th>Code</th>
                             <th>Name</th>
-                            <th class="hidden">AP Code</th>
+                            <th>AP Code</th>
                         </tr>
                     </thead>
                     <tbody>
                         <script>
                             invoiceSup = [];
                         </script>
-                        <c:forEach var="table" items="${invoiceSupList}">
-                            <tr onclick ="setupInvSupValue()">
+                        <%--<c:forEach var="table" items="${invoiceSupList}">--%>
+<!--                            <tr onclick ="setupInvSupValue()">
                                 <td class="invoice-id hidden">${table.id}</td>
                                 <td class="invoice-code">${table.code}</td>
                                 <td class="invoice-name">${table.name}</td>
@@ -898,10 +900,8 @@
                             </tr>
                             <script>
                                 invoiceSup.push({id: "${table.id}", code: "${table.code}", name: "${table.name}", apcode: "${table.apcode}"});
-                            </script>
-                        </c:forEach>
-                        
-
+                            </script>-->
+                        <%--</c:forEach>--%>                       
                     </tbody>
                 </table>
             </div>
@@ -1321,6 +1321,7 @@ for(var i = 0; i < rad.length; i++) {
 </script>     
 <!--Script-->       
 <script type="text/javascript" charset="utf-8">
+    var showflag = 1;
     $(document).ready(function() {
         $('.datemask').mask('00-00-0000');
         $('.date').datetimepicker();
@@ -1443,25 +1444,25 @@ for(var i = 0; i < rad.length; i++) {
        
        
         
-        $("#InvoiceSupTable tr").on('click', function () {
-            var invoice_id = $(this).find(".invoice-id").text();
-            var invoice_code = $(this).find(".invoice-code").text();
-            var invoice_name = $(this).find(".invoice-name").text();
-            var invoice_apcode = $(this).find(".invoice-apcode").text();
-            $("#invoiceSupId").val(invoice_id);
-            $("#invoiceSupCode").val(invoice_code);
-            $("#invoiceSupName").val(invoice_name);
-            $("#apCode").val(invoice_apcode);
-            $('#PaymentAirlineForm').bootstrapValidator('revalidateField', 'invoiceSupCode');
-            $('#PaymentAirlineForm').bootstrapValidator('revalidateField', 'apCode');
-            validateSaveButton();
-            $("#InvoiceSupModal").modal('hide');
-        });
+//        $("#InvoiceSupTable tr").on('click', function () {
+//            var invoice_id = $(this).find(".invoice-id").text();
+//            var invoice_code = $(this).find(".invoice-code").text();
+//            var invoice_name = $(this).find(".invoice-name").text();
+//            var invoice_apcode = $(this).find(".invoice-apcode").text();
+//            $("#invoiceSupId").val(invoice_id);
+//            $("#invoiceSupCode").val(invoice_code);
+//            $("#invoiceSupName").val(invoice_name);
+//            $("#apCode").val(invoice_apcode);
+//            $('#PaymentAirlineForm').bootstrapValidator('revalidateField', 'invoiceSupCode');
+//            $('#PaymentAirlineForm').bootstrapValidator('revalidateField', 'apCode');
+//            validateSaveButton();
+//            $("#InvoiceSupModal").modal('hide');
+//        });
         
          $('#InvoiceSupTable').dataTable({bJQueryUI: true,
             "sPaginationType": "full_numbers",
             "bAutoWidth": false,
-            "bFilter": true,
+            "bFilter": false,
             "bPaginate": true,
             "bInfo": false,
             "bLengthChange": false,
@@ -1475,44 +1476,45 @@ for(var i = 0; i < rad.length; i++) {
             validateSaveButton();
         });
         
-        var invoiceSupCode = [];
-        $.each(invoiceSup, function (key, value) {
-            invoiceSupCode.push(value.code);
-            invoiceSupCode.push(value.name);
-        });
+//        var invoiceSupCode = [];
+//        $.each(invoiceSup, function (key, value) {
+//            invoiceSupCode.push(value.code);
+//            invoiceSupCode.push(value.name);
+//        });
+//
+//        $("#invoiceSupCode").autocomplete({
+//            source: invoiceSupCode,
+//            close:function( event, ui ) {
+//               $("#invoiceSupCode").trigger('keyup');
+//            }
+//        });
+//        
+//        $("#invoiceSupCode").on('keyup',function(){
+//            var position = $(this).offset();
+//            $(".ui-widget").css("top", position.top + 30);
+//            $(".ui-widget").css("left", position.left);
+//            var code = this.value.toUpperCase();
+//            var name = this.value.toUpperCase();
+//            $("#invoiceSupId,#invoiceSupName,#apCode").val(null);
+//            $.each(invoiceSup, function (key, value) {
+//                
+//                if (value.code.toUpperCase() === code && code.length > 1) {  
+//                    $("#invoiceSupId").val(value.id);
+//                    $("#invoiceSupName").val(value.name);
+//                    $("#apCode").val(value.apcode);
+//                }
+//                else if(value.name.toUpperCase() === name && name.length > 1){
+//                    $("#invoiceSupCode").val(value.code);
+//                    $("#invoiceSupId").val(value.id);
+//                    $("#invoiceSupName").val(value.name);
+//                    $("#apCode").val(value.apcode);
+//                }
+//            });
+//            $('#PaymentAirlineForm').bootstrapValidator('revalidateField', 'invoiceSupCode');
+//            $('#PaymentAirlineForm').bootstrapValidator('revalidateField', 'apCode');
+//            validateSaveButton();
+//        });
 
-        $("#invoiceSupCode").autocomplete({
-            source: invoiceSupCode,
-            close:function( event, ui ) {
-               $("#invoiceSupCode").trigger('keyup');
-            }
-        });
-        
-        $("#invoiceSupCode").on('keyup',function(){
-            var position = $(this).offset();
-            $(".ui-widget").css("top", position.top + 30);
-            $(".ui-widget").css("left", position.left);
-            var code = this.value.toUpperCase();
-            var name = this.value.toUpperCase();
-            $("#invoiceSupId,#invoiceSupName,#apCode").val(null);
-            $.each(invoiceSup, function (key, value) {
-                
-                if (value.code.toUpperCase() === code && code.length > 1) {  
-                    $("#invoiceSupId").val(value.id);
-                    $("#invoiceSupName").val(value.name);
-                    $("#apCode").val(value.apcode);
-                }
-                else if(value.name.toUpperCase() === name && name.length > 1){
-                    $("#invoiceSupCode").val(value.code);
-                    $("#invoiceSupId").val(value.id);
-                    $("#invoiceSupName").val(value.name);
-                    $("#apCode").val(value.apcode);
-                }
-            });
-            $('#PaymentAirlineForm').bootstrapValidator('revalidateField', 'invoiceSupCode');
-            $('#PaymentAirlineForm').bootstrapValidator('revalidateField', 'apCode');
-            validateSaveButton();
-        });
         var wildCardSearch = ($("#wildCardSearch").val()).indexOf("%");
         $("#paymentNo").keyup(function (event) {
             if(event.keyCode === 13){
@@ -1740,6 +1742,39 @@ for(var i = 0; i < rad.length; i++) {
             "bLengthChange": false,
             "iDisplayLength": 10,
             "aaSorting": [[ 0, "desc" ]]
+        });
+        
+        $("#searchInvoiceSupplier").keyup(function() {
+            if ($("#searchInvoiceSupplier").val() !== '') {
+                searchInvoiceSupplierList($("#searchInvoiceSupplier").val());          
+            }
+        });
+        
+        //autocomplete
+        $("#invoiceSupCode").keyup(function(event){ 
+            var position = $(this).offset();
+            $(".ui-widget").css("top", position.top + 30);
+            $(".ui-widget").css("left", position.left); 
+            if($(this).val() === ""){
+                $("#invoiceSupId").val("");
+                $("#invoiceSupCode").val("");
+                $("#invoiceSupName").val("");
+                $("#apCode").val("");
+            }else{
+                if(event.keyCode === 13){
+                    searchInvoiceSupplierListAuto(this.value); 
+                }
+            }
+        });
+        
+        $("#invoiceSupCode").keydown(function(){
+            var position = $(this).offset();
+            $(".ui-widget").css("top", position.top + 30);
+            $(".ui-widget").css("left", position.left); 
+            if(showflag == 0){
+                $(".ui-widget").css("top", -1000);
+                showflag=1;
+            }
         });
         
     });
@@ -3009,6 +3044,177 @@ function calculateTotalDrCrAmount(){
     }
     document.getElementById('totalDrAmount').value = formatNumber(grandDrTotal);
     document.getElementById('totalCrAmount').value = formatNumber(grandCrTotal);
+}
+
+function searchInvoiceSupplierList(name) {
+    name = generateSpecialCharacter(name);
+    var servletName = 'MListItemServlet';
+    var servicesName = 'AJAXBean';
+    var param = 'action=' + 'text' +
+                    '&servletName=' + servletName +
+                    '&servicesName=' + servicesName +
+                    '&name=' + name +
+                    '&type=' + 'getInvoiceSupplierList';
+    CallAjaxGetInvoiceSuplierList(param);
+}
+
+function CallAjaxGetInvoiceSuplierList(param) {
+    var url = 'AJAXServlet';
+    $("#ajaxload").removeClass("hidden");
+    try {
+        $.ajax({
+            type: "POST",
+            url: url,
+            cache: false,
+            data: param,
+            success: function(msg) {
+                if(msg !== 'fail'){
+                    $('#InvoiceSupTable').dataTable().fnClearTable();
+                    $('#InvoiceSupTable').dataTable().fnDestroy();
+                    $("#InvoiceSupTable tbody").empty().append(msg);
+
+                    $('#InvoiceSupTable').dataTable({bJQueryUI: true,
+                        "sPaginationType": "full_numbers",
+                        "bAutoWidth": false,
+                        "bFilter": false,
+                        "bPaginate": true,
+                        "bInfo": false,
+                        "bLengthChange": false,
+                        "iDisplayLength": 10
+                    });
+
+                    $("#ajaxload").addClass("hidden");
+                }
+
+            }, error: function(msg) {
+                $("#ajaxload").addClass("hidden");
+            }
+        });
+    } catch (e) {
+        $("#ajaxload").addClass("hidden");
+    }
+}
+
+function searchInvoiceSupplierListAuto(name){
+    name = generateSpecialCharacter(name);
+    var servletName = 'MListItemServlet';
+    var servicesName = 'AJAXBean';
+    var param = 'action=' + 'text' +
+            '&servletName=' + servletName +
+            '&servicesName=' + servicesName +
+            '&name=' + name +
+            '&type=' + 'getInvoiceSupplierListAuto';
+    CallAjaxGetInvoiceSuplierListAuto(param);
+}
+
+function CallAjaxGetInvoiceSuplierListAuto(param){
+    var url = 'AJAXServlet';
+    var invArray = [];
+    var invIdList = [];
+    var invCodeList = [];
+    var invNameList = [];
+    var invARCodeList = [];
+    var invId , invCode , invName , invARCode;
+    $("#invoiceSupCode").autocomplete("destroy");
+    try {
+        $.ajax({
+           type: "POST",
+           url: url,
+           cache: false,
+           data: param,
+           beforeSend: function() {
+              $("#dataload").removeClass("hidden");    
+           },
+           success: function(msg) {     
+               var invJson =  JSON.parse(msg);
+               for (var i in invJson){
+                   if (invJson.hasOwnProperty(i)){
+                       invId = invJson[i].id;
+                       invCode = invJson[i].code;
+                       invName = invJson[i].name;
+                       invARCode = invJson[i].arcode;
+                       invArray.push(invCode);
+                       invArray.push(invName);
+                       invIdList.push(invId);
+                       invCodeList.push(invCode);
+                       invNameList.push(invName);
+                       invARCodeList.push(invARCode);                          
+                   }                 
+                    $("#dataload").addClass("hidden"); 
+               }
+               $("#invoiceSupId").val(invId);
+               $("#invoiceSupCode").val(invCode);
+               $("#invoiceSupName").val(invName);
+               $("#apCode").val(invARCode);
+
+               $("#invoiceSupCode").autocomplete({
+                   source: invArray,
+                   close: function(){
+                        $("#invoiceSupCode").trigger("keyup");
+                        var invselect = $("#invoiceSupCode").val();
+                        for(var i =0;i<invIdList.length;i++){
+                            if((invselect==invCodeList[i])||(invselect==invNameList[i])){      
+                               $("#invoiceSupId").val(invIdList[i]);
+                               $("#invoiceSupCode").val(invCodeList[i]);
+                               $("#invoiceSupName").val(invNameList[i]);
+                               $("#apCode").val(invARCodeList[i]);
+
+                               $('#PaymentAirlineForm').bootstrapValidator('revalidateField', 'invoiceSupCode');
+                               $('#PaymentAirlineForm').bootstrapValidator('revalidateField', 'apCode');
+                               validateSaveButton();
+                            }                 
+                        }   
+                   }
+                });
+
+               var invval = $("#invoiceSupCode").val();
+               for(var i =0;i<invIdList.length;i++){
+                   if(invval==invNameList[i]){
+                       $("#invoiceSupId").val(invIdList[i]);
+                       $("#invoiceSupCode").val(invCodeList[i]);
+                       $("#invoiceSupName").val(invNameList[i]);
+                       $("#apCode").val(invARCodeList[i]);
+
+                       $('#PaymentAirlineForm').bootstrapValidator('revalidateField', 'invoiceSupCode');
+                       $('#PaymentAirlineForm').bootstrapValidator('revalidateField', 'apCode');
+                       validateSaveButton();
+                   }
+               }
+               if(invIdList.length == 1){
+                   showflag = 0;
+                   $("#invoiceSupId").val(invIdList[0]);
+                   $("#invoiceSupCode").val(invCodeList[0]);
+                   $("#invoiceSupName").val(invNameList[0]);
+                   $("#apCode").val(invARCodeList[0]);
+
+                   $('#PaymentAirlineForm').bootstrapValidator('revalidateField', 'invoiceSupCode');
+                   $('#PaymentAirlineForm').bootstrapValidator('revalidateField', 'apCode');
+                   validateSaveButton();
+               }
+               var event = jQuery.Event('keydown');
+               event.keyCode = 40;
+               $("#invoiceSupCode").trigger(event);
+
+            }, error: function(msg) {
+               console.log('auto ERROR');
+               $("#dataload").addClass("hidden");
+            }
+        });
+    } catch (e) {
+
+    }
+}
+
+function setupInvSupValue(id,code,name,apcode){
+    document.getElementById('invoiceSupId').value = id;
+    document.getElementById('invoiceSupCode').value = code;
+    document.getElementById('invoiceSupName').value = name;
+    document.getElementById('apCode').value = apcode;
+    document.getElementById('invoiceSupCode').focus();
+    $('#PaymentAirlineForm').bootstrapValidator('revalidateField', 'invoiceSupCode');
+    $('#PaymentAirlineForm').bootstrapValidator('revalidateField', 'apCode');
+    validateSaveButton();
+    $("#InvoiceSupModal").modal('hide');
 }
 
 </script>
