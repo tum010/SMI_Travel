@@ -1394,6 +1394,9 @@ public class AJAXBean extends AbstractBean implements
                     result = "fail";
                 }
                 
+            } else if("getInvoiceSupplierListAuto".equalsIgnoreCase(type)){
+                String name = map.get("name").toString();
+                result = buildInvoiceSupplierListJSON(paymentWendytourDao.getListInvoiceSuppilerBySQLQuery(name));
             }
         }
         
@@ -2674,6 +2677,21 @@ public class AJAXBean extends AbstractBean implements
                 field.put("name", customer.getBillName());
                 field.put("address", customer.getAddress());
                 field.put("type", customer.getType());
+                record.add(field);
+            }
+        }    
+        return record;
+    }
+    
+    public JSONArray buildInvoiceSupplierListJSON(List<InvoiceSupplier> invoiceSupplierList) {
+        JSONArray record = new JSONArray();
+        if(invoiceSupplierList != null){
+            for (InvoiceSupplier a : invoiceSupplierList) {
+                JSONObject field = new JSONObject();
+                field.put("id", a.getId());
+                field.put("code", a.getCode());
+                field.put("name", a.getName());
+                field.put("arcode", a.getApcode());
                 record.add(field);
             }
         }    
