@@ -259,16 +259,16 @@ function addRowRefundAirlineList() {
         });
         $(".datetime").datetimepicker({
         });
-        $(".decimal").inputmask({
-            alias: "decimal",
-            integerDigits: 8,
-            groupSeparator: ',',
-            autoGroup: true,
-            digits: 2,
-            allowMinus: false,
-            digitsOptional: false,
-            placeholder: "0.00"
-        });
+//        $(".decimal").inputmask({
+//            alias: "decimal",
+//            integerDigits: 8,
+//            groupSeparator: ',',
+//            autoGroup: true,
+//            digits: 2,
+//            allowMinus: false,
+//            digitsOptional: false,
+//            placeholder: "0.00"
+//        });
         $("#counter").val(counter);
 
         if (this.id.startsWith("ticketNo")) {
