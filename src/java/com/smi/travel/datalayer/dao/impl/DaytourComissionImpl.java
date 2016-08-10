@@ -41,7 +41,7 @@ public class DaytourComissionImpl implements DaytourComissionDao {
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
 //        String query = GET_BOOKCOMISSION_QUERY;
-        String query = " SELECT * FROM daytour_booking_view_min db WHERE db.tourdate >= '"+ StartDate +"' AND db.tourdate <= '"+ EndDate +"' AND db.`status` = 1 AND db.`bookingstatus` <> 3 AND db.`bookingstatus` <> 4 " ;
+        String query = " SELECT * FROM daytour_booking_view_min db WHERE db.tourdate >= '"+ StartDate +"' AND db.tourdate <= '"+ EndDate +"'  " ;
         if((agentID != null) &&(!"".equalsIgnoreCase(agentID))){
             query += " and db.agentid = "+agentID;
         }
@@ -50,13 +50,6 @@ public class DaytourComissionImpl implements DaytourComissionDao {
         }
         query += " order by db.tourdate , db.`daytourcode` , db.refno ";
         System.out.println("query : "+query);
-//        List<DaytourBooking> list = session.createQuery(query)
-//                .setParameter("startdate", util.convertStringToDate(StartDate))
-//                .setParameter("enddate", util.convertStringToDate(EndDate))
-//                .list();
-//        if (list.isEmpty()) {
-//            return null;
-//        }
         
         List<DaytourBookingViewMin> list = new ArrayList<DaytourBookingViewMin>();
 
