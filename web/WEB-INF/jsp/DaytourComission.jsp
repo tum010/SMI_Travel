@@ -175,7 +175,7 @@
                     </script>
                     <c:forEach var="guide" items="${guideList}" >
                         <script>
-                            guideName.push({value: "${guide.id}", label: "${guide.name}"});
+                            guideName.push({value: "${guide.id}", label: "${guide.name} ${guide.tel}"});
                         </script>
                     </c:forEach>
                     <script>
