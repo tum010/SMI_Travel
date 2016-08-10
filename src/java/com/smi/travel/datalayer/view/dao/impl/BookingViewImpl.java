@@ -45,7 +45,8 @@ public class BookingViewImpl implements BookingViewDao{
         boolean isBookingViewMin = false;
         if((pnr == null || "".equals(pnr)) && (ticketNo == null || "".equals(ticketNo)) && (payBy == null || "".equals(payBy)) && (bankTransfer == null || "".equals(bankTransfer)) 
                 && (transferDateFrom == null || "".equals(transferDateFrom)) && (transferDateTo == null || "".equals(transferDateTo))){
-            query = "select `mt`.`Reference No` AS `ref_no`,`ag`.`code` AS `agent_code`,concat(`mi`.`name`,' ',`cm`.`last_name`,' ',`cm`.`first_name`) AS `leader_name`,"
+//            query = "from BookingViewMin book where ";
+            query = "select `mt`.`Reference No` AS `ref_no`,`ag`.`code` AS `agent_code`,`GET_LEADER_NAME`(`mt`.`id`) AS `leader_name`,"
                     + "`bs`.`name` AS `status_name`,`bs`.`id` AS `status_id`,'' AS `pnr`,ifnull(`bvt`.`hotel`,'') AS `hotel_name`,'' AS `first_depart_date`,'' AS `first_checkin_date`,"
                     + "`mt`.`Create_date` AS `Create_date`,`mt`.`Create_by` AS `Create_by`,`dm`.`name` AS `department_name`,`dm`.`id` AS `department_id`,"
                     + "'' AS `tel`,'' AS `remark`,'' AS `ticket_no`,'' AS `email`,'' AS `payby`,'' AS `accid`,'' AS `transfer_date`,"
@@ -61,19 +62,40 @@ public class BookingViewImpl implements BookingViewDao{
                     + "left join `billable` `bill` on((`bill`.`master_id` = `mt`.`id`))) "
                     + "left join `booking_daytour_view` `bdv` on((`bdv`.`master_id` = `mt`.`id`))) "
                     + "left join `booking_view_hotel` `bvt` on((`bvt`.`id` = `mt`.`id`))) "
-                    + "where (`pg`.`is_leader` = 1) ";
+                    + "where  ";
             isBookingViewMin = true;
         
         } else {
-            query = "from BookingView book where ";
+//            query = "from BookingView book where ";
+            query = "select distinct `mt`.`Reference No` AS `ref_no`,`ag`.`code` AS `agent_code`,`GET_LEADER_NAME`(`mt`.`id`) AS `leader_name`,"
+                    + "`bs`.`name` AS `status_name`,`bs`.`id` AS `status_id`,ifnull(`bpnr`.`pnr`,'') AS `pnr`,ifnull(`bvt`.`hotel`,'') AS `hotel_name`,"
+                    + "`GET_MIN_DEPART_DATE`(`mt`.`id`) AS `first_depart_date`,`GET_MIN_CHECKIN_DATE`(`mt`.`id`) AS `first_checkin_date`,`mt`.`Create_date` AS `Create_date`,"
+                    + "`mt`.`Create_by` AS `Create_by`,`dm`.`name` AS `department_name`,`dm`.`id` AS `department_id`,`cm`.`tel` AS `tel`,`cm`.`remark` AS `remark`,"
+                    + "'' AS `ticket_no`,`cm`.`email` AS `email`,`bill`.`pay_by` AS `payby`,`bill`.`acc_id` AS `accid`,`bill`.`transfer_date` AS `transfer_date`,"
+                    + "`bdv`.`tour_date` AS `tour_date`,`bdv`.`tour_code` AS `tour_code` "
+                    + "from (((((((((((`master` `mt` "
+                    + "left join `agent` `ag` on((`mt`.`Agent_id` = `ag`.`id`))) "
+                    + "left join `passenger` `pg` on((`mt`.`id` = `pg`.`master_id`))) "
+                    + "left join `customer` `cm` on((`pg`.`customer_id` = `cm`.`id`))) "
+                    + "left join `m_initialname` `mi` on((`cm`.`initial_name` = `mi`.`id`))) "
+                    + "left join `m_bookingstatus` `bs` on((`mt`.`Status` = `bs`.`id`))) "
+                    + "left join `staff` `st` on((`mt`.`Staff_id` = `st`.`id`))) "
+                    + "left join `m_department` `dm` on((`st`.`department_id` = `dm`.`id`))) "
+                    + "left join `billable` `bill` on((`bill`.`master_id` = `mt`.`id`))) "
+                    + "left join `booking_daytour_view` `bdv` on((`bdv`.`master_id` = `mt`.`id`))) "
+                    + "left join `booking_view_hotel` `bvt` on((`bvt`.`id` = `mt`.`id`))) "
+                    + "left join `booking_view_pnr` `bpnr` on((`bpnr`.`id` = `mt`.`id`))) "
+                    + "where  ";
+            isBookingViewMin = true;
         }
         
         String subquery = " book.refno in (select master.referenceNo from Passenger p ";
         Session session = this.sessionFactory.openSession();
-        int check = 1;
+        int check = 0;
         int checksub = 0;
 
         if ((refno != null) && (!"".equalsIgnoreCase(refno))) {
+            if (check == 1) {query += " and ";}
             query += " `mt`.`Reference No` = '" +refno +"'";
             check = 1;
         }
@@ -104,24 +126,28 @@ public class BookingViewImpl implements BookingViewDao{
         
         if ((pnr != null) && (!"".equalsIgnoreCase(pnr))) {
             if (check == 1) {query += " and ";}
-            query += " ifnull(`bpnr`.`pnr`, '') Like '%" +pnr +"%'";
+            query += " ifnull(`bpnr`.`pnr`, '') Like '%" + pnr + "%'";
             check = 1;
         }
         
-//        if ((ticketNo != null) && (!"".equalsIgnoreCase(ticketNo))) {
-//            if (check == 1) {query += " and ";}
-//            query += " book.ticketNo like '%" +ticketNo +"%'";
-//            check = 1;
-//        }
+        if ((ticketNo != null) && (!"".equalsIgnoreCase(ticketNo))) {
+            if (check == 1) {query += " and ";}
+            query += " GET_TICKETNO_FROM_REFNO(mt.`Reference No`) like '%" + ticketNo + "%' COLLATE utf8_unicode_ci";
+            check = 1;
+        }
 //        
-//        if ((passFirst != null) && (!"".equalsIgnoreCase(passFirst))) {
-//            if (check == 1) {query += " and ";}
+        if ((passFirst != null) && (!"".equalsIgnoreCase(passFirst))) {
+            if (check == 1) {query += " and ";}
 //            subquery += " where p.customer.firstName like '%"+passFirst+"%'";
 //            checksub = 1;
-//            check = 1;
-//        }
-//
-//        if ((passLast != null) && (!"".equalsIgnoreCase(passLast))) {
+            query += " `cm`.`first_name` like '%" + passFirst + "%' ";
+            check = 1;
+        }
+
+        if ((passLast != null) && (!"".equalsIgnoreCase(passLast))) {
+            if (check == 1) {query += " and ";}
+            query += " `cm`.`last_name` like '%" + passLast + "%' ";
+            check = 1;
 //            if ((check == 1)&&(checksub != 1)) {query += " and ";}
 //            check = 1;
 //            if(checksub == 1){
@@ -131,7 +157,7 @@ public class BookingViewImpl implements BookingViewDao{
 //            }
 //            checksub = 1;
 //            subquery += "  p.customer.lastName like '%"+passLast+"%'";
-//        }
+        }
         
         if ((payBy != null) && (!"".equalsIgnoreCase(payBy))) {
             if (check == 1) {query += " and ";}
@@ -167,8 +193,8 @@ public class BookingViewImpl implements BookingViewDao{
         query += " group by `mt`.`id` order by `mt`.`Reference No` desc ";
          System.out.println("query book view  : "+query);
        // List<BookingView> BookingList = session.createQuery(query).list();
-        Query HqlQuery = session.createQuery(query);
-        HqlQuery.setMaxResults(MAX_ROW);
+//        Query HqlQuery = session.createQuery(query);
+//        HqlQuery.setMaxResults(MAX_ROW);
         
         List<BookingView> BookingList = new ArrayList<>();
         if(isBookingViewMin){
@@ -194,7 +220,7 @@ public class BookingViewImpl implements BookingViewDao{
                     .addScalar("tel", Hibernate.STRING)
                     .addScalar("remark", Hibernate.STRING)
                     .addScalar("email", Hibernate.STRING)                                      
-                    .addScalar("payid", Hibernate.STRING)
+                    .addScalar("payby", Hibernate.STRING)
                     .addScalar("accid", Hibernate.STRING)
                     .addScalar("tour_code", Hibernate.STRING)
                     .setMaxResults(500)
@@ -205,10 +231,10 @@ public class BookingViewImpl implements BookingViewDao{
             }
                       
         } else {
-            BookingList = HqlQuery.list();      
-            if (BookingList.isEmpty()) {
-                return null;
-            }
+//            BookingList = HqlQuery.list();      
+//            if (BookingList.isEmpty()) {
+//                return null;
+//            }
         }
         
         return BookingList;
