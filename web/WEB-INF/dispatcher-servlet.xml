@@ -447,6 +447,7 @@
 		<property name="utilservice" ref="UtilityService" />
 		<property name="OtherService" ref="BookingOtherService" />
                 <property name="passsengerService" ref="PassengerService" />
+                <property name="stockService" ref="StockService" />
 	</bean>
 
 	<bean id="MProductCommissionController" class="com.smi.travel.controller.MProductCommissionController">
@@ -824,10 +825,10 @@
 		<property name="bookingAirticketService" ref="BookingAirticket" />
 	</bean>
 
-        <task:scheduled-tasks> 
+<!--        <task:scheduled-tasks> 
             <task:scheduled ref="monitorAmadeus" method="run" fixed-delay="5000" /> 
             <task:scheduled ref="monitorGalileo" method="run" fixed-delay="5000" /> 
-        </task:scheduled-tasks>  
+        </task:scheduled-tasks>  -->
 
 	<bean id="MProductTypeController"
 		class="com.smi.travel.masterdata.controller.MProductTypeController">
