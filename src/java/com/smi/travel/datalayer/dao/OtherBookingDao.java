@@ -6,12 +6,12 @@
 
 package com.smi.travel.datalayer.dao;
 
-import com.smi.travel.datalayer.entity.Customer;
 import com.smi.travel.datalayer.entity.OtherBooking;
 import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.report.model.OtherAgentCommission;
 import com.smi.travel.datalayer.report.model.OtherGuideCommissionInfo;
 import com.smi.travel.datalayer.view.entity.OtherBookingView;
+import com.smi.travel.datalayer.view.entity.OtherBookingViewMin;
 import com.smi.travel.datalayer.view.entity.OtherTicketView;
 import java.util.List;
 
@@ -24,7 +24,7 @@ public interface OtherBookingDao {
     public List<OtherBookingView> getListBookingAllView(String name);
     public List<OtherBooking> getListBookingAll();
     public OtherBooking getBookDetailOtherFromID(String OtherBookingID);
-    public List<OtherBooking> getListBookingOtherComission(String StartDate, String EndDate,String agentID,String guideID);
+    public List<OtherBookingViewMin> getListBookingOtherComission(String StartDate, String EndDate,String agentID,String guideID);
     public List<String> insertBookDetailOther(OtherBooking otherbook, SystemUser user);
     public List<String> updateBookDetailOther(OtherBooking otherbook);
     public int cancelBookDetailOther(String otherID);

@@ -12,6 +12,7 @@ import com.smi.travel.datalayer.service.BookingDetailService;
 import com.smi.travel.datalayer.service.BookingOtherService;
 import com.smi.travel.datalayer.service.DaytourCommissionService;
 import com.smi.travel.datalayer.service.UtilityService;
+import com.smi.travel.datalayer.view.entity.OtherBookingViewMin;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
@@ -64,7 +65,6 @@ public class DaytourOtherComissionController extends SMITravelController {
         String selectGuideId = request.getParameter("SelectGuide");
         String selectAgentId = request.getParameter("agent_id");
         String dayCommRows = request.getParameter("dayCommRows");
-    
         
         log.info("Action " + action);
         log.info("search DaytourCommission dateFrom: " + dateFromS + ", dateTo:" + dateToS);
@@ -75,12 +75,12 @@ public class DaytourOtherComissionController extends SMITravelController {
             String result = bookingOtherService.saveOtherBookCommission(saveDaytourBookingList);
             request.setAttribute(TransactionResult, result);
 
-            List<OtherBooking> dBookingList = bookingOtherService.getListBookingDaytourComission(dateFromS, dateToS, selectAgentId, selectGuideId);
+            List<OtherBookingViewMin> dBookingList = bookingOtherService.getListBookingDaytourComission(dateFromS, dateToS, selectAgentId, selectGuideId);
             request.setAttribute(BookingList, dBookingList);
         } else if ("search".equalsIgnoreCase(action)) {
            
             if (StringUtils.isNotEmpty(dateFromS) && StringUtils.isNotEmpty(dateToS)) {
-                List<OtherBooking> dBookingList = bookingOtherService.getListBookingDaytourComission(dateFromS, dateToS, selectAgentId, selectGuideId);
+                List<OtherBookingViewMin> dBookingList = bookingOtherService.getListBookingDaytourComission(dateFromS, dateToS, selectAgentId, selectGuideId);
                 
                 if(dBookingList != null){
                     request.setAttribute(BookingList, dBookingList);
@@ -108,7 +108,7 @@ public class DaytourOtherComissionController extends SMITravelController {
             String agentAdd =  request.getParameter("agentAdd");
             String guideAdd =  request.getParameter("guideAdd");
             if (StringUtils.isNotEmpty(fromdateAdd) && StringUtils.isNotEmpty(todateAdd)) {
-                List<OtherBooking> dBookingList = bookingOtherService.getListBookingDaytourComission(fromdateAdd, todateAdd, agentAdd, guideAdd);
+                List<OtherBookingViewMin> dBookingList = bookingOtherService.getListBookingDaytourComission(fromdateAdd, todateAdd, agentAdd, guideAdd);
                 if(dBookingList != null){
                     request.setAttribute(BookingList, dBookingList);
                     dateFromS = fromdateAdd;

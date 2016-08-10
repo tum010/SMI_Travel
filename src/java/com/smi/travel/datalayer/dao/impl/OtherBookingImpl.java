@@ -21,7 +21,9 @@ import com.smi.travel.datalayer.report.model.OtherAgentCommissionSummaryReport;
 import com.smi.travel.datalayer.report.model.OtherGuideCommissionInfo;
 import com.smi.travel.datalayer.report.model.OtherGuideCommissionSummary;
 import com.smi.travel.datalayer.report.model.OtherGuideCommissionSummaryHeader;
+import com.smi.travel.datalayer.view.entity.DaytourBookingViewMin;
 import com.smi.travel.datalayer.view.entity.OtherBookingView;
+import com.smi.travel.datalayer.view.entity.OtherBookingViewMin;
 import com.smi.travel.datalayer.view.entity.OtherTicketView;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
@@ -723,28 +725,131 @@ public class OtherBookingImpl implements OtherBookingDao{
     }
 
     @Override
-    public List<OtherBooking> getListBookingOtherComission(String StartDate, String EndDate, String agentID, String guideID) {
+    public List<OtherBookingViewMin> getListBookingOtherComission(String StartDate, String EndDate, String agentID, String guideID) {
+//        Session session = this.sessionFactory.openSession();
+//        UtilityFunction util = new UtilityFunction();
+//        String query = GET_BOOKOTHER_QUERY;
+//        System.out.println("agentID + "+agentID);
+//        System.out.println("guideID + "+guideID);
+//        if((agentID != null) &&(!"".equalsIgnoreCase(agentID))){
+//            query += " and ot.agent.id = "+agentID;
+//        }
+//        if((guideID != null) &&(!"".equalsIgnoreCase(guideID))){
+//            query += " and ot.guide.id = "+guideID;
+//        }
+//        query += " order by ot.otherDate,ot.product.code,ot.master.referenceNo";
+//        System.out.println("query : "+query);
+//        List<OtherBooking> list = session.createQuery(query)
+//                .setParameter("startdate", util.convertStringToDate(StartDate))
+//                .setParameter("enddate", util.convertStringToDate(EndDate))
+//                .list();
+//        if (list.isEmpty()) {
+//            return null;
+//        }
+//
+//        return list;
+        
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
-        String query = GET_BOOKOTHER_QUERY;
-        System.out.println("agentID + "+agentID);
-        System.out.println("guideID + "+guideID);
+        String query = " SELECT * FROM other_booking_view_min ot WHERE ot.otherdate >= '"+ StartDate +"' AND ot.otherdate <= '"+ EndDate+"' " ;
         if((agentID != null) &&(!"".equalsIgnoreCase(agentID))){
-            query += " and ot.agent.id = "+agentID;
+            query += " and ot.agentid = "+agentID;
         }
         if((guideID != null) &&(!"".equalsIgnoreCase(guideID))){
-            query += " and ot.guide.id = "+guideID;
+            query += " and ot.guideid = "+guideID;
         }
-        query += " order by ot.otherDate,ot.product.code,ot.master.referenceNo";
+        query += " order by ot.otherdate , ot.`productcode` , ot.refno ";
         System.out.println("query : "+query);
-        List<OtherBooking> list = session.createQuery(query)
-                .setParameter("startdate", util.convertStringToDate(StartDate))
-                .setParameter("enddate", util.convertStringToDate(EndDate))
-                .list();
-        if (list.isEmpty()) {
-            return null;
-        }
+        
+        List<OtherBookingViewMin> list = new ArrayList<OtherBookingViewMin>();
 
+        List<Object[]> QueryStaffList = session.createSQLQuery(query)
+                .addScalar("id", Hibernate.STRING)
+                .addScalar("masterid", Hibernate.STRING)
+                .addScalar("productid", Hibernate.STRING)
+                .addScalar("agentid", Hibernate.STRING)
+                .addScalar("adcost", Hibernate.STRING)
+                .addScalar("adprice", Hibernate.STRING)
+                .addScalar("adqty", Hibernate.STRING)
+                .addScalar("chcost", Hibernate.STRING)
+                .addScalar("chprice", Hibernate.STRING)
+                .addScalar("chqty", Hibernate.STRING)
+                .addScalar("incost", Hibernate.STRING)
+                .addScalar("inprice", Hibernate.STRING)
+                .addScalar("inqty", Hibernate.STRING)
+                .addScalar("status", Hibernate.STRING)
+                .addScalar("otherdate", Hibernate.DATE)
+                .addScalar("othertime", Hibernate.STRING)
+                .addScalar("remark", Hibernate.STRING)
+                .addScalar("canceldate", Hibernate.STRING)
+                .addScalar("isbill", Hibernate.STRING)
+                .addScalar("curcost", Hibernate.STRING)
+                .addScalar("agentcommission", Hibernate.STRING)
+                .addScalar("guidecommission", Hibernate.STRING)
+                .addScalar("remarkguidecommission", Hibernate.STRING)
+                .addScalar("remarkagentcommission", Hibernate.STRING)
+                .addScalar("guideid", Hibernate.STRING)
+                .addScalar("remarkticket", Hibernate.STRING)
+                .addScalar("curamount", Hibernate.STRING)
+                .addScalar("otherdateto", Hibernate.STRING)
+                .addScalar("memo", Hibernate.STRING)
+                .addScalar("stockid", Hibernate.STRING)
+                .addScalar("bookingstatus", Hibernate.STRING)
+                .addScalar("booktype", Hibernate.STRING)
+                .addScalar("productcode", Hibernate.STRING)
+                .addScalar("refno", Hibernate.STRING)
+                .addScalar("initialname", Hibernate.STRING)
+                .addScalar("firstname", Hibernate.STRING)
+                .addScalar("lastname", Hibernate.STRING)
+                .addScalar("guidename", Hibernate.STRING)
+                .addScalar("agentname", Hibernate.STRING)
+                .addScalar("productname", Hibernate.STRING)
+                .list();
+        
+        for (Object[] B : QueryStaffList) {
+            OtherBookingViewMin ot = new OtherBookingViewMin();
+            ot.setId(B[0]== null ? "" :util.ConvertString(B[0]));
+            ot.setMasterid(B[1]== null ? "" :util.ConvertString(B[1]));
+            ot.setProductid(B[2]== null ? "" :util.ConvertString(B[2]));
+            ot.setAgentid(B[3]== null ? "" :util.ConvertString(B[3]));
+            ot.setAdcost(B[4]== null ? "" :util.ConvertString(B[4]));
+            ot.setAdprice(B[5]== null ? "" :util.ConvertString(B[5]));
+            ot.setAdqty(B[6]== null ? "" :util.ConvertString(B[6]));
+            ot.setChcost(B[7]== null ? "" :util.ConvertString(B[7]));
+            ot.setChprice(B[8]== null ? "" :util.ConvertString(B[8]));
+            ot.setChqty(B[9]== null ? "" :util.ConvertString(B[9]));
+            ot.setIncost(B[10]== null ? "" :util.ConvertString(B[10]));
+            ot.setInprice(B[11]== null ? "" :util.ConvertString(B[11]));
+            ot.setInqty(B[12]== null ? "" :util.ConvertString(B[12]));
+            ot.setStatus(B[13]== null ? "" :util.ConvertString(B[13]));
+            ot.setOtherdate(B[14]== null ? null : util.convertStringToDate(util.ConvertString(B[14])));
+            ot.setOthertime(B[15]== null ? "" :util.ConvertString(B[15]));
+            ot.setRemark(B[16]== null ? "" :util.ConvertString(B[16]));
+            ot.setCanceldate(B[17]== null ? "" :util.ConvertString(B[17]));
+            ot.setIsbill(B[18]== null ? "" :util.ConvertString(B[18]));
+            ot.setCurcost(B[19]== null ? "" :util.ConvertString(B[19]));
+            ot.setAgentcommission(B[20]== null ? "" :util.ConvertString(B[20]));
+            ot.setGuidecommission(B[21]== null ? "" :util.ConvertString(B[21]));
+            ot.setRemarkguidecommission(B[22]== null ? "" :util.ConvertString(B[22]));
+            ot.setRemarkagentcommission(B[23]== null ? "" :util.ConvertString(B[23]));
+            ot.setGuideid(B[24]== null ? "" :util.ConvertString(B[24]));
+            ot.setRemarkticket(B[25]== null ? "" :util.ConvertString(B[25]));
+            ot.setCuramount(B[26]== null ? "" :util.ConvertString(B[26]));
+            ot.setOtherdateto(B[27]== null ? "" :util.ConvertString(B[27]));
+            ot.setMemo(B[28]== null ? "" :util.ConvertString(B[28]));
+            ot.setStockid(B[29]== null ? "" :util.ConvertString(B[29]));
+            ot.setBookingstatus(B[30]== null ? "" :util.ConvertString(B[30]));
+            ot.setBooktype(B[31]== null ? "" :util.ConvertString(B[31]));
+            ot.setProductcode(B[32]== null ? "" :util.ConvertString(B[32]));
+            ot.setRefno(B[33]== null ? "" :util.ConvertString(B[33]));
+            ot.setInitialname(B[34]== null ? "" :util.ConvertString(B[34]));
+            ot.setFirstname(B[35]== null ? "" :util.ConvertString(B[35]));
+            ot.setLastname(B[36]== null ? "" :util.ConvertString(B[36]));
+            ot.setGuidename(B[37]== null ? "" :util.ConvertString(B[37]));
+            ot.setAgentname(B[38]== null ? "" :util.ConvertString(B[38]));
+            ot.setProductname(B[39]== null ? "" :util.ConvertString(B[39]));
+            list.add(ot);
+        }
         return list;
     }
 

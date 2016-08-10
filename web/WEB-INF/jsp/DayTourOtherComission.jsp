@@ -183,33 +183,32 @@
                     <tbody>
                         <c:forEach var="item" items="${bookingList}" varStatus="status" >
                             <tr>
-                                <input type="hidden" id="adPrice-${status.count}" name="adPrice-" value="${item.adPrice}">
-                                <input type="hidden" id="adQty-${status.count}" name="adQty-" value="${item.adQty}">
-                                <input type="hidden" id="chPrice-${status.count}" name="chPrice-" value="${item.chPrice}">
-                                <input type="hidden" id="chQty-${status.count}" name="chQty-" value="${item.chQty}">
-                                <input type="hidden" id="inPrice-${status.count}" name="inPrice-" value="${item.inPrice}">
-                                <input type="hidden" id="inQty-${status.count}" name="inQty-" value="${item.inQty}">
+                                <input type="hidden" id="adPrice-${status.count}" name="adPrice-" value="${item.adprice}">
+                                <input type="hidden" id="adQty-${status.count}" name="adQty-" value="${item.adqty}">
+                                <input type="hidden" id="chPrice-${status.count}" name="chPrice-" value="${item.chprice}">
+                                <input type="hidden" id="chQty-${status.count}" name="chQty-" value="${item.chqty}">
+                                <input type="hidden" id="inPrice-${status.count}" name="inPrice-" value="${item.inprice}">
+                                <input type="hidden" id="inQty-${status.count}" name="inQty-" value="${item.inqty}">
                                 <td class="hide"><input type="hidden" id="daytourBookingId-${status.count}" name="daytourBookingId-" value="${item.id}"></td>
-                                <td>${item.product.code}</td>
-                                <td>${item.product.name}</td>
+                                <td>${item.productcode}</td>
+                                <td>${item.productname}</td>
                                 <td>
-                                    <c:set var="otherDate" value="${item.otherDate}" />
-                                    <fmt:parseDate value="${otherDate}" var="otherDate" pattern="yyyy-MM-dd" />
+                                    <c:set var="otherDate" value="${item.otherdate}" />
                                     <fmt:formatDate value="${otherDate}" var="otherDate" pattern="dd-MM-yyyy" />
                                     <input type="hidden" class="form-control" id="otherDate-${status.count}" name="otherDate-" 
                                            value="${otherDate}" maxlength="14">
                                     ${otherDate}
                                 </td>
-                                <c:set var="refno1" value="${fn:substring(item.master.referenceNo,0,2)}" />
-                                <c:set var="refno2" value="${fn:substring(item.master.referenceNo,2,7)}" />   
+                                <c:set var="refno1" value="${fn:substring(item.refno,0,2)}" />
+                                <c:set var="refno2" value="${fn:substring(item.refno,2,7)}" />   
                                 <td><center>${refno1}-${refno2}</center></td>
-                                <td>${item.master.customer.firstName} ${item.master.customer.lastName}</td>
+                                <td>${item.firstname} ${item.lastname}</td>
                                 <td class="selectGuide form-group">  
-                                    <select class="guidename"  id="selectGuide-${status.count}" name="selectGuide-" onchange="getGuideCommission('${item.guide.name}','guideComm-${status.count}');getGuideComm(${status.count});" onfocus="setDecimalFormat();" class="selectize"   >
+                                    <select class="guidename"  id="selectGuide-${status.count}" name="selectGuide-" onchange="getGuideCommission('${item.guidename}','guideComm-${status.count}');getGuideComm(${status.count});" onfocus="setDecimalFormat();" class="selectize"   >
                                         <option value="" ></option>
                                         <c:forEach var="guide" items="${guideList}" >
                                             <c:set var="select" value="" />
-                                            <c:set var="selectedId" value="${item.guide.id}" />
+                                            <c:set var="selectedId" value="${item.guideid}" />
                                             <c:if test="${guide.id == selectedId}">
                                                 <c:set var="select" value="selected" />
                                             </c:if>
@@ -219,23 +218,23 @@
                                 </td>
                                 <td class="form-group" >
                                     <input type="text" class="form-control decimal guidecom" id="guideComm-${status.count}" name="guideComm-" 
-                                           value="${item.guideCommission}" maxlength="14" onfocus="setDecimalFormat();">
+                                           value="${item.guidecommission}" maxlength="14" onfocus="setDecimalFormat();">
                                 </td>
                                 <td class="form-group">
                                     <input type="text" class="form-control" id="guideRemark-${status.count}" name="guideRemark-" 
-                                           value="${item.remarkGuideCommission}" maxlength="255" onfocus="setDecimalFormat();">
+                                           value="${item.remarkguidecommission}" maxlength="255" onfocus="setDecimalFormat();">
                                 </td>
                                 <td class="form-group">
                                     <input type="text" onkeyup="getAgentCommission('${status.count}')" class="form-control agentname" id="AgentName-${status.count}" name="AgentName-" 
-                                           valHidden="${item.agent.id}" value="${item.agent.name}" onfocus="setDecimalFormat();"/> 
+                                           valHidden="${item.agentid}" value="${item.agentname}" onfocus="setDecimalFormat();"/> 
                                 </td>
                                 <td class="form-group">
                                     <input type="text" class="form-control decimal agentcom" id="agentComm-${status.count}" name="agentComm-" 
-                                           value="${item.agentCommission}" maxlength="14" onfocus="setDecimalFormat();">
+                                           value="${item.agentcommission}" maxlength="14" onfocus="setDecimalFormat();">
                                 </td>
                                 <td class="agentRemark form-group">
                                     <input type="text" class="form-control" id="agentRemark-${status.count}" name="agentRemark-" 
-                                           value="${item.remarkAgentCommission}" maxlength="255" onfocus="setDecimalFormat();">
+                                           value="${item.remarkagentcommission}" maxlength="255" onfocus="setDecimalFormat();">
                                 </td>
                                 <td class="hidden edited">
                                     <input type="checkbox" class="form-control" id="hasEdit-${status.count}" name="hasEdit-" >

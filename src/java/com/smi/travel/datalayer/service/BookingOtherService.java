@@ -15,6 +15,7 @@ import com.smi.travel.datalayer.entity.Product;
 import com.smi.travel.datalayer.entity.StockDetail;
 import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.view.entity.OtherBookingView;
+import com.smi.travel.datalayer.view.entity.OtherBookingViewMin;
 import com.smi.travel.datalayer.view.entity.OtherTicketView;
 import java.util.ArrayList;
 import java.util.Date;
@@ -41,7 +42,7 @@ public class BookingOtherService {
         return otherBookDao.getListBookingAllView(name);
     }
     
-    public List<OtherBooking> getListBookingDaytourComission(String StartDate, String EndDate,String agentID,String guideID) {
+    public List<OtherBookingViewMin> getListBookingDaytourComission(String StartDate, String EndDate,String agentID,String guideID) {
         return otherBookDao.getListBookingOtherComission(StartDate, EndDate, agentID, guideID);
     }
     
