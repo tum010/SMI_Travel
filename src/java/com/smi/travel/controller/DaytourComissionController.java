@@ -174,7 +174,7 @@ public class DaytourComissionController extends SMITravelController {
         ArrayList<DaytourBooking> updateBooking = new ArrayList<DaytourBooking>();
         for (int i = 1; i <= row; i++) {
             String daytourBookingId = request.getParameter("daytourBookingId-" + i);
-            String guideId = request.getParameter("selectGuide-" + i);
+            String guideId = request.getParameter("GuideName-" + i);
             String guideComm = request.getParameter("guideComm-" + i);
             String guideRemark = request.getParameter("guideRemark-" + i);
             String agentId = request.getParameter("AgentName-" + i);

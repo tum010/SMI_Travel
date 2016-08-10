@@ -57,29 +57,29 @@ $(document).ready(function() {
     });
     controlGuide = $selectGuide[0].selectize;
     var tableLength = $("#CommissionTable tbody").find("tr").length;
-    console.log("table length " + tableLength);
+//    console.log("table length " + tableLength);
 
-    var dataGuide = [];
-    dataGuide = guideName;
+//    var dataGuide = [];
+//    dataGuide = guideName;
 //    console.log('dataGuide :'+dataGuide);
-    for (var i = 1; i <= tableLength; i++) {
-        var name = "#selectGuide-" + i;
-        console.log("name = " + name);
-
-        $(name).selectize({
-            removeItem: '',
-            sortField: 'text',
-            create: false,
-            dropdownParent: 'body',
-            plugins: {
-                'clear_selection': {}
-            }
-//            onDropdownOpen:  function() {
-//                arguments[0][0].style.width = "250%";
-//	    }
-        });
-
-    }
+//    for (var i = 1; i <= tableLength; i++) {
+//        var name = "#selectGuide-" + i;
+//        console.log("name = " + name);
+//
+//        $(name).selectize({
+//            removeItem: '',
+//            sortField: 'text',
+//            create: false,
+//            dropdownParent: 'body',
+//            plugins: {
+//                'clear_selection': {}
+//            }
+////            onDropdownOpen:  function() {
+////                arguments[0][0].style.width = "250%";
+////	    }
+//        });
+//
+//    }
 
     //validate date
     $('#DateFrom').datetimepicker().on('dp.change', function(e) {
@@ -388,6 +388,10 @@ function saveDaytourCommission() {
             cloneTr.find('input,select,span').each(function() {
                 $(this).removeClass('hidden');
                 if ($(this).attr('name') === "AgentName-") {
+                    $(this).val($(this).attr("valHidden"));
+                    
+                }
+                if ($(this).attr('name') === "GuideName-") {
                     $(this).val($(this).attr("valHidden"));
                     
                 }

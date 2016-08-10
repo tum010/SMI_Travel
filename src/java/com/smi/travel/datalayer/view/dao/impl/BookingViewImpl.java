@@ -488,50 +488,62 @@ public class BookingViewImpl implements BookingViewDao{
         UtilityFunction util = new UtilityFunction();
         List<BookingDayTourSummaryView> bookingDayTourSummaryViewList = new ArrayList<BookingDayTourSummaryView>();
         
-        String query = " SELECT * FROM `booking_daytour_summary_min` ";
+//        String query = " SELECT * FROM `booking_daytour_summary_min` ";
+        String query = "select `mt`.`Reference No` AS `refno`,date_format(`mt`.`Create_date`,'%d-%m-%Y') AS `refdate`,`agt`.`code` AS `agent`,"
+                + "`GET_LEADER_NAME`(`mt`.`id`) AS `leader`,sum(`dp`.`qty`) AS `pax`,`dt`.`name` AS `tour_name`,`dt`.`code` AS `tour_code`,"
+                + "date_format(`db`.`tour_date`,'%d-%m-%Y') AS `tour_date`,(case when (`pl`.`place` = 'OTHERS') then `db`.`pickup_detail` else `pl`.`place` end) AS `pickup`,"
+                + "date_format(`db`.`pickup_time`,'%H:%i') AS `time`,sum((case when (`dp`.`category_id` = 1) then `dp`.`qty` else 0 end)) AS `adult`,"
+                + "sum((case when (`dp`.`category_id` = 2) then `dp`.`qty` else 0 end)) AS `child`,sum((case when (`dp`.`category_id` = 3) then `dp`.`qty` else 0 end)) AS `infant`,"
+                + "`db`.`remark` AS `remark`,'' AS `invoice`,'' AS `receipt`,`db`.`id` AS `id`,`billd`.`id` AS `billid` "
+                + "from ((((((`daytour_booking` `db` join `master` `mt` on((`mt`.`id` = `db`.`master_id`))) "
+                + "join `agent` `agt` on((`agt`.`id` = `mt`.`Agent_id`))) "
+                + "join `daytour` `dt` on((`dt`.`id` = `db`.`tour_id`))) "
+                + "join `place` `pl` on((`pl`.`id` = `db`.`pickup`))) "
+                + "left join `billable_desc` `billd` on(((`billd`.`ref_item_id` = `db`.`id`) and (`billd`.`bill_type` = 6)))) "
+                + "left join `daytour_booking_price` `dp` on((`dp`.`daytour_booking_id` = `db`.`id`))) ";
         boolean condition = false;
         
         if((bookRefNo != null) && (!"".equalsIgnoreCase(bookRefNo))){
             query += (condition ? " and " : " where ");
-            query += " refno = '" + bookRefNo + "' " ;
+            query += " `mt`.`Reference No` = '" + bookRefNo + "' " ;
             condition = true;
         }
         if((bookLeader != null) &&(!"".equalsIgnoreCase(bookLeader))){
             query += (condition ? " and " : " where ");
-            query += " leader LIKE '%" + bookLeader + "%' COLLATE utf8_unicode_ci " ;
+            query += " `GET_LEADER_NAME` (`mt`.`id`) LIKE '%" + bookLeader + "%' COLLATE utf8_unicode_ci " ;
             condition = true;
         }
         if((bookDate != null) &&(!"".equalsIgnoreCase(bookDate))){
             query += (condition ? " and " : " where ");
-            query += " refdate = '" + bookDate + "' " ;
+            query += " date_format(`mt`.`Create_date`,'%d-%m-%Y') = '" + bookDate + "' " ;
             condition = true;
         }
         if((tourCode != null) &&(!"".equalsIgnoreCase(tourCode))){
             query += (condition ? " and " : " where ");
-            query += " tour_code LIKE '%" + tourCode + "%' " ;
+            query += " `dt`.`code` LIKE '%" + tourCode + "%' " ;
             condition = true;
         }
         if((tourName != null) &&(!"".equalsIgnoreCase(tourName))){
             query += (condition ? " and " : " where ");
-            query += " tour_name LIKE '%" + tourName + "%' " ;
+            query += " `dt`.`name` LIKE '%" + tourName + "%' " ;
             condition = true;
         }
         if((tourDate != null) &&(!"".equalsIgnoreCase(tourDate))){
             query += (condition ? " and " : " where ");
-            query += " tour_date = '" + tourDate + "' " ;
+            query += " date_format(`db`.`tour_date`,'%d-%m-%Y') = '" + tourDate + "' " ;
             condition = true;
         }
         if((tourPickUp != null) &&(!"".equalsIgnoreCase(tourPickUp))){
             query += (condition ? " and " : " where ");
-            query += " pickup LIKE '%" + tourPickUp + "%' " ;
+            query += " (CASE WHEN (`pl`.`place` = 'OTHERS') THEN `db`.`pickup_detail` ELSE `pl`.`place` END ) LIKE '%" + tourPickUp + "%' " ;
             condition = true;
         }
         if((tourAgent != null) &&(!"".equalsIgnoreCase(tourAgent))){
             query += (condition ? " and " : " where ");
-            query += " agent LIKE '%" + tourAgent + "%' " ;
+            query += " `agt`.`code` LIKE '%" + tourAgent + "%' " ;
             condition = true;
         }
-        query += " ORDER BY refno DESC ";
+        query += " group by `db`.`id` ORDER BY `mt`.`Reference No` DESC ";
 
         List<Object[]> QueryDayTour = session.createSQLQuery(query)
                 .addScalar("refno", Hibernate.STRING)

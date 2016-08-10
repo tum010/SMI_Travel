@@ -93,6 +93,7 @@ public class DaytourComissionImpl implements DaytourComissionDao {
                 .addScalar("initialname", Hibernate.STRING)
                 .addScalar("lastname", Hibernate.STRING)
                 .addScalar("firstname", Hibernate.STRING)
+                .addScalar("guidename", Hibernate.STRING)
                 .list();
         
         for (Object[] B : QueryStaffList) {
@@ -129,6 +130,7 @@ public class DaytourComissionImpl implements DaytourComissionDao {
             db.setInitialname(B[29]== null ? "" :util.ConvertString(B[29]));
             db.setLastname(B[30]== null ? "" :util.ConvertString(B[30]));
             db.setFirstname(B[31]== null ? "" :util.ConvertString(B[31]));
+            db.setGuidename(B[32]== null ? "" :util.ConvertString(B[32]));
             list.add(db);
         }
         
