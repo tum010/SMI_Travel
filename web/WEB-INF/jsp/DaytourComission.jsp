@@ -175,15 +175,18 @@
                     </script>
                     <c:forEach var="guide" items="${guideList}" >
                         <script>
-                            guideName.push({id: "${guide.id}", name: "${guide.name}"});
+                            guideName.push({value: "${guide.id}", label: "${guide.name}"});
                         </script>
                     </c:forEach>
                     <script>
                         agentName = [];
+                        agentCode = [];
                     </script>
                     <c:forEach var="agent" items="${agentList}" >
                         <script>
                             agentName.push({value: "${agent.id}", label: "${agent.name}"});
+                            agentCode.push("${agent.code}");
+                            agentCode.push("${agent.name}");
                         </script>
                     </c:forEach>
 
@@ -201,18 +204,19 @@
                                 <td>
                                     ${item.initialname} ${item.lastname} ${item.firstname}
                                 </td>
-                                <td class="selectGuide form-group">  
-                                    <select class="guidename"  id="selectGuide-${status.count}" name="selectGuide-" onchange="getGuideCommission('${item.daytourcode}','guideComm-${status.count}');" onfocus="setDecimalFormat();" class="selectize"   >
+                                <td class="selectGuide form-group">
+                                    <input type="text" class="form-control guidename" id="GuideName-${status.count}" name="GuideName-"  valHidden="${item.guideid}" value="${item.guidename}" onkeyup="getGuideName('${status.count}')" onfocus="setDecimalFormat();"/> 
+<!--                                    <select class="guidename"  id="selectGuide-${status.count}" name="selectGuide-" onchange="getGuideCommission('${item.daytourcode}','guideComm-${status.count}');" onfocus="setDecimalFormat();" class="selectize"   >
                                         <option value="" >--- select ---</option>
-                                        <c:forEach var="guide" items="${guideList}" >
-                                            <c:set var="select" value="" />
-                                            <c:set var="selectedId" value="${item.guideid}" />
-                                            <c:if test="${guide.id == selectedId}">
-                                                <c:set var="select" value="selected" />
-                                            </c:if>
+                                        <%--<c:forEach var="guide" items="${guideList}" >--%>
+                                            <%--<c:set var="select" value="" />--%>
+                                            <%--<c:set var="selectedId" value="${item.guideid}" />--%>
+                                            <%--<c:if test="${guide.id == selectedId}">--%>
+                                                <%--<c:set var="select" value="selected" />--%>
+                                            <%--</c:if>--%>
                                             <option value="${guide.id}" ${select}>${guide.name}" &nbsp; : &nbsp;${guide.tel}"</option>   
-                                        </c:forEach>
-                                    </select>
+                                        <%--</c:forEach>--%>
+                                    </select>-->
                                 </td>
                                 <td class="form-group" >
                                     <input type="text" class="form-control decimal guidecom" id="guideComm-${status.count}" name="guideComm-" 
@@ -609,15 +613,49 @@
         });
     }
     
+    function getGuideName(guidecount){
+        var dataGuide = [];
+        dataGuide = guideName;
+        $("#CommissionTable tbody").find("tr").each(function(){ 
+            $("#GuideName-"+guidecount).autocomplete({
+                source: dataGuide,
+                focus: function( event, ui ) {
+                    event.preventDefault();
+                    $(this).val(ui.item.label);
+                },
+                select: function( event, ui ) {
+                    event.preventDefault();
+                    $(this).val(ui.item.label);
+                    $(this).attr("valHidden",ui.item.value);
+                },
+                close:function( event, ui ) {
+                   var editCheckBox = $(this).closest('tr').find('td.edited').children();
+                   $(editCheckBox).attr("checked", true);
+                   $("#GuideName-"+guidecount).trigger('keyup');
+                } 
+            });
+        
+            $("#GuideName-"+guidecount).keyup(function () {
+                var position = $(this).offset();
+                $(".ui-widget").css("top", position.top + 30);
+                $(".ui-widget").css("left", position.left);
+                $(".ui-widget").css("font-size", 10);
+                if($(this).val() == ''){
+                    $(this).attr("valHidden",'');
+                }
+            }); 
+        });
+    }
+    
     
     // AGENT 
 $(document).ready(function () {
-    var agentCode = [];
-    $.each(agent, function (key, value) {
-        console.log("agentCount=="+agent.length);
-        agentCode.push(value.code);
-           agentCode.push(value.name);
-    });
+//    var agentCode = [];
+//    $.each(agent, function (key, value) {
+//        console.log("agentCount=="+agent.length);
+//        agentCode.push(value.code);
+//           agentCode.push(value.name);
+//    });
 
     $("#agent_code").autocomplete({
         source: agentCode,

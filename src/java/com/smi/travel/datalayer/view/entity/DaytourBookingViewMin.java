@@ -44,6 +44,7 @@ public class DaytourBookingViewMin {
     private String initialname;
     private String lastname;
     private String firstname;
+    private String guidename;
 
     public String getId() {
         return id;
@@ -299,6 +300,14 @@ public class DaytourBookingViewMin {
 
     public void setFirstname(String firstname) {
         this.firstname = firstname;
+    }
+
+    public String getGuidename() {
+        return guidename;
+    }
+
+    public void setGuidename(String guidename) {
+        this.guidename = guidename;
     }
 
     
