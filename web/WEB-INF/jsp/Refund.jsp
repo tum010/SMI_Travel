@@ -2057,7 +2057,7 @@ function DeleteRefund(rowID,refno,airbookingid,airticketrefundid,refundid){
         var airid0 = $("#airbookingid").val();
         var airticketbookingid0 = $("#refundById").val();
         var refundid0 = $("#refundid").val();
-        console.log("Action : " + action + "   Ref No : " + refno0 + " Air Booking ID : " + airid0 + " Air Ticket id : " + airticketbookingid0 + " Refund Id : " + refundid0 );
+//        console.log("Action : " + action + "   Ref No : " + refno0 + " Air Booking ID : " + airid0 + " Air Ticket id : " + airticketbookingid0 + " Refund Id : " + refundid0 );
 }
 
 function DeleteRefundDetail(rowID,code,refno,airbookingid,refundetailid){
@@ -2074,7 +2074,7 @@ function DeleteRefundDetail(rowID,code,refno,airbookingid,refundetailid){
     var airticketbookingid0 = $("#refundById").val();
     var refundid0 = $("#refundid").val();
     var refunddetailid =  $("#refunddetailid").val();
-    console.log("Action : " + action + "   Ref No : " + refno0 + " Air Booking ID : " + airid0 + " Air Ticket id : " + airticketbookingid0 + " Refund Id : " + refundid0  + " Refund Detail id : " + refunddetailid);
+//    console.log("Action : " + action + "   Ref No : " + refno0 + " Air Booking ID : " + airid0 + " Air Ticket id : " + airticketbookingid0 + " Refund Id : " + refundid0  + " Refund Detail id : " + refunddetailid);
 //    if(code !== ""){
         $("#textDeleteRefundDetail").text('Are you sure to delete refund detail ..?');
 //    }else{
