@@ -102,7 +102,7 @@ public class DaytourOperationOtherController extends SMITravelController {
         }else{
             System.out.println("List Booking All");
             for (int i = 0; i < listOtherBookingAll.size(); i++) {
-                System.out.println("Ref no : " + listOtherBookingAll.get(i).getMaster().getReferenceNo());
+//                System.out.println("Ref no : " + listOtherBookingAll.get(i).getMaster().getReferenceNo());
             }
             request.setAttribute("ListBookingAll", listOtherBookingAll);
         }
@@ -115,7 +115,7 @@ public class DaytourOperationOtherController extends SMITravelController {
         }else{
             System.out.println("List Booking All View");
             for (int i = 0; i < listOtherBookingAllView.size(); i++) {
-                System.out.println("Ref no : " + listOtherBookingAllView.get(i).getRefno());
+//                System.out.println("Ref no : " + listOtherBookingAllView.get(i).getRefno());
             }
             request.setAttribute("ListBookingAllView", listOtherBookingAllView);
         }
