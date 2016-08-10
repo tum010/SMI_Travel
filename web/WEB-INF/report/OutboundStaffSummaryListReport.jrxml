@@ -8,13 +8,13 @@
 	<field name="sale" class="java.lang.String"/>
 	<field name="net" class="java.lang.String"/>
 	<field name="profit" class="java.lang.String"/>
-	<variable name="sumsale" class="java.math.BigDecimal" calculation="Sum">
+	<variable name="sumsale" class="java.math.BigDecimal" resetType="Group" resetGroup="staff" calculation="Sum">
 		<variableExpression><![CDATA[new BigDecimal($F{sale})]]></variableExpression>
 	</variable>
-	<variable name="sumnet" class="java.math.BigDecimal" calculation="Sum">
+	<variable name="sumnet" class="java.math.BigDecimal" resetType="Group" resetGroup="staff" calculation="Sum">
 		<variableExpression><![CDATA[new BigDecimal($F{net})]]></variableExpression>
 	</variable>
-	<variable name="sumprofit" class="java.math.BigDecimal" calculation="Sum">
+	<variable name="sumprofit" class="java.math.BigDecimal" resetType="Group" resetGroup="staff" calculation="Sum">
 		<variableExpression><![CDATA[new BigDecimal($F{profit})]]></variableExpression>
 	</variable>
 	<group name="staff" isReprintHeaderOnEachPage="true">
