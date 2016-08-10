@@ -45,7 +45,23 @@ public class BookingViewImpl implements BookingViewDao{
         boolean isBookingViewMin = false;
         if((pnr == null || "".equals(pnr)) && (ticketNo == null || "".equals(ticketNo)) && (payBy == null || "".equals(payBy)) && (bankTransfer == null || "".equals(bankTransfer)) 
                 && (transferDateFrom == null || "".equals(transferDateFrom)) && (transferDateTo == null || "".equals(transferDateTo))){
-            query = "from BookingViewMin book where ";
+            query = "select `mt`.`Reference No` AS `ref_no`,`ag`.`code` AS `agent_code`,concat(`mi`.`name`,' ',`cm`.`last_name`,' ',`cm`.`first_name`) AS `leader_name`,"
+                    + "`bs`.`name` AS `status_name`,`bs`.`id` AS `status_id`,'' AS `pnr`,ifnull(`bvt`.`hotel`,'') AS `hotel_name`,'' AS `first_depart_date`,'' AS `first_checkin_date`,"
+                    + "`mt`.`Create_date` AS `Create_date`,`mt`.`Create_by` AS `Create_by`,`dm`.`name` AS `department_name`,`dm`.`id` AS `department_id`,"
+                    + "'' AS `tel`,'' AS `remark`,'' AS `ticket_no`,'' AS `email`,'' AS `payby`,'' AS `accid`,'' AS `transfer_date`,"
+                    + "`bdv`.`tour_date` AS `tour_date`,`bdv`.`tour_code` AS `tour_code` "
+                    + "from ((((((((((`master` `mt` "
+                    + "left join `agent` `ag` on((`mt`.`Agent_id` = `ag`.`id`))) "
+                    + "join `passenger` `pg` on((`mt`.`id` = `pg`.`master_id`))) "
+                    + "join `customer` `cm` on((`pg`.`customer_id` = `cm`.`id`))) "
+                    + "left join `m_initialname` `mi` on((`cm`.`initial_name` = `mi`.`id`))) "
+                    + "join `m_bookingstatus` `bs` on((`mt`.`Status` = `bs`.`id`))) "
+                    + "join `staff` `st` on((`mt`.`Staff_id` = `st`.`id`))) "
+                    + "left join `m_department` `dm` on((`st`.`department_id` = `dm`.`id`))) "
+                    + "left join `billable` `bill` on((`bill`.`master_id` = `mt`.`id`))) "
+                    + "left join `booking_daytour_view` `bdv` on((`bdv`.`master_id` = `mt`.`id`))) "
+                    + "left join `booking_view_hotel` `bvt` on((`bvt`.`id` = `mt`.`id`))) "
+                    + "where (`pg`.`is_leader` = 1) ";
             isBookingViewMin = true;
         
         } else {
@@ -54,90 +70,90 @@ public class BookingViewImpl implements BookingViewDao{
         
         String subquery = " book.refno in (select master.referenceNo from Passenger p ";
         Session session = this.sessionFactory.openSession();
-        int check = 0;
+        int check = 1;
         int checksub = 0;
-        System.out.println("passLast : "+passLast);
+
         if ((refno != null) && (!"".equalsIgnoreCase(refno))) {
-            query += " book.refno like '%" +refno +"%'";
+            query += " `mt`.`Reference No` = '" +refno +"'";
             check = 1;
         }
         
         if ((departmentID != null) && (!"".equalsIgnoreCase(departmentID))) {
             if (check == 1) {query += " and ";}
-            query += " book.departmentId = '" +departmentID +"'";
+            query += " `dm`.`id` = '" +departmentID +"'";
             check = 1;
         }
         
         if ((username != null) && (!"".equalsIgnoreCase(username))) {
             if (check == 1) {query += " and ";}
-            query += " book.createBy = '" +username +"'";
+            query += " `mt`.`Create_by` = '" +username +"'";
             check = 1;
         }
         
         if ((Bookdate != null) && (!"".equalsIgnoreCase(Bookdate))) {
             if (check == 1) {query += " and ";}
-            query += " book.createDate = '" +Bookdate +"'";
+            query += " `mt`.`Create_date` = '" +Bookdate +"'";
             check = 1;
         }
         
         if ((status != null) && (!"".equalsIgnoreCase(status))) {
             if (check == 1) {query += " and ";}
-            query += " book.statusId = '" +status +"'";
+            query += " `bs`.`id` = '" +status +"'";
             check = 1;
         }
         
         if ((pnr != null) && (!"".equalsIgnoreCase(pnr))) {
             if (check == 1) {query += " and ";}
-            query += " book.pnr Like '%" +pnr +"%'";
+            query += " ifnull(`bpnr`.`pnr`, '') Like '%" +pnr +"%'";
             check = 1;
         }
         
-        if ((ticketNo != null) && (!"".equalsIgnoreCase(ticketNo))) {
-            if (check == 1) {query += " and ";}
-            query += " book.ticketNo like '%" +ticketNo +"%'";
-            check = 1;
-        }
-        
-        if ((passFirst != null) && (!"".equalsIgnoreCase(passFirst))) {
-            if (check == 1) {query += " and ";}
-            subquery += " where p.customer.firstName like '%"+passFirst+"%'";
-            checksub = 1;
-            check = 1;
-        }
-
-        if ((passLast != null) && (!"".equalsIgnoreCase(passLast))) {
-            if ((check == 1)&&(checksub != 1)) {query += " and ";}
-            check = 1;
-            if(checksub == 1){
-                subquery += " and ";
-            }else{
-                 subquery += " where "; 
-            }
-            checksub = 1;
-            subquery += "  p.customer.lastName like '%"+passLast+"%'";
-        }
+//        if ((ticketNo != null) && (!"".equalsIgnoreCase(ticketNo))) {
+//            if (check == 1) {query += " and ";}
+//            query += " book.ticketNo like '%" +ticketNo +"%'";
+//            check = 1;
+//        }
+//        
+//        if ((passFirst != null) && (!"".equalsIgnoreCase(passFirst))) {
+//            if (check == 1) {query += " and ";}
+//            subquery += " where p.customer.firstName like '%"+passFirst+"%'";
+//            checksub = 1;
+//            check = 1;
+//        }
+//
+//        if ((passLast != null) && (!"".equalsIgnoreCase(passLast))) {
+//            if ((check == 1)&&(checksub != 1)) {query += " and ";}
+//            check = 1;
+//            if(checksub == 1){
+//                subquery += " and ";
+//            }else{
+//                 subquery += " where "; 
+//            }
+//            checksub = 1;
+//            subquery += "  p.customer.lastName like '%"+passLast+"%'";
+//        }
         
         if ((payBy != null) && (!"".equalsIgnoreCase(payBy))) {
             if (check == 1) {query += " and ";}
-            query += " book.payBy = '" +payBy +"'";
+            query += " `bill`.`pay_by` = '" +payBy +"'";
             check = 1;
         }
         
         if ((bankTransfer != null) && (!"".equalsIgnoreCase(bankTransfer))) {
             if (check == 1) {query += " and ";}
-            query += " book.accId = '" +bankTransfer +"'";
+            query += " `bill`.`acc_id` = '" +bankTransfer +"'";
             check = 1;
         }
         
         if ((transferDateFrom != null) && (!"".equalsIgnoreCase(transferDateFrom))) {
             if (check == 1) {query += " and ";}
-            query += " book.transferDate >= '" +transferDateFrom +"'";
+            query += " `bill`.`transfer_date` >= '" +transferDateFrom +"'";
             check = 1;
         }
         
         if ((transferDateTo != null) && (!"".equalsIgnoreCase(transferDateTo))) {
             if (check == 1) {query += " and ";}
-            query += " book.transferDate <= '" +transferDateTo +"'";
+            query += " `bill`.`transfer_date` <= '" +transferDateTo +"'";
             check = 1;
         }
                 
@@ -148,7 +164,7 @@ public class BookingViewImpl implements BookingViewDao{
             query += subquery +")";
         }
        
-        query += " order by  ref_no desc ";
+        query += " group by `mt`.`id` order by `mt`.`Reference No` desc ";
          System.out.println("query book view  : "+query);
        // List<BookingView> BookingList = session.createQuery(query).list();
         Query HqlQuery = session.createQuery(query);
@@ -156,11 +172,35 @@ public class BookingViewImpl implements BookingViewDao{
         
         List<BookingView> BookingList = new ArrayList<>();
         if(isBookingViewMin){
-            List<BookingViewMin> BookingMinList = HqlQuery.list();      
-            if (BookingMinList.isEmpty()) {
-                return null;
-            }         
-            for(BookingViewMin A : BookingMinList){
+//            List<BookingViewMin> BookingMinList = HqlQuery.list();      
+//            if (BookingMinList.isEmpty()) {
+//                return null;
+//            }         
+//            for(BookingViewMin A : BookingMinList){
+//                BookingList.add((mappingBookingViewMinToBookingView(A)));
+//            }
+            List<Object[]> queryList = session.createSQLQuery(query)
+                    .addScalar("ref_no", Hibernate.STRING)
+                    .addScalar("agent_code", Hibernate.STRING)
+                    .addScalar("leader_name", Hibernate.STRING)
+                    .addScalar("status_name", Hibernate.STRING)
+                    .addScalar("pnr", Hibernate.STRING)
+                    .addScalar("hotel_name", Hibernate.STRING)
+                    .addScalar("Create_date", Hibernate.STRING)
+                    .addScalar("Create_by", Hibernate.STRING)
+                    .addScalar("department_name", Hibernate.STRING)
+                    .addScalar("department_id", Hibernate.STRING)
+                    .addScalar("status_id", Hibernate.STRING)
+                    .addScalar("tel", Hibernate.STRING)
+                    .addScalar("remark", Hibernate.STRING)
+                    .addScalar("email", Hibernate.STRING)                                      
+                    .addScalar("payid", Hibernate.STRING)
+                    .addScalar("accid", Hibernate.STRING)
+                    .addScalar("tour_code", Hibernate.STRING)
+                    .setMaxResults(500)
+                    .list();
+            
+            for(Object[] A : queryList){
                 BookingList.add((mappingBookingViewMinToBookingView(A)));
             }
                       
@@ -241,7 +281,7 @@ public class BookingViewImpl implements BookingViewDao{
 
             if((bookRefNo != null) && (!"".equalsIgnoreCase(bookRefNo))){
                 query += (condition ? " and " : " where ");
-                query += " refno LIKE '%" + bookRefNo + "%' " ;
+                query += " refno = '" + bookRefNo + "' " ;
                 condition = true;
             }
             if((bookLeader != null) && (!"".equalsIgnoreCase(bookLeader))){
@@ -354,7 +394,7 @@ public class BookingViewImpl implements BookingViewDao{
 
             if((bookRefNo != null) && (!"".equalsIgnoreCase(bookRefNo))){
                 query += (condition ? " and " : " where ");
-                query += " `mt`.`Reference No` LIKE '%" + bookRefNo + "%' " ;
+                query += " `mt`.`Reference No` = '" + bookRefNo + "' " ;
                 condition = true;
             }
             if((bookLeader != null) &&(!"".equalsIgnoreCase(bookLeader))){
@@ -449,7 +489,7 @@ public class BookingViewImpl implements BookingViewDao{
 
             if((bookRefNo != null) && (!"".equalsIgnoreCase(bookRefNo))){
                 query += (condition ? " and " : " where ");
-                query += " b.refno LIKE '%" + bookRefNo + "%' " ;
+                query += " b.refno = '" + bookRefNo + "' " ;
                 condition = true;
             }
             if((bookLeader != null) &&(!"".equalsIgnoreCase(bookLeader))){
@@ -544,7 +584,7 @@ public class BookingViewImpl implements BookingViewDao{
 
             if((bookRefNo != null) && (!"".equalsIgnoreCase(bookRefNo))){
                 query += (condition ? " and " : " where ");
-                query += " `mt`.`Reference No` LIKE '%" + bookRefNo + "%' " ;
+                query += " `mt`.`Reference No` = '" + bookRefNo + "' " ;
                 condition = true;
             }
             if((bookLeader != null) &&(!"".equalsIgnoreCase(bookLeader))){
@@ -659,7 +699,7 @@ public class BookingViewImpl implements BookingViewDao{
 
             if((bookRefNo != null) && (!"".equalsIgnoreCase(bookRefNo))){
                 query += (condition ? " and " : " where ");
-                query += " refno LIKE '%" + bookRefNo + "%' " ;
+                query += " refno = '" + bookRefNo + "' " ;
                 condition = true;
             }
             if((bookLeader != null) &&(!"".equalsIgnoreCase(bookLeader))){
@@ -755,7 +795,7 @@ public class BookingViewImpl implements BookingViewDao{
 
             if((bookRefNo != null) && (!"".equalsIgnoreCase(bookRefNo))){
                 query += (condition ? " and " : " where ");
-                query += " refno LIKE '%" + bookRefNo + "%' " ;
+                query += " refno = '" + bookRefNo + "' " ;
                 condition = true;
             }
             if((bookLeader != null) &&(!"".equalsIgnoreCase(bookLeader))){
@@ -837,26 +877,44 @@ public class BookingViewImpl implements BookingViewDao{
         return bookingLandSummaryViewList;
     }
 
-    private BookingView mappingBookingViewMinToBookingView(BookingViewMin bookingViewMin) {
+    private BookingView mappingBookingViewMinToBookingView(Object[] A) {
+        UtilityFunction util = new UtilityFunction();
         BookingView bookingView = new BookingView();
-        bookingView.setRefno(bookingViewMin.getRefno() != null && !"".equals(bookingViewMin.getRefno()) ? bookingViewMin.getRefno() : "");
-        bookingView.setAgentCode(bookingViewMin.getAgentCode() != null && !"".equals(bookingViewMin.getAgentCode()) ? bookingViewMin.getAgentCode() : "");
-        bookingView.setLeaderName(bookingViewMin.getLeaderName() != null && !"".equals(bookingViewMin.getLeaderName()) ? bookingViewMin.getLeaderName() : "");
-        bookingView.setStatusName(bookingViewMin.getStatusName() != null && !"".equals(bookingViewMin.getStatusName()) ? bookingViewMin.getStatusName() : "");
-        bookingView.setPnr(bookingViewMin.getPnr() != null && !"".equals(bookingViewMin.getPnr()) ? bookingViewMin.getPnr() : "");
-        bookingView.setHotelName(bookingViewMin.getHotelName() != null && !"".equals(bookingViewMin.getHotelName()) ? bookingViewMin.getHotelName() : "");
-        bookingView.setCreateDate(bookingViewMin.getCreateDate() != null ? bookingViewMin.getCreateDate() : null);
-        bookingView.setCreateBy(bookingViewMin.getCreateBy() != null && !"".equals(bookingViewMin.getCreateBy()) ? bookingViewMin.getCreateBy() : "");
-        bookingView.setDepartmentName(bookingViewMin.getDepartmentName() != null && !"".equals(bookingViewMin.getDepartmentName()) ? bookingViewMin.getDepartmentName() : "");
-        bookingView.setDepartmentId(bookingViewMin.getDepartmentId() != null && !"".equals(bookingViewMin.getDepartmentId()) ? bookingViewMin.getDepartmentId() : "");
-        bookingView.setStatusId(bookingViewMin.getStatusId() != null && !"".equals(bookingViewMin.getStatusId()) ? bookingViewMin.getStatusId() : "");
-        bookingView.setTel(bookingViewMin.getTel() != null && !"".equals(bookingViewMin.getTel()) ? bookingViewMin.getTel() : "");
-        bookingView.setRemark(bookingViewMin.getRemark() != null && !"".equals(bookingViewMin.getRemark()) ? bookingViewMin.getRemark() : "");
-        bookingView.setEmail(bookingViewMin.getEmail() != null && !"".equals(bookingViewMin.getEmail()) ? bookingViewMin.getEmail() : "");
-        bookingView.setTicketNo(bookingViewMin.getTicketNo() != null && !"".equals(bookingViewMin.getTicketNo()) ? bookingViewMin.getTicketNo() : "");
-        bookingView.setPayBy(bookingViewMin.getPayBy() != null && !"".equals(bookingViewMin.getPayBy()) ? bookingViewMin.getPayBy() : "");
-        bookingView.setAccId(bookingViewMin.getAccId() != null && !"".equals(bookingViewMin.getAccId()) ? bookingViewMin.getAccId() : "");
-        bookingView.setTourCode(bookingViewMin.getTourCode() != null && !"".equals(bookingViewMin.getTourCode()) ? bookingViewMin.getTourCode() : "");
+        bookingView.setRefno(A[0] != null ? util.ConvertString(A[0]) : "");
+        bookingView.setAgentCode(A[1] != null ? util.ConvertString(A[1]) : "");
+        bookingView.setLeaderName(A[2] != null ? util.ConvertString(A[2]) : "");
+        bookingView.setStatusName(A[3] != null ? util.ConvertString(A[3]) : "");
+        bookingView.setPnr(A[4] != null ? util.ConvertString(A[4]) : "");
+        bookingView.setHotelName(A[5] != null ? util.ConvertString(A[5]) : "");
+        bookingView.setCreateDate(A[6] != null ? util.convertStringToDate(util.ConvertString(A[6])) : null);
+        bookingView.setCreateBy(A[7] != null ? util.ConvertString(A[7]) : "");
+        bookingView.setDepartmentName(A[8] != null ? util.ConvertString(A[8]) : "");
+        bookingView.setDepartmentId(A[9] != null ? util.ConvertString(A[9]) : "");
+        bookingView.setStatusId(A[10] != null ? util.ConvertString(A[10]) : "");
+        bookingView.setTel(A[11] != null ? util.ConvertString(A[11]) : "");
+        bookingView.setRemark(A[12] != null ? util.ConvertString(A[12]) : "");
+        bookingView.setEmail(A[13] != null ? util.ConvertString(A[13]) : "");
+        bookingView.setPayBy(A[14] != null ? util.ConvertString(A[14]) : "");
+        bookingView.setAccId(A[15] != null ? util.ConvertString(A[15]) : "");
+        bookingView.setTourCode(A[16] != null ? util.ConvertString(A[16]) : "");
+//        bookingView.setRefno(bookingViewMin.getRefno() != null && !"".equals(bookingViewMin.getRefno()) ? bookingViewMin.getRefno() : "");
+//        bookingView.setAgentCode(bookingViewMin.getAgentCode() != null && !"".equals(bookingViewMin.getAgentCode()) ? bookingViewMin.getAgentCode() : "");
+//        bookingView.setLeaderName(bookingViewMin.getLeaderName() != null && !"".equals(bookingViewMin.getLeaderName()) ? bookingViewMin.getLeaderName() : "");
+//        bookingView.setStatusName(bookingViewMin.getStatusName() != null && !"".equals(bookingViewMin.getStatusName()) ? bookingViewMin.getStatusName() : "");
+//        bookingView.setPnr(bookingViewMin.getPnr() != null && !"".equals(bookingViewMin.getPnr()) ? bookingViewMin.getPnr() : "");
+//        bookingView.setHotelName(bookingViewMin.getHotelName() != null && !"".equals(bookingViewMin.getHotelName()) ? bookingViewMin.getHotelName() : "");
+//        bookingView.setCreateDate(bookingViewMin.getCreateDate() != null ? bookingViewMin.getCreateDate() : null);
+//        bookingView.setCreateBy(bookingViewMin.getCreateBy() != null && !"".equals(bookingViewMin.getCreateBy()) ? bookingViewMin.getCreateBy() : "");
+//        bookingView.setDepartmentName(bookingViewMin.getDepartmentName() != null && !"".equals(bookingViewMin.getDepartmentName()) ? bookingViewMin.getDepartmentName() : "");
+//        bookingView.setDepartmentId(bookingViewMin.getDepartmentId() != null && !"".equals(bookingViewMin.getDepartmentId()) ? bookingViewMin.getDepartmentId() : "");
+//        bookingView.setStatusId(bookingViewMin.getStatusId() != null && !"".equals(bookingViewMin.getStatusId()) ? bookingViewMin.getStatusId() : "");
+//        bookingView.setTel(bookingViewMin.getTel() != null && !"".equals(bookingViewMin.getTel()) ? bookingViewMin.getTel() : "");
+//        bookingView.setRemark(bookingViewMin.getRemark() != null && !"".equals(bookingViewMin.getRemark()) ? bookingViewMin.getRemark() : "");
+//        bookingView.setEmail(bookingViewMin.getEmail() != null && !"".equals(bookingViewMin.getEmail()) ? bookingViewMin.getEmail() : "");
+//        bookingView.setTicketNo(bookingViewMin.getTicketNo() != null && !"".equals(bookingViewMin.getTicketNo()) ? bookingViewMin.getTicketNo() : "");
+//        bookingView.setPayBy(bookingViewMin.getPayBy() != null && !"".equals(bookingViewMin.getPayBy()) ? bookingViewMin.getPayBy() : "");
+//        bookingView.setAccId(bookingViewMin.getAccId() != null && !"".equals(bookingViewMin.getAccId()) ? bookingViewMin.getAccId() : "");
+//        bookingView.setTourCode(bookingViewMin.getTourCode() != null && !"".equals(bookingViewMin.getTourCode()) ? bookingViewMin.getTourCode() : "");
         
         return bookingView;
     }
