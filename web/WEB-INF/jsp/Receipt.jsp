@@ -3229,7 +3229,7 @@
                                     document.getElementById("receiveFromCode").value = $("#receiveFromBillable").val();
                                     document.getElementById("receiveFromName").value = $("#receiveNameBillable").val();
                                     document.getElementById("receiveFromAddress").value = $("#receiveAddressBillable").val();
-                                    document.getElementById("arCode").value = $("#arcodeBillable").val();
+                                    document.getElementById("arCode").value = ($("#billableType").val() === 'C' ? 'DUMMY' : $("#arcodeBillable").val());
                                     document.getElementById("inputStatus").value = $("#mAccPayBillable").val();
                                     if (result[1] !== '') {
                                         $("#RefNoListTable tbody").empty().append(result[1]);
