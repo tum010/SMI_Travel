@@ -374,7 +374,6 @@ public class OutboundSummaryImpl implements OutboundSummaryDao{
                 if(to != null && !"".equals(to)){
                     String dateOutbound = from + " To " + to;
                     other.setSaledatepage(dateOutbound);
-                    System.out.println(" Date Outbound : " +dateOutbound);
                 }else{
                     other.setSaledatepage("");
                 }
