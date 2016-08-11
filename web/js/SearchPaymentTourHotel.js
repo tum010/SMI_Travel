@@ -3,8 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+var showflag = 1;
 $(document).ready(function() {
-
     $('.date').datetimepicker();
     $('.spandate').click(function() {
         var position = $(this).offset();
@@ -69,6 +69,37 @@ $(document).ready(function() {
             data.fv.revalidateField('InputFromDate');
         }
     });
+    
+    $("#searchInvoiceSupplier").keyup(function() {
+        searchInvoiceSupplierList($("#searchInvoiceSupplier").val());          
+    });
+    
+    //autocomplete
+    $("#InputInvoiceSupCode").keyup(function(event){ 
+        var position = $(this).offset();
+        $(".ui-widget").css("top", position.top + 30);
+        $(".ui-widget").css("left", position.left); 
+        if($(this).val() === ""){
+            $("#InputInvoiceSupId").val("");
+            $("#InputInvoiceSupCode").val("");
+            $("#InputInvoiceSupName").val("");
+            $("#InputAPCode").val("");
+        }else{
+            if(event.keyCode === 13){
+                searchInvoiceSupplierListAuto(this.value); 
+            }
+        }
+    });
+
+    $("#InputInvoiceSupCode").keydown(function(){
+        var position = $(this).offset();
+        $(".ui-widget").css("top", position.top + 30);
+        $(".ui-widget").css("left", position.left); 
+        if(showflag == 0){
+            $(".ui-widget").css("top", -1000);
+            showflag=1;
+        }
+    });
 
 });
 
@@ -112,5 +143,152 @@ function printPaymentSummaryReport() {
 //    } else {
         window.open("report.smi?name=PaymentTourHotelSummary&fromdate=" + paydatefrom + "&todate=" + paydateto + "&pvtype=" + pvtype + "&comfirm=" + status + "&invSupCode=" + invSupCode);
 //    }
+}
+
+function searchInvoiceSupplierList(name) {
+    name = generateSpecialCharacter(name);
+    var servletName = 'MListItemServlet';
+    var servicesName = 'AJAXBean';
+    var param = 'action=' + 'text' +
+                    '&servletName=' + servletName +
+                    '&servicesName=' + servicesName +
+                    '&name=' + name +
+                    '&type=' + 'getInvoiceSupplierList';
+    CallAjaxGetInvoiceSuplierList(param);
+}
+
+function CallAjaxGetInvoiceSuplierList(param) {
+    var url = 'AJAXServlet';
+    $("#ajaxload").removeClass("hidden");
+    try {
+        $.ajax({
+            type: "POST",
+            url: url,
+            cache: false,
+            data: param,
+            success: function(msg) {
+                if(msg !== 'fail'){
+                    $('#SearchInvoicSupTable').dataTable().fnClearTable();
+                    $('#SearchInvoicSupTable').dataTable().fnDestroy();
+                    $("#SearchInvoicSupTable tbody").empty().append(msg);
+
+                    $('#SearchInvoicSupTable').dataTable({bJQueryUI: true,
+                        "sPaginationType": "full_numbers",
+                        "bAutoWidth": false,
+                        "bFilter": false,
+                        "bPaginate": true,
+                        "bInfo": false,
+                        "bLengthChange": false,
+                        "iDisplayLength": 10
+                    });
+
+                    $("#ajaxload").addClass("hidden");
+                }
+
+            }, error: function(msg) {
+                $("#ajaxload").addClass("hidden");
+            }
+        });
+    } catch (e) {
+        $("#ajaxload").addClass("hidden");
+    }
+}
+
+function searchInvoiceSupplierListAuto(name){
+    name = generateSpecialCharacter(name);
+    var servletName = 'MListItemServlet';
+    var servicesName = 'AJAXBean';
+    var param = 'action=' + 'text' +
+            '&servletName=' + servletName +
+            '&servicesName=' + servicesName +
+            '&name=' + name +
+            '&type=' + 'getInvoiceSupplierListAuto';
+    CallAjaxGetInvoiceSuplierListAuto(param);
+}
+
+function CallAjaxGetInvoiceSuplierListAuto(param){
+    var url = 'AJAXServlet';
+    var invArray = [];
+    var invIdList = [];
+    var invCodeList = [];
+    var invNameList = [];
+    var invARCodeList = [];
+    var invId , invCode , invName , invARCode;
+    $("#InputInvoiceSupCode").autocomplete("destroy");
+    try {
+        $.ajax({
+           type: "POST",
+           url: url,
+           cache: false,
+           data: param,
+           beforeSend: function() {
+              $("#dataload").removeClass("hidden");    
+           },
+           success: function(msg) {     
+               var invJson =  JSON.parse(msg);
+               for (var i in invJson){
+                   if (invJson.hasOwnProperty(i)){
+                       invId = invJson[i].id;
+                       invCode = invJson[i].code;
+                       invName = invJson[i].name;
+                       invARCode = invJson[i].arcode;
+                       invArray.push(invCode);
+                       invArray.push(invName);
+                       invIdList.push(invId);
+                       invCodeList.push(invCode);
+                       invNameList.push(invName);
+                       invARCodeList.push(invARCode);                          
+                   }                 
+                    $("#dataload").addClass("hidden"); 
+               }
+               $("#InputInvoiceSupId").val(invId);
+               $("#InputInvoiceSupCode").val(invCode);
+               $("#InputInvoiceSupName").val(invName);
+               $("#InputAPCode").val(invARCode);
+
+               $("#InputInvoiceSupCode").autocomplete({
+                   source: invArray,
+                   close: function(){
+                        $("#InputInvoiceSupCode").trigger("keyup");
+                        var invselect = $("#InputInvoiceSupCode").val();
+                        for(var i =0;i<invIdList.length;i++){
+                            if((invselect==invCodeList[i])||(invselect==invNameList[i])){      
+                               $("#InputInvoiceSupId").val(invIdList[i]);
+                               $("#InputInvoiceSupCode").val(invCodeList[i]);
+                               $("#InputInvoiceSupName").val(invNameList[i]);
+                               $("#InputAPCode").val(invARCodeList[i]);
+                            }                 
+                        }   
+                   }
+                });
+
+               var invval = $("#InputInvoiceSupCode").val();
+               for(var i =0;i<invIdList.length;i++){
+                   if(invval==invNameList[i]){
+                       $("#InputInvoiceSupId").val(invIdList[i]);
+                       $("#InputInvoiceSupCode").val(invCodeList[i]);
+                       $("#InputInvoiceSupName").val(invNameList[i]);
+                       $("#InputAPCode").val(invARCodeList[i]);
+                   }
+               }
+               if(invIdList.length == 1){
+                   showflag = 0;
+                   $("#InputInvoiceSupId").val(invIdList[0]);
+                   $("#InputInvoiceSupCode").val(invCodeList[0]);
+                   $("#InputInvoiceSupName").val(invNameList[0]);
+                   $("#InputAPCode").val(invARCodeList[0]);
+               }
+               var event = jQuery.Event('keydown');
+               event.keyCode = 40;
+               $("#InputInvoiceSupCode").trigger(event);
+
+            }, error: function(msg) {
+               console.log('auto ERROR');
+               $("#dataload").addClass("hidden");
+            }
+        });
+    } catch (e) {
+
+    }
 }
 

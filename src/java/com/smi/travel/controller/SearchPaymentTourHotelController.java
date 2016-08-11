@@ -29,8 +29,8 @@ public class SearchPaymentTourHotelController extends SMITravelController {
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         UtilityFunction util = new UtilityFunction();
-        List<InvoiceSupplier> invoiceSupplierList = paymentTourHotelService.getListInvoiceSuppiler();
-        request.setAttribute(INVOICESUPLIST, invoiceSupplierList);
+//        List<InvoiceSupplier> invoiceSupplierList = paymentTourHotelService.getListInvoiceSuppiler();
+//        request.setAttribute(INVOICESUPLIST, invoiceSupplierList);
         List<MItemstatus> mItemstatusList = utilityService.getListMItemstatus();
         request.setAttribute(STATUS, mItemstatusList);
         

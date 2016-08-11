@@ -217,7 +217,7 @@
     </div>
 </div>
                         
-                        <!--Search Invoice Sup-->
+<!--Search Invoice Sup-->
 <div class="modal fade" id="SearchInvoiceSup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -226,21 +226,23 @@
                 <h4 class="modal-title"  id="Titlemodel">Invoice Supplier</h4>
             </div>
             <div class="modal-body">
+                <div style="text-align: right"> 
+                    <i id="ajaxload"  class="fa fa-spinner fa-spin hidden"></i> Search : <input type="text" style="width: 175px" id="searchInvoiceSupplier" name="searchInvoiceSupplier"/> 
+                </div> 
                 <table class="display" id="SearchInvoicSupTable">
                     <thead class="datatable-header">
                         <script>
                             var invoiceSup = [];
                         </script>
                         <tr>
-                            <th class="hidden">Id</th>
                             <th>Code</th>
                             <th>Name</th>
                             <th>AP code</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach var="invSup" items="${invoiceSup_list}">
-                            <tr onclick ="setupInvSupValue('${invSup.id}', '${invSup.code}', '${invSup.name}', '${invSup.apcode}')" >
+                        <%--<c:forEach var="invSup" items="${invoiceSup_list}">--%>
+<!--                            <tr onclick ="setupInvSupValue('${invSup.id}', '${invSup.code}', '${invSup.name}', '${invSup.apcode}')" >
                                 <td class="hidden">${invSup.id}</td>
                                 <td>${invSup.code}</td>
                                 <td>${invSup.name}</td>
@@ -248,8 +250,8 @@
                             </tr>
                             <script>
                                 invoiceSup.push({id: "${invSup.id}", code: "${invSup.code}", name: "${invSup.name}", apcode: "${invSup.apcode}"});
-                            </script>
-                        </c:forEach>    
+                            </script>-->
+                        <%--</c:forEach>--%>    
                     </tbody>
                 </table>
             </div>
@@ -281,14 +283,25 @@
     $(document).ready(function () {
         $('.datemask').mask('00-00-0000');
         $(".money").mask('000,000,000,000.00', {reverse: true});
-        $('#SearchInvoicSupTable').dataTable({bJQueryUI: true,
+        var SearchInvoicSupTable = $('#SearchInvoicSupTable').dataTable({bJQueryUI: true,
             "sPaginationType": "full_numbers",
-            "bAutoWidth": true,
-            "bFilter": true,
+            "bAutoWidth": false,
+            "bFilter": false,
             "bPaginate": true,
             "bInfo": false,
             "bLengthChange": false,
             "iDisplayLength": 10
+        });
+
+        $('#SearchInvoicSupTable tbody').on('click', 'tr', function() {
+            $('.collapse').collapse('show');
+            if ($(this).hasClass('row_selected')) {
+                $(this).removeClass('row_selected');
+            }
+            else {
+                SearchInvoicSupTable.$('tr.row_selected').removeClass('row_selected');
+                $(this).addClass('row_selected');
+            }
         });
         
         var codeInvoiceSup = [];

@@ -927,21 +927,23 @@
                 <h4 class="modal-title"  id="Titlemodel">Invoice Supplier</h4>
             </div>
             <div class="modal-body">
+                <div style="text-align: right"> 
+                    <i id="ajaxload"  class="fa fa-spinner fa-spin hidden"></i> Search : <input type="text" style="width: 175px" id="searchInvoiceSupplier" name="searchInvoiceSupplier"/> 
+                </div> 
                 <table class="display" id="SearchInvoicSupTable">
                     <thead class="datatable-header">
                         <script>
                             var invoiceSup = [];
                         </script>
                         <tr>
-                            <th class="hidden">Id</th>
                             <th>Code</th>
                             <th>Name</th>
                             <th>AP code</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach var="invSup" items="${invSupList}">
-                            <tr onclick ="setupInvSupValue('${invSup.id}', '${invSup.code}', '${invSup.name}', '${invSup.apcode}')" >
+                        <%--<c:forEach var="invSup" items="${invSupList}">--%>
+<!--                            <tr onclick ="setupInvSupValue('${invSup.id}', '${invSup.code}', '${invSup.name}', '${invSup.apcode}')" >
                                 <td class="hidden">${invSup.id}</td>
                                 <td>${invSup.code}</td>
                                 <td>${invSup.name}</td>
@@ -949,8 +951,8 @@
                             </tr>
                             <script>
                                 invoiceSup.push({id: "${invSup.id}", code: "${invSup.code}", name: "${invSup.name}", apcode: "${invSup.apcode}"});
-                            </script>
-                        </c:forEach>    
+                            </script>-->
+                        <%--</c:forEach>--%>    
                     </tbody>
                 </table>
             </div>
