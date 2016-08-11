@@ -29,7 +29,7 @@ public class OutboundStaffSummaryController extends SMITravelController{
     
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
-        List<SystemUser> userList = utilityService.getUserList();
+        List<SystemUser> userList = utilityService.getUserOutboundList();
         request.setAttribute(USERLIST,userList);
         
          List<MCurrency> mCurrencys = utilityService.getListMCurrency();

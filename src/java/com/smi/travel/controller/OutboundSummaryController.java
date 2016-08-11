@@ -67,7 +67,7 @@ public class OutboundSummaryController extends SMITravelController{
             request.setAttribute("listBank", listBank);
         }
         // List Sale 
-        List<SystemUser> listSale = utilityService.getUserList();
+        List<SystemUser> listSale = utilityService.getUserOutboundList();
         if(listSale != null && listSale.size() != 0){
             request.setAttribute("listSale", listSale);
         }else{

@@ -171,7 +171,6 @@ public class TicketSummaryImpl implements TicketSummaryDao {
         if (check == 0) {
             query = query.replaceAll("where", " ");
         }
-        System.out.println("query : " + query);
         return query;
     }
 

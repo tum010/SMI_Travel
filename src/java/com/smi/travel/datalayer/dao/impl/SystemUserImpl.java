@@ -24,6 +24,7 @@ public class SystemUserImpl implements SystemUserDao {
     private static final String GUIDEQUERY = "select u from SystemUser u   WHERE u.position= 'GUIDE' and u.status = 'active' ";
     private static final String DRIVERQUERY = "select u from SystemUser u   WHERE u.position= 'DRIVER' and u.status = 'active' ";
     private static final String STAFFQUERY = "select u from SystemUser u   WHERE  u.status = 'active'";
+    private static final String STAFFOUTBOUNDQUERY = "select u from SystemUser u   WHERE  u.status = 'active' and u.MDepartment.id = 2 ";
     
     @Override
     public SystemUser getSystemUser(SystemUser user) {
@@ -193,9 +194,16 @@ public class SystemUserImpl implements SystemUserDao {
         return list;
     }
 
+    @Override
+    public List<SystemUser> getUserOutboundList() {
+        Session session = this.sessionFactory.openSession();
+        List<SystemUser> list = session.createQuery(STAFFOUTBOUNDQUERY).list();
+        if (list.isEmpty()) {
+            return null;
+        }
+        session.close();
+        this.sessionFactory.close();
+        return list;
+    }
 
-
-
-    
-    
 }

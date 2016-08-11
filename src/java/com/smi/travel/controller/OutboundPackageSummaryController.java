@@ -8,12 +8,9 @@ package com.smi.travel.controller;
 import com.smi.travel.datalayer.entity.MAccpay;
 import com.smi.travel.datalayer.entity.MBank;
 import com.smi.travel.datalayer.entity.MCity;
-import com.smi.travel.datalayer.entity.MCountry;
 import com.smi.travel.datalayer.entity.MItemstatus;
 import com.smi.travel.datalayer.entity.PackageTour;
-import com.smi.travel.datalayer.entity.Product;
 import com.smi.travel.datalayer.entity.SystemUser;
-import com.smi.travel.datalayer.service.BookingOtherService;
 import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.master.controller.SMITravelController;
 import java.util.List;
@@ -55,7 +52,7 @@ public class OutboundPackageSummaryController  extends SMITravelController{
         request.setAttribute("listBank", listBank);
         
         // List Sale 
-        List<SystemUser> listSale = utilityService.getUserList();
+        List<SystemUser> listSale = utilityService.getUserOutboundList();
         request.setAttribute("listSale", listSale);
         
         return OutboundPackageSummary;

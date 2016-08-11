@@ -21,4 +21,5 @@ public interface SystemUserDao {
     public List<SystemUser> getGuildeList();
     public List<SystemUser> getDriverList();
     public List<SystemUser> getUserList();
+    public List<SystemUser> getUserOutboundList();
 }

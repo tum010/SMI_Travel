@@ -7,12 +7,9 @@ package com.smi.travel.datalayer.view.dao.impl;
 
 import com.smi.travel.datalayer.entity.Agent;
 import com.smi.travel.datalayer.report.model.AirlineSummary;
-import com.smi.travel.datalayer.report.model.StaffSummary;
 import com.smi.travel.datalayer.view.dao.AirlineSummaryDao;
 import com.smi.travel.datalayer.view.entity.SummaryAirline;
 import com.smi.travel.datalayer.view.entity.SummaryAirlinePaxView;
-import com.smi.travel.datalayer.view.entity.TicketSummaryAirlineView;
-import org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;

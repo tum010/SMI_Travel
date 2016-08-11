@@ -298,6 +298,10 @@ public class UtilityService {
     public List<SystemUser> getUserList() {
        return systemUserdao.getUserList();
     }
+    
+    public List<SystemUser> getUserOutboundList(){
+        return systemUserdao.getUserOutboundList();
+    }
      
     public List<MCreditBank> getListCreditBank(){
         return listitemdao.getListCreditBank();
