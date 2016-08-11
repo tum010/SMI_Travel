@@ -61,8 +61,8 @@ public class PaymentOutboundController extends SMITravelController {
         MDefaultData mDefaultDataWht = utilservice.getMDefaultDataFromType("withholding tax");
         BigDecimal mWht = new BigDecimal(mDefaultDataWht.getValue());
         request.setAttribute(MWHT, mWht);
-        List<InvoiceSupplier> invoiceSupplierList = utilservice.getListInvoiceSuppiler();
-        request.setAttribute(INVOICESUPLIST, invoiceSupplierList);
+//        List<InvoiceSupplier> invoiceSupplierList = utilservice.getListInvoiceSuppiler();
+//        request.setAttribute(INVOICESUPLIST, invoiceSupplierList);
         List<String> refNoList =  paymentOutboundService.getRefNoOutbound();       
         request.setAttribute(REFNOLIST, refNoList);      
         

@@ -246,21 +246,23 @@
                 <h4 class="modal-title"  id="Titlemodel">Invoice Supplier</h4>
             </div>
             <div class="modal-body">
-                <table class="display" id="searchInvoicSupTable">
+                <div style="text-align: right"> 
+                    <i id="ajaxload"  class="fa fa-spinner fa-spin hidden"></i> Search : <input type="text" style="width: 175px" id="searchInvoiceSupplier" name="searchInvoiceSupplier"/> 
+                </div> 
+                <table class="display" id="SearchInvoicSupTable">
                     <thead class="datatable-header">
                         <script>
                             var invoiceSup = [];
                         </script>
                         <tr>
-                            <th class="hidden">Id</th>
                             <th>Code</th>
                             <th>Name</th>
                             <th>AP code</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach var="invSup" items="${invSupList}">
-                            <tr onclick ="setupInvSupValue('${invSup.id}', '${invSup.code}', '${invSup.name}', '${invSup.apcode}')" >
+                        <%--<c:forEach var="invSup" items="${invSupList}">--%>
+<!--                            <tr onclick ="setupInvSupValue('${invSup.id}', '${invSup.code}', '${invSup.name}', '${invSup.apcode}')" >
                                 <td class="hidden">${invSup.id}</td>
                                 <td>${invSup.code}</td>
                                 <td>${invSup.name}</td>
@@ -268,8 +270,8 @@
                             </tr>
                             <script>
                                 invoiceSup.push({id: "${invSup.id}", code: "${invSup.code}", name: "${invSup.name}", apcode: "${invSup.apcode}"});
-                            </script>
-                        </c:forEach>    
+                            </script>-->
+                        <%--</c:forEach>--%>    
                     </tbody>
                 </table>
             </div>
@@ -308,6 +310,7 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->      
 <script type="text/javascript">
+var showflag = 1;
 $(document).ready(function () {
     $('.date').datetimepicker();
     $('.datemask').mask('00-00-0000');
@@ -329,24 +332,38 @@ $(document).ready(function () {
         "iDisplayLength": 10
     });
     
-    $('#searchInvoicSupTable').dataTable({bJQueryUI: true,
+    var SearchInvoicSupTable = $('#SearchInvoicSupTable').dataTable({bJQueryUI: true,
         "sPaginationType": "full_numbers",
-        "bAutoWidth": true,
-        "bFilter": true,
+        "bAutoWidth": false,
+        "bFilter": false,
         "bPaginate": true,
         "bInfo": false,
-        "bLengthChange": false
+        "bLengthChange": false,
+        "iDisplayLength": 10
     });
+
+    $('#SearchInvoicSupTable tbody').on('click', 'tr', function() {
+        $('.collapse').collapse('show');
+        if ($(this).hasClass('row_selected')) {
+            $(this).removeClass('row_selected');
+        }
+        else {
+            SearchInvoicSupTable.$('tr.row_selected').removeClass('row_selected');
+            $(this).addClass('row_selected');
+        }
+    });
+        
      $(".decimal").inputmask({
-            alias: "decimal",
-            integerDigits: 8,
-            groupSeparator: ',',
-            autoGroup: true,
-            digits: 2,
-            allowMinus: false,
-            digitsOptional: false,
-            placeholder: "0.00",
-        });
+        alias: "decimal",
+        integerDigits: 8,
+        groupSeparator: ',',
+        autoGroup: true,
+        digits: 2,
+        allowMinus: false,
+        digitsOptional: false,
+        placeholder: "0.00",
+    });
+    
     var codeInvoiceSup = [];
     $.each(invoiceSup, function (key, value) {
         codeInvoiceSup.push(value.code);
@@ -485,6 +502,37 @@ $(document).ready(function () {
     } else if (result === 'fail') {
         $('#textAlertDivNotDelete').show();
     }
+    
+    $("#searchInvoiceSupplier").keyup(function() {
+        searchInvoiceSupplierList($("#searchInvoiceSupplier").val());          
+    });
+    
+    //autocomplete
+    $("#invSupCode").keyup(function(event){ 
+        var position = $(this).offset();
+        $(".ui-widget").css("top", position.top + 30);
+        $(".ui-widget").css("left", position.left); 
+        if($(this).val() === ""){
+            $("#invSupId").val("");
+            $("#invSupCode").val("");
+            $("#invSupName").val("");
+            $("#invSupApCode").val("");
+        }else{
+            if(event.keyCode === 13){
+                searchInvoiceSupplierListAuto(this.value); 
+            }
+        }
+    });
+
+    $("#invSupCode").keydown(function(){
+        var position = $(this).offset();
+        $(".ui-widget").css("top", position.top + 30);
+        $(".ui-widget").css("left", position.left); 
+        if(showflag == 0){
+            $(".ui-widget").css("top", -1000);
+            showflag=1;
+        }
+    });
     
 });
 
@@ -812,6 +860,151 @@ $(document).ready(function () {
         }
     }
 
+    function searchInvoiceSupplierList(name) {
+        name = generateSpecialCharacter(name);
+        var servletName = 'MListItemServlet';
+        var servicesName = 'AJAXBean';
+        var param = 'action=' + 'text' +
+                        '&servletName=' + servletName +
+                        '&servicesName=' + servicesName +
+                        '&name=' + name +
+                        '&type=' + 'getInvoiceSupplierList';
+        CallAjaxGetInvoiceSuplierList(param);
+    }
 
+    function CallAjaxGetInvoiceSuplierList(param) {
+        var url = 'AJAXServlet';
+        $("#ajaxload").removeClass("hidden");
+        try {
+            $.ajax({
+                type: "POST",
+                url: url,
+                cache: false,
+                data: param,
+                success: function(msg) {
+                    if(msg !== 'fail'){
+                        $('#SearchInvoicSupTable').dataTable().fnClearTable();
+                        $('#SearchInvoicSupTable').dataTable().fnDestroy();
+                        $("#SearchInvoicSupTable tbody").empty().append(msg);
+
+                        $('#SearchInvoicSupTable').dataTable({bJQueryUI: true,
+                            "sPaginationType": "full_numbers",
+                            "bAutoWidth": false,
+                            "bFilter": false,
+                            "bPaginate": true,
+                            "bInfo": false,
+                            "bLengthChange": false,
+                            "iDisplayLength": 10
+                        });
+
+                        $("#ajaxload").addClass("hidden");
+                    }
+
+                }, error: function(msg) {
+                    $("#ajaxload").addClass("hidden");
+                }
+            });
+        } catch (e) {
+            $("#ajaxload").addClass("hidden");
+        }
+    }
+
+    function searchInvoiceSupplierListAuto(name){
+        name = generateSpecialCharacter(name);
+        var servletName = 'MListItemServlet';
+        var servicesName = 'AJAXBean';
+        var param = 'action=' + 'text' +
+                '&servletName=' + servletName +
+                '&servicesName=' + servicesName +
+                '&name=' + name +
+                '&type=' + 'getInvoiceSupplierListAuto';
+        CallAjaxGetInvoiceSuplierListAuto(param);
+    }
+
+    function CallAjaxGetInvoiceSuplierListAuto(param){
+        var url = 'AJAXServlet';
+        var invArray = [];
+        var invIdList = [];
+        var invCodeList = [];
+        var invNameList = [];
+        var invARCodeList = [];
+        var invId , invCode , invName , invARCode;
+        $("#invSupCode").autocomplete("destroy");
+        try {
+            $.ajax({
+               type: "POST",
+               url: url,
+               cache: false,
+               data: param,
+               beforeSend: function() {
+                  $("#dataload").removeClass("hidden");    
+               },
+               success: function(msg) {     
+                   var invJson =  JSON.parse(msg);
+                   for (var i in invJson){
+                       if (invJson.hasOwnProperty(i)){
+                           invId = invJson[i].id;
+                           invCode = invJson[i].code;
+                           invName = invJson[i].name;
+                           invARCode = invJson[i].arcode;
+                           invArray.push(invCode);
+                           invArray.push(invName);
+                           invIdList.push(invId);
+                           invCodeList.push(invCode);
+                           invNameList.push(invName);
+                           invARCodeList.push(invARCode);                          
+                       }                 
+                        $("#dataload").addClass("hidden"); 
+                   }
+                   $("#invSupId").val(invId);
+                   $("#invSupCode").val(invCode);
+                   $("#invSupName").val(invName);
+                   $("#invSupApCode").val(invARCode);
+
+                   $("#invSupCode").autocomplete({
+                       source: invArray,
+                       close: function(){
+                            $("#invSupCode").trigger("keyup");
+                            var invselect = $("#invSupCode").val();
+                            for(var i =0;i<invIdList.length;i++){
+                                if((invselect==invCodeList[i])||(invselect==invNameList[i])){      
+                                   $("#invSupId").val(invIdList[i]);
+                                   $("#invSupCode").val(invCodeList[i]);
+                                   $("#invSupName").val(invNameList[i]);
+                                   $("#invSupApCode").val(invARCodeList[i]);
+                                }                 
+                            }   
+                       }
+                    });
+
+                   var invval = $("#invSupCode").val();
+                   for(var i =0;i<invIdList.length;i++){
+                       if(invval==invNameList[i]){
+                           $("#invSupId").val(invIdList[i]);
+                           $("#invSupCode").val(invCodeList[i]);
+                           $("#invSupName").val(invNameList[i]);
+                           $("#invSupApCode").val(invARCodeList[i]);
+                       }
+                   }
+                   if(invIdList.length == 1){
+                       showflag = 0;
+                       $("#invSupId").val(invIdList[0]);
+                       $("#invSupCode").val(invCodeList[0]);
+                       $("#invSupName").val(invNameList[0]);
+                       $("#invSupApCode").val(invARCodeList[0]);
+                   }
+                   var event = jQuery.Event('keydown');
+                   event.keyCode = 40;
+                   $("#invSupCode").trigger(event);
+
+                }, error: function(msg) {
+                   console.log('auto ERROR');
+                   $("#dataload").addClass("hidden");
+                }
+            });
+        } catch (e) {
+
+        }
+    }
 
 </script>

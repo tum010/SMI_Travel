@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+var showflag = 1;
 $(document).ready(function() {
     $(".money").mask('000,000,000.00', {reverse: true});
     $(".decimal").inputmask({
@@ -33,13 +34,25 @@ $(document).ready(function() {
         $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
 
     });
-    $('#SearchInvoicSupTable').dataTable({bJQueryUI: true,
+    var SearchInvoicSupTable = $('#SearchInvoicSupTable').dataTable({bJQueryUI: true,
         "sPaginationType": "full_numbers",
-        "bAutoWidth": true,
-        "bFilter": true,
+        "bAutoWidth": false,
+        "bFilter": false,
         "bPaginate": true,
         "bInfo": false,
-        "bLengthChange": false
+        "bLengthChange": false,
+        "iDisplayLength": 10
+    });
+
+    $('#SearchInvoicSupTable tbody').on('click', 'tr', function() {
+        $('.collapse').collapse('show');
+        if ($(this).hasClass('row_selected')) {
+            $(this).removeClass('row_selected');
+        }
+        else {
+            SearchInvoicSupTable.$('tr.row_selected').removeClass('row_selected');
+            $(this).addClass('row_selected');
+        }
     });
     $('#SearchAPCodeTable').dataTable({bJQueryUI: true,
         "sPaginationType": "full_numbers",
@@ -234,6 +247,37 @@ $(document).ready(function() {
     });
     
     setDescription();
+    
+    $("#searchInvoiceSupplier").keyup(function() {
+        searchInvoiceSupplierList($("#searchInvoiceSupplier").val());          
+    });
+    
+    //autocomplete
+    $("#invSupCode").keyup(function(event){ 
+        var position = $(this).offset();
+        $(".ui-widget").css("top", position.top + 30);
+        $(".ui-widget").css("left", position.left); 
+        if($(this).val() === ""){
+            $("#invSupId").val("");
+            $("#invSupCode").val("");
+            $("#invSupName").val("");
+            $("#invSupApCode").val("");
+        }else{
+            if(event.keyCode === 13){
+                searchInvoiceSupplierListAuto(this.value); 
+            }
+        }
+    });
+
+    $("#invSupCode").keydown(function(){
+        var position = $(this).offset();
+        $(".ui-widget").css("top", position.top + 30);
+        $(".ui-widget").css("left", position.left); 
+        if(showflag == 0){
+            $(".ui-widget").css("top", -1000);
+            showflag=1;
+        }
+    });
 });
 
 function reloadPage() {
@@ -1876,9 +1920,157 @@ function printPaymentOutboundReport(optionReport){
     window.open("report.smi?name=PaymentOutboundReport&paymentOutboundId=" + paymentOutboundId +"&optionReport="+optionReport);
 }
 
-
 function replaceAll(find, replace, str) {
     return str.replace(new RegExp(find, 'g'), replace);
+}
+
+function searchInvoiceSupplierList(name) {
+    name = generateSpecialCharacter(name);
+    var servletName = 'MListItemServlet';
+    var servicesName = 'AJAXBean';
+    var param = 'action=' + 'text' +
+                    '&servletName=' + servletName +
+                    '&servicesName=' + servicesName +
+                    '&name=' + name +
+                    '&type=' + 'getInvoiceSupplierList';
+    CallAjaxGetInvoiceSuplierList(param);
+}
+
+function CallAjaxGetInvoiceSuplierList(param) {
+    var url = 'AJAXServlet';
+    $("#ajaxload").removeClass("hidden");
+    try {
+        $.ajax({
+            type: "POST",
+            url: url,
+            cache: false,
+            data: param,
+            success: function(msg) {
+                if(msg !== 'fail'){
+                    $('#SearchInvoicSupTable').dataTable().fnClearTable();
+                    $('#SearchInvoicSupTable').dataTable().fnDestroy();
+                    $("#SearchInvoicSupTable tbody").empty().append(msg);
+
+                    $('#SearchInvoicSupTable').dataTable({bJQueryUI: true,
+                        "sPaginationType": "full_numbers",
+                        "bAutoWidth": false,
+                        "bFilter": false,
+                        "bPaginate": true,
+                        "bInfo": false,
+                        "bLengthChange": false,
+                        "iDisplayLength": 10
+                    });
+
+                    $("#ajaxload").addClass("hidden");
+                }
+
+            }, error: function(msg) {
+                $("#ajaxload").addClass("hidden");
+            }
+        });
+    } catch (e) {
+        $("#ajaxload").addClass("hidden");
+    }
+}
+
+function searchInvoiceSupplierListAuto(name){
+    name = generateSpecialCharacter(name);
+    var servletName = 'MListItemServlet';
+    var servicesName = 'AJAXBean';
+    var param = 'action=' + 'text' +
+            '&servletName=' + servletName +
+            '&servicesName=' + servicesName +
+            '&name=' + name +
+            '&type=' + 'getInvoiceSupplierListAuto';
+    CallAjaxGetInvoiceSuplierListAuto(param);
+}
+
+function CallAjaxGetInvoiceSuplierListAuto(param){
+    var url = 'AJAXServlet';
+    var invArray = [];
+    var invIdList = [];
+    var invCodeList = [];
+    var invNameList = [];
+    var invARCodeList = [];
+    var invId , invCode , invName , invARCode;
+    $("#invSupCode").autocomplete("destroy");
+    try {
+        $.ajax({
+           type: "POST",
+           url: url,
+           cache: false,
+           data: param,
+           beforeSend: function() {
+              $("#dataload").removeClass("hidden");    
+           },
+           success: function(msg) {     
+               var invJson =  JSON.parse(msg);
+               for (var i in invJson){
+                   if (invJson.hasOwnProperty(i)){
+                       invId = invJson[i].id;
+                       invCode = invJson[i].code;
+                       invName = invJson[i].name;
+                       invARCode = invJson[i].arcode;
+                       invArray.push(invCode);
+                       invArray.push(invName);
+                       invIdList.push(invId);
+                       invCodeList.push(invCode);
+                       invNameList.push(invName);
+                       invARCodeList.push(invARCode);                          
+                   }                 
+                    $("#dataload").addClass("hidden"); 
+               }
+               $("#invSupId").val(invId);
+               $("#invSupCode").val(invCode);
+               $("#invSupName").val(invName);
+               $("#invSupApCode").val(invARCode);
+
+               $("#invSupCode").autocomplete({
+                   source: invArray,
+                   close: function(){
+                        $("#invSupCode").trigger("keyup");
+                        var invselect = $("#invSupCode").val();
+                        for(var i =0;i<invIdList.length;i++){
+                            if((invselect==invCodeList[i])||(invselect==invNameList[i])){      
+                               $("#invSupId").val(invIdList[i]);
+                               $("#invSupCode").val(invCodeList[i]);
+                               $("#invSupName").val(invNameList[i]);
+                               $("#invSupApCode").val(invARCodeList[i]);
+                               $('#PaymentOutboundForm').bootstrapValidator('revalidateField', 'invSupApCode');
+                            }                 
+                        }   
+                   }
+                });
+
+               var invval = $("#invSupCode").val();
+               for(var i =0;i<invIdList.length;i++){
+                   if(invval==invNameList[i]){
+                       $("#invSupId").val(invIdList[i]);
+                       $("#invSupCode").val(invCodeList[i]);
+                       $("#invSupName").val(invNameList[i]);
+                       $("#invSupApCode").val(invARCodeList[i]);
+                       $('#PaymentOutboundForm').bootstrapValidator('revalidateField', 'invSupApCode');
+                   }
+               }
+               if(invIdList.length == 1){
+                   showflag = 0;
+                   $("#invSupId").val(invIdList[0]);
+                   $("#invSupCode").val(invCodeList[0]);
+                   $("#invSupName").val(invNameList[0]);
+                   $("#invSupApCode").val(invARCodeList[0]);
+               }
+               var event = jQuery.Event('keydown');
+               event.keyCode = 40;
+               $("#invSupCode").trigger(event);
+
+            }, error: function(msg) {
+               console.log('auto ERROR');
+               $("#dataload").addClass("hidden");
+            }
+        });
+    } catch (e) {
+
+    }
 }
 
 

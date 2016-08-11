@@ -27,8 +27,8 @@ public class SearchPaymentOutboundController extends SMITravelController {
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         List<MItemstatus> mItemstatusList = utilservice.getListMItemstatus();
         request.setAttribute(STATUS, mItemstatusList);
-        List<InvoiceSupplier> invoiceSupplierList = paymentTourHotelService.getListInvoiceSuppiler();
-        request.setAttribute(INVOICESUPLIST, invoiceSupplierList);
+//        List<InvoiceSupplier> invoiceSupplierList = paymentTourHotelService.getListInvoiceSuppiler();
+//        request.setAttribute(INVOICESUPLIST, invoiceSupplierList);
         
         String action = request.getParameter("action");
         String fromDate = request.getParameter("fromDate");
