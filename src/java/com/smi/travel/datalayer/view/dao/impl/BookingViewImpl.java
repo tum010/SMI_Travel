@@ -47,7 +47,7 @@ public class BookingViewImpl implements BookingViewDao{
                 && (transferDateFrom == null || "".equals(transferDateFrom)) && (transferDateTo == null || "".equals(transferDateTo))){
 //            query = "from BookingViewMin book where ";
             query = "select `mt`.`Reference No` AS `ref_no`,`ag`.`code` AS `agent_code`,`GET_LEADER_NAME`(`mt`.`id`) AS `leader_name`,"
-                    + "`bs`.`name` AS `status_name`,`bs`.`id` AS `status_id`,'' AS `pnr`,ifnull(`bvt`.`hotel`,'') AS `hotel_name`,'' AS `first_depart_date`,'' AS `first_checkin_date`,"
+                    + "`bs`.`name` AS `status_name`,`bs`.`id` AS `status_id`,`pnr`.`pnr` AS `pnr`,ifnull(`bvt`.`hotel`,'') AS `hotel_name`,'' AS `first_depart_date`,'' AS `first_checkin_date`,"
                     + "`mt`.`Create_date` AS `Create_date`,`mt`.`Create_by` AS `Create_by`,`dm`.`name` AS `department_name`,`dm`.`id` AS `department_id`,"
                     + "'' AS `tel`,'' AS `remark`,'' AS `ticket_no`,'' AS `email`,'' AS `payby`,'' AS `accid`,'' AS `transfer_date`,"
                     + "`bdv`.`tour_date` AS `tour_date`,`bdv`.`tour_code` AS `tour_code` "
@@ -62,6 +62,7 @@ public class BookingViewImpl implements BookingViewDao{
                     + "left join `billable` `bill` on((`bill`.`master_id` = `mt`.`id`))) "
                     + "left join `booking_daytour_view` `bdv` on((`bdv`.`master_id` = `mt`.`id`))) "
                     + "left join `booking_view_hotel` `bvt` on((`bvt`.`id` = `mt`.`id`))) "
+                    + "left join `booking_view_pnr` `pnr` ON ((`pnr`.`id` = `mt`.`id`))"
                     + "where  ";
             isBookingViewMin = true;
         
