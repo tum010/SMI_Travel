@@ -83,7 +83,8 @@ public class TransferJobImpl implements TransferJobDao {
     @Override
     public List<String> filterPlaceOtherFromDateAndTour(String TourDate, String TourID) {
         String filterPlaceOtherQuery = "from DaytourBooking DB where DB.tourDate = '" + TourDate + "'"
-                + " and DB.place.place = 'OTHERS' and DB.daytour.id in (" + TourID + ") and DB.master.MBookingstatus.id <> 3 and DB.master.MBookingstatus.id <> 4  and DB.MItemstatus.id = 1 ";
+                + " and DB.place.place = 'OTHERS' and DB.daytour.id in (" + TourID + ") and DB.master.MBookingstatus.id <> 3 and DB.master.MBookingstatus.id <> 4  and DB.MItemstatus.id = 1 "
+                + " Group by DB.pickupDetail ";
         System.out.println("filterPlaceOtherQuery : " + filterPlaceOtherQuery);
         Session session = this.sessionFactory.openSession();
         List<String> otherList = new LinkedList<String>();
