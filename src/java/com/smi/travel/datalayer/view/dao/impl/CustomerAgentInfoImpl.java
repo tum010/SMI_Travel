@@ -78,7 +78,23 @@ public class CustomerAgentInfoImpl implements CustomerAgentInfoDao{
     public List<CustomerAgentInfo> SearchListCustomerAgentInfo(String name) {
         Session session = this.sessionFactory.openSession();
         util = new UtilityFunction();
-        String sql ="SELECT * FROM `customer_agent_info` where bill_name like '%"+name+"%' or bill_to like '"+name+"%' limit 200";
+//        String sql ="SELECT * FROM `customer_agent_info` where bill_name like '%"+name+"%' or bill_to like '"+name+"%' limit 200";
+        String sql = "SELECT concat( ifnull(concat(`mi`.`name`, ' '), ''), ifnull( concat(`cm`.`last_name`, ' '), '' ), "
+                + "ifnull( concat(' ', `cm`.`first_name`), '' )) AS `bill_name`, `cm`.`code` AS `bill_to`, `cm`.`tel` AS `tel`, "
+                + "`cm`.`address` AS `address`, NULL AS `fax`, NULL AS `term`, NULL AS `pay`, 'C' AS `type` "
+                + "FROM ( `customer` `cm` LEFT JOIN `m_initialname` `mi` ON (( `mi`.`id` = `cm`.`initial_name` ))) "
+                + "WHERE concat( ifnull(concat(`mi`.`name`, ' '), ''), ifnull( concat(`cm`.`last_name`, ' '), '' ), ifnull( concat(' ', `cm`.`first_name`), '' )) LIKE '%" + name + "%' "
+                + "OR `cm`.`code` LIKE '%" + name + "%' "
+                + "UNION ALL "
+                + "SELECT `ag`.`name` AS `bill_name`, `ag`.`code` AS `bill_to`, `ag`.`tel` AS `tel`, `ag`.`address` AS `address`, "
+                + "`ag`.`fax` AS `fax`, `ag`.`term_id` AS `term`, `ag`.`pay_id` AS `pay`, 'A' AS `agent` "
+                + "FROM `agent` `ag` "
+                + "WHERE `ag`.`name` LIKE '%" + name + "%' OR `ag`.`code` LIKE '%" + name + "%' "
+                + "UNION ALL "
+                + "SELECT concat('G.', `st`.`name`) AS `bill_name`, `st`.`ar_code` AS `bill_to`, `st`.`tel` AS `tel`, NULL AS `address`, NULL AS `fax`, "
+                + "NULL AS `term`, NULL AS `pay`, 'S' AS `type` "
+                + "FROM `staff` `st` "
+                + "WHERE (`st`.`position` = 'GUIDE') AND ( concat('G.', `st`.`name`) LIKE '%" + name + "%' OR `st`.`ar_code` LIKE '%" + name + "%' )";
         List<Object[]> QueryList =  session.createSQLQuery(sql)
                 .addScalar("bill_To",Hibernate.STRING)
                 .addScalar("bill_Name",Hibernate.STRING)
@@ -87,6 +103,7 @@ public class CustomerAgentInfoImpl implements CustomerAgentInfoDao{
                 .addScalar("term",Hibernate.INTEGER)
                 .addScalar("pay",Hibernate.INTEGER)
                 .addScalar("type",Hibernate.STRING)
+                .setMaxResults(300)
                 .list();
         
         List<CustomerAgentInfo> CustomerAgentInfoList =  new LinkedList<CustomerAgentInfo>();
@@ -118,7 +135,23 @@ public class CustomerAgentInfoImpl implements CustomerAgentInfoDao{
     public List<CustomerAgentInfo> SearchListCustomerAgentInfoReceiveTable(String name) {
         Session session = this.sessionFactory.openSession();
         util = new UtilityFunction();
-        String sql ="SELECT * FROM `customer_agent_info` where bill_name like '%"+name+"%' limit 200";
+//        String sql ="SELECT * FROM `customer_agent_info` where bill_name like '%"+name+"%' limit 200";
+        String sql = "SELECT concat( ifnull(concat(`mi`.`name`, ' '), ''), ifnull( concat(`cm`.`last_name`, ' '), '' ), "
+                + "ifnull( concat(' ', `cm`.`first_name`), '' )) AS `bill_name`, `cm`.`code` AS `bill_to`, `cm`.`tel` AS `tel`, "
+                + "`cm`.`address` AS `address`, NULL AS `fax`, NULL AS `term`, NULL AS `pay`, 'C' AS `type` "
+                + "FROM ( `customer` `cm` LEFT JOIN `m_initialname` `mi` ON (( `mi`.`id` = `cm`.`initial_name` ))) "
+                + "WHERE concat( ifnull(concat(`mi`.`name`, ' '), ''), ifnull( concat(`cm`.`last_name`, ' '), '' ), ifnull( concat(' ', `cm`.`first_name`), '' )) LIKE '%" + name + "%' "
+                + "OR `cm`.`code` LIKE '%" + name + "%' "
+                + "UNION ALL "
+                + "SELECT `ag`.`name` AS `bill_name`, `ag`.`code` AS `bill_to`, `ag`.`tel` AS `tel`, `ag`.`address` AS `address`, "
+                + "`ag`.`fax` AS `fax`, `ag`.`term_id` AS `term`, `ag`.`pay_id` AS `pay`, 'A' AS `agent` "
+                + "FROM `agent` `ag` "
+                + "WHERE `ag`.`name` LIKE '%" + name + "%' OR `ag`.`code` LIKE '%" + name + "%' "
+                + "UNION ALL "
+                + "SELECT concat('G.', `st`.`name`) AS `bill_name`, `st`.`ar_code` AS `bill_to`, `st`.`tel` AS `tel`, NULL AS `address`, NULL AS `fax`, "
+                + "NULL AS `term`, NULL AS `pay`, 'S' AS `type` "
+                + "FROM `staff` `st` "
+                + "WHERE (`st`.`position` = 'GUIDE') AND ( concat('G.', `st`.`name`) LIKE '%" + name + "%' OR `st`.`ar_code` LIKE '%" + name + "%' )";    
         List<Object[]> QueryList =  session.createSQLQuery(sql)
                 .addScalar("bill_To",Hibernate.STRING)
                 .addScalar("bill_Name",Hibernate.STRING)

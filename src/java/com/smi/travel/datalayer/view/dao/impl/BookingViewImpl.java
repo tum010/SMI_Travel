@@ -223,7 +223,7 @@ public class BookingViewImpl implements BookingViewDao{
                     .addScalar("payby", Hibernate.STRING)
                     .addScalar("accid", Hibernate.STRING)
                     .addScalar("tour_code", Hibernate.STRING)
-                    .setMaxResults(500)
+                    .setMaxResults(300)
                     .list();
             
             for(Object[] A : queryList){
@@ -350,7 +350,7 @@ public class BookingViewImpl implements BookingViewDao{
                     .addScalar("curamount", Hibernate.STRING)
                     .addScalar("id", Hibernate.STRING)
                     .addScalar("billid", Hibernate.STRING)
-                    .setMaxResults(500)
+                    .setMaxResults(300)
                     .list();
             
             boolean hasData = QueryHotel != null && QueryHotel.size() > 0 ? true : false;
@@ -461,7 +461,7 @@ public class BookingViewImpl implements BookingViewDao{
                     .addScalar("depart_date", Hibernate.STRING)
                     .addScalar("flight", Hibernate.STRING)
                     .addScalar("billid", Hibernate.STRING)
-                    .setMaxResults(500)
+                    .setMaxResults(300)
                     .list();
 
             boolean hasData = QueryAir != null && QueryAir.size() > 0 ? true : false;
@@ -549,7 +549,7 @@ public class BookingViewImpl implements BookingViewDao{
                     .addScalar("code", Hibernate.STRING)
                     .addScalar("name", Hibernate.STRING)
                     .addScalar("billid", Hibernate.STRING)
-                    .setMaxResults(500)
+                    .setMaxResults(300)
                     .list();
 
             boolean hasData = QueryPackage != null && QueryPackage.size() > 0 ? true : false;
@@ -667,7 +667,7 @@ public class BookingViewImpl implements BookingViewDao{
                     .addScalar("remark", Hibernate.STRING)
                     .addScalar("id", Hibernate.STRING)
                     .addScalar("billid", Hibernate.STRING)
-                    .setMaxResults(500)
+                    .setMaxResults(300)
                     .list();
             
             boolean hasData = QueryDayTour != null && QueryDayTour.size() > 0 ? true : false;
@@ -770,7 +770,7 @@ public class BookingViewImpl implements BookingViewDao{
                     .addScalar("other_date", Hibernate.STRING)
                     .addScalar("id", Hibernate.STRING)
                     .addScalar("billid", Hibernate.STRING)
-                    .setMaxResults(500)
+                    .setMaxResults(300)
                     .list();
             
             boolean hasData = QueryOther != null && QueryOther.size() > 0 ? true : false;
@@ -862,7 +862,7 @@ public class BookingViewImpl implements BookingViewDao{
                     .addScalar("qty", Hibernate.STRING)
                     .addScalar("id", Hibernate.STRING)
                     .addScalar("billid", Hibernate.STRING)
-                    .setMaxResults(500)
+                    .setMaxResults(300)
                     .list();
             
             boolean hasData = QueryLand != null && QueryLand.size() > 0 ? true : false;
