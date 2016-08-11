@@ -624,9 +624,10 @@
                 if ($(this).hasClass("othername")) {
                     otherNameChk = $(this).html();
                 }
-                if ($("#transferOtherTable tbody tr > td:contains('" + otherNameChk + "')").length > 0) {
-                    $('#otherTable tbody tr > td:contains("' + otherNameChk + '")').parent().addClass('hidden');
-                }
+                
+//                if ($("#transferOtherTable tbody tr > td:contains('" + otherNameChk + "')").length > 0) {
+//                    $('#otherTable tbody tr > td:contains("' + otherNameChk + '")').parent().addClass('hidden');
+//                }
             });
         });
     }
@@ -1064,7 +1065,11 @@
             var objId = $(this).find('td.otherid').html();
             var objElem = $(this).find('td.othernametemp');
             for (i = 0; i < nameArray.length; i++) {
-                if (generateSpecialCharacter(nameArray[i].trim()) === objElem.html().trim()) {
+                var nameArr = generateSpecialCharacter(nameArray[i].trim());
+                if(nameArray[i].trim().indexOf("(") || nameArray[i].trim().indexOf(")")){
+                    nameArr = nameArray[i].trim();
+                }
+                if (nameArr === objElem.html().trim()) {
                     matchedFlag = true;
                     if (objId === $("#transferOtherTable tbody tr > td:contains('" + objId + "')").html()) {
                         $("#row-" + objId + "-other").prop("checked", false);
