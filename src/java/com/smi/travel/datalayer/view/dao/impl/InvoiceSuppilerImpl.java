@@ -37,7 +37,24 @@ public class InvoiceSuppilerImpl implements InvoiceSuppilerDao{
     public List<InvoiceSupplier> getListInvoiceSupplier() {
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
-        List<Object[]> invoiceSupplierList = session.createSQLQuery(" SELECT * FROM `invoice_supplier` ")
+//        String sqlQuery = " SELECT * FROM `invoice_supplier` ";
+        String sqlQuery = "SELECT `h`.`id` AS `id`, `h`.`code` AS `code`, `h`.`name` AS `name`, `h`.`code` AS `apcode`, '' AS `taxno`, '' AS `branchno`, "
+                + "'Hotel' AS `type` "
+                + "FROM `hotel` `h` "            
+                + "UNION ALL "
+                + "SELECT `a`.`id` AS `id`, `a`.`code` AS `code`, `a`.`name` AS `name`, `a`.`code` AS `apcode`, `a`.`tax_no` AS `taxno`, "
+                + "`a`.`branch` AS `branchno`, 'Agent' AS `type` "
+                + "FROM `agent` `a` "               
+                + "UNION ALL "
+                + "SELECT `s`.`id` AS `id`, `s`.`username` AS `code`, `s`.`name` AS `name`, `s`.`ap_code` AS `apcode`, '' AS `taxno`, '' AS `branchno`, "
+                + "'Staff' AS `type` "
+                + "FROM `staff` `s` "
+                + "UNION ALL "
+                + "SELECT `sup`.`id` AS `id`, `sup`.`ap_code` AS `code`, `sup`.`name` AS `name`, `sup`.`ap_code` AS `apcode`, '' AS `taxno`, "
+                + "'' AS `branchno`, 'Supplier' AS `type` "
+                + "FROM `supplier` `sup` ";
+
+        List<Object[]> invoiceSupplierList = session.createSQLQuery(sqlQuery)
                 .addScalar("id", Hibernate.STRING)
                 .addScalar("code", Hibernate.STRING)
                 .addScalar("name", Hibernate.STRING)

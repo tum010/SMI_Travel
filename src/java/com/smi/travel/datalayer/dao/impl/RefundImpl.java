@@ -224,7 +224,24 @@ public class RefundImpl implements RefundDao{
                 refundTicket.setRefundno(airbookingidList.get(i).getRefundAirticket().getRefundNo());
                 // Refund By Name
                 if(airbookingidList.get(i).getRefundAirticket().getRefundBy() != null && !"".equals(airbookingidList.get(i).getRefundAirticket().getRefundNo())){
-                    List<Object[]> QueryRefundbyName = session.createSQLQuery("SELECT * FROM `customer_agent_info` cgi where cgi.bill_to = '" + airbookingidList.get(i).getRefundAirticket().getRefundBy()+"'")
+//                    String sqlQuery = "SELECT * FROM `customer_agent_info` cgi where cgi.bill_to = '" + airbookingidList.get(i).getRefundAirticket().getRefundBy()+"'";
+                    String sqlQuery = "SELECT concat( ifnull(concat(`mi`.`name`, ' '), ''), ifnull( concat(`cm`.`last_name`, ' '), '' ), ifnull( concat(' ', `cm`.`first_name`), '' )) AS `bill_name`, "
+                            + "`cm`.`code` AS `bill_to`, `cm`.`tel` AS `tel`, `cm`.`address` AS `address`, NULL AS `fax`, NULL AS `term`, "
+                            + "NULL AS `pay`, 'C' AS `type` "
+                            + "FROM ( `customer` `cm` "
+                            + "LEFT JOIN `m_initialname` `mi` ON (( `mi`.`id` = `cm`.`initial_name` ))) "
+                            + "WHERE `cm`.`code` = '" + airbookingidList.get(i).getRefundAirticket().getRefundBy() + "' "
+                            + "UNION ALL "
+                            + "SELECT `ag`.`name` AS `bill_name`, `ag`.`code` AS `bill_to`, `ag`.`tel` AS `tel`, `ag`.`address` AS `address`, "
+                            + "`ag`.`fax` AS `fax`, `ag`.`term_id` AS `term`, `ag`.`pay_id` AS `pay`, 'A' AS `agent` "
+                            + "FROM `agent` `ag` "
+                            + "WHERE `ag`.`code` = '" + airbookingidList.get(i).getRefundAirticket().getRefundBy() + "' "
+                            + "UNION ALL "
+                            + "SELECT concat('G.', `st`.`name`) AS `bill_name`, `st`.`ar_code` AS `bill_to`, `st`.`tel` AS `tel`, "
+                            + "NULL AS `address`, NULL AS `fax`, NULL AS `term`, NULL AS `pay`, 'S' AS `type` "
+                            + "FROM `staff` `st` "
+                            + "WHERE (`st`.`position` = 'GUIDE') AND ( `st`.`ar_code` = '" + airbookingidList.get(i).getRefundAirticket().getRefundBy() + "' )";
+                    List<Object[]> QueryRefundbyName = session.createSQLQuery(sqlQuery)
                         .addScalar("bill_name", Hibernate.STRING)
                         .list();
                     String refundbyname = "";

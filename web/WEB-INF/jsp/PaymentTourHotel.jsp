@@ -1395,9 +1395,9 @@
         });
         
         $("#searchInvoiceSupplier").keyup(function() {
-            if ($("#searchInvoiceSupplier").val() !== '') {
+//            if ($("#searchInvoiceSupplier").val() !== '') {
                 searchInvoiceSupplierList($("#searchInvoiceSupplier").val());          
-            }
+//            }
         });
         
         //autocomplete

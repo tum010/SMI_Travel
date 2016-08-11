@@ -27,7 +27,21 @@ public class CustomerAgentInfoImpl implements CustomerAgentInfoDao{
     public List<CustomerAgentInfo> getListCustomerAgentInfo() {
         Session session = this.sessionFactory.openSession();
         util = new UtilityFunction();
-        List<Object[]> QueryList =  session.createSQLQuery("SELECT * FROM `customer_agent_info` ")
+//        String query = "SELECT * FROM `customer_agent_info` ";
+        String query = "select concat(ifnull(concat(`mi`.`name`,' '),''),ifnull(concat(`cm`.`last_name`,' '),''),ifnull(concat(' ',`cm`.`first_name`),'')) AS `bill_name`,"
+                + "`cm`.`code` AS `bill_to`,`cm`.`tel` AS `tel`,`cm`.`address` AS `address`,NULL AS `fax`,NULL AS `term`,NULL AS `pay`,'C' AS `type` "
+                + "from (`customer` `cm` "
+                + "left join `m_initialname` `mi` on((`mi`.`id` = `cm`.`initial_name`))) "
+                + "union all "
+                + "select `ag`.`name` AS `bill_name`,`ag`.`code` AS `bill_to`,`ag`.`tel` AS `tel`,`ag`.`address` AS `address`,`ag`.`fax` AS `fax`,"
+                + "`ag`.`term_id` AS `term`,`ag`.`pay_id` AS `pay`,'A' AS `agent` "
+                + "from `agent` `ag` "
+                + "union all "
+                + "select concat('G.',`st`.`name`) AS `bill_name`,`st`.`ar_code` AS `bill_to`,`st`.`tel` AS `tel`,NULL AS `address`,NULL AS `fax`,"
+                + "NULL AS `term`,NULL AS `pay`,'S' AS `type` "
+                + "from `staff` `st` "
+                + "where (`st`.`position` = 'GUIDE')";
+        List<Object[]> QueryList =  session.createSQLQuery(query)
                 .addScalar("bill_To",Hibernate.STRING)
                 .addScalar("bill_Name",Hibernate.STRING)
                 .addScalar("tel",Hibernate.STRING)
@@ -160,6 +174,7 @@ public class CustomerAgentInfoImpl implements CustomerAgentInfoDao{
                 .addScalar("term",Hibernate.INTEGER)
                 .addScalar("pay",Hibernate.INTEGER)
                 .addScalar("type",Hibernate.STRING)
+                .setMaxResults(100)
                 .list();
         
         List<CustomerAgentInfo> CustomerAgentInfoList =  new LinkedList<CustomerAgentInfo>();
