@@ -402,54 +402,43 @@ public class BookingViewImpl implements BookingViewDao{
         UtilityFunction util = new UtilityFunction();
         List<BookingAirSummaryView> bookingAirSummaryViewList = new ArrayList<BookingAirSummaryView>();
         try{
-            String query = "select `mt`.`Reference No` AS `refno`,date_format(`mt`.`Create_date`,'%d-%m-%Y') AS `refdate`,`agt`.`name` AS `agent`,"
-                    + "`GET_LEADER_NAME`(`mt`.`id`) AS `leader`,(select count(0) from `airticket_passenger` `ap` where (`ap`.`airline_id` = `aa`.`id`)) AS `pax`,"
-                    + "`pnr`.`pnr` AS `pnr`,`af`.`des_code` AS `arrv`,`af`.`source_code` AS `dept`,date_format(`af`.`depart_date`,'%d-%m-%Y') AS `depart_date`,"
-                    + "(case when (`af`.`depart_time` is not null) then concat(substr(`af`.`depart_time`,1,2),':',substr(`af`.`depart_time`,3,4)) else NULL end) AS `depart_time`,"
-                    + "date_format(`af`.`arrive_date`,'%d-%m-%Y') AS `arrive_date`,(case when (`af`.`arrive_time` is not null) then concat(substr(`af`.`arrive_time`,1,2),':',substr(`af`.`arrive_time`,3,4)) else NULL end) AS `arrive_time`,"
-                    + "(case when ((`af`.`filght_class` is not null) and (`af`.`sub_flight_class` is not null)) then concat(`mfli`.`name`,' (',`af`.`sub_flight_class`,')') else `mfli`.`name` end) AS `class`,"
-                    + "`af`.`flight_no` AS `flight`,`billd`.`id` AS `billid` "
-                    + "from (((((((`master` `mt` join `agent` `agt` on((`agt`.`id` = `mt`.`Agent_id`))) "
-                    + "join `airticket_booking` `ab` on((`ab`.`master_id` = `mt`.`id`))) "
-                    + "join `airticket_pnr` `pnr` on((`pnr`.`booking_id` = `ab`.`id`))) "
-                    + "join `airticket_airline` `aa` on((`aa`.`pnr_id` = `pnr`.`id`))) "
-                    + "join `airticket_flight` `af` on((`af`.`airline_id` = `aa`.`id`))) "
-                    + "left join `billable_desc` `billd` on(((`billd`.`ref_item_id` = `aa`.`id`) and (`billd`.`bill_type` = 1)))) "
-                    + "left join `m_flight` `mfli` on((`mfli`.`id` = `af`.`filght_class`)))";
+            String query = "SELECT b.*, billd.id AS billid FROM ( SELECT `mt`.`Reference No` AS `refno`, date_format( `mt`.`Create_date`, '%d-%m-%Y' ) AS `refdate`, `agt`.`name` AS `agent`, `GET_LEADER_NAME` (`mt`.`id`) AS `leader`, ( SELECT count(0) FROM `airticket_passenger` `ap` WHERE ( `ap`.`airline_id` = `aa`.`id` )) AS `pax`, `pnr`.`pnr` AS `pnr`, `af`.`des_code` AS `arrv`, `af`.`source_code` AS `dept`, date_format( `af`.`depart_date`, '%d-%m-%Y' ) AS `depart_date`, ( CASE WHEN ( `af`.`depart_time` IS NOT NULL ) THEN concat( substr(`af`.`depart_time`, 1, 2), ':', substr(`af`.`depart_time`, 3, 4)) ELSE NULL END ) AS `depart_time`, date_format( `af`.`arrive_date`, '%d-%m-%Y' ) AS `arrive_date`, ( CASE WHEN ( `af`.`arrive_time` IS NOT NULL ) THEN concat( substr(`af`.`arrive_time`, 1, 2), ':', substr(`af`.`arrive_time`, 3, 4)) ELSE NULL END ) AS `arrive_time`, ( CASE WHEN (( `af`.`filght_class` IS NOT NULL ) AND ( `af`.`sub_flight_class` IS NOT NULL )) THEN concat( `mfli`.`name`, ' (', `af`.`sub_flight_class`, ')' ) ELSE `mfli`.`name` END ) AS `class`, `af`.`flight_no` AS `flight`, `aa`.`id` AS `airline_id` FROM (((((( `master` `mt` JOIN `agent` `agt` ON ((`agt`.`id` = `mt`.`Agent_id`))) JOIN `airticket_booking` `ab` ON ((`ab`.`master_id` = `mt`.`id`))) JOIN `airticket_pnr` `pnr` ON (( `pnr`.`booking_id` = `ab`.`id` ))) JOIN `airticket_airline` `aa` ON ((`aa`.`pnr_id` = `pnr`.`id`))) JOIN `airticket_flight` `af` ON (( `af`.`airline_id` = `aa`.`id` ))) LEFT JOIN `m_flight` `mfli` ON (( `mfli`.`id` = `af`.`filght_class` ))) subQuery ) b LEFT JOIN ( SELECT billd.id, billd.ref_item_id FROM billable_desc billd WHERE billd.bill_type = 1 ) billd ON billd.ref_item_id = b.airline_id ";
     //        String query = " SELECT tt.* FROM booking_air_summary_min tt ";
+            String subQuery = "";
             boolean condition = false;
-
+            
             if((bookRefNo != null) && (!"".equalsIgnoreCase(bookRefNo))){
-                query += (condition ? " and " : " where ");
-                query += " `mt`.`Reference No` = '" + bookRefNo + "' " ;
+                subQuery += (condition ? " and " : " where ");
+                subQuery += " `mt`.`Reference No` = '" + bookRefNo + "' " ;
                 condition = true;
             }
             if((bookLeader != null) &&(!"".equalsIgnoreCase(bookLeader))){
-                query += (condition ? " and " : " where ");
-                query += " `GET_LEADER_NAME` (`mt`.`id`) LIKE '%" + bookLeader + "%' COLLATE utf8_unicode_ci " ;
+                subQuery += (condition ? " and " : " where ");
+                subQuery += " `GET_LEADER_NAME` (`mt`.`id`) LIKE '%" + bookLeader + "%' COLLATE utf8_unicode_ci " ;
                 condition = true;
             }
             if((bookDate != null) &&(!"".equalsIgnoreCase(bookDate))){
-                query += (condition ? " and " : " where ");
-                query += " date_format(`mt`.`Create_date`,'%d-%m-%Y') = '" + bookDate + "' " ;
+                subQuery += (condition ? " and " : " where ");
+                subQuery += " date_format(`mt`.`Create_date`,'%d-%m-%Y') = '" + bookDate + "' " ;
                 condition = true;
             }
             if((airPnr != null) &&(!"".equalsIgnoreCase(airPnr))){
-                query += (condition ? " and " : " where ");
-                query += " `pnr`.`pnr` LIKE '%" + airPnr + "%' " ;
+                subQuery += (condition ? " and " : " where ");
+                subQuery += " `pnr`.`pnr` LIKE '%" + airPnr + "%' " ;
                 condition = true;
             }
             if((airDeptDate != null) &&(!"".equalsIgnoreCase(airDeptDate))){
-                query += (condition ? " and " : " where ");
-                query += " date_format(`af`.`depart_date`,'%d-%m-%Y') = '" + airDeptDate + "' " ;
+                subQuery += (condition ? " and " : " where ");
+                subQuery += " date_format(`af`.`depart_date`,'%d-%m-%Y') = '" + airDeptDate + "' " ;
                 condition = true;
             }
             if((airFlight != null) &&(!"".equalsIgnoreCase(airFlight))){
-                query += (condition ? " and " : " where ");
-                query += " `af`.`flight_no` LIKE '%" + airFlight + "%' " ;
+                subQuery += (condition ? " and " : " where ");
+                subQuery += " `af`.`flight_no` LIKE '%" + airFlight + "%' " ;
                 condition = true;
             }       
-            query += " ORDER BY `mt`.`Reference No` DESC ";
+            subQuery += " ORDER BY `mt`.`Reference No` DESC ";
+            query = query.replace("subQuery", subQuery);
             List<Object[]> QueryAir = session.createSQLQuery(query)
                     .addScalar("refno", Hibernate.STRING)
                     .addScalar("refdate", Hibernate.STRING)
@@ -595,61 +584,52 @@ public class BookingViewImpl implements BookingViewDao{
         List<BookingDayTourSummaryView> bookingDayTourSummaryViewList = new ArrayList<BookingDayTourSummaryView>();
         try{
 //        String query = " SELECT * FROM `booking_daytour_summary_min` ";
-            String query = "select `mt`.`Reference No` AS `refno`,date_format(`mt`.`Create_date`,'%d-%m-%Y') AS `refdate`,`agt`.`code` AS `agent`,"
-                    + "`GET_LEADER_NAME`(`mt`.`id`) AS `leader`,sum(`dp`.`qty`) AS `pax`,`dt`.`name` AS `tour_name`,`dt`.`code` AS `tour_code`,"
-                    + "date_format(`db`.`tour_date`,'%d-%m-%Y') AS `tour_date`,(case when (`pl`.`place` = 'OTHERS') then `db`.`pickup_detail` else `pl`.`place` end) AS `pickup`,"
-                    + "date_format(`db`.`pickup_time`,'%H:%i') AS `time`,sum((case when (`dp`.`category_id` = 1) then `dp`.`qty` else 0 end)) AS `adult`,"
-                    + "sum((case when (`dp`.`category_id` = 2) then `dp`.`qty` else 0 end)) AS `child`,sum((case when (`dp`.`category_id` = 3) then `dp`.`qty` else 0 end)) AS `infant`,"
-                    + "`db`.`remark` AS `remark`,'' AS `invoice`,'' AS `receipt`,`db`.`id` AS `id`,`billd`.`id` AS `billid` "
-                    + "from ((((((`daytour_booking` `db` join `master` `mt` on((`mt`.`id` = `db`.`master_id`))) "
-                    + "join `agent` `agt` on((`agt`.`id` = `mt`.`Agent_id`))) "
-                    + "join `daytour` `dt` on((`dt`.`id` = `db`.`tour_id`))) "
-                    + "join `place` `pl` on((`pl`.`id` = `db`.`pickup`))) "
-                    + "left join `billable_desc` `billd` on(((`billd`.`ref_item_id` = `db`.`id`) and (`billd`.`bill_type` = 6)))) "
-                    + "left join `daytour_booking_price` `dp` on((`dp`.`daytour_booking_id` = `db`.`id`))) ";
+            String query = "SELECT bd.*, billd.id AS billid FROM ( SELECT `mt`.`Reference No` AS `refno`, date_format( `mt`.`Create_date`, '%d-%m-%Y' ) AS `refdate`, `agt`.`code` AS `agent`, `GET_LEADER_NAME` (`mt`.`id`) AS `leader`, sum(`dp`.`qty`) AS `pax`, `dt`.`name` AS `tour_name`, `dt`.`code` AS `tour_code`, date_format( `db`.`tour_date`, '%d-%m-%Y' ) AS `tour_date`, ( CASE WHEN (`pl`.`place` = 'OTHERS') THEN `db`.`pickup_detail` ELSE `pl`.`place` END ) AS `pickup`, date_format(`db`.`pickup_time`, '%H:%i') AS `time`, sum(( CASE WHEN (`dp`.`category_id` = 1) THEN `dp`.`qty` ELSE 0 END )) AS `adult`, sum(( CASE WHEN (`dp`.`category_id` = 2) THEN `dp`.`qty` ELSE 0 END )) AS `child`, sum(( CASE WHEN (`dp`.`category_id` = 3) THEN `dp`.`qty` ELSE 0 END )) AS `infant`, `db`.`remark` AS `remark`, '' AS `invoice`, '' AS `receipt`, `db`.`id` AS `id` FROM ((((( `daytour_booking` `db` JOIN `master` `mt` ON ((`mt`.`id` = `db`.`master_id`))) JOIN `agent` `agt` ON ((`agt`.`id` = `mt`.`Agent_id`))) JOIN `daytour` `dt` ON ((`dt`.`id` = `db`.`tour_id`))) JOIN `place` `pl` ON ((`pl`.`id` = `db`.`pickup`))) LEFT JOIN `daytour_booking_price` `dp` ON (( `dp`.`daytour_booking_id` = `db`.`id` ))) subQuery ) bd LEFT JOIN ( SELECT billd.id, billd.ref_item_id FROM billable_desc billd WHERE billd.bill_type = 6 ) billd ON billd.ref_item_id = bd.id ";
+            String subQuery = "";
             boolean condition = false;
 
             if((bookRefNo != null) && (!"".equalsIgnoreCase(bookRefNo))){
-                query += (condition ? " and " : " where ");
-                query += " `mt`.`Reference No` = '" + bookRefNo + "' " ;
+                subQuery += (condition ? " and " : " where ");
+                subQuery += " `mt`.`Reference No` = '" + bookRefNo + "' " ;
                 condition = true;
             }
             if((bookLeader != null) &&(!"".equalsIgnoreCase(bookLeader))){
-                query += (condition ? " and " : " where ");
-                query += " `GET_LEADER_NAME` (`mt`.`id`) LIKE '%" + bookLeader + "%' COLLATE utf8_unicode_ci " ;
+                subQuery += (condition ? " and " : " where ");
+                subQuery += " `GET_LEADER_NAME` (`mt`.`id`) LIKE '%" + bookLeader + "%' COLLATE utf8_unicode_ci " ;
                 condition = true;
             }
             if((bookDate != null) &&(!"".equalsIgnoreCase(bookDate))){
-                query += (condition ? " and " : " where ");
-                query += " date_format(`mt`.`Create_date`,'%d-%m-%Y') = '" + bookDate + "' " ;
+                subQuery += (condition ? " and " : " where ");
+                subQuery += " date_format(`mt`.`Create_date`,'%d-%m-%Y') = '" + bookDate + "' " ;
                 condition = true;
             }
             if((tourCode != null) &&(!"".equalsIgnoreCase(tourCode))){
-                query += (condition ? " and " : " where ");
-                query += " `dt`.`code` LIKE '%" + tourCode + "%' " ;
+                subQuery += (condition ? " and " : " where ");
+                subQuery += " `dt`.`code` LIKE '%" + tourCode + "%' " ;
                 condition = true;
             }
             if((tourName != null) &&(!"".equalsIgnoreCase(tourName))){
-                query += (condition ? " and " : " where ");
-                query += " `dt`.`name` LIKE '%" + tourName + "%' " ;
+                subQuery += (condition ? " and " : " where ");
+                subQuery += " `dt`.`name` LIKE '%" + tourName + "%' " ;
                 condition = true;
             }
             if((tourDate != null) &&(!"".equalsIgnoreCase(tourDate))){
-                query += (condition ? " and " : " where ");
-                query += " date_format(`db`.`tour_date`,'%d-%m-%Y') = '" + tourDate + "' " ;
+                subQuery += (condition ? " and " : " where ");
+                subQuery += " date_format(`db`.`tour_date`,'%d-%m-%Y') = '" + tourDate + "' " ;
                 condition = true;
             }
             if((tourPickUp != null) &&(!"".equalsIgnoreCase(tourPickUp))){
-                query += (condition ? " and " : " where ");
-                query += " (CASE WHEN (`pl`.`place` = 'OTHERS') THEN `db`.`pickup_detail` ELSE `pl`.`place` END ) LIKE '%" + tourPickUp + "%' " ;
+                subQuery += (condition ? " and " : " where ");
+                subQuery += " (CASE WHEN (`pl`.`place` = 'OTHERS') THEN `db`.`pickup_detail` ELSE `pl`.`place` END ) LIKE '%" + tourPickUp + "%' " ;
                 condition = true;
             }
             if((tourAgent != null) &&(!"".equalsIgnoreCase(tourAgent))){
-                query += (condition ? " and " : " where ");
-                query += " `agt`.`code` LIKE '%" + tourAgent + "%' " ;
+                subQuery += (condition ? " and " : " where ");
+                subQuery += " `agt`.`code` LIKE '%" + tourAgent + "%' " ;
                 condition = true;
             }
-            query += " group by `db`.`id` ORDER BY `mt`.`Reference No` DESC ";
+            subQuery += " group by `db`.`id` ORDER BY `mt`.`Reference No` DESC ";
+            query = query.replace("subQuery", subQuery);
 
             List<Object[]> QueryDayTour = session.createSQLQuery(query)
                     .addScalar("refno", Hibernate.STRING)
