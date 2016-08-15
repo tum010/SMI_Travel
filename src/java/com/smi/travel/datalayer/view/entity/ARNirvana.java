@@ -78,6 +78,7 @@ public class ARNirvana {
     private String rowid;
     private String accno;
     private String comid;
+    private String arglaccountid;
     
     //header 
     private String printofdatePage;
@@ -964,7 +965,13 @@ public class ARNirvana {
     public void setComid(String comid) {
         this.comid = comid;
     }
-    
-    
-    
+
+    public String getArglaccountid() {
+        return arglaccountid;
+    }
+
+    public void setArglaccountid(String arglaccountid) {
+        this.arglaccountid = arglaccountid;
+    }
+          
 }
