@@ -681,10 +681,10 @@ public class OtherBookingImpl implements OtherBookingDao{
         UtilityFunction util = new UtilityFunction();
         Session session = this.sessionFactory.openSession();
         List<OtherBookingView> data = new LinkedList<OtherBookingView>();
-        String query = "SELECT * FROM `other_operation_view` ";
+        String query = "SELECT * FROM `other_operation_view` WHERE bookingtype = 'I' ";
         if(!"".equalsIgnoreCase(name) && name != null){
-            query += " WHERE bookingtype = 'I' and refno LIKE '%" + name + "%' OR leader LIKE '%" + name + "%' OR product_code LIKE '%" + name + "%' OR "
-                    + "product LIKE '%" + name + "%' OR other_date LIKE '%" + name + "%'";
+            query += " and ( refno LIKE '%" + name + "%' OR leader LIKE '%" + name + "%' OR product_code LIKE '%" + name + "%' OR "
+                    + "product LIKE '%" + name + "%' OR other_date LIKE '%" + name + "%' ) ";
         }
         query += " ORDER BY create_date DESC , refno ASC";
         List<Object[]> listBookingAll = session.createSQLQuery(query)
