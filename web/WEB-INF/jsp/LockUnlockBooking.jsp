@@ -208,12 +208,12 @@ function setCheckboxFlag(){
     var flagLand = $("#flagLand").val();
 
     if(flagAir == '1'){
-        $('input:checkbox[name=flagAir]').attr('checked',true);
+        $('#flagAir').prop('checked', true);
     }else{
-        $('input:checkbox[name=flagAir]').attr('checked',false);
+        $('#flagAir').prop('checked', false);
     }
     $("#flagAir").click(function () {
-        if($('input:checkbox[name=flagAir]').is(':checked')){
+        if($("#flagAir").is(':checked')){
             $("#flagAir").val('1');
         }else{
             $("#flagAir").val('2');
@@ -221,12 +221,12 @@ function setCheckboxFlag(){
     });
 
     if(flagHotel == '1'){
-        $('input:checkbox[name=flagHotel]').attr('checked',true);
+        $('#flagHotel').prop('checked', true);
     }else{
-        $('input:checkbox[name=flagHotel]').attr('checked',false);
+        $('#flagHotel').prop('checked', false);
     }
     $("#flagHotel").click(function () {
-        if($('input:checkbox[name=flagHotel]').is(':checked')){
+        if($("#flagHotel").is(':checked')){
             $("#flagHotel").val('1');
         }else{
             $("#flagHotel").val('2');
@@ -234,12 +234,12 @@ function setCheckboxFlag(){
     });
 
     if(flagDaytour == '1'){
-        $('input:checkbox[name=flagDaytour]').attr('checked',true);
+        $('#flagDaytour').prop('checked', true);
     }else{
-        $('input:checkbox[name=flagDaytour]').attr('checked',false);
+        $('#flagDaytour').prop('checked', false);
     }
     $("#flagDaytour").click(function () {
-        if($('input:checkbox[name=flagDaytour]').is(':checked')){
+        if($("#flagDaytour").is(':checked')){
             $("#flagDaytour").val('1');
         }else{
             $("#flagDaytour").val('2');
@@ -247,12 +247,12 @@ function setCheckboxFlag(){
     });
 
     if(flagOther == '1'){
-        $('input:checkbox[name=flagOther]').attr('checked',true);
+        $('#flagOther').prop('checked', true);
     }else{
-        $('input:checkbox[name=flagOther]').attr('checked',false);
+        $('#flagOther').prop('checked', false);
     }
     $("#flagOther").click(function () {
-        if($('input:checkbox[name=flagOther]').is(':checked')){
+        if($("#flagOther").is(':checked')){
             $("#flagOther").val('1');
         }else{
             $("#flagOther").val('2');
@@ -260,12 +260,12 @@ function setCheckboxFlag(){
     });
 
     if(flagLand == '1'){
-        $('input:checkbox[name=flagLand]').attr('checked',true);
+        $('#flagLand').prop('checked', true);
     }else{
-        $('input:checkbox[name=flagLand]').attr('checked',false);
+        $('#flagLand').prop('checked', false);
     }
     $("#flagLand").click(function () {
-        if($('input:checkbox[name=flagLand]').is(':checked')){
+        if($("#flagLand").is(':checked')){
             $("#flagLand").val('1');
         }else{
             $("#flagLand").val('2');
@@ -420,9 +420,9 @@ function hideTextAlertDivSave(){
     $("#textAlertDivNotSave").hide();
 }
 
-    $('input[type="checkbox"]').checkbox({
-        checkedClass: 'icon-check',
-        uncheckedClass: 'icon-check-empty'
-    });
+//    $('input[type="checkbox"]').checkbox({
+//        checkedClass: 'icon-check',
+//        uncheckedClass: 'icon-check-empty'
+//    });
 
 </script>
