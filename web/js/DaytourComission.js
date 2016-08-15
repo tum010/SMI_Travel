@@ -142,6 +142,90 @@ $(document).ready(function() {
     $('.toDate').datetimepicker().change(function() {
         checkToDateField();
     });
+    
+    $('table.paginated').each(function() {
+        var currentPage = 0;
+        var numPerPage = 10;
+        var $table = $(this);
+        $table.bind('repaginate', function() {
+            $table.find('tbody tr').hide().slice(currentPage * numPerPage, (currentPage + 1) * numPerPage).show();
+        });
+        $table.trigger('repaginate');
+        var numRows = $table.find('tbody tr').length;
+        var numPages = Math.ceil(numRows / numPerPage);
+        var $pager = $('<div class="col-xs-12 text-right" id="pageNo"><font style="color: #499DD5"></font>&nbsp;</div>');
+        var $br = $('<div class="col-xs-12"><br></div>');
+
+        for (var page = 0; page < numPages; page++) {
+            var isShowPage = (page < 5 ? "" : "hidden");
+            if(page === 0){
+                $('<font style="color: #499DD5" id="noFirst" onclick="changeColor(\'noFirst\',\'first\',\''+page+'\')"><span class="page-number glyphicon"></span></font>').text(" " + "First" + "  ").bind('click', {
+                newPage: page
+                }, function(event) {
+                    currentPage = event.data['newPage'];
+                    $table.trigger('repaginate');
+                    $(this).addClass('active').siblings().removeClass('active');
+                    $(this).css("color", "#AFEEEE");
+                }).appendTo($pager).addClass('clickable');                                      
+
+                if(numPages > 1){
+                    for(var i=0; i<numPages; i++){
+                        var isHidden = (i === 0 ? "" : "hidden");
+                        $('<font style="color: #499DD5" id="noPrevious'+i+'" onclick="changeColor(\'noPrevious'+i+'\',\'previous\',\''+i+'\')" class="'+isHidden+'"><span class="page-number glyphicon"></span></font>').text(" " + "Previous" + "  ").bind('click', {
+                        newPage: i
+                        }, function(event) {
+                            currentPage = event.data['newPage'];
+                            $table.trigger('repaginate');
+                            $(this).addClass('active').siblings().removeClass('active');
+    //                        $(this).css("color", "#AFEEEE");
+                        }).appendTo($pager).addClass('clickable');
+                    }
+                }    
+            }
+
+            $('<font style="color: #499DD5" id="no' + page + '" onclick="changeColor(\'no'+page+'\',\'no\',\''+page+'\')" class="'+isShowPage+'"><span class="page-number glyphicon"></span></font>').text(" " + (page + 1) + "  ").bind('click', {
+                newPage: page
+            }, function(event) {                  
+                currentPage = event.data['newPage'];
+                $table.trigger('repaginate');
+                $(this).addClass('active').siblings().removeClass('active');
+                $(this).css("color", "#AFEEEE");
+            }).appendTo($pager).addClass('clickable');
+
+            if(page === (numPages - 1)){
+                if(numPages > 1){
+                    for(var i=0; i<numPages; i++){
+                        var isHidden = (i === 1 ? "" : "hidden");
+                        $('<font style="color: #499DD5" id="noNext'+i+'" onclick="changeColor(\'noNext'+i+'\',\'next\',\''+i+'\')" class="'+isHidden+'"><span class="page-number glyphicon"></span></font>').text(" " + "Next" + "  ").bind('click', {
+                        newPage: i
+                        }, function(event) {
+                            currentPage = event.data['newPage'];
+                            $table.trigger('repaginate');
+                            $(this).addClass('active').siblings().removeClass('active');
+    //                        $(this).css("color", "#AFEEEE");
+                        }).appendTo($pager).addClass('clickable');
+                    }
+                }    
+
+                $('<font style="color: #499DD5" id="noLast" onclick="changeColor(\'noLast\',\'last\',\''+page+'\')"><span class="page-number glyphicon"></span></font>').text(" " + "Last" + "  ").bind('click', {
+                newPage: page
+                }, function(event) {
+                    currentPage = event.data['newPage'];
+                    $table.trigger('repaginate');
+                    $(this).addClass('active').siblings().removeClass('active');
+                    $(this).css("color", "#AFEEEE");
+                }).appendTo($pager).addClass('clickable');                                     
+            }
+        }
+        $br.insertAfter($table).addClass('active');
+        $pager.insertAfter($table).find('span.page-number:first').addClass('active');
+        document.getElementById("pageNo").style.cursor="pointer";
+        document.getElementById("page").value = numPages-1;
+        document.getElementById("currentPage").value = 0;
+        $("#noFirst").css("color", "#AFEEEE");
+        $("#no0").css("color", "#AFEEEE");
+        $("#noPrevious0").css("color", "#AFEEEE");
+    });
 
 });
 
@@ -381,15 +465,16 @@ function saveDaytourCommission() {
     $("#filterGuide").val(controlGuide.getValue());
     
     var count = $("#CommissionTable tr").length;
-    for(var row = 1; row <= count; row++){
-        if($("#hasEdit-" + row).is(':checked')){
-            var daytourBookingId = $("#daytourBookingId-" + row).val();
-            var guideName = $("#GuideName-" + row).attr("valHidden");
-            var guideCom = $("#guideComm-" + row).val();
-            var guideRemark = $("#guideRemark-" + row).val();
-            var agentName = $("#AgentName-" + row).attr("valHidden");
-            var agentComm = $("#agentComm-" + row).val();
-            var agentRemark = $("#agentRemark-" + row).val();
+    var row = 1;
+    for(var i = 1; i <= count; i++){
+        if($("#hasEdit-" + i).is(':checked')){
+            var daytourBookingId = $("#daytourBookingId-" + i).val();
+            var guideName = $("#GuideName-" + i).attr("valHidden");
+            var guideCom = $("#guideComm-" + i).val();
+            var guideRemark = $("#guideRemark-" + i).val();
+            var agentName = $("#AgentName-" + i).attr("valHidden");
+            var agentComm = $("#agentComm-" + i).val();
+            var agentRemark = $("#agentRemark-" + i).val();
             
             var rowTr = '<tr>' +
                         '<td class="sorting_' + row + '"><input type="text" id="daytourBookingId-' + row + '" name="daytourBookingId-' + row + '" value="' + daytourBookingId + '"></td>' +
@@ -417,6 +502,7 @@ function saveDaytourCommission() {
                     '</tr>';
             
             $("#EditTable tbody").append(rowTr);
+            row += 1;
         }
     }
 //    alert($("#GuideName-3").attr("valHidden"));
@@ -455,8 +541,8 @@ function saveDaytourCommission() {
         $("#searchDaytourCommissionForm").submit();
     } else {
         console.log("submit save");
-        $("#saveDaytourCommissionForm").submit(function(e) {
-        });
+//        $("#saveDaytourCommissionForm").submit(function(e) {
+//        });
 
     }
 
@@ -634,4 +720,91 @@ function CallGuideComAjax(param, textid) {
     } catch (e) {
         // alert(e);
     }
+}
+
+function getPageNo(type){
+    var page = parseInt($("#page").val())+1;
+    var currentPage = parseInt($("#currentPage").val());
+    var row = 0;
+    var start = 0;
+    var end = page-1;
+    if(type === 'previous'){
+        row = (currentPage !== start ? currentPage-1 : start);
+
+    }else if(type === 'next'){
+        row = (currentPage !== end ? currentPage+1 : end);
+    }
+    $("#row").val(row);
+    return row;
+}
+
+function changeColor(id,type,page){
+    var pageNo = parseInt($("#page").val())+1;
+    for(var i=0; i<pageNo; i++){
+        $("#no"+i).css("color", "#499DD5");
+        $("#noPrevious"+i).css("color", "#499DD5");
+        $("#noNext"+i).css("color", "#499DD5");
+        $("#noFirst").css("color", "#499DD5");                
+        $("#noLast").css("color", "#499DD5");
+
+        $("#no"+i).addClass("hidden");
+        $("#noPrevious"+i).addClass("hidden");
+        $("#noNext"+i).addClass("hidden");
+    }
+
+    var pageShow = parseInt(page);
+    if(pageShow > 2 && pageShow < pageNo - 2){
+        for(var i=pageShow; i >= pageShow-2; i--){
+           $("#no"+i).removeClass("hidden"); 
+        }
+        for(var i=pageShow; i <= pageShow+2; i++){
+           $("#no"+i).removeClass("hidden");  
+        }
+
+    }else{
+        if(pageShow <= 2){
+            for(var i=0; i < 5; i++){
+                $("#no"+i).removeClass("hidden");  
+            } 
+
+        }else if(pageShow <= pageNo-1){
+            for(var i=pageNo-5; i < pageNo; i++){
+                $("#no"+i).removeClass("hidden");  
+            } 
+        }
+
+    }    
+
+    var previous = ((parseInt(page) === 0 ? 0 : parseInt(page)-1));
+    $("#noPrevious"+(previous)).removeClass("hidden");
+
+    var next = ((parseInt(page) === pageNo-1 ? pageNo-1 : parseInt(page)+1));
+    $("#noNext"+(next)).removeClass("hidden");
+
+    $("#no"+page).css("color", "#AFEEEE");
+
+    if(parseInt(page) === 0){
+        $("#noFirst").css("color", "#AFEEEE");
+        $("#noPrevious"+(previous)).css("color", "#AFEEEE");
+
+    }else if(parseInt(page) === pageNo-1){
+        $("#noLast").css("color", "#AFEEEE");
+        $("#noNext"+(next)).css("color", "#AFEEEE");
+    }
+
+    if(pageNo-1 === 0){
+        $("#noFirst").css("color", "#499DD5");                
+        $("#noLast").css("color", "#499DD5");
+
+        if(type === 'first'){
+            $("#noFirst").css("color", "#AFEEEE");
+
+        }else if(type === 'last'){
+            $("#noLast").css("color", "#AFEEEE");
+
+        }
+    }
+
+    $("#currentPage").val(page);
+
 }

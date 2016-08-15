@@ -153,7 +153,7 @@
  <!--table form-->
  
             <form action="DaytourCommission.smi" id="saveDaytourCommissionForm" name="saveDaytourCommissionForm" method="post" role="form" >
-                <table class="display" id="CommissionTable" name="CommissionTable" cellspacing="0">
+                <table class="display paginated" id="CommissionTable" name="CommissionTable" cellspacing="0">
                     <thead class="datatable-header">
                         <tr>
                             <th class="hide">Booking ID</th>
@@ -247,12 +247,14 @@
                     </tbody>
                 </table>
                 
-                <table class="display " id="EditTable" name="EditTable">
+                <table class="display hide" id="EditTable" name="EditTable">
                     <tbody></tbody>
                 </table>
                 <hr/>
                 <div class="text-center">
-                    <input id="dayCommRows" name="dayCommRows" type="text" class="" />
+                    <input type="hidden" value="" id="page" name="page">
+                    <input type="hidden" value="" id="currentPage" name="currentPage">
+                    <input id="dayCommRows" name="dayCommRows" type="text" class="hidden" />
                     <input type="hidden" id="dateFromSearch" name="InputDateFrom" >                        
                     <input type="hidden" id="dateToSearch" name="InputDateTo" >                        
                     <input type="hidden" id="filterGuide" name="SelectGuide" >                        
@@ -261,7 +263,7 @@
                     <input type="hidden" id="action" name="action" value="save"> 
                     <a id="ButtonPrintGuide" name="ButtonPrintGuide" onclick="printGuideCommission();" class="btn btn-primary" data-toggle="modal" ><i class="fa fa-print"></i> Print Guide</a>
                     <a id="ButtonPrintAgent" name="ButtonPrintAgent" onclick="printAgentCommission();" class="btn btn-primary" data-toggle="modal"><i class="fa fa-print"></i> Print Agent</a>
-                   <button type="button" id="ButtonSave" name="ButtonSave" onclick="saveDaytourCommission();"  class="btn btn-success"><i class="fa fa-save"></i> Save</button>
+                   <button type="submit" id="ButtonSave" name="ButtonSave" onclick="saveDaytourCommission();"  class="btn btn-success"><i class="fa fa-save"></i> Save</button>
                 </div>
             </form>
         </div>
@@ -486,15 +488,15 @@
         }
         $('.datemask').mask('00-00-0000');
     
-        $('#CommissionTable').dataTable({
-            bJQueryUI: true,
-            "sPaginationType": "full_numbers",
-            "bAutoWidth": false,
-            "bFilter": false,
-            "bPaginate": true,
-            "bInfo": true,
-            "iDisplayLength":10
-        });
+//        $('#CommissionTable').dataTable({
+//            bJQueryUI: true,
+//            "sPaginationType": "full_numbers",
+//            "bAutoWidth": false,
+//            "bFilter": false,
+//            "bPaginate": true,
+//            "bInfo": true,
+//            "iDisplayLength":10
+//        });
         
         $(".decimal").inputmask({
             alias: "decimal",
@@ -567,16 +569,16 @@
     });
     
     function setDecimalFormat(){
-        $(".decimal").inputmask({
-            alias: "decimal",
-            integerDigits: 8,
-            groupSeparator: ',',
-            autoGroup: true,
-            digits: 2,
-            allowMinus: false,
-            digitsOptional: false,
-            placeholder: "0.00",
-        });
+//        $(".decimal").inputmask({
+//            alias: "decimal",
+//            integerDigits: 8,
+//            groupSeparator: ',',
+//            autoGroup: true,
+//            digits: 2,
+//            allowMinus: false,
+//            digitsOptional: false,
+//            placeholder: "0.00",
+//        });
     }
     
     function getAgentName(agentcount){
