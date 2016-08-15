@@ -829,6 +829,14 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
             dataArea += util.generateDataAreaNirvana(documentNo,9);
             System.out.println("===== documentNo ===== : "+ documentNo);
             
+            String arTrans = (arNirvana.getArtrans() != null && !"".equalsIgnoreCase(arNirvana.getArtrans()) ? arNirvana.getArtrans() : "");
+            dataArea += util.generateDataAreaNirvana(arTrans,1);
+            System.out.println("===== arTrans ===== : "+ arTrans);
+            
+            String arGLAccountId = (arNirvana.getArglaccountid()!= null && !"".equalsIgnoreCase(arNirvana.getArglaccountid()) ? arNirvana.getArglaccountid() : "");
+            dataArea += util.generateDataAreaNirvana(arGLAccountId,21);
+            System.out.println("===== arGLAccountId ===== : "+ arGLAccountId);
+            
             System.out.println("===== dataArea ==== : " + dataArea);
             
             ssDataexchTemp.setDataArea(dataArea);

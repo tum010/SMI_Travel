@@ -249,9 +249,8 @@
                                 <th style="width: 1%" onclick="selectAll()"><u>All</u></th>
                                 <th style="width: 1%" >No</th>
                                 <th style="width: 10%">Inv No.</th>
-                                <th style="width: 9%">AR Code</th>
-                                <th style="width: 26%">Inv To</th>
-                                <th style="width: 12%">Acc Code</th>
+                                <th style="width: 11%">AR Code</th>
+                                <th style="width: 36%">Inv To</th>
                                 <th style="width: 15%">Gross</th>
                                 <th style="width: 7%">Vat</th>
                                 <th style="width: 15%">Amount</th>
@@ -277,7 +276,6 @@
                                 <td>${ar_nirvana.intreference}</td>
                                 <td>${ar_nirvana.customerid}</td>
                                 <td>${ar_nirvana.customername}</td>
-                                <td>${ar_nirvana.salesaccount1}</td>
                                 <td align="right" class="money">${ar_nirvana.salesamt}</td>
                                 <td align="right" class="money">${ar_nirvana.vatamt}</td>
                                 <td align="right" class="money">${ar_nirvana.arhmamt}</td>
