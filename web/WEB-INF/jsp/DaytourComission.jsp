@@ -247,12 +247,12 @@
                     </tbody>
                 </table>
                 
-                <table class="display hide" id="EditTable" name="EditTable">
+                <table class="display " id="EditTable" name="EditTable">
                     <tbody></tbody>
                 </table>
                 <hr/>
                 <div class="text-center">
-                    <input id="dayCommRows" name="dayCommRows" type="text" class="hidden" />
+                    <input id="dayCommRows" name="dayCommRows" type="text" class="" />
                     <input type="hidden" id="dateFromSearch" name="InputDateFrom" >                        
                     <input type="hidden" id="dateToSearch" name="InputDateTo" >                        
                     <input type="hidden" id="filterGuide" name="SelectGuide" >                        
@@ -261,7 +261,7 @@
                     <input type="hidden" id="action" name="action" value="save"> 
                     <a id="ButtonPrintGuide" name="ButtonPrintGuide" onclick="printGuideCommission();" class="btn btn-primary" data-toggle="modal" ><i class="fa fa-print"></i> Print Guide</a>
                     <a id="ButtonPrintAgent" name="ButtonPrintAgent" onclick="printAgentCommission();" class="btn btn-primary" data-toggle="modal"><i class="fa fa-print"></i> Print Agent</a>
-                   <button type="submit" id="ButtonSave" name="ButtonSave" onclick="saveDaytourCommission();"  class="btn btn-success"><i class="fa fa-save"></i> Save</button>
+                   <button type="button" id="ButtonSave" name="ButtonSave" onclick="saveDaytourCommission();"  class="btn btn-success"><i class="fa fa-save"></i> Save</button>
                 </div>
             </form>
         </div>

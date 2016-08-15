@@ -380,29 +380,70 @@ function saveDaytourCommission() {
     $("#dateToSearch").val(dateTo);
     $("#filterGuide").val(controlGuide.getValue());
     
-    var counter = 1;
-    $("#CommissionTable tbody").find("tr").each(function(){
-        var checkbox = $(this).find("td.edited").children();
-        if ($(checkbox).is(":checked")) {
-            var cloneTr = $(this).clone();
-            cloneTr.find('input,select,span').each(function() {
-                $(this).removeClass('hidden');
-                if ($(this).attr('name') === "AgentName-") {
-                    $(this).val($(this).attr("valHidden"));
-                    
-                }
-                if ($(this).attr('name') === "GuideName-") {
-                    $(this).val($(this).attr("valHidden"));
-                    
-                }
-                $(this).attr({
-                    name: $(this).attr('name') + counter
-                });
-            });
-            $("#EditTable tbody").append(cloneTr);
-            counter++;
+    var count = $("#CommissionTable tr").length;
+    for(var row = 1; row <= count; row++){
+        if($("#hasEdit-" + row).is(':checked')){
+            var daytourBookingId = $("#daytourBookingId-" + row).val();
+            var guideName = $("#GuideName-" + row).attr("valHidden");
+            var guideCom = $("#guideComm-" + row).val();
+            var guideRemark = $("#guideRemark-" + row).val();
+            var agentName = $("#AgentName-" + row).attr("valHidden");
+            var agentComm = $("#agentComm-" + row).val();
+            var agentRemark = $("#agentRemark-" + row).val();
+            
+            var rowTr = '<tr>' +
+                        '<td class="sorting_' + row + '"><input type="text" id="daytourBookingId-' + row + '" name="daytourBookingId-' + row + '" value="' + daytourBookingId + '"></td>' +
+                        '<td class="selectGuide form-group ">' +
+                        '<input type="text" class="form-control guidename ui-autocomplete-input" id="GuideName-' + row + '" name="GuideName-' + row + '" valhidden="" value="' + guideName + '" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true">' + 
+                        '</td>' +
+                        '<td class="form-group ">' +
+                        '<input type="text" class="form-control decimal guidecom" id="guideComm-' + row + '" name="guideComm-' + row + '" value="' + guideCom + '" maxlength="14" style="text-align: right;">' +
+                        '</td>' +
+                        '<td class="form-group ">' +
+                        '<input type="text" class="form-control" id="guideRemark-' + row + '" name="guideRemark-' + row + '" value="' + guideRemark + '" maxlength="255" >' +
+                        '</td>' +
+                        '<td class="form-group ">' +
+                        '<input type="text" class="form-control agentname" id="AgentName-' + row + '" name="AgentName-' + row + '" valhidden="" value="' + agentName + '" >' + 
+                        '</td>' +
+                        '<td class="form-group ">' +
+                        '<input type="text" class="form-control decimal agentcom" id="agentComm-' + row + '" name="agentComm-' + row + '" value="' + agentComm + '" maxlength="14" style="text-align: right;">' +
+                        '</td>' +
+                        '<td class="agentRemark form-group ">' +
+                        '<input type="text" class="form-control" id="agentRemark-' + row + '" name="agentRemark-' + row + '" value="' + agentRemark + '" maxlength="255" >' +
+                        '</td>' +
+                        '<td class="hidden edited ">' +
+                        '<input type="checkbox" class="form-control" id="hasEdit-' + row + '" name="hasEdit-' + row + '" checked="checked">' +
+                        '</td>'
+                    '</tr>';
+            
+            $("#EditTable tbody").append(rowTr);
         }
-    });
+    }
+//    alert($("#GuideName-3").attr("valHidden"));
+//    
+//    var counter = 1;
+//    $("#CommissionTable tbody").find("tr").each(function(){
+//        var checkbox = $(this).find("td.edited").children();
+//        if ($(checkbox).is(":checked")) {
+//            var cloneTr = $(this).clone();
+//            cloneTr.find('input,select,span').each(function() {
+//                $(this).removeClass('hidden');
+//                if ($(this).attr('name') === "AgentName-") {
+//                    $(this).val($(this).attr("valHidden"));
+//                    
+//                }
+//                if ($(this).attr('name') === "GuideName-") {
+//                    $(this).val($(this).attr("valHidden"));
+//                    
+//                }
+//                $(this).attr({
+//                    name: $(this).attr('name') + counter
+//                });
+//            });
+//            $("#EditTable tbody").append(cloneTr);
+//            counter++;
+//        }
+//    });
 
     var rows = $("#EditTable tbody").find("tr").length;
     var rows1 = $("#CommissionTable tbody").find("tr").length;
