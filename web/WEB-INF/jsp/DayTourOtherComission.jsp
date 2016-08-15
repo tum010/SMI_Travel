@@ -145,7 +145,7 @@
             <!--Table show detail when search -->
            
             <form action="DayTourOtherComission.smi" id="saveDaytourCommissionForm" name="saveDaytourCommissionForm" method="post" role="form" >
-                <table class="display" id="CommissionTable" name="CommissionTable" cellspacing="0" style="table-layout: fixed">
+                <table class="display paginated" id="CommissionTable" name="CommissionTable" cellspacing="0" style="table-layout: fixed">
                     <thead class="datatable-header">
                         <tr>
                             <th class="hide">Booking ID</th>
@@ -253,6 +253,8 @@
                 </table> 
                 <hr/>
                 <div class="text-center">
+                    <input type="hidden" value="" id="page" name="page">
+                    <input type="hidden" value="" id="currentPage" name="currentPage">
                     <input id="dayCommRows" name="dayCommRows" type="text" class="hidden" />
                     <input type="hidden" id="dateFromSearch" name="InputDateFrom" >                        
                     <input type="hidden" id="dateToSearch" name="InputDateTo" >                        
@@ -479,14 +481,14 @@
         }
                         
                         
-        $('#CommissionTable').dataTable({bJQueryUI: true,
-            "sPaginationType": "full_numbers",
-            "bAutoWidth": false,
-            "bFilter": false,
-            "bPaginate": true,
-            "bInfo": true,
-            "iDisplayLength":10
-        });
+//        $('#CommissionTable').dataTable({bJQueryUI: true,
+//            "sPaginationType": "full_numbers",
+//            "bAutoWidth": false,
+//            "bFilter": false,
+//            "bPaginate": true,
+//            "bInfo": true,
+//            "iDisplayLength":10
+//        });
         
         $('.datemask').mask('00-00-0000');
         $('.date').datetimepicker();
@@ -763,16 +765,16 @@
     }
     
     function setDecimalFormat(){
-        $(".decimal").inputmask({
-            alias: "decimal",
-            integerDigits: 8,
-            groupSeparator: ',',
-            autoGroup: true,
-            digits: 2,
-            allowMinus: false,
-            digitsOptional: false,
-            placeholder: "0.00",
-        });
+//        $(".decimal").inputmask({
+//            alias: "decimal",
+//            integerDigits: 8,
+//            groupSeparator: ',',
+//            autoGroup: true,
+//            digits: 2,
+//            allowMinus: false,
+//            digitsOptional: false,
+//            placeholder: "0.00",
+//        });
     }
     
     function getAgentCommission(agentcount){
