@@ -153,20 +153,20 @@
  <!--table form-->
  
             <form action="DaytourCommission.smi" id="saveDaytourCommissionForm" name="saveDaytourCommissionForm" method="post" role="form" >
-                <table class="display paginated" id="CommissionTable" name="CommissionTable" cellspacing="0">
+                <table class="display paginated" id="CommissionTable" name="CommissionTable" cellspacing="0" style="table-layout: fixed;">
                     <thead class="datatable-header">
                         <tr>
                             <th class="hide">Booking ID</th>
-                            <th style="width:11%">Tour Date</th>
-                            <th style="width:5%">Tour Code</th>
-                            <th style="width:9%">Ref. No</th>
+                            <th style="width:9%">Tour Date</th>
+                            <th style="width:11%">Tour Code</th>
+                            <th style="width:7%">Ref. No</th>
                             <th style="width:15%">Client Name</th>
-                            <th style="width:15%">Guide Name(<font style="color: red">*</font>)</th>
-                            <th style="width:6%">Guide Comm(<font style="color: red">*</font>)</th>
-                            <th style="width:12%">Remark Guide</th>
-                            <th style="width:15%">Agent Name(<font style="color: red">*</font>)</th>
-                            <th style="width:6%">Agent Comm(<font style="color: red">*</font>)</span></th>
-                            <th style="width:12%">Remark Agent</th>
+                            <th style="width:10%">Guide Name(<font style="color: red">*</font>)</th>
+                            <th style="width:9%">Guide Comm(<font style="color: red">*</font>)</th>
+                            <th style="width:10%">Remark Guide</th>
+                            <th style="width:10%">Agent Name(<font style="color: red">*</font>)</th>
+                            <th style="width:9%">Agent Comm(<font style="color: red">*</font>)</span></th>
+                            <th style="width:10%">Remark Agent</th>
                             <th class="hide" >Edit</th>
                         </tr>
                     </thead>
@@ -192,15 +192,19 @@
 
                     <tbody>
                         <c:forEach var="item" items="${bookingList}" varStatus="status" >
-                            <tr>
+                            <c:set var="color" value=""/>
+                            <c:if test="${status.count%2 == 0}">
+                                <c:set var="color" value="#F2F2F2"/>
+                            </c:if>
+                            <tr bgcolor="${color}">
                                 <td class="hide"><input type="hidden" id="daytourBookingId-${status.count}" name="daytourBookingId-" value="${item.id}"></td>
-                                <td>
+                                <td class="text-center">
                                     <fmt:formatDate value="${item.tourdate}" var="tourDate" pattern="dd-MM-yyyy" />${tourDate}
                                 </td>
                                 <td>${item.daytourcode}</td>
                                 <c:set var="refno1" value="${fn:substring(item.refno,0,2)}" />
                                 <c:set var="refno2" value="${fn:substring(item.refno,2,7)}" />        
-                                <td>${refno1}-${refno2}</td>
+                                <td class="text-center">${refno1}-${refno2}</td>
                                 <td>
                                     ${item.initialname} ${item.lastname} ${item.firstname}
                                 </td>

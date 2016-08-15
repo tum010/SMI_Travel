@@ -182,7 +182,11 @@
 
                     <tbody>
                         <c:forEach var="item" items="${bookingList}" varStatus="status" >
-                            <tr>
+                            <c:set var="color" value=""/>
+                            <c:if test="${status.count%2 == 0}">
+                                <c:set var="color" value="#F2F2F2"/>
+                            </c:if>
+                            <tr bgcolor="${color}">
                                 <input type="hidden" id="adPrice-${status.count}" name="adPrice-" value="${item.adprice}">
                                 <input type="hidden" id="adQty-${status.count}" name="adQty-" value="${item.adqty}">
                                 <input type="hidden" id="chPrice-${status.count}" name="chPrice-" value="${item.chprice}">
