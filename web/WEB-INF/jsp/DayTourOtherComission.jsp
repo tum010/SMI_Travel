@@ -518,41 +518,41 @@
             placeholder: "0.00",
         });
         
-        var rowIndex = 1;
-        var dataAgent = [];
-        dataAgent = agentName;
-        var agentcount= 0 ; 
-//        console.log("dataAgent : "+dataAgent);
-        $("#CommissionTable tbody").find("tr").each(function(){ 
-            agentcount++;
-            $("#AgentName-"+agentcount).autocomplete({
-                source: dataAgent,
-                focus: function( event, ui ) {
-                    event.preventDefault();
-                    $(this).val(ui.item.label);
-                },
-                select: function( event, ui ) {
-                    event.preventDefault();
-                    $(this).val(ui.item.label);
-                    $(this).attr("valHidden",ui.item.value);
-                },
-                close:function( event, ui ) {
-                   var editCheckBox = $(this).closest('tr').find('td.edited').children();
-                   $(editCheckBox).attr("checked", true);
-                   $("#AgentName-"+agentcount).trigger('keyup');
-                } 
-            });
-            
-            $("#AgentName-"+agentcount).keyup(function () {
-                var position = $(this).offset();
-                $(".ui-widget").css("top", position.top + 30);
-                $(".ui-widget").css("left", position.left);
-                $(".ui-widget").css("font-size", 10);
-                if($(this).val() == ''){
-                    $(this).attr("valHidden",'');
-                }
-            }); 
-        });
+//        var rowIndex = 1;
+//        var dataAgent = [];
+//        dataAgent = agentName;
+//        var agentcount= 0 ; 
+////        console.log("dataAgent : "+dataAgent);
+//        $("#CommissionTable tbody").find("tr").each(function(){ 
+//            agentcount++;
+//            $("#AgentName-"+agentcount).autocomplete({
+//                source: dataAgent,
+//                focus: function( event, ui ) {
+//                    event.preventDefault();
+//                    $(this).val(ui.item.label);
+//                },
+//                select: function( event, ui ) {
+//                    event.preventDefault();
+//                    $(this).val(ui.item.label);
+//                    $(this).attr("valHidden",ui.item.value);
+//                },
+//                close:function( event, ui ) {
+//                   var editCheckBox = $(this).closest('tr').find('td.edited').children();
+//                   $(editCheckBox).attr("checked", true);
+//                   $("#AgentName-"+agentcount).trigger('keyup');
+//                } 
+//            });
+//            
+//            $("#AgentName-"+agentcount).keyup(function () {
+//                var position = $(this).offset();
+//                $(".ui-widget").css("top", position.top + 30);
+//                $(".ui-widget").css("left", position.left);
+//                $(".ui-widget").css("font-size", 10);
+//                if($(this).val() == ''){
+//                    $(this).attr("valHidden",'');
+//                }
+//            }); 
+//        });
         
 //        var dataGuide = [];
 //        dataGuide = guideName;
