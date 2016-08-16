@@ -1790,6 +1790,10 @@
 
         $('#deleteChqButton').on('click', function () {
             $("#addChq").addClass('hidden');
+            $("#chqBank2").val('');
+            $("#chqNo2").val('');
+            $("#chqDate2").val('');
+            $("#chqAmount2").val('');
         });
 
         $('#addCreditButton').on('click', function () {
