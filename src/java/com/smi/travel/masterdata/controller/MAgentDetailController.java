@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
+
 public class MAgentDetailController extends SMITravelController {
     private static final ModelAndView MAgentDetail = new ModelAndView("MAgentDetail");
     private static final ModelAndView Agent = new ModelAndView("Agent");
@@ -43,6 +43,7 @@ public class MAgentDetailController extends SMITravelController {
         String remark = request.getParameter("remark");
         String AgentID = request.getParameter("AgentID");
         String tempCode = request.getParameter("tempagentcode");
+        String apcode = request.getParameter("apcode");
         MBranch mBranch = new MBranch();
         MAccterm Mterm = new MAccterm();
         MAccpay Mpay = new MAccpay();
@@ -53,7 +54,7 @@ public class MAgentDetailController extends SMITravelController {
         
         Agent agent = new Agent();
         agent.setCode((String.valueOf(code)).toUpperCase());
-        agent.setApCode(String.valueOf(code).toUpperCase());
+        agent.setApCode(String.valueOf(apcode).toUpperCase());
         agent.setName((String.valueOf(name)).toUpperCase());
         agent.setAddress((String.valueOf(Address)).toUpperCase());
         agent.setTaxNo(Tax);
@@ -117,6 +118,7 @@ public class MAgentDetailController extends SMITravelController {
             Agent agentdetail = agentservice.getAgentFromID(request.getParameter("agentid").toString());  
             request.setAttribute("disableAgentCode", "readonly");
             code = (String.valueOf(agentdetail.getCode())).toUpperCase();
+            apcode = (String.valueOf(agentdetail.getApCode())).toUpperCase();
             name = (String.valueOf(agentdetail.getName())).toUpperCase(); 
             Address = (String.valueOf(agentdetail.getAddress())).toUpperCase(); 
             Tax = agentdetail.getTaxNo();
@@ -161,6 +163,7 @@ public class MAgentDetailController extends SMITravelController {
         request.setAttribute("remark", remark);
         request.setAttribute("AgentID", AgentID);
         request.setAttribute("Detail", Detail);
+        request.setAttribute("apcode", apcode);
         return MAgentDetail;
     }
 

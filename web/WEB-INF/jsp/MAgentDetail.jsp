@@ -44,6 +44,7 @@
                                 <div class="col-sm-6">
                                     <input type="text" class="form-control" maxlength="15" ${disableAgentCode} id="agentcode" name="agentcode" style="text-transform:uppercase" value='${requestScope['agentcode']}' readonly=""> 
                                     <input type="text" class="hidden" id="tempagentcode"  maxlength="10" name="tempagentcode"  value="${requestScope['agentcode']}" >
+                                    <input type="text" class="hidden" id="apcode"  maxlength="15" name="apcode"  value="${requestScope['apcode']}" >
                                 </div>
                             </div>
                         </div>
