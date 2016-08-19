@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="AirlineVolumn" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" uuid="36591689-e817-40b9-bb01-c68bf69d6b71">
-	<property name="ireport.zoom" value="3.2210200000000397"/>
-	<property name="ireport.x" value="1181"/>
-	<property name="ireport.y" value="384"/>
+	<property name="ireport.zoom" value="1.1289478601075682"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<queryString>
 		<![CDATA[]]>
@@ -39,77 +39,73 @@
 	<background>
 		<band splitType="Stretch"/>
 	</background>
-	<title>
-		<band height="85" splitType="Stretch">
-			<staticText>
-				<reportElement x="169" y="20" width="171" height="30" uuid="f5166cf2-3ee8-441b-a467-266353099c98"/>
-				<textElement textAlignment="Right">
-					<font size="22" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Transfer Job]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="368" y="70" width="163" height="15" uuid="337874e5-5365-42db-8488-bbb2b52ff09f"/>
-				<textElement textAlignment="Right"/>
-				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
-			</textField>
-			<textField evaluationTime="Report">
-				<reportElement x="531" y="70" width="17" height="15" uuid="9c914f0f-332c-46c6-9beb-7fffd3f87e79"/>
-				<textElement textAlignment="Right"/>
-				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
-			</textField>
-			<textField pattern="">
-				<reportElement x="428" y="55" width="120" height="15" uuid="465acab3-62c6-4b60-b650-6d4f9e454a50"/>
-				<textElement textAlignment="Right"/>
-				<textFieldExpression><![CDATA[$F{systemdate}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="407" y="55" width="54" height="15" uuid="16fb41d0-4edf-4849-8d70-4828df0f0df4"/>
-				<text><![CDATA[Print Date  : ]]></text>
-			</staticText>
-		</band>
-	</title>
 	<pageHeader>
-		<band height="40" splitType="Stretch">
+		<band height="125" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="0" width="49" height="17" uuid="521a9977-4083-4b5f-8a87-6d7e37ed4436"/>
+				<reportElement x="0" y="87" width="49" height="17" uuid="521a9977-4083-4b5f-8a87-6d7e37ed4436"/>
 				<textElement>
 					<font size="12"/>
 				</textElement>
 				<text><![CDATA[Guide :]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="170" y="0" width="42" height="17" uuid="4f8de899-15d0-47f7-bca9-3e26246d03cd"/>
+				<reportElement x="170" y="87" width="42" height="17" uuid="4f8de899-15d0-47f7-bca9-3e26246d03cd"/>
 				<textElement>
 					<font size="12"/>
 				</textElement>
 				<text><![CDATA[Driver :]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="20" width="39" height="15" uuid="c91bea46-92ba-42c4-a63e-1961258bf7d7"/>
+				<reportElement x="0" y="107" width="39" height="15" uuid="c91bea46-92ba-42c4-a63e-1961258bf7d7"/>
 				<text><![CDATA[Date :]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="44" y="-2" width="120" height="20" uuid="f73f94e2-e702-4016-aadb-f2e6dd38cb0a"/>
+				<reportElement x="44" y="85" width="120" height="20" uuid="f73f94e2-e702-4016-aadb-f2e6dd38cb0a"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="11" isBold="false" pdfFontName="resource/fonts/Tahoma.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{guide}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="39" y="17" width="120" height="20" uuid="3b7b62fc-40b9-4352-8ad2-de492be41758"/>
+				<reportElement x="39" y="104" width="120" height="20" uuid="3b7b62fc-40b9-4352-8ad2-de492be41758"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9" pdfFontName="resource/fonts/Tahoma.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{tourdate}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="213" y="-2" width="120" height="20" uuid="b9fa02e9-5043-45c9-890e-56ff2c267326"/>
+				<reportElement x="213" y="85" width="120" height="20" uuid="b9fa02e9-5043-45c9-890e-56ff2c267326"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="11" isBold="false" pdfFontName="resource/fonts/Tahoma.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{driver}]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement x="170" y="14" width="171" height="30" uuid="f5166cf2-3ee8-441b-a467-266353099c98"/>
+				<textElement textAlignment="Right">
+					<font size="22" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Transfer Job]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="369" y="64" width="163" height="15" uuid="337874e5-5365-42db-8488-bbb2b52ff09f"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="532" y="64" width="17" height="15" uuid="9c914f0f-332c-46c6-9beb-7fffd3f87e79"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="429" y="49" width="120" height="15" uuid="465acab3-62c6-4b60-b650-6d4f9e454a50"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{systemdate}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="408" y="49" width="54" height="15" uuid="16fb41d0-4edf-4849-8d70-4828df0f0df4"/>
+				<text><![CDATA[Print Date  : ]]></text>
+			</staticText>
 		</band>
 	</pageHeader>
 	<columnHeader>
