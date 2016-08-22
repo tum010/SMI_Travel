@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="GuideJob" language="groovy" pageWidth="648" pageHeight="792" columnWidth="643" leftMargin="5" rightMargin="0" topMargin="0" bottomMargin="0" uuid="afe86f30-4ddb-453a-8429-dac3373d85ce">
-	<property name="ireport.zoom" value="1.5026296018031644"/>
+	<property name="ireport.zoom" value="2.4200000000000155"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="152"/>
+	<property name="ireport.y" value="834"/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<field name="guide" class="java.lang.String"/>
 	<field name="driver" class="java.lang.String"/>
@@ -403,9 +403,9 @@
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="189" splitType="Stretch">
+		<band height="103" splitType="Stretch">
 			<staticText>
-				<reportElement x="14" y="3" width="30" height="20" uuid="a4494802-5505-4ed3-a09e-4188483fadf0">
+				<reportElement x="14" y="3" width="30" height="18" uuid="a4494802-5505-4ed3-a09e-4188483fadf0">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
 				</reportElement>
 				<textElement>
@@ -414,7 +414,7 @@
 				<text><![CDATA[Meal]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="14" y="20" width="50" height="20" uuid="d9952e79-4ad0-4db1-a30a-b47c754289f1">
+				<reportElement positionType="Float" x="14" y="21" width="50" height="19" uuid="d9952e79-4ad0-4db1-a30a-b47c754289f1">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
 				</reportElement>
 				<textElement>
@@ -422,24 +422,8 @@
 				</textElement>
 				<text><![CDATA[Remarks]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="426" y="143" width="132" height="20" uuid="6eab1b04-fe7c-458b-95d2-b968bdf8e9bc"/>
-				<textElement textAlignment="Center">
-					<font fontName="Tahoma" size="10" isBold="true" isStrikeThrough="false" pdfFontName="resource/fonts/Tahoma.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{user}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="14" y="102" width="544" height="20" uuid="90925aa2-c248-42b4-bc47-23c2f6e337db">
-					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
-				</reportElement>
-				<textElement>
-					<font fontName="Tahoma" size="10" isBold="false" pdfFontName="resource/fonts/Tahoma.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{stafftour}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="76" y="21" width="482" height="82" uuid="12bbbf41-c729-4876-af3b-4e308bf075b4">
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" x="76" y="21" width="482" height="19" uuid="12bbbf41-c729-4876-af3b-4e308bf075b4">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
 				</reportElement>
 				<textElement markup="none">
@@ -447,8 +431,8 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{remark}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="76" y="3" width="482" height="20" uuid="01fb270b-f093-403d-9fc9-78748521575c">
+			<textField isStretchWithOverflow="true">
+				<reportElement x="76" y="3" width="482" height="17" uuid="01fb270b-f093-403d-9fc9-78748521575c">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
 				</reportElement>
 				<textElement>
@@ -456,12 +440,29 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{meal}]]></textFieldExpression>
 			</textField>
+			<line>
+				<reportElement positionType="Float" x="14" y="20" width="544" height="1" forecolor="#FFFFFF" uuid="eff05579-6d0e-429f-ab07-33f018fe0d0f"/>
+			</line>
 		</band>
 	</columnFooter>
 	<pageFooter>
-		<band splitType="Stretch"/>
+		<band height="86">
+			<textField>
+				<reportElement x="426" y="41" width="132" height="20" uuid="6eab1b04-fe7c-458b-95d2-b968bdf8e9bc"/>
+				<textElement textAlignment="Center">
+					<font fontName="Tahoma" size="10" isBold="true" isStrikeThrough="false" pdfFontName="resource/fonts/Tahoma.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{user}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="14" y="0" width="544" height="20" uuid="90925aa2-c248-42b4-bc47-23c2f6e337db">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Tahoma" size="10" isBold="false" pdfFontName="resource/fonts/Tahoma.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{stafftour}]]></textFieldExpression>
+			</textField>
+		</band>
 	</pageFooter>
-	<summary>
-		<band splitType="Stretch"/>
-	</summary>
 </jasperReport>
