@@ -2875,15 +2875,15 @@ public class AJAXBean extends AbstractBean implements
                 int adtemp = 0;
                 int chtemp = 0;
                 int intemp = 0;
-                if(!PriceList.isEmpty() && PriceList != null ){
-                    adtemp = Integer.parseInt(passenger[0]);
-                    chtemp = Integer.parseInt(passenger[1]);
-                    intemp = Integer.parseInt(passenger[2]);
-                }else{
+//                if(!PriceList.isEmpty() && PriceList != null ){
+//                    adtemp = Integer.parseInt(passenger[0]);
+//                    chtemp = Integer.parseInt(passenger[1]);
+//                    intemp = Integer.parseInt(passenger[2]);
+//                }else{
                     adtemp = daytour.getAdult();
                     chtemp = daytour.getChild();
                     intemp = daytour.getInfant();
-                }
+//                }
                 result += "<tr>"
                         + "<td>" + row + "</td>"
                         + "<td>" + pickupPlace + "</td>"
