@@ -371,9 +371,9 @@ public class AirTicketDetailController extends SMITravelController {
 
         List<BookingPnr> listBookingPnr = bookingAirticketService.getListBookingPnr();
 
-//        List<MInitialname> listInitialName = utilservice.getListMInitialname();
-//        request.setAttribute(InitialName, listInitialName);
-//        request.setAttribute(List_BookingPnrs, listBookingPnr);
+        List<MInitialname> listInitialName = utilservice.getListMInitialname();
+        request.setAttribute(InitialName, listInitialName);
+        request.setAttribute(List_BookingPnrs, listBookingPnr);
         
         if(airticketPnr != null){
             if("isExistingAirlineCode".equalsIgnoreCase(airticketPnr.getId())){
