@@ -177,15 +177,15 @@ public class TransferJobReportImpl implements TransferJobReportDao {
             String tel = "";//(cus.getTel() != null && !"".equalsIgnoreCase(cus.getTel()) ? cus.getTel() : "");
             String name = (!"".equalsIgnoreCase(tel) ? mInitialname +" "+ lastName +" "+ firstName +"<br>"+ tel : mInitialname +" "+ lastName +" "+ firstName);
             report.setName(name);
-            if(!PriceList.isEmpty() && PriceList != null ){
-                report.setAd(Integer.parseInt(passenger[0]));
-                report.setCh(Integer.parseInt(passenger[1]));
-                report.setIn(Integer.parseInt(passenger[2]));
-            }else{
+//            if(!PriceList.isEmpty() && PriceList != null ){
+//                report.setAd(Integer.parseInt(passenger[0]));
+//                report.setCh(Integer.parseInt(passenger[1]));
+//                report.setIn(Integer.parseInt(passenger[2]));
+//            }else{
                 report.setAd(book.getAdult());
                 report.setCh(book.getChild());
                 report.setIn(book.getInfant());
-            }
+//            }
             
             if(!PriceList.isEmpty()){
                 if(PriceList.get(0).getDetail() != null){
