@@ -221,7 +221,7 @@ public class TransferJobImpl implements TransferJobDao {
     @Override
     public List<DaytourBooking> getTransferjobData(String TourId, String TourDate, String Place, String Other) {
         String getJobDetailQuery = "from DaytourBooking DB where DB.tourDate = '" + TourDate + "'"
-                + " and DB.daytour.code in ('" + TourId.replaceAll(" ", "").replaceAll("\\|\\|", "','").trim() + "') and DB.MItemstatus.id = 1 and DB.master.MBookingstatus.id <> 3  and DB.master.MBookingstatus.id <> 4  ";
+                + " and DB.daytour.code in ('" + TourId.replaceAll("\\|\\|", "','").replaceAll(" '", "'").replaceAll("' ", "'").replaceAll(",''", "").trim() + "') and DB.MItemstatus.id = 1 and DB.master.MBookingstatus.id <> 3  and DB.master.MBookingstatus.id <> 4  ";
         String open = "";
         String close = "";
 //        List Transferjoblist = new ArrayList();

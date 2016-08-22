@@ -55,9 +55,8 @@ public class TransferJobReportImpl implements TransferJobReportDao {
         String TourId = job.getTour();
         String Place = job.getPlace();
         String Other = job.getPlaceOther();
-
         String getJobDetailQuery = "from DaytourBooking DB where DB.tourDate = '" + TourDate + "'"
-                + " and DB.daytour.code in ('" + TourId.replaceAll(" ", "").replaceAll("\\|\\|", "','").trim() + "') and DB.MItemstatus.id <> 2 and DB.MItemstatus.id <> 3 and DB.master.MBookingstatus.id <> 3  and DB.master.MBookingstatus.id <> 4 ";
+                + " and DB.daytour.code in ('" + TourId.replaceAll("\\|\\|", "','").replaceAll(" '", "'").replaceAll("' ", "'").replaceAll(",''", "").trim() + "') and DB.MItemstatus.id <> 2 and DB.MItemstatus.id <> 3 and DB.master.MBookingstatus.id <> 3  and DB.master.MBookingstatus.id <> 4 ";
         String open = "";
         String close = "";
         List Transferjoblist = new ArrayList();
@@ -133,9 +132,9 @@ public class TransferJobReportImpl implements TransferJobReportDao {
         UtilityFunction util = new UtilityFunction();
         String[] placeOther = (job.getPlaceOther()).split("||");
         System.out.println("===== job.getPlaceOther() ===== : "+job.getPlaceOther());
-        for(String a : placeOther){
-            System.out.println("===== placeOther ===== : "+a);
-        }
+//        for(String a : placeOther){
+//            System.out.println("===== placeOther ===== : "+a);
+//        }
         
         int indexPlaceOther = 0;
         for(int i=0;i<Booklist.size();i++){
