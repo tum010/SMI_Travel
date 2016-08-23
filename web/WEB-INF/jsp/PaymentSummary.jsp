@@ -7,6 +7,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<script type="text/javascript" src="js/jquery-ui.js"></script>
 <c:set var="listCity" value="${requestScope['city_list']}" />
 <c:set var="listCountry" value="${requestScope['country_list']}" />
 <c:set var="product_list" value="${requestScope['listProduct']}" />

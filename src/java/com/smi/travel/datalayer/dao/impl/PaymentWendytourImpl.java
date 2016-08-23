@@ -706,9 +706,9 @@ public class PaymentWendytourImpl implements PaymentWendytourDao{
         query += "UNION ALL "
                 + "SELECT `s`.`id` AS `id`, `s`.`username` AS `code`, `s`.`name` AS `name`, `s`.`ap_code` AS `apcode`, '' AS `taxno`, '' AS `branchno`, "
                 + "'Staff' AS `type` "
-                + "FROM `staff` `s` ";
+                + "FROM `staff` `s` where `s`.`status` = 'active' ";
         if(name != null && !"".equalsIgnoreCase(name)){
-            query += "WHERE (`s`.`ap_code` IS NOT NULL) AND ( `s`.`username` LIKE '%" + name + "%' OR `s`.`name` LIKE '%" + name + "%' ) ";
+            query += " and (`s`.`ap_code` IS NOT NULL) AND ( `s`.`username` LIKE '%" + name + "%' OR `s`.`name` LIKE '%" + name + "%' ) ";
         }        
                 
         query += "UNION ALL "

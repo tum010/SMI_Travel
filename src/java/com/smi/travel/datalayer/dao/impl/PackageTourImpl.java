@@ -43,10 +43,10 @@ public class PackageTourImpl implements PackageTourDao {
     public List<PackageTour> SearchPackage(PackageTour mpackage, int option) {
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
-        String query = "from PackageTour pt where ";
+        String query = "from PackageTour pt where pt.status = 'active' ";
         String queryOperation = "";
         String Prefix_Subfix = "";
-        int check = 0;
+        int check = 1;
         if (option == 1) {
             queryOperation = " = ";
             Prefix_Subfix = "";
@@ -56,7 +56,7 @@ public class PackageTourImpl implements PackageTourDao {
         }
         
         if ((mpackage.getCode() != null) && (!"".equalsIgnoreCase(mpackage.getCode()))) {
-            query += " pt.code " + queryOperation + " '" + Prefix_Subfix + util.StringUtilReplaceChar(mpackage.getCode()) + Prefix_Subfix + "'";
+            query += " and pt.code " + queryOperation + " '" + Prefix_Subfix + util.StringUtilReplaceChar(mpackage.getCode()) + Prefix_Subfix + "'";
             check = 1;
         }
         if ((mpackage.getName() != null) && (!"".equalsIgnoreCase(mpackage.getName()))) {
@@ -462,7 +462,7 @@ public class PackageTourImpl implements PackageTourDao {
 
     @Override
     public List<PackageTour> getListPackageTour() {
-        String query = "from PackageTour pt ";
+        String query = "from PackageTour pt where pt.status = 'active' ";
         Session session = this.sessionFactory.openSession();
         List<PackageTour> list = session.createQuery(query).list();
         System.out.println("query : "+query );

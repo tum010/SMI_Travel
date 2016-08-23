@@ -48,7 +48,7 @@ public class InvoiceSuppilerImpl implements InvoiceSuppilerDao{
                 + "UNION ALL "
                 + "SELECT `s`.`id` AS `id`, `s`.`username` AS `code`, `s`.`name` AS `name`, `s`.`ap_code` AS `apcode`, '' AS `taxno`, '' AS `branchno`, "
                 + "'Staff' AS `type` "
-                + "FROM `staff` `s` "
+                + "FROM `staff` `s` where `s`.`status` = 'active' "
                 + "UNION ALL "
                 + "SELECT `sup`.`id` AS `id`, `sup`.`ap_code` AS `code`, `sup`.`name` AS `name`, `sup`.`ap_code` AS `apcode`, '' AS `taxno`, "
                 + "'' AS `branchno`, 'Supplier' AS `type` "
