@@ -132,8 +132,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-2">
-                            <div class="col-sm-12">
+                        <div class="col-md-2 form-group">
+                            <div class="col-sm-12 input-group">
                                 <input name="InputTourName" id="InputTourName"  type="text" style="width: 200px" class="form-control" readonly="" value="${daytourBooking.daytour.name}">
                             </div>
                         </div>
@@ -549,7 +549,7 @@
             <script>
 
                 $(document).ready(function () {
-//                    var tourDate = $('#InputTourDate').val();
+//                     var tourDate = $('#InputTourDate').val();
 //                    $('#InputTourDate').val(convertFormatDate(tourDate));
                     
                     $("#tourTable tr").on('click', function () {//winit
@@ -609,6 +609,7 @@
 ////                               availableTags.push(value.name);
 ////                            }
 //                        });
+
                         $("#InputTourCode").autocomplete({
                            minLength:1,
                             source: function(request, response) {
@@ -617,6 +618,8 @@
                                     return item;
                                 }
                                 else{
+                                    $("#InputTourId").val('');
+                                    $("#InputTourName").val(''); 
                                     return null;
                                 }
                             });
@@ -640,9 +643,19 @@
                             var position = $(this).offset();
                             $(".ui-widget").css("top", position.top + 30);
                             $(".ui-widget").css("left", position.left);
-                            var name = this.value;
+                            var id = $("#InputTourId").val();
+                            var name = $("#InputTourName").val();
                             var code = this.value.toUpperCase();
-                            $("#InputTourName").val(name);
+                            if($("#InputTourCode").val() !== ''){
+                                $("#InputTourId").val(id);
+                                $("#InputTourCode").val(code);
+                                $("#InputTourName").val(name);
+                            }else{
+                                $("#InputTourId").val('');
+                                $("#InputTourCode").val('');
+                                $("#InputTourName").val(''); 
+                            }
+//                            $("#InputTourName").val(name);
                         });
 
 //                        $("#InputTourCode").autocomplete({
