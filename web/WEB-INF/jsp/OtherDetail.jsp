@@ -121,7 +121,7 @@
             </div>
             </c:if>
             <c:if test="${requestScope['resultTicket'] == 'stock success'}">
-            <div id="textAlertDivNotSave"  style="" class="alert alert-success alert-dismissible" role="alert">
+            <div id="textAlertDivNotSave"  style="" class="alert alert-danger alert-dismissible" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <strong>Update Stock Ticket Success!</strong> 
             </div>
