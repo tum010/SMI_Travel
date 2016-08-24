@@ -25,11 +25,25 @@ $(document).ready(function () {
                             }
                         }
                     },
+                    InputTourId: {
+                        validators: {
+                            notEmpty: {
+                                message: ' Tour name is required'
+                            }
+                        }
+                    },
                     InputTourCode: {
                         trigger: 'focus keyup',
                         validators: {
                             notEmpty: {trigger: 'change',
                                 message: ' Tour Code is required'
+                            }
+                        }
+                    },
+                    InputTourName: {
+                        validators: {
+                            notEmpty: {
+                                message: ' Tour name is required'
                             }
                         }
                     },
