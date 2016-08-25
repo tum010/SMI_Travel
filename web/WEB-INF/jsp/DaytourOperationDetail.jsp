@@ -920,12 +920,14 @@
                                         </div>
                                     </div>
                                     <div class="col-xs-12 form-group"><hr/></div>
-                                    <div class="col-xs-12 form-group" style="padding-top: 10px">                               
-                                        <div id="textAlertDivGuideName" style="display:none; color: red">
+                                    <div class="col-xs-12 form-group" style="margin-top: -15px;"> 
+                                        <div class="col-sm-6" >
+                                            <div id="textAlertDivGuideName" style="display:none; color: red">
 
+                                            </div>
                                         </div>
                                     </div>                               
-                                    <div class="col-xs-12 form-group" style="margin-top: -10px;">
+                                    <div class="col-xs-12 form-group" style="padding-top: 10px;">
                                         <div class="col-sm-6" style="margin-top: -30px;">
                                             <h4>Guide Bill</h4>
                                         </div>
