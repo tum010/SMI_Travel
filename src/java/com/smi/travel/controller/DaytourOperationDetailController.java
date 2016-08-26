@@ -91,7 +91,7 @@ public class DaytourOperationDetailController extends SMITravelController {
         SystemUser user = (SystemUser) session.getAttribute("USER");
         String mDepartmentNameTemp = "";
         if(user.getMDepartment() != null){
-            mDepartmentNameTemp = user.getMDepartment().getName();
+            mDepartmentNameTemp = (user.getMDepartment().getName()).toLowerCase();
         }
         request.setAttribute("mDepartmentName", mDepartmentNameTemp);
 
