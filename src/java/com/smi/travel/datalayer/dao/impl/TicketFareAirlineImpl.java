@@ -1232,7 +1232,7 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
     public String getListTicketFareFromInvno(String invNo) {
         String result ="";
         System.out.println(" invNo ::: "+invNo);
-        String query = " From InvoiceDetail inv where inv.invoice.invNo = :invNo and inv.billableDesc.MBilltype.id = 1 and invd.invoice.MFinanceItemstatus.id <> 2 ";
+        String query = " From InvoiceDetail inv where inv.invoice.invNo = :invNo and inv.billableDesc.MBilltype.id = 1 and inv.invoice.MFinanceItemstatus.id <> 2 ";
         Session session = this.sessionFactory.openSession();
         List<InvoiceDetail> invoiceDetails = session.createQuery(query).setParameter("invNo", invNo).list();
         System.out.println(" invoiceDetails.size() " + invoiceDetails.size());
