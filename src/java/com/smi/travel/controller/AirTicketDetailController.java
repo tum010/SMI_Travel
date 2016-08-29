@@ -209,8 +209,8 @@ public class AirTicketDetailController extends SMITravelController {
                                 }
                             }
                         }else if (refItemIdTempParts.length > 1){
-                            int cost = 0;
-                            int price = 0;
+                            BigDecimal cost = new BigDecimal(BigInteger.ZERO);
+                            BigDecimal price = new BigDecimal(BigInteger.ZERO);
                             String curcost = "";
                             String curamout = "";
                             for(int k = 0 ; k < refItemIdTempParts.length ; k++){
@@ -218,8 +218,8 @@ public class AirTicketDetailController extends SMITravelController {
                                     System.out.println(" refItemIdTempParts[k] " + refItemIdTempParts[k]);
                                     System.out.println(" billableViews.get(x).getRefItemId() " + billableViews.get(x).getRefItemId());
                                     if(String.valueOf(refItemIdTempParts[k]).equalsIgnoreCase(billableViews.get(x).getRefItemId())){
-//                                        cost = cost + billableViews.get(x).getCost();
-//                                        price = price + billableViews.get(x).getPrice();
+                                        cost = cost.add(new BigDecimal(billableViews.get(x).getCost()));
+                                        price = price.add(new BigDecimal(billableViews.get(x).getPrice()));
                                         curcost =  billableViews.get(x).getCurCost();
                                         curamout =  billableViews.get(x).getCurAmount();
                                         
@@ -236,8 +236,8 @@ public class AirTicketDetailController extends SMITravelController {
                             System.out.println(" curcost " + curcost);
                             System.out.println(" curamout " + curamout);
                             BillableView billableView = new BillableView();
-//                            billableView.setCost(cost);
-//                            billableView.setPrice(price);
+                            billableView.setCost(String.valueOf(cost));
+                            billableView.setPrice(String.valueOf(price));
                             billableView.setCurCost(curcost);
                             billableView.setCurAmount(curamout);
                             int resultupdate = utilservice.updateBillableDesc(billableView,billableDescList.get(j).getId()); //billdescId
