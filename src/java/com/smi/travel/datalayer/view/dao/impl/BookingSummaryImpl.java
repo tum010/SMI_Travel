@@ -425,7 +425,7 @@ public class BookingSummaryImpl implements BookingSummaryDao{
                 .addScalar("arrv", Hibernate.STRING)
                 .addScalar("arrvname", Hibernate.STRING)
                 .addScalar("arrive_time", Hibernate.STRING)
-                .addScalar("price", Hibernate.STRING)
+//                .addScalar("price", Hibernate.STRING)
                 .list();
         
         SimpleDateFormat dateformat = new SimpleDateFormat();
@@ -450,7 +450,7 @@ public class BookingSummaryImpl implements BookingSummaryDao{
             confirmdetail.setArrivename(B[7]== null ? "" :util.ConvertString(B[7]));
 
             confirmdetail.setArrivetime(B[8]== null ? "" :util.ConvertString(B[8]));
-            confirmdetail.setPrice(B[9]== null ? "" :util.ConvertString(B[9]));
+//            confirmdetail.setPrice(B[9]== null ? "" :util.ConvertString(B[9]));
             data.add(confirmdetail);
         }
         this.sessionFactory.close();
