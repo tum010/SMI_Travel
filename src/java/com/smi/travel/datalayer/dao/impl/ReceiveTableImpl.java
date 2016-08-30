@@ -598,17 +598,42 @@ public class ReceiveTableImpl implements ReceiveTableDao{
         SimpleDateFormat dateformatReceiveDate = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
         
         int i = 1;
-        for (Object[] C : QueryReceiveView){
+        if(QueryReceiveView != null && QueryReceiveView.size() != 0 && !QueryReceiveView.isEmpty()){
+            for (Object[] C : QueryReceiveView){
+                CollectionView collectionView = new CollectionView();
+                collectionView.setDatefrom(advanceReceivePeriod != null ? String.valueOf(dateformatReceiveDate.format(advanceReceivePeriod.getReceiveFrom())) : "");
+                collectionView.setDateto(advanceReceivePeriod != null ? String.valueOf(dateformatReceiveDate.format(advanceReceivePeriod.getReceiveTo())) : "");
+                collectionView.setDepartment(department);
+                collectionView.setSystemdate(String.valueOf(dateformatSystemDate.format(new Date())));
+                collectionView.setNo(String.valueOf(i));
+                collectionView.setName(C[0] != null ? util.ConvertString(C[0]) : "0.00");
+                collectionView.setTotalamount(C[1] != null ? util.ConvertString(C[1]) : "0.00");
+                collectionView.setDetail(C[2] != null ? util.ConvertString(C[2]) : "0.00");
+                collectionView.setRemark(C[3] != null ? util.ConvertString(C[3]) : "0.00");
+                collectionView.setOcash(receiptSummary.getOcash());
+                collectionView.setOchq(receiptSummary.getOchq());
+                collectionView.setOcredit(receiptSummary.getOcredit());
+                collectionView.setObanktransfer(receiptSummary.getObanktransfer());
+                collectionView.setOcashminus(receiptSummary.getOcashminus());
+                collectionView.setIcash(receiveSummary.getIcash());
+                collectionView.setIchq(receiveSummary.getIchq());
+                collectionView.setIcredit(receiveSummary.getIcredit());
+                collectionView.setIbanktransfer(receiveSummary.getIbanktransfer());
+                collectionView.setIcashminus(receiveSummary.getIcashminus());
+                data.add(collectionView);
+                i++;
+            }
+        }else{      
             CollectionView collectionView = new CollectionView();
             collectionView.setDatefrom(advanceReceivePeriod != null ? String.valueOf(dateformatReceiveDate.format(advanceReceivePeriod.getReceiveFrom())) : "");
             collectionView.setDateto(advanceReceivePeriod != null ? String.valueOf(dateformatReceiveDate.format(advanceReceivePeriod.getReceiveTo())) : "");
             collectionView.setDepartment(department);
             collectionView.setSystemdate(String.valueOf(dateformatSystemDate.format(new Date())));
-            collectionView.setNo(String.valueOf(i));
-            collectionView.setName(C[0] != null ? util.ConvertString(C[0]) : "0.00");
-            collectionView.setTotalamount(C[1] != null ? util.ConvertString(C[1]) : "0.00");
-            collectionView.setDetail(C[2] != null ? util.ConvertString(C[2]) : "0.00");
-            collectionView.setRemark(C[3] != null ? util.ConvertString(C[3]) : "0.00");
+            collectionView.setNo("");
+            collectionView.setName("");
+            collectionView.setTotalamount("0.00");
+            collectionView.setDetail("");
+            collectionView.setRemark("");
             collectionView.setOcash(receiptSummary.getOcash());
             collectionView.setOchq(receiptSummary.getOchq());
             collectionView.setOcredit(receiptSummary.getOcredit());
@@ -620,7 +645,6 @@ public class ReceiveTableImpl implements ReceiveTableDao{
             collectionView.setIbanktransfer(receiveSummary.getIbanktransfer());
             collectionView.setIcashminus(receiveSummary.getIcashminus());
             data.add(collectionView);
-            i++;
         }
         this.sessionFactory.close();
         session.close();
