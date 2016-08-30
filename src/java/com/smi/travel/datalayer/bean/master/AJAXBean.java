@@ -422,7 +422,7 @@ public class AJAXBean extends AbstractBean implements
                         result += "<tr>"
 //                                + "<td class=\"text-center\">" + otherBooking.getMaster().getReferenceNo().trim() + "</td>"
                                 + "<td class=\"text-center\">" + refNo1+"-"+refNo2 + "</td>"
-                                + "<td class=\"text-center\">" + (otherBooking.getOtherdate()!= null ? otherBooking.getOtherdate() : "") + "</td>"
+                                + "<td class=\"text-center\">" + (otherBooking.getOtherdate()!= null ? util.convertStringToDateFormat(otherBooking.getOtherdate()) : "") + "</td>"
                                 + "<td class=\"text-left\">" + otherBooking.getLeader() + "</td>"
                                 + "<td class=\"text-left\">" + otherBooking.getProduct() + "</td>"
                                 + "<td class=\"text-center\">" + otherBooking.getStatus() + "</td>" 
