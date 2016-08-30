@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TaxInvoiceEmailReport" language="groovy" pageWidth="648" pageHeight="396" columnWidth="569" leftMargin="28" rightMargin="51" topMargin="8" bottomMargin="28" uuid="346dddd2-e21a-4c7b-8d69-ccea53d38a9d">
-	<property name="ireport.zoom" value="1.3636363636363662"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TaxInvoiceEmailReport" language="groovy" pageWidth="648" pageHeight="396" columnWidth="583" leftMargin="14" rightMargin="51" topMargin="18" bottomMargin="18" uuid="346dddd2-e21a-4c7b-8d69-ccea53d38a9d">
+	<property name="ireport.zoom" value="1.9965000000000042"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<field name="customer" class="java.lang.String"/>

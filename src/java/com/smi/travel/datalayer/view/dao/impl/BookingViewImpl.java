@@ -461,12 +461,18 @@ public class BookingViewImpl implements BookingViewDao{
             
             String billdescid = "";          
             for (Object[] B : QueryAir) {
-                billdescid += ",";
-                billdescid += B[10] == null ? null : util.ConvertString(B[10]);
+                if(B[10] != null){
+                    billdescid += ",";
+                }
+                billdescid += B[10] == null ? "" : util.ConvertString(B[10]);
             }
-
-            Map<String, String> mapInvoice = getInvoiceMap(session, billdescid);
-            Map<String, String> mapReceipt = getReceiptMap(session, billdescid);
+            
+            Map<String, String> mapInvoice = null;
+            Map<String, String> mapReceipt = null;
+            if(!"".equals(billdescid)){
+                mapInvoice = getInvoiceMap(session, billdescid);
+                mapReceipt = getReceiptMap(session, billdescid);
+            }
 
             for (Object[] B : QueryAir) {
                 BookingAirSummaryView bookingAirSummaryView = new BookingAirSummaryView();
@@ -481,8 +487,29 @@ public class BookingViewImpl implements BookingViewDao{
                 bookingAirSummaryView.setDepartdate(B[8]== null ? "" :util.ConvertString(B[8]));
                 bookingAirSummaryView.setFlight(B[9]== null ? "" :util.ConvertString(B[9]));
                 bookingAirSummaryView.setBillid(B[10]== null ? "" :util.ConvertString(B[10]));
-                bookingAirSummaryView.setInvoice(mapInvoice.get(B[10]== null ? "" :util.ConvertString(B[10])));
-                bookingAirSummaryView.setReceipt(mapReceipt.get(B[10]== null ? "" :util.ConvertString(B[10])));
+                
+                if(mapInvoice != null){
+                    if(mapInvoice.get(B[10]== null ? "" :util.ConvertString(B[10])) != null 
+                            && !"".equals(mapInvoice.get(B[10]== null ? "" :util.ConvertString(B[10])))){
+                        bookingAirSummaryView.setInvoice(mapInvoice.get(B[10]== null ? "" :util.ConvertString(B[10])));
+                    }else{
+                        String refNo = B[0]== null ? "" : util.ConvertString(B[0]);
+                        String invoiceNo = getInvoiceMapAirticketDesc(session, refNo);
+                        bookingAirSummaryView.setInvoice(invoiceNo);
+                    }
+                }
+                
+                if(mapReceipt != null){
+                    if(mapInvoice.get(B[10]== null ? "" :util.ConvertString(B[10])) != null 
+                            && !"".equals(mapReceipt.get(B[10]== null ? "" :util.ConvertString(B[10])))){
+                        bookingAirSummaryView.setReceipt(mapReceipt.get(B[10]== null ? "" :util.ConvertString(B[10])));
+                    }else{
+                        String refNo = B[0]== null ? "" : util.ConvertString(B[0]);
+                        String receiptNo = getReceiptMapAirticketDesc(session, refNo);
+                        bookingAirSummaryView.setReceipt(receiptNo);
+                    }
+                }
+                               
                 bookingAirSummaryViewList.add(bookingAirSummaryView);
             }
             
@@ -956,6 +983,82 @@ public class BookingViewImpl implements BookingViewDao{
             mapReceipt.put(B[0]== null ? "" : util.ConvertString(B[0]), B[2]== null ? "" : util.ConvertString(B[2]));
         }
         return mapReceipt;
+    }
+
+    private String getInvoiceMapAirticketDesc(Session session, String refNo) {
+        UtilityFunction util = new UtilityFunction();
+        String queryairticketdesc = " SELECT b.*, billd.id AS billid FROM ( SELECT `mt`.`Reference No` AS `refno`, `ad`.`id` AS `airticket_desc_id` FROM `master` `mt` JOIN `airticket_booking` `ab` ON ((`ab`.`master_id` = `mt`.`id`)) INNER JOIN `airticket_desc` `ad` ON (( `ad`.`booking_id` = `ab`.`id` )) WHERE `mt`.`Reference No` = :refNo ORDER BY `mt`.`Reference No` DESC ) b LEFT JOIN ( SELECT billd.id, billd.ref_item_id, billd.bill_type FROM billable_desc billd WHERE billd.bill_type = 7 ) billd ON billd.ref_item_id = b.airticket_desc_id ";
+        queryairticketdesc = queryairticketdesc.replace(":refNo", refNo);
+        List<Object[]> QueryAirticketDesc = session.createSQLQuery(queryairticketdesc)
+                .addScalar("refno", Hibernate.STRING)
+                .addScalar("airticket_desc_id", Hibernate.STRING)
+                .addScalar("billid", Hibernate.STRING)
+                .list();
+        
+        String invoiceNo = "";
+        String billdescid = "";
+        for (Object[] B : QueryAirticketDesc) {
+            if(B[2] != null){
+                billdescid += ",";
+            }
+            billdescid += B[2] == null ? "" : util.ConvertString(B[2]);
+        }
+        
+        if(QueryAirticketDesc.isEmpty()){
+            return invoiceNo;
+        }
+              
+        String[] billdescidList = billdescid.split(",");
+        Map<String, String> mapInvoice = getInvoiceMap(session, billdescid);
+        for(int i = 0; i < billdescidList.length; i++){
+            if(i == 0){
+                invoiceNo = mapInvoice.get(billdescidList[i]) != null && !"".equals(mapInvoice.get(billdescidList[i])) ? mapInvoice.get(billdescidList[i]) : "";
+            
+            } else {
+                String invoiceTemp = mapInvoice.get(billdescidList[i]) != null && !"".equals(mapInvoice.get(billdescidList[i])) ? mapInvoice.get(billdescidList[i]) : "";
+                invoiceNo = invoiceTemp.length() > invoiceNo.length() ? invoiceTemp : invoiceNo;
+            }
+        }
+        
+        return invoiceNo;
+    }
+
+    private String getReceiptMapAirticketDesc(Session session, String refNo) {
+        UtilityFunction util = new UtilityFunction();
+        String queryairticketdesc = " SELECT b.*, billd.id AS billid FROM ( SELECT `mt`.`Reference No` AS `refno`, `ad`.`id` AS `airticket_desc_id` FROM `master` `mt` JOIN `airticket_booking` `ab` ON ((`ab`.`master_id` = `mt`.`id`)) INNER JOIN `airticket_desc` `ad` ON (( `ad`.`booking_id` = `ab`.`id` )) WHERE `mt`.`Reference No` = :refNo ORDER BY `mt`.`Reference No` DESC ) b LEFT JOIN ( SELECT billd.id, billd.ref_item_id, billd.bill_type FROM billable_desc billd WHERE billd.bill_type = 7 ) billd ON billd.ref_item_id = b.airticket_desc_id ";
+        queryairticketdesc = queryairticketdesc.replace(":refNo", refNo);
+        List<Object[]> QueryAirticketDesc = session.createSQLQuery(queryairticketdesc)
+                .addScalar("refno", Hibernate.STRING)
+                .addScalar("airticket_desc_id", Hibernate.STRING)
+                .addScalar("billid", Hibernate.STRING)
+                .list();
+        
+        String receiptNo = "";
+        String billdescid = "";
+        for (Object[] B : QueryAirticketDesc) {
+            if(B[2] != null){
+                billdescid += ",";
+            }
+            billdescid += B[2] == null ? "" : util.ConvertString(B[2]);
+        }
+        
+        if(QueryAirticketDesc.isEmpty()){
+            return receiptNo;
+        }
+        
+        String[] billdescidList = billdescid.split(",");
+        Map<String, String> mapReceipt = getReceiptMap(session, billdescid);
+        for(int i = 0; i < billdescidList.length; i++){
+            if(i == 0){
+                receiptNo = mapReceipt.get(billdescidList[i]) != null && !"".equals(mapReceipt.get(billdescidList[i])) ? mapReceipt.get(billdescidList[i]) : "";
+            
+            } else {
+                String receiptTemp = mapReceipt.get(billdescidList[i]) != null && !"".equals(mapReceipt.get(billdescidList[i])) ? mapReceipt.get(billdescidList[i]) : "";
+                receiptNo = receiptTemp.length() > receiptNo.length() ? receiptTemp : receiptNo;
+            }
+        }
+        
+        return receiptNo;
     }
     
 }
