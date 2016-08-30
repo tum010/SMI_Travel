@@ -15,6 +15,8 @@ import com.smi.travel.datalayer.view.entity.PackageSummaryHotelView;
 import com.smi.travel.datalayer.view.entity.PackageSummaryLandView;
 import com.smi.travel.datalayer.view.entity.PackageSummaryOthersView;
 import com.smi.travel.util.UtilityFunction;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -113,8 +115,8 @@ public class PackageMonthlyImpl implements PackageMonthlyDao{
             packageMonthly.setCourse(B[1]== null ? "" :util.ConvertString(B[1]));
             packageMonthly.setTour(B[2]== null ? "" :util.ConvertString(B[2]));
             packageMonthly.setPax(B[3]== null ? "" :util.ConvertString(B[3]));
-            packageMonthly.setSell(B[4]== null ? "" :util.ConvertString(B[4]));
-            packageMonthly.setNet(B[5]== null ? "" :util.ConvertString(B[5]));
+            packageMonthly.setNet(B[4]== null ? "" :util.ConvertString(B[4]));
+            packageMonthly.setSell(B[5]== null ? "" :util.ConvertString(B[5]));
             packageMonthly.setBalance(B[6]== null ? "" :util.ConvertString(B[6]));
             data.add(packageMonthly);
         }
@@ -168,16 +170,22 @@ public class PackageMonthlyImpl implements PackageMonthlyDao{
        
         SimpleDateFormat dateformat = new SimpleDateFormat();
         dateformat.applyPattern("dd-MM-yy");
-
+        String grouptour = "";
+        BigDecimal pax = new BigDecimal(BigInteger.ZERO);
+        BigDecimal net = new BigDecimal(BigInteger.ZERO);
+        BigDecimal sell = new BigDecimal(BigInteger.ZERO);
+        BigDecimal balance = new BigDecimal(BigInteger.ZERO);
+        int index = 0;
+        int indexset = 0;
         for (Object[] B : QueryStaffList) {
             PackageSummaryDetailView packageSum = new PackageSummaryDetailView();
             packageSum.setPackagedate(B[0]== null ? "" :util.ConvertString(dateformat.format(util.convertStringToDate(util.ConvertString(B[0])))));
             packageSum.setCourse(B[1]== null ? "" :util.ConvertString(B[1]));
             packageSum.setPackagename(B[2]== null ? "" :util.ConvertString(B[2]));
             packageSum.setPax(B[3]== null ? "" :util.ConvertString(B[3]));
-            packageSum.setNet(B[4]== null ? "" :util.ConvertString(B[4]));
-            packageSum.setSell(B[5]== null ? "" :util.ConvertString(B[5]));
-            packageSum.setBalance(B[6]== null ? "" :util.ConvertString(B[6]));
+//            packageSum.setNet(B[4]== null ? "" :util.ConvertString(B[4]));
+//            packageSum.setSell(B[5]== null ? "" :util.ConvertString(B[5]));
+//            packageSum.setBalance(B[6]== null ? "" :util.ConvertString(B[6]));
             packageSum.setRefno(B[7]== null ? "" :util.ConvertString(B[7]));
             packageSum.setLeadername(B[8]== null ? "" :util.ConvertString(B[8]));
             packageSum.setBookpax(B[9]== null ? "" :util.ConvertString(B[9]));
@@ -187,7 +195,35 @@ public class PackageMonthlyImpl implements PackageMonthlyDao{
             packageSum.setPackageLandSubReportDataSource(new JRBeanCollectionDataSource(getPackageLand(util.ConvertString(B[7]))));
             packageSum.setPackageOthersSubReportDataSource(new JRBeanCollectionDataSource(getPackageOthers(util.ConvertString(B[7]))));
             packageSum.setPackageAirlineSubReportDataSource(new JRBeanCollectionDataSource(getPackageAirline(util.ConvertString(B[7]))));
+            
+            if("".equalsIgnoreCase(grouptour) || (grouptour).equalsIgnoreCase(util.ConvertString(B[10]))){
+                pax = pax.add(B[3]== null ?  new BigDecimal(BigInteger.ZERO) :  new BigDecimal(util.ConvertString(B[3])));
+                net = net.add(B[4]== null ?  new BigDecimal(BigInteger.ZERO) :  new BigDecimal(util.ConvertString(B[4])));
+                sell = sell.add(B[5]== null ?  new BigDecimal(BigInteger.ZERO) :  new BigDecimal(util.ConvertString(B[5])));
+                balance = balance.add(B[6]== null ?  new BigDecimal(BigInteger.ZERO) :  new BigDecimal(util.ConvertString(B[6])));
+            }else{
+                indexset = index ;
+                pax = new BigDecimal(BigInteger.ZERO);
+                net = new BigDecimal(BigInteger.ZERO);
+                sell = new BigDecimal(BigInteger.ZERO);
+                balance = new BigDecimal(BigInteger.ZERO);
+                
+                pax = pax.add(B[3]== null ?  new BigDecimal(BigInteger.ZERO) :  new BigDecimal(util.ConvertString(B[3])));
+                net = net.add(B[4]== null ?  new BigDecimal(BigInteger.ZERO) :  new BigDecimal(util.ConvertString(B[4])));
+                sell = sell.add(B[5]== null ?  new BigDecimal(BigInteger.ZERO) :  new BigDecimal(util.ConvertString(B[5])));
+                balance = balance.add(B[6]== null ?  new BigDecimal(BigInteger.ZERO) :  new BigDecimal(util.ConvertString(B[6])));
+            }
+            
+            grouptour = B[10]== null ? "" :util.ConvertString(B[10]);
+            
+            index ++ ;
             data.add(packageSum);
+            
+            PackageSummaryDetailView psdv = (PackageSummaryDetailView) data.get(indexset);
+            psdv.setPaxsum(util.ConvertString(pax));
+            psdv.setNet(util.ConvertString(net));
+            psdv.setSell(util.ConvertString(sell));
+            psdv.setBalance(util.ConvertString(balance));
         }
         
         

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PackageDetailSubReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="2" bottomMargin="2" uuid="cf1ccb46-96bc-4028-a911-b10f03b03c4f">
-	<property name="ireport.zoom" value="5.0"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="273"/>
+	<property name="ireport.zoom" value="2.565790591153534"/>
+	<property name="ireport.x" value="46"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="REFNO_MASTER" class="java.lang.String">
 		<defaultValueExpression><![CDATA[$F{refno}]]></defaultValueExpression>
 	</parameter>
@@ -24,6 +24,7 @@
 	<field name="packageLandSubReportDataSource" class="net.sf.jasperreports.engine.JRDataSource"/>
 	<field name="packageOthersSubReportDataSource" class="net.sf.jasperreports.engine.JRDataSource"/>
 	<field name="packageAirlineSubReportDataSource" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<field name="paxsum" class="java.lang.String"/>
 	<group name="groupTour" isStartNewPage="true">
 		<groupExpression><![CDATA[$F{grouptour}]]></groupExpression>
 		<groupHeader>
@@ -102,7 +103,7 @@
 					<textElement>
 						<font fontName="TH SarabunPSK" size="14" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA[($F{pax} != null && !"null".equals($F{pax}) && $F{pax}.length() > 0 && !"".equalsIgnoreCase($F{pax})) ? new BigDecimal($F{pax}) : new BigDecimal("0")]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($F{paxsum} != null && !"null".equals($F{paxsum}) && $F{paxsum}.length() > 0 && !"".equalsIgnoreCase($F{paxsum})) ? new BigDecimal($F{paxsum}) : new BigDecimal("0")]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="203" y="3" width="330" height="16" uuid="63b37eab-30d4-4ad4-a75d-793936fdec39"/>
@@ -210,6 +211,13 @@
 				<dataSourceExpression><![CDATA[$F{packageAirlineSubReportDataSource}]]></dataSourceExpression>
 				<subreportExpression><![CDATA[$F{subReportDir} + "/PackageAirlineSubReport.jasper"]]></subreportExpression>
 			</subreport>
+			<textField pattern="#,##0">
+				<reportElement x="454" y="3" width="87" height="16" uuid="2dcfca63-cdc6-4a6f-a23e-4b5bff251865"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{pax} != null && !"null".equals($F{pax}) && $F{pax}.length() > 0 && !"".equalsIgnoreCase($F{pax})) ? new BigDecimal($F{pax}) : new BigDecimal("0")]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 </jasperReport>

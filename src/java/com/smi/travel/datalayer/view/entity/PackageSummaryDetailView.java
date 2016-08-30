@@ -28,6 +28,7 @@ public class PackageSummaryDetailView {
     private String department;
     private String createdate;
     private String subReportDir;
+    private String paxsum;
     private JRDataSource packageHotelSubReportDataSource;
     private JRDataSource packageOthersSubReportDataSource;
     private JRDataSource packageAirlineSubReportDataSource;
@@ -175,5 +176,13 @@ public class PackageSummaryDetailView {
 
     public void setPackageLandSubReportDataSource(JRDataSource packageLandSubReportDataSource) {
         this.packageLandSubReportDataSource = packageLandSubReportDataSource;
+    }
+
+    public String getPaxsum() {
+        return paxsum;
+    }
+
+    public void setPaxsum(String paxsum) {
+        this.paxsum = paxsum;
     }
 }
