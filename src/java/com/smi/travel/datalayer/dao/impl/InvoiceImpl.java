@@ -17,6 +17,7 @@ import com.smi.travel.model.NonBillableView;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.math.MathContext;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -728,75 +729,103 @@ public class InvoiceImpl implements InvoiceDao{
     public String checkOverflowValueOfInvoice(List<InvoiceDetail> invoiceDetail) {
         Session session = this.sessionFactory.openSession();
         String result = "okMoney";
+        boolean isOver = false;
         if(invoiceDetail != null && invoiceDetail.size() != 0){
-        for(int i=0;i<invoiceDetail.size();i++){
-            BigDecimal cost;
-            BigDecimal price;
-            BigDecimal InvoiceCost = new BigDecimal(0);
-            BigDecimal InvoicePrice  = new BigDecimal(0);
-            InvoiceDetail  detail  = invoiceDetail.get(i);
-            if(detail.getBillableDesc()  != null){
-                if(detail.getBillableDesc().getId() != null){
-                List<BillableDesc> Billdesc = session.createQuery(GET_BILL_AMOUNT)
-                    .setParameter("descid", detail.getBillableDesc().getId())
-                    .list();
-                cost = (Billdesc.get(0).getCost() != null ? Billdesc.get(0).getCost() : new BigDecimal(BigInteger.ZERO));
-                price = (Billdesc.get(0).getPrice() != null ? Billdesc.get(0).getPrice() : new BigDecimal(BigInteger.ZERO));
-                System.out.println("cost : "+cost +"price : "+price);
-                List<InvoiceDetail> invoiceList;
-                if(detail.getId() != null){
-                    invoiceList = session.createQuery(GET_BILLDESC_FILTER )
-                    .setParameter("billableDescId", detail.getBillableDesc().getId())
-                    .setParameter("invdID", detail.getId())
-                    .list();
-                }else{
-                    invoiceList = session.createQuery(GET_BILLDESC )
-                    .setParameter("billableDescId", detail.getBillableDesc().getId())
-                    .list();
-                }
+            for(int i=0;i<invoiceDetail.size();i++){
+                BigDecimal cost = new BigDecimal(0);
+                BigDecimal price = new BigDecimal(0);
+                BigDecimal exRate = new BigDecimal(0);
+                String curPrice = "";
+                
+                BigDecimal InvoiceCost = new BigDecimal(0);
+                BigDecimal InvoicePrice  = new BigDecimal(0);
+                InvoiceDetail  detail  = invoiceDetail.get(i);
+                
+                if(detail.getBillableDesc()  != null){
+                    
+                    if(detail.getBillableDesc().getId() != null){
+                        List<BillableDesc> Billdesc = session.createQuery(GET_BILL_AMOUNT)
+                            .setParameter("descid", detail.getBillableDesc().getId())
+                            .list();
+                        cost = (Billdesc.get(0).getCost() != null ? Billdesc.get(0).getCost() : new BigDecimal(BigInteger.ZERO));
+                        curPrice = (Billdesc.get(0).getCurrency() != null && !"".equals(Billdesc.get(0).getCurrency()) ? Billdesc.get(0).getCurrency() : "");
+                        
+                        if("THB".equals(curPrice)){
+                            price = (Billdesc.get(0).getPrice() != null ? Billdesc.get(0).getPrice() : new BigDecimal(BigInteger.ZERO));
+                        
+                        } else {
+                            exRate = (detail.getExRate() != null ? detail.getExRate() : new BigDecimal(0));
+                            price = (Billdesc.get(0).getPrice() != null ? Billdesc.get(0).getPrice() : new BigDecimal(BigInteger.ZERO)).multiply(exRate);
+                            price = price.setScale(2, BigDecimal.ROUND_HALF_UP);
+                        }
+                        
+                        System.out.println("cost : "+cost +"price : "+price);
+                        List<InvoiceDetail> invoiceList;
+                        
+                        if(detail.getId() != null){
+                            invoiceList = session.createQuery(GET_BILLDESC_FILTER )
+                            .setParameter("billableDescId", detail.getBillableDesc().getId())
+                            .setParameter("invdID", detail.getId())
+                            .list();
+                            
+                        }else{
+                            invoiceList = session.createQuery(GET_BILLDESC )
+                            .setParameter("billableDescId", detail.getBillableDesc().getId())
+                            .list();
+                        }
 
-                for(int j=0;j<invoiceList.size();j++){
-                    if(invoiceList.get(j).getCost() != null && !"".equalsIgnoreCase(String.valueOf(invoiceList.get(j).getCost()))){
-                        InvoiceCost = InvoiceCost.add(invoiceList.get(j).getCost());
-                    }else{
-                        InvoiceCost = InvoiceCost.add(BigDecimal.ZERO);
-                    }
-                    
-                    if(invoiceList.get(j).getAmountLocal()!= null && !"".equalsIgnoreCase(String.valueOf(invoiceList.get(j).getAmountLocal()))){
-                        InvoicePrice = InvoicePrice.add(invoiceList.get(j).getAmountLocal());
-                    }else{
-                        InvoicePrice = InvoicePrice.add(BigDecimal.ZERO);
-                    }
-                    
-                }
-                System.out.println("InvoiceCost : "+InvoiceCost +"InvoicePrice : "+InvoicePrice);
-                
-                if(detail.getAmountLocal()!= null && !"".equals(detail.getAmountLocal())){
-                    InvoicePrice = InvoicePrice.add(detail.getAmountLocal());
-                }
-                if(detail.getCost() != null && !"".equals(detail.getCost())){
-                    InvoiceCost = InvoiceCost.add(detail.getCost());
-                }
-                
-                System.out.println("SumInvoiceCost : "+InvoiceCost +"SumInvoicePrice : "+InvoicePrice);
-                System.out.println("Compare price : "+price.compareTo(InvoicePrice));
-                    if((price.compareTo(InvoicePrice) == -1)){
-                        result = "moreMoney";
+                        for(int j=0;j<invoiceList.size();j++){
+                            if(invoiceList.get(j).getCost() != null && !"".equalsIgnoreCase(String.valueOf(invoiceList.get(j).getCost()))){
+                                InvoiceCost = InvoiceCost.add(invoiceList.get(j).getCost());
+                            }else{
+                                InvoiceCost = InvoiceCost.add(BigDecimal.ZERO);
+                            }
+
+                            if(invoiceList.get(j).getAmountLocal()!= null && !"".equalsIgnoreCase(String.valueOf(invoiceList.get(j).getAmountLocal()))){
+                                InvoicePrice = InvoicePrice.add(invoiceList.get(j).getAmountLocal());
+                            }else{
+                                InvoicePrice = InvoicePrice.add(BigDecimal.ZERO);
+                            }
+
+                        }
+                        System.out.println("InvoiceCost : "+InvoiceCost +"InvoicePrice : "+InvoicePrice);
+
+                        if(detail.getAmountLocal()!= null && !"".equals(detail.getAmountLocal())){
+                            InvoicePrice = InvoicePrice.add(detail.getAmountLocal());
+                        }
+                        if(detail.getCost() != null && !"".equals(detail.getCost())){
+                            InvoiceCost = InvoiceCost.add(detail.getCost());
+                        }
+
+                        System.out.println("SumInvoiceCost : "+InvoiceCost +"SumInvoicePrice : "+InvoicePrice);
+                        System.out.println("Compare price : "+price.compareTo(InvoicePrice));
+                        
+                        if((price.compareTo(InvoicePrice) == -1)){
+                            result = "moreMoney";
+                            isOver = true;
+                        }else{
+                            result = "okMoney";
+                        }
+                        
                     }else{
                         result = "okMoney";
                     }
+                    
                 }else{
                     result = "okMoney";
                 }
-            }else{
-                result = "okMoney";
             }
-        }
         }else{
             result = "okMoney";
         }
+        
         this.sessionFactory.close();
         session.close();
+        
+        if(isOver){
+            result = "moreMoney";
+        }
+        
         return result;
     }
     

@@ -216,7 +216,7 @@ public class InvoiceController extends SMITravelController {
                 request.setAttribute("result", result);
             }
             request.setAttribute("thisdate", InputInvDate);
-            System.out.println("invoiceService checkOverflowValueOfInvoice:"+invoiceService.checkOverflowValueOfInvoice(invoice.getInvoiceDetails()));
+//            System.out.println("invoiceService checkOverflowValueOfInvoice:"+invoiceService.checkOverflowValueOfInvoice(invoice.getInvoiceDetails()));
             
             if(!"fail".equalsIgnoreCase(result) && !"update fail".equalsIgnoreCase(result)){
                 //Duplicate User
