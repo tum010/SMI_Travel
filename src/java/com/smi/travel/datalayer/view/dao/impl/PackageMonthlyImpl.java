@@ -81,7 +81,7 @@ public class PackageMonthlyImpl implements PackageMonthlyDao{
         UtilityFunction util = new UtilityFunction();
         List data = new ArrayList();
         
-        String query = "SELECT ( SELECT min(fdb.depart_date) FROM first_depart_booking fdb WHERE fdb.refno = mt.`Reference No` ) AS date, pt.`code` AS course, pt.`name` AS tourname, count(pa.id) AS pax, ifnull( sum(( SELECT sum(billd.cost) FROM billable_desc billd WHERE billd.billable_id = bill.id )), 0 ) AS net, ifnull( sum(( SELECT sum(billd.price) FROM billable_desc billd WHERE billd.billable_id = bill.id )), 0 ) AS sell, ifnull( sum(( SELECT sum(billd.price) FROM billable_desc billd WHERE billd.billable_id = bill.id )), 0 ) - ifnull( sum(( SELECT sum(billd.cost) FROM billable_desc billd WHERE billd.billable_id = bill.id )), 0 ) AS balance FROM `master` mt INNER JOIN package_tour pt ON mt.package_id = pt.id INNER JOIN passenger pa ON pa.master_id = mt.id LEFT JOIN billable bill ON bill.master_id = mt.id WHERE mt.package_id IS NOT NULL ";
+        String query = " SELECT ( SELECT min(fdb.depart_date) FROM first_depart_booking fdb WHERE fdb.refno = mt.`Reference No` ) AS date, pt.`code` AS course, pt.`name` AS tourname, ( ifnull(sum((mt.Adult)), 0) + ifnull(sum((mt.Child)), 0) + ifnull(sum((mt.Infant)), 0)) AS pax, ifnull( sum(( SELECT sum(billd.cost) FROM billable_desc billd WHERE billd.billable_id = bill.id )), 0 ) AS net, ifnull( sum(( SELECT sum(billd.price) FROM billable_desc billd WHERE billd.billable_id = bill.id )), 0 ) AS sell, ifnull( sum(( SELECT sum(billd.price) FROM billable_desc billd WHERE billd.billable_id = bill.id )), 0 ) - ifnull( sum(( SELECT sum(billd.cost) FROM billable_desc billd WHERE billd.billable_id = bill.id )), 0 ) AS balance FROM `master` mt INNER JOIN package_tour pt ON mt.package_id = pt.id LEFT JOIN billable bill ON bill.master_id = mt.id WHERE mt.package_id IS NOT NULL ";
         
         if(((datefrom != null) &&(!"".equalsIgnoreCase(datefrom))) && ((dateto != null) &&(!"".equalsIgnoreCase(dateto)))){
             query += " and mt.Create_date BETWEEN '"+ datefrom +"' and '" + dateto +"'" ;
@@ -168,7 +168,7 @@ public class PackageMonthlyImpl implements PackageMonthlyDao{
        
         SimpleDateFormat dateformat = new SimpleDateFormat();
         dateformat.applyPattern("dd-MM-yy");
-        
+
         for (Object[] B : QueryStaffList) {
             PackageSummaryDetailView packageSum = new PackageSummaryDetailView();
             packageSum.setPackagedate(B[0]== null ? "" :util.ConvertString(dateformat.format(util.convertStringToDate(util.ConvertString(B[0])))));
