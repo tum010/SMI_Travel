@@ -613,16 +613,17 @@ function AddRowDetailBillAble(row, prod, des, cos, id, price, RefNo, cur, cur_c,
     selectC = select.replace("value='" + cur + "'", "selected value='" + cur + "'");
     selectCC = select_cost.replace("value='" + cur_c + "'", "selected value='" + cur_c + "'");
 //    alert("D : " + des + " R : " + RefNo);
+    $('#DetailBillableTable tr input:last').removeClass('lastrow');
     if (des != '' || RefNo != '') {
         $("#DetailBillableTable tbody").append(
                 '<tr>' +
                 '<td class="hidden"><input type="text" class="form-control" id="detailId' + row + '" name="detailId' + row + '" value="" > </td>' +
                 '<td class="hidden"><input type="text" class="form-control" id="DetailBillId' + row + '" name="DetailBillId' + row + '" value="' + id + '" > </td>' +
-                '<td><select id="SelectProductType' + row + '" name="SelectProductType' + row + '" class="form-control">' + selectT + '</select> </td>' +
+                '<td><select id="SelectProductType' + row + '" name="SelectProductType' + row + '" class="form-control" onchange="AddrowBySelect(\'' + row + '\');">' + selectT + '</select> </td>' +
                 '<td><input type="text" class="form-control" id="BillDescriptionTemp' + row + '" name="BillDescriptionTemp' + row + '" value="" onkeyup="setDescription(' + row + ')" onchange="setDescription(' + row + ')"></td>' +
                 '<td class="hidden"><input type="text" class="form-control" id="BillDescription' + row + '" name="BillDescription' + row + '" value="' + des + '" > </td>' +
                 '<td><input type="text" onfocusout="changeFormatCostNumber(' + row + ')" class="form-control decimal text-right" id="InputCost' + row + '" name="InputCost' + row + '" value="' + cos + '" ></td>' +
-                '<td><select id="SelectCurrencyCost' + row + '" name="SelectCurrencyCost' + row + '" class="form-control">' + selectCC + '</select></td>' +
+                '<td><select id="SelectCurrencyCost' + row + '" name="SelectCurrencyCost' + row + '" class="form-control" onchange="AddrowBySelect(\'' + row + '\');">' + selectCC + '</select></td>' +
                 '<td><input type="text" onfocusout="changeFormatCostLocalNumber(' + row + ')"  value="' + cos + '" id="InputCostLocal' + row + '" name="InputCostLocal' + row + '" class="form-control text-right decimal"></td>' +
                 '<td class="hidden"><input type="text" value="' + cos + '" id="InputCostLocalTemp' + row + '" name="InputCostLocalTemp' + row + '"></td>' +
                 '<td  ' + vathidden + '><input type="checkbox" ' + check + ' id="checkUse' + row + '" name="checkUse' + row + '"  onclick="calculateGross(' + row + ')"></td>' +
@@ -630,7 +631,7 @@ function AddRowDetailBillAble(row, prod, des, cos, id, price, RefNo, cur, cur_c,
                 '<td class="hidden"><input type="text" class="form-control" id="InputVatTemp' + row + '" name="InputVatTemp' + row + '" value="' + vat + '" ></td>' +
                 '<td ' + vathidden + ' ><input type="text" readonly onfocusout="changeFormatGrossNumber(' + row + ')" class="form-control decimal text-right" id="InputGross' + row + '" name="InputGross' + row + '" value="" ></td>' +
                 '<td><input type="text" onfocusout="changeFormatAmountNumber(' + row + ');" class="form-control decimal text-right" id="InputAmount' + row + '" name="InputAmount' + row + '" value="' + price + '" ></td>' +
-                '<td class="priceCurrencyAmount"><select id="SelectCurrencyAmount' + row + '" name="SelectCurrencyAmount' + row + '" class="form-control" onclick="" onchange="CalculateGrandTotal(\'\'); checkCurrency(\'' + row + '\');">' + selectC + '</select></td>' +
+                '<td class="priceCurrencyAmount"><select id="SelectCurrencyAmount' + row + '" name="SelectCurrencyAmount' + row + '" class="form-control" onclick="" onchange="CalculateGrandTotal(\'\'); checkCurrency(\'' + row + '\'); AddrowBySelect(\'' + row + '\');">' + selectC + '</select></td>' +
                 '<td><input type="text" id="InputExRate' + row + '" onfocusout="changeFormatExRateNumber(' + row + ')" name="InputExRate' + row + '" class="form-control text-right decimalexrate" ></td>' +
                 '<td><input type="text" onfocusout="changeFormatAmountLocalNumber(' + row + ')" value="' + price + '" id="InputAmountLocal' + row + '" name="InputAmountLocal' + row + '" class="form-control text-right decimal" ></td>' +
                 '<td class="hidden"><input type="text" onfocusout="changeFormatAmountLocalTempNumber(' + row + ')" value="' + price + '" id="InputAmountLocalTemp' + row + '" name="InputAmountLocalTemp' + row + '"  ></td>' +
@@ -651,11 +652,11 @@ function AddRowDetailBillAble(row, prod, des, cos, id, price, RefNo, cur, cur_c,
                 '<tr>' +
                 '<td class="hidden"><input type="text" class="form-control" id="detailId' + row + '" name="detailId' + row + '" value="" > </td>' +
                 '<td class="hidden"><input type="text" class="form-control" id="DetailBillId' + row + '" name="DetailBillId' + row + '" value="' + id + '" > </td>' +
-                '<td><select id="SelectProductType' + row + '" name="SelectProductType' + row + '" class="form-control">' + selectT + '</select> </td>' +
+                '<td><select id="SelectProductType' + row + '" name="SelectProductType' + row + '" class="form-control" onchange="AddrowBySelect(\'' + row + '\');">' + selectT + '</select> </td>' +
                 '<td><input type="text" class="form-control" id="BillDescriptionTemp' + row + '" name="BillDescriptionTemp' + row + '" value="" onkeyup="setDescription(' + row + ')" onchange="setDescription(' + row + ')"></td>' +
                 '<td class="hidden"><input type="text" class="form-control" id="BillDescription' + row + '" name="BillDescription' + row + '" value="' + des + '" > </td>' +
                 '<td><input type="text" onfocusout="changeFormatCostNumber(' + row + ')" class="form-control decimal text-right" id="InputCost' + row + '" name="InputCost' + row + '" value="' + cos + '" ></td>' +
-                '<td><select id="SelectCurrencyCost' + row + '" name="SelectCurrencyCost' + row + '" class="form-control">' + selectCC + '</select></td>' +
+                '<td><select id="SelectCurrencyCost' + row + '" name="SelectCurrencyCost' + row + '" class="form-control" onchange="AddrowBySelect(\'' + row + '\');">' + selectCC + '</select></td>' +
                 '<td><input type="text" onfocusout="changeFormatCostLocalNumber(' + row + ')"  value="' + cos + '" id="InputCostLocal' + row + '" name="InputCostLocal' + row + '" class="form-control text-right decimal"></td>' +
                 '<td class="hidden"><input type="text" value="' + cos + '" id="InputCostLocalTemp' + row + '" name="InputCostLocalTemp' + row + '"></td>' +
                 '<td  ' + vathidden + '><input type="checkbox" ' + check + ' id="checkUse' + row + '" name="checkUse' + row + '"  onclick="calculateGross(' + row + ')"></td>' +
@@ -663,7 +664,7 @@ function AddRowDetailBillAble(row, prod, des, cos, id, price, RefNo, cur, cur_c,
                 '<td class="hidden"><input type="text" class="form-control" id="InputVatTemp' + row + '" name="InputVatTemp' + row + '" value="' + vat + '" ></td>' +
                 '<td ' + vathidden + ' ><input type="text" readonly onfocusout="changeFormatGrossNumber(' + row + ')" class="form-control decimal text-right" id="InputGross' + row + '" name="InputGross' + row + '" value="" ></td>' +
                 '<td><input type="text" onfocusout="changeFormatAmountNumber(' + row + ');" class="form-control decimal text-right" id="InputAmount' + row + '" name="InputAmount' + row + '"  value="' + price + '" ></td>' +
-                '<td class="priceCurrencyAmount"><select id="SelectCurrencyAmount' + row + '" name="SelectCurrencyAmount' + row + '" class="form-control" onclick="" onchange="CalculateGrandTotal(\'\'); checkCurrency(\'' + row + '\')">' + selectC + '</select></td>' +
+                '<td class="priceCurrencyAmount"><select id="SelectCurrencyAmount' + row + '" name="SelectCurrencyAmount' + row + '" class="form-control" onclick="" onchange="CalculateGrandTotal(\'\'); checkCurrency(\'' + row + '\'); AddrowBySelect(\'' + row + '\');">' + selectC + '</select></td>' +
                 '<td><input type="text" id="InputExRate' + row + '" onfocusout="changeFormatExRateNumber(' + row + ')" name="InputExRate' + row + '" class="form-control text-right decimalexrate" ></td>' +
                 '<td><input type="text" onfocusout="changeFormatAmountLocalNumber(' + row + ')" value="' + price + '" id="InputAmountLocal' + row + '" name="InputAmountLocal' + row + '" class="form-control text-right decimal" ></td>' +
                 '<td class="hidden"><input type="text" onfocusout="changeFormatAmountLocalTempNumber(' + row + ')" value="' + price + '" id="InputAmountLocalTemp' + row + '" name="InputAmountLocalTemp' + row + '"  ></td>' +
@@ -699,7 +700,12 @@ function AddRowDetailBillAble(row, prod, des, cos, id, price, RefNo, cur, cur_c,
         digitsOptional: false,
         placeholder: "0.0000",
     });
-    
+    $('#DetailBillableTable input:last').addClass('lastrow');
+    $("#SelectProductType"+row+",#BillDescriptionTemp"+row+",#InputCost"+row+",#SelectCurrencyCost"+row+",#InputCostLocal"+row+",#InputAmount"+row+",#SelectCurrencyAmount"+row+",#InputExRate"+row+",#InputAmountLocal"+row).focus(function() {
+        if($("#curExRateTemp"+(parseInt(row)-1)).hasClass("lastrow")){
+           AddRowDetailBillAble(parseInt($("#counterTable").val()) + 1);
+        }            
+    });
     var count = document.getElementById('counterTable');
     count.value = row++;
 
@@ -1011,6 +1017,8 @@ function DeleteBill() {
             console.log("show button tr_FormulaAddRow : ");
             $("#tr_FormulaAddRow").css("display", "block");
         }
+        $('#DetailBillableTable input:last').removeClass('lastrow');
+        $('#DetailBillableTable input:last').addClass('lastrow');
 //        count.value = count.value - 1;
         CalculateGrandTotal('');
     }
@@ -1040,6 +1048,8 @@ function CallAjaxDeleteBill(param, row) {
                     $('#textAlertInvoiceNotEmptyReceipt').show();
                 }
                 $("#ajaxload").addClass("hidden");
+                $('#DetailBillableTable input:last').removeClass('lastrow');
+                $('#DetailBillableTable input:last').addClass('lastrow');
                 CalculateGrandTotal('');
 
             }, error: function(msg) {
@@ -1903,4 +1913,13 @@ function checkCurrency(row){
         }
         $("#DescriptionInvoiceDetail" + row).val(description);
     }
+}
+
+function AddrowBySelect(row){
+//    var count =  parseInt($("#counterTable").val());
+//    row = parseInt(row);
+//    if(row === (count)){
+//       AddRowDetailBillAble(count++); 
+//    }       
+    
 }

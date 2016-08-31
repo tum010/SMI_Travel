@@ -2234,7 +2234,7 @@
     }
 
     function AddRowProduct(row) {
-
+        $('#ReceiptListTable input:last').removeClass('lastrow');
         var typeRec = "${typeReceipt}";
         if (typeRec === "V") {
             $("#ReceiptListTable tbody").append(
@@ -2349,6 +2349,21 @@
             digitsOptional: false,
             placeholder: "0.0000",
         });
+        
+        $('#ReceiptListTable input:last').addClass('lastrow');
+        $("#receiveProduct"+row+",#receiveDes"+row+",#receiveAmount"+row+",#receiveCurrency"+row+",#receiveExRate"+row).focus(function() {
+            if (typeRec === "V") {
+                if($("#curExRateTemp"+row).hasClass("lastrow")){
+                   AddRowProduct(parseInt($("#counter").val()));
+                }
+                
+            } else {
+                if($("#receiveExRate"+row).hasClass("lastrow")){
+                   AddRowProduct(parseInt($("#counter").val()));
+                }
+            }
+        });
+        
 //            var tempCount = parseInt($("#counter").val()) + 1;
         $("#counter").val(row + 1);
 //        }
@@ -2480,6 +2495,7 @@
     }
 
     function AddRowCredit(row) {
+        $('#CreditDetailTable input:last').removeClass('lastrowCredit');
         $("#CreditDetailTable tbody").append(
                 '<tr style="higth 100px">' +
                 '<input id="tableCreditId' + row + '" name="tableCreditId' + row + '"  type="hidden" >' +
@@ -2529,6 +2545,13 @@
             allowMinus: false,
             digitsOptional: false,
             placeholder: "0.0000",
+        });
+        
+        $('#CreditDetailTable input:last').addClass('lastrowCredit');
+        $("#creditNo"+row+",#creditAmount"+row).focus(function() {
+            if($("#creditAmount"+row).hasClass("lastrowCredit")){
+               AddRowCredit(parseInt($("#countRowCredit").val()));
+            }
         });
 
         var tempCount = parseInt($("#countRowCredit").val()) + 1;
@@ -2770,6 +2793,8 @@
                 $("#counter").val(row);
             }
         }
+        
+        $('#ReceiptListTable input:last').removeClass('lastrow');
         var typeRec = "${typeReceipt}";
         if (typeRec === "V") {
             $("#ReceiptListTable tbody").append(
@@ -2931,6 +2956,21 @@
             digitsOptional: false,
             placeholder: "0.0000",
         });
+        
+        $('#ReceiptListTable input:last').addClass('lastrow');
+        $("#receiveProduct"+row+",#receiveDes"+row+",#receiveAmount"+row+",#receiveCurrency"+row+",#receiveExRate"+row).focus(function() {
+            if (typeRec === "V") {
+                if($("#curExRateTemp"+row).hasClass("lastrow")){
+                   AddRowProduct(parseInt($("#counter").val()));
+                }
+                
+            } else {
+                if($("#receiveExRate"+row).hasClass("lastrow")){
+                   AddRowProduct(parseInt($("#counter").val()));
+                }
+            }
+        });
+        
         var tempCount = parseInt($("#counter").val()) + 1;
         $("#counter").val(tempCount);
         AddRowProduct(tempCount);
@@ -3474,6 +3514,8 @@
                     $("#ButtonSearchPaymentNoTour").removeAttr("disabled");
                 }
             }
+            $('#ReceiptListTable input:last').removeClass('lastrow');
+            $('#ReceiptListTable input:last').addClass('lastrow');
         }
         else {
             $.ajax({
@@ -3518,6 +3560,8 @@
                             $("#ButtonSearchPaymentNoTour").removeAttr("disabled");
                         }
                     }
+                    $('#ReceiptListTable input:last').removeClass('lastrow');
+                    $('#ReceiptListTable input:last').addClass('lastrow');
 //                AddRowProduct();
                 },
                 error: function () {
@@ -3568,6 +3612,10 @@
                 $("#countRowCredit").val(1);
                 AddRowCredit(1);
             }
+            
+            $('#CreditDetailTable input:last').removeClass('lastrowCredit');
+            $('#CreditDetailTable input:last').addClass('lastrowCredit');
+
         }
         else {
             $.ajax({
@@ -3592,6 +3640,9 @@
                         $("#countRowCredit").val(1);
                         AddRowCredit(1);
                     }
+                    
+                    $('#CreditDetailTable input:last').removeClass('lastrowCredit');
+                    $('#CreditDetailTable input:last').addClass('lastrowCredit');
                 },
                 error: function () {
                     console.log("error");

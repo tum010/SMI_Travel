@@ -738,6 +738,7 @@ function changeFormatAmountNumber(id) {
 }
 
 function addRowInvoiceInboundDetail(row){
+    $('#DetailBillableTable input:last').removeClass('lastrow');
     var typeInvoiceInbound = $("#InputTypeInvoiceInbound").val();
     var vatTemp = $('#vatBase').val();
     var textHidden = '';
@@ -774,6 +775,14 @@ function addRowInvoiceInboundDetail(row){
         placeholder: "0.00",
     });
     $("#mBillTypeListTemp option").clone().appendTo("#product" + row);
+    
+    $('#DetailBillableTable input:last').addClass('lastrow');
+    $("#product"+row+",#BillDescriptionTemp"+row+",#InputAmount"+row+",#SelectCurrencyAmount"+row).focus(function() {
+        if($("#InputAmount"+(parseInt(row)-1)).hasClass("lastrow")){
+           addRowInvoiceInboundDetail(parseInt($("#counterTable").val()) + 1);
+        }            
+    });
+    
     var count = document.getElementById('counterTable');
     count.value = row++;
 }
@@ -827,6 +836,10 @@ function DeleteBill() {
             $("#tr_FormulaAddRow").css("display", "block");
         }
         count.value = count.value - 1;
+        
+        $('#DetailBillableTable input:last').removeClass('lastrow');
+        $('#DetailBillableTable input:last').addClass('lastrow');
+        
         CalculateTotalNet('1')
         CalculateGrandTotal('1');
     }
@@ -851,6 +864,10 @@ function CallAjaxDeleteBill(param, row) {
                 } else if (msg === 'notDeleteReciptAndTax') {
                     $('#textAlertInvoiceNotEmpty').show();
                 }
+                
+                $('#DetailBillableTable input:last').removeClass('lastrow');
+                $('#DetailBillableTable input:last').addClass('lastrow');
+                
                 $("#ajaxload").addClass("hidden");
                 CalculateTotalNet('1')
                 CalculateGrandTotal('1');
