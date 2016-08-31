@@ -313,10 +313,32 @@ public class BookingPnrImpl implements BookingPnrDao {
             int isNew = 0;
             BookingAirline currentAirline = iteratorCurrentAirline.next();
             System.out.println(" airline code d " + currentAirline.getAirlineCode());
+            
+            
             if (currentAirline.getAirlineCode().equalsIgnoreCase(newAirline.getAirlineCode())) {
+                
+                //Fix from issue http://192.168.99.49:8012/issue-log/view.php?id=750
+                BookingPnr pnr = currentAirline.getBookingPnr();
+                boolean CheckFileMatching = true;
+                if("GALILEO".equalsIgnoreCase(pnr.getGds())){
+                    Iterator<BookingPassenger> iteratorCurrentPassenger =  currentAirline.getBookingPassengers().iterator();
+                    Iterator<BookingPassenger> iteratorNewPassenger =newAirline.getBookingPassengers().iterator();
+                    while (iteratorCurrentPassenger.hasNext()) {
+                        String passengerType = iteratorCurrentPassenger.next().getPassengerType();
+                        while (iteratorNewPassenger.hasNext()) {
+                            String NewPassengerType = iteratorNewPassenger.next().getPassengerType();
+                            if(passengerType.equalsIgnoreCase(NewPassengerType)){
+                                CheckFileMatching = false; 
+                            }
+                        }
+                    }
+                    if(!CheckFileMatching){
+                        return false;
+                    } 
+                }
+                //******************************************************************
                 System.out.println("Duplicate airline " + currentAirline.getAirlineCode());
                 Iterator<BookingFlight> iteratorCurrentFlight =  currentAirline.getBookingFlights().iterator();
-                
                 while (iteratorCurrentFlight.hasNext()) {
                     BookingFlight currentFlight = iteratorCurrentFlight.next();
                     System.out.println("currentFlight Order: "+currentFlight.getFlightOrder() +","+currentFlight.getFlightNo());
