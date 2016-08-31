@@ -2024,7 +2024,7 @@
         });
         $('#TaxInvoiceTable input:last').addClass('lastrow');
         $("#refNo"+row+",#description"+row+",#cost"+row+",#gross"+row+",#amount"+row).focus(function() {
-            if($("#amount"+row).hasClass("lastrow")){
+            if($("#exRate"+row).hasClass("lastrow")){
                AddRowTaxInvoiceTable(parseInt($("#countTaxInvoice").val()));
             }  
 //             $('#TaxInvoiceTable-area table td').each(function(){

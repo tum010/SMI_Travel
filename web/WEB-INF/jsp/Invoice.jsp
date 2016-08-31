@@ -604,7 +604,7 @@
                                                                 <td class="hidden"><input type="text" class="form-control" id="detailId${taxdesc.count}" name="detailId${taxdesc.count}" value="${ind.id}" > </td>
                                                                 <td class="hidden"><input type="text" class="form-control" id="DetailBillId${taxdesc.count}" name="DetailBillId${taxdesc.count}" value="${ind.billableDesc.id}" > </td>
                                                                 <td>  
-                                                                    <select id="SelectProductType${taxdesc.count}" name="SelectProductType${taxdesc.count}" class="form-control">
+                                                                    <select id="SelectProductType${taxdesc.count}" name="SelectProductType${taxdesc.count}" class="form-control" onchange="AddrowBySelect('${taxdesc.count}');">
                                                                         <option value='' ></option>
                                                                         <c:forEach var="typeP" items="${listType}">
                                                                             <c:set var="selectTypePro" value="" />
@@ -622,7 +622,7 @@
                                                                 <td class="hidden"><input type="text" class="form-control" id="BillDescription${taxdesc.count}" name="BillDescription${taxdesc.count}" value="${ind.description}" > </td>
                                                                 <td><input type="text" class="form-control text-right decimal" onfocusout="changeFormatCostNumber('${taxdesc.count}')" id="InputCost${taxdesc.count}" name="InputCost${taxdesc.count}" value="${ind.cost}"></td>
                                                                 <td class="priceCurrencyCost">
-                                                                    <select id="SelectCurrencyCost${taxdesc.count}" name="SelectCurrencyCost${taxdesc.count}" class="form-control">
+                                                                    <select id="SelectCurrencyCost${taxdesc.count}" name="SelectCurrencyCost${taxdesc.count}" class="form-control" onchange="AddrowBySelect('${taxdesc.count}');">
                                                                         <option value='' ></option>
                                                                         <c:forEach var="cur" items="${listCurrency}">
                                                                             <c:set var="select" value="" />
@@ -648,7 +648,7 @@
                                                                 <td ><input type="text" readonly  onfocusout="changeFormatGrossNumber(${taxdesc.count})" class="form-control decimal" id="InputGross${taxdesc.count}" name="InputGross${taxdesc.count}" value="${ind.gross}" ></td>
                                                                 <td><input type="text" class="form-control text-right decimal" id="InputAmount${taxdesc.count}" name="InputAmount${taxdesc.count}" value="${ind.amount}" onfocusout="changeFormatAmountNumber('${taxdesc.count}');"></td>
                                                                 <td class="priceCurrencyAmount">
-                                                                    <select id="SelectCurrencyAmount${taxdesc.count}" name="SelectCurrencyAmount${taxdesc.count}" class="form-control" onclick="" onchange="CalculateGrandTotal(''); checkCurrency('${taxdesc.count}');">
+                                                                    <select id="SelectCurrencyAmount${taxdesc.count}" name="SelectCurrencyAmount${taxdesc.count}" class="form-control" onclick="" onchange="CalculateGrandTotal(''); checkCurrency('${taxdesc.count}'); AddrowBySelect('${taxdesc.count}');">
                                                                         <option value='' ></option>
                                                                         <c:forEach var="cur" items="${listCurrency}">
                                                                             <c:set var="selectA" value="" />
@@ -726,7 +726,7 @@
                                                                 <td class="hidden"><input type="text" class="form-control" id="detailId${taxdesc.count}" name="detailId${taxdesc.count}" value="${ind.id}" > </td>
                                                                 <td class="hidden"><input type="text" class="form-control" id="DetailBillId${taxdesc.count}" name="DetailBillId${taxdesc.count}" value="${ind.billableDesc.id}" > </td>
                                                                 <td>  
-                                                                    <select id="SelectProductType${taxdesc.count}" name="SelectProductType${taxdesc.count}" class="form-control">
+                                                                    <select id="SelectProductType${taxdesc.count}" name="SelectProductType${taxdesc.count}" class="form-control" onchange="AddrowBySelect('${taxdesc.count}');">
                                                                         <option value='' ></option>
                                                                         <c:forEach var="typeP" items="${listType}">
                                                                             <c:set var="selectTypePro" value="" />
@@ -744,7 +744,7 @@
                                                                 <td class="hidden"><input type="text" class="form-control" id="BillDescription${taxdesc.count}" name="BillDescription${taxdesc.count}" value="${ind.description}" > </td>
                                                                 <td><input type="text" onfocusout="changeFormatCostNumber(${taxdesc.count})" class="form-control decimal text-right" id="InputCost${taxdesc.count}" name="InputCost${taxdesc.count}" value="${ind.cost}" ></td>
                                                                 <td>
-                                                                    <select id="SelectCurrencyCost${taxdesc.count}" name="SelectCurrencyCost${taxdesc.count}" class="form-control">
+                                                                    <select id="SelectCurrencyCost${taxdesc.count}" name="SelectCurrencyCost${taxdesc.count}" class="form-control" onchange="AddrowBySelect('${taxdesc.count}');">
                                                                         <option value='' ></option>
                                                                         <c:forEach var="cur" items="${listCurrency}">
                                                                             <c:set var="select" value="" />
@@ -770,7 +770,7 @@
                                                                 <td class="hidden" ><input type="text" onfocusout="changeFormatGrossNumber(${taxdesc.count})" class="form-control decimal" id="InputGross${taxdesc.count}" name="InputGross${taxdesc.count}" value="${ind.gross}" ></td>
                                                                 <td><input type="text" class="form-control decimal text-right" id="InputAmount${taxdesc.count}" name="InputAmount${taxdesc.count}" value="${ind.amount}" onfocusout="changeFormatAmountNumber('${taxdesc.count}');"></td>
                                                                 <td class="priceCurrencyAmount">
-                                                                    <select id="SelectCurrencyAmount${taxdesc.count}" name="SelectCurrencyAmount${taxdesc.count}" class="form-control" onclick="" onchange="CalculateGrandTotal(''); checkCurrency('${taxdesc.count}');">
+                                                                    <select id="SelectCurrencyAmount${taxdesc.count}" name="SelectCurrencyAmount${taxdesc.count}" class="form-control" onclick="" onchange="CalculateGrandTotal(''); checkCurrency('${taxdesc.count}'); AddrowBySelect('${taxdesc.count}');" >
                                                                         <option value='' ></option>
                                                                         <c:forEach var="cur" items="${listCurrency}">
                                                                             <c:set var="selectA" value="" />
