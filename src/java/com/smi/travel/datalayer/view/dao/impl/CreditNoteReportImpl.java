@@ -41,8 +41,11 @@ public class CreditNoteReportImpl implements  CreditNoteReportDao{
         BigDecimal sumvat = new BigDecimal(0);
         BigDecimal Realsubtotal = new BigDecimal(0);
         BigDecimal percent = new BigDecimal(100);        
-            
-        List<Object[]> QueryCNList = session.createSQLQuery("SELECT * FROM `creditnote_view` where id= " + creditId)
+        
+        //query creditnote_view
+        String queryCreditNoteView = "SELECT `note`.`id` AS `id`, `note`.`cn_name` AS `customer`, `note`.`cn_address` AS `address`, `note`.`cn_no` AS `cnno`, `note`.`cn_date` AS `cndate`, ( CASE WHEN ( isnull(`noted`.`description`) OR (`noted`.`description` = '')) THEN concat( 'Refernce Tax Invoice No ', `tax`.`tax_no`, ' Date ', ifnull( date_format( `note`.`cn_date`, '%d/%m/%Y' ), '' ), ': ', ifnull(`pay`.`name`, '')) ELSE concat( 'Refernce Tax Invoice No ', `tax`.`tax_no`, ' Date ', ifnull( date_format( `note`.`cn_date`, '%d/%m/%Y' ), '' ), ': ', ifnull(`pay`.`name`, ''), ' [', `noted`.`description`, ']' ) END ) AS `description`, round(`noted`.`amount`, 2) AS `amount`, round( sum(( CASE WHEN (`taxd`.`is_vat` = '1') THEN `taxd`.`gross` ELSE 0 END )), 2 ) AS `test`, `noted`.`real_amount` AS `realamount`, round(`noted`.`vat`, 2) AS `vat`, `note`.`cn_remark` AS `remark`, `st`.`name` AS `user`, `taxd`.`vat` AS `realvat`, `taxd`.`cur_amount` AS `curamount`, `agt`.`tax_no` AS `tax_no`, ( CASE WHEN (`agt`.`branch` = 1) THEN 'สำนักงานใหญ่' WHEN (`agt`.`branch` = 2) THEN 'สาขา' ELSE '' END ) AS `branch` FROM (((((((( `credit_note` `note` JOIN `credit_note_detail` `noted` ON (( `noted`.`credit_note_id` = `note`.`id` ))) JOIN `tax_invoice` `tax` ON (( `tax`.`id` = `noted`.`tax_invoice_id` ))) JOIN `tax_invoice_detail` `taxd` ON (( `taxd`.`tax_invoice_id` = `tax`.`id` ))) LEFT JOIN `invoice_detail` `invd` ON (( `invd`.`id` = `taxd`.`invoice_detail_id` ))) LEFT JOIN `invoice` `inv` ON (( `inv`.`id` = `invd`.`invoice_id` ))) LEFT JOIN `staff` `st` ON (( `st`.`username` = `note`.`create_by` ))) LEFT JOIN `m_paytype` `pay` ON (( `pay`.`id` = `noted`.`product_type` ))) LEFT JOIN `agent` `agt` ON (( `agt`.`code` = `note`.`ap_code` ))) WHERE `note`.`id` = :cnid GROUP BY `noted`.`id`";
+        queryCreditNoteView = queryCreditNoteView.replace(":cnid", creditId);
+        List<Object[]> QueryCNList = session.createSQLQuery(queryCreditNoteView)
                  .addScalar("customer", Hibernate.STRING)
                  .addScalar("address", Hibernate.STRING)
                  .addScalar("cnno", Hibernate.STRING)

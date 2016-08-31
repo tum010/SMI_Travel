@@ -23,23 +23,47 @@
           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
           http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd
 ">
-   
+    <!--iCONEXT-->   
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 	<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-        <property name="url" value="jdbc:mysql://192.168.99.48:3306/smitravel?characterEncoding=UTF-8&amp;useUnicode=yes"/> 
+        <property name="url" value="jdbc:mysql://192.168.99.48:3306/smi_uat?characterEncoding=UTF-8&amp;useUnicode=yes"/> 
         <property name="username" value="root" />
         <property name="password" value="P@ssw0rd" />
     </bean>
-    
+   
+   <!--Production-->
 <!--    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 	<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-        <property name="url" value="jdbc:mysql://127.0.0.1:3306/smitravel?characterEncoding=UTF-8&amp;useUnicode=yes"/> 
-        <property name="username" value="root" />
+        <property name="url" value="jdbc:mysql://192.168.0.100:3306/smi_uat?characterEncoding=UTF-8&amp;useUnicode=yes"/> 
+        <property name="username" value="DEV01" />
         <property name="password" value="P@ssw0rd" />
     </bean>-->
     
+    <!--Production UAT Test-->
+<!--    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+	<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+        <property name="url" value="jdbc:mysql://192.168.0.100:3306/smi_test?characterEncoding=UTF-8&amp;useUnicode=yes"/> 
+        <property name="username" value="DEV01" />
+        <property name="password" value="P@ssw0rd" />
+    </bean>-->
+    
+    <!--Local-->
+<!--    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+	<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+        <property name="url" value="jdbc:mysql://127.0.0.1:3306/smi_uat?characterEncoding=UTF-8&amp;useUnicode=yes"/> 
+        <property name="username" value="root" />
+        <property name="password" value="P@ssw0rd" />
+    </bean>-->
+   
+   <!--P'Tum-->
+<!--    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+	<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+        <property name="url" value="jdbc:mysql://127.0.0.1:3306/smi_uat?characterEncoding=UTF-8&amp;useUnicode=yes"/> 
+        <property name="username" value="root" />
+        <property name="password" value="root" />
+    </bean>-->
     
     
-    
+      
     <!--<add bean id>-->
 </beans>
