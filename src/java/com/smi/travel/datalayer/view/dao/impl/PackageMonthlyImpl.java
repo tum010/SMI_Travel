@@ -170,7 +170,8 @@ public class PackageMonthlyImpl implements PackageMonthlyDao{
        
         SimpleDateFormat dateformat = new SimpleDateFormat();
         dateformat.applyPattern("dd-MM-yy");
-        String grouptour = "";
+        String grouptour = "NEW";
+        String course = "NEW";
         BigDecimal pax = new BigDecimal(BigInteger.ZERO);
         BigDecimal net = new BigDecimal(BigInteger.ZERO);
         BigDecimal sell = new BigDecimal(BigInteger.ZERO);
@@ -196,7 +197,7 @@ public class PackageMonthlyImpl implements PackageMonthlyDao{
             packageSum.setPackageOthersSubReportDataSource(new JRBeanCollectionDataSource(getPackageOthers(util.ConvertString(B[7]))));
             packageSum.setPackageAirlineSubReportDataSource(new JRBeanCollectionDataSource(getPackageAirline(util.ConvertString(B[7]))));
             
-            if("".equalsIgnoreCase(grouptour) || (grouptour).equalsIgnoreCase(util.ConvertString(B[10]))){
+            if( ("NEW".equalsIgnoreCase(grouptour) && "NEW".equalsIgnoreCase(course)) || ((grouptour).equalsIgnoreCase(util.ConvertString(B[10])) && (course).equalsIgnoreCase(util.ConvertString(B[1])))){
                 pax = pax.add(B[3]== null ?  new BigDecimal(BigInteger.ZERO) :  new BigDecimal(util.ConvertString(B[3])));
                 net = net.add(B[4]== null ?  new BigDecimal(BigInteger.ZERO) :  new BigDecimal(util.ConvertString(B[4])));
                 sell = sell.add(B[5]== null ?  new BigDecimal(BigInteger.ZERO) :  new BigDecimal(util.ConvertString(B[5])));
@@ -215,7 +216,7 @@ public class PackageMonthlyImpl implements PackageMonthlyDao{
             }
             
             grouptour = B[10]== null ? "" :util.ConvertString(B[10]);
-            
+            course = B[1]== null ? "" :util.ConvertString(B[1]);
             index ++ ;
             data.add(packageSum);
             
