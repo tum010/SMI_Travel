@@ -322,7 +322,7 @@
             <div class="col-xs-1 form-group text-left" style="padding-left:25px;width:175px;margin-top: -10px">
             <c:choose>
                 <c:when test="${(idRole  == 22) || (idRole == 1)|| (idRole == 20)}">
-                <select class="form-control" name="InputCurrency" id="InputCurrency">
+                <select class="form-control" name="InputCurrency" id="InputCurrency" onchange="checkExrate()">
                     <option  value="">---------</option>
                     <c:forEach var="currency" items="${currency_list}" varStatus="status">
                         <c:set var="select" value="" />
@@ -334,7 +334,7 @@
                 </select>
                 </c:when>
                 <c:when test="${(idRole  == 19)}">
-                <select class="form-control" name="InputCurrencyShow" id="InputCurrencyShow" disabled="">
+                <select class="form-control" name="InputCurrencyShow" id="InputCurrencyShow" disabled="" onchange="checkExrate()">
                     <option  value="">---------</option>
                     <c:forEach var="currency" items="${currency_list}" varStatus="status">
                         <c:set var="select" value="" />
@@ -440,7 +440,7 @@
                                     <td> <input style="width: ${Amount};text-align:right;"  id="amount${i.count}" name="amount${i.count}" type="text" class="form-control decimal" onfocusout="CalculateGrandTotal('${pl.id}')" onfocus="onfocusTour('${i.count}')" value="${pl.amount}"> </td>
                                     <td> <input style="width: ${recCom};text-align:right;"  id="recCom${i.count}" name="recCom${i.count}" type="text" class="form-control decimal" onfocusout="calculateComm('${i.count}')" onfocus="onfocusTour('${i.count}')" value="${pl.recCom}"> </td>                               
                                     <td> <input style="width: ${Description}" id="description${i.count}" name="description${i.count}" maxlength ="255"  type="text" class="form-control" value="${pl.description}" onfocus="onfocusTour('${i.count}')"> </td>
-                                    <td> <input style="text-align: right;" id="exRate${i.count}" name="exRate${i.count}" type="text" class="form-control decimalexrate" value="${pl.exRate}"> </td>
+                                    <td> <input style="text-align: right;" id="exRate${i.count}" name="exRate${i.count}" type="text" class="form-control decimalexrate" value="${pl.exRate}" onfocusout="checkExrate()"> </td>
                                     <td class="text-center">
                                         <a href="#" onclick=""  data-toggle="modal" data-target="">
                                             <span id="editSpan${i.count}" class="glyphicon glyphicon-th-list" onclick="editlist('${pl.id}','${i.count}'); onfocusTour('${i.count}')"></span>
@@ -559,7 +559,7 @@
                                     <td> <input style="width: ${recCom};text-align:right;"  id="recCom${i.count}" name="recCom${i.count}" type="text" class="form-control decimal" value="${pl.recCom}" readonly=""> </td>                                   
                                     <td>${pl.description}</td>
                                     <td class="hidden"> <input style="width: ${Description}" id="description${i.count}" name="description${i.count}" maxlength ="255"  type="text" class="form-control" value="${pl.description}"> </td>                                   
-                                    <td> <input style="text-align:right;" id="exRatet${i.count}" name="exRate${i.count}" type="text" class="form-control decimalexrate" value="${pl.exRate}" ></td>
+                                    <td> <input style="text-align:right;" id="exRatet${i.count}" name="exRate${i.count}" type="text" class="form-control decimalexrate" value="${pl.exRate}" onfocusout="checkExrate()"></td>
                                     <td align="center">
                                         <a href="#" onclick=""  data-toggle="modal" data-target="">
                                             <span id="editSpan${i.count}" class="glyphicon glyphicon-th-list" onclick="editlist('${pl.id}','${i.count}')" ></span>
@@ -1044,6 +1044,7 @@
 <script type="text/javascript">
     var showflag = 1;
     $(document).ready(function () {
+        checkExrate();
         //Select City
 //        Selectize.define('clear_selection', function(options) {
 //            var self = this;
@@ -1698,7 +1699,7 @@
                 '<td><input class="form-control decimal" id="amount' + row + '" name="amount' + row + '" type="text" onfocusout="CalculateGrandTotal(\'\')" onfocus="onfocusTour(\''+row+'\')"></td>' +
                 '<td><input class="form-control decimal" id="recCom' + row + '" name="recCom' + row + '" type="text" onfocusout="calculateComm(\''+row+'\')" onfocus="onfocusTour(\''+row+'\')" ></td>' +
                 '<td><input class="form-control" maxlength="255" id="description' + row + '" name="description' + row + '" rows="2" onfocus="onfocusTour(\''+row+'\')"></td>' +
-                '<td><input id="exRate' + row + '" name="exRate' + row + '"   type="text" class="form-control decimalexrate" ></td>' +
+                '<td><input id="exRate' + row + '" name="exRate' + row + '"   type="text" class="form-control decimalexrate" onfocusout="checkExrate()"></td>' +
                 '<td class="text-center">' +
                     '<a href="#" onclick=""  data-toggle="modal" data-target=""> ' +
                         '<span id="editSpan' + row + '" class="glyphicon glyphicon-th-list" onclick="editlist(\'\',\''+ row + '\'); onfocusTour(\''+row+'\')" ></span>' +
@@ -2101,7 +2102,31 @@
         }    
     }
     
-    function validateForm(){              
+    function checkExrate(){
+        var currencycheck = document.getElementById('InputCurrency').value;
+        var count = document.getElementById('counter').value;
+        for(var i=0;i<=count;i++){
+            var exRateField = document.getElementById('exRate'+i);
+            var productField = document.getElementById('select-product'+i);
+            if(exRateField !== null && productField !== null){
+                if(currencycheck !== "THB" && productField.value !== ''){
+                    if(exRateField.value !== ''){
+                        exRateField.style.borderColor = "Green";
+                        $("#btnSave").removeClass("disabled");
+                    }else{
+                        exRateField.style.borderColor = "Red";
+                        $("#btnSave").addClass("disabled");
+                    }
+                }else{
+                    exRateField.style.borderColor = "";
+                    $("#btnSave").removeClass("disabled");
+                }
+            }
+        }
+    }
+    
+    function validateForm(){    
+        checkExrate();
         var idRole = '${idRole}';
         if((idRole === '22') || (idRole === '1') || (idRole === '20')){
             var invoiceSup = $("#InputInvoiceSupCode").val();
@@ -2134,11 +2159,17 @@
                 return;
             }
         }
-    
-        var count = document.getElementById('counter').value;       
+        var currencycheck = document.getElementById('InputCurrency').value;
+        var count = document.getElementById('counter').value;
         for(var i=0;i<=count;i++){
             var refNoField = document.getElementById('refNo'+i);
-            
+            var exRateField = document.getElementById('exRate'+i);
+            if(currencycheck !== "THB" && exRateField !== null){
+                var color = document.getElementById('exRate'+i).style.borderColor;
+                if(color === "red"){
+                    return;
+                }   
+            }
             if(refNoField !== null){
                 var color = document.getElementById('refNo'+i).style.borderColor;
                 if(color === "red"){
