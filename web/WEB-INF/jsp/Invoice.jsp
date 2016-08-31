@@ -568,7 +568,7 @@
                                                 <strong>Currency Amount Not Empty</strong> 
                                             </div>
                                         </div>
-                                        <input type="text" class="" id="counterTable" name="counterTable" value="1" >
+                                        <input type="text" class="hidden" id="counterTable" name="counterTable" value="1" >
                                         <input type="text" class="hidden" id="idDeleteDetailBillable" name="idDeleteDetailBillable" value="0" >
                                         <input type="text" class="hidden" id="action" name="action" value="" >
                                         <c:choose>
