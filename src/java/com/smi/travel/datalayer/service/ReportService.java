@@ -183,11 +183,9 @@ public class ReportService {
         List data  = new ArrayList();
         if("isAddition".equalsIgnoreCase(pnrID)){
             data.add(ticketOrderdao.getTicketOrderAddition(refno));
-        
         } else {
             data.add(ticketOrderdao.getTicketOrder(refno,pnrID));
         }
-        
         return data;
     }
     

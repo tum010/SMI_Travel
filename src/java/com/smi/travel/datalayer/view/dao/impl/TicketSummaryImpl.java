@@ -40,13 +40,14 @@ public class TicketSummaryImpl implements TicketSummaryDao {
     }
     @Override
     public List getTicketSummary(String ticketfrom, String tickettype, String startdate, String enddate, String billto, String passenger,String username,String department) {
-        System.out.println(" +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
         Date thisDate = new Date();
         List data = new ArrayList();
-        String Query ="SELECT * FROM `airticket_ticket` ";
-        Query += createTicketSummaryQuery(ticketfrom,tickettype,startdate,enddate,billto,passenger,department);
+//        String Query ="SELECT * FROM `airticket_ticket` ";
+        String Query =" SELECT `aa`.`ticket_date` AS `ticket_date`, `ma`.`code` AS `air`, concat( `bp`.`series1`, `bp`.`series2`, `bp`.`series3` ) AS `ticket_no`, concat( ifnull(`it`.`name`, ''), ' ', `bp`.`last_name`, ' ', `bp`.`first_name` ) AS `passenger_name`, `bp`.`id` AS `passenger_id`, `bb`.`bill_name` AS `bill_to`, `bb`.`bill_to` AS `bill_code`, `GET_ROUTING` (`aa`.`id`) AS `routing`, ( CASE WHEN ( ifnull(`bi`.`invoice_no`, '') <> '' ) THEN concat( ifnull(`bi`.`invoice_no`, ''), '\\n', '(', `mt`.`Reference No`, ')' ) ELSE concat( '(', `mt`.`Reference No`, ')' ) END ) AS `invoice_no`, `GET_TICKET_PRICE_FOR_TICKETSUMMARY` ( `aa`.`id`, `bp`.`passenger_type` ) AS `sale_fare`, `GET_TICKET_COST_FOR_TICKETSUMMARY` ( `aa`.`id`, `bp`.`passenger_type` ) AS `net_fare`, `GET_TICKET_TAX_FOR_TICKETSUMMARY` ( `aa`.`id`, `bp`.`passenger_type` ) AS `tax`, ( `GET_TICKET_PRICE_FOR_TICKETSUMMARY` ( `aa`.`id`, `bp`.`passenger_type` ) - `GET_TICKET_COST_FOR_TICKETSUMMARY` ( `aa`.`id`, `bp`.`passenger_type` )) AS `profit`, ( SELECT sum(( ifnull(`refd`.`client_charge`, 0) + ifnull(`refd`.`receive_airline`, 0))) FROM `refund_airticket_detail` `refd` WHERE ( `refd`.`ticket_passenger_id` = `bp`.`id` )) AS `refund`, `st`.`username` AS `owner`, `mt`.`Reference No` AS `ref_no`, `bp`.`ticket_from` AS `ticket_from`, `bp`.`ticket_type` AS `ticket_type`, `mt`.`Create_date` AS `Create_date`, ( CASE WHEN (`mt`.`booking_type` = 'O') THEN 'Outbound' WHEN (`mt`.`booking_type` = 'I') THEN 'Wendy' ELSE `mt`.`booking_type` END ) AS `booktype`, `aa`.`id` AS `airline_id`, `bp`.`passenger_type` AS `passenger_type` FROM ((((((((( `master` `mt` JOIN `billable` `bb` ON ((`mt`.`id` = `bb`.`master_id`))) JOIN `airticket_booking` `ab` ON ((`mt`.`id` = `ab`.`master_id`))) JOIN `airticket_pnr` `ar` ON (( `ab`.`id` = `ar`.`booking_id` ))) JOIN `airticket_airline` `aa` ON ((`ar`.`id` = `aa`.`pnr_id`))) JOIN `m_airline` `ma` ON (( `aa`.`airline_code` = `ma`.`id` ))) JOIN `airticket_passenger` `bp` ON (( `aa`.`id` = `bp`.`airline_id` ))) LEFT JOIN `staff` `st` ON ((`ab`.`owner_by` = `st`.`id`))) LEFT JOIN `m_initialname` `it` ON (( `bp`.`initial_name` = `it`.`id` ))) LEFT JOIN `billing_invoice` `bi` ON ((`bb`.`id` = `bi`.`bill_id`))) WHERE ((`ar`.`status` <> 3) AND (`st`.`department_id` = 2)) ";
+        Query += createTicketSummaryQueryView(ticketfrom,tickettype,startdate,enddate,billto,passenger,department);
+        Query += " order by `aa`.`ticket_date` ";
         System.out.println("Query : "+Query);
         int no = 0;
         List<Object[]> QueryTicketList = session.createSQLQuery(Query )
@@ -67,7 +68,7 @@ public class TicketSummaryImpl implements TicketSummaryDao {
                 .addScalar("ticket_date", Hibernate.DATE)
                 .addScalar("invoice_no", Hibernate.STRING)
                 .list();
-                    SimpleDateFormat dateformat = new SimpleDateFormat();
+            SimpleDateFormat dateformat = new SimpleDateFormat();
             dateformat.applyPattern("dd-MM-yyyy");
         for (Object[] B : QueryTicketList) {
             TicketSummary sum = new TicketSummary();
@@ -97,7 +98,6 @@ public class TicketSummaryImpl implements TicketSummaryDao {
 //            sum.setTicketdate(util.convertStringToDate(util.ConvertString(B[14])));
             sum.setInvoiceno(util.ConvertString(B[15]));
             data.add(sum);
-            System.out.println("sum data :");
             
         }
         
@@ -109,7 +109,6 @@ public class TicketSummaryImpl implements TicketSummaryDao {
     
     private String setDisplayValueTicketType(String tickettype){
         String input = tickettype;
-        System.out.println("tickettype : "+tickettype);
         if("I".equalsIgnoreCase(tickettype)){
             input = "Inter";
         }else if("D".equalsIgnoreCase(tickettype)){
@@ -122,7 +121,6 @@ public class TicketSummaryImpl implements TicketSummaryDao {
     
     private String setDisplayValueTicketFrom(String ticketfrom){
         String input = ticketfrom;
-        System.out.println("ticketfrom : "+ticketfrom);
         if("C".equalsIgnoreCase(ticketfrom)){
             input = "In";
         }else if("O".equalsIgnoreCase(ticketfrom)){
@@ -136,8 +134,7 @@ public class TicketSummaryImpl implements TicketSummaryDao {
     public String createTicketSummaryQuery(String ticketfrom, String tickettype, String startdate, String enddate, String billto, String passenger,String department) {
         String query = " where ";
         int check = 0;
-        System.out.println(startdate);
-        System.out.println(enddate);
+
         if ((ticketfrom != null) && (!"".equalsIgnoreCase(ticketfrom))) {
             query += " ticket_from ='" + ticketfrom + "'";
             check = 1;
@@ -171,6 +168,44 @@ public class TicketSummaryImpl implements TicketSummaryDao {
         if (check == 0) {
             query = query.replaceAll("where", " ");
         }
+        return query;
+    }
+    
+    public String createTicketSummaryQueryView(String ticketfrom, String tickettype, String startdate, String enddate, String billto, String passenger,String department) {
+        String query = " ";
+        int check = 1;
+
+        if ((ticketfrom != null) && (!"".equalsIgnoreCase(ticketfrom))) {
+            if (check == 1) {query += " and"; }
+            query += " `bp`.`ticket_from` ='" + ticketfrom + "'";
+            check = 1;
+        }
+        if ((tickettype != null) && (!"".equalsIgnoreCase(tickettype))) {
+            if (check == 1) {query += " and"; }
+            query += " `bp`.`ticket_type` = '" + tickettype + "'";
+            query += "";
+            check = 1;
+        }
+
+        if (((startdate != null) && (!"".equalsIgnoreCase(startdate))) && ((enddate != null) && (!"".equalsIgnoreCase(enddate)))) {
+            if (check == 1) {query += " and"; }
+            query += " `aa`.`ticket_date`  between '" + startdate + "' and '" + enddate + "'";
+            query += "";
+            check = 1;
+        }
+        if ((billto != null) && (!"".equalsIgnoreCase(billto))) {
+            if (check == 1) {query += " and"; }
+            query += " `bb`.`bill_to` = '" + billto + "'";
+            query += "";
+            check = 1;
+        }
+        if ((department != null) && (!"".equalsIgnoreCase(department))) {
+            if (check == 1) {query += " and"; }
+            query += "  `mt`.`booking_type` = '" + department + "'";
+            query += "";
+            check = 1;
+        }
+
         return query;
     }
 
