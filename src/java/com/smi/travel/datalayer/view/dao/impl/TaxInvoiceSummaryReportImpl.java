@@ -103,7 +103,7 @@ public class TaxInvoiceSummaryReportImpl implements TaxInvoiceSummaryReportDao {
         for(String departmentListValue : departmentList){
             for (Object[] B : QueryList) {
                 String departmentTemp = util.ConvertString(B[12]); 
-                System.out.println(departmentListValue + " : " + departmentTemp);
+//                System.out.println(departmentListValue + " : " + departmentTemp);
                 if(departmentListValue.indexOf(departmentTemp) != -1){
                     TaxInvoiceSummaryReport taxInvoiceSummaryReport = new TaxInvoiceSummaryReport();
                     taxInvoiceSummaryReport.setNo(String.valueOf(no));
@@ -114,7 +114,7 @@ public class TaxInvoiceSummaryReportImpl implements TaxInvoiceSummaryReportDao {
                     taxInvoiceSummaryReport.setTaxname(util.ConvertString(B[4]));                           
                     taxInvoiceSummaryReport.setStatus(util.ConvertString(B[11]));
 
-                    System.out.println("departmentTemp : "+departmentTemp);
+//                    System.out.println("departmentTemp : "+departmentTemp);
                     if(("Wendy".equalsIgnoreCase(departmentTemp) || "Outbound".equalsIgnoreCase(departmentTemp))&&(("".equalsIgnoreCase(department)||("Wendy,Outbound".equalsIgnoreCase(department))))){
                         taxInvoiceSummaryReport.setDepartment("Wendy + Outbound");
 

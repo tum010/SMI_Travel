@@ -51,77 +51,79 @@ public class InvoiceSummaryImpl implements InvoiceSummaryDao{
             statusInvoice = "VOID";
         }
         if("".equals(department)  && "".equals(type)  && "".equals(fromData)  && "".equals(toDate) && "".equals(agent)){
-            query = "SELECT * FROM invoice_summary st " ; 
+            query = "SELECT `inv`.`inv_no` AS `invno`, `inv`.`inv_date` AS `invdate`, `inv`.`inv_to` AS `to`, `inv`.`inv_name` AS `invname`, `term`.`name` AS `termpay`, group_concat( DISTINCT `bt`.`name` SEPARATOR ',' ) AS `detail`, round( sum(( CASE WHEN (`invd`.`is_vat` = 0) THEN `invd`.`amount_local` ELSE ((`invd`.`amount_local` * 100) / (100 + `invd`.`vat`)) END )), 2 ) AS `gross`, round( sum(( CASE WHEN (`invd`.`is_vat` = 0) THEN 0 ELSE ( `invd`.`amount_local` - ((`invd`.`amount_local` * 100) / (100 + `invd`.`vat`))) END )), 2 ) AS `vat`, round(sum(`invd`.`amount`), 2) AS `amount`, round(sum(`invd`.`cost_local`), 2) AS `cost`, round( sum(( `invd`.`amount_local` - `invd`.`cost_local` )), 2 ) AS `profit`, round( sum(`invd`.`amount_local`), 2 ) AS `amountlocal`, `invd`.`cur_amount` AS `cur`, `st`.`username` AS `staff`, ( CASE WHEN (`fi`.`name` = 'NORMAL') THEN 'NORMAL' WHEN (`fi`.`name` = 'VOID') THEN 'VOID' ELSE 'VOID' END ) AS `status`, `inv`.`department` AS `department`, `inv`.`inv_type` AS `type`, `inv`.`sub_department` AS `subdepartment` FROM ((((( `invoice` `inv` JOIN `invoice_detail` `invd` ON (( `invd`.`invoice_id` = `inv`.`id` ))) LEFT JOIN `m_accterm` `term` ON (( `term`.`id` = `inv`.`term_pay` ))) LEFT JOIN `m_billtype` `bt` ON (( `bt`.`id` = `invd`.`item_type_id` ))) LEFT JOIN `staff` `st` ON ((`st`.`id` = `inv`.`staff_id`))) LEFT JOIN `m_finance_itemstatus` `fi` ON ((`fi`.`id` = `inv`.`status`)))  st " ; 
         }else{
-            query = "SELECT * FROM invoice_summary st where" ;
+            query = "SELECT `inv`.`inv_no` AS `invno`, `inv`.`inv_date` AS `invdate`, `inv`.`inv_to` AS `to`, `inv`.`inv_name` AS `invname`, `term`.`name` AS `termpay`, group_concat( DISTINCT `bt`.`name` SEPARATOR ',' ) AS `detail`, round( sum(( CASE WHEN (`invd`.`is_vat` = 0) THEN `invd`.`amount_local` ELSE ((`invd`.`amount_local` * 100) / (100 + `invd`.`vat`)) END )), 2 ) AS `gross`, round( sum(( CASE WHEN (`invd`.`is_vat` = 0) THEN 0 ELSE ( `invd`.`amount_local` - ((`invd`.`amount_local` * 100) / (100 + `invd`.`vat`))) END )), 2 ) AS `vat`, round(sum(`invd`.`amount`), 2) AS `amount`, round(sum(`invd`.`cost_local`), 2) AS `cost`, round( sum(( `invd`.`amount_local` - `invd`.`cost_local` )), 2 ) AS `profit`, round( sum(`invd`.`amount_local`), 2 ) AS `amountlocal`, `invd`.`cur_amount` AS `cur`, `st`.`username` AS `staff`, ( CASE WHEN (`fi`.`name` = 'NORMAL') THEN 'NORMAL' WHEN (`fi`.`name` = 'VOID') THEN 'VOID' ELSE 'VOID' END ) AS `status`, `inv`.`department` AS `department`, `inv`.`inv_type` AS `type`, `inv`.`sub_department` AS `subdepartment` FROM ((((( `invoice` `inv` JOIN `invoice_detail` `invd` ON (( `invd`.`invoice_id` = `inv`.`id` ))) LEFT JOIN `m_accterm` `term` ON (( `term`.`id` = `inv`.`term_pay` ))) LEFT JOIN `m_billtype` `bt` ON (( `bt`.`id` = `invd`.`item_type_id` ))) LEFT JOIN `staff` `st` ON ((`st`.`id` = `inv`.`staff_id`))) LEFT JOIN `m_finance_itemstatus` `fi` ON ((`fi`.`id` = `inv`.`status`))) where" ;
         }
         
         System.out.println("Attribute : " + fromData + " : " + toDate + " : " + department + " : " + type + " : " + agent);
         if ( department != null && (!"".equalsIgnoreCase(department)) ) {
             AndQuery = 1;
             if(department.indexOf(",") == -1){
-                query += " st.department = '" + department + "'";
+                query += " `inv`.`department` = '" + department + "'";
             }else{
                 String[] departmentTemp = department.split(",");
-                query += " st.department in ('" + departmentTemp[0] + "','" + departmentTemp[1] + "') ";
+                query += " `inv`.`department` in ('" + departmentTemp[0] + "','" + departmentTemp[1] + "') ";
             }          
         }
             
         if (subdepartment != null && (!"".equalsIgnoreCase(subdepartment)) ) {
             if(AndQuery == 1){
-                 query += " and st.subdepartment = '" + subdepartment + "'";
+                 query += " and `inv`.`sub_department` = '" + subdepartment + "'";
             }else{
                 AndQuery = 1;
-                query += " st.subdepartment = '" + subdepartment + "'";
+                query += " `inv`.`sub_department` = '" + subdepartment + "'";
             }
         }
        
         if (type != null && (!"".equalsIgnoreCase(type)) ) {
            if(AndQuery == 1){
-                query += " and st.type = '" + type + "'";
+                query += " and `inv`.`inv_type` = '" + type + "'";
            }else{
                AndQuery = 1;
-               query += " st.type = '" + type + "'";
+               query += " `inv`.`inv_type` = '" + type + "'";
            }
         }else{
             if(AndQuery == 1){
-                query += " and st.type != 'T'";
+                query += " and `inv`.`inv_type`!= 'T'";
            }else{
                AndQuery = 1;
-               query += " st.type != 'T'";
+               query += " `inv`.`inv_type` != 'T'";
            }
         }
         
         if(agent != null && (!"".equalsIgnoreCase(agent))){
             if(AndQuery == 1){
-                query += " and st.to = '" + agent + "'";
+                query += " and `inv`.`inv_to` = '" + agent + "'";
            }else{
                AndQuery = 1;
-               query += " st.to = '" + agent + "'";
+               query += " `inv`.`inv_to` = '" + agent + "'";
            }
         }
         
         if(statusInvoice != null && (!"".equalsIgnoreCase(statusInvoice))){
             if(AndQuery == 1){
-                query += " and st.status = '" + statusInvoice + "'";
+                query += " and `fi`.`name` = '" + statusInvoice + "'";
            }else{
                AndQuery = 1;
-               query += " st.status = '" + statusInvoice + "'";
+               query += " `fi`.`name`  = '" + statusInvoice + "'";
            }
         }
         
         if ((fromData != null )&&(!"".equalsIgnoreCase(fromData))) {
             if ((toDate != null )&&(!"".equalsIgnoreCase(toDate))) {
                 if(AndQuery == 1){
-                     query += " and st.invdate  BETWEEN  '" + util.covertStringDateToFormatYMD(fromData) + "' AND '" + util.covertStringDateToFormatYMD(toDate) + "' ";
+                     query += " and `inv`.`inv_date`  BETWEEN  '" + util.covertStringDateToFormatYMD(fromData) + "' AND '" + util.covertStringDateToFormatYMD(toDate) + "' ";
                 }else{
                     AndQuery = 1;
-                     query += " st.invdate  BETWEEN  '" + util.covertStringDateToFormatYMD(fromData) + "' AND '" + util.covertStringDateToFormatYMD(toDate) + "' ";
+                     query += " `inv`.`inv_date` BETWEEN  '" + util.covertStringDateToFormatYMD(fromData) + "' AND '" + util.covertStringDateToFormatYMD(toDate) + "' ";
                 }
                 
                
             }
         }
+        
+        query += " GROUP BY `inv`.`id` ORDER BY `inv`.`inv_type`, `inv`.`inv_no` " ;
       //  query += "  ORDER BY st.invdate DESC";
         System.out.println("Query : "+query);
         int no = 0;
