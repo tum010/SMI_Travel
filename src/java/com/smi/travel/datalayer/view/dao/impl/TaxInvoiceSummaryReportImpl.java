@@ -43,45 +43,51 @@ public class TaxInvoiceSummaryReportImpl implements TaxInvoiceSummaryReportDao {
         SimpleDateFormat dateformat = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss", Locale.US);        
         
         String departmentshow = "ALL";
-        StringBuffer query = new StringBuffer(" SELECT * FROM `taxinvoice_summary` ");
+        
+        //query taxinvoice_view
+        String query = "SELECT `tax`.`id` AS `id`, `tax`.`tax_no` AS `taxno`, `tax`.`tax_inv_date` AS `taxdate`, `tax`.`tax_inv_to` AS `taxto`, `tax`.`tax_inv_name` AS `taxname`, `tax`.`department` AS `department`, group_concat(`bt`.`name` SEPARATOR ',') AS `detail`, group_concat(`inv`.`inv_no` SEPARATOR ',') AS `invoiceno`, `GET_RECIPTDETAILFROMTAXINVOICE` (`tax`.`id`) AS `receiptno`, round( sum((( ifnull(`taxd`.`amount`, 0) * 100 ) / (100 + `taxd`.`vat`))), 2 ) AS `gross`, round( sum(( ifnull(`taxd`.`amount`, 0) - (( ifnull(`taxd`.`amount`, 0) * 100 ) / (100 + `taxd`.`vat`)))), 2 ) AS `vat`, round(sum(`taxd`.`amount`), 2) AS `amount`, ( CASE WHEN (`fi`.`name` = 'NORMAL') THEN '' WHEN (`fi`.`name` = 'VOID') THEN 'VOID' ELSE '' END ) AS `status` FROM ((((( `tax_invoice` `tax` LEFT JOIN `tax_invoice_detail` `taxd` ON (( `taxd`.`tax_invoice_id` = `tax`.`id` ))) LEFT JOIN `invoice_detail` `invd` ON (( `invd`.`id` = `taxd`.`invoice_detail_id` ))) LEFT JOIN `invoice` `inv` ON (( `inv`.`id` = `invd`.`invoice_id` ))) LEFT JOIN `m_billtype` `bt` ON (( `bt`.`id` = `taxd`.`item_type_id` ))) LEFT JOIN `m_finance_itemstatus` `fi` ON ((`fi`.`id` = `tax`.`status`))) subQuery GROUP BY `tax`.`id` ORDER BY `tax`.`tax_no`";
+        String subQuery = "";
+//        StringBuffer query = new StringBuffer(" SELECT `tax`.`id` AS `id`, `tax`.`tax_no` AS `taxno`, `tax`.`tax_inv_date` AS `taxdate`, `tax`.`tax_inv_to` AS `taxto`, `tax`.`tax_inv_name` AS `taxname`, `tax`.`department` AS `department`, group_concat(`bt`.`name` SEPARATOR ',') AS `detail`, group_concat(`inv`.`inv_no` SEPARATOR ',') AS `invoiceno`, `GET_RECIPTDETAILFROMTAXINVOICE` (`tax`.`id`) AS `receiptno`, round( sum((( ifnull(`taxd`.`amount`, 0) * 100 ) / (100 + `taxd`.`vat`))), 2 ) AS `gross`, round( sum(( ifnull(`taxd`.`amount`, 0) - (( ifnull(`taxd`.`amount`, 0) * 100 ) / (100 + `taxd`.`vat`)))), 2 ) AS `vat`, round(sum(`taxd`.`amount`), 2) AS `amount`, ( CASE WHEN (`fi`.`name` = 'NORMAL') THEN '' WHEN (`fi`.`name` = 'VOID') THEN 'VOID' ELSE '' END ) AS `status` FROM ((((( `tax_invoice` `tax` LEFT JOIN `tax_invoice_detail` `taxd` ON (( `taxd`.`tax_invoice_id` = `tax`.`id` ))) LEFT JOIN `invoice_detail` `invd` ON (( `invd`.`id` = `taxd`.`invoice_detail_id` ))) LEFT JOIN `invoice` `inv` ON (( `inv`.`id` = `invd`.`invoice_id` ))) LEFT JOIN `m_billtype` `bt` ON (( `bt`.`id` = `taxd`.`item_type_id` ))) LEFT JOIN `m_finance_itemstatus` `fi` ON ((`fi`.`id` = `tax`.`status`))) GROUP BY `tax`.`id` subQuery ORDER BY `tax`.`department`, `tax`.`tax_no` ");
         boolean haveCondition = false;
         if ((from != null) && (!"".equalsIgnoreCase(from))) {
-            query.append(haveCondition ? " and" : " where");
-            query.append(" `taxinvoice_summary`.taxdate >= '" + util.covertStringDateToFormatYMD(from) + "'");
+            subQuery += (haveCondition ? " and" : " where");
+            subQuery += (" `tax`.`tax_inv_date` >= '" + util.covertStringDateToFormatYMD(from) + "'");
             haveCondition = true;
         }
         if ((to != null) && (!"".equalsIgnoreCase(to))) {
-            query.append(haveCondition ? " and" : " where");
-            query.append(" `taxinvoice_summary`.taxdate <= '" + util.covertStringDateToFormatYMD(to) + "'");
+            subQuery += (haveCondition ? " and" : " where");
+            subQuery +=(" `tax`.`tax_inv_date` <= '" + util.covertStringDateToFormatYMD(to) + "'");
             haveCondition = true;
         }
         if ((status != null) && (!"".equalsIgnoreCase(status))) {
             if("NORMAL".equalsIgnoreCase(status)){status = "";}
-            query.append(haveCondition ? " and" : " where");
-            query.append(" `taxinvoice_summary`.status = '" + status + "'");
+            subQuery += (haveCondition ? " and" : " where");
+            subQuery += (" ( CASE WHEN (`fi`.`name` = 'NORMAL') THEN '' WHEN (`fi`.`name` = 'VOID') THEN 'VOID' ELSE '' END ) = '" + status + "'");
             haveCondition = true;
         }
         if ((department != null) && (!"".equalsIgnoreCase(department))) {
-            query.append(haveCondition ? " and" : " where");
+            subQuery += (haveCondition ? " and" : " where");
             if(department.indexOf(",") == -1){
-                query.append(" `taxinvoice_summary`.department = '" + department + "'");
+                subQuery += (" `tax`.`department` = '" + department + "'");
                 departmentshow = department;
             }else{
                 String[] departmentTemp = department.split(",");
-                query.append(" `taxinvoice_summary`.department in ('" + departmentTemp[0] + "','" + departmentTemp[1] + "') ");
+                subQuery += (" `tax`.`department` in ('" + departmentTemp[0] + "','" + departmentTemp[1] + "') ");
                 departmentshow = "WO";
             }           
             haveCondition = true;          
         } else {
-            query.append(haveCondition ? " and" : " where");
-            query.append(" `taxinvoice_summary`.department in ('Wendy','Outbound','Inbound') ");
+            subQuery += (haveCondition ? " and" : " where");
+            subQuery += (" `tax`.`department` in ('Wendy','Outbound','Inbound') ");
         }
         
-        if("WO".equalsIgnoreCase(departmentshow) || "ALL".equalsIgnoreCase(departmentshow)){
-            query.append(" order by taxinvoice_summary.taxno ");
-        }
+//        if("WO".equalsIgnoreCase(departmentshow) || "ALL".equalsIgnoreCase(departmentshow)){
+//            subQuery += (" order by taxinvoice_summary.taxno ");
+//        }
+        
+        query = query.replace("subQuery", subQuery);
 
-        List<Object[]> QueryList =  session.createSQLQuery(query.toString())
+        List<Object[]> QueryList =  session.createSQLQuery(query)
                 .addScalar("id",Hibernate.STRING)
                 .addScalar("taxno",Hibernate.STRING)
                 .addScalar("taxdate",Hibernate.STRING)
