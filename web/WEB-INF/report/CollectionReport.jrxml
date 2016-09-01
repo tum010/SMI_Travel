@@ -405,8 +405,7 @@
 					<textElement textAlignment="Right" verticalAlignment="Middle">
 						<font fontName="Tahoma" size="9" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA[(($F{ochq} != null && !"null".equals($F{ochq}) && $F{ochq}.length() > 0 && !"".equalsIgnoreCase($F{ochq})) ? new BigDecimal($F{ochq}) : new BigDecimal("0.00")).add(($F{ichq} != null && !"null".equals($F{ichq}) && $F{ichq}.length() > 0 && !"".equalsIgnoreCase($F{ichq})) ? new BigDecimal($F{ichq}) : new BigDecimal("0.00"))
-]]></textFieldExpression>
+					<textFieldExpression><![CDATA[(($F{ochq} != null && !"null".equals($F{ochq}) && $F{ochq}.length() > 0 && !"".equalsIgnoreCase($F{ochq})) ? new BigDecimal($F{ochq}) : new BigDecimal("0.00")).add(($F{ichq} != null && !"null".equals($F{ichq}) && $F{ichq}.length() > 0 && !"".equalsIgnoreCase($F{ichq})) ? new BigDecimal($F{ichq}) : new BigDecimal("0.00"))]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00">
 					<reportElement positionType="Float" x="401" y="87" width="100" height="20" uuid="3b5e3952-56a6-472e-88e7-91e11bcf5f36"/>
@@ -420,15 +419,14 @@
 					<textElement textAlignment="Right" verticalAlignment="Middle">
 						<font fontName="Tahoma" size="9" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA[(($F{ocredit} != null && !"null".equals($F{ocredit}) && $F{ocredit}.length() > 0 && !"".equalsIgnoreCase($F{ocredit})) ? new BigDecimal($F{ocredit}) : new BigDecimal("0.00")).add(($F{icredit} != null && !"null".equals($F{icredit}) && $F{icredit}.length() > 0 && !"".equalsIgnoreCase($F{icredit})) ? new BigDecimal($F{icredit}) : new BigDecimal("0.00"))
-]]></textFieldExpression>
+					<textFieldExpression><![CDATA[(($F{ocredit} != null && !"null".equals($F{ocredit}) && $F{ocredit}.length() > 0 && !"".equalsIgnoreCase($F{ocredit})) ? new BigDecimal($F{ocredit}) : new BigDecimal("0.00")).add(($F{icredit} != null && !"null".equals($F{icredit}) && $F{icredit}.length() > 0 && !"".equalsIgnoreCase($F{icredit})) ? new BigDecimal($F{icredit}) : new BigDecimal("0.00"))]]></textFieldExpression>
 				</textField>
-				<textField pattern="#,##0.00">
+				<textField pattern="#,##0.00" isBlankWhenNull="false">
 					<reportElement positionType="Float" x="401" y="128" width="100" height="20" uuid="02bbf726-5b70-4583-8ed9-34ea8a67cf83"/>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
 						<font fontName="Tahoma" size="9" isBold="true" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA[new BigDecimal($F{ocash}).add(new BigDecimal($F{icash}).add(new BigDecimal($F{ochq}).add(new BigDecimal($F{ichq}).add(new BigDecimal($F{ocredit}).add(new BigDecimal($F{icredit}).add(new BigDecimal($F{obanktransfer}).add(new BigDecimal($F{ibanktransfer}))))))))]]></textFieldExpression>
+					<textFieldExpression><![CDATA[(($F{ocash} != null && !"null".equals($F{ocash}) && $F{ocash}.length() > 0 && !"".equalsIgnoreCase($F{ocash})) ? new BigDecimal($F{ocash}) : new BigDecimal("0.00")).add(($F{icash} != null && !"null".equals($F{icash}) && $F{icash}.length() > 0 && !"".equalsIgnoreCase($F{icash})) ? new BigDecimal($F{icash}) : new BigDecimal("0.00")).add((($F{ochq} != null && !"null".equals($F{ochq}) && $F{ochq}.length() > 0 && !"".equalsIgnoreCase($F{ochq})) ? new BigDecimal($F{ochq}) : new BigDecimal("0.00")).add(($F{ichq} != null && !"null".equals($F{ichq}) && $F{ichq}.length() > 0 && !"".equalsIgnoreCase($F{ichq})) ? new BigDecimal($F{ichq}) : new BigDecimal("0.00"))).add((($F{ocredit} != null && !"null".equals($F{ocredit}) && $F{ocredit}.length() > 0 && !"".equalsIgnoreCase($F{ocredit})) ? new BigDecimal($F{ocredit}) : new BigDecimal("0.00")).add(($F{icredit} != null && !"null".equals($F{icredit}) && $F{icredit}.length() > 0 && !"".equalsIgnoreCase($F{icredit})) ? new BigDecimal($F{icredit}) : new BigDecimal("0.00"))).add((($F{obanktransfer} != null && !"null".equals($F{obanktransfer}) && $F{obanktransfer}.length() > 0 && !"".equalsIgnoreCase($F{obanktransfer})) ? new BigDecimal($F{obanktransfer}) : new BigDecimal("0.00")).add(($F{ibanktransfer} != null && !"null".equals($F{ibanktransfer}) && $F{ibanktransfer}.length() > 0 && !"".equalsIgnoreCase($F{ibanktransfer})) ? new BigDecimal($F{ibanktransfer}) : new BigDecimal("0.00")))]]></textFieldExpression>
 				</textField>
 				<rectangle radius="10">
 					<reportElement positionType="Float" x="44" y="107" width="470" height="20" uuid="d7d2bd7b-fae5-4848-a3da-f8d5108a573b">
