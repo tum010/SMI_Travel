@@ -628,7 +628,7 @@
                                             </select>                                                                  
                                         </td>
                                         <td><input maxlength="255" id="receiveDes${i.count}" name="receiveDes${i.count}" type="text" class="form-control" value="${table.description}"></td>
-                                        <td><input id="receiveCost${i.count}"  name="receiveCost${i.count}"  type="text" class="form-control decimal"  value="${table.cost}" readonly=""></td>
+                                        <td><input id="receiveCost${i.count}"  name="receiveCost${i.count}"  type="text" class="form-control decimal"  value="${table.cost}" disabled="disabled" ></td>
                                         <td>                                   
                                             <select class="form-control" name="receiveCurCostTemp${i.count}" id="receiveCurCostTemp${i.count}" disabled="disabled">
                                                 <option  value="" >---------</option>
@@ -2249,7 +2249,7 @@
                     '<select class="form-control" name="receiveProduct' + row + '" id="receiveProduct' + row + '" onchange="addProductManual(' + row + ')"><option value="">---------</option></select>' +
                     '</td>' +
                     '<td><input maxlength="255" id="receiveDes' + row + '" name="receiveDes' + row + '" type="text" class="form-control" onchange="addProductManual(' + row + ')" ></td>' +
-                    '<td><input id="receiveCost' + row + '" name="receiveCost' + row + '" type="text" class="form-control decimal" readonly="" ></td>' +
+                    '<td><input id="receiveCost' + row + '" name="receiveCost' + row + '" type="text" class="form-control decimal" disabled="disabled" ></td>' +
                     '<td>' +
                     '<select class="form-control" name="receiveCurCostTemp' + row + '" id="receiveCurCostTemp' + row + '"><option value="">---------</option></select>' +
                     '</td>' +
@@ -2287,7 +2287,7 @@
                     '<select class="form-control" name="receiveProduct' + row + '" id="receiveProduct' + row + '" ><option value="">---------</option></select>' +
                     '</td>' +
                     '<td><input maxlength="255" id="receiveDes' + row + '" name="receiveDes' + row + '" type="text" class="form-control" ></td>' +
-                    '<td><input id="receiveCost' + row + '" name="receiveCost' + row + '" type="text" class="form-control decimal" onkeyup="insertCommas(this)" readonly="" ></td>' +
+                    '<td><input id="receiveCost' + row + '" name="receiveCost' + row + '" type="text" class="form-control decimal" onkeyup="insertCommas(this)" disabled="disabled" ></td>' +
                     '<td>' +
                     '<select class="form-control" name="receiveCurCostTemp' + row + '" id="receiveCurCostTemp' + row + '"><option value="">---------</option></select>' +
                     '</td>' +
@@ -2815,7 +2815,7 @@
                     '<select class="form-control" name="receiveProduct' + row + '" id="receiveProduct' + row + '" ><option value="' + product + '" selected></option></select>' +
                     '</td>' +
                     '<td><input maxlength="255" id="receiveDes' + row + '" name="receiveDes' + row + '" type="text" class="form-control" value="' + description + '"></td>' +
-                    '<td><input id="receiveCost' + row + '" name="receiveCost' + row + '" type="text" class="form-control decimal" value="' + cost + '" readonly="" ></td>' +
+                    '<td><input id="receiveCost' + row + '" name="receiveCost' + row + '" type="text" class="form-control decimal" value="' + cost + '" disabled="disabled" ></td>' +
                     '<td>' +
                     '<select class="form-control" name="receiveCurCostTemp' + row + '" id="receiveCurCostTemp' + row + '"><option value="' + cur + '" ></option></select>' +
                     '</td>' +
@@ -2858,7 +2858,7 @@
                     '<select class="form-control" name="receiveProduct' + row + '" id="receiveProduct' + row + '" ><option value="' + product + '" selected></option></select>' +
                     '</td>' +
                     '<td><input maxlength="255" id="receiveDes' + row + '" name="receiveDes' + row + '" type="text" class="form-control" value="' + description + '"></td>' +
-                    '<td><input id="receiveCost' + row + '" name="receiveCost' + row + '" type="text" class="form-control decimal" value="' + cost + '" readonly="" ></td>' +
+                    '<td><input id="receiveCost' + row + '" name="receiveCost' + row + '" type="text" class="form-control decimal" value="' + cost + '" disabled="disabled" ></td>' +
                     '<td>' +
                     '<select class="form-control" name="receiveCurCostTemp' + row + '" id="receiveCurCostTemp' + row + '"><option value="' + cur + '" ></option></select>' +
                     '</td>' +
