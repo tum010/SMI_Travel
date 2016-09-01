@@ -264,7 +264,7 @@
                                                     </td>
                                                     <td class="hidden">${ind.vat}</td>
                                                     <td class="hidden">
-                                                        <input type="text" readonly  onfocusout="changeFormatGrossNumber(${taxdesc.count})" 
+                                                        <input type="text" disabled="disabled"  onfocusout="changeFormatGrossNumber(${taxdesc.count})" 
                                                         class="form-control decimal" id="InputGross${taxdesc.count}" 
                                                         name="InputGross${taxdesc.count}" value="${ind.gross}" >
                                                     </td>
@@ -289,7 +289,7 @@
                                                         </c:if>   
                                                     </td>
                                                     <td>
-                                                        <input type="text" readonly  onfocusout="changeFormatGrossNumber(${taxdesc.count})"
+                                                        <input type="text" disabled="disabled"  onfocusout="changeFormatGrossNumber(${taxdesc.count})"
                                                         class="form-control decimal" id="InputGross${taxdesc.count}" 
                                                         name="InputGross${taxdesc.count}" value="${ind.gross}" >
                                                     </td>

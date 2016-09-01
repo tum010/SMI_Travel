@@ -629,7 +629,7 @@ function AddRowDetailBillAble(row, prod, des, cos, id, price, RefNo, cur, cur_c,
                 '<td  ' + vathidden + '><input type="checkbox" ' + check + ' id="checkUse' + row + '" name="checkUse' + row + '"  onclick="calculateGross(' + row + ')"></td>' +
                 '<td align="center" ' + vathidden + '>' + vatValue + '</td>' +
                 '<td class="hidden"><input type="text" class="form-control" id="InputVatTemp' + row + '" name="InputVatTemp' + row + '" value="' + vat + '" ></td>' +
-                '<td ' + vathidden + ' ><input type="text" readonly onfocusout="changeFormatGrossNumber(' + row + ')" class="form-control decimal text-right" id="InputGross' + row + '" name="InputGross' + row + '" value="" ></td>' +
+                '<td ' + vathidden + ' ><input type="text" disabled="disabled" onfocusout="changeFormatGrossNumber(' + row + ')" class="form-control decimal text-right" id="InputGross' + row + '" name="InputGross' + row + '" value="" ></td>' +
                 '<td><input type="text" onfocusout="changeFormatAmountNumber(' + row + ');" class="form-control decimal text-right" id="InputAmount' + row + '" name="InputAmount' + row + '" value="' + price + '" ></td>' +
                 '<td class="priceCurrencyAmount"><select id="SelectCurrencyAmount' + row + '" name="SelectCurrencyAmount' + row + '" class="form-control" onclick="" onchange="CalculateGrandTotal(\'\'); checkCurrency(\'' + row + '\'); AddrowBySelect(\'' + row + '\');">' + selectC + '</select></td>' +
                 '<td><input type="text" id="InputExRate' + row + '" onfocusout="changeFormatExRateNumber(' + row + ')" name="InputExRate' + row + '" class="form-control text-right decimalexrate" ></td>' +
@@ -662,7 +662,7 @@ function AddRowDetailBillAble(row, prod, des, cos, id, price, RefNo, cur, cur_c,
                 '<td  ' + vathidden + '><input type="checkbox" ' + check + ' id="checkUse' + row + '" name="checkUse' + row + '"  onclick="calculateGross(' + row + ')"></td>' +
                 '<td align="center" ' + vathidden + '>' + vatValue + '</td>' +
                 '<td class="hidden"><input type="text" class="form-control" id="InputVatTemp' + row + '" name="InputVatTemp' + row + '" value="' + vat + '" ></td>' +
-                '<td ' + vathidden + ' ><input type="text" readonly onfocusout="changeFormatGrossNumber(' + row + ')" class="form-control decimal text-right" id="InputGross' + row + '" name="InputGross' + row + '" value="" ></td>' +
+                '<td ' + vathidden + ' ><input type="text" disabled="disabled" onfocusout="changeFormatGrossNumber(' + row + ')" class="form-control decimal text-right" id="InputGross' + row + '" name="InputGross' + row + '" value="" ></td>' +
                 '<td><input type="text" onfocusout="changeFormatAmountNumber(' + row + ');" class="form-control decimal text-right" id="InputAmount' + row + '" name="InputAmount' + row + '"  value="' + price + '" ></td>' +
                 '<td class="priceCurrencyAmount"><select id="SelectCurrencyAmount' + row + '" name="SelectCurrencyAmount' + row + '" class="form-control" onclick="" onchange="CalculateGrandTotal(\'\'); checkCurrency(\'' + row + '\'); AddrowBySelect(\'' + row + '\');">' + selectC + '</select></td>' +
                 '<td><input type="text" id="InputExRate' + row + '" onfocusout="changeFormatExRateNumber(' + row + ')" name="InputExRate' + row + '" class="form-control text-right decimalexrate" ></td>' +

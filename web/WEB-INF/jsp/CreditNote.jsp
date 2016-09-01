@@ -218,7 +218,7 @@
                                                 </td>
                                                 <td style="text-align:center">
                                                     <!--<input type="hidden" name="taxVat" value="${creditNoteDetail.vat}" readonly/>-->
-                                                    <input type="text" id="taxVat" name="taxVat" class="form-control text-right decimal" value="${creditNoteDetail.vat2Digits}" readonly=""/>
+                                                    <input type="text" id="taxVat" name="taxVat" class="form-control text-right decimal" value="${creditNoteDetail.vat2Digits}" disabled="disabled"/>
                                                 </td>
                                                 <td style="text-align:center" class="hidden">
                                                     <!--<input type="hidden" name="taxVatReal" value="${creditNoteDetail.vat}" readonly/>-->
@@ -422,7 +422,7 @@
                 </td>
                 <td style="text-align:center">
                     <!--<input type="hidden" name="taxVat"/>-->
-                    <input type="text" id="taxVat" name="taxVat" class="form-control text-right decimal" readonly=""/>
+                    <input type="text" id="taxVat" name="taxVat" class="form-control text-right decimal" disabled="disabled"/>
                 </td>
                 <td style="text-align:center" class="hidden">
                     <!--<input type="hidden" name="taxVatReal"/>-->
