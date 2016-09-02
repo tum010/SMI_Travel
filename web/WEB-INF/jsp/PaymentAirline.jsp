@@ -2465,7 +2465,9 @@ function replaceAll(find, replace, str) {
 }
 
 function formatNumber(num) {
-    return num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g,"$1,")
+    var numtemp = Number(Math.round(num+'e2')+'e-2');
+    numtemp = parseFloat(numtemp);
+    return numtemp.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g,"$1,")
 }
 
 function insertCommas(nField){
@@ -2778,8 +2780,7 @@ function calculateWithodingTax(){
     var tax = document.getElementById('whtax').value;
     var whtax = parseFloat(tax);
 //    var withholdingTax = ( (sumcomm + sumCommRefund ) * (whtax / 100));
-   // alert((sumcomm * (100/(100 + vat))));
-    var withholdingTax = ( (sumcomm  - sumCommRefund ) * (whtax / 100));
+    var withholdingTax = (((sumcomm  - sumCommRefund ) * whtax ) / 100);
     if(payto === 'A'){
         document.getElementById("withholdingTax").value = formatNumber(withholdingTax);
     }else{
