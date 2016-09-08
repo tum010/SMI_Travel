@@ -69,7 +69,6 @@ public class StaffSummaryImpl implements StaffSummaryDao {
                 .list();
         for (Object[] B : QueryStaffList) {
             StaffSummary sum = new StaffSummary();
-            System.out.println("sum data :");
             sum.setStaff(util.ConvertString(B[0]));
             sum.setTicketnum(B[1]== null ? 0:(Integer)B[1]);
             
