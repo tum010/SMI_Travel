@@ -18,10 +18,10 @@
             <column name="initial_name" />
         </many-to-one>
         <property name="firstName" type="string">
-            <column name="first_name" length="50" not-null="true" />
+            <column name="first_name" length="100" not-null="true" />
         </property>
         <property name="lastName" type="string">
-            <column name="last_name" length="50" not-null="true" />
+            <column name="last_name" length="100" not-null="true" />
         </property>
         <property name="series1" type="string">
             <column name="series1" length="3"  />
