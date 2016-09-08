@@ -88,6 +88,9 @@ $(document).ready(function () {
 });
 
 function FilterBookingList(name) {
+    if(name.indexOf("-") === 2){
+        name = convertFormatDate(name);
+    }
     // var name = 
     var servletName = 'BookOtherServlet';
     var servicesName = 'AJAXBean';
