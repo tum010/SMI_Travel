@@ -159,7 +159,6 @@ public class InvoiceSummaryImpl implements InvoiceSummaryDao{
 //                System.out.println("Date : " + util.ConvertString(B[2]));
                 String date = ""+dayy[2]+"-"+dayy[1]+"-"+dayy[0];
                 try {
-
                     Date dateBefore = df.parse(date);
                     sum.setInvdate(new SimpleDateFormat("dd/MM/yyyy", new Locale("us", "us")).format(dateBefore));
                 } catch (ParseException e) {
@@ -202,12 +201,12 @@ public class InvoiceSummaryImpl implements InvoiceSummaryDao{
             }
             
             sum.setTo(util.ConvertString(B[13]));
+
             if(!"".equals(fromData) && fromData != null){
                 String dayy[] = fromData.split("-");
 //                System.out.println("Date From : " + fromData);
-                String date = ""+dayy[0]+"-"+dayy[1]+"-"+dayy[2];
+                String date = ""+dayy[2]+"-"+dayy[1]+"-"+dayy[0];
                 try {
-
                     Date dateBefore = df.parse(date);
                     sum.setInvfrom(new SimpleDateFormat("dd/MM/yyyy", new Locale("us", "us")).format(dateBefore));
                 } catch (ParseException e) {
@@ -217,7 +216,7 @@ public class InvoiceSummaryImpl implements InvoiceSummaryDao{
             if(!"".equals(toDate) && toDate != null){
                 String dayy[] = toDate.split("-");
 //                System.out.println("Date From : " + toDate);
-                String date = ""+dayy[0]+"-"+dayy[1]+"-"+dayy[2];
+                String date = ""+dayy[2]+"-"+dayy[1]+"-"+dayy[0];
                 try {
 
                     Date dateBefore = df.parse(date);

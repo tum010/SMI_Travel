@@ -38,7 +38,7 @@ public class CostIncomeSummary extends AbstractExcelView {
     @Override
     protected void buildExcelDocument(Map model, HSSFWorkbook workbook, HttpServletRequest request, HttpServletResponse response) throws Exception {
         String name = (String) model.get("name");
-        System.out.println("name : " + name);
+//        System.out.println("name : " + name);
         response.setHeader("Content-disposition", "attachment; filename=" + name + ".xls");
         if (name.equalsIgnoreCase(SummaryTicketCostAndIncome)) {
             System.out.println("gen report SummaryTicketCostAndIncome");
@@ -1749,7 +1749,7 @@ public class CostIncomeSummary extends AbstractExcelView {
                 cell55.setCellValue(listSummaryTicketCostIncome.get(num).getInvno());
                 cell55.setCellStyle(styleDetailTable);
                 HSSFCell cell5 = row.createCell(5);
-                System.out.println("Cost : " + listSummaryTicketCostIncome.get(num).getCostinv());
+//                System.out.println("Cost : " + listSummaryTicketCostIncome.get(num).getCostinv());
                 BigDecimal costinv = null;
                 if ("".equals(listSummaryTicketCostIncome.get(num).getCostinv())) {
                     costinv = new BigDecimal(0);
@@ -1854,7 +1854,7 @@ public class CostIncomeSummary extends AbstractExcelView {
                 sheet.autoSizeColumn(i);
             }
         }
-        System.out.println(count);
+//        System.out.println(count);
 
         //Inter
         HSSFRow rowsinter1 = sheet.createRow(count);
@@ -2390,7 +2390,7 @@ public class CostIncomeSummary extends AbstractExcelView {
                 cell4.setCellValue(listSummaryTicketCostIncomeSum.get(num2).getInvno());
                 cell4.setCellStyle(styleDetailTable);
                 HSSFCell cell5 = row22.createCell(4);
-                System.out.println("Cost : " + listSummaryTicketCostIncomeSum.get(num2).getCostinv());
+//                System.out.println("Cost : " + listSummaryTicketCostIncomeSum.get(num2).getCostinv());
                 BigDecimal costinv = null;
                 if ("".equals(listSummaryTicketCostIncomeSum.get(num2).getCostinv())) {
                     costinv = new BigDecimal(0);
@@ -3056,7 +3056,7 @@ public class CostIncomeSummary extends AbstractExcelView {
             }
         }
 
-        System.out.println(count);
+//        System.out.println(count);
 
         HSSFRow row = sheet.createRow(count);
         HSSFCell cell000Sum = row.createCell(0);
@@ -3372,7 +3372,7 @@ public class CostIncomeSummary extends AbstractExcelView {
         BigDecimal cancelrc2 = new BigDecimal(0);
         BigDecimal cancelpayref2 = new BigDecimal(0);
         BigDecimal cancelcommrec2 = new BigDecimal(0);
-        System.out.println("Size : " + listTicketCommissionReceiveSum.size());
+//        System.out.println("Size : " + listTicketCommissionReceiveSum.size());
         for (int r = 9; r < count2; r++) {
             if (num2 < listTicketCommissionReceiveSum.size()) {
                 HSSFRow row2 = sheet1.createRow(r);
@@ -3477,7 +3477,7 @@ public class CostIncomeSummary extends AbstractExcelView {
                 sheet1.autoSizeColumn(i);
             }
         }
-        System.out.println(count2);
+//        System.out.println(count2);
 //        HSSFRow rowL2 = sheet1.createRow(count2);
 //        rowL2.createCell(0).setCellStyle(styleDetailTableBorderBottomTop);
 //        rowL2.createCell(1).setCellStyle(styleDetailTableBorderBottomTop);

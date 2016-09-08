@@ -485,14 +485,14 @@
         }
                         
                         
-//        $('#CommissionTable').dataTable({bJQueryUI: true,
-//            "sPaginationType": "full_numbers",
-//            "bAutoWidth": false,
-//            "bFilter": false,
-//            "bPaginate": true,
-//            "bInfo": true,
-//            "iDisplayLength":10
-//        });
+        $('#CommissionTable').dataTable({bJQueryUI: true,
+            "sPaginationType": "full_numbers",
+            "bAutoWidth": false,
+            "bFilter": false,
+            "bPaginate": false,
+            "bInfo": true,
+            "iDisplayLength":10
+        });
         
         $('.datemask').mask('00-00-0000');
         $('.date').datetimepicker();
