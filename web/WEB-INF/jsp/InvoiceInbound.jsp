@@ -70,15 +70,15 @@
             </div>
             <div id="textAlertInvoiceNotEmpty"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <strong>Invoice Not Empty</strong> 
+                <strong>Cannot delete invoice detail. It use in tax invoice and receipt.</strong> 
             </div>
             <div id="textAlertCurrencyAmountNotEmpty"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <strong>Currency Amount Not Empty</strong> 
             </div>
-            <div id="textAlertInvoiceNotEmpty"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+            <div id="textAlertInvoiceNotEmptyTax"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <strong>Invoice Not Empty</strong> 
+                <strong>Cannot delete invoice detail. It use in tax invoice.</strong> 
             </div>
             <div id="textAlertTaxinvoice"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -88,7 +88,7 @@
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <strong>Cannot void invoice. It use in receipt no </strong> 
             </div>
-            <div id="textAlertInvoiceNotEmpty"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+            <div id="textAlertInvoiceNotEmptyReceipt"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <strong>Cannot delete invoice detail. It use in receipt.</strong> 
             </div> 

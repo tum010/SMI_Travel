@@ -857,12 +857,20 @@ function CallAjaxDeleteBill(param, row) {
             success: function(msg) {
                 console.log("Message : " + msg);
                 $('#resultText').val(msg);
+                
+                $('#textAlertInvoiceNotEmpty').hide();
+                $('#textAlertInvoiceNotEmptyTax').hide();
+                $('#textAlertInvoiceNotEmptyReceipt').hide();
+                
                 if (msg === 'success') {
                     console.log("Delete Detail");
                     $("#BillDescriptionTemp" + row).parent().parent().remove();
-                    $('#textAlertInvoiceNotEmpty').hide();
                 } else if (msg === 'notDeleteReciptAndTax') {
                     $('#textAlertInvoiceNotEmpty').show();
+                } else if (msg === 'notDeleteTax') {
+                    $('#textAlertInvoiceNotEmptyTax').show();
+                } else if (msg === 'notDeleteRecipt') {
+                    $('#textAlertInvoiceNotEmptyReceipt').show();
                 }
                 
                 $('#DetailBillableTable input:last').removeClass('lastrow');
@@ -1040,6 +1048,8 @@ function validFromInvoiceInbound() {
                 return ;
             } else {
                 $('#textAlertInvoiceNotEmpty').hide();
+                $('#textAlertInvoiceNotEmptyTax').hide();
+                $('#textAlertInvoiceNotEmptyReceipt').hide();
             }
 
             var action = document.getElementById('action');
@@ -1145,5 +1155,9 @@ $(document).ready(function() {
 //        clearInvoice();
     } else if (bla === "notDeleteReciptAndTax") {
         $("#textAlertInvoiceNotEmpty").show();
+    } else if (bla === "notDeleteTax") {
+        $("#textAlertInvoiceNotEmptyTax").show();
+    } else if (bla === "notDeleteRecipt") {
+        $("#textAlertInvoiceNotEmptyReceipt").show();
     }
 });
