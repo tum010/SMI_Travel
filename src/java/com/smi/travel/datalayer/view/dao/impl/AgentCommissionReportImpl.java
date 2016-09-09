@@ -100,7 +100,7 @@ public class AgentCommissionReportImpl implements AgentCommissionReportDao {
         if((agentid != null)&&(!"".equalsIgnoreCase(agentid))){
             query += " and agentid = "+agentid;
         }
-        query += " order by tourdate ";
+        query += " order by name , tourdate ";
         List<Object[]> QueryAgentComList = session.createSQLQuery(query)
                 .addScalar("tourdate", Hibernate.DATE)
                 .addScalar("tourcode", Hibernate.STRING)
