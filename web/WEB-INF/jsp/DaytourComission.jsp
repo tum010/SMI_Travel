@@ -73,12 +73,12 @@
                     <div class="col-xs-2">
                        <div class=" form-group">     
                             <div class="input-group date fromDate" id="DateFrom">
-                                <c:set var="InputDateFromTemp" value="${dateFrom}" />
-                                <fmt:parseDate value="${InputDateFromTemp}" var="InputDateFromTemp" pattern="yyyy-MM-dd" />
-                                <fmt:formatDate value="${InputDateFromTemp}" var="InputDateFromTemp" pattern="dd-MM-yyyy" />
+                                <c:set var="InputDateFrom" value="${dateFrom}" />
+                                <fmt:parseDate value="${InputDateFrom}" var="InputDateFrom" pattern="yyyy-MM-dd" />
+                                <fmt:formatDate value="${InputDateFrom}" var="InputDateFrom" pattern="dd-MM-yyyy" />
                                 <input  id="InputDateFrom" name="InputDateFrom" type="text" 
                                          class="form-control datemask" data-date-format="DD-MM-YYYY"
-                                        placeholder="DD-MM-YYYY" value="${InputDateFromTemp}">
+                                        placeholder="DD-MM-YYYY" value="${InputDateFrom}">
                                 <span class="input-group-addon spandate">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
@@ -93,12 +93,12 @@
                     </div>
                     <div class="col-xs-2 form-group">
                         <div class="input-group date todate" id="DateTo">
-                            <c:set var="InputDateToTemp" value="${dateTo}" />
-                            <fmt:parseDate value="${InputDateToTemp}" var="InputDateToTemp" pattern="yyyy-MM-dd" />
-                            <fmt:formatDate value="${InputDateToTemp}" var="InputDateToTemp" pattern="dd-MM-yyyy" />
+                            <c:set var="InputDateTo" value="${dateTo}" />
+                            <fmt:parseDate value="${InputDateTo}" var="InputDateTo" pattern="yyyy-MM-dd" />
+                            <fmt:formatDate value="${InputDateTo}" var="InputDateTo" pattern="dd-MM-yyyy" />
                             <input id="InputDateTo" name="InputDateTo" type="text"
                                     class="form-control datemask" data-date-format="DD-MM-YYYY"
-                                   placeholder="DD-MM-YYYY" value="${InputDateToTemp}">
+                                   placeholder="DD-MM-YYYY" value="${InputDateTo}">
                             <span class="input-group-addon spandate">
                                     <span class="glyphicon glyphicon-calendar"></span>
                             </span>
@@ -192,6 +192,7 @@
 
                     <tbody>
                         <c:forEach var="item" items="${bookingList}" varStatus="status" >
+                        <input type="text" id="bookinglistcount" name="bookinglistcount" class="hidden" value="${fn:length(bookingList)}" >
                             <c:set var="color" value=""/>
                             <c:if test="${status.count%2 == 0}">
                                 <c:set var="color" value="#F2F2F2"/>
@@ -209,7 +210,7 @@
                                     ${item.initialname} ${item.lastname} ${item.firstname}
                                 </td>
                                 <td class="selectGuide form-group">
-                                    <input type="text" class="form-control guidename" id="GuideName-${status.count}" name="GuideName-"  valHidden="${item.guideid}" value="${item.guidename}" onkeyup="getGuideName('${status.count}')" onfocus="setDecimalFormat();"/> 
+                                    <input type="text" class="form-control guidename" id="GuideName-${status.count}" name="GuideName-"  valHidden="${item.guideid}" value="${item.guidename}" onkeyup="getGuideName('${status.count}')" /> 
 <!--                                    <select class="guidename"  id="selectGuide-${status.count}" name="selectGuide-" onchange="getGuideCommission('${item.daytourcode}','guideComm-${status.count}');" onfocus="setDecimalFormat();" class="selectize"   >
                                         <option value="" >--- select ---</option>
                                         <%--<c:forEach var="guide" items="${guideList}" >--%>
@@ -223,23 +224,23 @@
                                     </select>-->
                                 </td>
                                 <td class="form-group" >
-                                    <input type="text" class="form-control decimal guidecom" id="guideComm-${status.count}" name="guideComm-" 
-                                           value="${item.guidecommission}" maxlength="14" onfocus="setDecimalFormat();">
+                                    <input type="text" class="form-control decimal-${status.count} guidecom" id="guideComm-${status.count}" name="guideComm-" 
+                                           value="${item.guidecommission}" maxlength="14" onfocus="setDecimalFormat(${status.count});">
                                 </td>
                                 <td class="form-group">
                                     <input type="text" class="form-control" id="guideRemark-${status.count}" name="guideRemark-" 
-                                           value="${item.remarkguidecom}" maxlength="255" onfocus="setDecimalFormat();">
+                                           value="${item.remarkguidecom}" maxlength="255"  >
                                 </td>
                                 <td class="form-group">
-                                    <input type="text" class="form-control agentname" id="AgentName-${status.count}" name="AgentName-"  valHidden="${item.agentid}" value="${item.agentname}" onkeyup="getAgentName('${status.count}')" onfocus="setDecimalFormat();"/> 
+                                    <input type="text" class="form-control agentname" id="AgentName-${status.count}" name="AgentName-"  valHidden="${item.agentid}" value="${item.agentname}" onkeyup="getAgentName('${status.count}')"  /> 
                                 </td>
                                 <td class="form-group">
-                                    <input type="text" class="form-control decimal agentcom" id="agentComm-${status.count}" name="agentComm-" 
-                                           value="${item.agentcomission}" maxlength="14" onfocus="setDecimalFormat();">
+                                    <input type="text" class="form-control decimal-${status.count} agentcom" id="agentComm-${status.count}" name="agentComm-" 
+                                           value="${item.agentcomission}" maxlength="14" onfocus="setDecimalFormat(${status.count});" />
                                 </td>
                                 <td class="agentRemark form-group">
                                     <input type="text" class="form-control" id="agentRemark-${status.count}" name="agentRemark-" 
-                                           value="${item.remarkagentcom}" maxlength="255" onfocus="setDecimalFormat();">
+                                           value="${item.remarkagentcom}" maxlength="255" />
                                 </td>
                                 <td class="hidden edited">
                                     <input type="checkbox" class="form-control" id="hasEdit-${status.count}" name="hasEdit-" >
@@ -482,7 +483,6 @@
 <script type="text/javascript" charset="uts-8">
     $(document).ready(function () { 
         jQuery.curCSS = jQuery.css;
-        
         var InputDateFrom = $('#InputDateFrom').val();
         if(InputDateFrom !== ''){
             $('#InputDateFrom').val(InputDateFrom);
@@ -502,17 +502,20 @@
             "bInfo": true,
             "iDisplayLength":10
         });
-
-        $(".decimal").inputmask({
-            alias: "decimal",
-            integerDigits: 8,
-            groupSeparator: ',',
-            autoGroup: true,
-            digits: 2,
-            allowMinus: false,
-            digitsOptional: false,
-            placeholder: "0.00"
-        });
+        
+        
+        setDecimalFormatOnload();
+        
+//        $(".decimal").inputmask({
+//            alias: "decimal",
+//            integerDigits: 8,
+//            groupSeparator: ',',
+//            autoGroup: true,
+//            digits: 2,
+//            allowMinus: false,
+//            digitsOptional: false,
+//            placeholder: "0.00",
+//        });
         
         //datetime
         $('.date').datetimepicker();
@@ -573,17 +576,38 @@
         
     });
     
-    function setDecimalFormat(){
-//        $(".decimal").inputmask({
-//            alias: "decimal",
-//            integerDigits: 8,
-//            groupSeparator: ',',
-//            autoGroup: true,
-//            digits: 2,
-//            allowMinus: false,
-//            digitsOptional: false,
-//            placeholder: "0.00",
-//        });
+    function setDecimalFormat(row){
+        $(".decimal-"+row).inputmask({
+            alias: "decimal",
+            integerDigits: 8,
+            groupSeparator: ',',
+            autoGroup: true,
+            digits: 2,
+            allowMinus: false,
+            digitsOptional: false,
+            placeholder: "0.00",
+        });
+    }
+    
+    function setDecimalFormatOnload(){
+        var bookinglistcount = $("#bookinglistcount").val();
+        bookinglistcount = parseInt(bookinglistcount);
+        for(var i = 1 ; i < bookinglistcount ; i++){
+            var guideComm = $("#guideComm-"+i).val();
+            var agentComm = $("#agentComm-"+i).val();
+            if(guideComm !== "" || agentComm !== "") {
+                $(".decimal-"+i).inputmask({
+                    alias: "decimal",
+                    integerDigits: 8,
+                    groupSeparator: ',',
+                    autoGroup: true,
+                    digits: 2,
+                    allowMinus: false,
+                    digitsOptional: false,
+                    placeholder: "0.00",
+                });
+            }
+        }
     }
     
     function getAgentName(agentcount){
