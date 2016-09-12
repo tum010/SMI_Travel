@@ -191,8 +191,8 @@
                     </c:forEach>
 
                     <tbody>
-                        <c:forEach var="item" items="${bookingList}" varStatus="status" >
                         <input type="text" id="bookinglistcount" name="bookinglistcount" class="hidden" value="${fn:length(bookingList)}" >
+                        <c:forEach var="item" items="${bookingList}" varStatus="status" >
                             <c:set var="color" value=""/>
                             <c:if test="${status.count%2 == 0}">
                                 <c:set var="color" value="#F2F2F2"/>

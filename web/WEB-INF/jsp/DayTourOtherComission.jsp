@@ -181,6 +181,7 @@
                     </c:forEach>
 
                     <tbody>
+                        <input type="text" id="bookinglistcount" name="bookinglistcount" class="hidden" value="${fn:length(bookingList)}" >
                         <c:forEach var="item" items="${bookingList}" varStatus="status" >
                             <c:set var="color" value=""/>
                             <c:if test="${status.count%2 == 0}">
@@ -209,38 +210,27 @@
                                 <td>${item.firstname} ${item.lastname}</td>
                                 <td class="selectGuide form-group">
                                     <input type="text" class="form-control guidename" id="GuideName-${status.count}" name="GuideName-"  
-                                           valHidden="${item.guideid}" value="${item.guidename}" onkeyup="getGuideName('${status.count}')" onfocus="setDecimalFormat();"/>                                    
-                                    <!--<select class="guidename"  id="selectGuide-${status.count}" name="selectGuide-" onchange="getGuideCommission('${item.guidename}','guideComm-${status.count}');getGuideComm(${status.count});" onfocus="setDecimalFormat();" class="selectize"   >-->
-                                        <!--<option value="" ></option>-->
-                                        <%--<c:forEach var="guide" items="${guideList}" >--%>
-                                            <%--<c:set var="select" value="" />--%>
-                                            <%--<c:set var="selectedId" value="${item.guideid}" />--%>
-                                            <%--<c:if test="${guide.id == selectedId}">--%>
-                                                <%--<c:set var="select" value="selected" />--%>
-                                            <%--</c:if>--%>
-                                            <!--<option value="${guide.id}" ${select}>${guide.name}" &nbsp; : &nbsp;${guide.tel}"</option>-->   
-                                        <%--</c:forEach>--%>
-                                    <!--</select>-->
+                                           valHidden="${item.guideid}" value="${item.guidename}" onkeyup="getGuideName('${status.count}')" />                                    
                                 </td>
                                 <td class="form-group" >
-                                    <input type="text" class="form-control decimal guidecom" id="guideComm-${status.count}" name="guideComm-" 
-                                           value="${item.guidecommission}" maxlength="14" onfocus="setDecimalFormat();">
+                                    <input type="text" class="form-control decimal-${status.count} guidecom" id="guideComm-${status.count}" name="guideComm-" 
+                                           value="${item.guidecommission}" maxlength="14" onfocus="setDecimalFormat(${status.count});">
                                 </td>
                                 <td class="form-group">
                                     <input type="text" class="form-control" id="guideRemark-${status.count}" name="guideRemark-" 
-                                           value="${item.remarkguidecommission}" maxlength="255" onfocus="setDecimalFormat();">
+                                           value="${item.remarkguidecommission}" maxlength="255" >
                                 </td>
                                 <td class="form-group">
                                     <input type="text" onkeyup="getAgentCommission('${status.count}')" class="form-control agentname" id="AgentName-${status.count}" name="AgentName-" 
-                                           valHidden="${item.agentid}" value="${item.agentname}" onfocus="setDecimalFormat();"/> 
+                                           valHidden="${item.agentid}" value="${item.agentname}" /> 
                                 </td>
                                 <td class="form-group">
-                                    <input type="text" class="form-control decimal agentcom" id="agentComm-${status.count}" name="agentComm-" 
-                                           value="${item.agentcommission}" maxlength="14" onfocus="setDecimalFormat();">
+                                    <input type="text" class="form-control decimal-${status.count} agentcom" id="agentComm-${status.count}" name="agentComm-" 
+                                           value="${item.agentcommission}" maxlength="14" onfocus="setDecimalFormat(${status.count});">
                                 </td>
                                 <td class="agentRemark form-group">
                                     <input type="text" class="form-control" id="agentRemark-${status.count}" name="agentRemark-" 
-                                           value="${item.remarkagentcommission}" maxlength="255" onfocus="setDecimalFormat();">
+                                           value="${item.remarkagentcommission}" maxlength="255" >
                                 </td>
                                 <td class="hidden edited">
                                     <input type="checkbox" class="form-control" id="hasEdit-${status.count}" name="hasEdit-" >
@@ -507,16 +497,18 @@
             pickTime: false      
         });
         
-        $(".decimal").inputmask({
-            alias: "decimal",
-            integerDigits: 8,
-            groupSeparator: ',',
-            autoGroup: true,
-            digits: 2,
-            allowMinus: false,
-            digitsOptional: false,
-            placeholder: "0.00",
-        });
+        setDecimalFormatOnload();
+        
+//        $(".decimal").inputmask({
+//            alias: "decimal",
+//            integerDigits: 8,
+//            groupSeparator: ',',
+//            autoGroup: true,
+//            digits: 2,
+//            allowMinus: false,
+//            digitsOptional: false,
+//            placeholder: "0.00",
+//        });
         
 //        var rowIndex = 1;
 //        var dataAgent = [];
@@ -768,17 +760,38 @@
         console.log("Add Guide : " + fromdate + " " + todate + " " + agent + " " + guide );
     }
     
-    function setDecimalFormat(){
-//        $(".decimal").inputmask({
-//            alias: "decimal",
-//            integerDigits: 8,
-//            groupSeparator: ',',
-//            autoGroup: true,
-//            digits: 2,
-//            allowMinus: false,
-//            digitsOptional: false,
-//            placeholder: "0.00",
-//        });
+    function setDecimalFormat(row){
+        $(".decimal-"+row).inputmask({
+            alias: "decimal",
+            integerDigits: 8,
+            groupSeparator: ',',
+            autoGroup: true,
+            digits: 2,
+            allowMinus: false,
+            digitsOptional: false,
+            placeholder: "0.00",
+        });
+    }
+    
+    function setDecimalFormatOnload(){
+        var bookinglistcount = $("#bookinglistcount").val();
+        bookinglistcount = parseInt(bookinglistcount);
+        for(var i = 1 ; i < bookinglistcount ; i++){
+            var guideComm = $("#guideComm-"+i).val();
+            var agentComm = $("#agentComm-"+i).val();
+            if(guideComm !== "" || agentComm !== "") {
+                $(".decimal-"+i).inputmask({
+                    alias: "decimal",
+                    integerDigits: 8,
+                    groupSeparator: ',',
+                    autoGroup: true,
+                    digits: 2,
+                    allowMinus: false,
+                    digitsOptional: false,
+                    placeholder: "0.00",
+                });
+            }
+        }
     }
     
     function getAgentCommission(agentcount){
