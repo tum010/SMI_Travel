@@ -73,12 +73,12 @@
                     <div class="col-xs-2">
                        <div class=" form-group">     
                             <div class="input-group date fromDate" id="DateFrom">
-                                <c:set var="InputDateFrom" value="${dateFrom}" />
-                                <fmt:parseDate value="${InputDateFrom}" var="InputDateFrom" pattern="yyyy-MM-dd" />
-                                <fmt:formatDate value="${InputDateFrom}" var="InputDateFrom" pattern="dd-MM-yyyy" />
+                                <c:set var="InputDateFromTemp" value="${dateFrom}" />
+                                <fmt:parseDate value="${InputDateFromTemp}" var="InputDateFromTemp" pattern="yyyy-MM-dd" />
+                                <fmt:formatDate value="${InputDateFromTemp}" var="InputDateFromTemp" pattern="dd-MM-yyyy" />
                                 <input  id="InputDateFrom" name="InputDateFrom" type="text" 
                                          class="form-control datemask" data-date-format="DD-MM-YYYY"
-                                        placeholder="DD-MM-YYYY" value="${InputDateFrom}">
+                                        placeholder="DD-MM-YYYY" value="${InputDateFromTemp}">
                                 <span class="input-group-addon spandate">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
@@ -93,12 +93,12 @@
                     </div>
                     <div class="col-xs-2 form-group">
                         <div class="input-group date todate" id="DateTo">
-                            <c:set var="InputDateTo" value="${dateTo}" />
-                            <fmt:parseDate value="${InputDateTo}" var="InputDateTo" pattern="yyyy-MM-dd" />
-                            <fmt:formatDate value="${InputDateTo}" var="InputDateTo" pattern="dd-MM-yyyy" />
+                            <c:set var="InputDateToTemp" value="${dateTo}" />
+                            <fmt:parseDate value="${InputDateToTemp}" var="InputDateToTemp" pattern="yyyy-MM-dd" />
+                            <fmt:formatDate value="${InputDateToTemp}" var="InputDateToTemp" pattern="dd-MM-yyyy" />
                             <input id="InputDateTo" name="InputDateTo" type="text"
                                     class="form-control datemask" data-date-format="DD-MM-YYYY"
-                                   placeholder="DD-MM-YYYY" value="${InputDateTo}">
+                                   placeholder="DD-MM-YYYY" value="${InputDateToTemp}">
                             <span class="input-group-addon spandate">
                                     <span class="glyphicon glyphicon-calendar"></span>
                             </span>
@@ -482,6 +482,7 @@
 <script type="text/javascript" charset="uts-8">
     $(document).ready(function () { 
         jQuery.curCSS = jQuery.css;
+        
         var InputDateFrom = $('#InputDateFrom').val();
         if(InputDateFrom !== ''){
             $('#InputDateFrom').val(InputDateFrom);
@@ -501,7 +502,7 @@
             "bInfo": true,
             "iDisplayLength":10
         });
-        
+
         $(".decimal").inputmask({
             alias: "decimal",
             integerDigits: 8,
@@ -510,7 +511,7 @@
             digits: 2,
             allowMinus: false,
             digitsOptional: false,
-            placeholder: "0.00",
+            placeholder: "0.00"
         });
         
         //datetime
