@@ -337,6 +337,7 @@ public class BookingPnrImpl implements BookingPnrDao {
                     } 
                 }
                 //******************************************************************
+                
                 System.out.println("Duplicate airline " + currentAirline.getAirlineCode());
                 Iterator<BookingFlight> iteratorCurrentFlight =  currentAirline.getBookingFlights().iterator();
                 while (iteratorCurrentFlight.hasNext()) {
@@ -356,11 +357,17 @@ public class BookingPnrImpl implements BookingPnrDao {
                    if(isNew == 1){break;}
                 }
                 
+                System.out.println("isNew : "+isNew);
+                System.out.println("!iteratorCurrentAirline.hasNext() : "+!iteratorCurrentAirline.hasNext());
                  if((isNew == 0)&&(!iteratorCurrentAirline.hasNext())){
                         System.out.println("is new airline");
                         return false;
                  }
-                 return true;
+                 //Fix from issue http://192.168.99.49:8012/issue-log/view.php?id=752
+                 if((!iteratorCurrentAirline.hasNext())){
+                    return true;
+                 }
+                 //******************************************************************
                 
             }
             
