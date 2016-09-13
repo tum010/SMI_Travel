@@ -316,7 +316,7 @@
 <!--                                                    <span  class="glyphicon glyphicon-th-list" data-toggle="modal" data-target="#DescriptionInvoiceDetailModal" 
                                                        onclick="getDescriptionDetail(${taxdesc.count})" id="InputDescription${taxdesc.count}">
                                                 </span>-->
-                                                <span  class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteDetailBillInbound('${taxdesc.count}','${ind.description}')" 
+                                                <span  class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteDetailBillInbound('${taxdesc.count}','')" 
                                                        data-toggle="modal" data-target="#DelDetailBill" >  
                                                 </span>
                                             </td>          

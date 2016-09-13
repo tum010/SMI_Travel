@@ -869,6 +869,9 @@ function changeFormatExRateNumber(id) {
 }
 
 function DeleteDetailBill(rowID, code) {
+    if(code === ""){
+        code = $("#BillDescription"+rowID).val();
+    }
     $("#idDeleteDetailBillable").val(rowID);
     var operationAction = $("#action").val();
     var operationTable = $("#operationTable").val();

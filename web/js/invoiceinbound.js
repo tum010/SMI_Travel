@@ -802,6 +802,7 @@ function clearScreenInvoiceInbound() {
 }
 
 function DeleteDetailBillInbound(rowID, code) {
+    code = $("#BillDescriptionTemp"+rowID).val();
     $("#idDeleteDetailBillable").val(rowID);
     if (code !== "") {
         $("#DeleteDetailBillable").text('Are you sure to delete detail billable : ' + code + '..?');
