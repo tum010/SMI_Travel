@@ -6,6 +6,7 @@
 
 package com.smi.travel.datalayer.view.dao.impl;
 
+import com.smi.travel.datalayer.entity.MAirport;
 import com.smi.travel.datalayer.view.dao.BookingSummaryDao;
 import com.smi.travel.datalayer.view.entity.BookSummary;
 import com.smi.travel.datalayer.view.entity.BookingHeaderSummaryView;
@@ -420,12 +421,9 @@ public class BookingSummaryImpl implements BookingSummaryDao{
                 .addScalar("pnr", Hibernate.STRING)
                 .addScalar("flight", Hibernate.STRING)
                 .addScalar("dept", Hibernate.STRING)
-                .addScalar("deptname", Hibernate.STRING)
                 .addScalar("depart_time", Hibernate.STRING)
                 .addScalar("arrv", Hibernate.STRING)
-                .addScalar("arrvname", Hibernate.STRING)
                 .addScalar("arrive_time", Hibernate.STRING)
-//                .addScalar("price", Hibernate.STRING)
                 .list();
         
         SimpleDateFormat dateformat = new SimpleDateFormat();
@@ -440,22 +438,42 @@ public class BookingSummaryImpl implements BookingSummaryDao{
             confirmdetail.setPnr(B[1]== null ? "" :util.ConvertString(B[1]));
             confirmdetail.setFlight(B[2]== null ? "" :util.ConvertString(B[2]));
             confirmdetail.setDepart(B[3]== null ? "" :util.ConvertString(B[3]));
-            confirmdetail.setDepartname(B[4]== null ? "" :util.ConvertString(B[4]));
-            String deptime1 = util.ConvertString(B[5]).substring(0,2);
-            String deptime2 = util.ConvertString(B[5]).substring(2,4);
-            String arrtime1 = util.ConvertString(B[8]).substring(0,2);
-            String arrtime2 = util.ConvertString(B[8]).substring(2,4);
-            confirmdetail.setDeparttime(deptime1+":"+deptime2 + " - " +arrtime1+":"+arrtime2 );
-            confirmdetail.setArrive(B[6]== null ? "" :util.ConvertString(B[6]));
-            confirmdetail.setArrivename(B[7]== null ? "" :util.ConvertString(B[7]));
 
-            confirmdetail.setArrivetime(B[8]== null ? "" :util.ConvertString(B[8]));
+            String deptime1 = util.ConvertString(B[4]).substring(0,2);
+            String deptime2 = util.ConvertString(B[4]).substring(2,4);
+            String arrtime1 = util.ConvertString(B[6]).substring(0,2);
+            String arrtime2 = util.ConvertString(B[6]).substring(2,4);
+            
+            confirmdetail.setDeparttime(deptime1+":"+deptime2 + " - " +arrtime1+":"+arrtime2 );
+            confirmdetail.setArrive(B[5]== null ? "" :util.ConvertString(B[5]));
+            confirmdetail.setArrivetime(B[6]== null ? "" :util.ConvertString(B[6]));
+            
+            confirmdetail.setDepartname(getAirportName(B[3]== null ? "" :util.ConvertString(B[3])));
+            confirmdetail.setArrivename(getAirportName(B[5]== null ? "" :util.ConvertString(B[5])));
+            
 //            confirmdetail.setPrice(B[9]== null ? "" :util.ConvertString(B[9]));
             data.add(confirmdetail);
         }
         this.sessionFactory.close();
         session.close();
         return data;
+    }
+    
+    public String getAirportName(String AirportCode) {
+        Session session = this.sessionFactory.openSession();
+        String query = "from MAirport a where a.code = '" + AirportCode + "'";
+        String result = "";
+        try {
+            List<MAirport> list = session.createQuery(query).list();
+            if (list.isEmpty()) {
+                return "";
+            }
+            result = list.get(0).getName();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            result = "";
+        }
+        return result;
     }
     
     public List getConfirmSlipHotelSubReport(String refno) {
