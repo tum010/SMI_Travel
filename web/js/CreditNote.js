@@ -267,16 +267,20 @@ function addRow() {
                                 vatAmountRealID.val(parseFloat(calVat.toFixed(4)));
 //                                this.style.borderColor = "Green";
                                 realAmountBorder.borderColor = "Green";
-
+                                $("#alertTextFail").html("");
+                                $("#alertFail").hide();
                             }else if(realAmount === ''){
                                 realAmountHidden.val(realAmount);
 //                                this.style.borderColor = "";
                                 realAmountBorder.borderColor = "";    
-
+                                $("#alertTextFail").html("");
+                                $("#alertFail").hide();
                             }else{
                                 realAmountHidden.val(realAmount);
 //                                this.style.borderColor = "Red"; 
                                 realAmountBorder.borderColor = "Red";
+                                $("#alertTextFail").html("Tax Invoice "+ taxNo.val() +" Amount Total much over.");
+                                $("#alertFail").show();
                             }
 
                         }, error: function(msg) {
