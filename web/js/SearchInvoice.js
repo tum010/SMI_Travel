@@ -313,8 +313,8 @@ function Disable() {
 }
 
 function printInvoiceSummary(){
-    var from = $('#FromDate').val();
-    var to = $('#ToDate').val();
+    var from = convertFormatDate($('#FromDate').val());
+    var to = convertFormatDate($('#ToDate').val());
     var department = $('#Department').val();
     var type = $('#Type').val();
     var agent = $('#InvTo').val();
