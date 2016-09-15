@@ -26,6 +26,18 @@ $(document).ready(function() {
         digitsOptional: false,
         placeholder: "0.00",
     });
+    
+    $(".decimalexrate").inputmask({
+        alias: "decimal",
+        integerDigits: 6,
+        groupSeparator: ',',
+        autoGroup: true,
+        digits: 4,
+        allowMinus: false,
+        digitsOptional: false,
+        placeholder: "0.0000"
+    });
+    
 //    $(".numerical").mask('00000000', {reverse: true});
     
     // Invoice To Modal
@@ -758,6 +770,8 @@ function addRowInvoiceInboundDetail(row){
     '<td '+ textHidden+'><input type="text" disabled="disabled" onfocusout="changeFormatGrossNumber(' + row + ')" class="form-control decimal" id="InputGross' + row + '" name="InputGross' + row + '" value="" ></td>' +
     '<td><input type="text" class="form-control decimal" id="InputAmount' + row + '" name="InputAmount' + row + '" onfocusout="changeFormatAmountNumber(' + row + ');"  value=""></td>' +
     '<td class="priceCurrencyAmount"><select id="SelectCurrencyAmount' + row + '" name="SelectCurrencyAmount' + row + '" class="form-control" onclick="checkCurrency()" onchange="CalculateGrandTotal(\'\')">' + select + '</select></td>' +              
+    '<td><input type="text" id="InputExRate' + row + '" name="InputExRate' + row + '" class="form-control text-right decimalexrate" ></td>' +
+    '<td><input type="text"  value="" id="InputAmountLocal' + row + '" name="InputAmountLocal' + row + '" class="form-control text-right decimal" ></td>' +
     '<td align="center" ><span  class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteDetailBillInbound(' + row + ',\'\')" data-toggle="modal" data-target="#DelDetailBill" >  </span></td>' +           
     '</tr>'
     );
@@ -773,6 +787,17 @@ function addRowInvoiceInboundDetail(row){
         allowMinus: false,
         digitsOptional: false,
         placeholder: "0.00",
+    });
+    
+    $(".decimalexrate").inputmask({
+        alias: "decimal",
+        integerDigits: 6,
+        groupSeparator: ',',
+        autoGroup: true,
+        digits: 4,
+        allowMinus: false,
+        digitsOptional: false,
+        placeholder: "0.0000"
     });
     $("#mBillTypeListTemp option").clone().appendTo("#product" + row);
     

@@ -535,6 +535,9 @@ public class InvoiceInboundController extends SMITravelController {
             String amountCurren = request.getParameter("SelectCurrencyAmount"+i);
             String isVat = request.getParameter("checkUse"+i);
             String product = request.getParameter("product"+i);
+            String exrate = request.getParameter("InputExRate"+i);
+            String amountlocal = request.getParameter("InputAmountLocal"+i);
+            
             request.getParameterMap();
             System.out.println("isvat : ["+i+"]"+isVat);
             System.out.println("vat : ["+i+"]"+vat);
@@ -548,10 +551,18 @@ public class InvoiceInboundController extends SMITravelController {
                 }
 
                 if(amount != null && !amount.equals("")){
-                    System.out.println(""+amount);
                     BigDecimal amountInt = new BigDecimal(amount.replaceAll(",", ""));
                     invoiceDetail.setAmount(amountInt);
-                    invoiceDetail.setAmountLocal(amountInt);
+                }
+                
+                if(amountlocal != null && !amountlocal.equals("")){
+                    BigDecimal amountlocalInt = new BigDecimal(amountlocal.replaceAll(",", ""));
+                    invoiceDetail.setAmountLocal(amountlocalInt);
+                }
+                
+                if(exrate != null && !exrate.equals("")){
+                    BigDecimal exrateInt = new BigDecimal(exrate.replaceAll(",", ""));
+                    invoiceDetail.setExRate(exrateInt);
                 }
 
                 if(gross != null && !gross.equals("")){

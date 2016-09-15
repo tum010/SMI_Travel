@@ -224,6 +224,8 @@
                                             </c:choose>
                                             <th style="width: 8%" align="center">Amount</th>
                                             <th style="width: 6%" align="center" class="" >Cur</th>
+                                            <th style="width: 7%" align="center" class="" >Ex Rate</th>
+                                            <th style="width: 8%" align="center">Amount Local</th>
                                             <th style="width: 2%" align="center">Action</th>
                                         </tr>
                                     </thead>
@@ -311,8 +313,10 @@
                                                         <option value='${cur.code}' ${selectA}>${cur.code}</option>
                                                     </c:forEach>
                                                 </select>
-                                            </td>              
-                                            <td align="center" >
+                                            </td>
+                                            <td><input type="text" value="${ind.exRate}" id="InputExRate${taxdesc.count}" name="InputExRate${taxdesc.count}" class="form-control text-right decimalexrate" ></td>
+                                            <td><input type="text" value="${ind.amountLocal}" id="InputAmountLocal${taxdesc.count}" name="InputAmountLocal${taxdesc.count}" class="form-control text-right decimal" ></td>
+                                            <td align="center">
 <!--                                                    <span  class="glyphicon glyphicon-th-list" data-toggle="modal" data-target="#DescriptionInvoiceDetailModal" 
                                                        onclick="getDescriptionDetail(${taxdesc.count})" id="InputDescription${taxdesc.count}">
                                                 </span>-->
@@ -680,7 +684,7 @@
          <c:forEach var="cur" items="${listCurrency}">
             select += "<option value='${cur.code}' ><c:out value='${cur.code}' /></option>";
         </c:forEach>
-            
+           
        $('.date').datetimepicker();
        $('.datemask').mask('00-00-0000');
        $('.spandate').click(function() {
