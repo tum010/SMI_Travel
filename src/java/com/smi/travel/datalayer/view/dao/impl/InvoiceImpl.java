@@ -561,9 +561,9 @@ public class InvoiceImpl implements InvoiceReportDao{
         }else{
             query += " and  invm.invstatus  != 2 ";
         }
-        if(checkQuery == 1){
-            query += " and (recstatus  like '%7%' or recstatus is null) ";
-        }
+//        if(checkQuery == 1){
+//            query += " and (recstatus  like '%7%' or recstatus is null) ";
+//        }
         
         
         System.out.println("query : "+query);
