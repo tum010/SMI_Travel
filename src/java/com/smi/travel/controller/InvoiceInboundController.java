@@ -9,7 +9,6 @@ import com.smi.travel.datalayer.entity.MFinanceItemstatus;
 import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.service.InvoiceService;
 import com.smi.travel.datalayer.service.UtilityService;
-import com.smi.travel.datalayer.view.entity.CustomerAgentInfo;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
