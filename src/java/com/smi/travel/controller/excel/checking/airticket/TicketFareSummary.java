@@ -246,7 +246,7 @@ public class TicketFareSummary extends AbstractExcelView {
         styleC25.setDataFormat(currency.getFormat("#,##0.00"));
         for(int i=0;i<TicketFare.size();i++){
             
-            System.out.println("get size : "+ i);
+//            System.out.println("get size : "+ i);
              TicketFareReport data = (TicketFareReport)TicketFare.get(i);
              HSSFRow row = sheet.createRow(count + i);
              HSSFCell cell0 = row.createCell(0);
