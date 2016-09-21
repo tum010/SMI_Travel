@@ -602,7 +602,8 @@
                                     <th style="width:3%;">Action</th>
                                     </tr>
                                     </thead>
-                                    <tbody> 
+                                    <tbody>
+                                        <input type="text" id="receiptDetailListcount" name="receiptDetailListcount" class="hidden" value="${fn:length(receiptDetailList)}" >
                                         <c:forEach var="table" items="${receiptDetailList}" varStatus="i">
                                             <tr>
                                         <input type="hidden" name="count${i.count}" id="count${i.count}" value="${i.count}">
@@ -628,7 +629,7 @@
                                             </select>                                                                  
                                         </td>
                                         <td><input maxlength="255" id="receiveDes${i.count}" name="receiveDes${i.count}" type="text" class="form-control" value="${table.description}"></td>
-                                        <td><input id="receiveCost${i.count}"  name="receiveCost${i.count}"  type="text" class="form-control decimal"  value="${table.cost}" disabled="disabled" ></td>
+                                        <td><input id="receiveCost${i.count}"  name="receiveCost${i.count}"  type="text" class="form-control decimal-${i.count}"  value="${table.cost}" onfocus="setDecimalFormat(${i.count});" disabled="disabled" ></td>
                                         <td>                                   
                                             <select class="form-control" name="receiveCurCostTemp${i.count}" id="receiveCurCostTemp${i.count}" disabled="disabled">
                                                 <option  value="" >---------</option>
@@ -688,7 +689,7 @@
                                                 </c:when>
                                             </c:choose>
                                         </td>
-                                        <td><input id="receiveAmount${i.count}" name="receiveAmount${i.count}" type="text" class="form-control decimal" value="${table.amount}" onfocusout="calculateGrandTotal();"></td>
+                                        <td><input id="receiveAmount${i.count}" name="receiveAmount${i.count}" type="text" class="form-control decimal-${i.count}" onfocus="setDecimalFormat(${i.count});" value="${table.amount}" onfocusout="calculateGrandTotal();"></td>
                                         <td>                                   
                                             <select class="form-control" name="receiveCurrency${i.count}" id="receiveCurrency${i.count}" >
                                                 <option  value="" >---------</option>
@@ -701,7 +702,7 @@
                                                 </c:forEach>
                                             </select>                                                                  
                                         </td>
-                                        <td><input type="text" value="${table.exRate}" id="receiveExRate${i.count}" name="receiveExRate${i.count}" class="form-control decimalexrate"></td>
+                                        <td><input type="text" value="${table.exRate}" id="receiveExRate${i.count}" name="receiveExRate${i.count}" class="form-control decimalexrate-${i.count}" onfocus="setDecimalFormat(${i.count});"></td>
                                         <td class="hidden"><input type="text" value="${table.exRate}" id="curExRateTemp${i.count}" name="curExRateTemp${i.count}" class="form-control" ></td>
                                         <td class="text-center">
                                             <a href="#/inv" data-toggle="modal" data-target="#DescriptionReceiptDetailModal" onclick="getDescriptionDetail('${i.count}')"><span class="glyphicon glyphicon-th-list"></span></a>&nbsp
@@ -878,7 +879,8 @@
                                             <th style="width:20%;">Action</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody>     
+                                        <input type="text" id="receiptCreditListcount" name="receiptCreditListcount" class="hidden" value="${fn:length(receiptCreditList)}" >
                                         <c:forEach var="table" items="${receiptCreditList}" varStatus="i">
                                             <tr>
                                         <input type="hidden" name="countCredit${i.count}" id="countCredit${i.count}" value="${i.count}">
@@ -902,7 +904,7 @@
                                                 <span class="input-group-addon spandate" style="padding : 1px 10px;"><span class="glyphicon glyphicon-calendar"></span></span>
                                             </div>
                                         </td>
-                                        <td><input id="creditAmount${i.count}" name="creditAmount${i.count}" type="text" class="form-control text-right" onkeyup="insertCommas(this)" value="${table.creditAmount}"></td>                                                           
+                                        <td><input id="creditAmount${i.count}" name="creditAmount${i.count}" type="text" class="form-control text-right decimalcredit-${i.count}" onfocus="setDecimalCreditFormat(${i.count});" onkeyup="insertCommas(this)" value="${table.creditAmount}"></td>                                                           
                                         <td class="text-center">
                                             <a class="remCF"><span id="SpanRemove${i.count}" onclick="deleteCreditList('${table.id}', '${i.count}');" class="glyphicon glyphicon-remove deleteicon "></span></a>
                                         </td>                                   
@@ -1625,6 +1627,7 @@
     var setinvoice = 0;
 
     $(document).ready(function () {
+        
         $("#inv,#ref,#com").removeClass('hidden');
         $('.datemask').mask('00-00-0000');
         $('.date').datetimepicker();
@@ -1801,14 +1804,6 @@
             $("#addCreditDetail").removeClass('hidden');
         });
 
-//        $('#selectInvoiceId').on('click', function() {
-//            if($('#selectInvoiceId').val() === ''){
-//                $("#confirmPrintInv").addClass("disabled");
-//            }else{
-//                $("#confirmPrintInv").removeClass("disabled");
-//            }
-//        });
-
         $('#deleteCreditButton').on('click', function () {
             $("#addCredit").addClass('hidden');
             $("#addCreditDetail").addClass('hidden');
@@ -1886,9 +1881,7 @@
 
         // +++++++++++++++++++++ Credit Detail Table +++++++++++++++++++++ //
         AddRowCredit(parseInt($("#countRowCredit").val()));
-//        $('#CreditDetailTable tbody tr:last td .input-group-addon').click(function() {  
-//            AddRowCredit(parseInt($("#countRowCredit").val()));
-//        });
+
         $("#CreditDetailTable").on("keyup", function () {
             var rowAll = $("#CreditDetailTable tr").length;
             $("td").keyup(function () {
@@ -1929,54 +1922,54 @@
 
 
         //set format money
-        $("#withTax").focusout(function () {
-            setFormatCurrencyReceipt();
-        });
-        $("#cashAmount").focusout(function () {
-            setFormatCurrencyReceipt();
-        });
-        $("#cashMinusAmount").focusout(function () {
-            setFormatCurrencyReceipt();
-        });
-        $("#bankTransfer").focusout(function () {
-            setFormatCurrencyReceipt();
-        });
-        $("#chqAmount1").focusout(function () {
-            setFormatCurrencyReceipt();
-        });
-        $("#chqAmount2").focusout(function () {
-            setFormatCurrencyReceipt();
-        });
+//        $("#withTax").focusout(function () {
+//            setFormatCurrencyReceipt();
+//        });
+//        $("#cashAmount").focusout(function () {
+//            setFormatCurrencyReceipt();
+//        });
+//        $("#cashMinusAmount").focusout(function () {
+//            setFormatCurrencyReceipt();
+//        });
+//        $("#bankTransfer").focusout(function () {
+//            setFormatCurrencyReceipt();
+//        });
+//        $("#chqAmount1").focusout(function () {
+//            setFormatCurrencyReceipt();
+//        });
+//        $("#chqAmount2").focusout(function () {
+//            setFormatCurrencyReceipt();
+//        });
 
-        setFormatCurrencyReceipt();
+//        setFormatCurrencyReceipt();
 //        var creditlength = $("#CreditDetailTable tr").length ;
-        var detaillength = $("#ReceiptListTable tr").length;
-
-        if (detaillength > 1) {
-            for (var i = 1; i < detaillength; i++) {
-                if ($('#receiveCost' + i).val() != "") {
-                    setFormatCurrency(i);
-                }
-                if ($('#receiveAmount' + i).val() != "") {
-                    setFormatCurrency(i);
-                }
-                if ($('#receiveExRate' + i).val() != "") {
-                    setFormatExRate(i);
-                }
-            }
-        }
+//        var detaillength = $("#ReceiptListTable tr").length;
+//
+//        if (detaillength > 1) {
+//            for (var i = 1; i < detaillength; i++) {
+//                if ($('#receiveCost' + i).val() != "") {
+//                    setFormatCurrency(i);
+//                }
+//                if ($('#receiveAmount' + i).val() != "") {
+//                    setFormatCurrency(i);
+//                }
+//                if ($('#receiveExRate' + i).val() != "") {
+//                    setFormatExRate(i);
+//                }
+//            }
+//        }
         calculateGrandTotal();
 
-        var creditDetailTableLength = $("#CreditDetailTable tr").length;
-
-        if (creditDetailTableLength > 1) {
-            for (var i = 1; i < creditDetailTableLength; i++) {
-                if ($('#creditAmount' + i).val() != "") {
-                    setFormatCreditAmount(i);
-                }
-
-            }
-        }
+//        var creditDetailTableLength = $("#CreditDetailTable tr").length;
+//
+//        if (creditDetailTableLength > 1) {
+//            for (var i = 1; i < creditDetailTableLength; i++) {
+//                if ($('#creditAmount' + i).val() != "") {
+//                    setFormatCreditAmount(i);
+//                }
+//
+//            }
+//        }
 
         $(".decimal").inputmask({
             alias: "decimal",
@@ -1998,7 +1991,9 @@
             digitsOptional: false,
             placeholder: "0.0000",
         });
-
+        
+        setDecimalFormatOnload();
+        setDecimalCreditFormatOnload();
         //Operation Duplicate
         if ($("#isDuplicate").val() === '1') {
             var username = $("#operationUser").val();
@@ -2249,7 +2244,7 @@
                     '<select class="form-control" name="receiveProduct' + row + '" id="receiveProduct' + row + '" onchange="addProductManual(' + row + ')"><option value="">---------</option></select>' +
                     '</td>' +
                     '<td><input maxlength="255" id="receiveDes' + row + '" name="receiveDes' + row + '" type="text" class="form-control" onchange="addProductManual(' + row + ')" ></td>' +
-                    '<td><input id="receiveCost' + row + '" name="receiveCost' + row + '" type="text" class="form-control decimal" disabled="disabled" ></td>' +
+                    '<td><input id="receiveCost' + row + '" name="receiveCost' + row + '" type="text" class="form-control decimal-'+row+'" disabled="disabled" onfocus="setDecimalFormat('+row+');" ></td>' +
                     '<td>' +
                     '<select class="form-control" name="receiveCurCostTemp' + row + '" id="receiveCurCostTemp' + row + '"><option value="">---------</option></select>' +
                     '</td>' +
@@ -2260,12 +2255,12 @@
                     '<input type="checkbox" name="receiveIsVat' + row + '" id="receiveIsVat' + row + '" onclick="handleClick(this,' + row + ');" value="" >' +
                     '</td>' +
                     '<td align="center"><div id="receiveVat' + row + '" style="display:none" ></div></td>' +
-                    '<td><input id="receiveAmount' + row + '" name="receiveAmount' + row + '" type="text" class="form-control decimal" ></td>' +
+                    '<td><input id="receiveAmount' + row + '" name="receiveAmount' + row + '" type="text" class="form-control decimal-'+row+'" onfocus="setDecimalFormat('+row+');" ></td>' +
                     '<td>' +
                     '<select class="form-control" name="receiveCurrency' + row + '" id="receiveCurrency' + row + '" ><option value="">---------</option></select>' +
                     '</td>' +
                     '<td>' +
-                    '<input type="text" value="" id="receiveExRate' + row + '" name="receiveExRate' + row + '" class="form-control decimalexrate" >' +
+                    '<input type="text" value="" id="receiveExRate' + row + '" name="receiveExRate' + row + '" class="form-control decimalexrate-'+row+'" onfocus="setDecimalFormat('+row+');" >' +
                     '</td>' +
                     '<td class="hidden">' +
                     '<input type="text" value="" id="curExRateTemp' + row + '" name="curExRateTemp' + row + '" class="form-control" >' +
@@ -2287,7 +2282,7 @@
                     '<select class="form-control" name="receiveProduct' + row + '" id="receiveProduct' + row + '" ><option value="">---------</option></select>' +
                     '</td>' +
                     '<td><input maxlength="255" id="receiveDes' + row + '" name="receiveDes' + row + '" type="text" class="form-control" ></td>' +
-                    '<td><input id="receiveCost' + row + '" name="receiveCost' + row + '" type="text" class="form-control decimal" onkeyup="insertCommas(this)" disabled="disabled" ></td>' +
+                    '<td><input id="receiveCost' + row + '" name="receiveCost' + row + '" type="text" class="form-control decimal-'+row+'"" onfocus="setDecimalFormat('+row+');" onkeyup="insertCommas(this)" disabled="disabled" ></td>' +
                     '<td>' +
                     '<select class="form-control" name="receiveCurCostTemp' + row + '" id="receiveCurCostTemp' + row + '"><option value="">---------</option></select>' +
                     '</td>' +
@@ -2298,12 +2293,12 @@
                     '<input type="checkbox" name="receiveIsVat' + row + '" id="receiveIsVat' + row + '" onclick="return false" value="" >' +
                     '</td>' +
                     '<td align="center"><div id="receiveVat' + row + '" style="display:none" ></div></td>' +
-                    '<td><input id="receiveAmount' + row + '" name="receiveAmount' + row + '" type="text" class="form-control decimal"></td>' +
+                    '<td><input id="receiveAmount' + row + '" name="receiveAmount' + row + '" type="text" class="form-control decimal-'+row+'"" onfocus="setDecimalFormat('+row+');"></td>' +
                     '<td>' +
                     '<select class="form-control" name="receiveCurrency' + row + '" id="receiveCurrency' + row + '" ><option value="">---------</option></select>' +
                     '</td>' +
                     '<td>' +
-                    '<input type="text" value="" id="receiveExRate' + row + '" name="receiveExRate' + row + '" class="form-control decimalexrate" >' +
+                    '<input type="text" value="" id="receiveExRate' + row + '" name="receiveExRate' + row + '" class="form-control decimalexrate-'+row+'"" onfocus="setDecimalFormat('+row+');">' +
                     '</td>' +
                     '<td class="text-center">' +
                     '<a href="#/inv" data-toggle="modal" data-target="#DescriptionReceiptDetailModal" onclick="getDescriptionDetail(' + row + ')" id="InputDescription' + row + '"><span class="glyphicon glyphicon-th-list"></span></a>&nbsp&nbsp' +
@@ -2320,35 +2315,36 @@
         $('#receiveCurCostTemp' + row).attr("disabled", true);
         $("#receiveAmount" + row).focusout(function () {
 //              calculatGross(row);
-            setFormatCurrency(row);
+//            setFormatCurrency(row);
             calculateGrandTotal();
         });
-        $("#receiveCost" + row).focusout(function () {
-            setFormatCurrency(row);
-        });
-        $("#receiveExRate" + row).focusout(function () {
-            setFormatExRate(row);
-        });
-        $(".decimal").inputmask({
-            alias: "decimal",
-            integerDigits: 8,
-            groupSeparator: ',',
-            autoGroup: true,
-            digits: 2,
-            allowMinus: false,
-            digitsOptional: false,
-            placeholder: "0.00",
-        });
-        $(".decimalexrate").inputmask({
-            alias: "decimal",
-            integerDigits: 6,
-            groupSeparator: ',',
-            autoGroup: true,
-            digits: 4,
-            allowMinus: false,
-            digitsOptional: false,
-            placeholder: "0.0000",
-        });
+        setDecimalFormat(row);
+//        $("#receiveCost" + row).focusout(function () {
+//            setFormatCurrency(row);
+//        });
+//        $("#receiveExRate" + row).focusout(function () {
+//            setFormatExRate(row);
+//        });
+//        $(".decimal").inputmask({
+//            alias: "decimal",
+//            integerDigits: 8,
+//            groupSeparator: ',',
+//            autoGroup: true,
+//            digits: 2,
+//            allowMinus: false,
+//            digitsOptional: false,
+//            placeholder: "0.00",
+//        });
+//        $(".decimalexrate").inputmask({
+//            alias: "decimal",
+//            integerDigits: 6,
+//            groupSeparator: ',',
+//            autoGroup: true,
+//            digits: 4,
+//            allowMinus: false,
+//            digitsOptional: false,
+//            placeholder: "0.0000",
+//        });
         
         $('#ReceiptListTable input:last').addClass('lastrow');
         $("#receiveProduct"+row+",#receiveDes"+row+",#receiveAmount"+row+",#receiveCurrency"+row+",#receiveExRate"+row).focus(function() {
@@ -2493,7 +2489,97 @@
             sumTotalCreditAmount();
         });
     }
-
+    function setDecimalFormat(row){
+        $(".decimal-"+row).inputmask({
+            alias: "decimal",
+            integerDigits: 8,
+            groupSeparator: ',',
+            autoGroup: true,
+            digits: 2,
+            allowMinus: false,
+            digitsOptional: false,
+            placeholder: "0.00",
+        });
+        
+        $(".decimalexrate-"+i).inputmask({
+            alias: "decimal",
+            integerDigits: 6,
+            groupSeparator: ',',
+            autoGroup: true,
+            digits: 4,
+            allowMinus: false,
+            digitsOptional: false,
+            placeholder: "0.0000",
+        });
+    }
+	
+    function setDecimalFormatOnload(){
+        var receiptDetailListcount = $("#receiptDetailListcount").val();
+        receiptDetailListcount = parseInt(receiptDetailListcount+1);
+        for(var i = 1 ; i < receiptDetailListcount ; i++){
+            var receiveCost = $("#receiveCost"+i).val();
+            var receiveAmount = $("#receiveAmount"+i).val();
+            var receiveExRate = $("#receiveExRate"+i).val();
+            if(receiveCost !== "" || receiveAmount !== "") {
+                $(".decimal-"+i).inputmask({
+                    alias: "decimal",
+                    integerDigits: 8,
+                    groupSeparator: ',',
+                    autoGroup: true,
+                    digits: 2,
+                    allowMinus: false,
+                    digitsOptional: false,
+                    placeholder: "0.00",
+                });
+            }
+            if(receiveExRate !== "") {
+                $(".decimalexrate-"+i).inputmask({
+                    alias: "decimal",
+                    integerDigits: 6,
+                    groupSeparator: ',',
+                    autoGroup: true,
+                    digits: 4,
+                    allowMinus: false,
+                    digitsOptional: false,
+                    placeholder: "0.0000",
+                });
+            }
+        }
+    }
+    
+    function setDecimalCreditFormat(row){
+        $(".decimalcredit-"+row).inputmask({
+            alias: "decimal",
+            integerDigits: 8,
+            groupSeparator: ',',
+            autoGroup: true,
+            digits: 2,
+            allowMinus: false,
+            digitsOptional: false,
+            placeholder: "0.00",
+        });
+    }
+	
+    function setDecimalCreditFormatOnload(){
+        var receiptCreditListcount = $("#receiptCreditListcount").val();
+        receiptCreditListcount = parseInt(receiptCreditListcount+1);
+        for(var i = 1 ; i < receiptCreditListcount ; i++){
+            var creditAmount = $("#creditAmount"+i).val();
+            if(creditAmount !== "" ) {
+                $(".decimalcredit-"+i).inputmask({
+                    alias: "decimal",
+                    integerDigits: 8,
+                    groupSeparator: ',',
+                    autoGroup: true,
+                    digits: 2,
+                    allowMinus: false,
+                    digitsOptional: false,
+                    placeholder: "0.00",
+                });
+            }
+ 
+        }
+    }
     function AddRowCredit(row) {
         $('#CreditDetailTable input:last').removeClass('lastrowCredit');
         $("#CreditDetailTable tbody").append(
@@ -2504,7 +2590,7 @@
                 '</td>' +
                 '<td><input maxlength="20" id="creditNo' + row + '" name="creditNo' + row + '" type="text" class="form-control" ></td>' +
                 '<td><div class="input-group date"><input id="creditExpired' + row + '" name="creditExpired' + row + '"  type="text" class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value=""><span class="input-group-addon spandate" style="padding : 1px 10px;"><span class="glyphicon glyphicon-calendar"></span></span></div></td>' +
-                '<td><input id="creditAmount' + row + '" name="creditAmount' + row + '" type="text" class="form-control decimal"></td>' +
+                '<td><input id="creditAmount' + row + '" name="creditAmount' + row + '" type="text" class="form-control decimalcredit-'+row+'" onfocus="setDecimalCreditFormat('+row+');"></td>' +
                 '<td class="text-center">' +
                 '<a class="remCF" onclick="deleteCreditList(\'\', \'' + row + '\')">  ' +
                 '<span id="SpanRemove' + row + '"class="glyphicon glyphicon-remove deleteicon"></span></a></td>' +
@@ -2525,27 +2611,28 @@
             }
             sumTotalCreditAmount();
         });
-
-        $(".decimal").inputmask({
-            alias: "decimal",
-            integerDigits: 8,
-            groupSeparator: ',',
-            autoGroup: true,
-            digits: 2,
-            allowMinus: false,
-            digitsOptional: false,
-            placeholder: "0.00",
-        });
-        $(".decimalexrate").inputmask({
-            alias: "decimal",
-            integerDigits: 6,
-            groupSeparator: ',',
-            autoGroup: true,
-            digits: 4,
-            allowMinus: false,
-            digitsOptional: false,
-            placeholder: "0.0000",
-        });
+        
+        setDecimalCreditFormat(row);
+//        $(".decimal").inputmask({
+//            alias: "decimal",
+//            integerDigits: 8,
+//            groupSeparator: ',',
+//            autoGroup: true,
+//            digits: 2,
+//            allowMinus: false,
+//            digitsOptional: false,
+//            placeholder: "0.00",
+//        });
+//        $(".decimalexrate").inputmask({
+//            alias: "decimal",
+//            integerDigits: 6,
+//            groupSeparator: ',',
+//            autoGroup: true,
+//            digits: 4,
+//            allowMinus: false,
+//            digitsOptional: false,
+//            placeholder: "0.0000",
+//        });
         
         $('#CreditDetailTable input:last').addClass('lastrowCredit');
         $("#creditNo"+row+",#creditAmount"+row).focus(function() {
@@ -2815,7 +2902,7 @@
                     '<select class="form-control" name="receiveProduct' + row + '" id="receiveProduct' + row + '" ><option value="' + product + '" selected></option></select>' +
                     '</td>' +
                     '<td><input maxlength="255" id="receiveDes' + row + '" name="receiveDes' + row + '" type="text" class="form-control" value="' + description + '"></td>' +
-                    '<td><input id="receiveCost' + row + '" name="receiveCost' + row + '" type="text" class="form-control decimal" value="' + cost + '" disabled="disabled" ></td>' +
+                    '<td><input id="receiveCost' + row + '" name="receiveCost' + row + '" type="text" class="form-control decimal-' + row + '" onfocus="setDecimalFormat('+row+');" value="' + cost + '" disabled="disabled" ></td>' +
                     '<td>' +
                     '<select class="form-control" name="receiveCurCostTemp' + row + '" id="receiveCurCostTemp' + row + '"><option value="' + cur + '" ></option></select>' +
                     '</td>' +
@@ -2826,12 +2913,12 @@
                     '<input type="checkbox" name="receiveIsVat' + row + '" id="receiveIsVat' + row + '" value="' + isVat + '"  onclick="handleClick(this,' + row + ');">' +
                     '</td>' +
                     '<td align="center"><div id="receiveVat' + row + '" style="display:none" value="' + vat + '"></div></td>' +
-                    '<td><input id="receiveAmount' + row + '" name="receiveAmount' + row + '" type="text" class="form-control decimal" onfocusout="checkAmount(' + row + ')" value="' + amount + '"></td>' +
+                    '<td><input id="receiveAmount' + row + '" name="receiveAmount' + row + '" type="text" class="form-control decimal-' + row + '"  onfocus="setDecimalFormat('+row+');" onfocusout="checkAmount(' + row + ')" value="' + amount + '"></td>' +
                     '<td>' +
                     '<select class="form-control" name="receiveCurrency' + row + '" id="receiveCurrency' + row + '" ><option value="' + currency + '"></option></select>' +
                     '</td>' +
                     '<td>' +
-                    '<input type="text" value="" id="receiveExRate' + row + '" name="receiveExRate' + row + '" class="form-control decimalexrate" >' +
+                    '<input type="text" value="" id="receiveExRate' + row + '" name="receiveExRate' + row + '" class="form-control decimalexrate-' + row + '" onfocus="setDecimalFormat('+row+');" >' +
                     '</td>' +
                     '<td class="text-center">' +
                     '<a href="#/inv" data-toggle="modal" data-target="#DescriptionReceiptDetailModal" onclick="getDescriptionDetail(' + row + ')" id="InputDescription' + row + '"><span class="glyphicon glyphicon-th-list"></span></a>&nbsp' +
@@ -2858,7 +2945,7 @@
                     '<select class="form-control" name="receiveProduct' + row + '" id="receiveProduct' + row + '" ><option value="' + product + '" selected></option></select>' +
                     '</td>' +
                     '<td><input maxlength="255" id="receiveDes' + row + '" name="receiveDes' + row + '" type="text" class="form-control" value="' + description + '"></td>' +
-                    '<td><input id="receiveCost' + row + '" name="receiveCost' + row + '" type="text" class="form-control decimal" value="' + cost + '" disabled="disabled" ></td>' +
+                    '<td><input id="receiveCost' + row + '" name="receiveCost' + row + '" type="text" class="form-control decimal-' + row + '" onfocus="setDecimalFormat('+row+');" value="' + cost + '" disabled="disabled" ></td>' +
                     '<td>' +
                     '<select class="form-control" name="receiveCurCostTemp' + row + '" id="receiveCurCostTemp' + row + '"><option value="' + cur + '" ></option></select>' +
                     '</td>' +
@@ -2869,12 +2956,12 @@
                     '<input type="checkbox" name="receiveIsVat' + row + '" id="receiveIsVat' + row + '" value="' + isVat + '"  onclick="return false">' +
                     '</td>' +
                     '<td align="center"><div id="receiveVat' + row + '" style="display:none" value="' + vat + '"></div></td>' +
-                    '<td><input id="receiveAmount' + row + '" name="receiveAmount' + row + '" type="text" class="form-control decimal" onfocusout="checkAmount(' + row + ')" value="' + amount + '"></td>' +
+                    '<td><input id="receiveAmount' + row + '" name="receiveAmount' + row + '" type="text" class="form-control decimal-' + row + '" onfocus="setDecimalFormat('+row+');" onfocusout="checkAmount(' + row + ')" value="' + amount + '"></td>' +
                     '<td>' +
                     '<select class="form-control" name="receiveCurrency' + row + '" id="receiveCurrency' + row + '" ><option value="' + currency + '"></option></select>' +
                     '</td>' +
                     '<td>' +
-                    '<input type="text" value="" id="receiveExRate' + row + '" name="receiveExRate' + row + '" class="form-control decimalexrate" >' +
+                    '<input type="text" value="" id="receiveExRate' + row + '" name="receiveExRate' + row + '" class="form-control decimalexrate-' + row + '" onfocus="setDecimalFormat('+row+');" >' +
                     '</td>' +
                     '<td class="text-center">' +
                     '<a href="#/inv" data-toggle="modal" data-target="#DescriptionReceiptDetailModal" onclick="getDescriptionDetail(' + row + ')" id="InputDescription' + row + '"><span class="glyphicon glyphicon-th-list"></span></a>&nbsp' +
@@ -2924,39 +3011,39 @@
             return ($(this).val() === currency);
         }).prop('selected', true);
 
-        $("#receiveAmount" + row).focusout(function () {
+//        $("#receiveAmount" + row).focusout(function () {
 //        calculatGross(row);
-            setFormatCurrency(row);
-            calculateGrandTotal();
-        });
-        $("#receiveCost" + row).focusout(function () {
-            setFormatCurrency(row);
-        });
-        $("#receiveExRate" + row).focusout(function () {
-            setFormatExRate(row);
-        });
-        setFormatCurrency(row);
-        $(".decimal").inputmask({
-            alias: "decimal",
-            integerDigits: 8,
-            groupSeparator: ',',
-            autoGroup: true,
-            digits: 2,
-            allowMinus: false,
-            digitsOptional: false,
-            placeholder: "0.00",
-        });
-        $(".decimalexrate").inputmask({
-            alias: "decimal",
-            integerDigits: 6,
-            groupSeparator: ',',
-            autoGroup: true,
-            digits: 4,
-            allowMinus: false,
-            digitsOptional: false,
-            placeholder: "0.0000",
-        });
-        
+//            setFormatCurrency(row);
+//            calculateGrandTotal();
+//        });
+//        $("#receiveCost" + row).focusout(function () {
+//            setFormatCurrency(row);
+//        });
+//        $("#receiveExRate" + row).focusout(function () {
+//            setFormatExRate(row);
+//        });
+//        setFormatCurrency(row);
+//        $(".decimal").inputmask({
+//            alias: "decimal",
+//            integerDigits: 8,
+//            groupSeparator: ',',
+//            autoGroup: true,
+//            digits: 2,
+//            allowMinus: false,
+//            digitsOptional: false,
+//            placeholder: "0.00",
+//        });
+//        $(".decimalexrate").inputmask({
+//            alias: "decimal",
+//            integerDigits: 6,
+//            groupSeparator: ',',
+//            autoGroup: true,
+//            digits: 4,
+//            allowMinus: false,
+//            digitsOptional: false,
+//            placeholder: "0.0000",
+//        });
+        setDecimalFormat(row);
         $('#ReceiptListTable input:last').addClass('lastrow');
         $("#receiveProduct"+row+",#receiveDes"+row+",#receiveAmount"+row+",#receiveCurrency"+row+",#receiveExRate"+row).focus(function() {
             if (typeRec === "V") {
