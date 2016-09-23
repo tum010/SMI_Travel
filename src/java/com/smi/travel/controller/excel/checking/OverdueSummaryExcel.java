@@ -12,6 +12,7 @@ import com.smi.travel.datalayer.view.entity.StockInvoiceSummaryView;
 import com.smi.travel.datalayer.view.entity.StockNonInvoiceSummaryView;
 import java.awt.Color;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -260,14 +261,24 @@ public class OverdueSummaryExcel extends AbstractExcelView{
         int num = 0;
         int count = 9 ;
         String temp = "";
-        String sumThbAll = "";
-        String sumJpyAll = "";
-        String sumUsdAll = "";
-        String sumRecAmtAll = "";
+//        String sumThbAll = "";
+//        String sumJpyAll = "";
+//        String sumUsdAll = "";
+//        String sumRecAmtAll = "";
+        BigDecimal bahtTotalAll = new BigDecimal(BigInteger.ZERO);
+        BigDecimal jpyTotalAll = new BigDecimal(BigInteger.ZERO);
+        BigDecimal usdTotalAll = new BigDecimal(BigInteger.ZERO);
+        BigDecimal recamtTotalAll = new BigDecimal(BigInteger.ZERO);
+        
         if(listOver != null && listOver.size() != 0){
             for (int r = 0 ; r < listOver.size() ; r++) {
                 if(r != 0){
                     if("Agent".equals(listOver.get(r).getGroup())){
+                        bahtTotalAll = bahtTotalAll.add("".equalsIgnoreCase(String.valueOf(listOver.get(r).getBath())) ? new BigDecimal(0) : (new BigDecimal(listOver.get(r).getBath())));
+                        jpyTotalAll = jpyTotalAll.add("".equalsIgnoreCase(String.valueOf(listOver.get(r).getJpy())) ? new BigDecimal(0) : (new BigDecimal(listOver.get(r).getJpy())));
+                        usdTotalAll = usdTotalAll.add("".equalsIgnoreCase(String.valueOf(listOver.get(r).getUsd())) ? new BigDecimal(0) : (new BigDecimal(listOver.get(r).getUsd())));
+                        recamtTotalAll = recamtTotalAll.add("".equalsIgnoreCase(String.valueOf(listOver.get(r).getRecamt())) ? new BigDecimal(0) : (new BigDecimal(listOver.get(r).getRecamt())));
+
                         if(temp.equals(listOver.get(r).getInvto())){ // equal type	
                             if(r  != (listOver.size()-1)){ // check not last row
                                 HSSFRow row = sheet1.createRow(r+count);
@@ -284,10 +295,10 @@ public class OverdueSummaryExcel extends AbstractExcelView{
                                 String totaljpy = "SUM(E" + start+":E"+(r+count)+")";
                                 String totalusd = "SUM(F" + start+":F"+(r+count)+")";
                                 String totalrecamt = "SUM(H" + start+":H"+(r+count)+")";
-                                sumThbAll += ",D"+(count+r+1);
-                                sumJpyAll += ",E"+(count+r+1);
-                                sumUsdAll += ",F"+(count+r+1);
-                                sumRecAmtAll += ",H"+(count+r+1);
+//                                sumThbAll += ",D"+(count+r+1);
+//                                sumJpyAll += ",E"+(count+r+1);
+//                                sumUsdAll += ",F"+(count+r+1);
+//                                sumRecAmtAll += ",H"+(count+r+1);
                                 start = count+r+3;
                                 HSSFRow row00 = sheet1.createRow(r+count);
                                 HSSFCell cell00 = row00.createCell(0);
@@ -335,10 +346,10 @@ public class OverdueSummaryExcel extends AbstractExcelView{
                             String totaljpy = "SUM(E" + start+":E"+(count+r+1)+")";
                             String totalusd = "SUM(F" + start+":F"+(count+r+1)+")";
                             String totalrecamt = "SUM(H" + start+":H"+(count+r+1)+")";
-                            sumThbAll += ",D"+(count+r+2);
-                            sumJpyAll += ",E"+(count+r+2);
-                            sumUsdAll += ",F"+(count+r+2);
-                            sumRecAmtAll += ",H"+(count+r+2);
+//                            sumThbAll += ",D"+(count+r+2);
+//                            sumJpyAll += ",E"+(count+r+2);
+//                            sumUsdAll += ",F"+(count+r+2);
+//                            sumRecAmtAll += ",H"+(count+r+2);
                             HSSFRow row00 = sheet1.createRow(count+r+1);
                             HSSFCell cell00 = row00.createCell(0);
                             cell00.setCellValue("");
@@ -378,18 +389,18 @@ public class OverdueSummaryExcel extends AbstractExcelView{
                             cellTotal002.setCellStyle(styleAlignRightBorderAllDetailTable);
                             sheet1.addMergedRegion(CellRangeAddress.valueOf("A"+(count+r+3)+":C"+(count+r+3)+""));
                             HSSFCell cellTotal003 = rowTotalAll.createCell(3);
-                            cellTotal003.setCellFormula(" SUM("+sumThbAll.substring(1)+")");
+                            cellTotal003.setCellValue(bahtTotalAll.doubleValue());
                             cellTotal003.setCellStyle(styleAlignRightBorderAllNumber);
                             HSSFCell cellTotal004 = rowTotalAll.createCell(4);
-                            cellTotal004.setCellFormula(" SUM("+sumJpyAll.substring(1)+")");
+                            cellTotal004.setCellValue(jpyTotalAll.doubleValue());
                             cellTotal004.setCellStyle(styleAlignRightBorderAllNumber);
                             HSSFCell cellTotal005 = rowTotalAll.createCell(5);
-                            cellTotal005.setCellFormula(" SUM("+sumUsdAll.substring(1)+")");
+                            cellTotal005.setCellValue(usdTotalAll.doubleValue());
                             cellTotal005.setCellStyle(styleAlignRightBorderAllNumber);
                             HSSFCell cellTotal006 = rowTotalAll.createCell(6);
                             cellTotal006.setCellStyle(styleAlignRightBorderAllNumber);
                             HSSFCell cellTotal007 = rowTotalAll.createCell(7);
-                            cellTotal007.setCellFormula(" SUM("+sumRecAmtAll.substring(1)+")");
+                            cellTotal007.setCellValue(recamtTotalAll.doubleValue());
                             cellTotal007.setCellStyle(styleAlignRightBorderAllNumber);
                             for(int k = 8 ; k < 13 ;k++){
                                 HSSFCell cellTotal008 = rowTotalAll.createCell(k);
@@ -398,6 +409,11 @@ public class OverdueSummaryExcel extends AbstractExcelView{
                             sheet1.addMergedRegion(CellRangeAddress.valueOf("I"+(count+r+3)+":M"+(count+r+3)+""));
                         }
                     }else if("Owner".equals(listOver.get(r).getGroup())){
+                        bahtTotalAll = bahtTotalAll.add("".equalsIgnoreCase(String.valueOf(listOver.get(r).getBath())) ? new BigDecimal(0) : (new BigDecimal(listOver.get(r).getBath())));
+                        jpyTotalAll = jpyTotalAll.add("".equalsIgnoreCase(String.valueOf(listOver.get(r).getJpy())) ? new BigDecimal(0) : (new BigDecimal(listOver.get(r).getJpy())));
+                        usdTotalAll = usdTotalAll.add("".equalsIgnoreCase(String.valueOf(listOver.get(r).getUsd())) ? new BigDecimal(0) : (new BigDecimal(listOver.get(r).getUsd())));
+                        recamtTotalAll = recamtTotalAll.add("".equalsIgnoreCase(String.valueOf(listOver.get(r).getRecamt())) ? new BigDecimal(0) : (new BigDecimal(listOver.get(r).getRecamt())));
+
                         if(temp.equals(listOver.get(r).getOwnername())){ // equal type	
                             if(r  != (listOver.size()-1)){ // check not last row
                                 HSSFRow row = sheet1.createRow(r+count);
@@ -414,10 +430,10 @@ public class OverdueSummaryExcel extends AbstractExcelView{
                             String totaljpy = "SUM(E" + start+":E"+(r+count)+")";
                             String totalusd = "SUM(F" + start+":F"+(r+count)+")";
                             String totalrecamt = "SUM(H" + start+":H"+(r+count)+")";
-                            sumThbAll += ",D"+(count+r+1);
-                            sumJpyAll += ",E"+(count+r+1);
-                            sumUsdAll += ",F"+(count+r+1);
-                            sumRecAmtAll += ",H"+(count+r+1);
+//                            sumThbAll += ",D"+(count+r+1);
+//                            sumJpyAll += ",E"+(count+r+1);
+//                            sumUsdAll += ",F"+(count+r+1);
+//                            sumRecAmtAll += ",H"+(count+r+1);
                             start = count+r+3;
                             HSSFRow row00 = sheet1.createRow(r+count);
                             HSSFCell cell00 = row00.createCell(0);
@@ -465,10 +481,10 @@ public class OverdueSummaryExcel extends AbstractExcelView{
                             String totaljpy = "SUM(E" + start+":E"+(count+r+1)+")";
                             String totalusd = "SUM(F" + start+":F"+(count+r+1)+")";
                             String totalrecamt = "SUM(H" + start+":H"+(count+r+1)+")";
-                            sumThbAll += ",D"+(count+r+2);
-                            sumJpyAll += ",E"+(count+r+2);
-                            sumUsdAll += ",F"+(count+r+2);
-                            sumRecAmtAll += ",H"+(count+r+2);
+//                            sumThbAll += ",D"+(count+r+2);
+//                            sumJpyAll += ",E"+(count+r+2);
+//                            sumUsdAll += ",F"+(count+r+2);
+//                            sumRecAmtAll += ",H"+(count+r+2);
                             HSSFRow row00 = sheet1.createRow(count+r+1);
                             HSSFCell cell00 = row00.createCell(0);
                             cell00.setCellValue("");
@@ -508,18 +524,18 @@ public class OverdueSummaryExcel extends AbstractExcelView{
                             cellTotal002.setCellStyle(styleAlignRightBorderAllDetailTable);
                             sheet1.addMergedRegion(CellRangeAddress.valueOf("A"+(count+r+3)+":C"+(count+r+3)+""));
                             HSSFCell cellTotal003 = rowTotalAll.createCell(3);
-                            cellTotal003.setCellFormula(" SUM("+sumThbAll.substring(1)+")");
+                            cellTotal003.setCellValue(bahtTotalAll.doubleValue());
                             cellTotal003.setCellStyle(styleAlignRightBorderAllNumber);
                             HSSFCell cellTotal004 = rowTotalAll.createCell(4);
-                            cellTotal004.setCellFormula(" SUM("+sumJpyAll.substring(1)+")");
+                            cellTotal004.setCellValue(jpyTotalAll.doubleValue());
                             cellTotal004.setCellStyle(styleAlignRightBorderAllNumber);
                             HSSFCell cellTotal005 = rowTotalAll.createCell(5);
-                            cellTotal005.setCellFormula(" SUM("+sumUsdAll.substring(1)+")");
+                            cellTotal005.setCellValue(usdTotalAll.doubleValue());
                             cellTotal005.setCellStyle(styleAlignRightBorderAllNumber);
                             HSSFCell cellTotal006 = rowTotalAll.createCell(6);
                             cellTotal006.setCellStyle(styleAlignRightBorderAllNumber);
                             HSSFCell cellTotal007 = rowTotalAll.createCell(7);
-                            cellTotal007.setCellFormula(" SUM("+sumRecAmtAll.substring(1)+")");
+                            cellTotal007.setCellValue(recamtTotalAll.doubleValue());
                             cellTotal007.setCellStyle(styleAlignRightBorderAllNumber);
                             for(int k = 8 ; k < 13 ;k++){
                                 HSSFCell cellTotal008 = rowTotalAll.createCell(k);
@@ -529,6 +545,11 @@ public class OverdueSummaryExcel extends AbstractExcelView{
                         }
                     }
                 }else{
+                    bahtTotalAll = bahtTotalAll.add("".equalsIgnoreCase(String.valueOf(listOver.get(r).getBath())) ? new BigDecimal(0) : (new BigDecimal(listOver.get(r).getBath())));
+                    jpyTotalAll = jpyTotalAll.add("".equalsIgnoreCase(String.valueOf(listOver.get(r).getJpy())) ? new BigDecimal(0) : (new BigDecimal(listOver.get(r).getJpy())));
+                    usdTotalAll = usdTotalAll.add("".equalsIgnoreCase(String.valueOf(listOver.get(r).getUsd())) ? new BigDecimal(0) : (new BigDecimal(listOver.get(r).getUsd())));
+                    recamtTotalAll = recamtTotalAll.add("".equalsIgnoreCase(String.valueOf(listOver.get(r).getRecamt())) ? new BigDecimal(0) : (new BigDecimal(listOver.get(r).getRecamt())));
+
                     HSSFRow row0 = sheet1.createRow(count+r);
                     if("Owner".equals(listOver.get(r).getGroup())){  
                         HSSFCell cell = row0.createCell(0);
