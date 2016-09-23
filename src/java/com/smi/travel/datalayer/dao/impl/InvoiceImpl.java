@@ -314,7 +314,7 @@ public class InvoiceImpl implements InvoiceDao{
                 department = "Wendy";
             }else if("O".equalsIgnoreCase(department)){
                 department = "Outbound";
-            }else if("I".equalsIgnoreCase(department)){
+            }else if("R".equalsIgnoreCase(department) || "P".equalsIgnoreCase(department)){
                 department = "Inbound";
             }
             
