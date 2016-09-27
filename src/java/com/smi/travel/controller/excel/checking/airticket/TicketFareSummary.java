@@ -143,6 +143,36 @@ public class TicketFareSummary extends AbstractExcelView {
         cell52.setCellValue(dataheader.getHeadstaff());
         cell52.setCellStyle(styleC22);
 
+        // Row 6
+        HSSFRow row06 = sheet.createRow(5);
+        HSSFCell cell061 = row06.createCell(0);
+        cell061.setCellValue("Report of : ");
+        cell061.setCellStyle(styleC21);
+        sheet.addMergedRegion(CellRangeAddress.valueOf("A6:D6"));
+        HSSFCell cell062 = row06.createCell(4);
+        if(!"".equalsIgnoreCase(dataheader.getFrom())){
+            cell062.setCellValue(dataheader.getFrom());
+            cell062.setCellStyle(styleC22);
+        }
+        HSSFCell cell063 = row06.createCell(5);
+        if(!"".equalsIgnoreCase(dataheader.getTo())){
+        cell063.setCellValue("to  " + dataheader.getTo());
+        cell063.setCellStyle(styleC22);
+        }
+        
+        // Row 7
+        HSSFRow row07 = sheet.createRow(6);
+        HSSFCell cell071 = row07.createCell(0);
+        cell071.setCellValue("Print on : ");
+        cell071.setCellStyle(styleC21);
+        sheet.addMergedRegion(CellRangeAddress.valueOf("A7:D7"));
+        HSSFCell cell072 = row07.createCell(4);
+        cell072.setCellValue(dataheader.getPrintondate());
+        cell072.setCellStyle(styleC22);
+        sheet.addMergedRegion(CellRangeAddress.valueOf("E7:F7"));
+        
+        
+        
         // Header Table
         HSSFCellStyle styleC3Center = wb.createCellStyle();
         styleC3Center.setFont(excelFunction.getHeaderTable(wb.createFont()));
@@ -776,6 +806,35 @@ public class TicketFareSummary extends AbstractExcelView {
         HSSFCell cell52 = row5.createCell(5);
         cell52.setCellValue(dataheader.getHeadstaff());
         cell52.setCellStyle(styleC22);
+        
+        // Row 6
+        HSSFRow row06 = sheet.createRow(5);
+        HSSFCell cell061 = row06.createCell(0);
+        cell061.setCellValue("Report of : ");
+        cell061.setCellStyle(styleC21);
+        sheet.addMergedRegion(CellRangeAddress.valueOf("A6:D6"));
+        HSSFCell cell062 = row06.createCell(4);
+        if(!"".equalsIgnoreCase(dataheader.getFrom())){
+            cell062.setCellValue(dataheader.getFrom());
+            cell062.setCellStyle(styleC22);
+        }
+        HSSFCell cell063 = row06.createCell(5);
+        if(!"".equalsIgnoreCase(dataheader.getTo())){
+        cell063.setCellValue("to  " + dataheader.getTo());
+        cell063.setCellStyle(styleC22);
+        }
+        
+        // Row 7
+        HSSFRow row07 = sheet.createRow(6);
+        HSSFCell cell071 = row07.createCell(0);
+        cell071.setCellValue("Print on : ");
+        cell071.setCellStyle(styleC21);
+        sheet.addMergedRegion(CellRangeAddress.valueOf("A7:D7"));
+        HSSFCell cell072 = row07.createCell(4);
+        cell072.setCellValue(dataheader.getPrintondate());
+        cell072.setCellStyle(styleC22);
+        sheet.addMergedRegion(CellRangeAddress.valueOf("E7:F7"));
+        
         
          // Header Table
         HSSFCellStyle styleC3Center = wb.createCellStyle();

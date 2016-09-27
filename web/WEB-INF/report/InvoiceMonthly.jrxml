@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="InvoiceMonthly" language="groovy" pageWidth="595" pageHeight="770" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f3e0a4ca-601e-4515-90b1-1c808ba982a2">
-	<property name="ireport.zoom" value="3.2153832150000103"/>
-	<property name="ireport.x" value="643"/>
-	<property name="ireport.y" value="789"/>
+	<property name="ireport.zoom" value="2.4157650000000075"/>
+	<property name="ireport.x" value="663"/>
+	<property name="ireport.y" value="494"/>
 	<field name="systemdate" class="java.lang.String"/>
 	<field name="billto" class="java.lang.String"/>
 	<field name="billfrom" class="java.lang.String"/>
@@ -42,7 +42,7 @@
 		<variableExpression><![CDATA[((!"7".equals($F{recstatus})) ? $F{recamt} :  new BigDecimal("0.00"))]]></variableExpression>
 	</variable>
 	<variable name="grandtotalthb" class="java.math.BigDecimal" resetType="Group" resetGroup="invoice">
-		<variableExpression><![CDATA[$V{totalthb} - $V{totalamount}]]></variableExpression>
+		<variableExpression><![CDATA[$V{totalthb} - (($V{totalamount} != null && (!"".equals($V{totalamount}))) ?  $V{totalamount} : new BigDecimal("0.00") )]]></variableExpression>
 	</variable>
 	<group name="invoice" keepTogether="true">
 		<groupExpression><![CDATA[$F{invname}]]></groupExpression>
