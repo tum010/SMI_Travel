@@ -751,7 +751,8 @@ function changeFormatAmountNumber(id) {
 }
 
 function addRowInvoiceInboundDetail(row){
-    $('#DetailBillableTable input:last').removeClass('lastrow');
+//    $('#DetailBillableTable input:last').removeClass('lastrow');
+    $('#DetailBillableTable tr input:last').removeClass('lastrow');
     var typeInvoiceInbound = $("#InputTypeInvoiceInbound").val();
     var vatTemp = $('#vatBase').val();
     var textHidden = '';
@@ -805,8 +806,8 @@ function addRowInvoiceInboundDetail(row){
     
     $('#DetailBillableTable input:last').addClass('lastrow');
     
-    $("#product"+row+",#BillDescriptionTemp"+row+",#InputAmount"+row+",#SelectCurrencyAmount"+row).focus(function() {
-        if($("#InputAmount"+(parseInt(row)-1)).hasClass("lastrow")){
+    $("#product"+row+",#BillDescriptionTemp"+row+",#InputGross"+row+",#InputAmount"+row+",#SelectCurrencyAmount"+row+",#InputExRate"+row+",#InputAmountLocal"+row).focus(function() {
+        if($("#InputAmountLocal"+(parseInt(row)-1)).hasClass("lastrow")){
            addRowInvoiceInboundDetail(parseInt($("#counterTable").val()) + 1);
         }            
     });
