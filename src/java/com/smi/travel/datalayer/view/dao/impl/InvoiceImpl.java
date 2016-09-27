@@ -580,6 +580,7 @@ public class InvoiceImpl implements InvoiceReportDao{
                 .addScalar("recno", Hibernate.STRING)
                 .addScalar("recamt", Hibernate.BIG_DECIMAL)
                 .addScalar("type", Hibernate.STRING)
+                .addScalar("recstatus", Hibernate.STRING)
                 .list();
         if(QueryInvoiceMounthList != null && QueryInvoiceMounthList.size() != 0){
         String[] billing = Accno.split(",");
@@ -623,6 +624,12 @@ public class InvoiceImpl implements InvoiceReportDao{
                 invM.setRemittanceto1("REMITTANCE TO : "+billing[0].toUpperCase());
                 invM.setRemittanceto2(billing[1].toUpperCase()+" CURRENT ACCOUNT NO. "+billing[2]);
             }          
+            String recstatus = util.ConvertString(B[11]);
+            if(recstatus.indexOf("7") != -1){
+                invM.setRecstatus("7");
+            }else{
+                invM.setRecstatus(recstatus);
+            }
             data.add(invM);
         }
         }

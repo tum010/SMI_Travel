@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="InvoiceMonthly" language="groovy" pageWidth="595" pageHeight="770" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f3e0a4ca-601e-4515-90b1-1c808ba982a2">
-	<property name="ireport.zoom" value="2.1961500000000007"/>
-	<property name="ireport.x" value="467"/>
-	<property name="ireport.y" value="316"/>
+	<property name="ireport.zoom" value="3.2153832150000103"/>
+	<property name="ireport.x" value="643"/>
+	<property name="ireport.y" value="789"/>
 	<field name="systemdate" class="java.lang.String"/>
 	<field name="billto" class="java.lang.String"/>
 	<field name="billfrom" class="java.lang.String"/>
@@ -28,6 +28,7 @@
 	<field name="billingmail" class="java.lang.String"/>
 	<field name="remittanceto1" class="java.lang.String"/>
 	<field name="remittanceto2" class="java.lang.String"/>
+	<field name="recstatus" class="java.lang.String"/>
 	<variable name="totalthb" class="java.math.BigDecimal" resetType="Group" resetGroup="invoice" calculation="Sum">
 		<variableExpression><![CDATA[$F{thb}]]></variableExpression>
 	</variable>
@@ -38,7 +39,10 @@
 		<variableExpression><![CDATA[$F{usd}]]></variableExpression>
 	</variable>
 	<variable name="totalamount" class="java.math.BigDecimal" resetType="Group" resetGroup="invoice" calculation="Sum">
-		<variableExpression><![CDATA[$F{recamt}]]></variableExpression>
+		<variableExpression><![CDATA[((!"7".equals($F{recstatus})) ? $F{recamt} :  new BigDecimal("0.00"))]]></variableExpression>
+	</variable>
+	<variable name="grandtotalthb" class="java.math.BigDecimal" resetType="Group" resetGroup="invoice">
+		<variableExpression><![CDATA[$V{totalthb} - $V{totalamount}]]></variableExpression>
 	</variable>
 	<group name="invoice" keepTogether="true">
 		<groupExpression><![CDATA[$F{invname}]]></groupExpression>
@@ -67,7 +71,13 @@
 			</band>
 		</groupHeader>
 		<groupFooter>
-			<band height="40">
+			<band height="61">
+				<rectangle>
+					<reportElement mode="Transparent" x="9" y="0" width="534" height="21" uuid="b41eb504-7539-4923-9088-899cf0833d82"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</rectangle>
 				<textField pattern=" #,##0.00" isBlankWhenNull="true">
 					<reportElement x="200" y="0" width="61" height="21" uuid="60e2efdd-298b-4cb4-aece-08c15682c434"/>
 					<textElement textAlignment="Right">
@@ -97,20 +107,14 @@
 					<textFieldExpression><![CDATA[$V{totalusd}]]></textFieldExpression>
 				</textField>
 				<textField pattern=" #,##0.00" isBlankWhenNull="true">
-					<reportElement x="423" y="0" width="66" height="21" uuid="7fefa16e-aa2e-4ceb-bb2d-d09dc8f72d2e"/>
+					<reportElement x="419" y="0" width="66" height="21" uuid="7fefa16e-aa2e-4ceb-bb2d-d09dc8f72d2e"/>
 					<textElement textAlignment="Right">
 						<font fontName="TH SarabunPSK" size="14"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{totalamount}]]></textFieldExpression>
 				</textField>
-				<rectangle>
-					<reportElement mode="Transparent" x="9" y="0" width="534" height="21" uuid="b41eb504-7539-4923-9088-899cf0833d82"/>
-					<graphicElement>
-						<pen lineWidth="0.25"/>
-					</graphicElement>
-				</rectangle>
 				<staticText>
-					<reportElement x="129" y="0" width="73" height="20" uuid="e7835b80-58da-4aee-80f7-ef85ea3055b9"/>
+					<reportElement x="159" y="0" width="43" height="20" uuid="e7835b80-58da-4aee-80f7-ef85ea3055b9"/>
 					<textElement>
 						<font fontName="TH SarabunPSK" size="14" isBold="true"/>
 					</textElement>
@@ -122,6 +126,46 @@
 						<pen lineWidth="0.25"/>
 					</graphicElement>
 				</line>
+				<rectangle>
+					<reportElement mode="Transparent" x="9" y="21" width="534" height="21" uuid="3da23cbe-0232-43a7-af63-8a5db8c17e41"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</rectangle>
+				<textField pattern=" #,##0.00" isBlankWhenNull="true">
+					<reportElement x="200" y="21" width="61" height="21" uuid="747e1858-bd68-412b-886c-30f36a479b39"/>
+					<textElement textAlignment="Right">
+						<font fontName="TH SarabunPSK" size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{grandtotalthb}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="200" y="21" width="1" height="21" uuid="5504dd78-862d-449f-8bdd-17c248aa577b"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+				<staticText>
+					<reportElement x="129" y="21" width="73" height="20" uuid="147f57e7-a8c7-427b-9222-e262ee3a260f"/>
+					<textElement>
+						<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Grand Total]]></text>
+				</staticText>
+				<textField pattern=" #,##0.00" isBlankWhenNull="true">
+					<reportElement x="264" y="21" width="57" height="21" uuid="ea5aa840-cd66-4761-a4b4-f821d75ef08a"/>
+					<textElement textAlignment="Right">
+						<font fontName="TH SarabunPSK" size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{totaljpy}]]></textFieldExpression>
+				</textField>
+				<textField pattern=" #,##0.00" isBlankWhenNull="true">
+					<reportElement x="324" y="21" width="60" height="21" uuid="abfdf928-6940-430c-8d68-25cf536ce58a"/>
+					<textElement textAlignment="Right">
+						<font fontName="TH SarabunPSK" size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{totalusd}]]></textFieldExpression>
+				</textField>
 			</band>
 		</groupFooter>
 	</group>

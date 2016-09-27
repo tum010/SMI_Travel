@@ -38,6 +38,7 @@ public class InvoiceMonthly {
     private String billingmail;
     private String remittanceto1;
     private String remittanceto2;
+    private String recstatus;
                    
     public String getInvname() {
         return invname;
@@ -239,6 +240,14 @@ public class InvoiceMonthly {
 
     public void setRemittanceto2(String remittanceto2) {
         this.remittanceto2 = remittanceto2;
+    }
+
+    public String getRecstatus() {
+        return recstatus;
+    }
+
+    public void setRecstatus(String recstatus) {
+        this.recstatus = recstatus;
     }
 
 }

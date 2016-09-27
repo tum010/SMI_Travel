@@ -96,10 +96,19 @@ public class CustomerAgentInfoImpl implements CustomerAgentInfoDao{
         String sql = "SELECT concat( ifnull(concat(`mi`.`name`, ' '), ''), ifnull( concat(`cm`.`last_name`, ' '), '' ), "
                 + "ifnull( concat(' ', `cm`.`first_name`), '' )) AS `bill_name`, `cm`.`code` AS `bill_to`, `cm`.`tel` AS `tel`, "
                 + "`cm`.`address` AS `address`, NULL AS `fax`, NULL AS `term`, NULL AS `pay`, 'C' AS `type` "
-                + "FROM ( `customer` `cm` LEFT JOIN `m_initialname` `mi` ON (( `mi`.`id` = `cm`.`initial_name` ))) "
-                + "WHERE concat( ifnull(concat(`mi`.`name`, ' '), ''), ifnull( concat(`cm`.`last_name`, ' '), '' ), ifnull( concat(' ', `cm`.`first_name`), '' )) LIKE '%" + name + "%' "
-                + "OR `cm`.`code` LIKE '%" + name + "%' "
-                + "UNION ALL "
+                + "FROM ( `customer` `cm` LEFT JOIN `m_initialname` `mi` ON (( `mi`.`id` = `cm`.`initial_name` ))) " ;
+        if(name.indexOf("/") >= 0){
+            String[] nametemp = name.split("/");
+            String lastname = nametemp[0];
+            String firstname = nametemp[1];    
+            sql += "WHERE "
+                + " ( `cm`.`first_name` LIKE '" + firstname + "%' and `cm`.`last_name` LIKE '" + lastname + "%' ) "
+                + "OR `cm`.`code` LIKE '%" + lastname + firstname + "%' " ;
+        }else{
+            sql += "WHERE concat( ifnull(concat(`mi`.`name`, ' '), ''), ifnull( concat(`cm`.`last_name`, ' '), '' ), ifnull( concat(' ', `cm`.`first_name`), '' )) LIKE '%" + name + "%' "
+                + "OR `cm`.`code` LIKE '%" + name + "%' ";
+        }
+            sql += "UNION ALL "
                 + "SELECT `ag`.`name` AS `bill_name`, `ag`.`code` AS `bill_to`, `ag`.`tel` AS `tel`, `ag`.`address` AS `address`, "
                 + "`ag`.`fax` AS `fax`, `ag`.`term_id` AS `term`, `ag`.`pay_id` AS `pay`, 'A' AS `agent` "
                 + "FROM `agent` `ag` "
@@ -109,6 +118,7 @@ public class CustomerAgentInfoImpl implements CustomerAgentInfoDao{
                 + "NULL AS `term`, NULL AS `pay`, 'S' AS `type` "
                 + "FROM `staff` `st` "
                 + "WHERE (`st`.`position` = 'GUIDE') AND ( concat('G.', `st`.`name`) LIKE '%" + name + "%' OR `st`.`ar_code` LIKE '%" + name + "%' )";
+        
         List<Object[]> QueryList =  session.createSQLQuery(sql)
                 .addScalar("bill_To",Hibernate.STRING)
                 .addScalar("bill_Name",Hibernate.STRING)

@@ -271,7 +271,7 @@ public class BookingViewImpl implements BookingViewDao{
     public String checkBook(String refNoEdit) {
         String result = "fail";
         Session session = this.sessionFactory.openSession();
-        List<InvoiceDetail> invoiceDetailList = session.createQuery("from InvoiceDetail inv where inv.billableDesc.billable.master.referenceNo = :refNo").setParameter("refNo", refNoEdit).list();
+        List<InvoiceDetail> invoiceDetailList = session.createQuery("from InvoiceDetail inv where inv.billableDesc.billable.master.referenceNo = :refNo and inv.invoice.MFinanceItemstatus.id <> 2 ").setParameter("refNo", refNoEdit).list();
         if(!invoiceDetailList.isEmpty()){
             return result;
         } 
