@@ -795,6 +795,7 @@ public class BookingSummaryImpl implements BookingSummaryDao{
                 .addScalar("price", Hibernate.STRING)
                 .addScalar("profit", Hibernate.STRING)
                 .addScalar("departmentno", Hibernate.STRING)
+                .addScalar("refno", Hibernate.STRING)
                 .list();
 
         for (Object[] B : QueryStaffList) {
@@ -806,6 +807,7 @@ public class BookingSummaryImpl implements BookingSummaryDao{
             osssr.setSale(B[4]== null ? "" : util.ConvertString(B[4]));
             osssr.setProfit(B[5]== null ? "" : util.ConvertString(B[5]));
             osssr.setDepartmentno(B[6]== null ? "" : util.ConvertString(B[6]));
+            osssr.setRefno(B[7]== null ? "" : util.ConvertString(B[7]));
             data.add(osssr);
         }
         this.sessionFactory.close();

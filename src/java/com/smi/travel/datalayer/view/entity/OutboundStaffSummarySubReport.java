@@ -18,6 +18,7 @@ public class OutboundStaffSummarySubReport {
     private String type;
     private String name;
     private String departmentno;
+    private String refno;
     
     public String getStaff() {
         return staff;
@@ -81,6 +82,14 @@ public class OutboundStaffSummarySubReport {
 
     public void setDepartmentno(String departmentno) {
         this.departmentno = departmentno;
+    }
+
+    public String getRefno() {
+        return refno;
+    }
+
+    public void setRefno(String refno) {
+        this.refno = refno;
     }
     
 }

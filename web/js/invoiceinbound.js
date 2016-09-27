@@ -167,6 +167,7 @@ $(document).ready(function() {
     var counter = $('#DetailBillableTable tbody tr').length;
     for (var j = 1; j <= (counter - 1); j++) {
         changeFormatAmountNumber(j);
+        calculateAmountLocal(j,'setEvent');
     }
     
     var invoiceNumber = $('#InvNo').val();
@@ -775,6 +776,7 @@ function addRowInvoiceInboundDetail(row){
     '<td align="center" ><span  class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteDetailBillInbound(' + row + ',\'\')" data-toggle="modal" data-target="#DelDetailBill" >  </span></td>' +           
     '</tr>'
     );
+    calculateAmountLocal(row, 'amountLocal');
     $('[name=SelectCurrencyAmount' + row + '] option').filter(function() { 
         return ($(this).text() === 'THB');
     }).prop('selected', true);     
@@ -802,6 +804,7 @@ function addRowInvoiceInboundDetail(row){
     $("#mBillTypeListTemp option").clone().appendTo("#product" + row);
     
     $('#DetailBillableTable input:last').addClass('lastrow');
+    
     $("#product"+row+",#BillDescriptionTemp"+row+",#InputAmount"+row+",#SelectCurrencyAmount"+row).focus(function() {
         if($("#InputAmount"+(parseInt(row)-1)).hasClass("lastrow")){
            addRowInvoiceInboundDetail(parseInt($("#counterTable").val()) + 1);
@@ -1089,6 +1092,36 @@ function validFromInvoiceInbound() {
         $('#InvoiceInboundForm').bootstrapValidator('revalidateField', 'ARCode');
         $('#InvoiceInboundForm').bootstrapValidator('revalidateField', 'InputInvDate');        
     }   
+}
+
+function calculateAmountLocal(row, option) {
+    if (option === 'amountLocal') {
+        var curAmount = $("#SelectCurrencyAmount" + row).val();
+        if (curAmount !== undefined) {
+            if(curAmount !== 'THB'){
+                $("#InputAmountLocal" + row).val('');
+            }           
+            $("#InputExRate" + row).keyup(function(event) {
+                if (event.keyCode === 13) {
+                    calculateAmountLocal(row, 'exRate');
+                }
+            });
+        }
+    } else if (option === 'exRate') {
+        var curAmount = $("#SelectCurrencyAmount" + row).val();
+        if(curAmount !== undefined && curAmount !== 'THB'){
+            var amount = ($("#InputAmount" + row).val() !== '' ? parseFloat(($("#InputAmount" + row).val()).replace(/\,/g, '')) : 0);
+            var exRate = ($("#InputExRate" + row).val() !== '' ? parseFloat(($("#InputExRate" + row).val()).replace(/\,/g, '')) : 0);
+            var amountLocal = amount * exRate;
+            $("#InputAmountLocal" + row).val((amountLocal !== 0 ? formatNumber(amountLocal) : ''));
+        }       
+    } else if (option === 'setEvent'){
+        $("#InputExRate" + row).keyup(function(event) {
+            if (event.keyCode === 13) {
+                calculateAmountLocal(row, 'exRate');
+            }
+        });
+    }
 }
 
 function checkCurrency(){

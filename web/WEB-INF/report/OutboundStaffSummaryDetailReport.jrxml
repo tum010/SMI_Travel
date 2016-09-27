@@ -10,6 +10,7 @@
 	<field name="profit" class="java.lang.String"/>
 	<field name="name" class="java.lang.String"/>
 	<field name="departmentno" class="java.lang.String"/>
+	<field name="refno" class="java.lang.String"/>
 	<group name="staff" isReprintHeaderOnEachPage="true">
 		<groupExpression><![CDATA[$F{staff}]]></groupExpression>
 		<groupHeader>
@@ -116,7 +117,7 @@
 					<textElement textAlignment="Center">
 						<font fontName="TH SarabunPSK" size="14" isBold="true"/>
 					</textElement>
-					<text><![CDATA[Department No]]></text>
+					<text><![CDATA[Ref No]]></text>
 				</staticText>
 				<line>
 					<reportElement stretchType="RelativeToBandHeight" x="76" y="28" width="1" height="20" isPrintWhenDetailOverflows="true" uuid="7c0f2f64-3b85-4dde-8ef7-e18995978833"/>
@@ -200,7 +201,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{departmentno}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{refno}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement stretchType="RelativeToBandHeight" x="76" y="-4" width="1" height="23" isPrintWhenDetailOverflows="true" uuid="4ecebdab-022b-44de-9291-c637d90880d3"/>
