@@ -833,7 +833,7 @@
             </div>
             <div class="modal-body">
                 <!--Agent List Table-->
-                <div style="text-align: right"> <i id="ajaxload"  class="fa fa-spinner fa-spin hidden"></i> Search : <input type="text" style="width: 175px" id="searchTaxInvoiceFrom" name="searchTaxInvoiceFrom"/> </div> 
+                <div style="text-align: right"> <i id="ajaxload"  class="fa fa-spinner fa-spin hidden"></i> Search : <input type="text" style="width: 175px" id="searchTaxInvoiceFrom" name="searchTaxInvoiceFrom" placeholder ="LAST/FIRST" /> </div> 
                 <table class="display" id="SearchTaxInvoiceToTable">
                     <thead class="datatable-header">
                         <script>

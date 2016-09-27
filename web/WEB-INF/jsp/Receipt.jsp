@@ -1042,7 +1042,7 @@
             </div>
             <div class="modal-body">
                 <!-- Receive From List Table-->
-                <div style="text-align: right"> <i id="ajaxload"  class="fa fa-spinner fa-spin hidden"></i> Search : <input type="text" style="width: 175px" id="searchReceiveFrom" name="searchReceiveFrom"/> </div> 
+                <div style="text-align: right"> <i id="ajaxload"  class="fa fa-spinner fa-spin hidden"></i> Search : <input type="text" style="width: 175px" id="searchReceiveFrom" name="searchReceiveFrom" placeholder ="LAST/FIRST"/> </div> 
                 <table class="display" id="ReceiveFromTable">
                     <thead>                        
                         <tr class="datatable-header">

@@ -357,7 +357,7 @@
             </div>
             <div class="modal-body">
                 <!--Bill To List Table-->
-                <div style="text-align: right"> <i id="ajaxload"  class="fa fa-spinner fa-spin hidden"></i> Search : <input type="text" style="width: 175px" id="searchInvoiceFrom" name="searchInvoiceFrom"/> </div> 
+                <div style="text-align: right"> <i id="ajaxload"  class="fa fa-spinner fa-spin hidden"></i> Search : <input type="text" style="width: 175px" id="searchInvoiceFrom" name="searchInvoiceFrom" placeholder ="LAST/FIRST"/> </div> 
                 <table class="display" id="AgentTable">
                     <thead>                        
                         <tr class="datatable-header">
