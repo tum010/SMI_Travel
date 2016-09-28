@@ -6,7 +6,6 @@
 
 package com.smi.travel.datalayer.view.dao;
 
-import com.smi.travel.datalayer.report.model.TicketFareReport;
 import java.util.List;
 /**
  *

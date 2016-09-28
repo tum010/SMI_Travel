@@ -21,7 +21,8 @@ public class TicketFareReport {
     private String headtermpay;
     private String printondate;
     private String printby;
-    
+    private String invoicedatefrom;
+    private String invoicedateto;
     
     private String air;
     private String docno;
@@ -321,5 +322,21 @@ public class TicketFareReport {
 
     public void setInvdate(String invdate) {
         this.invdate = invdate;
+    }
+
+    public String getInvoicedatefrom() {
+        return invoicedatefrom;
+    }
+
+    public void setInvoicedatefrom(String invoicedatefrom) {
+        this.invoicedatefrom = invoicedatefrom;
+    }
+
+    public String getInvoicedateto() {
+        return invoicedateto;
+    }
+
+    public void setInvoicedateto(String invoicedateto) {
+        this.invoicedateto = invoicedateto;
     }
 }

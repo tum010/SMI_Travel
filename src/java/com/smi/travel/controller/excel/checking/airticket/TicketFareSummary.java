@@ -138,10 +138,16 @@ public class TicketFareSummary extends AbstractExcelView {
         HSSFCell cell51 = row5.createCell(0);
         cell51.setCellValue("Sale Staff : ");
         cell51.setCellStyle(styleC21);
-        sheet.addMergedRegion(CellRangeAddress.valueOf("A5:E5"));
-        HSSFCell cell52 = row5.createCell(5);
+        HSSFCell cell52 = row5.createCell(1);
         cell52.setCellValue(dataheader.getHeadstaff());
         cell52.setCellStyle(styleC22);
+        sheet.addMergedRegion(CellRangeAddress.valueOf("B5:D5"));
+        HSSFCell cell53 = row5.createCell(4);
+        cell53.setCellValue("Invoice Date : ");
+        cell53.setCellStyle(styleC21);
+        HSSFCell cell54 = row5.createCell(5);
+        cell54.setCellValue(dataheader.getInvoicedatefrom() + " to " + dataheader.getInvoicedateto());
+        cell54.setCellStyle(styleC22);
 
         // Row 6
         HSSFRow row06 = sheet.createRow(5);
@@ -475,10 +481,16 @@ public class TicketFareSummary extends AbstractExcelView {
         HSSFCell cell51 = row5.createCell(0);
         cell51.setCellValue("Sale Staff : ");
         cell51.setCellStyle(styleC21);
-        sheet.addMergedRegion(CellRangeAddress.valueOf("A5:E5"));
-        HSSFCell cell52 = row5.createCell(5);
+        HSSFCell cell52 = row5.createCell(1);
         cell52.setCellValue(dataheader.getHeadstaff());
         cell52.setCellStyle(styleC22);
+        sheet.addMergedRegion(CellRangeAddress.valueOf("B5:D5"));
+        HSSFCell cell53 = row5.createCell(4);
+        cell53.setCellValue("Invoice Date : ");
+        cell53.setCellStyle(styleC21);
+        HSSFCell cell54 = row5.createCell(5);
+        cell54.setCellValue(dataheader.getInvoicedatefrom() + " to " + dataheader.getInvoicedateto());
+        cell54.setCellStyle(styleC22);
         
         // Row 6
         HSSFRow row06 = sheet.createRow(5);
@@ -802,10 +814,16 @@ public class TicketFareSummary extends AbstractExcelView {
         HSSFCell cell51 = row5.createCell(0);
         cell51.setCellValue("Sale Staff : ");
         cell51.setCellStyle(styleC21);
-        sheet.addMergedRegion(CellRangeAddress.valueOf("A5:E5"));
-        HSSFCell cell52 = row5.createCell(5);
+        HSSFCell cell52 = row5.createCell(1);
         cell52.setCellValue(dataheader.getHeadstaff());
         cell52.setCellStyle(styleC22);
+        sheet.addMergedRegion(CellRangeAddress.valueOf("B5:D5"));
+        HSSFCell cell53 = row5.createCell(4);
+        cell53.setCellValue("Invoice Date : ");
+        cell53.setCellStyle(styleC21);
+        HSSFCell cell54 = row5.createCell(5);
+        cell54.setCellValue(dataheader.getInvoicedatefrom() + " to " + dataheader.getInvoicedateto());
+        cell54.setCellStyle(styleC22);
         
         // Row 6
         HSSFRow row06 = sheet.createRow(5);

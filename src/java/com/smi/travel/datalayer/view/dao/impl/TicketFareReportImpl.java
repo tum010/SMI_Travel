@@ -213,6 +213,8 @@ public class TicketFareReportImpl implements TicketFareReportDao {
             ticketFareReport.setHeadtermpay(termPay);
             ticketFareReport.setPrintby(printby);
             ticketFareReport.setPrintondate(String.valueOf(df.format(new Date())));
+            ticketFareReport.setInvoicedatefrom("".equals(String.valueOf(invdateFrom)) || invdateFrom == null ? "" : util.ConvertString(dateformat.format(util.convertStringToDate(invdateFrom))));
+            ticketFareReport.setInvoicedateto("".equals(String.valueOf(invdateTo)) || invdateTo == null ? "" : util.ConvertString(dateformat.format(util.convertStringToDate(invdateTo))));
             //set data
             ticketFareReport.setAir(util.ConvertString(B[0]));
             ticketFareReport.setDocno(util.ConvertString(B[1]));

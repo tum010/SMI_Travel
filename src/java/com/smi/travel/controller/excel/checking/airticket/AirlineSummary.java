@@ -1168,7 +1168,7 @@ public class AirlineSummary extends AbstractExcelView {
                     String totalAmountNoInv = "SUM(V" + 10+":V"+(tempcount2)+")";
                     String totalAmountBuss = "SUM(W" + 10+":W"+(tempcount2)+")";
                     String totalAmountAnn = "SUM(X" + 10+":X"+(tempcount2)+")";
-                    String totalAmountRef = "SUM(Z" + 10+":Z"+(tempcount2)+")";
+                    String totalAmountRef = "SUM(Y" + 10+":Y"+(tempcount2)+")";
                     String totalAmountDiff = "SUM(AA" + 10+":AA"+(tempcount2)+")";
                     
                     HSSFCellStyle styleTotal = wb.createCellStyle();
