@@ -359,7 +359,7 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
         String queryOperation = "";
         String Prefix_Subfix ="";
         int check =0;
-        int option = 2;
+        int option = 1;
         if(option == 1){
              queryOperation = " = ";
              Prefix_Subfix = "";

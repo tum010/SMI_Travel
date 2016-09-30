@@ -60,7 +60,7 @@ public class ARMonitorController extends SMITravelController {
             int count = Integer.parseInt(arCount);
             for(int i=1;i<=count;i++){
                 String isSelect = request.getParameter("selectAll"+i);
-                System.out.println("isSelect : "+isSelect);
+//                System.out.println("isSelect : "+isSelect);
                 if(isSelect != null){
                     ARNirvana ar = new ARNirvana();
                     String inputId = request.getParameter("inputId"+i);

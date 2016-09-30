@@ -55,7 +55,7 @@ public class SaleVatReportController extends SMITravelController {
             int count = Integer.parseInt(postCount);
             for(int i=1;i<=count;i++){
                 String isSelect = request.getParameter("selectAll"+i);
-                System.out.println("isSelect : "+isSelect);
+//                System.out.println("isSelect : "+isSelect);
                 if(isSelect != null){
                     OutputTaxView otv = new OutputTaxView();
                     String taxId = request.getParameter("taxId"+i);
