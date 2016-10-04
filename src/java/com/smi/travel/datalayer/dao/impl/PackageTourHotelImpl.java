@@ -96,7 +96,7 @@ public class PackageTourHotelImpl implements PackageTourHotelDao {
         
         query += "GROUP BY ht.id " +
                  "having  sum((select sum(IFNULL(hr.price,0)) from hotel_room hr where hr.booking_hotel_id = hb.id))  is not null " +
-                 "and sum((select sum(IFNULL(hr.cost,0)) from hotel_room hr where hr.booking_hotel_id = hb.id)) is not null order by ci.`code` ";
+                 "and sum((select sum(IFNULL(hr.cost,0)) from hotel_room hr where hr.booking_hotel_id = hb.id)) is not null order by ci.`code` , ht.`name` ";
         
         List<Object[]> QueryList =  session.createSQLQuery(query)
                 .addScalar("city",Hibernate.STRING)		
@@ -112,7 +112,7 @@ public class PackageTourHotelImpl implements PackageTourHotelDao {
             if(from != null && !"".equals(from)){
                 String array[] = from.split("-");
                 String fromdate = array[2] + "-"+array[1] + "-" + array[0];
-                System.out.println("From Date : " + fromdate);
+//                System.out.println("From Date : " + fromdate);
                 hotelSummary.setFrompage(fromdate);
             }else{
                 hotelSummary.setFrompage("");
@@ -120,7 +120,7 @@ public class PackageTourHotelImpl implements PackageTourHotelDao {
             if(to != null && !"".equals(to)){
                 String array[] = to.split("-");
                 String todate = array[2] + "-"+array[1] + "-" + array[0];
-                System.out.println("To Date : " + todate);
+//                System.out.println("To Date : " + todate);
                 hotelSummary.setTopage(todate);
             }else{
                 hotelSummary.setTopage("");
@@ -135,7 +135,7 @@ public class PackageTourHotelImpl implements PackageTourHotelDao {
             
             hotelSummary.setCity(util.ConvertString(B[0]));
             hotelSummary.setHotel(util.ConvertString(B[1]));
-            System.out.println("Night : "+B[2]);
+//            System.out.println("Night : "+B[2]);
             if(B[2] != null && !"".equals(B[2])){
                 hotelSummary.setNight((Integer) B[2]);
             }else{
@@ -279,7 +279,7 @@ public class PackageTourHotelImpl implements PackageTourHotelDao {
             if(from != null && !"".equals(from)){
                 String array[] = from.split("-");
                 String fromdate = array[2] + "-"+array[1] + "-" + array[0];
-                System.out.println("From Date : " + fromdate);
+//                System.out.println("From Date : " + fromdate);
                 hotelSummary.setFrompage(fromdate);
             }else{
                 hotelSummary.setFrompage("");
@@ -287,7 +287,7 @@ public class PackageTourHotelImpl implements PackageTourHotelDao {
             if(to != null && !"".equals(to)){
                 String array[] = to.split("-");
                 String todate = array[2] + "-"+array[1] + "-" + array[0];
-                System.out.println("To Date : " + todate);
+//                System.out.println("To Date : " + todate);
                 hotelSummary.setTopage(todate);
             }else{
                 hotelSummary.setTopage("");
@@ -307,7 +307,7 @@ public class PackageTourHotelImpl implements PackageTourHotelDao {
                 hotelSummary.setHotelid(0);
             }
             hotelSummary.setHotel(util.ConvertString(B[2]));
-            System.out.println("Night : "+B[3]);
+//            System.out.println("Night : "+B[3]);
             if(B[3] != null && !"".equals(B[3])){
                 hotelSummary.setNight((Integer) B[3]);
             }else{
@@ -389,7 +389,7 @@ public class PackageTourHotelImpl implements PackageTourHotelDao {
             if(from != null && !"".equals(from)){
                 String array[] = from.split("-");
                 String fromdate = array[2] + "-"+array[1] + "-" + array[0];
-                System.out.println("From Date : " + fromdate);
+//                System.out.println("From Date : " + fromdate);
                 hotelSummary.setFrompage(fromdate);
             }else{
                 hotelSummary.setFrompage("");
@@ -397,7 +397,7 @@ public class PackageTourHotelImpl implements PackageTourHotelDao {
             if(to != null && !"".equals(to)){
                 String array[] = to.split("-");
                 String todate = array[2] + "-"+array[1] + "-" + array[0];
-                System.out.println("To Date : " + todate);
+//                System.out.println("To Date : " + todate);
                 hotelSummary.setTopage(todate);
             }else{
                 hotelSummary.setTopage("");
@@ -426,10 +426,10 @@ public class PackageTourHotelImpl implements PackageTourHotelDao {
             List dataTemp = new ArrayList();
             dataTemp = getHotelMonthlySub(util.ConvertString(B[8]) == null || "".equals(util.ConvertString(B[8])) ? "" : util.ConvertString(B[8]));
             if(dataTemp.size() > 0){
-                System.out.println("Size Have : " + dataTemp.size());
+//                System.out.println("Size Have : " + dataTemp.size());
                 hotelSummary.setHotelMonthlyDetailSubReportDataSource(new JRBeanCollectionDataSource(dataTemp));
             }else{
-                System.out.println("Size Not Have : " + dataTemp.size());
+//                System.out.println("Size Not Have : " + dataTemp.size());
                 hotelSummary.setHotelMonthlyDetailSubReportDataSource(null);
             }
             

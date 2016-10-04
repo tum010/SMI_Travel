@@ -184,10 +184,10 @@ public class OverdueSummaryExcel extends AbstractExcelView{
             cell042.setCellValue(over.getDepart_page());
             cell042.setCellStyle(styleC22);
             sheet1.addMergedRegion(CellRangeAddress.valueOf("B4:D4"));
-        HSSFCell cell043 = row03.createCell(4);
+        HSSFCell cell043 = row04.createCell(4);
             cell043.setCellValue("View : ");
             cell043.setCellStyle(styleC21);
-        HSSFCell cell044 = row03.createCell(5);
+        HSSFCell cell044 = row04.createCell(5);
             cell044.setCellValue(over.getView_page());
             cell044.setCellStyle(styleC22);
 
@@ -200,7 +200,24 @@ public class OverdueSummaryExcel extends AbstractExcelView{
         HSSFCell cell052 = row05.createCell(1);
             cell052.setCellValue(over.getGroup_page());
             cell052.setCellStyle(styleC22);
-
+        HSSFCell cell053 = row05.createCell(4);
+            cell053.setCellValue("Print By : ");
+            cell053.setCellStyle(styleC21);
+        HSSFCell cell054 = row05.createCell(5);
+            cell054.setCellValue(over.getPrintby_page());
+            cell054.setCellStyle(styleC22);
+            
+        // Row 3
+        HSSFRow row06 = sheet1.createRow(5);
+        HSSFCell cell061 = row06.createCell(0);
+            cell061.setCellValue("Print Date : ");
+            cell061.setCellStyle(styleC21);
+        HSSFCell cell062 = row06.createCell(1);
+            cell062.setCellValue(over.getPrintdate_page());
+            cell062.setCellStyle(styleC22);
+            sheet1.addMergedRegion(CellRangeAddress.valueOf("B6:D6"));    
+            
+    
          // Header Table
         HSSFRow row6 = sheet1.createRow(8);
         HSSFCell cell61 = row6.createCell(0);

@@ -37,6 +37,8 @@ public class OverdueSummartExcel {
     private String depart_page;
     private String group_page;
     private String view_page;
+    private String printby_page;
+    private String printdate_page;
     
     private String groupBy;
     private String signname;
@@ -263,6 +265,22 @@ public class OverdueSummartExcel {
 
     public void setSignname(String signname) {
         this.signname = signname;
+    }
+
+    public String getPrintby_page() {
+        return printby_page;
+    }
+
+    public void setPrintby_page(String printby_page) {
+        this.printby_page = printby_page;
+    }
+
+    public String getPrintdate_page() {
+        return printdate_page;
+    }
+
+    public void setPrintdate_page(String printdate_page) {
+        this.printdate_page = printdate_page;
     }
 
 }

@@ -12,6 +12,7 @@ import com.smi.travel.datalayer.view.entity.CustomerAgentInfo;
 import com.smi.travel.util.UtilityFunction;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
@@ -147,6 +148,9 @@ public class OverdueSummaryImpl implements OverdueSummaryDao{
         SimpleDateFormat df = new SimpleDateFormat();
         df.applyPattern("dd-MM-yyyy");
         
+        SimpleDateFormat dft = new SimpleDateFormat();
+        dft.applyPattern("dd-MM-yyyy HH:mm:ss");
+        
         System.out.println("query : " + query);
         List<Object[]> overdueList = session.createSQLQuery(query )
                 .addScalar("invno", Hibernate.STRING)
@@ -227,10 +231,14 @@ public class OverdueSummaryImpl implements OverdueSummaryDao{
             
             if(printby != null && !"".equals(printby)){
                 overdue.setSignname(printby);
+                overdue.setPrintby_page(printby);
             }else{
                 overdue.setSignname("");
+                overdue.setPrintby_page("");
             }        
-                    
+            
+            overdue.setPrintdate_page(dft.format(new Date()));
+            
             overdue.setInvno(util.ConvertString(B[0]) != null && !"".equals(util.ConvertString(B[0])) ? util.ConvertString(B[0]) :"");
             overdue.setDate(util.ConvertString(B[1]) != null && !"".equals(util.ConvertString(B[1])) ? df.format(util.convertStringToDate(util.ConvertString(B[1]))) :"");
             overdue.setDetail(util.ConvertString(B[2]) != null && !"".equals(util.ConvertString(B[2])) ? util.ConvertString(B[2]) :"");

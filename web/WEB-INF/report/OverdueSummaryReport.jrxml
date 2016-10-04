@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="OverdueSummaryReport" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9918ccf4-38e8-43e9-9556-9aa27a1349a1">
 	<property name="ireport.zoom" value="1.9487171000000636"/>
-	<property name="ireport.x" value="32"/>
-	<property name="ireport.y" value="162"/>
+	<property name="ireport.x" value="214"/>
+	<property name="ireport.y" value="0"/>
 	<field name="clientname_page" class="java.lang.String"/>
 	<field name="depart_page" class="java.lang.String"/>
 	<field name="from_page" class="java.lang.String"/>
@@ -27,6 +27,9 @@
 	<field name="overduesstatus" class="java.lang.String"/>
 	<field name="group" class="java.lang.String"/>
 	<field name="signname" class="java.lang.String"/>
+	<field name="vattype_page" class="java.lang.String"/>
+	<field name="printby_page" class="java.lang.String"/>
+	<field name="printdate_page" class="java.lang.String"/>
 	<variable name="totalthb" class="java.math.BigDecimal" resetType="Group" resetGroup="AgentOrOwner" calculation="Sum">
 		<variableExpression><![CDATA[($F{bath} != null && !"null".equals($F{bath}) && $F{bath}.length() > 0) ? new BigDecimal($F{bath}) : new BigDecimal("0")]]></variableExpression>
 	</variable>
@@ -175,7 +178,7 @@
 	<pageHeader>
 		<band height="110" splitType="Stretch">
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement x="712" y="40" width="90" height="13" uuid="850b6d4e-e83a-460e-b14b-69363b868626"/>
+				<reportElement x="712" y="53" width="90" height="13" uuid="850b6d4e-e83a-460e-b14b-69363b868626"/>
 				<textElement textAlignment="Right">
 					<font fontName="Tahoma" size="8"/>
 				</textElement>
@@ -186,7 +189,7 @@
 				<imageExpression><![CDATA["resource/images/smi-logo.gif"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="679" y="40" width="34" height="13" uuid="ccad3873-d5c3-4a39-b80f-53e94076a639"/>
+				<reportElement x="679" y="53" width="34" height="13" uuid="ccad3873-d5c3-4a39-b80f-53e94076a639"/>
 				<textElement textAlignment="Right">
 					<font fontName="Tahoma" size="8" isBold="true"/>
 				</textElement>
@@ -207,7 +210,7 @@
 				<text><![CDATA[Agent :]]></text>
 			</staticText>
 			<textField evaluationTime="Report">
-				<reportElement x="766" y="84" width="36" height="12" uuid="32cc7acc-af1a-418a-84c6-9ce59efa980d"/>
+				<reportElement x="766" y="93" width="36" height="12" uuid="32cc7acc-af1a-418a-84c6-9ce59efa980d"/>
 				<textElement>
 					<font fontName="Tahoma" size="8"/>
 				</textElement>
@@ -256,7 +259,7 @@
 				<text><![CDATA[Tel: +66(0)-2162201 Fax: +66(0)-216-2202]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="630" y="84" width="131" height="12" uuid="5a45d4c7-b755-47f5-b8ab-0856a1e5dbb9"/>
+				<reportElement x="630" y="93" width="131" height="12" uuid="5a45d4c7-b755-47f5-b8ab-0856a1e5dbb9"/>
 				<textElement textAlignment="Right">
 					<font fontName="Tahoma" size="8"/>
 				</textElement>
@@ -324,6 +327,48 @@
 					<font fontName="Tahoma" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{depart_page}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement x="712" y="40" width="90" height="13" uuid="a5d1ed77-86ae-4b8c-9704-e4dac2fe076c"/>
+				<textElement textAlignment="Right">
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vattype_page}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="668" y="40" width="45" height="13" uuid="5f553afd-168a-475f-a90e-b80555f1b64d"/>
+				<textElement textAlignment="Right">
+					<font fontName="Tahoma" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Vat Type :]]></text>
+			</staticText>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement x="712" y="66" width="90" height="13" uuid="0755ef29-39e0-423c-8fcd-0b2a417d206e"/>
+				<textElement textAlignment="Right">
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{printby_page}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="671" y="66" width="42" height="13" uuid="bc4b3d67-181e-4a34-a69a-fe662a5e5add"/>
+				<textElement textAlignment="Right">
+					<font fontName="Tahoma" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Print By :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="505" y="78" width="57" height="12" uuid="cf9ad952-ff30-4c87-ada9-411156c58b7b"/>
+				<textElement textAlignment="Right">
+					<font fontName="Tahoma" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Print Date :]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="568" y="78" width="125" height="12" uuid="a0f06c3f-d8d8-451d-bc72-1abb3cb2c1be"/>
+				<textElement textAlignment="Left">
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{printdate_page}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
