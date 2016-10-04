@@ -563,7 +563,7 @@
                                             <input type="hidden" name="creditId${i.count}" id="creditId${i.count}" value="${table.id}">
                                             <td align="center">${i.count}</td>
                                             <td><input maxlength="255" id="creditNote${i.count}" name="creditNote${i.count}" type="text" class="form-control" value="${table.creditNote}"></td>
-                                            <td><input maxlength="10" id="creditAmount${i.count}"  name="creditAmount${i.count}"  type="text" class="form-control text-right"  value="${table.creditAmount}" onfocusout="calculateTotalCreditAmount()" onkeyup="insertCommas(this)"></td>
+                                            <td><input maxlength="16" id="creditAmount${i.count}"  name="creditAmount${i.count}"  type="text" class="form-control text-right"  value="${table.creditAmount}" onfocusout="calculateTotalCreditAmount()" onkeyup="insertCommas(this)"></td>
                                             <td> 
                                                 <center> 
                                                     <a class="remCF"><span id="SpanRemove${i.count}" onclick="deleteCreditList('${table.id}','${i.count}');" class="glyphicon glyphicon-remove deleteicon "></span></a>
@@ -613,7 +613,7 @@
                                             <input type="hidden" name="debitId${i.count}" id="debitId${i.count}" value="${table.id}">
                                             <td align="center">${i.count}</td>
                                             <td><input maxlength="255" id="debitNote${i.count}" name="debitNote${i.count}" type="text" class="form-control" value="${table.debitNote}"></td>
-                                            <td><input maxlength="10" id="debitAmount${i.count}"  name="debitAmount${i.count}"  type="text" class="form-control text-right"  value="${table.debitAmount}" onfocusout="calculateTotalDebitAmount()" onkeyup="insertCommas(this)"></td>
+                                            <td><input maxlength="16" id="debitAmount${i.count}"  name="debitAmount${i.count}"  type="text" class="form-control text-right"  value="${table.debitAmount}" onfocusout="calculateTotalDebitAmount()" onkeyup="insertCommas(this)"></td>
                                             <td> 
                                                 <center> 
                                                     <a class="remCF"><span id="SpanRemove${i.count}" onclick="deleteDebitList('${table.id}','${i.count}');" class="glyphicon glyphicon-remove deleteicon "></span></a>
@@ -654,7 +654,7 @@
                             </div>
                             <div class="col-xs-1"  style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="agentAmount" name="agentAmount" type="text" class="form-control numerical" style="text-align: right" maxlength="12" onkeyup="insertCommas(this)" value="${paymentAirticket.agentAmount}" >
+                                    <input id="agentAmount" name="agentAmount" type="text" class="form-control numerical" style="text-align: right" maxlength="16" onkeyup="insertCommas(this)" value="${paymentAirticket.agentAmount}" >
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 155px">
@@ -662,7 +662,7 @@
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="withholdingTax" name="withholdingTax" type="text" maxlength="12" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" value="${paymentAirticket.witholdingTax}" >
+                                    <input id="withholdingTax" name="withholdingTax" type="text" maxlength="16" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" value="${paymentAirticket.witholdingTax}" >
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 140px">
@@ -670,7 +670,7 @@
                             </div>
                             <div class="col-xs-1"  style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="cash" name="cash" type="text" class="form-control numerical" maxlength="12" style="text-align: right" onkeyup="insertCommas(this)" value="${paymentAirticket.cash}">
+                                    <input id="cash" name="cash" type="text" class="form-control numerical" maxlength="16" style="text-align: right" onkeyup="insertCommas(this)" value="${paymentAirticket.cash}">
                                 </div>
                             </div>
                         </div>
@@ -688,7 +688,7 @@
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="amount" name="amount" type="text" maxlength="14" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" value="${paymentAirticket.chqAmount}">
+                                    <input id="amount" name="amount" type="text" maxlength="16" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" value="${paymentAirticket.chqAmount}">
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 140px">
@@ -696,7 +696,7 @@
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="totalPayment" name="totalPayment" type="text" maxlength="14" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" readonly="" value="${paymentAirticket.totalAmount}">
+                                    <input id="totalPayment" name="totalPayment" type="text" maxlength="16" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" readonly="" value="${paymentAirticket.totalAmount}">
                                 </div>
                             </div>
                         </div>
@@ -817,8 +817,8 @@
                                                     <option value="Inbound" ${selectedInbound}>Inbound</option>
                                                 </select>
                                             </td>
-                                            <td><input maxlength="15" id="drAmount${i.count}"  name="drAmount${i.count}"  type="text" class="form-control text-right"  value="${table.drAmount}" onfocusout="calculateTotalDrCrAmount()" onkeyup="insertCommas(this)"></td>
-                                            <td><input maxlength="15" id="crAmount${i.count}"  name="crAmount${i.count}"  type="text" class="form-control text-right"  value="${table.crAmount}" onfocusout="calculateTotalDrCrAmount()" onkeyup="insertCommas(this)"></td>
+                                            <td><input maxlength="16" id="drAmount${i.count}"  name="drAmount${i.count}"  type="text" class="form-control text-right"  value="${table.drAmount}" onfocusout="calculateTotalDrCrAmount()" onkeyup="insertCommas(this)"></td>
+                                            <td><input maxlength="16" id="crAmount${i.count}"  name="crAmount${i.count}"  type="text" class="form-control text-right"  value="${table.crAmount}" onfocusout="calculateTotalDrCrAmount()" onkeyup="insertCommas(this)"></td>
                                             <td> 
                                                 <center> 
                                                     <a class="remCF"><span id="SpanRemove${i.count}" onclick="deletePaymentAccList('${table.id}','${i.count}');" class="glyphicon glyphicon-remove deleteicon "></span></a>
