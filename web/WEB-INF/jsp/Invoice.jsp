@@ -781,7 +781,7 @@
                                                                         </c:forEach>
                                                                     </select>
                                                                 </td>
-                                                                <td><input type="text" value="${ind.exRate}" id="InputExRate${taxdesc.count}" onfocusout="changeFormatExRateNumber(${taxdesc.count})" name="InputExRate${taxdesc.count}" class="form-control text-right decimal" ></td>
+                                                                <td><input type="text" value="${ind.exRate}" id="InputExRate${taxdesc.count}" onfocusout="changeFormatExRateNumber(${taxdesc.count})" name="InputExRate${taxdesc.count}" class="form-control text-right decimalexrate" ></td>
                                                                 <td><input type="text" value="${ind.amountLocal}" onfocusout="changeFormatAmountLocalNumber(${taxdesc.count})" id="InputAmountLocal${taxdesc.count}" name="InputAmountLocal${taxdesc.count}" class="form-control text-right decimal" ></td>
                                                                 <td class="hidden"><input type="text" value="${ind.amount}" id="InputAmountLocalTemp${taxdesc.count}" onfocusout="changeFormatAmountLocalTempNumber(${taxdesc.count})" name="InputAmountLocalTemp${taxdesc.count}"  ></td>
                                                                 <td align="center" >

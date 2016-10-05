@@ -356,6 +356,10 @@ public class CollectionNirvanaImpl implements CollectionNirvanaDao{
             //Ss_dataextrchtr2
             List<SsDataexchTr> ssDataexchTrList = setCollectionNirvanaCashReceipt(co.getRowid() , colNirvanaNo); 
             ssDataexchTemp.setSsDataexchTrList(ssDataexchTrList);
+            //Ss_dataextrchtr3
+            List<SsDataexchTr> ssDataexchTr2List = setCollectionNirvanaExpenseReceipt(co.getRowid() , colNirvanaNo); 
+            ssDataexchTemp.setSsDataexchTr2List(ssDataexchTr2List);
+            
             ssDataexchTemp.setRecno(co.getRecno() != null && !"".equalsIgnoreCase(co.getRecno()) ? co.getRecno() : "");
             //Ss_dataextrchtr3
 //            List<SsDataexchTr> ssDataexchTr3List = setCollectionNirvanaExpenseReceipt(co.getRowid() , colNirvanaNo); 
@@ -409,12 +413,15 @@ public class CollectionNirvanaImpl implements CollectionNirvanaDao{
         
         String companyId = (col.getComid()!= null && !"".equalsIgnoreCase(col.getComid()) ? col.getComid() : "");
         dataArea += util.generateDataAreaNirvana(companyId,21);
+        System.out.println(" ==== companyId ==== " + companyId );
         
         String tranCode = (col.getTrancode() != null && !"".equalsIgnoreCase(col.getTrancode()) ? col.getTrancode() : "");
         dataArea += util.generateDataAreaNirvana(tranCode,2);
+        System.out.println(" ==== tranCode ==== " + tranCode );
         
         String prefix = (col.getPrefix()!= null && !"".equalsIgnoreCase(col.getPrefix()) ? col.getPrefix() : "");
         dataArea += util.generateDataAreaNirvana(prefix,6);
+        System.out.println(" ==== prefix ==== " + prefix );
 
         String docno = (col.getDocno()!= null && !"".equalsIgnoreCase(col.getDocno()) ? col.getDocno() : "");
         dataArea += util.generateDataAreaNirvana(docno,9);
@@ -720,19 +727,20 @@ public class CollectionNirvanaImpl implements CollectionNirvanaDao{
         }
         
         List<SsDataexchTr> ssDataexchTrList = new ArrayList<SsDataexchTr>();
-        
+        Integer dataseq = 1 ;
         for(int i = 0 ; i < cncrList.size() ; i ++){
             SsDataexchTr ssDataexchTr = new SsDataexchTr();
             ssDataexchTr.setDataCd("240030");            
             ssDataexchTr.setDataNo(datano);
             if(!"".equalsIgnoreCase(datano)){
-                ssDataexchTr.setDataSeq(String.valueOf(Integer.parseInt(datano)-1));
+                ssDataexchTr.setDataSeq(String.valueOf(dataseq));
             }
             ssDataexchTr.setEntSysCd("SMI");           
             ssDataexchTr.setEntSysDate(sdf.format(new Date()));
             ssDataexchTr.setRcvComment("");
             ssDataexchTr.setDataArea(setDataAreaSsDataexChTr2(cncrList.get(i)));
             ssDataexchTrList.add(ssDataexchTr);
+            dataseq++ ;
         }        
         session.close();
         this.sessionFactory.close();
@@ -798,38 +806,41 @@ public class CollectionNirvanaImpl implements CollectionNirvanaDao{
         UtilityFunction util = new UtilityFunction();
         List<CollectionNirvanaExpenseReceipt> cnerList = new ArrayList<CollectionNirvanaExpenseReceipt>();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd.HHmmss", Locale.US);
-        String query = " select * from collection_nirvana_expense_receipt where receiptid = '"+rowid+"'" ;
+        String query = " select * from collection_nirvana_expense_receipt where recid = '"+rowid+"'" ;
         List<Object[]> QueryList = session.createSQLQuery(query)
-                .addScalar("receiptid",Hibernate.STRING)
-                .addScalar("transcode",Hibernate.STRING)
-                .addScalar("prefix",Hibernate.STRING)
-                .addScalar("discount_amt",Hibernate.BIG_DECIMAL)
+                .addScalar("recid",Hibernate.STRING)
+                .addScalar("projectid",Hibernate.STRING)
+                .addScalar("glaccid",Hibernate.STRING)
+                .addScalar("amt",Hibernate.BIG_DECIMAL)
                 .addScalar("note",Hibernate.STRING)
+                .addScalar("divisionid",Hibernate.STRING)
                 .list();
         for(Object[] CN : QueryList){
             CollectionNirvanaExpenseReceipt cner = new CollectionNirvanaExpenseReceipt();
-            cner.setProjectid(util.ConvertString(CN[0]));
-            cner.setDivisionid(util.ConvertString(CN[1]));
+            cner.setRecid(util.ConvertString(CN[0]));
+            cner.setProjectid(util.ConvertString(CN[1]));
             cner.setGlaccountid(util.ConvertString(CN[2]));
             cner.setAmount((BigDecimal) CN[3]);
             cner.setNote(util.ConvertString(CN[4]));
+            cner.setDivisionid(util.ConvertString(CN[5]));
             cnerList.add(cner);
         }
         
         List<SsDataexchTr> ssDataexchTrList = new ArrayList<SsDataexchTr>();
-        
+        int count = 1;
         for(int i = 0 ; i < cnerList.size() ; i ++){
             SsDataexchTr ssDataexchTr = new SsDataexchTr();
             ssDataexchTr.setDataCd("240030");            
             ssDataexchTr.setDataNo(datano);
             if(!"".equalsIgnoreCase(datano)){
-                ssDataexchTr.setDataSeq(String.valueOf(Integer.parseInt(datano)-1));
+                ssDataexchTr.setDataSeq(String.valueOf(count));
             }
             ssDataexchTr.setEntSysCd("SMI");           
             ssDataexchTr.setEntSysDate(sdf.format(new Date()));
             ssDataexchTr.setRcvComment("");
             ssDataexchTr.setDataArea(setDataAreaSsDataexChTr3(cnerList.get(i)));
             ssDataexchTrList.add(ssDataexchTr);
+            count++;
         }        
         session.close();
         this.sessionFactory.close();

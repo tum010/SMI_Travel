@@ -18,7 +18,8 @@ public class CollectionNirvanaExpenseReceipt {
     private String glaccountid;
     private BigDecimal amount;
     private String note;
-
+    private String recid;
+    
     public String getProjectid() {
         return projectid;
     }
@@ -57,6 +58,14 @@ public class CollectionNirvanaExpenseReceipt {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public String getRecid() {
+        return recid;
+    }
+
+    public void setRecid(String recid) {
+        this.recid = recid;
     }
 
     

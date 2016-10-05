@@ -14,7 +14,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -22,7 +21,7 @@ import java.util.List;
  * @author chonnasith
  */
 public class SsDataexch {
-    private static final String ip = "192.168.129.147";
+    private static final String ip = "192.168.129.18";
     private static final String port = "2638";
     private static final String username = "ICONEXT";
     private static final String password = "iconext";
@@ -304,6 +303,10 @@ public class SsDataexch {
         String datanodetail = insertDetail(ssDataexch.getSsDataexchTrList());
         System.out.println(" datanodetail ::: " +datanodetail);
         
+        if(ssDataexch.getSsDataexchTr2List() != null){
+            String datanodetail3 = insertDetailDataexchtr3(ssDataexch.getSsDataexchTr2List());
+            System.out.println(" datanodetail3 ::: " +datanodetail3);
+        }
         return dataNo;
     }
     
@@ -331,7 +334,32 @@ public class SsDataexch {
         
         return dataNo;
     }
-
+    
+    public String insertDetailDataexchtr3(List<SsDataexchTr> ssDataexchTrList) throws SQLException {
+        String dataNo = "";
+        for(int i=0; i<ssDataexchTrList.size(); i++){
+            SsDataexchTr ssDataexchTr = ssDataexchTrList.get(i);
+            String sql = " INSERT INTO ss_dataexchtr3 values ("
+                + "'" + ssDataexchTr.getDataCd() + "'"
+                + ",'" + ssDataexchTr.getDataNo() + "'"
+                + ",'" + ssDataexchTr.getDataSeq()+ "'"
+                + ",'" + ssDataexchTr.getEntSysCd()+ "'"
+                + ",'" + ssDataexchTr.getEntSysDate()+ "'"
+                + ",'" + ssDataexchTr.getRcvComment()+ "'"
+                + ",'" + ssDataexchTr.getDataArea()+ "' );";
+            
+            try {
+                stmt.executeUpdate(sql);
+            } catch (Exception e) {
+                e.printStackTrace();
+                
+            }
+            
+        }
+        
+        return dataNo;
+    }
+    
     public String getDataCd() {
         return dataCd;
     }

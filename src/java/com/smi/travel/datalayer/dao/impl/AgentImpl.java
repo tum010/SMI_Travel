@@ -97,12 +97,12 @@ public class AgentImpl implements AgentDao{
         String firstChar = name.substring(0, 1);
                 
         List<String> listAgentCode = new LinkedList<String>();
-        Query queryAgent = session.createSQLQuery("SELECT code FROM `agent` WHERE CHARACTER_LENGTH(code) = 6 AND code LIKE '" + firstChar + "%' ORDER BY code DESC");
+        Query queryAgent = session.createSQLQuery("SELECT max(code) FROM `agent` WHERE CHARACTER_LENGTH(code) = 6 AND code LIKE '" + firstChar + "%' and code != 'AIR001' and code != 'AIR002' ORDER BY code DESC");
         queryAgent.setMaxResults(1);
         listAgentCode = queryAgent.list();
         
         List<String> listSupplierCode = new LinkedList<String>();
-        Query querySupplier = session.createSQLQuery("SELECT ap_code FROM `supplier` WHERE CHARACTER_LENGTH(ap_code) = 6 AND ap_code LIKE '" + firstChar + "%' ORDER BY ap_code DESC");
+        Query querySupplier = session.createSQLQuery("SELECT max(ap_code) FROM `supplier` WHERE CHARACTER_LENGTH(ap_code) = 6 AND ap_code LIKE '" + firstChar + "%' and ap_code != 'AIR001' and ap_code != 'AIR002' ORDER BY ap_code DESC");
         querySupplier.setMaxResults(1);
         listSupplierCode = querySupplier.list();
         

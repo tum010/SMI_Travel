@@ -73,7 +73,6 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
         Date thisDate = new Date();
         List data = new ArrayList();
         String query = "";
-        int AndQuery = 0;
         
         if("undefined".equals(invtype)){
             invtype = null;
@@ -94,67 +93,69 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
             status = null;
         }
         
-        if(invtype == null  && department == null  &&  billtype == null  && from == null && to == null && status == null){
-            query = "SELECT * FROM ar_nirvana ar " ; 
-        }else{
-            query = "SELECT * FROM ar_nirvana ar  where " ;
-        }
         
-        if ( department != null && (!"".equalsIgnoreCase(department)) ) {
-            AndQuery = 1;
-            query += " ar.department = '" + department + "'";
-        }
-       
-        if (invtype != null && (!"".equalsIgnoreCase(invtype)) ) {
-           if(AndQuery == 1){
-                query += " and ar.invtype = '" + invtype + "'";
-           }else{
-               AndQuery = 1;
-               query += " ar.invtype = '" + invtype + "'";
-           }
-        }
-        
-        if(billtype != null && (!"".equalsIgnoreCase(billtype))){
-            if(AndQuery == 1){
-                query += " and ar.producttype = '" + billtype + "'";
-           }else{
-               AndQuery = 1;
-               query += " ar.producttype = '" + billtype + "'";
-           }
-        }
+        String invQuery =  " SELECT `inv`.`inv_no` AS `intreference`, '00' AS `salesmanid`, `inv`.`arcode` AS `customerid`, `inv`.`inv_name` AS `customername`, ( CASE WHEN (`inv`.`department` = 'Wendy') THEN 'WENDY' WHEN ( `inv`.`department` = 'Inbound' ) THEN 'INBOUND' WHEN ( `inv`.`department` = 'Outbound' ) THEN 'OUTBOUND' ELSE '' END ) AS `divisionid`, '00' AS `projectid`, 'IN' AS `transcode`, `inv`.`inv_date` AS `transdate`, ( CASE WHEN isnull(`inv`.`due_date`) THEN `inv`.`inv_date` ELSE `inv`.`due_date` END ) AS `duedate`, `invd`.`cur_amount` AS `currencyid`, '1' AS `homerate`, ( CASE WHEN ((`invd`.`cur_amount` <> 'THB') AND ( `inv`.`department` = 'inbound' )) THEN ( SELECT min(`exr`.`ex_rate`) FROM `m_exchangerate` `exr` WHERE (( `inv`.`inv_date` = `exr`.`ex_date` ) AND ( `invd`.`cur_amount` = `exr`.`currency` ))) WHEN (`invd`.`cur_amount` <> 'THB') THEN round( sum(( ifnull(`invd`.`amount_local`, 0) / ifnull(`invd`.`amount`, 0))), 4 ) ELSE 1 END ) AS `foreignrate`, ( CASE WHEN (`inv`.`inv_type` = 'V') THEN sum(ifnull(`invd`.`gross`, 0)) WHEN ((`inv`.`inv_type` = 'A') OR (`inv`.`inv_type` = 'T') OR (`inv`.`inv_type` = 'N')) THEN sum(ifnull(`invd`.`amount`, 0)) ELSE 0 END ) AS `salesamt`, ( CASE WHEN (`inv`.`inv_type` = 'V') THEN ( CASE WHEN (`invd`.`cur_amount` = 'THB') THEN ifnull(`invd`.`gross`, 0) WHEN ((`invd`.`cur_amount` <> 'THB') AND ( `inv`.`department` <> 'inbound' )) THEN ifnull(`invd`.`gross`, 0) ELSE round( ifnull(( `invd`.`gross` * ( SELECT min(`exr`.`ex_rate`) FROM `m_exchangerate` `exr` WHERE (( `inv`.`inv_date` = `exr`.`ex_date` ) AND ( `invd`.`cur_amount` = `exr`.`currency` )))), 0 ), 2 ) END ) WHEN ((`inv`.`inv_type` = 'A') OR (`inv`.`inv_type` = 'T') OR (`inv`.`inv_type` = 'N')) THEN ( CASE WHEN (`invd`.`cur_amount` = 'THB') THEN ifnull(`invd`.`amount_local`, 0) WHEN ((`invd`.`cur_amount` <> 'THB') AND ( `inv`.`department` <> 'inbound' )) THEN ifnull(`invd`.`amount_local`, 0) ELSE round( ifnull(( `invd`.`amount_local` * ( SELECT min(`exr`.`ex_rate`) FROM `m_exchangerate` `exr` WHERE (( `inv`.`inv_date` = `exr`.`ex_date` ) AND ( `invd`.`cur_amount` = `exr`.`currency` )))), 0 ), 2 ) END ) ELSE '' END ) AS `saleshmamt`, ( CASE WHEN (`invd`.`is_vat` = 1) THEN sum(( ifnull(`invd`.`amount`, 0) - ifnull(`invd`.`gross`, 0))) WHEN (`invd`.`is_vat` = 0) THEN 0 ELSE 0 END ) AS `vatamt`, sum(( CASE WHEN (`invd`.`cur_amount` = 'THB') THEN ( CASE WHEN (`invd`.`is_vat` = 1) THEN ( ifnull(`invd`.`amount_local`, 0) - ifnull(`invd`.`gross`, 0)) ELSE 0 END ) WHEN ((`invd`.`cur_amount` <> 'THB') AND ( `inv`.`department` <> 'inbound' )) THEN ( CASE WHEN (`invd`.`is_vat` = 1) THEN ( ifnull(`invd`.`amount_local`, 0) - ifnull(`invd`.`gross`, 0)) ELSE 0 END ) ELSE ( CASE WHEN (`invd`.`is_vat` = 1) THEN round((( ifnull(`invd`.`amount`, 0) - ifnull(`invd`.`gross`, 0)) * ( SELECT min(`exr`.`ex_rate`) FROM `m_exchangerate` `exr` WHERE (( `inv`.`inv_date` = `exr`.`ex_date` ) AND ( `invd`.`cur_amount` = `exr`.`currency` )))), 2 ) ELSE 0 END ) END )) AS `vathmamt`, sum(ifnull(`invd`.`amount`, 0)) AS `aramt`, round( sum(( CASE WHEN (`invd`.`cur_amount` = 'THB') THEN `invd`.`amount_local` WHEN ((`invd`.`cur_amount` <> 'THB') AND ( `inv`.`department` <> 'inbound' )) THEN `invd`.`amount_local` ELSE ( `invd`.`amount` * ( SELECT min(`exr`.`ex_rate`) FROM `m_exchangerate` `exr` WHERE (( `inv`.`inv_date` = `exr`.`ex_date` ) AND ( `invd`.`cur_amount` = `exr`.`currency` )))) END )), 2 ) AS `arhmamt`, ( CASE WHEN (`inv`.`inv_type` = 'V') THEN 'Y' ELSE 'N' END ) AS `vatflag`, ( CASE WHEN (`inv`.`inv_type` = 'V') THEN '07' ELSE '' END ) AS `vatid`, 'N' AS `whtflag`, '01' AS `whtid`, 0 AS `basewhtamt`, '' AS `basewhthmamt`, 0 AS `whtamt`, '' AS `whthmamt`, YEAR (`inv`.`inv_date`) AS `year`, MONTH (`inv`.`inv_date`) AS `period`, concat( 'Refno : ', `mt`.`Reference No`, ' Product Type :', `bt`.`name`, ' Status : Normal' ) AS `note`, '' AS `salesaccount1`, '' AS `salesdivision1`, '' AS `salesproject1`, '' AS `salesamt1`, '' AS `saleshmamt1`, '' AS `salesaccount2`, '' AS `salesdivision2`, '' AS `salesproject2`, '' AS `salesamt2`, '' AS `saleshmamt2`, '' AS `salesaccount3`, '' AS `salesdivision3`, '' AS `salesproject3`, '' AS `salesamt3`, '' AS `saleshmamt3`, 'Y' AS `service`, ( CASE WHEN (`inv`.`inv_type` = 'T') THEN '1130-01' ELSE '1130-01' END ) AS `araccount`, ( CASE WHEN (`inv`.`inv_type` = 'T') THEN substr(`inv`.`inv_no`, 1, 1) WHEN (`inv`.`inv_type` = 'N') THEN substr(`inv`.`inv_no`, 1, 2) WHEN (`inv`.`inv_type` = 'V') THEN substr(`inv`.`inv_no`, 1, 2) WHEN (`inv`.`inv_type` = 'A') THEN substr(`inv`.`inv_no`, 1, 2) ELSE '' END ) AS `prefix`, ( CASE WHEN (`inv`.`inv_type` = 'T') THEN substr(`inv`.`inv_no`, 2) WHEN (`inv`.`inv_type` = 'N') THEN substr(`inv`.`inv_no`, 3) WHEN (`inv`.`inv_type` = 'V') THEN substr(`inv`.`inv_no`, 3) WHEN (`inv`.`inv_type` = 'A') THEN substr(`inv`.`inv_no`, 3) ELSE '' END ) AS `documentno`, `sup`.`tax_no` AS `cust_taxid`, `sup`.`branch_no` AS `cust_branch`, '' AS `company_branch`, `inv`.`id` AS `inv_id`, ( CASE WHEN ( isnull(`inv`.`is_export`) OR (`inv`.`is_export` = 0)) THEN 'New' WHEN (( ifnull( to_seconds(`inv`.`export_date`), 0 ) - ifnull( to_seconds(`inv`.`update_date`), 0 )) > 0 ) THEN 'Export' ELSE 'Change' END ) AS `itf_status`, group_concat( `invd`.`item_type_id` SEPARATOR ',' ) AS `producttype`, `inv`.`department` AS `department`, `inv`.`inv_type` AS `invtype`, `inv`.`inv_date` AS `invdate`, `inv`.`id` AS `receive_detail_id`, ( CASE WHEN (`inv`.`inv_type` = 'T') THEN 2 ELSE 1 END ) AS `accno`, concat('I', `inv`.`id`) AS `rowid`, ( CASE WHEN (`inv`.`inv_type` = 'T') THEN 'TEMP' ELSE 'SMI' END ) AS `comid`, '' AS `artrans`, '' AS `ArGlaccountid` FROM ((((((( `invoice` `inv` JOIN `invoice_detail` `invd` ON (( `invd`.`invoice_id` = `inv`.`id` ))) LEFT JOIN `staff` `st` ON ((`st`.`id` = `inv`.`staff_id`))) LEFT JOIN `m_billtype` `bt` ON (( `bt`.`id` = `invd`.`item_type_id` ))) LEFT JOIN `billable_desc` `billdesc` ON (( `billdesc`.`id` = `invd`.`bill_desc_id` ))) LEFT JOIN `billable` `bill` ON (( `bill`.`id` = `billdesc`.`billable_id` ))) LEFT JOIN `master` `mt` ON (( `mt`.`id` = `bill`.`master_id` ))) LEFT JOIN `agent` `sup` ON (( `sup`.`code` = `inv`.`inv_to` ))) where ";
+        String suffixInvQuery = " GROUP BY `inv`.`id` ";																				
+//        String orderInvQuery = " ORDER BY `inv`.`inv_no` desc , inv.inv_date desc ";																				
+																								
+	String TaxInvQuery = " SELECT `tax`.`tax_no` AS `intreference`, '00' AS `salesmanid`, `tax`.`ar_code` AS `customerid`, `tax`.`tax_inv_name` AS `customername`, ( CASE WHEN (`tax`.`department` = 'Wendy') THEN 'WENDY' WHEN ( `tax`.`department` = 'Inbound' ) THEN 'INBOUND' WHEN ( `tax`.`department` = 'Outbound' ) THEN 'OUTBOUND' ELSE '' END ) AS `divisionid`, '00' AS `projectid`, 'IN' AS `transcode`, `tax`.`tax_inv_date` AS `transdate`, `tax`.`tax_inv_date` AS `duedate`, `taxd`.`cur_amount` AS `currencyid`, '1' AS `homerate`, '1' AS `foreignrate`, sum(( CASE WHEN (`taxd`.`is_vat` = 1) THEN round((( ifnull(`taxd`.`amount`, 0) * 100 ) / (100 + `taxd`.`vat`)), 2 ) WHEN (`taxd`.`is_vat` = 0) THEN ifnull(`taxd`.`amount`, 0) ELSE 0 END )) AS `salesamt`, sum(( CASE WHEN (`taxd`.`cur_amount` = 'THB') THEN round((( ifnull(`taxd`.`amount`, 0) * 100 ) / (100 + `taxd`.`vat`)), 2 ) ELSE 0 END )) AS `saleshmamt`, sum(( CASE WHEN (`taxd`.`is_vat` = 1) THEN round(( ifnull(`taxd`.`amount`, 0) - (( ifnull(`taxd`.`amount`, 0) * 100 ) / (100 + `taxd`.`vat`))), 2 ) WHEN (`taxd`.`is_vat` = 0) THEN 0 ELSE 0 END )) AS `vatamt`, sum(( CASE WHEN (`taxd`.`cur_amount` = 'THB') THEN round(( ifnull(`taxd`.`amount`, 0) - (( ifnull(`taxd`.`amount`, 0) * 100 ) / (100 + `taxd`.`vat`))), 2 ) ELSE 0 END )) AS `vathmamt`, sum(`taxd`.`amount`) AS `aramt`, sum(( CASE WHEN (`taxd`.`cur_amount` = 'THB') THEN `taxd`.`amount` ELSE 0 END )) AS `arhmamt`, ( CASE WHEN (`taxd`.`is_vat` = 1) THEN 'Y' WHEN (`taxd`.`is_vat` = 0) THEN 'N' ELSE 'N' END ) AS `vatflag`, ( CASE WHEN (`taxd`.`is_vat` = 1) THEN '07' WHEN (`taxd`.`is_vat` = 0) THEN '' ELSE '' END ) AS `vatid`, 'N' AS `whtflag`, '01' AS `whtid`, 0 AS `basewhtamt`, '' AS `basewhthmamt`, 0 AS `whtamt`, '' AS `whthmamt`, YEAR (`tax`.`tax_inv_date`) AS `year`, MONTH (`tax`.`tax_inv_date`) AS `period`, concat( 'Refno : ', `mt`.`Reference No`, ' Product Type :', `bt`.`name`, ' Status : Profit' ) AS `note`, `bt`.`acc_code` AS `salesaccount1`, ( CASE WHEN (`tax`.`department` = 'Wendy') THEN 'WENDY' WHEN ( `tax`.`department` = 'Inbound' ) THEN 'INBOUND' WHEN ( `tax`.`department` = 'Outbound' ) THEN 'OUTBOUND' ELSE '' END ) AS `salesdivision1`, '00' AS `salesproject1`, sum(( CASE WHEN (`taxd`.`is_vat` = 1) THEN round((( ifnull(`taxd`.`amount`, 0) * 100 ) / (100 + `taxd`.`vat`)), 2 ) ELSE `taxd`.`amount` END )) AS `salesamt1`, sum(( CASE WHEN (`taxd`.`cur_amount` = 'THB') THEN ( CASE WHEN (`taxd`.`is_vat` = 1) THEN round((( ifnull(`taxd`.`amount`, 0) * 100 ) / (100 + `taxd`.`vat`)), 2 ) ELSE `taxd`.`amount` END ) ELSE '' END )) AS `saleshmamt1`, '' AS `salesaccount2`, '' AS `salesdivision2`, '' AS `salesproject2`, '' AS `salesamt2`, '' AS `saleshmamt2`, '' AS `salesaccount3`, '' AS `salesdivision3`, '' AS `salesproject3`, '' AS `salesamt3`, '' AS `saleshmamt3`, 'Y' AS `service`, '' AS `araccount`, substr(`tax`.`tax_no`, 1, 1) AS `prefix`, substr(`tax`.`tax_no`, 2) AS `documentno`, `sup`.`taxno` AS `cust_taxid`, `sup`.`branchno` AS `cust_branch`, '' AS `company_branch`, `tax`.`id` AS `inv_id`, ( CASE WHEN ( isnull(`tax`.`is_export`) OR (`tax`.`is_export` = 0)) THEN 'New' WHEN (( ifnull( to_seconds(`tax`.`export_date`), 0 ) - ifnull( to_seconds(`tax`.`update_date`), 0 )) > 0 ) THEN 'Export' ELSE 'Change' END ) AS `itf_status`, `taxd`.`item_type_id` AS `producttype`, `tax`.`department` AS `department`, 'TAX' AS `invtype`, `tax`.`tax_inv_date` AS `invdate`, `taxd`.`id` AS `receive_detail_id`, 1 AS `accno`, concat('TAX', `tax`.`id`) AS `rowid`, 'SMI' AS `comid`, 'N' AS `artrans`, '1152-08' AS `ArGlaccountid` FROM (((( `tax_invoice` `tax` JOIN `tax_invoice_detail` `taxd` ON (( `tax`.`id` = `taxd`.`tax_invoice_id` ))) JOIN `master` `mt` ON (( `mt`.`id` = `taxd`.`master_id` ))) JOIN `m_billtype` `bt` ON (( `bt`.`id` = `taxd`.`item_type_id` ))) LEFT JOIN `invoice_supplier` `sup` ON (( `sup`.`code` = `tax`.`tax_inv_to` ))) WHERE (`taxd`.`is_profit` = 1) ";
+        String suffixTaxInvQuery = " GROUP BY `tax`.`id` ";																				
+//        String orderTaxInvQuery =  "ORDER BY `tax`.`tax_no` desc , tax.tax_inv_date desc ";																				
+				
+//        if(invtype == null  && department == null  &&  billtype == null  && from == null && to == null && status == null){
+//            query = "SELECT * FROM ar_nirvana ar " ; 
+//        }else{
+//            query = "SELECT * FROM ar_nirvana ar  where " ;
+//        }
         
         if ((from != null )&&(!"".equalsIgnoreCase(from))) {
             if ((to != null )&&(!"".equalsIgnoreCase(to))) {
-                if(AndQuery == 1){
-                     query += " and ar.invdate  BETWEEN  '" + from + "' AND '" + to + "' ";
-                }else{
-                    AndQuery = 1;
-                     query += " ar.invdate  BETWEEN  '" + from + "' AND '" + to + "' ";
-                }
-                
-               
+                invQuery += " ( inv.inv_date BETWEEN  '" + from + "' AND '" + to + "' ) ";
+                TaxInvQuery += " and ( tax.tax_inv_date BETWEEN  '" + from + "' AND '" + to + "' ) ";
             }
         }
         
-        if(status != null && (!"".equalsIgnoreCase(status))){
-            if(AndQuery == 1){
-                query += " and ar.itf_status = '" + status + "'";
-           }else{
-               AndQuery = 1;
-               query += " ar.itf_status = '" + status + "'";
-           }
+        if ( department != null && (!"".equalsIgnoreCase(department)) ) {
+            invQuery += " and inv.department = '" + department + "' ";
+            TaxInvQuery += " and tax.department = '" + department + "' ";
         }
-        
+       
+        if (invtype != null && (!"".equalsIgnoreCase(invtype)) ) {
+            invQuery += " and inv.inv_type = '" + invtype + "'";
+            if(!"TAX".equalsIgnoreCase(invQuery)){
+                TaxInvQuery += " and tax.tax_no = '1' ";
+            }
+        }
+
         if(accno != null && (!"".equalsIgnoreCase(accno))){
-            if(AndQuery == 1){
-                query += " and ar.accno = '" + accno + "'";
-           }else{
-               AndQuery = 1;
-               query += " ar.accno = '" + accno + "'";
-           }
+            if("1".equalsIgnoreCase(accno)){
+                invQuery += " and ( `inv`.`inv_type` = 'T' ) ";
+            }else if("2".equalsIgnoreCase(accno)){
+                invQuery += " and ( `inv`.`inv_type` != 'T' ) ";
+                TaxInvQuery += " and tax.tax_no = '1' ";
+            }
+        }
+                
+        if(status != null && (!"".equalsIgnoreCase(status))){
+            if("New".equalsIgnoreCase(status)){
+                invQuery += " and ( isnull(`inv`.`is_export`) OR (`inv`.`is_export` = 0)) ";
+                TaxInvQuery += " and ( isnull(`tax`.`is_export`) OR (`tax`.`is_export` = 0)) ";
+            }else if("Export".equalsIgnoreCase(status)){
+                invQuery += " and (( ifnull( to_seconds(`inv`.`export_date`), 0 ) - ifnull( to_seconds(`inv`.`update_date`), 0 )) > 0 ) ";
+                TaxInvQuery += " and (( ifnull( to_seconds(`tax`.`export_date`), 0 ) - ifnull( to_seconds(`tax`.`update_date`), 0 )) > 0 ) ";
+            }else if("Change".equalsIgnoreCase(status)){
+                invQuery += " (!( isnull(`inv`.`is_export`) OR (`inv`.`is_export` = 0)) and !(( ifnull( to_seconds(`inv`.`export_date`), 0 ) - ifnull( to_seconds(`inv`.`update_date`), 0 )) > 0 ) ) ";
+                TaxInvQuery += " and (!( isnull(`tax`.`is_export`) OR (`tax`.`is_export` = 0)) and !(( ifnull( to_seconds(`tax`.`export_date`), 0 ) - ifnull( to_seconds(`tax`.`update_date`), 0 )) > 0 )) ";
+            }
         }
         
-        query += " ORDER BY ar.intreference desc , ar.invdate  DESC";
+        if(billtype != null && (!"".equalsIgnoreCase(billtype))){
+            suffixInvQuery += " having group_concat( `invd`.`item_type_id` SEPARATOR ',' ) like '%" + billtype + "%' ";
+            suffixTaxInvQuery += " having GROUP_CONCAT(`taxd`.`item_type_id` SEPARATOR ',') like '%" + billtype + "%' ";
+        }
+        
+        String orderby = " ORDER BY intreference desc , invdate  DESC ";
+        query = invQuery + suffixInvQuery + " UNION " + TaxInvQuery + suffixTaxInvQuery + orderby ;
         
         System.out.println("query : " + query);
         List<Object[]> ARNirvanaList = session.createSQLQuery(query )
@@ -189,7 +190,7 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
                 .addScalar("basewhthmamt", Hibernate.BIG_DECIMAL)
                 .addScalar("whtamt", Hibernate.BIG_DECIMAL)
                 .addScalar("whthmamt", Hibernate.BIG_DECIMAL)
-                .addScalar("period", Hibernate.INTEGER)
+                .addScalar("year", Hibernate.INTEGER)
                 .addScalar("period", Hibernate.INTEGER)
                 .addScalar("note", Hibernate.STRING)
                 .addScalar("salesaccount1", Hibernate.STRING)
@@ -218,6 +219,7 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
                 .addScalar("inv_id", Hibernate.INTEGER)
                 .addScalar("receive_detail_id", Hibernate.INTEGER)
                 .addScalar("rowid", Hibernate.STRING)
+                .addScalar("comid", Hibernate.STRING)
                 .list();
         for (Object[] B : ARNirvanaList) {
             ARNirvana ar = new ARNirvana();
@@ -296,6 +298,7 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
             ar.setInvid((Integer) B[57]);
             ar.setId((Integer) B[58]);
             ar.setRowid(util.ConvertString(B[59]));
+            ar.setComid(util.ConvertString(B[60]));
             data.add(ar);
         }
         session.close();
@@ -417,40 +420,168 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
     public Transaction getTransaction() {
         return transaction;
     }
+    
+    private List<ARNirvana> convertARNirvanaFormat(String query , Session session){																		
+        List data = new ArrayList();																		
+        UtilityFunction util = new UtilityFunction();																		
+        																		
+        List<Object[]> QueryResult = session.createSQLQuery(query)																		
+                .addScalar("invtype", Hibernate.STRING)																		
+                .addScalar("department", Hibernate.STRING)																		
+                .addScalar("producttype", Hibernate.STRING)																		
+                .addScalar("invdate", Hibernate.DATE)																		
+                .addScalar("itf_status", Hibernate.STRING)																		
+                .addScalar("intreference", Hibernate.STRING)																		
+                .addScalar("salesmanid", Hibernate.STRING)																		
+                .addScalar("customerid", Hibernate.STRING)																		
+                .addScalar("customername", Hibernate.STRING)																		
+                .addScalar("divisionid", Hibernate.STRING)																		
+                .addScalar("projectid", Hibernate.STRING)																		
+                .addScalar("transcode", Hibernate.STRING)																		
+                .addScalar("transdate", Hibernate.DATE)																		
+                .addScalar("duedate", Hibernate.DATE)																		
+                .addScalar("currencyid", Hibernate.STRING)																		
+                .addScalar("homerate", Hibernate.BIG_DECIMAL)																		
+                .addScalar("foreignrate", Hibernate.BIG_DECIMAL)																		
+                .addScalar("salesamt", Hibernate.BIG_DECIMAL)																		
+                .addScalar("saleshmamt", Hibernate.BIG_DECIMAL)																		
+                .addScalar("vatamt", Hibernate.BIG_DECIMAL)																		
+                .addScalar("vathmamt", Hibernate.BIG_DECIMAL)																		
+                .addScalar("aramt", Hibernate.BIG_DECIMAL)																		
+                .addScalar("arhmamt", Hibernate.BIG_DECIMAL)																		
+                .addScalar("vatflag", Hibernate.STRING)																		
+                .addScalar("vatid", Hibernate.STRING)																		
+                .addScalar("whtflag", Hibernate.STRING)																		
+                .addScalar("whtid", Hibernate.STRING)																		
+                .addScalar("basewhtamt", Hibernate.BIG_DECIMAL)																		
+                .addScalar("basewhthmamt", Hibernate.BIG_DECIMAL)																		
+                .addScalar("whtamt", Hibernate.BIG_DECIMAL)																		
+                .addScalar("whthmamt", Hibernate.BIG_DECIMAL)																		
+                .addScalar("year", Hibernate.INTEGER)																		
+                .addScalar("period", Hibernate.INTEGER)																		
+                .addScalar("note", Hibernate.STRING)																		
+                .addScalar("salesaccount1", Hibernate.STRING)																		
+                .addScalar("salesdivision1", Hibernate.STRING)																		
+                .addScalar("salesproject1", Hibernate.STRING)																		
+                .addScalar("salesamt1", Hibernate.BIG_DECIMAL)																		
+                .addScalar("saleshmamt1", Hibernate.BIG_DECIMAL)																		
+                .addScalar("salesaccount2", Hibernate.STRING)																		
+                .addScalar("salesdivision2", Hibernate.STRING)																		
+                .addScalar("salesproject2", Hibernate.STRING)																		
+                .addScalar("salesamt2", Hibernate.BIG_DECIMAL)																		
+                .addScalar("saleshmamt2", Hibernate.BIG_DECIMAL)																		
+                .addScalar("salesaccount3", Hibernate.STRING)																		
+                .addScalar("salesdivision3", Hibernate.STRING)																		
+                .addScalar("salesproject3", Hibernate.STRING)																		
+                .addScalar("salesamt3", Hibernate.BIG_DECIMAL)																		
+                .addScalar("saleshmamt3", Hibernate.BIG_DECIMAL)																		
+                .addScalar("service", Hibernate.STRING)																		
+                .addScalar("araccount", Hibernate.STRING)																		
+                .addScalar("prefix", Hibernate.STRING)																		
+                .addScalar("documentno", Hibernate.STRING)																		
+                .addScalar("artrans", Hibernate.STRING)																		
+                .addScalar("cust_taxid", Hibernate.STRING)																		
+                .addScalar("cust_branch", Hibernate.INTEGER)																		
+                .addScalar("company_branch", Hibernate.INTEGER)																		
+                .addScalar("inv_id", Hibernate.INTEGER)																		
+                .addScalar("receive_detail_id", Hibernate.INTEGER)																		
+                .addScalar("rowid", Hibernate.STRING)	
+                .addScalar("comid", Hibernate.STRING)	
+                
+                .list();																		
+        																		
+         for (Object[] B : QueryResult) {																		
+            ARNirvana ar = new ARNirvana();																		
+            ar.setInvtype(util.ConvertString(B[0]));																		
+            ar.setDepartment(util.ConvertString(B[1]));																		
+            ar.setProducttype(util.ConvertString(B[2]));																		
+            ar.setInvdate(util.convertStringToDate(util.ConvertString(B[3])));																		
+            ar.setStatus(util.ConvertString(B[4]));																		
+            ar.setIntreference(util.ConvertString(B[5]));																		
+            ar.setSalesmanid(util.ConvertString(B[6]));																		
+            ar.setCustomerid(util.ConvertString(B[7]));																		
+            ar.setCustomername(util.ConvertString(B[8]));																		
+            ar.setDivisionid(util.ConvertString(B[9]));																		
+            ar.setProjectid(util.ConvertString(B[10]));																		
+            ar.setTranscode(util.ConvertString(B[11]));																		
+            ar.setTransdate(util.convertStringToDate(util.ConvertString(B[12])));																		
+            ar.setDuedate(util.convertStringToDate(util.ConvertString(B[13])));																		
+            ar.setCurrencyid(util.ConvertString(B[14]));																		
+            ar.setHomerate((BigDecimal) B[15]);																		
+            ar.setForeignrate((BigDecimal) B[16]);																		
+            ar.setSalesamt((BigDecimal) B[17]);																		
+            ar.setSaleshmamt((BigDecimal) B[18]);																		
+            ar.setVatamt((BigDecimal) B[19]);																		
+            ar.setVathmamt((BigDecimal) B[20]);																		
+            ar.setAramt((BigDecimal) B[21]);																		
+            ar.setArhmamt((BigDecimal) B[22]);																		
+            ar.setVatflag(util.ConvertString(B[23]));																		
+            ar.setVatid(util.ConvertString(B[24]));																		
+            ar.setWhtflag(util.ConvertString(B[25]));																		
+            ar.setWhtid(util.ConvertString(B[26]));																		
+            ar.setBasewhtamt((BigDecimal) B[27]);																		
+            ar.setBasewhthmamt((BigDecimal) B[28]);																		
+            ar.setWhtamt((BigDecimal) B[29]);																		
+            ar.setWhthmamt((BigDecimal) B[30]);																		
+            ar.setYear((Integer) B[31]);																		
+            ar.setPeriod((Integer) B[32]);																		
+            ar.setNote(util.ConvertString(B[33]));																		
+            ar.setSalesaccount1(util.ConvertString(B[34]));																		
+            ar.setSalesdivision1(util.ConvertString(B[35]));																		
+            ar.setSalesproject1(util.ConvertString(B[36]));																		
+            ar.setSalesamt1((BigDecimal) B[37]);																		
+            ar.setSaleshmamt((BigDecimal) B[38]);																		
+            ar.setSalesaccount2(util.ConvertString(B[39]));																		
+            ar.setSalesdivision2(util.ConvertString(B[40]));																		
+            ar.setSalesproject2(util.ConvertString(B[41]));																		
+            ar.setSalesamt2((BigDecimal) B[42]);																		
+            ar.setSaleshmamt2((BigDecimal) B[43]);																		
+            ar.setSalesaccount3(util.ConvertString(B[44]));																		
+            ar.setSalesdivision3(util.ConvertString(B[45]));																		
+            ar.setSalesproject3(util.ConvertString(B[46]));																		
+            ar.setSalesamt3((BigDecimal) B[47]);																		
+            ar.setSaleshmamt3((BigDecimal) B[48]);																		
+            ar.setService(util.ConvertString(B[49]));																		
+            ar.setAraccount(util.ConvertString(B[50]));																		
+            ar.setPrefix(util.ConvertString(B[51]));																		
+            ar.setDocumentno(util.ConvertString(B[52]));																		
+            ar.setArtrans(util.ConvertString(B[53]));																		
+            ar.setCust_taxid(util.ConvertString(B[54]));																		
+            ar.setCust_branch((Integer) B[55]);																		
+            ar.setCompany_branch((Integer) B[56]);																		
+            ar.setInvid((Integer) B[57]);																		
+            ar.setId((Integer) B[58]);																		
+            ar.setRowid(util.ConvertString(B[59]));
+            ar.setComid(util.ConvertString(B[60]));
+            data.add(ar);																		
+        }																		
+        return data;																		
+    }																
 
-    private List<ARNirvana> SearchArNirvanaFromPaymentDetailId(List<ARNirvana> ARList) {
-//           Session session = this.getSessionFactory().openSession();
-//        StringBuffer query = new StringBuffer(" SELECT '' as rowid, ar.* FROM `ar_nirvana` ar WHERE  receive_detail_id in (");
-//        for (int i = 0; i < ARList.size(); i++) {
-//            query.append(i == 0 ? "" : ",");
-//            query.append(ARList.get(i).getReceive_detail_id());
-//        }
-//        query.append(")");
-//
-//        SQLQuery sQLQuery = session.createSQLQuery(query.toString()).addEntity(ARNirvana.class);
-//        List result = sQLQuery.list();
-//
-//        this.sessionFactory.close();
-//        session.close();
-//        return result;
-        UtilityFunction util = new UtilityFunction(); 
+    private List<ARNirvana> SearchArNirvanaFromPaymentDetailId(List<ARNirvana> ARList) {       
         Session session = this.getSessionFactory().openSession();
-        String query = "from ARNirvana ar where ar.rowid in (";
+        UtilityFunction util = new UtilityFunction(); 
+        String invquery = " SELECT `inv`.`inv_no` AS `intreference`, '00' AS `salesmanid`, `inv`.`arcode` AS `customerid`, `inv`.`inv_name` AS `customername`, ( CASE WHEN (`inv`.`department` = 'Wendy') THEN 'WENDY' WHEN ( `inv`.`department` = 'Inbound' ) THEN 'INBOUND' WHEN ( `inv`.`department` = 'Outbound' ) THEN 'OUTBOUND' ELSE '' END ) AS `divisionid`, '00' AS `projectid`, 'IN' AS `transcode`, `inv`.`inv_date` AS `transdate`, ( CASE WHEN isnull(`inv`.`due_date`) THEN `inv`.`inv_date` ELSE `inv`.`due_date` END ) AS `duedate`, `invd`.`cur_amount` AS `currencyid`, '1' AS `homerate`, ( CASE WHEN ((`invd`.`cur_amount` <> 'THB') AND ( `inv`.`department` = 'inbound' )) THEN ( SELECT min(`exr`.`ex_rate`) FROM `m_exchangerate` `exr` WHERE (( `inv`.`inv_date` = `exr`.`ex_date` ) AND ( `invd`.`cur_amount` = `exr`.`currency` ))) WHEN (`invd`.`cur_amount` <> 'THB') THEN round( sum(( ifnull(`invd`.`amount_local`, 0) / ifnull(`invd`.`amount`, 0))), 4 ) ELSE 1 END ) AS `foreignrate`, ( CASE WHEN (`inv`.`inv_type` = 'V') THEN sum(ifnull(`invd`.`gross`, 0)) WHEN ((`inv`.`inv_type` = 'A') OR (`inv`.`inv_type` = 'T') OR (`inv`.`inv_type` = 'N')) THEN sum(ifnull(`invd`.`amount`, 0)) ELSE 0 END ) AS `salesamt`, ( CASE WHEN (`inv`.`inv_type` = 'V') THEN ( CASE WHEN (`invd`.`cur_amount` = 'THB') THEN ifnull(`invd`.`gross`, 0) WHEN ((`invd`.`cur_amount` <> 'THB') AND ( `inv`.`department` <> 'inbound' )) THEN ifnull(`invd`.`gross`, 0) ELSE round( ifnull(( `invd`.`gross` * ( SELECT min(`exr`.`ex_rate`) FROM `m_exchangerate` `exr` WHERE (( `inv`.`inv_date` = `exr`.`ex_date` ) AND ( `invd`.`cur_amount` = `exr`.`currency` )))), 0 ), 2 ) END ) WHEN ((`inv`.`inv_type` = 'A') OR (`inv`.`inv_type` = 'T') OR (`inv`.`inv_type` = 'N')) THEN ( CASE WHEN (`invd`.`cur_amount` = 'THB') THEN ifnull(`invd`.`amount_local`, 0) WHEN ((`invd`.`cur_amount` <> 'THB') AND ( `inv`.`department` <> 'inbound' )) THEN ifnull(`invd`.`amount_local`, 0) ELSE round( ifnull(( `invd`.`amount_local` * ( SELECT min(`exr`.`ex_rate`) FROM `m_exchangerate` `exr` WHERE (( `inv`.`inv_date` = `exr`.`ex_date` ) AND ( `invd`.`cur_amount` = `exr`.`currency` )))), 0 ), 2 ) END ) ELSE '' END ) AS `saleshmamt`, ( CASE WHEN (`invd`.`is_vat` = 1) THEN sum(( ifnull(`invd`.`amount`, 0) - ifnull(`invd`.`gross`, 0))) WHEN (`invd`.`is_vat` = 0) THEN 0 ELSE 0 END ) AS `vatamt`, sum(( CASE WHEN (`invd`.`cur_amount` = 'THB') THEN ( CASE WHEN (`invd`.`is_vat` = 1) THEN ( ifnull(`invd`.`amount_local`, 0) - ifnull(`invd`.`gross`, 0)) ELSE 0 END ) WHEN ((`invd`.`cur_amount` <> 'THB') AND ( `inv`.`department` <> 'inbound' )) THEN ( CASE WHEN (`invd`.`is_vat` = 1) THEN ( ifnull(`invd`.`amount_local`, 0) - ifnull(`invd`.`gross`, 0)) ELSE 0 END ) ELSE ( CASE WHEN (`invd`.`is_vat` = 1) THEN round((( ifnull(`invd`.`amount`, 0) - ifnull(`invd`.`gross`, 0)) * ( SELECT min(`exr`.`ex_rate`) FROM `m_exchangerate` `exr` WHERE (( `inv`.`inv_date` = `exr`.`ex_date` ) AND ( `invd`.`cur_amount` = `exr`.`currency` )))), 2 ) ELSE 0 END ) END )) AS `vathmamt`, sum(ifnull(`invd`.`amount`, 0)) AS `aramt`, round( sum(( CASE WHEN (`invd`.`cur_amount` = 'THB') THEN `invd`.`amount_local` WHEN ((`invd`.`cur_amount` <> 'THB') AND ( `inv`.`department` <> 'inbound' )) THEN `invd`.`amount_local` ELSE ( `invd`.`amount` * ( SELECT min(`exr`.`ex_rate`) FROM `m_exchangerate` `exr` WHERE (( `inv`.`inv_date` = `exr`.`ex_date` ) AND ( `invd`.`cur_amount` = `exr`.`currency` )))) END )), 2 ) AS `arhmamt`, ( CASE WHEN (`inv`.`inv_type` = 'V') THEN 'Y' ELSE 'N' END ) AS `vatflag`, ( CASE WHEN (`inv`.`inv_type` = 'V') THEN '07' ELSE '' END ) AS `vatid`, 'N' AS `whtflag`, '01' AS `whtid`, 0 AS `basewhtamt`, '' AS `basewhthmamt`, 0 AS `whtamt`, '' AS `whthmamt`, YEAR (`inv`.`inv_date`) AS `year`, MONTH (`inv`.`inv_date`) AS `period`, concat( 'Refno : ', `mt`.`Reference No`, ' Product Type :', `bt`.`name`, ' Status : Normal' ) AS `note`, '' AS `salesaccount1`, '' AS `salesdivision1`, '' AS `salesproject1`, '' AS `salesamt1`, '' AS `saleshmamt1`, '' AS `salesaccount2`, '' AS `salesdivision2`, '' AS `salesproject2`, '' AS `salesamt2`, '' AS `saleshmamt2`, '' AS `salesaccount3`, '' AS `salesdivision3`, '' AS `salesproject3`, '' AS `salesamt3`, '' AS `saleshmamt3`, 'Y' AS `service`, ( CASE WHEN (`inv`.`inv_type` = 'T') THEN '1130-01' ELSE '1130-01' END ) AS `araccount`, ( CASE WHEN (`inv`.`inv_type` = 'T') THEN substr(`inv`.`inv_no`, 1, 1) WHEN (`inv`.`inv_type` = 'N') THEN substr(`inv`.`inv_no`, 1, 2) WHEN (`inv`.`inv_type` = 'V') THEN substr(`inv`.`inv_no`, 1, 2) WHEN (`inv`.`inv_type` = 'A') THEN substr(`inv`.`inv_no`, 1, 2) ELSE '' END ) AS `prefix`, ( CASE WHEN (`inv`.`inv_type` = 'T') THEN substr(`inv`.`inv_no`, 2) WHEN (`inv`.`inv_type` = 'N') THEN substr(`inv`.`inv_no`, 3) WHEN (`inv`.`inv_type` = 'V') THEN substr(`inv`.`inv_no`, 3) WHEN (`inv`.`inv_type` = 'A') THEN substr(`inv`.`inv_no`, 3) ELSE '' END ) AS `documentno`, `sup`.`tax_no` AS `cust_taxid`, `sup`.`branch_no` AS `cust_branch`, '' AS `company_branch`, `inv`.`id` AS `inv_id`, ( CASE WHEN ( isnull(`inv`.`is_export`) OR (`inv`.`is_export` = 0)) THEN 'New' WHEN (( ifnull( to_seconds(`inv`.`export_date`), 0 ) - ifnull( to_seconds(`inv`.`update_date`), 0 )) > 0 ) THEN 'Export' ELSE 'Change' END ) AS `itf_status`, group_concat( `invd`.`item_type_id` SEPARATOR ',' ) AS `producttype`, `inv`.`department` AS `department`, `inv`.`inv_type` AS `invtype`, `inv`.`inv_date` AS `invdate`, `inv`.`id` AS `receive_detail_id`, ( CASE WHEN (`inv`.`inv_type` = 'T') THEN 2 ELSE 1 END ) AS `accno`, concat('I', `inv`.`id`) AS `rowid`, ( CASE WHEN (`inv`.`inv_type` = 'T') THEN 'TEMP' ELSE 'SMI' END ) AS `comid`, '' AS `artrans`, '' AS `ArGlaccountid` FROM ((((((( `invoice` `inv` JOIN `invoice_detail` `invd` ON (( `invd`.`invoice_id` = `inv`.`id` ))) LEFT JOIN `staff` `st` ON ((`st`.`id` = `inv`.`staff_id`))) LEFT JOIN `m_billtype` `bt` ON (( `bt`.`id` = `invd`.`item_type_id` ))) LEFT JOIN `billable_desc` `billdesc` ON (( `billdesc`.`id` = `invd`.`bill_desc_id` ))) LEFT JOIN `billable` `bill` ON (( `bill`.`id` = `billdesc`.`billable_id` ))) LEFT JOIN `master` `mt` ON (( `mt`.`id` = `bill`.`master_id` ))) LEFT JOIN `agent` `sup` ON (( `sup`.`code` = `inv`.`inv_to` ))) WHERE concat('I', `inv`.`id`) IN ( " ;
+        String taxinvquery = " SELECT `tax`.`tax_no` AS `intreference`, '00' AS `salesmanid`, `tax`.`ar_code` AS `customerid`, `tax`.`tax_inv_name` AS `customername`, ( CASE WHEN (`tax`.`department` = 'Wendy') THEN 'WENDY' WHEN ( `tax`.`department` = 'Inbound' ) THEN 'INBOUND' WHEN ( `tax`.`department` = 'Outbound' ) THEN 'OUTBOUND' ELSE '' END ) AS `divisionid`, '00' AS `projectid`, 'IN' AS `transcode`, `tax`.`tax_inv_date` AS `transdate`, `tax`.`tax_inv_date` AS `duedate`, `taxd`.`cur_amount` AS `currencyid`, '1' AS `homerate`, '1' AS `foreignrate`, sum(( CASE WHEN (`taxd`.`is_vat` = 1) THEN round((( ifnull(`taxd`.`amount`, 0) * 100 ) / (100 + `taxd`.`vat`)), 2 ) WHEN (`taxd`.`is_vat` = 0) THEN ifnull(`taxd`.`amount`, 0) ELSE 0 END )) AS `salesamt`, sum(( CASE WHEN (`taxd`.`cur_amount` = 'THB') THEN round((( ifnull(`taxd`.`amount`, 0) * 100 ) / (100 + `taxd`.`vat`)), 2 ) ELSE 0 END )) AS `saleshmamt`, sum(( CASE WHEN (`taxd`.`is_vat` = 1) THEN round(( ifnull(`taxd`.`amount`, 0) - (( ifnull(`taxd`.`amount`, 0) * 100 ) / (100 + `taxd`.`vat`))), 2 ) WHEN (`taxd`.`is_vat` = 0) THEN 0 ELSE 0 END )) AS `vatamt`, sum(( CASE WHEN (`taxd`.`cur_amount` = 'THB') THEN round(( ifnull(`taxd`.`amount`, 0) - (( ifnull(`taxd`.`amount`, 0) * 100 ) / (100 + `taxd`.`vat`))), 2 ) ELSE 0 END )) AS `vathmamt`, sum(`taxd`.`amount`) AS `aramt`, sum(( CASE WHEN (`taxd`.`cur_amount` = 'THB') THEN `taxd`.`amount` ELSE 0 END )) AS `arhmamt`, ( CASE WHEN (`taxd`.`is_vat` = 1) THEN 'Y' WHEN (`taxd`.`is_vat` = 0) THEN 'N' ELSE 'N' END ) AS `vatflag`, ( CASE WHEN (`taxd`.`is_vat` = 1) THEN '07' WHEN (`taxd`.`is_vat` = 0) THEN '' ELSE '' END ) AS `vatid`, 'N' AS `whtflag`, '01' AS `whtid`, 0 AS `basewhtamt`, '' AS `basewhthmamt`, 0 AS `whtamt`, '' AS `whthmamt`, YEAR (`tax`.`tax_inv_date`) AS `year`, MONTH (`tax`.`tax_inv_date`) AS `period`, concat( 'Refno : ', `mt`.`Reference No`, ' Product Type :', `bt`.`name`, ' Status : Profit' ) AS `note`, `bt`.`acc_code` AS `salesaccount1`, ( CASE WHEN (`tax`.`department` = 'Wendy') THEN 'WENDY' WHEN ( `tax`.`department` = 'Inbound' ) THEN 'INBOUND' WHEN ( `tax`.`department` = 'Outbound' ) THEN 'OUTBOUND' ELSE '' END ) AS `salesdivision1`, '00' AS `salesproject1`, sum(( CASE WHEN (`taxd`.`is_vat` = 1) THEN round((( ifnull(`taxd`.`amount`, 0) * 100 ) / (100 + `taxd`.`vat`)), 2 ) ELSE `taxd`.`amount` END )) AS `salesamt1`, sum(( CASE WHEN (`taxd`.`cur_amount` = 'THB') THEN ( CASE WHEN (`taxd`.`is_vat` = 1) THEN round((( ifnull(`taxd`.`amount`, 0) * 100 ) / (100 + `taxd`.`vat`)), 2 ) ELSE `taxd`.`amount` END ) ELSE '' END )) AS `saleshmamt1`, '' AS `salesaccount2`, '' AS `salesdivision2`, '' AS `salesproject2`, '' AS `salesamt2`, '' AS `saleshmamt2`, '' AS `salesaccount3`, '' AS `salesdivision3`, '' AS `salesproject3`, '' AS `salesamt3`, '' AS `saleshmamt3`, 'Y' AS `service`, '' AS `araccount`, substr(`tax`.`tax_no`, 1, 1) AS `prefix`, substr(`tax`.`tax_no`, 2) AS `documentno`, `sup`.`taxno` AS `cust_taxid`, `sup`.`branchno` AS `cust_branch`, '' AS `company_branch`, `tax`.`id` AS `inv_id`, ( CASE WHEN ( isnull(`tax`.`is_export`) OR (`tax`.`is_export` = 0)) THEN 'New' WHEN (( ifnull( to_seconds(`tax`.`export_date`), 0 ) - ifnull( to_seconds(`tax`.`update_date`), 0 )) > 0 ) THEN 'Export' ELSE 'Change' END ) AS `itf_status`, `taxd`.`item_type_id` AS `producttype`, `tax`.`department` AS `department`, 'TAX' AS `invtype`, `tax`.`tax_inv_date` AS `invdate`, `taxd`.`id` AS `receive_detail_id`, 1 AS `accno`, concat('TAX', `tax`.`id`) AS `rowid`, 'SMI' AS `comid`, 'N' AS `artrans`, '1152-08' AS `ArGlaccountid` FROM (((( `tax_invoice` `tax` JOIN `tax_invoice_detail` `taxd` ON (( `tax`.`id` = `taxd`.`tax_invoice_id` ))) JOIN `master` `mt` ON (( `mt`.`id` = `taxd`.`master_id` ))) JOIN `m_billtype` `bt` ON (( `bt`.`id` = `taxd`.`item_type_id` ))) LEFT JOIN `invoice_supplier` `sup` ON (( `sup`.`code` = `tax`.`tax_inv_to` ))) WHERE (`taxd`.`is_profit` = 1) AND concat('TAX', `tax`.`id`) IN ( " ;
         for (int i = 0; i < ARList.size(); i++) {
-            query += (i == 0 ? "" : ",");
-            query += ("'"+ARList.get(i).getRowid()+"'");
+            invquery += (i == 0 ? "" : ",");
+            invquery += ("'"+ARList.get(i).getRowid()+"'");
+            taxinvquery += (i == 0 ? "" : ",");
+            taxinvquery += ("'"+ARList.get(i).getRowid()+"'");
         } 
-        query += ") order by accno , intreference asc " ;
-        System.out.println(" query :: " + query);
-        Query HqlQuery = session.createQuery(query);
-        List<ARNirvana> result = HqlQuery.list();
+            invquery += " ) GROUP BY  `inv`.`id` " ;
+            taxinvquery += " ) 	GROUP BY `tax`.`id` " ;
+            
+        String query = invquery + " UNION " +  taxinvquery + " ORDER BY intreference asc ";
+        List<ARNirvana> result = convertARNirvanaFormat(query,session);
+
         if(result != null){
             for (int i = 0; i < result.size() ; i++) {
                 String rowid = result.get(i).getRowid();
-                String type = rowid.substring(0, 1);
-                String row = rowid.substring(1);
-                System.out.println("Type :" + type +" Row : " + row);
-                String queryDetail = "SELECT * FROM `ar_nirvana_sale_detail` where id='"+row+"'";
+//                String type = rowid.substring(0, 1);
+//                String row = rowid.substring(1);
+//                System.out.println("Type :" + type +" Row : " + row);
+                String queryDetail = "SELECT * FROM `ar_nirvana_sale_detail` where rowid = '"+rowid+"'" ;
                 List<Object[]> detail = session.createSQLQuery(queryDetail)
                  .addScalar("salesaccount", Hibernate.STRING)
                  .addScalar("salesdivision", Hibernate.STRING)
