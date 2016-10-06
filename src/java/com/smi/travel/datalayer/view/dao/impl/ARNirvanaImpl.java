@@ -220,6 +220,7 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
                 .addScalar("receive_detail_id", Hibernate.INTEGER)
                 .addScalar("rowid", Hibernate.STRING)
                 .addScalar("comid", Hibernate.STRING)
+                .addScalar("ArGlaccountid", Hibernate.STRING)
                 .list();
         for (Object[] B : ARNirvanaList) {
             ARNirvana ar = new ARNirvana();
@@ -299,6 +300,7 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
             ar.setId((Integer) B[58]);
             ar.setRowid(util.ConvertString(B[59]));
             ar.setComid(util.ConvertString(B[60]));
+            ar.setArglaccountid(util.ConvertString(B[61]));
             data.add(ar);
         }
         session.close();
@@ -487,7 +489,7 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
                 .addScalar("receive_detail_id", Hibernate.INTEGER)																		
                 .addScalar("rowid", Hibernate.STRING)	
                 .addScalar("comid", Hibernate.STRING)	
-                
+                .addScalar("ArGlaccountid", Hibernate.STRING)
                 .list();																		
         																		
          for (Object[] B : QueryResult) {																		
@@ -553,6 +555,7 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
             ar.setId((Integer) B[58]);																		
             ar.setRowid(util.ConvertString(B[59]));
             ar.setComid(util.ConvertString(B[60]));
+            ar.setArglaccountid(util.ConvertString(B[61]));
             data.add(ar);																		
         }																		
         return data;																		
