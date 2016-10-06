@@ -16,13 +16,13 @@ $(document).ready(function() {
     });
     $(".decimalexrate").inputmask({
         alias: "decimal",
-        integerDigits: 6,
+        integerDigits: 20,
         groupSeparator: ',',
         autoGroup: true,
-        digits: 4,
+        digits: 10,
         allowMinus: false,
         digitsOptional: false,
-        placeholder: "0.0000",
+        placeholder: "0.0000000000"
     });
     
     $("#InvNo").focus();
@@ -692,13 +692,13 @@ function AddRowDetailBillAble(row, prod, des, cos, id, price, RefNo, cur, cur_c,
     });
     $(".decimalexrate").inputmask({
         alias: "decimal",
-        integerDigits: 6,
+        integerDigits: 20,
         groupSeparator: ',',
         autoGroup: true,
-        digits: 4,
+        digits: 10,
         allowMinus: false,
         digitsOptional: false,
-        placeholder: "0.0000",
+        placeholder: "0.0000000000"
     });
     $('#DetailBillableTable input:last').addClass('lastrow');
     $("#SelectProductType"+row+",#BillDescriptionTemp"+row+",#InputCost"+row+",#SelectCurrencyCost"+row+",#InputCostLocal"+row+",#InputAmount"+row+",#SelectCurrencyAmount"+row+",#InputExRate"+row+",#InputAmountLocal"+row).focus(function() {

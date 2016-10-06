@@ -1983,13 +1983,13 @@
         });
         $(".decimalexrate").inputmask({
             alias: "decimal",
-            integerDigits: 6,
+            integerDigits: 20,
             groupSeparator: ',',
             autoGroup: true,
-            digits: 4,
+            digits: 10,
             allowMinus: false,
             digitsOptional: false,
-            placeholder: "0.0000",
+            placeholder: "0.0000000000"
         });
         
         setDecimalFormatOnload();
@@ -2501,18 +2501,19 @@
             placeholder: "0.00",
         });
         
-        $(".decimalexrate-"+i).inputmask({
+        $(".decimalexrate-"+row).inputmask({
             alias: "decimal",
-            integerDigits: 6,
+            integerDigits: 20,
             groupSeparator: ',',
             autoGroup: true,
-            digits: 4,
+            digits: 10,
             allowMinus: false,
             digitsOptional: false,
-            placeholder: "0.0000",
+            placeholder: "0.0000000000"
         });
     }
 	
+       
     function setDecimalFormatOnload(){
         var receiptDetailListcount = $("#receiptDetailListcount").val();
         receiptDetailListcount = parseInt(receiptDetailListcount+1);
@@ -2535,13 +2536,13 @@
             if(receiveExRate !== "") {
                 $(".decimalexrate-"+i).inputmask({
                     alias: "decimal",
-                    integerDigits: 6,
+                    integerDigits: 20,
                     groupSeparator: ',',
                     autoGroup: true,
-                    digits: 4,
+                    digits: 10,
                     allowMinus: false,
                     digitsOptional: false,
-                    placeholder: "0.0000",
+                    placeholder: "0.0000000000"
                 });
             }
         }

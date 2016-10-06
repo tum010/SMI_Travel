@@ -27,15 +27,15 @@ $(document).ready(function() {
         placeholder: "0.00",
     });
     
-    $(".decimalexrate").inputmask({
+     $(".decimalexrate").inputmask({
         alias: "decimal",
-        integerDigits: 6,
+        integerDigits: 20,
         groupSeparator: ',',
         autoGroup: true,
-        digits: 4,
+        digits: 10,
         allowMinus: false,
         digitsOptional: false,
-        placeholder: "0.0000"
+        placeholder: "0.0000000000"
     });
     
 //    $(".numerical").mask('00000000', {reverse: true});
@@ -794,14 +794,15 @@ function addRowInvoiceInboundDetail(row){
     
     $(".decimalexrate").inputmask({
         alias: "decimal",
-        integerDigits: 6,
+        integerDigits: 20,
         groupSeparator: ',',
         autoGroup: true,
-        digits: 4,
+        digits: 10,
         allowMinus: false,
         digitsOptional: false,
-        placeholder: "0.0000"
+        placeholder: "0.0000000000"
     });
+    
     $("#mBillTypeListTemp option").clone().appendTo("#product" + row);
     
     $('#DetailBillableTable input:last').addClass('lastrow');

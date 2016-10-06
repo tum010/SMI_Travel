@@ -53,7 +53,7 @@
             <column name="remark" />
         </property>
         <property name="exRate" type="big_decimal">
-            <column name="ex_rate" precision="10" />
+            <column name="ex_rate" precision="20" />
         </property>
     </class>
 </hibernate-mapping>

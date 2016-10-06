@@ -56,7 +56,7 @@
             <column name="is_export"  />
         </property>
         <property name="exRate" type="big_decimal">
-            <column name="ex_rate" precision="10" />
+            <column name="ex_rate" precision="20" />
         </property>
         <bag name="invoiceDocuments" table="invoice_document" inverse="true" lazy="true" fetch="select">
             <key>
