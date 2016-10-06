@@ -303,7 +303,7 @@ public class SsDataexch {
         String datanodetail = insertDetail(ssDataexch.getSsDataexchTrList());
         System.out.println(" datanodetail ::: " +datanodetail);
         
-        if(ssDataexch.getSsDataexchTr2List() != null){
+        if(!ssDataexch.getSsDataexchTr2List().isEmpty()){
             String datanodetail3 = insertDetailDataexchtr3(ssDataexch.getSsDataexchTr2List());
             System.out.println(" datanodetail3 ::: " +datanodetail3);
         }
