@@ -769,7 +769,7 @@ function addRowInvoiceInboundDetail(row){
     '<td align="center" '+ textHidden+'><input type="checkbox" id="checkUse' + row + '" name="checkUse' + row + '" onclick="calculateGross(' + row + ')" value="" checked></td>' +
     '<td class="hidden" ><input type="text" id="InputVatTemp' + row + '" name="InputVatTemp' + row + '"  value="' + vat + '"></td>' +
     '<td '+ textHiddenVat+'>'+vatTemp+'</td>' +
-    '<td '+ textHidden+'><input type="text" disabled="disabled" onfocusout="changeFormatGrossNumber(' + row + ')" class="form-control decimal" id="InputGross' + row + '" name="InputGross' + row + '" value="" ></td>' +
+    '<td '+ textHidden+'><input type="text" readonly="" onfocusout="changeFormatGrossNumber(' + row + ')" class="form-control decimal" id="InputGross' + row + '" name="InputGross' + row + '" value="" ></td>' +
     '<td><input type="text" class="form-control decimal" id="InputAmount' + row + '" name="InputAmount' + row + '" onfocusout="changeFormatAmountNumber(' + row + ');"  value=""></td>' +
     '<td class="priceCurrencyAmount"><select id="SelectCurrencyAmount' + row + '" name="SelectCurrencyAmount' + row + '" class="form-control" onclick="checkCurrency()" onchange="CalculateGrandTotal(\'\')">' + select + '</select></td>' +              
     '<td><input type="text" id="InputExRate' + row + '" name="InputExRate' + row + '" class="form-control text-right decimalexrate" ></td>' +

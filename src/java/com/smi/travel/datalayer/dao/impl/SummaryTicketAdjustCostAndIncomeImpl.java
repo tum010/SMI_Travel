@@ -787,46 +787,54 @@ public class SummaryTicketAdjustCostAndIncomeImpl implements SummaryTicketAdjust
             //query = "SELECT ( CASE WHEN (`fare`.`ticket_type` = 'B') THEN 'BSP' WHEN (`fare`.`ticket_type` = 'A') THEN 'AGENT' WHEN (`fare`.`ticket_type` = 'D') THEN 'DOMESTIC' WHEN (`fare`.`ticket_type` = 'TI') THEN 'TG INTER' WHEN (`fare`.`ticket_type` = 'TD') THEN 'TG DOMESTIC' ELSE `fare`.`ticket_type` END ) AS `typepayment`, `fare`.`ticket_rounting` AS `typerounting`, count(`fare`.`ticket_no`) AS `pax`, substr(`fare`.`ticket_no`, 1, 3) AS `air`, sum( ifnull( `fare`.`ticket_commission`, 0 )) AS `comairline`, sum( ifnull( `fare`.`litter_commission`, 0 )) AS `littlecom`, sum( ifnull( `fare`.`agent_commission`, 0 )) AS `payagent`, sum( ifnull(`refd`.`agent_comission`, 0)) AS `rcagent`, sum( ifnull( `refd`.`airline_comission`, 0 )) AS `payrefund`, sum((((( ifnull( `fare`.`ticket_commission`, 0 ) + ifnull( `fare`.`litter_commission`, 0 )) - ifnull( `fare`.`agent_commission`, 0 )) + ifnull(`refd`.`agent_comission`, 0)) - ifnull( `refd`.`airline_comission`, 0 ))) AS `comreceive` FROM ((((( `ticket_fare_airline` `fare` LEFT JOIN `ticket_fare_invoice` `finv` ON (( `finv`.`ticket_fare_id` = `fare`.`id` ))) LEFT JOIN `invoice` `inv` ON (( `inv`.`id` = `finv`.`invoice_id` ))) LEFT JOIN `m_accterm` `term` ON (( `term`.`id` = `inv`.`term_pay` )))) LEFT JOIN `refund_airticket_detail` `refd` ON (( `refd`.`ticket_no` = `fare`.ticket_no ))) " ; 
             query = "SELECT ( CASE WHEN (`fare`.`ticket_type` = 'B') THEN 'BSP' WHEN (`fare`.`ticket_type` = 'A') THEN 'AGENT' WHEN (`fare`.`ticket_type` = 'D') THEN 'DOMESTIC' WHEN (`fare`.`ticket_type` = 'TI') THEN 'TG INTER' WHEN (`fare`.`ticket_type` = 'TD') THEN 'TG DOMESTIC' ELSE `fare`.`ticket_type` END ) AS `typepayment`, `fare`.`ticket_rounting` AS `typerounting`, count(`fare`.`ticket_no`) AS `pax`, substr(`fare`.`ticket_no`, 1, 3) AS `air`, sum( ifnull( `fare`.`ticket_commission`, 0 )) AS `comairline`, sum( ifnull( `fare`.`litter_commission`, 0 )) AS `littlecom`, sum( ifnull( `fare`.`agent_commission`, 0 )) AS `payagent`, sum( ifnull(`refd`.`agent_comission`, 0)) AS `rcagent`, sum( ifnull( `refd`.`airline_comission`, 0 )) AS `payrefund`, sum((((( ifnull( `fare`.`ticket_commission`, 0 ) + ifnull( `fare`.`litter_commission`, 0 )) - ifnull( `fare`.`agent_commission`, 0 )) + ifnull(`refd`.`agent_comission`, 0)) - ifnull( `refd`.`airline_comission`, 0 ))) AS `comreceive` FROM ((((( `ticket_fare_airline` `fare` LEFT JOIN `ticket_fare_invoice` `finv` ON (( `finv`.`ticket_fare_id` = `fare`.`id` ))) LEFT JOIN `invoice` `inv` ON (( `inv`.`id` = `finv`.`invoice_id` OR ( `inv`.`inv_no` = rtrim( REPLACE ( REPLACE ( substr(`fare`.`remark`, 1, 10), CHAR (13), '' ), CHAR (10), '' ))) ))) LEFT JOIN `m_accterm` `term` ON (( `term`.`id` = `inv`.`term_pay` )))) LEFT JOIN `refund_airticket_detail` `refd` ON (( `refd`.`ticket_no` = `fare`.ticket_no )) LEFT JOIN ticket_fare_airline fave ON fave.pv_code IS NOT NULL AND fare.id = fave.id ) ";
             //querySum = "SELECT ( CASE WHEN (`fare`.`ticket_type` = 'B') THEN 'BSP' WHEN (`fare`.`ticket_type` = 'A') THEN 'AGENT' WHEN (`fare`.`ticket_type` = 'D') THEN 'DOMESTIC' WHEN (`fare`.`ticket_type` = 'TI') THEN 'TG INTER' WHEN (`fare`.`ticket_type` = 'TD') THEN 'TG DOMESTIC' ELSE `fare`.`ticket_type` END ) AS `typepayment`, `fare`.`ticket_rounting` AS `typerounting`, count(`fare`.`ticket_no`) AS `pax`, substr(`fare`.`ticket_no`, 1, 3) AS `air`, sum( ifnull( `fare`.`ticket_commission`, 0 )) AS `comairline`, sum( ifnull( `fare`.`litter_commission`, 0 )) AS `littlecom`, sum( ifnull( `fare`.`agent_commission`, 0 )) AS `payagent`, sum( ifnull(`refd`.`agent_comission`, 0)) AS `rcagent`, sum( ifnull( `refd`.`airline_comission`, 0 )) AS `payrefund`, sum((((( ifnull( `fare`.`ticket_commission`, 0 ) + ifnull( `fare`.`litter_commission`, 0 )) - ifnull( `fare`.`agent_commission`, 0 )) + ifnull(`refd`.`agent_comission`, 0)) - ifnull( `refd`.`airline_comission`, 0 ))) AS `comreceive` FROM ((((( `ticket_fare_airline` `fare` LEFT JOIN `ticket_fare_invoice` `finv` ON (( `finv`.`ticket_fare_id` = `fare`.`id` ))) LEFT JOIN `invoice` `inv` ON (( `inv`.`id` = `finv`.`invoice_id` ))) LEFT JOIN `m_accterm` `term` ON (( `term`.`id` = `inv`.`term_pay` )))) LEFT JOIN `refund_airticket_detail` `refd` ON (( `refd`.`ticket_no` = `fare`.ticket_no ))) ";
-            querySum = " SELECT ( CASE WHEN (`fare`.`ticket_type` = 'B') THEN 'BSP' WHEN (`fare`.`ticket_type` = 'A') THEN 'AGENT' WHEN (`fare`.`ticket_type` = 'D') THEN 'DOMESTIC' WHEN (`fare`.`ticket_type` = 'TI') THEN 'TG INTER' WHEN (`fare`.`ticket_type` = 'TD') THEN 'TG DOMESTIC' ELSE `fare`.`ticket_type` END ) AS `typepayment`, `fare`.`ticket_rounting` AS `typerounting`, count(`fare`.`ticket_no`) AS `pax`, substr(`fare`.`ticket_no`, 1, 3) AS `air`, sum( ifnull( `fare`.`ticket_commission`, 0 )) AS `comairline`, sum( ifnull( `fare`.`litter_commission`, 0 )) AS `littlecom`, sum( ifnull( `fare`.`agent_commission`, 0 )) AS `payagent`, sum( ifnull(`refd`.`agent_comission`, 0)) AS `rcagent`, sum( ifnull( `refd`.`airline_comission`, 0 )) AS `payrefund`, sum((((( ifnull( `fare`.`ticket_commission`, 0 ) + ifnull( `fare`.`litter_commission`, 0 )) - ifnull( `fare`.`agent_commission`, 0 )) + ifnull(`refd`.`agent_comission`, 0)) - ifnull( `refd`.`airline_comission`, 0 ))) AS `comreceive` FROM ((((( `ticket_fare_airline` `fare` LEFT JOIN `ticket_fare_invoice` `finv` ON (( `finv`.`ticket_fare_id` = `fare`.`id` ))) LEFT JOIN `invoice` `inv` ON (( `inv`.`id` = `finv`.`invoice_id` OR ( `inv`.`inv_no` = rtrim( REPLACE ( REPLACE ( substr(`fare`.`remark`, 1, 10), CHAR (13), '' ), CHAR (10), '' )))))) LEFT JOIN `m_accterm` `term` ON (( `term`.`id` = `inv`.`term_pay` )))) LEFT JOIN `refund_airticket_detail` `refd` ON (( `refd`.`ticket_no` = `fare`.ticket_no ))) ";
+            querySum = " SELECT ( CASE WHEN (`fare`.`ticket_type` = 'B') THEN 'BSP' WHEN (`fare`.`ticket_type` = 'A') THEN 'AGENT' WHEN (`fare`.`ticket_type` = 'D') THEN 'DOMESTIC' WHEN (`fare`.`ticket_type` = 'TI') THEN 'TG INTER' WHEN (`fare`.`ticket_type` = 'TD') THEN 'TG DOMESTIC' ELSE `fare`.`ticket_type` END ) AS `typepayment`, `fare`.`ticket_rounting` AS `typerounting`, count(`fare`.`ticket_no`) AS `pax`, substr(`fare`.`ticket_no`, 1, 3) AS `air`, sum( ifnull( `fare`.`ticket_commission`, 0 )) AS `comairline`, sum( ifnull( `fare`.`litter_commission`, 0 )) AS `littlecom`, sum( ifnull( `fare`.`agent_commission`, 0 )) AS `payagent`, sum( ifnull(`refd`.`agent_comission`, 0)) AS `rcagent`, sum( ifnull( `refd`.`airline_comission`, 0 )) AS `payrefund`, sum((((( ifnull( `fare`.`ticket_commission`, 0 ) + ifnull( `fare`.`litter_commission`, 0 )) - ifnull( `fare`.`agent_commission`, 0 )) + ifnull(`refd`.`agent_comission`, 0)) - ifnull( `refd`.`airline_comission`, 0 ))) AS `comreceive` FROM ((((( `ticket_fare_airline` `fare` LEFT JOIN `ticket_fare_invoice` `finv` ON (( `finv`.`ticket_fare_id` = `fare`.`id` ))) LEFT JOIN `invoice` `inv` ON (( `inv`.`id` = `finv`.`invoice_id` OR ( `inv`.`inv_no` = rtrim( REPLACE ( REPLACE ( substr(`fare`.`remark`, 1, 10), CHAR (13), '' ), CHAR (10), '' )))))) LEFT JOIN `m_accterm` `term` ON (( `term`.`id` = `inv`.`term_pay` )))) LEFT JOIN `refund_airticket_detail` `refd` ON (( `refd`.`ticket_no` = `fare`.ticket_no )) LEFT JOIN ticket_fare_airline fave ON fave.pv_code IS NOT NULL AND fare.id = fave.id ) ";
         }else{  
             query = "SELECT ( CASE WHEN (`fare`.`ticket_type` = 'B') THEN 'BSP' WHEN (`fare`.`ticket_type` = 'A') THEN 'AGENT' WHEN (`fare`.`ticket_type` = 'D') THEN 'DOMESTIC' WHEN (`fare`.`ticket_type` = 'TI') THEN 'TG INTER' WHEN (`fare`.`ticket_type` = 'TD') THEN 'TG DOMESTIC' ELSE `fare`.`ticket_type` END ) AS `typepayment`, `fare`.`ticket_rounting` AS `typerounting`, count(`fare`.`ticket_no`) AS `pax`, substr(`fare`.`ticket_no`, 1, 3) AS `air`, sum( ifnull( `fare`.`ticket_commission`, 0 )) AS `comairline`, sum( ifnull( `fare`.`litter_commission`, 0 )) AS `littlecom`, sum( ifnull( `fare`.`agent_commission`, 0 )) AS `payagent`, sum( ifnull(`refd`.`agent_comission`, 0)) AS `rcagent`, sum( ifnull( `refd`.`airline_comission`, 0 )) AS `payrefund`, sum((((( ifnull( `fare`.`ticket_commission`, 0 ) + ifnull( `fare`.`litter_commission`, 0 )) - ifnull( `fare`.`agent_commission`, 0 )) + ifnull(`refd`.`agent_comission`, 0)) - ifnull( `refd`.`airline_comission`, 0 ))) AS `comreceive` FROM ((((( `ticket_fare_airline` `fare` LEFT JOIN `ticket_fare_invoice` `finv` ON (( `finv`.`ticket_fare_id` = `fare`.`id` ))) LEFT JOIN `invoice` `inv` ON (( `inv`.`id` = `finv`.`invoice_id` OR ( `inv`.`inv_no` = rtrim( REPLACE ( REPLACE ( substr(`fare`.`remark`, 1, 10), CHAR (13), '' ), CHAR (10), '' ))) ))) LEFT JOIN `m_accterm` `term` ON (( `term`.`id` = `inv`.`term_pay` )))) LEFT JOIN `refund_airticket_detail` `refd` ON (( `refd`.`ticket_no` = `fare`.ticket_no )) LEFT JOIN ticket_fare_airline fave ON fave.pv_code IS NOT NULL AND fare.id = fave.id ) where " ;
             //querySum = "SELECT ( CASE WHEN (`fare`.`ticket_type` = 'B') THEN 'BSP' WHEN (`fare`.`ticket_type` = 'A') THEN 'AGENT' WHEN (`fare`.`ticket_type` = 'D') THEN 'DOMESTIC' WHEN (`fare`.`ticket_type` = 'TI') THEN 'TG INTER' WHEN (`fare`.`ticket_type` = 'TD') THEN 'TG DOMESTIC' ELSE `fare`.`ticket_type` END ) AS `typepayment`, `fare`.`ticket_rounting` AS `typerounting`, count(`fare`.`ticket_no`) AS `pax`, substr(`fare`.`ticket_no`, 1, 3) AS `air`, sum( ifnull( `fare`.`ticket_commission`, 0 )) AS `comairline`, sum( ifnull( `fare`.`litter_commission`, 0 )) AS `littlecom`, sum( ifnull( `fare`.`agent_commission`, 0 )) AS `payagent`, sum( ifnull(`refd`.`agent_comission`, 0)) AS `rcagent`, sum( ifnull( `refd`.`airline_comission`, 0 )) AS `payrefund`, sum((((( ifnull( `fare`.`ticket_commission`, 0 ) + ifnull( `fare`.`litter_commission`, 0 )) - ifnull( `fare`.`agent_commission`, 0 )) + ifnull(`refd`.`agent_comission`, 0)) - ifnull( `refd`.`airline_comission`, 0 ))) AS `comreceive` FROM ((((( `ticket_fare_airline` `fare` LEFT JOIN `ticket_fare_invoice` `finv` ON (( `finv`.`ticket_fare_id` = `fare`.`id` ))) LEFT JOIN `invoice` `inv` ON (( `inv`.`id` = `finv`.`invoice_id` ))) LEFT JOIN `m_accterm` `term` ON (( `term`.`id` = `inv`.`term_pay` )))) LEFT JOIN `refund_airticket_detail` `refd` ON (( `refd`.`ticket_no` = `fare`.ticket_no ))) where ";
-            querySum = " SELECT ( CASE WHEN (`fare`.`ticket_type` = 'B') THEN 'BSP' WHEN (`fare`.`ticket_type` = 'A') THEN 'AGENT' WHEN (`fare`.`ticket_type` = 'D') THEN 'DOMESTIC' WHEN (`fare`.`ticket_type` = 'TI') THEN 'TG INTER' WHEN (`fare`.`ticket_type` = 'TD') THEN 'TG DOMESTIC' ELSE `fare`.`ticket_type` END ) AS `typepayment`, `fare`.`ticket_rounting` AS `typerounting`, count(`fare`.`ticket_no`) AS `pax`, substr(`fare`.`ticket_no`, 1, 3) AS `air`, sum( ifnull( `fare`.`ticket_commission`, 0 )) AS `comairline`, sum( ifnull( `fare`.`litter_commission`, 0 )) AS `littlecom`, sum( ifnull( `fare`.`agent_commission`, 0 )) AS `payagent`, sum( ifnull(`refd`.`agent_comission`, 0)) AS `rcagent`, sum( ifnull( `refd`.`airline_comission`, 0 )) AS `payrefund`, sum((((( ifnull( `fare`.`ticket_commission`, 0 ) + ifnull( `fare`.`litter_commission`, 0 )) - ifnull( `fare`.`agent_commission`, 0 )) + ifnull(`refd`.`agent_comission`, 0)) - ifnull( `refd`.`airline_comission`, 0 ))) AS `comreceive` FROM ((((( `ticket_fare_airline` `fare` LEFT JOIN `ticket_fare_invoice` `finv` ON (( `finv`.`ticket_fare_id` = `fare`.`id` ))) LEFT JOIN `invoice` `inv` ON (( `inv`.`id` = `finv`.`invoice_id` OR ( `inv`.`inv_no` = rtrim( REPLACE ( REPLACE ( substr(`fare`.`remark`, 1, 10), CHAR (13), '' ), CHAR (10), '' )))))) LEFT JOIN `m_accterm` `term` ON (( `term`.`id` = `inv`.`term_pay` )))) LEFT JOIN `refund_airticket_detail` `refd` ON (( `refd`.`ticket_no` = `fare`.ticket_no ))) where ";
+            querySum = " SELECT ( CASE WHEN (`fare`.`ticket_type` = 'B') THEN 'BSP' WHEN (`fare`.`ticket_type` = 'A') THEN 'AGENT' WHEN (`fare`.`ticket_type` = 'D') THEN 'DOMESTIC' WHEN (`fare`.`ticket_type` = 'TI') THEN 'TG INTER' WHEN (`fare`.`ticket_type` = 'TD') THEN 'TG DOMESTIC' ELSE `fare`.`ticket_type` END ) AS `typepayment`, `fare`.`ticket_rounting` AS `typerounting`, count(`fare`.`ticket_no`) AS `pax`, substr(`fare`.`ticket_no`, 1, 3) AS `air`, sum( ifnull( `fare`.`ticket_commission`, 0 )) AS `comairline`, sum( ifnull( `fare`.`litter_commission`, 0 )) AS `littlecom`, sum( ifnull( `fare`.`agent_commission`, 0 )) AS `payagent`, sum( ifnull(`refd`.`agent_comission`, 0)) AS `rcagent`, sum( ifnull( `refd`.`airline_comission`, 0 )) AS `payrefund`, sum((((( ifnull( `fare`.`ticket_commission`, 0 ) + ifnull( `fare`.`litter_commission`, 0 )) - ifnull( `fare`.`agent_commission`, 0 )) + ifnull(`refd`.`agent_comission`, 0)) - ifnull( `refd`.`airline_comission`, 0 ))) AS `comreceive` FROM ((((( `ticket_fare_airline` `fare` LEFT JOIN `ticket_fare_invoice` `finv` ON (( `finv`.`ticket_fare_id` = `fare`.`id` ))) LEFT JOIN `invoice` `inv` ON (( `inv`.`id` = `finv`.`invoice_id` OR ( `inv`.`inv_no` = rtrim( REPLACE ( REPLACE ( substr(`fare`.`remark`, 1, 10), CHAR (13), '' ), CHAR (10), '' )))))) LEFT JOIN `m_accterm` `term` ON (( `term`.`id` = `inv`.`term_pay` )))) LEFT JOIN `refund_airticket_detail` `refd` ON (( `refd`.`ticket_no` = `fare`.ticket_no )) LEFT JOIN ticket_fare_airline fave ON fave.pv_code IS NOT NULL AND fare.id = fave.id ) where ";
         }
         
         if (paymentType != null && (!"".equalsIgnoreCase(paymentType)) ) {
            if(AndQuery == 1){
                 query += " and fare.ticket_type = '" + paymentType + "'";
+                querySum += " and fare.ticket_type = '" + paymentType + "'";
            }else{
                AndQuery = 1;
                query += " fare.ticket_type = '" + paymentType + "'";
+               querySum += " fare.ticket_type = '" + paymentType + "'";
            }
         }
         
         if(departmentt != null && (!"".equalsIgnoreCase(departmentt))){
             if(AndQuery == 1){
                 query += " and fare.department = '" + departmentt + "'";
+                querySum += " and fare.department = '" + departmentt + "'";
            }else{
                AndQuery = 1;
                query += " fare.department = '" + departmentt + "'";
+               querySum += " fare.department = '" + departmentt + "'";
            }
         }
         
         if(salebyUser != null && (!"".equalsIgnoreCase(salebyUser))){
             if(AndQuery == 1){
                 query += " and fare.`owner` = '" + salebyUser + "'";
+                querySum += " and fare.`owner` = '" + salebyUser + "'";
            }else{
                AndQuery = 1;
                query += " fare.`owner` = '" + salebyUser + "'";
+               querySum += " fare.`owner` = '" + salebyUser + "'";
            }
         }
         
         if(termPayt != null && (!"".equalsIgnoreCase(termPayt))){
             if(AndQuery == 1){
                 query += " and inv.term_pay = " + termPayt + "";
+                querySum += " and inv.term_pay = " + termPayt + "";
            }else{
                AndQuery = 1;
                query += " inv.term_pay = " + termPayt + "";
+               querySum += " inv.term_pay = " + termPayt + "";
            }
         }
         
@@ -835,10 +843,13 @@ public class SummaryTicketAdjustCostAndIncomeImpl implements SummaryTicketAdjust
                 if(AndQuery == 1){
                     // query += " and ( inv.inv_date  BETWEEN  '" + invoiceFromDate + "' AND '" + invoiceToDate + "' " + " or (fave.issue_date BETWEEN "+invoiceFromDate+" AND "+ invoiceToDate +")";
                     query += " and (( inv.inv_date  BETWEEN  '" + invoiceFromDate + "' AND '" + invoiceToDate + "' ) or (fave.issue_date BETWEEN  '" + invoiceFromDate + "' AND '" + invoiceToDate + "' ))";
+                    querySum += " and (( inv.inv_date  BETWEEN  '" + invoiceFromDate + "' AND '" + invoiceToDate + "' ) or (fave.issue_date BETWEEN  '" + invoiceFromDate + "' AND '" + invoiceToDate + "' ))";
+
                 }else{
                     AndQuery = 1;
                     //query += " inv.inv_date  BETWEEN  '" + invoiceFromDate + "' AND '" + invoiceToDate + "' ";
                     query += " (( inv.inv_date  BETWEEN  '" + invoiceFromDate + "' AND '" + invoiceToDate + "' ) or (fave.issue_date BETWEEN  '" + invoiceFromDate + "' AND '" + invoiceToDate + "' ))";
+                    querySum += " (( inv.inv_date  BETWEEN  '" + invoiceFromDate + "' AND '" + invoiceToDate + "' ) or (fave.issue_date BETWEEN  '" + invoiceFromDate + "' AND '" + invoiceToDate + "' ))";
                 } 
             }
         }
@@ -846,72 +857,75 @@ public class SummaryTicketAdjustCostAndIncomeImpl implements SummaryTicketAdjust
         if ((issueFrom != null )&&(!"".equalsIgnoreCase(issueFrom))) {
             if ((issueTo != null )&&(!"".equalsIgnoreCase(issueTo))) {
                 if(AndQuery == 1){
-                     query += " and fare.issue_date  BETWEEN  '" + issueFrom + "' AND '" + issueTo + "' ";
+                    query += " and fare.issue_date  BETWEEN  '" + issueFrom + "' AND '" + issueTo + "' ";
+                    querySum += " and fare.issue_date  BETWEEN  '" + issueFrom + "' AND '" + issueTo + "' ";
                 }else{
                     AndQuery = 1;
-                     query += " fare.issue_date  BETWEEN  '" + issueFrom + "' AND '" + issueTo + "' ";
+                    query += " fare.issue_date  BETWEEN  '" + issueFrom + "' AND '" + issueTo + "' ";
+                    query += " fare.issue_date  BETWEEN  '" + issueFrom + "' AND '" + issueTo + "' ";
                 } 
             }
         }
         
-        // Query Summary Income
-        if (paymentType != null && (!"".equalsIgnoreCase(paymentType)) ) {
-           if(AndQuerySum == 1){
-                querySum += " and fare.ticket_type = '" + paymentType + "'";
-           }else{
-               AndQuerySum = 1;
-               querySum += " fare.ticket_type = '" + paymentType + "'";
-           }
-        }
+//        // Query Summary Income
+//        if (paymentType != null && (!"".equalsIgnoreCase(paymentType)) ) {
+//           if(AndQuerySum == 1){
+//                
+//           }else{
+//               AndQuerySum = 1;
+//               
+//           }
+//        }
+//        
+//        if(departmentt != null && (!"".equalsIgnoreCase(departmentt))){
+//            if(AndQuerySum == 1){
+//                querySum += " and fare.department = '" + departmentt + "'";
+//           }else{
+//               AndQuerySum = 1;
+//               querySum += " fare.department = '" + departmentt + "'";
+//           }
+//        }
         
-        if(departmentt != null && (!"".equalsIgnoreCase(departmentt))){
-            if(AndQuerySum == 1){
-                querySum += " and fare.department = '" + departmentt + "'";
-           }else{
-               AndQuerySum = 1;
-               querySum += " fare.department = '" + departmentt + "'";
-           }
-        }
+//        if(salebyUser != null && (!"".equalsIgnoreCase(salebyUser))){
+//            if(AndQuerySum == 1){
+//                querySum += " and fare.`owner` = '" + salebyUser + "'";
+//           }else{
+//               AndQuerySum = 1;
+//               querySum += " fare.`owner` = '" + salebyUser + "'";
+//           }
+//        }
         
-        if(salebyUser != null && (!"".equalsIgnoreCase(salebyUser))){
-            if(AndQuerySum == 1){
-                querySum += " and fare.`owner` = '" + salebyUser + "'";
-           }else{
-               AndQuerySum = 1;
-               querySum += " fare.`owner` = '" + salebyUser + "'";
-           }
-        }
+//        if(termPayt != null && (!"".equalsIgnoreCase(termPayt))){
+//            if(AndQuerySum == 1){
+//                querySum += " and inv.term_pay = " + termPayt + "";
+//           }else{
+//               AndQuerySum = 1;
+//               querySum += " inv.term_pay = " + termPayt + "";
+//           }
+//        }
         
-        if(termPayt != null && (!"".equalsIgnoreCase(termPayt))){
-            if(AndQuerySum == 1){
-                querySum += " and inv.term_pay = " + termPayt + "";
-           }else{
-               AndQuerySum = 1;
-               querySum += " inv.term_pay = " + termPayt + "";
-           }
-        }
+//        if ((invoiceFromDate != null )&&(!"".equalsIgnoreCase(invoiceFromDate))) {
+//            if ((invoiceToDate != null )&&(!"".equalsIgnoreCase(invoiceToDate))) {
+//                if(AndQuerySum == 1){
+//                     querySum += " and inv.inv_date  BETWEEN  '" + invoiceFromDate + "' AND '" + invoiceToDate + "' ";
+//                }else{
+//                    AndQuerySum = 1;
+//                     querySum += " inv.inv_date  BETWEEN  '" + invoiceFromDate + "' AND '" + invoiceToDate + "' ";
+//                } 
+//            }
+//        }
+//        
+//        if ((issueFrom != null )&&(!"".equalsIgnoreCase(issueFrom))) {
+//            if ((issueTo != null )&&(!"".equalsIgnoreCase(issueTo))) {
+//                if(AndQuerySum == 1){
+//                     querySum += " and fare.issue_date  BETWEEN  '" + issueFrom + "' AND '" + issueTo + "' ";
+//                }else{
+//                    AndQuerySum = 1;
+//                     querySum += " fare.issue_date  BETWEEN  '" + issueFrom + "' AND '" + issueTo + "' ";
+//                } 
+//            }
+//        }
         
-        if ((invoiceFromDate != null )&&(!"".equalsIgnoreCase(invoiceFromDate))) {
-            if ((invoiceToDate != null )&&(!"".equalsIgnoreCase(invoiceToDate))) {
-                if(AndQuerySum == 1){
-                     querySum += " and inv.inv_date  BETWEEN  '" + invoiceFromDate + "' AND '" + invoiceToDate + "' ";
-                }else{
-                    AndQuerySum = 1;
-                     querySum += " inv.inv_date  BETWEEN  '" + invoiceFromDate + "' AND '" + invoiceToDate + "' ";
-                } 
-            }
-        }
-        
-        if ((issueFrom != null )&&(!"".equalsIgnoreCase(issueFrom))) {
-            if ((issueTo != null )&&(!"".equalsIgnoreCase(issueTo))) {
-                if(AndQuerySum == 1){
-                     querySum += " and fare.issue_date  BETWEEN  '" + issueFrom + "' AND '" + issueTo + "' ";
-                }else{
-                    AndQuerySum = 1;
-                     querySum += " fare.issue_date  BETWEEN  '" + issueFrom + "' AND '" + issueTo + "' ";
-                } 
-            }
-        }
         querySum += " group by `fare`.`ticket_type`,`fare`.`ticket_rounting` ";
         query += " group by `fare`.`ticket_type`,`fare`.`ticket_rounting`,substr(`fare`.`ticket_no`,1,3)";
         System.out.println("query sum : " + querySum);

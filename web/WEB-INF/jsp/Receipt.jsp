@@ -629,9 +629,9 @@
                                             </select>                                                                  
                                         </td>
                                         <td><input maxlength="255" id="receiveDes${i.count}" name="receiveDes${i.count}" type="text" class="form-control" value="${table.description}"></td>
-                                        <td><input id="receiveCost${i.count}"  name="receiveCost${i.count}"  type="text" class="form-control decimal-${i.count}"  value="${table.cost}" onfocus="setDecimalFormat(${i.count});" disabled="disabled" ></td>
+                                        <td><input id="receiveCost${i.count}"  name="receiveCost${i.count}"  type="text" class="form-control decimal-${i.count}"  value="${table.cost}" onfocus="setDecimalFormat(${i.count});" readonly="" ></td>
                                         <td>                                   
-                                            <select class="form-control" name="receiveCurCostTemp${i.count}" id="receiveCurCostTemp${i.count}" disabled="disabled">
+                                            <select class="form-control" name="receiveCurCostTemp${i.count}" id="receiveCurCostTemp${i.count}" readonly="">
                                                 <option  value="" >---------</option>
                                                 <c:forEach var="curCost" items="${currencyList}" varStatus="status">                                       
                                                     <c:set var="select" value="" />
@@ -2244,7 +2244,7 @@
                     '<select class="form-control" name="receiveProduct' + row + '" id="receiveProduct' + row + '" onchange="addProductManual(' + row + ')"><option value="">---------</option></select>' +
                     '</td>' +
                     '<td><input maxlength="255" id="receiveDes' + row + '" name="receiveDes' + row + '" type="text" class="form-control" onchange="addProductManual(' + row + ')" ></td>' +
-                    '<td><input id="receiveCost' + row + '" name="receiveCost' + row + '" type="text" class="form-control decimal-'+row+'" disabled="disabled" onfocus="setDecimalFormat('+row+');" ></td>' +
+                    '<td><input id="receiveCost' + row + '" name="receiveCost' + row + '" type="text" class="form-control decimal-'+row+'" readonly="" onfocus="setDecimalFormat('+row+');" ></td>' +
                     '<td>' +
                     '<select class="form-control" name="receiveCurCostTemp' + row + '" id="receiveCurCostTemp' + row + '"><option value="">---------</option></select>' +
                     '</td>' +
@@ -2282,7 +2282,7 @@
                     '<select class="form-control" name="receiveProduct' + row + '" id="receiveProduct' + row + '" ><option value="">---------</option></select>' +
                     '</td>' +
                     '<td><input maxlength="255" id="receiveDes' + row + '" name="receiveDes' + row + '" type="text" class="form-control" ></td>' +
-                    '<td><input id="receiveCost' + row + '" name="receiveCost' + row + '" type="text" class="form-control decimal-'+row+'"" onfocus="setDecimalFormat('+row+');" onkeyup="insertCommas(this)" disabled="disabled" ></td>' +
+                    '<td><input id="receiveCost' + row + '" name="receiveCost' + row + '" type="text" class="form-control decimal-'+row+'"" onfocus="setDecimalFormat('+row+');" onkeyup="insertCommas(this)" readonly="" ></td>' +
                     '<td>' +
                     '<select class="form-control" name="receiveCurCostTemp' + row + '" id="receiveCurCostTemp' + row + '"><option value="">---------</option></select>' +
                     '</td>' +
@@ -2902,7 +2902,7 @@
                     '<select class="form-control" name="receiveProduct' + row + '" id="receiveProduct' + row + '" ><option value="' + product + '" selected></option></select>' +
                     '</td>' +
                     '<td><input maxlength="255" id="receiveDes' + row + '" name="receiveDes' + row + '" type="text" class="form-control" value="' + description + '"></td>' +
-                    '<td><input id="receiveCost' + row + '" name="receiveCost' + row + '" type="text" class="form-control decimal-' + row + '" onfocus="setDecimalFormat('+row+');" value="' + cost + '" disabled="disabled" ></td>' +
+                    '<td><input id="receiveCost' + row + '" name="receiveCost' + row + '" type="text" class="form-control decimal-' + row + '" onfocus="setDecimalFormat('+row+');" value="' + cost + '" readonly="" ></td>' +
                     '<td>' +
                     '<select class="form-control" name="receiveCurCostTemp' + row + '" id="receiveCurCostTemp' + row + '"><option value="' + cur + '" ></option></select>' +
                     '</td>' +
@@ -2945,7 +2945,7 @@
                     '<select class="form-control" name="receiveProduct' + row + '" id="receiveProduct' + row + '" ><option value="' + product + '" selected></option></select>' +
                     '</td>' +
                     '<td><input maxlength="255" id="receiveDes' + row + '" name="receiveDes' + row + '" type="text" class="form-control" value="' + description + '"></td>' +
-                    '<td><input id="receiveCost' + row + '" name="receiveCost' + row + '" type="text" class="form-control decimal-' + row + '" onfocus="setDecimalFormat('+row+');" value="' + cost + '" disabled="disabled" ></td>' +
+                    '<td><input id="receiveCost' + row + '" name="receiveCost' + row + '" type="text" class="form-control decimal-' + row + '" onfocus="setDecimalFormat('+row+');" value="' + cost + '" readonly="" ></td>' +
                     '<td>' +
                     '<select class="form-control" name="receiveCurCostTemp' + row + '" id="receiveCurCostTemp' + row + '"><option value="' + cur + '" ></option></select>' +
                     '</td>' +

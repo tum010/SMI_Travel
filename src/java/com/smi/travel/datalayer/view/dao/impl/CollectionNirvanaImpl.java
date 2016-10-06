@@ -374,7 +374,7 @@ public class CollectionNirvanaImpl implements CollectionNirvanaDao{
                 resultfail = "cannot connect";
                 return resultfail;
             }
-            
+
             ssDataexchList.add(ssDataexchTemp);
             
             if(i == cnData.size()-1){
