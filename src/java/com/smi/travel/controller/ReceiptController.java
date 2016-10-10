@@ -358,7 +358,7 @@ public class ReceiptController extends SMITravelController {
                 }
 
                 receiptDetail.setAmount(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(receiveAmount) ? receiveAmount.replaceAll(",","") : 0)));
-                receiptDetail.setExRate(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(receiveExRate) ? receiveExRate.replaceAll(",","") : 0)));
+                receiptDetail.setExRate(StringUtils.isNotEmpty(receiveExRate) ? new BigDecimal(receiveExRate.replaceAll(",","")) : null);
                 receiptDetail.setCurAmount(receiveCurrency);
                 if(StringUtils.isNotEmpty(invId)){
                     InvoiceDetail invoiceDetail = new InvoiceDetail();
