@@ -599,8 +599,8 @@
                                                             ${vatShow}
                                                         </c:if>    
                                                     </td>
-                                                    <td class="hidden"><input class="form-control" style="text-align:right;" type="text" id="vat${i.count}" name="vat${i.count}" readonly="" value="${taxDetail.vat}"></td>
-                                                    <td align="right"><input class="form-control decimal" style="text-align:right;" type="text" id="gross${i.count}" name="gross${i.count}" value="${taxDetail.gross}" readonly=""></td>
+                                                    <td class="hidden"><input class="form-control" style="text-align:right;" type="text" id="vat${i.count}" name="vat${i.count}" tabIndex="-1" readonly value="${taxDetail.vat}"></td>
+                                                    <td align="right"><input class="form-control decimal" style="text-align:right;" type="text" id="gross${i.count}" name="gross${i.count}" value="${taxDetail.gross}" tabIndex="-1" readonly ></td>
                                                     <td class="hidden"><input class="form-control" style="text-align:right;" type="text" id="grossTemp${i.count}" name="grossTemp${i.count}" value="${taxDetail.gross}"></td>
                                                     <td align="right"><input class="form-control decimal" style="text-align:right;" type="text" id="amount${i.count}" name="amount${i.count}" value="${taxDetail.amount}" onfocusout="CalculateAmountTotal('${i.count}')"></td>
                                                     <td>
@@ -1975,8 +1975,8 @@
             '<td><select class="form-control" name="currencyCost' + row + '" id="currencyCost' + row + '" onchange="AddrowBySelect(\'' + row + '\')"><option  value="" >---------</option></select></td>' +
             '<td align="center"><input type="checkbox" id="isVat' + row + '" name="isVat' + row + '" value="1" onclick="CalculateGross(\'' + row + '\')" checked></td>' +
             '<td align="center" id="vatShow' + row + '"></td>' +
-            '<td class="hidden"><input class="form-control" style="text-align:right;" type="text" id="vat' + row + '" name="vat' + row + '" readonly=""></td>' +
-            '<td><input class="form-control decimal" style="text-align:right;" type="text" id="gross' + row + '" name="gross' + row + '" value="0.00" readonly="" ></td>' +
+            '<td class="hidden"><input class="form-control" style="text-align:right;" type="text" id="vat' + row + '" name="vat' + row + '" tabIndex="-1" readonly ></td>' +
+            '<td><input class="form-control decimal" style="text-align:right;" type="text" id="gross' + row + '" name="gross' + row + '" value="0.00" tabIndex="-1" readonly ></td>' +
             '<td><input class="form-control decimal" style="text-align:right;" type="text" id="amount' + row + '" name="amount' + row + '" value="" onfocusout="CalculateAmountTotal(\'' + row + '\')"></td>' +
             '<td><select class="form-control" name="currencyAmount' + row + '" id="currencyAmount' + row + '" onchange="AddrowBySelect(\'' + row + '\'); CalculateAmountTotal(\'\');"><option  value="" >---------</option></select></td>' +
             '<td class="${outbound}"><input class="form-control decimalexrate" style="text-align:right;" type="text" id="exRate' + row + '" name="exRate' + row + '" value="" ></td>' +
@@ -2187,8 +2187,8 @@
                 '<td><select class="form-control" name="currencyCost' + count + '" id="currencyCost' + count + '" onchange="AddrowBySelect(\'' + count + '\')"><option  value="" >---------</option></select></td>' +
                 '<td align="center"><input type="checkbox" id="isVat' + count + '" name="isVat' + count + '" value="1" onclick="CalculateGross(\'' + count + '\')" checked></td>' +
                 '<td align="center" id="vatShow' + count + '"></td>' +
-                '<td class="hidden"><input class="form-control" style="text-align:right;" type="text" id="vat' + count + '" name="vat' + count + '" readonly=""></td>' +
-                '<td><input class="form-control decimal" style="text-align:right;" type="text" id="gross' + count + '" name="gross' + count + '" value="0.00" readonly=""></td>' +
+                '<td class="hidden"><input class="form-control" style="text-align:right;" type="text" id="vat' + count + '" name="vat' + count + '" tabIndex="-1" readonly ></td>' +
+                '<td><input class="form-control decimal" style="text-align:right;" type="text" id="gross' + count + '" name="gross' + count + '" value="0.00" tabIndex="-1" readonly ></td>' +
                 '<td><input class="form-control decimal" style="text-align:right;" type="text" id="amount' + count + '" name="amount' + count + '" value="" onfocusout="CalculateAmountTotal(\'' + row + '\')"></td>' +               
                 '<td><select class="form-control" name="currencyAmount' + count + '" id="currencyAmount' + count + '" onchange="AddrowBySelect(\'' + count + '\'); CalculateAmountTotal(\'\');"><option  value="" >---------</option></select></td>' +
                 '<td class="${outbound}"><input class="form-control decimalexrate" style="text-align:right;" type="text" id="exRate' + count + '" name="exRate' + count + '" value="" ></td>' +

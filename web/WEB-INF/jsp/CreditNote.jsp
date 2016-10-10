@@ -218,11 +218,11 @@
                                                 </td>
                                                 <td style="text-align:center">
                                                     <!--<input type="hidden" name="taxVat" value="${creditNoteDetail.vat}" readonly/>-->
-                                                    <input type="text" id="taxVat" name="taxVat" class="form-control text-right decimal" value="${creditNoteDetail.vat2Digits}" readonly=""/>
+                                                    <input type="text" id="taxVat" name="taxVat" class="form-control text-right decimal" value="${creditNoteDetail.vat2Digits}" tabIndex="-1" readonly />
                                                 </td>
                                                 <td style="text-align:center" class="hidden">
                                                     <!--<input type="hidden" name="taxVatReal" value="${creditNoteDetail.vat}" readonly/>-->
-                                                    <input type="text" id="taxVatReal" name="taxVatReal" class="form-control text-right " value="${creditNoteDetail.vat}" readonly=""/>
+                                                    <input type="text" id="taxVatReal" name="taxVatReal" class="form-control text-right " value="${creditNoteDetail.vat}" tabIndex="-1" readonly />
                                                 </td>
                                                 <td style="text-align:center">
                                                     <input type="text" name="taxDesc" class="form-control" value="${creditNoteDetail.description}"/></td>
@@ -422,11 +422,11 @@
                 </td>
                 <td style="text-align:center">
                     <!--<input type="hidden" name="taxVat"/>-->
-                    <input type="text" id="taxVat" name="taxVat" class="form-control text-right decimal" readonly=""/>
+                    <input type="text" id="taxVat" name="taxVat" class="form-control text-right decimal" tabIndex="-1" readonly />
                 </td>
                 <td style="text-align:center" class="hidden">
                     <!--<input type="hidden" name="taxVatReal"/>-->
-                    <input type="text" id="taxVatReal" name="taxVatReal" class="form-control text-right " readonly=""/>
+                    <input type="text" id="taxVatReal" name="taxVatReal" class="form-control text-right " tabIndex="-1" readonly />
                 </td>
                 <td style="text-align:center"><input type="text" name="taxDesc" class="form-control" /></td>
                 <td class="text-center">

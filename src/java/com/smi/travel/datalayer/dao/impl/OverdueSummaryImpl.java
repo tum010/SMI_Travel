@@ -169,6 +169,7 @@ public class OverdueSummaryImpl implements OverdueSummaryDao{
                 .addScalar("ownername", Hibernate.STRING)
                 .addScalar("invto", Hibernate.STRING)
                 .addScalar("invname", Hibernate.STRING)
+                .addScalar("invstatus", Hibernate.STRING)
                 .list();
         for (Object[] B : overdueList) {
             OverdueSummartExcel overdue = new OverdueSummartExcel();
@@ -255,7 +256,10 @@ public class OverdueSummaryImpl implements OverdueSummaryDao{
             overdue.setOwnername(util.ConvertString(B[13]) != null && !"".equals(util.ConvertString(B[13])) ? util.ConvertString(B[13]) :"ALL");
             String invname = util.ConvertString(B[15]) != null && !"".equals(util.ConvertString(B[15])) ? util.ConvertString(B[15]) :"";
             overdue.setInvto(util.ConvertString(B[14]) != null && !"".equals(util.ConvertString(B[14])) ? util.ConvertString(B[14]) + "   " +invname : "");
-            data.add(overdue);
+            
+            if(!"2".equalsIgnoreCase(util.ConvertString(B[16]))){
+                data.add(overdue);
+            }
         }
         session.close();
         this.sessionFactory.close();
