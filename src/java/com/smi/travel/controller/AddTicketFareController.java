@@ -820,6 +820,10 @@ public class AddTicketFareController extends SMITravelController {
                     request.setAttribute(AGENTCOMMDATE, ticketFareAirline.getAgentCommissionDate());
                     agents = agentService.getAgentFromID(String.valueOf(ticketFareAirline.getAgentId()));
                     request.setAttribute(SELECTEDAGENT, agents);
+                    if (StringUtils.isNotEmpty(invTo)){
+                        agents = agentService.getAgentFromID(String.valueOf(invTo));
+                        request.setAttribute(SELECTEDAGENT, agents);
+                    }
                     request.setAttribute(OVERDATE, ticketFareAirline.getOverDate());
                     request.setAttribute(LITTERDATE, ticketFareAirline.getLitterDate());
                     request.setAttribute(DECPAYDATE, ticketFareAirline.getDecPayDate());

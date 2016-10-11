@@ -336,7 +336,7 @@
             "bInfo": false,
             "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
             "iDisplayLength": 50,
-            "bSort": false,
+            "bSort": true,
             "bPaginate": false
         });
         

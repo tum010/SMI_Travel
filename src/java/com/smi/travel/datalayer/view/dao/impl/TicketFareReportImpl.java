@@ -506,7 +506,7 @@ public class TicketFareReportImpl implements TicketFareReportDao {
             
             if(((invdateForm != null) &&(!"".equalsIgnoreCase(invdateForm))) &&((invdateTo != null) &&(!"".equalsIgnoreCase(invdateTo)))){
                 if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
-                query += prefix+" `inv`.`inv_date` >= '" +invdateForm +"' and `inv`.`inv_date`  <= '"+invdateTo +"' "  + " OR ( fave.issue_date >= '"+invdateForm+"' AND fave.issue_date <= '"+invdateTo+"' )";
+                query += prefix+" ( `inv`.`inv_date` >= '" +invdateForm +"' and `inv`.`inv_date`  <= '"+invdateTo +"' "  + " OR ( fave.issue_date >= '"+invdateForm+"' AND fave.issue_date <= '"+invdateTo+"' ) )";
             }else if((invdateForm != null) &&(!"".equalsIgnoreCase(invdateForm))){
                 if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
                 query +=  prefix+" `inv`.`inv_date` >= '" +invdateForm +"'" + " OR ( fave.issue_date >= '"+invdateForm+"')";
