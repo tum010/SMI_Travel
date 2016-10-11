@@ -128,9 +128,9 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
         }
 
         if(accno != null && (!"".equalsIgnoreCase(accno))){
-            if("1".equalsIgnoreCase(accno)){
+            if("2".equalsIgnoreCase(accno)){
                 invQuery += " and ( `inv`.`inv_type` = 'T' ) ";
-            }else if("2".equalsIgnoreCase(accno)){
+            }else if("1".equalsIgnoreCase(accno)){
                 invQuery += " and ( `inv`.`inv_type` != 'T' ) ";
                 TaxInvQuery += " and tax.tax_no = '1' ";
             }
