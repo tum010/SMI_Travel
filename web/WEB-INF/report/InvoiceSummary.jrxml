@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="InvoiceSummary2" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="5" bottomMargin="20" uuid="ce5d0eb5-af68-44b4-b287-253094472c71">
-	<property name="ireport.zoom" value="4.392300000000035"/>
-	<property name="ireport.x" value="2505"/>
-	<property name="ireport.y" value="635"/>
+	<property name="ireport.zoom" value="2.0490403660952277"/>
+	<property name="ireport.x" value="895"/>
+	<property name="ireport.y" value="67"/>
 	<field name="systemdate" class="java.lang.String"/>
 	<field name="username" class="java.lang.String"/>
 	<field name="invfrom" class="java.lang.String"/>
@@ -27,16 +27,16 @@
 	<field name="headertype" class="java.lang.String"/>
 	<field name="amountlocal" class="java.math.BigDecimal"/>
 	<variable name="totalnet" class="java.math.BigDecimal" resetType="Group" resetGroup="invoicesummary" calculation="Sum">
-		<variableExpression><![CDATA[$F{gross}]]></variableExpression>
+		<variableExpression><![CDATA[(!"VOID".equals($F{status})) ? $F{gross} : new BigDecimal("0")]]></variableExpression>
 	</variable>
 	<variable name="totalvat" class="java.math.BigDecimal" resetType="Group" resetGroup="invoicesummary" calculation="Sum">
-		<variableExpression><![CDATA[$F{vat}]]></variableExpression>
+		<variableExpression><![CDATA[(!"VOID".equals($F{status})) ? $F{vat} : new BigDecimal("0") ]]></variableExpression>
 	</variable>
 	<variable name="totalamount" class="java.math.BigDecimal" resetType="Group" resetGroup="invoicesummary" calculation="Sum">
-		<variableExpression><![CDATA[$F{amountlocal}]]></variableExpression>
+		<variableExpression><![CDATA[(!"VOID".equals($F{status})) ? $F{amountlocal} : new BigDecimal("0") ]]></variableExpression>
 	</variable>
 	<variable name="totalprofit" class="java.math.BigDecimal" resetType="Group" resetGroup="invoicesummary" calculation="Sum">
-		<variableExpression><![CDATA[$F{profit}]]></variableExpression>
+		<variableExpression><![CDATA[(!"VOID".equals($F{status})) ? $F{profit} : new BigDecimal("0") ]]></variableExpression>
 	</variable>
 	<variable name="no" class="java.lang.Number" resetType="None" calculation="System">
 		<initialValueExpression><![CDATA[1]]></initialValueExpression>
