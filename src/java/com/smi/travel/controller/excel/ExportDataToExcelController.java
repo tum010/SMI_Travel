@@ -98,7 +98,7 @@ public class ExportDataToExcelController  extends SMITravelController{
 
         
         SystemUser user = (SystemUser) session.getAttribute("USER");
-        String printby = user.getRole().getName(); 
+        String printby = user.getName();
         List data  = new ArrayList();
         
         String invoiceFromDate = request.getParameter("invoiceFromDate");
@@ -348,7 +348,7 @@ public class ExportDataToExcelController  extends SMITravelController{
             String city = request.getParameter("city");
             String paytype = request.getParameter("paytype");
             String productname = request.getParameter("productname");
-            data = reportservice.getPaymentSummaryReport(from_payments, to_payments,saleby,invSupCode, refno, user.getRole().getName(),invto,invfrom,billname,productid,country,city,paytype,billnamedetail,productname);
+            data = reportservice.getPaymentSummaryReport(from_payments, to_payments,saleby,invSupCode, refno, printby ,invto,invfrom,billname,productid,country,city,paytype,billnamedetail,productname);
             return new ModelAndView("OutboundProduct",name,data).addObject(ReportName, name);
         }else if(BookingInvoiceSummary.equals(name)){
             String owner = request.getParameter("owner");
@@ -357,7 +357,7 @@ public class ExportDataToExcelController  extends SMITravelController{
             String bookdateto = request.getParameter("bookdateto");
             String invdatefrom = request.getParameter("invdatefrom");
             String invdateto = request.getParameter("invdateto");
-            data = reportservice.getBookingInvoiceReport(owner, invto, bookdatefrom, bookdateto, invdatefrom, invdateto, user.getRole().getName());
+            data = reportservice.getBookingInvoiceReport(owner, invto, bookdatefrom, bookdateto, invdatefrom, invdateto, printby );
             return new ModelAndView("BookingInvoiceSummary",name,data).addObject(ReportName, name);
         }else if(BookingNonInvoiceSummary.equals(name)){
             String owner = request.getParameter("owner");
@@ -366,7 +366,7 @@ public class ExportDataToExcelController  extends SMITravelController{
             String bookdateto = request.getParameter("bookdateto");
             String paydatefrom = request.getParameter("paydatefrom");
             String paydateto = request.getParameter("paydateto");
-            data = reportservice.getBookingNonInvoiceReport(owner, invsup, bookdatefrom, bookdateto, paydatefrom, paydateto, user.getRole().getName());
+            data = reportservice.getBookingNonInvoiceReport(owner, invsup, bookdatefrom, bookdateto, paydatefrom, paydateto, printby );
             return new ModelAndView("BookingInvoiceSummary",name,data).addObject(ReportName, name);
         }else if(StockInvoiceSummary.equals(name)){
             String product = request.getParameter("product");
@@ -376,7 +376,7 @@ public class ExportDataToExcelController  extends SMITravelController{
             String invoiceDateFrom = request.getParameter("invoiceDateFrom");
             String invoiceDateTo = request.getParameter("invoiceDateTo");
             String addDate = request.getParameter("addDate");
-            data = reportservice.getStockInvoiceSummaryReport(product, invTo, effectiveDateFrom, effectiveDateTo, invoiceDateFrom, invoiceDateTo, addDate, user.getRole().getName());
+            data = reportservice.getStockInvoiceSummaryReport(product, invTo, effectiveDateFrom, effectiveDateTo, invoiceDateFrom, invoiceDateTo, addDate, printby);
             return new ModelAndView("OverdueSummaryExcel",name,data).addObject(ReportName, name);
         }else if(StockNonInvoiceSummary.equals(name)){
             String product = request.getParameter("product");
@@ -386,7 +386,7 @@ public class ExportDataToExcelController  extends SMITravelController{
             String payDateFrom = request.getParameter("payDateFrom");
             String payDateTo = request.getParameter("payDateTo");
             String addDate = request.getParameter("addDate");
-            data = reportservice.getStockNonInvoiceSummaryReport(product, invoiceSup, effectiveDateFrom, effectiveDateTo, payDateFrom, payDateTo, addDate, user.getRole().getName());
+            data = reportservice.getStockNonInvoiceSummaryReport(product, invoiceSup, effectiveDateFrom, effectiveDateTo, payDateFrom, payDateTo, addDate, printby);
             return new ModelAndView("OverdueSummaryExcel",name,data).addObject(ReportName, name);
         }else if(PaymentProfitLossSummary.equals(name)){
             String departFromDate = request.getParameter("departFromDate");
