@@ -19,6 +19,12 @@
         <property name="accNo" type="java.lang.Integer">
             <column name="acc_no" length="11" not-null="true" />
         </property>
+        <property name="otAccCode" type="string">
+            <column name="ot_acc_code" length="20" not-null="true" />
+        </property>
+        <property name="onAccCode" type="string">
+            <column name="on_acc_code" length="20" not-null="true" />
+        </property>
         <set name="billableDescs" table="billable_desc" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="bill_type" />

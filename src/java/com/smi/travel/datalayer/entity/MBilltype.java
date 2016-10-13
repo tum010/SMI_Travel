@@ -16,6 +16,8 @@ public class MBilltype  {
      private String accCode;
      private String department;
      private Integer accNo;
+     private String otAccCode;
+     private String onAccCode;
      private Set billableDescs = new HashSet(0);
 
     public MBilltype() {
@@ -74,6 +76,22 @@ public class MBilltype  {
 
     public void setAccNo(Integer accNo) {
         this.accNo = accNo;
+    }
+
+    public String getOtAccCode() {
+        return otAccCode;
+    }
+
+    public void setOtAccCode(String otAccCode) {
+        this.otAccCode = otAccCode;
+    }
+
+    public String getOnAccCode() {
+        return onAccCode;
+    }
+
+    public void setOnAccCode(String onAccCode) {
+        this.onAccCode = onAccCode;
     }
 
 
