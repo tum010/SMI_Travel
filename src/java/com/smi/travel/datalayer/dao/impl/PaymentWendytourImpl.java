@@ -682,42 +682,42 @@ public class PaymentWendytourImpl implements PaymentWendytourDao{
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
         
-//        String query = " SELECT s.id, s.code, s.name, s.apcode FROM `invoice_supplier` s ";
-//        boolean hasCondition = false;
+        String query = " SELECT * FROM `invoice_supplier` s ";
+        boolean hasCondition = false;
+        if(name != null && !"".equalsIgnoreCase(name)){
+            query += (hasCondition ? " AND " : " WHERE ");
+            query += " (s.code LIKE '%" + name + "%' OR s.name LIKE '%" + name + "%')";
+        }
+//        String query = "SELECT `h`.`id` AS `id`, `h`.`code` AS `code`, `h`.`name` AS `name`, `h`.`code` AS `apcode`, '' AS `taxno`, '' AS `branchno`, "
+//                + "'Hotel' AS `type` "
+//                + "FROM `hotel` `h` ";               
 //        if(name != null && !"".equalsIgnoreCase(name)){
-//            query += (hasCondition ? " AND " : " WHERE ");
-//            query += " (s.code LIKE '%" + name + "%' OR s.name LIKE '%" + name + "%')";
+//            query += "WHERE (`h`.`ap_code` IS NOT NULL) AND ( `h`.`code` LIKE '%" + name + "%' OR `h`.`name` LIKE '%" + name + "%' ) ";
 //        }
-        String query = "SELECT `h`.`id` AS `id`, `h`.`code` AS `code`, `h`.`name` AS `name`, `h`.`code` AS `apcode`, '' AS `taxno`, '' AS `branchno`, "
-                + "'Hotel' AS `type` "
-                + "FROM `hotel` `h` ";               
-        if(name != null && !"".equalsIgnoreCase(name)){
-            query += "WHERE (`h`.`ap_code` IS NOT NULL) AND ( `h`.`code` LIKE '%" + name + "%' OR `h`.`name` LIKE '%" + name + "%' ) ";
-        }
-                
-        query += "UNION ALL "
-                + "SELECT `a`.`id` AS `id`, `a`.`code` AS `code`, `a`.`name` AS `name`, `a`.`code` AS `apcode`, `a`.`tax_no` AS `taxno`, "
-                + "`a`.`branch` AS `branchno`, 'Agent' AS `type` "
-                + "FROM `agent` `a` ";                
-        if(name != null && !"".equalsIgnoreCase(name)){
-            query += "WHERE (`a`.`ap_code` IS NOT NULL) AND ( `a`.`code` LIKE '%" + name + "%' OR `a`.`name` LIKE '%" + name + "%' ) ";
-        }
-        
-        query += "UNION ALL "
-                + "SELECT `s`.`id` AS `id`, `s`.`username` AS `code`, `s`.`name` AS `name`, `s`.`ap_code` AS `apcode`, '' AS `taxno`, '' AS `branchno`, "
-                + "'Staff' AS `type` "
-                + "FROM `staff` `s` where `s`.`status` = 'active' ";
-        if(name != null && !"".equalsIgnoreCase(name)){
-            query += " and (`s`.`ap_code` IS NOT NULL) AND ( `s`.`username` LIKE '%" + name + "%' OR `s`.`name` LIKE '%" + name + "%' ) ";
-        }        
-                
-        query += "UNION ALL "
-                + "SELECT `sup`.`id` AS `id`, `sup`.`ap_code` AS `code`, `sup`.`name` AS `name`, `sup`.`ap_code` AS `apcode`, '' AS `taxno`, "
-                + "'' AS `branchno`, 'Supplier' AS `type` "
-                + "FROM `supplier` `sup` ";
-        if(name != null && !"".equalsIgnoreCase(name)){
-            query += "WHERE ( `sup`.`ap_code` LIKE '%" + name + "%' OR `sup`.`name` LIKE '%" + name + "%' ) ";
-        }             
+//                
+//        query += "UNION ALL "
+//                + "SELECT `a`.`id` AS `id`, `a`.`code` AS `code`, `a`.`name` AS `name`, `a`.`code` AS `apcode`, `a`.`tax_no` AS `taxno`, "
+//                + "`a`.`branch` AS `branchno`, 'Agent' AS `type` "
+//                + "FROM `agent` `a` ";                
+//        if(name != null && !"".equalsIgnoreCase(name)){
+//            query += "WHERE (`a`.`ap_code` IS NOT NULL) AND ( `a`.`code` LIKE '%" + name + "%' OR `a`.`name` LIKE '%" + name + "%' ) ";
+//        }
+//        
+//        query += "UNION ALL "
+//                + "SELECT `s`.`id` AS `id`, `s`.`username` AS `code`, `s`.`name` AS `name`, `s`.`ap_code` AS `apcode`, '' AS `taxno`, '' AS `branchno`, "
+//                + "'Staff' AS `type` "
+//                + "FROM `staff` `s` where `s`.`status` = 'active' ";
+//        if(name != null && !"".equalsIgnoreCase(name)){
+//            query += " and (`s`.`ap_code` IS NOT NULL) AND ( `s`.`username` LIKE '%" + name + "%' OR `s`.`name` LIKE '%" + name + "%' ) ";
+//        }        
+//                
+//        query += "UNION ALL "
+//                + "SELECT `sup`.`id` AS `id`, `sup`.`ap_code` AS `code`, `sup`.`name` AS `name`, `sup`.`ap_code` AS `apcode`, '' AS `taxno`, "
+//                + "'' AS `branchno`, 'Supplier' AS `type` "
+//                + "FROM `supplier` `sup` ";
+//        if(name != null && !"".equalsIgnoreCase(name)){
+//            query += "WHERE ( `sup`.`ap_code` LIKE '%" + name + "%' OR `sup`.`name` LIKE '%" + name + "%' ) ";
+//        }             
         
         List<Object[]> invoiceSupplierList = session.createSQLQuery(query)
                 .setMaxResults(300)

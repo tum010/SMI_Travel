@@ -223,9 +223,9 @@
                                 <th style="width: 10%">Inv To</th>
                                 <th style="width: 10%">Inv Amount</th>
                                 <th style="width: 10%">Sum Inv</th>
+                                <th style="width: 5%">Cur</th>
                                 <th style="width: 10%">Diff</th>
                                 <th style="width: 10%">Sum Rec</th>
-                                <th style="width: 5%">Cur</th>
                                 <th style="width: 10%">Collection</th>
                                 <th style="width: 12%">Bank Code</th>
                                 <th style="width: 8%">Status</th>
@@ -252,9 +252,9 @@
                                     <td>${table.invto}</td>
                                     <td align="right">${table.invoiceamount}</td>
                                     <td align="right"><fmt:formatNumber type="currency" pattern="#,##0.00;-#,##0.00" value="${table.invamount}" /></td>
+                                    <td align="left">${table.cur}</td>
                                     <td align="right"><fmt:formatNumber type="currency" pattern="#,##0.00;-#,##0.00" value="${table.diff}" /></td>
                                     <td align="right"><fmt:formatNumber type="currency" pattern="#,##0.00;-#,##0.00" value="${table.recamount}" /></td>
-                                    <td align="left">${table.cur}</td>
                                     <td align="center">${table.collectionStatus}</td>
                                     <td align="center" >
                                         <c:choose>

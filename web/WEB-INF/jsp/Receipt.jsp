@@ -2411,7 +2411,7 @@
     }
 
     function formatExRateNumber(num) {
-        return  num.toFixed(4).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
+        return  num.toFixed(10).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
     }
 
     function insertCommas(nField) {
