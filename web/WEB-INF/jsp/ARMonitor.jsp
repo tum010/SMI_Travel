@@ -643,8 +643,8 @@
         var department = $('#department').val();
         var arType = $('#arType').val();
         var arStatus  = $('#arStatus').val();
-        var arFromDate = $('#arFromDate').val();
-        var arToDate = $('#arToDate').val();
+        var arFromDate = convertFormatDate($('#arFromDate').val());
+        var arToDate = convertFormatDate($('#arToDate').val());
         if((arFromDate === '') || (arToDate === '')){
             validateDate();
         } else {

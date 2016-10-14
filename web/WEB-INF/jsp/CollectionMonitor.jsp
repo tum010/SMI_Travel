@@ -573,8 +573,8 @@
         var department = document.getElementById('department').value;
         var type = document.getElementById('type').value;
         var status = document.getElementById('status').value;
-        var inputFromDate = document.getElementById('inputFromDate').value;
-        var inputToDate = document.getElementById("inputToDate").value;
+        var inputFromDate = convertFormatDate(document.getElementById('inputFromDate').value);
+        var inputToDate = convertFormatDate(document.getElementById("inputToDate").value);
         var invno = document.getElementById("invno").value;
 //        var strStatus = status.options[status.selectedIndex].text;
         if((inputToDate === '') || (inputFromDate === '')){

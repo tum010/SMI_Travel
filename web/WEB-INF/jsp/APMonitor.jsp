@@ -697,8 +697,8 @@
         var payment = document.getElementById("apPayment").value;
         var ticketType = document.getElementById("apType").value;
         var status = document.getElementById("apStatus").value;
-        var dateFrom = document.getElementById("apFromDate").value;
-        var dateTo = document.getElementById("apToDate").value;
+        var dateFrom = convertFormatDate(document.getElementById("apFromDate").value);
+        var dateTo = convertFormatDate(document.getElementById("apToDate").value);
         if((dateFrom !== '') && (dateTo !== '')){
             window.open("Excel.smi?name=ApReport&payment=" + payment + "&ticketType=" + ticketType + "&status=" + status + "&dateFrom=" + dateFrom + "&dateTo=" + dateTo);
         } else {

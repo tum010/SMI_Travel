@@ -19,7 +19,7 @@
         <property name="accNo" type="java.lang.Integer">
             <column name="acc_no" length="11" not-null="true" />
         </property>
-        <property name="otAccCode" type="string">
+		<property name="otAccCode" type="string">
             <column name="ot_acc_code" length="20" not-null="true" />
         </property>
         <property name="onAccCode" type="string">

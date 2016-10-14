@@ -93,7 +93,9 @@ public class AccountReportSummary extends AbstractExcelView {
 //        styleNumber.setDataFormat(creationHelper.createDataFormat().getFormat("#,##0"));
 
         ARNirvana arTemp = new  ARNirvana();
-        arTemp = (ARNirvana) listAR.get(0);
+        if(!listAR.isEmpty()){
+            arTemp = (ARNirvana) listAR.get(0);
+        }
         // Row 2
         HSSFRow row2 = sheet.createRow(1);
         HSSFCell cell21 = row2.createCell(1);
@@ -1171,7 +1173,10 @@ public class AccountReportSummary extends AbstractExcelView {
             styleSymbolCheck.setAlignment(styleSymbolCheck.ALIGN_CENTER);
             
             //Set Header All Page
-            OutputTaxView dataHeader = (OutputTaxView)outputTaxViewList.get(0);
+            OutputTaxView dataHeader = new OutputTaxView();
+            if(!outputTaxViewList.isEmpty()){
+                dataHeader = (OutputTaxView)outputTaxViewList.get(0);
+            }
             HSSFCellStyle styleC1 = wb.createCellStyle();
             styleC1.setAlignment(styleC1.ALIGN_CENTER);
             int countWendy = dataHeader.getCountWendy();
