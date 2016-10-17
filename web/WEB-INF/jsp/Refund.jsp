@@ -1879,7 +1879,7 @@ function addRowRefundTicketDetail(row,id){
         '<td id="rowTable' + row + '" class="center">' + row + '</td>' +       
         '<td><select id="SelectTocketNo' + row + '" name="SelectTocketNo' + row + '" class="form-control" onchange="setSectorRefund(' + row + ');">'+ selectTicket +'</select> <input type="hidden" id="ticketNoOnSelected' + row + '" name="ticketNoOnSelected' + row + '" value="" ></td>' +
         '<td><input type="text" maxlength ="255" class="form-control" id="inputSector' + row + '" name="inputSector' + row + '" value="" readonly=""></td>' +
-        '<td><input type="text" class="form-control" id="inputSectorRefund' + row + '" name="inputSectorRefund' + row + '" value="" onfocusout="checkRefundAdd(this,'+row+')"></td>' +
+        '<td><input type="text" class="form-control" id="inputSectorRefund' + row + '" name="inputSectorRefund' + row + '" value="" onfocusout="checkRefund(this,'+row+')"></td>' +
         '<td><input  maxlength ="15" type="text"  class="form-control numerical text-right"  onfocusout="changeFormatChargeNumber('+row+');"  id="inputCharge' + row + '" name="inputCharge' + row + '" value="" ></td>' + 
         '<td><input  maxlength ="15" type="text"  class="form-control numerical text-right"  onfocusout="changeFormatClientchargeNumber('+row+');"  id="inputClientcharge' + row + '" name="inputClientcharge' + row + '" value="" ></td>'+
         '<td class="text-center"><a class="carousel" data-toggle="modal"  data-target="#DeleteRefundDetail" onclick="DeleteRefundDetail('+row+',\'\')"  ><span class="glyphicon glyphicon-remove deleteicon"></span></a></td>'+
