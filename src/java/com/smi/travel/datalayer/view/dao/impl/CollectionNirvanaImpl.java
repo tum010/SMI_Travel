@@ -304,13 +304,11 @@ public class CollectionNirvanaImpl implements CollectionNirvanaDao{
                 String dataNo = "";
                 if(nirvanaInterfaceList.get(i).getRowid() != null && !"".equalsIgnoreCase(nirvanaInterfaceList.get(i).getRowid())){
                     id = nirvanaInterfaceList.get(i).getRowid();
-                    dataNo = nirvanaInterfaceList.get(i).getDatano();
-                    hql = "update Receipt rec set rec.isExport = 1 , rec.exportDate = :date , rec.dataNo = :dataNo where rec.id = :recid";
+                    hql = "update Receipt rec set rec.isExport = 1 , rec.exportDate = :date where rec.id = :recid";
                 }
                 Query query = session.createQuery(hql);
                 query.setParameter("recid", String.valueOf(id));
                 query.setParameter("date", date);
-                query.setParameter("dataNo", dataNo);
                 int result = query.executeUpdate();
                 System.out.println("Query Update : " + result + ":" + query);
             }
@@ -326,7 +324,40 @@ public class CollectionNirvanaImpl implements CollectionNirvanaDao{
         }
         return isUpdate;
     }
+    
+    public String UpdateDataNoCollection(String recid) {
+        String datano = "";
+        try {
+            Session session = this.sessionFactory.openSession();
+            transaction = session.beginTransaction();
+            List<Receipt> list = session.createQuery("from Receipt rec WHERE rec.id = :receiptId").setParameter("receiptId",recid).list();
+            if(!list.isEmpty()){
+                Receipt receipt = list.get(0);
+                if(!"".equalsIgnoreCase(receipt.getDataNo()) && receipt.getDataNo() != null){
+                    datano = receipt.getDataNo();
+                }else{
+                    datano = gennarateColNirvanaNo("CL");
+                    String hql = "update Receipt rec set rec.dataNo = :dataNo where rec.id = :recid";
+                    Query query = session.createQuery(hql);
+                    query.setParameter("recid", String.valueOf(recid));
+                    query.setParameter("dataNo", datano);
+                    int result = query.executeUpdate();
+                    System.out.println("Query Update : " + result + ":" + query);
+                }
+            }
+            transaction.commit();
+            session.close();
+            this.sessionFactory.close();
+        } catch (Exception ex) {
+            transaction.rollback();
+            ex.printStackTrace();
+            datano = "fail";
+        }
+        return datano;
+    }
+    
 
+        
     @Override
     public String MappingCollectionNirvana(List<CollectionNirvana> cnData) {
         String result = "fail";
@@ -338,15 +369,17 @@ public class CollectionNirvanaImpl implements CollectionNirvanaDao{
         List<SsDataexch> ssDataexchList = new ArrayList<SsDataexch>();
         for(int i=0; i<cnDataList.size(); i++){
             CollectionNirvana co = cnDataList.get(i);
-            String colNirvanaNo = gennarateColNirvanaNo("CL");
+            String colNirvanaNo = UpdateDataNoCollection(co.getRowid());
+            
             Date date = new Date();
             //Data ss_dataexch2 For Header , Receipt Voucher
             SsDataexch ssDataexchTemp = new SsDataexch();
             ssDataexchTemp.setRowid(co.getRowid()); // Receiot Id
             ssDataexchTemp.setDataCd("240030");            
             ssDataexchTemp.setDataNo(colNirvanaNo);
-            ssDataexchTemp.setEntSysCd("SMI");           
-            ssDataexchTemp.setEntSysDate(sdf.format(date));
+            ssDataexchTemp.setEntSysCd("SMI");    
+            String entSysDate = sdf.format(date);
+            ssDataexchTemp.setEntSysDate(entSysDate);
             ssDataexchTemp.setRcvStaCd("1");
             ssDataexchTemp.setRcvSysDate("00000000.000000");
             ssDataexchTemp.setRcvComment("");
@@ -354,10 +387,10 @@ public class CollectionNirvanaImpl implements CollectionNirvanaDao{
             ssDataexchTemp.setDataArea(setDataArea(co));
             
             //Ss_dataextrchtr2
-            List<SsDataexchTr> ssDataexchTrList = setCollectionNirvanaCashReceipt(co.getRowid() , colNirvanaNo); 
+            List<SsDataexchTr> ssDataexchTrList = setCollectionNirvanaCashReceipt(co.getRowid() , colNirvanaNo , entSysDate); 
             ssDataexchTemp.setSsDataexchTrList(ssDataexchTrList);
             //Ss_dataextrchtr3
-            List<SsDataexchTr> ssDataexchTr2List = setCollectionNirvanaExpenseReceipt(co.getRowid() , colNirvanaNo); 
+            List<SsDataexchTr> ssDataexchTr2List = setCollectionNirvanaExpenseReceipt(co.getRowid() , colNirvanaNo , entSysDate); 
             ssDataexchTemp.setSsDataexchTr2List(ssDataexchTr2List);
             
             ssDataexchTemp.setRecno(co.getRecno() != null && !"".equalsIgnoreCase(co.getRecno()) ? co.getRecno() : "");
@@ -687,7 +720,8 @@ public class CollectionNirvanaImpl implements CollectionNirvanaDao{
     }
     
     
-    private List<SsDataexchTr> setCollectionNirvanaCashReceipt(String rowid , String datano) {
+    private List<SsDataexchTr> setCollectionNirvanaCashReceipt(String rowid , String datano , String entSysDate) {
+        System.out.println(" ======== setCollectionNirvanaCashReceipt ==========");
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
         List<CollectionNirvanaCashReceipt> cncrList = new ArrayList<CollectionNirvanaCashReceipt>();
@@ -736,7 +770,7 @@ public class CollectionNirvanaImpl implements CollectionNirvanaDao{
                 ssDataexchTr.setDataSeq(String.valueOf(dataseq));
             }
             ssDataexchTr.setEntSysCd("SMI");           
-            ssDataexchTr.setEntSysDate(sdf.format(new Date()));
+            ssDataexchTr.setEntSysDate(entSysDate);
             ssDataexchTr.setRcvComment("");
             ssDataexchTr.setDataArea(setDataAreaSsDataexChTr2(cncrList.get(i)));
             ssDataexchTrList.add(ssDataexchTr);
@@ -801,7 +835,8 @@ public class CollectionNirvanaImpl implements CollectionNirvanaDao{
         return dataArea;
     }
     
-    private List<SsDataexchTr> setCollectionNirvanaExpenseReceipt(String rowid , String datano) {
+    private List<SsDataexchTr> setCollectionNirvanaExpenseReceipt(String rowid , String datano , String entSysDate) {
+        System.out.println(" ======== setCollectionNirvanaExpenseReceipt ==========");
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
         List<CollectionNirvanaExpenseReceipt> cnerList = new ArrayList<CollectionNirvanaExpenseReceipt>();
@@ -836,7 +871,7 @@ public class CollectionNirvanaImpl implements CollectionNirvanaDao{
                 ssDataexchTr.setDataSeq(String.valueOf(count));
             }
             ssDataexchTr.setEntSysCd("SMI");           
-            ssDataexchTr.setEntSysDate(sdf.format(new Date()));
+            ssDataexchTr.setEntSysDate(entSysDate);
             ssDataexchTr.setRcvComment("");
             ssDataexchTr.setDataArea(setDataAreaSsDataexChTr3(cnerList.get(i)));
             ssDataexchTrList.add(ssDataexchTr);

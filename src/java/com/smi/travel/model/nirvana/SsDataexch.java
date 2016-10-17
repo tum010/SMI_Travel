@@ -21,6 +21,9 @@ import java.util.List;
  * @author chonnasith
  */
 public class SsDataexch {
+    //production
+//    private static final String ip = "192.168.0.15";
+//    private static final String port = "6688";    
     private static final String ip = "192.168.129.18";
     private static final String port = "2638";
     private static final String username = "ICONEXT";
@@ -144,10 +147,8 @@ public class SsDataexch {
                     }
                 }
             }
-            
         } catch (Exception e) {
             e.printStackTrace();
-            
         } finally {
             stmt.close();
             con.close();
@@ -242,12 +243,11 @@ public class SsDataexch {
                         SsDataexch ssDataexch = ssDataexchList.get(i);
                         System.out.println("===== Data No ===== : "+ ssDataexch.getDataNo());
                         System.out.println("===== Data Cd ===== : "+ ssDataexch.getDataCd());
-                        ResultSet rs = stmt.executeQuery("select * from ss_dataexch2 where data_no = '" + ssDataexch.getDataNo() + "' and data_cd = '" + ssDataexch.getDataCd() + "'" );
+                        ResultSet rs = stmt.executeQuery("select * from ss_dataexch2 where data_no = '" + ssDataexch.getDataNo() + "' and data_cd = '" + ssDataexch.getDataCd() + "' and  ent_sys_date = '" + ssDataexch.getEntSysDate() + "' ");
                         while (rs.next()) {    
                             String rcvcommment = rs.getString("rcv_comment") == null ? "" : rs.getString("rcv_comment");
                             String recno = (ssDataexch.getRecno() != null && !"".equalsIgnoreCase(ssDataexch.getRecno()) ? ssDataexch.getRecno() : "");
                             String rowid = (ssDataexch.getRowid() != null && !"".equalsIgnoreCase(ssDataexch.getRowid()) ? ssDataexch.getRowid() : "");
-
                             NirvanaInterface nirvanaInterface = new NirvanaInterface();
                             nirvanaInterface.setRecno(recno);
                             nirvanaInterface.setComment(rcvcommment);
@@ -255,10 +255,8 @@ public class SsDataexch {
                             nirvanaInterface.setResult("fail");
                             nirvanaInterfaceList.add(nirvanaInterface);
                         }
-                        
-                        ResultSet rslog = stmt.executeQuery("select * from ss_dataexch2log where data_no = '" + ssDataexch.getDataNo() + "' and data_cd = '" + ssDataexch.getDataCd() + "'" );
+                        ResultSet rslog = stmt.executeQuery("select * from ss_dataexch2log where data_no = '" + ssDataexch.getDataNo() + "' and data_cd = '" + ssDataexch.getDataCd() + "' and  ent_sys_date = '" + ssDataexch.getEntSysDate() + "' ");
                         while (rslog.next()) {    
-
                                 String datano = (ssDataexch.getDataNo() != null && !"".equalsIgnoreCase(ssDataexch.getDataNo()) ? ssDataexch.getDataNo() : "");
                                 String rowid = (ssDataexch.getRowid() != null && !"".equalsIgnoreCase(ssDataexch.getRowid()) ? ssDataexch.getRowid() : "");
                                 NirvanaInterface nirvanaInterface = new NirvanaInterface();
@@ -322,7 +320,7 @@ public class SsDataexch {
                 + ",'" + ssDataexchTr.getEntSysDate()+ "'"
                 + ",'" + ssDataexchTr.getRcvComment()+ "'"
                 + ",'" + ssDataexchTr.getDataArea()+ "' );";
-            
+                dataNo = ssDataexchTr.getDataNo();
             try {
                 stmt.executeUpdate(sql);
             } catch (Exception e) {
@@ -347,7 +345,7 @@ public class SsDataexch {
                 + ",'" + ssDataexchTr.getEntSysDate()+ "'"
                 + ",'" + ssDataexchTr.getRcvComment()+ "'"
                 + ",'" + ssDataexchTr.getDataArea()+ "' );";
-            
+                dataNo = ssDataexchTr.getDataNo();
             try {
                 stmt.executeUpdate(sql);
             } catch (Exception e) {
