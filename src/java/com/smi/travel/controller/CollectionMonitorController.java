@@ -97,6 +97,9 @@ public class CollectionMonitorController extends SMITravelController {
                 if(!"".equalsIgnoreCase(inputId)){
                     System.out.println(" inputId :: " + inputId);
                     System.out.println(" bankcode :: " + bankcode);
+                    if("CASH-R".equalsIgnoreCase(bankcode)){
+                        bankcode = "CASHR";
+                    }
                     Receipt rec = new Receipt();
                     rec.setId(inputId);
                     rec.setBankCode(!"".equalsIgnoreCase(bankcode) && !"null".equalsIgnoreCase(bankcode) && bankcode != null ? bankcode : "");

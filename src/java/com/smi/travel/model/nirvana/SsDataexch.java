@@ -113,7 +113,7 @@ public class SsDataexch {
                     for(int i=0; i<ssDataexchList.size(); i++){
                         SsDataexch ssDataexch = ssDataexchList.get(i);
                         System.out.println("===== Data No ===== : "+ssDataexch.getDataNo());
-                        ResultSet rs = stmt.executeQuery("select * from ss_dataexch2 where data_no = '" + ssDataexch.getDataNo() + "' and data_cd = '240020' ");
+                        ResultSet rs = stmt.executeQuery("select * from ss_dataexch2 where data_no = '" + ssDataexch.getDataNo() + "' and data_cd = '240020' and ent_sys_date = '"+ ssDataexch.getEntSysDate()+"' ");
                         while (rs.next()) {    
                             String status = rs.getString("rcv_sta_cd") == null ? "" : rs.getString("rcv_sta_cd");
                             String rcvcommment = rs.getString("rcv_comment") == null ? "" : rs.getString("rcv_comment");
@@ -129,7 +129,8 @@ public class SsDataexch {
                             nirvanaInterface.setResult("fail");
                             nirvanaInterfaceList.add(nirvanaInterface);
                         }
-                        ResultSet rslog = stmt.executeQuery("select * from ss_dataexch2log where data_no = '" + Integer.parseInt(ssDataexch.getDataNo()) + "' and data_cd = '240020' ");
+
+                        ResultSet rslog = stmt.executeQuery("select * from ss_dataexch2log where data_no = '" + Integer.parseInt(ssDataexch.getDataNo()) + "' and data_cd = '240020' and ent_sys_date = '"+ ssDataexch.getEntSysDate()+"' ");
                         while (rslog.next()) {    
                             String datano = (ssDataexch.getDataNo() != null && !"".equalsIgnoreCase(ssDataexch.getDataNo()) ? ssDataexch.getDataNo() : "");
                             String paymentDetailId = (ssDataexch.getPayment_detail_id() != null && !"".equalsIgnoreCase(ssDataexch.getPayment_detail_id()) ? ssDataexch.getPayment_detail_id() : "");
@@ -177,7 +178,7 @@ public class SsDataexch {
                     for(int i=0; i<ssDataexchList.size(); i++){
                         SsDataexch ssDataexch = ssDataexchList.get(i);
                         System.out.println("===== Data No ===== : "+ssDataexch.getDataNo());
-                        ResultSet rs = stmt.executeQuery("select * from ss_dataexch2 where data_no = '" + ssDataexch.getDataNo() + "' and data_cd = '240010' ");
+                        ResultSet rs = stmt.executeQuery("select * from ss_dataexch2 where data_no = '" + ssDataexch.getDataNo() + "' and data_cd = '240010' and ent_sys_date = '"+ ssDataexch.getEntSysDate()+"' ");
                         while (rs.next()) {   
                             System.out.println(" fail !!!!!!!!!!!!!!!!! ");
                             String rcvcommment = rs.getString("rcv_comment") == null ? "" : rs.getString("rcv_comment");
@@ -192,7 +193,7 @@ public class SsDataexch {
                             nirvanaInterfaceList.add(nirvanaInterface);
                         }
                         
-                        ResultSet rslog = stmt.executeQuery("select * from ss_dataexch2log where data_no = '" + Integer.parseInt(ssDataexch.getDataNo()) + "' and data_cd = '240010' ");
+                        ResultSet rslog = stmt.executeQuery("select * from ss_dataexch2log where data_no = '" + Integer.parseInt(ssDataexch.getDataNo()) + "' and data_cd = '240010' and ent_sys_date = '"+ ssDataexch.getEntSysDate()+"' ");
                         while (rslog.next()) {    
                             System.out.println(" success !!!!!!!!!!!!!!!!! ");
                             //AP

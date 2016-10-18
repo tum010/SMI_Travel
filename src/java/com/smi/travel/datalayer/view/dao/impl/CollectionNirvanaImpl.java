@@ -351,7 +351,6 @@ public class CollectionNirvanaImpl implements CollectionNirvanaDao{
         } catch (Exception ex) {
             transaction.rollback();
             ex.printStackTrace();
-            datano = "fail";
         }
         return datano;
     }

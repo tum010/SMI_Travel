@@ -6,6 +6,9 @@
 package com.smi.travel.datalayer.view.dao.impl;
 
 import com.smi.travel.datalayer.entity.MRunningCode;
+import com.smi.travel.datalayer.entity.PaymentAirticket;
+import com.smi.travel.datalayer.entity.PaymentDetailWendy;
+import com.smi.travel.datalayer.entity.PaymentOutboundDetail;
 import com.smi.travel.datalayer.view.dao.APNirvanaDao;
 import com.smi.travel.datalayer.view.entity.APNirvana;
 import com.smi.travel.datalayer.view.entity.NirvanaInterface;
@@ -76,7 +79,7 @@ public class APNirvanaImpl implements APNirvanaDao {
         return status;
     }
     
-    public List<SsDataexchTr> setApNirvanaDetail(APNirvana ap,String datano,String paymentType){
+    public List<SsDataexchTr> setApNirvanaDetail(APNirvana ap,String datano,String paymentType, String entSysDate){
         List<SsDataexchTr> ssdtrList = new ArrayList<SsDataexchTr>();
         UtilityFunction util = new UtilityFunction();
         String dataArea = "";
@@ -164,7 +167,7 @@ public class APNirvanaImpl implements APNirvanaDao {
                     ssdtr.setDataNo(datano);
                     ssdtr.setDataSeq(String.valueOf(count));
                     ssdtr.setEntSysCd("SMI");
-                    ssdtr.setEntSysDate(sdf.format(new Date()));
+                    ssdtr.setEntSysDate(entSysDate);
             //        ssdtr.setEntDataNo(datano);
             //        ssdtr.setEntComment("");
             //        ssdtr.setRcvSysCd("NIRVANA");
@@ -219,7 +222,7 @@ public class APNirvanaImpl implements APNirvanaDao {
                     ssdtr.setDataNo(datano);
                     ssdtr.setDataSeq(String.valueOf(count));
                     ssdtr.setEntSysCd("SMI");
-                    ssdtr.setEntSysDate(sdf.format(new Date()));
+                    ssdtr.setEntSysDate(entSysDate);
             //        ssdtr.setEntDataNo(datano);
             //        ssdtr.setEntComment("");
             //        ssdtr.setRcvSysCd("NIRVANA");
@@ -251,27 +254,20 @@ public class APNirvanaImpl implements APNirvanaDao {
         try {
             Session session = this.getSessionFactory().openSession();
             setTransaction(session.beginTransaction());
-
             for (int i = 0; i < nirvanaInterfaceList.size(); i++) {
                 NirvanaInterface nirvanaInterface = nirvanaInterfaceList.get(i);
                 String paymentDetailId = nirvanaInterface.getPayment_detail_id();
                 String paymentType = nirvanaInterface.getPaymenttype();
-                String dataNo = nirvanaInterface.getDatano();
-//                String dataNo = apNirvana.getDataNo();
                 System.out.println("===== paymentDetailId ===== : "+paymentDetailId);
                 System.out.println("===== paymentType ===== : "+paymentType);
-                System.out.println("===== dataNo ===== : "+dataNo);
                 Date date = new Date();
                 if ("W".equalsIgnoreCase(paymentType)) {
-                    String hql = "update PaymentDetailWendy pay set pay.isExport = 1 , pay.exportDate = :date , pay.dataNo = :dataNo where pay.id = :paymentDetailId";
+                    String hql = "update PaymentDetailWendy pay set pay.isExport = 1 , pay.exportDate = :date where pay.id = :paymentDetailId";
                     try {
                         Query query = session.createQuery(hql);
                         query.setParameter("paymentDetailId", paymentDetailId);
                         query.setParameter("date", date);
-                        query.setParameter("dataNo", dataNo);
-                        
                         System.out.println(" query " + query);
-                        
                         result = query.executeUpdate();
                         System.out.println("Rows affected: " + result);
                     } catch (Exception ex) {
@@ -279,15 +275,12 @@ public class APNirvanaImpl implements APNirvanaDao {
                         result = 0;
                     }
                 } else if ("A".equalsIgnoreCase(paymentType)) {
-                    String hql = "update PaymentAirticket air set air.isExport = 1 , air.exportDate = :date , air.dataNo = :dataNo where air.id = :paymentDetailId";
+                    String hql = "update PaymentAirticket air set air.isExport = 1 , air.exportDate = :date where air.id = :paymentDetailId";
                     try {
                         Query query = session.createQuery(hql);
                         query.setParameter("paymentDetailId", paymentDetailId);
                         query.setParameter("date", date);
-                        query.setParameter("dataNo", dataNo);
-                        
                         System.out.println(" query " + query);
-                        
                         result = query.executeUpdate();
                         System.out.println("Rows affected: " + result);
                     } catch (Exception ex) {
@@ -295,15 +288,12 @@ public class APNirvanaImpl implements APNirvanaDao {
                         result = 0;
                     }
                 } else if ("O".equalsIgnoreCase(paymentType)) {
-                    String hql = "update PaymentOutboundDetail pod set pod.isExport = 1 , pod.exportDate = :date , pod.dataNo = :dataNo where pod.id = :paymentDetailId";
+                    String hql = "update PaymentOutboundDetail pod set pod.isExport = 1 , pod.exportDate = :date where pod.id = :paymentDetailId";
                     try {
                         Query query = session.createQuery(hql);
                         query.setParameter("paymentDetailId", paymentDetailId);
                         query.setParameter("date", date);
-                        query.setParameter("dataNo", dataNo);
-                        
                         System.out.println(" query " + query);
-                        
                         result = query.executeUpdate();
                         System.out.println("Rows affected: " + result);
                     } catch (Exception ex) {
@@ -321,6 +311,77 @@ public class APNirvanaImpl implements APNirvanaDao {
             result = 0;
         }
         return (result == 1 ? "success" : "fail");
+    }
+    
+    
+    public String UpdateDataNoAPInterface(String paymentDetailId , String paymentType) {
+        int result = 0;
+        String datano = "";
+        try {
+            Session session = this.sessionFactory.openSession();
+            transaction = session.beginTransaction();
+            System.out.println("===== paymentDetailId ===== : "+paymentDetailId);
+            System.out.println("===== paymentType ===== : "+paymentType);
+            
+            if ("W".equalsIgnoreCase(paymentType)) {
+                List<PaymentDetailWendy> list = session.createQuery("from PaymentDetailWendy pay WHERE pay.id = :paymentDetailId").setParameter("paymentDetailId",paymentDetailId).list();
+                if(!list.isEmpty()){
+                    PaymentDetailWendy pay = list.get(0);
+                    if(!"".equalsIgnoreCase(pay.getDataNo()) && pay.getDataNo() != null){
+                        datano = pay.getDataNo();
+                    }else{
+                        datano = gennarateAPNirvanaNo("AP");
+                        String hql = "update PaymentDetailWendy pay set pay.dataNo = :dataNo where pay.id = :paymentDetailId ";
+                        Query query = session.createQuery(hql);
+                        query.setParameter("paymentDetailId", paymentDetailId);
+                        query.setParameter("dataNo", datano);
+                        result = query.executeUpdate();
+                        System.out.println("Rows affected: " + result);
+                    }
+                }
+            } else if ("A".equalsIgnoreCase(paymentType)) {
+                List<PaymentAirticket> list = session.createQuery("from PaymentAirticket air WHERE air.id = :paymentDetailId ").setParameter("paymentDetailId",paymentDetailId).list();
+                if(!list.isEmpty()){
+                    PaymentAirticket pay = list.get(0);
+                    if(!"".equalsIgnoreCase(pay.getDataNo()) && pay.getDataNo() != null){
+                        datano = pay.getDataNo();
+                    }else{
+                        datano = gennarateAPNirvanaNo("AP");
+                        String hql = "update PaymentAirticket air set air.dataNo = :dataNo where air.id = :paymentDetailId ";
+                        Query query = session.createQuery(hql);
+                        query.setParameter("paymentDetailId", paymentDetailId);
+                        query.setParameter("dataNo", datano);
+                        result = query.executeUpdate();
+                        System.out.println("Rows affected: " + result);
+                    }
+                }
+            } else if ("O".equalsIgnoreCase(paymentType)) {
+                List<PaymentOutboundDetail> list = session.createQuery("from PaymentOutboundDetail pod WHERE pod.id = :paymentDetailId ").setParameter("paymentDetailId",paymentDetailId).list();
+                if(!list.isEmpty()){
+                    PaymentOutboundDetail pay = list.get(0);
+                    if(!"".equalsIgnoreCase(pay.getDataNo()) && pay.getDataNo() != null){
+                        datano = pay.getDataNo();
+                    }else{
+                        datano = gennarateAPNirvanaNo("AP");
+                        String hql = "update PaymentOutboundDetail pod set pod.dataNo = :dataNo where pod.id = :paymentDetailId ";
+                        Query query = session.createQuery(hql);
+                        query.setParameter("paymentDetailId", paymentDetailId);
+                        query.setParameter("dataNo", datano);
+                        result = query.executeUpdate();
+                        System.out.println("Rows affected: " + result);
+                    }
+                }
+            }
+
+            transaction.commit();
+            session.close();
+            this.sessionFactory.close();
+        } catch (Exception ex) {
+            getTransaction().rollback();
+            ex.printStackTrace();
+            result = 0;
+        }
+        return datano;
     }
 
     @Override
@@ -1086,14 +1147,15 @@ public class APNirvanaImpl implements APNirvanaDao {
         List<SsDataexch> ssDataexchList = new ArrayList<SsDataexch>();
         for(int i=0; i<apDataList.size(); i++){
             APNirvana apNirvana = apDataList.get(i);
-            String apNirvanaNo = gennarateAPNirvanaNo("AP");
+            String apNirvanaNo = UpdateDataNoAPInterface(apNirvana.getPayment_detail_id(), apNirvana.getPaymenttype());
             Date date = new Date();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd.HHmmss", Locale.US);
             SsDataexch ssDataexchTemp = new SsDataexch();
             ssDataexchTemp.setDataCd("240020");            
             ssDataexchTemp.setDataNo(apNirvanaNo);
-            ssDataexchTemp.setEntSysCd("SMI");           
-            ssDataexchTemp.setEntSysDate(sdf.format(date));
+            ssDataexchTemp.setEntSysCd("SMI");      
+            String entSysDate = sdf.format(date);
+            ssDataexchTemp.setEntSysDate(entSysDate);
 //            ssDataexchTemp.setEntDataNo(apNirvanaNo);
 //            ssDataexchTemp.setEntComment("");
 //            ssDataexchTemp.setRcvSysCd("NIRVANA");
@@ -1229,7 +1291,7 @@ public class APNirvanaImpl implements APNirvanaDao {
             ssDataexchTemp.setRefinvoice(refInvoiceNo);
             ssDataexchTemp.setInterference(intReference);
             
-            List<SsDataexchTr> ssDataexchTrList = setApNirvanaDetail(apNirvana,apNirvanaNo,paymentType);
+            List<SsDataexchTr> ssDataexchTrList = setApNirvanaDetail(apNirvana,apNirvanaNo,paymentType,entSysDate);
             ssDataexchTemp.setSsDataexchTrList(ssDataexchTrList);
 
             util.logsNirvana(ssDataexchTemp,apNirvana.getRowid());
