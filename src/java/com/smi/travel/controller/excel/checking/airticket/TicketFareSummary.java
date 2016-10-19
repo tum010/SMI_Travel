@@ -1217,7 +1217,7 @@ public class TicketFareSummary extends AbstractExcelView {
         cell81.setCellStyle(styleC21);
         sheet.addMergedRegion(CellRangeAddress.valueOf("A8:D8"));
         HSSFCell cell82 = row8.createCell(4);
-        cell82.setCellValue(dataheader.getOwner());
+        cell82.setCellValue(dataheader.getPrinton());
         cell82.setCellStyle(styleC22);
         sheet.addMergedRegion(CellRangeAddress.valueOf("E8:F8"));
         }
@@ -1231,7 +1231,7 @@ public class TicketFareSummary extends AbstractExcelView {
         styleC3.setAlignment(styleC3.ALIGN_CENTER);
         
         // Detail of Table
-        String temp = "";
+        String temp = "XXXXXXXX";
         int count = 9;
         int ktemp = 12 ;
         //Total Outbound
@@ -1252,8 +1252,9 @@ public class TicketFareSummary extends AbstractExcelView {
         BigDecimal totalCostWendy = new BigDecimal("0.00");
         for(int i=0;i<ticketSumByStaff.size();i++){
             TicketFareSummaryByAgentStaff data = (TicketFareSummaryByAgentStaff)ticketSumByStaff.get(i);
+            
             if(!temp.equalsIgnoreCase(data.getOwner())){
-                if(!"".equalsIgnoreCase(temp)){
+                if(!"XXXXXXXX".equalsIgnoreCase(temp)){
                    HSSFRow row = sheet.createRow(count + i);
                     String totalPax = "SUM(C" + ktemp+":C"+(count + i)+")";
                     String totalInvAmount = "SUM(D" + ktemp+":D"+(count + i )+")";
