@@ -729,6 +729,7 @@ function saveDescriptionDetail() {
     var descriptionDetail = $('#InputDescriptionDetail').val();
     console.log("Detail : " + $('#InputDescriptionDetail').val());
     $('#DescriptionInvoiceDetail' + row).html(descriptionDetail);
+    $('#DescriptionInvoiceDetail' + row).val(descriptionDetail);
 }
 function cancelDescriptionDetail() {
     var row = $("#InputDescriptionDetailId").val();
