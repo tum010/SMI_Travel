@@ -280,12 +280,12 @@
                                                     </c:forEach>
                                                 </select>
                                             </c:when>
-                                            <c:when test="${table.bankcode == 'CASHR'}">
+                                            <c:when test="${table.bankcode == 'CASH-R'}">
                                                 <select class="form-control" name="bankcodeTemp${dataStatus.count}" id="bankcode${dataStatus.count}" disabled>
-                                                    <option value="CASHR" ${select}>CASHR</option>
+                                                    <option value="CASH-R" ${select}>CASH-R</option>
                                                 </select>
                                                 <select class="form-control hidden" name="bankcode${dataStatus.count}" id="bankcode${dataStatus.count}">
-                                                    <option value="CASHR" ${select}>CASHR</option>
+                                                    <!--<option value="CASH-R" ${select}>CASH-R</option>-->
                                                 </select>
                                             </c:when>
                                             <c:otherwise>
