@@ -258,7 +258,7 @@
                                     <td align="center">${table.collectionStatus}</td>
                                     <td align="center" >
                                         <c:choose>
-                                            <c:when test="${table.bankcode == 'CASH'}">
+                                            <c:when test="${table.bankcode == 'CASH' || table.bankcode == 'CASH-R'}">
                                                 <select class="form-control" name="bankcodeTemp${dataStatus.count}" id="bankcode${dataStatus.count}" disabled>
                                                     <option  value="" >---------</option>
                                                     <c:forEach var="banknir" items="${bankNirvanaList}" varStatus="status">                                       
@@ -278,14 +278,6 @@
                                                         </c:if>
                                                         <option  value="${banknir.code}" ${select}>${banknir.code}</option>
                                                     </c:forEach>
-                                                </select>
-                                            </c:when>
-                                            <c:when test="${table.bankcode == 'CASH-R'}">
-                                                <select class="form-control" name="bankcodeTemp${dataStatus.count}" id="bankcode${dataStatus.count}" disabled>
-                                                    <option value="CASH-R" ${select}>CASH-R</option>
-                                                </select>
-                                                <select class="form-control hidden" name="bankcode${dataStatus.count}" id="bankcode${dataStatus.count}">
-                                                    <!--<option value="CASH-R" ${select}>CASH-R</option>-->
                                                 </select>
                                             </c:when>
                                             <c:otherwise>
