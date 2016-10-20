@@ -258,7 +258,29 @@
                                     <td align="center">${table.collectionStatus}</td>
                                     <td align="center" >
                                         <c:choose>
-                                            <c:when test="${table.bankcode == 'CASH' || table.bankcode == 'CASH-R'}">
+                                            <c:when test="${table.bankcode == 'CASH'}">
+                                                <select class="form-control" name="bankcodeTemp${dataStatus.count}" id="bankcode${dataStatus.count}" disabled>
+                                                    <option  value="" >---------</option>
+                                                    <c:forEach var="banknir" items="${bankNirvanaList}" varStatus="status">                                       
+                                                        <c:set var="select" value="" />
+                                                        <c:if test="${banknir.code == table.bankcode}">
+                                                            <c:set var="select" value="selected" />
+                                                        </c:if>
+                                                        <option  value="${banknir.code}" ${select}>${banknir.code}</option>
+                                                    </c:forEach>
+                                                </select>
+                                                <select class="form-control hidden" name="bankcode${dataStatus.count}" id="bankcode${dataStatus.count}">
+                                                    <option  value="" >---------</option>
+                                                    <c:forEach var="banknir" items="${bankNirvanaList}" varStatus="status">                                       
+                                                        <c:set var="select" value="" />
+                                                        <c:if test="${banknir.code == table.bankcode}">
+                                                            <c:set var="select" value="selected" />
+                                                        </c:if>
+                                                        <option  value="${banknir.code}" ${select}>${banknir.code}</option>
+                                                    </c:forEach>
+                                                </select>
+                                            </c:when>
+                                            <c:when test="${table.bankcode == 'CASH-R'}">
                                                 <select class="form-control" name="bankcodeTemp${dataStatus.count}" id="bankcode${dataStatus.count}" disabled>
                                                     <option  value="" >---------</option>
                                                     <c:forEach var="banknir" items="${bankNirvanaList}" varStatus="status">                                       
