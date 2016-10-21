@@ -2110,6 +2110,60 @@ function deleteTicket(id,ticketNo,count){
     $('#DeleteTicket').modal('show');
 }
 
+function getTotalAmountAndTotalCommission() {
+    var paymentId = $("#paymentId").val();
+    var servletName = 'PaymentAirTicketServlet';
+    var servicesName = 'AJAXBean';
+    var param = 'action=' + 'text' +
+            '&servletName=' + servletName +
+            '&servicesName=' + servicesName +
+            '&paymentId=' + paymentId +
+            '&type=' + 'getTotalAmountAndTotalCommission';
+    CallAjaxTotalAmountAndTotalCommission(param);
+}
+
+function CallAjaxTotalAmountAndTotalCommission(param) {
+    var url = 'AJAXServlet';
+    try {
+        $.ajax({
+            type: "POST",
+            url: url,
+            cache: false,
+            data: param,
+            success: function (msg) {
+                var total = JSON.parse(msg);
+                try {
+                    if(msg !== 'null'){
+                        var vatValue = replaceAll(",","",$('#vat').val()); 
+                        if (vatValue == ""){
+                            vatValue = 0;
+                        }
+                        var vat = parseFloat(vatValue);
+                        
+                        var totalamount = parseFloat(total.amount);
+                        var totalcomm= parseFloat(total.commission);
+                        document.getElementById("totalAmountTicketFare").value = formatNumber(totalamount);
+                        document.getElementById("sumCommissionTicket").value = formatNumber(totalcomm);
+                        document.getElementById("totalCommissionTicketFare").value = formatNumber(totalcomm +(totalcomm *( vat/100)));
+                        calculateWithodingTax();
+                        calculateTotalPayment();
+                        calculateAmount();
+                    }
+                } catch (e) {
+                    alert(e);
+                }
+
+            }, error: function (msg) {
+                
+            }
+        });
+    } catch (e) {
+        alert(e);
+    }
+}	
+
+
+
 function DeleteRowTicket(){
     var no = document.getElementById('deleteTicketNo').value;
     var ticketid = document.getElementById('deleteTicketId').value;
@@ -2119,14 +2173,16 @@ function DeleteRowTicket(){
     $("#tableId" + count).parent().remove();
     
     if($("#TicketFareTable tr").length > 1){
-        calculateTotalAmount();
-        calculateTotalCommission();
+        getTotalAmountAndTotalCommission();
+//        calculateTotalAmount();
+//        calculateTotalCommission();
         calculateWithodingTax();
         calculateTotalPayment();
         calculateAmount();
     }else{
         $('#totalCommissionTicketFare').val("");
         $('#totalAmountTicketFare').val("");
+        getTotalAmountAndTotalCommission();
         calculateTotalPayment();
         calculateAmount();
     }
@@ -2137,14 +2193,16 @@ function DeleteRowTicket(){
         data: {deleteTicketId: ticketid , paymentId:paymentId},
         success: function () {
             if($("#TicketFareTable tr").length > 1){
-                calculateTotalAmount();
-                calculateTotalCommission();
+                getTotalAmountAndTotalCommission();
+//                calculateTotalAmount();
+//                calculateTotalCommission();
                 calculateWithodingTax();
                 calculateTotalPayment();
                 calculateAmount();
             }else{
                 $('#totalCommissionTicketFare').val("");
                 $('#totalAmountTicketFare').val("");
+                getTotalAmountAndTotalCommission();
                 calculateTotalPayment();
                 calculateAmount();
             }    
@@ -2156,6 +2214,7 @@ function DeleteRowTicket(){
     }); 
     $('#DeleteTicket').modal('hide');
 }
+
 function deleteRefund(id,refundNo,rowCount){
     $("#deleteRefundCount").val(rowCount);
     $("#delRefundId").val(id);

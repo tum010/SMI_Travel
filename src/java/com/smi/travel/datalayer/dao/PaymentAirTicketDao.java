@@ -10,13 +10,13 @@ import com.smi.travel.datalayer.entity.PaymentAirCredit;
 import com.smi.travel.datalayer.entity.PaymentAirDebit;
 import com.smi.travel.datalayer.entity.PaymentAirticket;
 import com.smi.travel.datalayer.entity.PaymentAirticketAccount;
-import com.smi.travel.datalayer.entity.PaymentAirticketFare;
 import com.smi.travel.datalayer.entity.RefundAirticketDetailView;
 import com.smi.travel.datalayer.report.model.PaymentAirline;
 import com.smi.travel.datalayer.view.entity.PaymentAirView;
 import com.smi.travel.datalayer.view.entity.PaymentAirlineList;
 import com.smi.travel.datalayer.view.entity.TicketFareView;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -59,4 +59,6 @@ public interface PaymentAirTicketDao {
     
     public PaymentAirticket getPaymentAirTicketByWildCardSearch(String paymentId, String paymentNo, String wildCardSearch, String keyCode);
     public List<PaymentAirlineList> getPaymentAirlineList();
+    
+    public Map<String, Object> getTotalAmountAndTotalCommission(String paymentId);
 }

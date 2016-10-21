@@ -866,6 +866,15 @@ public class AJAXBean extends AbstractBean implements
                 if (result == null) {
                     result = "null";
                 }
+            }else if ("getTotalAmountAndTotalCommission".equalsIgnoreCase(type)) {
+                String paymentId = map.get("paymentId").toString();
+                System.out.println("paymentId ::: " + paymentId);
+                JSONObject obj = new JSONObject(paymentairticketdao.getTotalAmountAndTotalCommission(paymentId));
+                if (result == null) {
+                    result = "null";
+                }else{
+                    result = obj.toJSONString();
+                }
             }
         } else if (INVOICE.equalsIgnoreCase(servletName)) {
             if ("searchInvoice".equalsIgnoreCase(type)) {

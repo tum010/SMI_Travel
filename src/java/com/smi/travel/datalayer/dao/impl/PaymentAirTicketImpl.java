@@ -7,7 +7,6 @@ package com.smi.travel.datalayer.dao.impl;
 
 import com.smi.travel.datalayer.dao.PaymentAirTicketDao;
 import com.smi.travel.datalayer.entity.MAirlineAgent;
-import com.smi.travel.datalayer.entity.MRunningCode;
 import com.smi.travel.datalayer.entity.PaymentAirCredit;
 import com.smi.travel.datalayer.entity.PaymentAirDebit;
 import com.smi.travel.datalayer.entity.PaymentAirticket;
@@ -30,9 +29,11 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
@@ -421,7 +422,7 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
         }else{
             for(int i=0;i<listAirline.size();i++){
                 
-                System.out.println(" invoiceSubCode " + invoiceSubCode);
+//                System.out.println(" invoiceSubCode " + invoiceSubCode);
                 String paymentAirFare = "from PaymentAirticketFare fare where fare.ticketFareAirline.id = :ticketfareId and fare.paymentAirticket.invoiceSup = :invoiceSup";
                 List<PaymentAirticketFare> paymentAirticketFares = session.createQuery(paymentAirFare).setParameter("ticketfareId", listAirline.get(i).getId()).setParameter("invoiceSup", invoiceSubCode).list();
 //                System.out.println(" paymentAirticketFares .size "+ paymentAirticketFares.size());
@@ -799,7 +800,7 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
                     ticketFareView.setTicketIns(ticketFareAirline.getTicketIns());
                     ticketFareView.setSalePrice(ticketFareAirline.getSalePrice());
                     ticketType = String.valueOf(ticketFareAirline.getTicketType());
-                    System.out.println(" +++++++++++++ ticketType +++++++++++++ "+ ticketType);
+//                    System.out.println(" +++++++++++++ ticketType +++++++++++++ "+ ticketType);
                     if("B".equalsIgnoreCase(ticketType) || "TI".equalsIgnoreCase(ticketType)){
                         ticketfareamount = ticketfareamount.add(ticketFareAirline.getTicketFare());
                         ticketfareamount = ticketfareamount.add(ticketFareAirline.getTicketTax());
@@ -827,10 +828,10 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
     public List<RefundAirticketDetailView> getRefundDetailByPaymentAirId(String paymentAirId) {
         String query = "from PaymentAirticketRefund pay where pay.paymentAirticket.id = :paymentAirId";
         Session session = this.sessionFactory.openSession();
-        System.out.println(" paymentAirId " +paymentAirId);
+//        System.out.println(" paymentAirId " +paymentAirId);
         List<RefundAirticketDetailView> listView = new ArrayList<RefundAirticketDetailView>();
         List<PaymentAirticketRefund> PaymentAirticketRefundList = session.createQuery(query).setParameter("paymentAirId", paymentAirId).list();
-        System.out.println(" PaymentAirticketRefundList size "+PaymentAirticketRefundList.size());
+//        System.out.println(" PaymentAirticketRefundList size "+PaymentAirticketRefundList.size());
         if (PaymentAirticketRefundList.isEmpty()){
             return null;
         }else{
@@ -1479,5 +1480,23 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
         
         session.close();
         return paymentAirlineList;
+    }
+
+    @Override
+    public Map<String, Object> getTotalAmountAndTotalCommission(String paymentId) {
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();
+        List<Object[]> queryList =  session.createSQLQuery(" SELECT sum( CASE WHEN tf.ticket_type = 'B' OR tf.ticket_type = 'TI' THEN tf.ticket_fare + tf.ticket_tax + tf.ticket_ins + tf.ticket_commission ELSE tf.ticket_fare + tf.ticket_tax + tf.ticket_ins END ) AS amount, sum(tf.ticket_commission) AS commission FROM `payment_airticket_fare` paf INNER JOIN ticket_fare_airline tf ON tf.id = paf.ticket_fare_id WHERE paf.payment_air_id = '"+paymentId+"' GROUP BY paf.payment_air_id ")
+                .addScalar("amount",Hibernate.STRING)
+                .addScalar("commission",Hibernate.STRING)           
+                .list();
+        Map<String, Object> mapData = new HashMap<String, Object>();
+        for (Object[] B : queryList) {
+            mapData.put("amount", B[0] != null ? util.ConvertString(B[0]) : "0.00");
+            mapData.put("commission", B[1] != null ? util.ConvertString(B[1]) : "0.00");
+        }
+        
+        session.close();
+        return mapData;
     }
 }
