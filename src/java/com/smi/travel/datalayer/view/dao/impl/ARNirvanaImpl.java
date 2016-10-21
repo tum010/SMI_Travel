@@ -287,6 +287,7 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
             ar.setSalesamt3((BigDecimal) B[47]);
             ar.setSaleshmamt3((BigDecimal) B[48]);
             ar.setService(util.ConvertString(B[49]));
+            System.out.println("================= Araccount ================= " + util.ConvertString(B[50]));
             ar.setAraccount(util.ConvertString(B[50]));
             ar.setPrefix(util.ConvertString(B[51]));
             ar.setDocumentno(util.ConvertString(B[52]));
@@ -919,11 +920,11 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
             dataArea += util.generateDataAreaNirvana(salesHmAmt,20);
             System.out.println("===== salesHmAmt ===== : "+ salesHmAmt);
             
-            String totBaseVatAmt = "0.00";
+            String totBaseVatAmt = (arNirvana.getSalesamt()!= null ? String.valueOf(arNirvana.getSalesamt()) : "0.00");
             dataArea += util.generateDataAreaNirvana(totBaseVatAmt,20);
             System.out.println("===== totBaseVatAmt ===== : "+ totBaseVatAmt);
             
-            String totBaseVatHmAmt = "0.00";
+            String totBaseVatHmAmt = (arNirvana.getSaleshmamt()!= null ? String.valueOf(arNirvana.getSaleshmamt()) : "0.00");
             dataArea += util.generateDataAreaNirvana(totBaseVatHmAmt,20);
             System.out.println("===== totBaseVatHmAmt ===== : "+ totBaseVatHmAmt);
             

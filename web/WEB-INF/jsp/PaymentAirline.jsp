@@ -377,6 +377,8 @@
                                         <tr>
                                             <input type="hidden" name="count${dataStatus.count}" id="count${dataStatus.count}" value="${dataStatus.count}">
                                             <input type="hidden" name="tableId${dataStatus.count}" id="tableId${dataStatus.count}" value="${table.id}">
+                                            <input type="hidden" name="ticketCommissionCal${dataStatus.count}" id="ticketCommissionCal${dataStatus.count}" value="${table.ticketCommission}">
+                                            <input type="hidden" name="ticketFareAmountCal${dataStatus.count}" id="ticketFareAmountCal${dataStatus.count}" value="${table.ticketFareAmount}">
                                             <td class="hidden">${table.ticketNo}</td>
                                             <td align="center"> <c:out value="${table.referenceNo}" /></td>
                                             <td align="left"> <c:out value="${table.ticketNo}" /></td>
@@ -2162,7 +2164,31 @@ function CallAjaxTotalAmountAndTotalCommission(param) {
     }
 }	
 
-
+function calTotalAmountWhenDelete(row){
+    
+    var vatValue = replaceAll(",","",$('#vat').val()); 
+    if (vatValue == ""){
+        vatValue = 0;
+    }
+    var vat = parseFloat(vatValue);
+    
+    var amountbefore = replaceAll(",","",document.getElementById("totalAmountTicketFare").value);
+    var amountdelete = replaceAll(",","",document.getElementById("ticketFareAmountCal"+row).value);
+    amountbefore = parseFloat(amountbefore);
+    amountdelete = parseFloat(amountdelete);
+    var amountafter = amountbefore - amountdelete ;
+    
+    var commbefore = replaceAll(",","",document.getElementById("sumCommissionTicket").value);
+    var commdelete = replaceAll(",","",document.getElementById("ticketCommissionCal"+row).value);
+    commbefore = parseFloat(commbefore);
+    commdelete = parseFloat(commdelete);
+    var commafter = commbefore - commdelete;
+    
+    document.getElementById("totalAmountTicketFare").value = formatNumber(amountafter);
+    document.getElementById("sumCommissionTicket").value = formatNumber(commafter);
+    document.getElementById("totalCommissionTicketFare").value = formatNumber(commafter +(commafter *( vat/100)));
+    
+}
 
 function DeleteRowTicket(){
     var no = document.getElementById('deleteTicketNo').value;
@@ -2170,48 +2196,45 @@ function DeleteRowTicket(){
     var count = document.getElementById('deleteTicketCount').value;
     var paymentId = document.getElementById('paymentId').value;
     
+    calTotalAmountWhenDelete(count);
     $("#tableId" + count).parent().remove();
-    
     if($("#TicketFareTable tr").length > 1){
-        getTotalAmountAndTotalCommission();
-//        calculateTotalAmount();
-//        calculateTotalCommission();
         calculateWithodingTax();
         calculateTotalPayment();
         calculateAmount();
     }else{
         $('#totalCommissionTicketFare').val("");
         $('#totalAmountTicketFare').val("");
-        getTotalAmountAndTotalCommission();
         calculateTotalPayment();
         calculateAmount();
     }
-
-    $.ajax({
-        url: 'PaymentAirline.smi?action=deleteTicket',
-        type: 'get',
-        data: {deleteTicketId: ticketid , paymentId:paymentId},
-        success: function () {
-            if($("#TicketFareTable tr").length > 1){
-                getTotalAmountAndTotalCommission();
-//                calculateTotalAmount();
-//                calculateTotalCommission();
-                calculateWithodingTax();
-                calculateTotalPayment();
-                calculateAmount();
-            }else{
-                $('#totalCommissionTicketFare').val("");
-                $('#totalAmountTicketFare').val("");
-                getTotalAmountAndTotalCommission();
-                calculateTotalPayment();
-                calculateAmount();
-            }    
-        },
-        error: function () {
-            console.log("error");
-            result =0;
-        }
-    }); 
+    
+    if(paymentId !== ""){
+        $.ajax({
+            url: 'PaymentAirline.smi?action=deleteTicket',
+            type: 'get',
+            data: {deleteTicketId: ticketid , paymentId:paymentId},
+            success: function () {
+                if($("#TicketFareTable tr").length > 1){
+                    getTotalAmountAndTotalCommission();
+    //                calculateTotalAmount();
+    //                calculateTotalCommission();
+                    calculateWithodingTax();
+                    calculateTotalPayment();
+                    calculateAmount();
+                }else{
+                    $('#totalCommissionTicketFare').val("");
+                    $('#totalAmountTicketFare').val("");
+                    calculateTotalPayment();
+                    calculateAmount();
+                }    
+            },
+            error: function () {
+                console.log("error");
+                result =0;
+            }
+        }); 
+    }
     $('#DeleteTicket').modal('hide');
 }
 
