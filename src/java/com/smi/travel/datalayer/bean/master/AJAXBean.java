@@ -1652,7 +1652,7 @@ public class AJAXBean extends AbstractBean implements
             airline = ticketList.get(i).getAirline();
             commission = String.valueOf(ticketList.get(i).getCommision());
             isUse = String.valueOf(ticketList.get(i).getIsUse());
-            description = String.valueOf(ticketList.get(i).getDetail()).replaceAll("(\r\n|\n)", "<br>");
+            description = String.valueOf(ticketList.get(i).getDetail()).replaceAll("(\r\n|\n)", " ");
             String newrow = "";
             if(!"null".equalsIgnoreCase(ticketList.get(i).getAgentcode()) ){
                 receiveFrom = ticketList.get(i).getAgentcode();
@@ -1717,7 +1717,7 @@ public class AJAXBean extends AbstractBean implements
             payNo = paymentTourList.get(i).getPayNo();
             commission = String.valueOf(paymentTourList.get(i).getCommision());
             isUse = String.valueOf(paymentTourList.get(i).getIsUse());
-            description = String.valueOf(paymentTourList.get(i).getDetail()).replaceAll("(\r\n|\n)", "<br>");
+            description = String.valueOf(paymentTourList.get(i).getDetail()).replaceAll("(\r\n|\n)", " ");
             String newrow = "";
             
             if(!"null".equalsIgnoreCase(paymentTourList.get(i).getSupcode()) ){
