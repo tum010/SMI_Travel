@@ -615,6 +615,7 @@
                                         <input id="receiveAmountTemp${i.count}" name="receiveAmountTemp${i.count}"  type="hidden" value="${table.amount}" >
                                         <input id="paymentTourId${i.count}" name="paymentTourId${i.count}"  type="hidden" value="${table.paymentDetailWendy.id}" >
                                         <input id="paymentId${i.count}" name="paymentId${i.count}"  type="hidden" value="${table.paymentAirticket.id}" >
+                                        <input id="airlineCode${i.count}" name="airlineCode${i.count}"  type="hidden" value="${table.airlineCode}" >
                                         <input id="DescriptionReceiptDetail${i.count}" name="DescriptionReceiptDetail${i.count}"  type="hidden" value="${table.displayDescription}" >
                                         <td>
                                             <select class="form-control" name="receiveProduct${i.count}" id="receiveProduct${i.count}">
