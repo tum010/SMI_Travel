@@ -766,9 +766,9 @@ public class BillableImpl implements BillableDao {
                              description += "";
                         }
                         if(listLand.get(j).getDescription() != null){ // description
-                            description += "          "+listLand.get(j).getDescription() +" NTS \n         ";
+                            description += "          "+listLand.get(j).getDescription() +" \n         ";
                         }else{
-                             description += " 0 NTS  \n";
+                             description += " 0  \n";
                         }
                     }else{
                         if(listLand.get(j).getDayDate() != null){ //day date
@@ -780,9 +780,9 @@ public class BillableImpl implements BillableDao {
                              description += "";
                         }
                         if(listLand.get(j).getDescription() != null){ // description
-                            description += "          "+listLand.get(j).getDescription() +" NTS   ";
+                            description += "          "+listLand.get(j).getDescription() +"   ";
                         }else{
-                             description += " 0 NTS   ";
+                             description += " 0   ";
                         }
                     }            
                 }
