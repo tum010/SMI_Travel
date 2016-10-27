@@ -251,7 +251,15 @@ public class TicketFareReportImpl implements TicketFareReportDao {
         UtilityFunction util = new UtilityFunction();
         List data = new ArrayList<TicketFareSummaryByAgentStaff>();
         String query = "";
+        String airlineCodeName = "";
         
+        if((airlineCode != null) &&(!"".equalsIgnoreCase(airlineCode))){
+            String[] air = airlineCode.split(",");
+            airlineCode = air[0];
+            airlineCodeName = air[1];
+        }else{
+            airlineCodeName = "ALL";
+        }
         
         if("agent".equalsIgnoreCase(groupBy)){
             // by Agent
@@ -307,9 +315,9 @@ public class TicketFareReportImpl implements TicketFareReportDao {
         }else{
             airline = "ALL";
         }
-
+        
         if((airlineCode != null) &&(!"".equalsIgnoreCase(airlineCode))){
-            if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
+            if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}            
             query += prefix+ " SUBSTR(`fare`.`ticket_no`,1,3) = '"+airlineCode+"'";
         }
         
@@ -432,6 +440,7 @@ public class TicketFareReportImpl implements TicketFareReportDao {
            ticket.setInvdateto(invdateTo);
            ticket.setTermpay(termPay);
            ticket.setPrinton(String.valueOf(df.format(new Date())));
+           ticket.setHeaderairline(airlineCodeName);
            
            ticket.setAgentname(util.ConvertString(B[0]));
            ticket.setAgentid(util.ConvertString(B[1]));

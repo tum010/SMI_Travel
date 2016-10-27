@@ -438,7 +438,7 @@ public class TicketFareSummary extends AbstractExcelView {
         cell22.setCellStyle(styleC22);
         sheet.addMergedRegion(CellRangeAddress.valueOf("B2:D2"));
         HSSFCell cell23 = row2.createCell(4);
-        cell23.setCellValue("Air Line : ");
+        cell23.setCellValue("Airline : ");
         cell23.setCellStyle(styleC21);
         HSSFCell cell24 = row2.createCell(5);
         cell24.setCellValue(dataheader.getAirline());
@@ -1128,7 +1128,7 @@ public class TicketFareSummary extends AbstractExcelView {
         cell22.setCellStyle(styleC22);
         sheet.addMergedRegion(CellRangeAddress.valueOf("B2:D2"));
         HSSFCell cell23 = row2.createCell(4);
-        cell23.setCellValue("Air Line : ");
+        cell23.setCellValue("Air Line Code : ");
         cell23.setCellStyle(styleC21);
         HSSFCell cell24 = row2.createCell(5);
         cell24.setCellValue(dataheader.getAirline());
@@ -1169,12 +1169,18 @@ public class TicketFareSummary extends AbstractExcelView {
         // Row 5
         HSSFRow row5 = sheet.createRow(4);
         HSSFCell cell51 = row5.createCell(0);
-        cell51.setCellValue("Sale Staff : ");
+        cell51.setCellValue("Airline : ");
         cell51.setCellStyle(styleC21);
-        sheet.addMergedRegion(CellRangeAddress.valueOf("A5:E5"));
-        HSSFCell cell52 = row5.createCell(5);
-        cell52.setCellValue(dataheader.getHeadsale());
+        HSSFCell cell52 = row5.createCell(1);
+        cell52.setCellValue(dataheader.getHeaderairline());
         cell52.setCellStyle(styleC22);
+        sheet.addMergedRegion(CellRangeAddress.valueOf("B5:D5"));
+        HSSFCell cell53 = row5.createCell(4);
+        cell53.setCellValue("Sale Staff : ");
+        cell53.setCellStyle(styleC21);
+        HSSFCell cell54 = row5.createCell(5);
+        cell54.setCellValue(dataheader.getHeadsale());
+        cell54.setCellStyle(styleC22);
         
         // Row 6
         HSSFRow row6 = sheet.createRow(5);
@@ -1658,7 +1664,7 @@ public class TicketFareSummary extends AbstractExcelView {
             cell22.setCellStyle(styleC22);
             sheet.addMergedRegion(CellRangeAddress.valueOf("B2:D2"));
             HSSFCell cell23 = row2.createCell(4);
-            cell23.setCellValue("Air Line : ");
+            cell23.setCellValue("Airline Code : ");
             cell23.setCellStyle(styleC21);
             HSSFCell cell24 = row2.createCell(5);
             cell24.setCellValue(dataheader.getAirline());
@@ -1699,13 +1705,21 @@ public class TicketFareSummary extends AbstractExcelView {
             // Row 5
             HSSFRow row5 = sheet.createRow(4);
             HSSFCell cell51 = row5.createCell(0);
-            cell51.setCellValue("Sale Staff : ");
+            cell51.setCellValue("Airline : ");
             cell51.setCellStyle(styleC21);
-            sheet.addMergedRegion(CellRangeAddress.valueOf("A5:E5"));
-            HSSFCell cell52 = row5.createCell(5);
-            cell52.setCellValue(dataheader.getHeadsale());
+            HSSFCell cell52 = row5.createCell(1);
+            cell52.setCellValue(dataheader.getHeaderairline());
             cell52.setCellStyle(styleC22);
-
+            sheet.addMergedRegion(CellRangeAddress.valueOf("B5:D5"));
+            HSSFCell cell53 = row5.createCell(4);
+            cell53.setCellValue("Sale Staff : ");
+            cell53.setCellStyle(styleC21);
+            HSSFCell cell54 = row5.createCell(5);
+            cell54.setCellValue(dataheader.getHeadsale());
+            cell54.setCellStyle(styleC22);
+            
+            
+            
             // Row 6
             HSSFRow row6 = sheet.createRow(5);
             HSSFCell cell61 = row6.createCell(0);

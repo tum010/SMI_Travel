@@ -287,7 +287,7 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
             ar.setSalesamt3((BigDecimal) B[47]);
             ar.setSaleshmamt3((BigDecimal) B[48]);
             ar.setService(util.ConvertString(B[49]));
-            System.out.println("================= Araccount ================= " + util.ConvertString(B[50]));
+//            System.out.println("================= Araccount ================= " + util.ConvertString(B[50]));
             ar.setAraccount(util.ConvertString(B[50]));
             ar.setPrefix(util.ConvertString(B[51]));
             ar.setDocumentno(util.ConvertString(B[52]));

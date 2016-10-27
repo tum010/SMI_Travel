@@ -462,7 +462,7 @@ public class MListItemImpl implements MListItemDao {
 
     @Override
     public List<MAirline> getListMAirlineCode() {
-        String query = "from MAirline ma where ma.code3Letter  IS NOT NULL";
+        String query = "from MAirline ma where ma.code3Letter IS NOT NULL";
         Session session = this.sessionFactory.openSession();
         List<MAirline> MAirline = session.createQuery(query).list();
         if (MAirline.isEmpty()) {

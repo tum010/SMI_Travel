@@ -340,7 +340,7 @@ public class ReceiptController extends SMITravelController {
                     MBilltype mBilltype = new MBilltype();
                     mBilltype.setId(receiveProduct);
                     receiveProducttemp = mBilltype.getId();
-                    System.out.println(" receiveProducttemp +++++++ " + receiveProducttemp);
+//                    System.out.println(" receiveProducttemp +++++++ " + receiveProducttemp);
                     receiptDetail.setMBilltype(mBilltype);
                 }
                 receiptDetail.setDescription(receiveDes);

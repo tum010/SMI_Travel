@@ -199,7 +199,6 @@ import org.hibernate.Transaction;
             List<ReceiptDetail> receiptDetails = receipt.getReceiptDetails();
             if(receiptDetails != null){
                 for(int i = 0; i < receiptDetails.size(); i++){
-                    System.out.println(" receiptDetails.get(i).getId() " + receiptDetails.get(i).getId());
                     if(receiptDetails.get(i).getId() == null || "".equals(receiptDetails.get(i).getId())){
                         session.save(receiptDetails.get(i));
                     } else {

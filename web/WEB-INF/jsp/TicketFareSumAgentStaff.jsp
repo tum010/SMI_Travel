@@ -111,7 +111,7 @@
                                             <option value=""  selected="selected">-- ALL --</option>
                                             <c:forEach var="table" items="${airlineCodeList}" >
                                                 <c:set var="select" value=""/>
-                                                <option value="${table.code3Letter}" ${select}>${table.name}</option>  
+                                                <option value="${table.code3Letter},${table.name}" ${select}>${table.name}</option>  
                                             </c:forEach>
                                         </select>
                                     </div>
@@ -540,8 +540,6 @@
         var salebyUser = document.getElementById("salebyUser").value;
         var termPay = document.getElementById("termPay").value;
         var salebyName = document.getElementById("salebyName").value;
-        
-        
          if((invfrom !== '') && (invto !== '')){
              if(reportType == 1){
                 window.open("Excel.smi?name=TicketFareSummaryByStaff&ticketType=" + ticketType + "&ticketBuy=" + ticketBuy + "&airline=" + airline + "&airlineCode=" + airlineCode + "&issuedateFrom=" + issuefrom + "&issuedateTo=" + issueto + "&department=" + department + "&staff=" + salebyName + "&termPay=" + termPay + "&invdateFrom=" + invfrom + "&invdateTo=" + invto);

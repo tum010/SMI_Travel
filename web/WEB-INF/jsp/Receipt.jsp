@@ -3089,10 +3089,10 @@
         var checksave = 1;
         var action = document.getElementById('action');
         action.value = 'saveReceipt';
-        var counter = document.getElementById('counter');
-        counter.value = $("#ReceiptListTable tr").length;
-        var countRowCredit = document.getElementById('countRowCredit');
-        countRowCredit.value = $("#CreditDetailTable tr").length;
+        var counter = document.getElementById('counter').value;
+//        counter.value = $("#ReceiptListTable tr").length;
+        var countRowCredit = document.getElementById('countRowCredit').value;
+//        countRowCredit.value = $("#CreditDetailTable tr").length;
 
 
         checkSumAmountBeforeSave();

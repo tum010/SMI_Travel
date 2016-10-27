@@ -22,6 +22,7 @@ public class TicketFareSummaryByAgentStaff {
     private String profit;
     private String pax;
     
+    
     private String printby;
     private String airline;
     private String headdepartment;
@@ -34,7 +35,7 @@ public class TicketFareSummaryByAgentStaff {
     private String invdateto;
     private String printon;
     private String termpay;
-    
+    private String headerairline;
     private String cost;
     
 
@@ -221,6 +222,16 @@ public class TicketFareSummaryByAgentStaff {
     public void setCost(String cost) {
         this.cost = cost;
     }
+
+    public String getHeaderairline() {
+        return headerairline;
+    }
+
+    public void setHeaderairline(String headerairline) {
+        this.headerairline = headerairline;
+    }
+
+
 
 
     
