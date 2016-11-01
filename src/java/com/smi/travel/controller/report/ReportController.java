@@ -190,8 +190,8 @@ public class ReportController extends SMITravelController {
         String detailHotelMonthly = (request.getParameter("detail") != null && !"".equalsIgnoreCase(request.getParameter("detail")) ? new String(request.getParameter("detail").getBytes("ISO8859_1"),"UTF-8") : ""); 
         
         //Invoice Monthly
-        String billingAttn = request.getParameter("billingAttn");
-        String billingTel = request.getParameter("billingTel");
+        String billingAttn = (request.getParameter("billingAttn") != null && !"".equalsIgnoreCase(request.getParameter("billingAttn")) ? new String(request.getParameter("billingAttn").getBytes("ISO8859_1"),"UTF-8") : "");
+        String billingTel = request.getParameter("billingTel"); 
         String billingFax = request.getParameter("billingFax");
         String billingMail = request.getParameter("billingMail");
         String billingDate = request.getParameter("billingDate");
@@ -307,19 +307,6 @@ public class ReportController extends SMITravelController {
             }else if(CreditNoteReport.equalsIgnoreCase(name)){
                 data = reportservice.getCreditNoteReport(cnid);
             }else if(InvoiceMonthly.equalsIgnoreCase(name)){
-                try {
-                    billingAttn = new String(billingAttn.getBytes("ISO8859_1"),"UTF-8");
-                    billingFrom = new String(billingFrom.getBytes("ISO8859_1"),"UTF-8");
-                    billingTel = new String(billingTel.getBytes("ISO8859_1"),"UTF-8");
-                    billingFax = new String(billingFax.getBytes("ISO8859_1"),"UTF-8");
-                    billingMail = new String(billingMail.getBytes("ISO8859_1"),"UTF-8");
-                    billingDate = new String(billingDate.getBytes("ISO8859_1"),"UTF-8");
-                    ClientTo = new String(ClientTo.getBytes("ISO8859_1"),"UTF-8");
-                    ClientName = new String(ClientName.getBytes("ISO8859_1"),"UTF-8");
-                    System.out.println("billingAttn :  "+billingAttn);
-                } catch (UnsupportedEncodingException ex) {
-                    ex.printStackTrace();
-                }
                 data = reportservice.getInvoiceMonthly(ClientTo, ClientName, Accno, vattype, from, to, departmentInvoice, billingAttn, billingFrom, billingTel, billingFax, billingMail, billingDate);
             }else if(RefundAirReport.equalsIgnoreCase(name)){
                 data = reportservice.getRefundAirReport(refundId);
