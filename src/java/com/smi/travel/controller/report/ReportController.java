@@ -191,10 +191,10 @@ public class ReportController extends SMITravelController {
         
         //Invoice Monthly
         String billingAttn = (request.getParameter("billingAttn") != null && !"".equalsIgnoreCase(request.getParameter("billingAttn")) ? new String(request.getParameter("billingAttn").getBytes("ISO8859_1"),"UTF-8") : "");
-        String billingTel = request.getParameter("billingTel"); 
-        String billingFax = request.getParameter("billingFax");
-        String billingMail = request.getParameter("billingMail");
-        String billingDate = request.getParameter("billingDate");
+        String billingTel = (request.getParameter("billingTel") != null && !"".equalsIgnoreCase(request.getParameter("billingTel")) ? new String(request.getParameter("billingTel").getBytes("ISO8859_1"),"UTF-8") : "");
+        String billingFax = (request.getParameter("billingFax") != null && !"".equalsIgnoreCase(request.getParameter("billingFax")) ? new String(request.getParameter("billingFax").getBytes("ISO8859_1"),"UTF-8") : "");
+        String billingMail = (request.getParameter("billingMail") != null && !"".equalsIgnoreCase(request.getParameter("billingMail")) ? new String(request.getParameter("billingMail").getBytes("ISO8859_1"),"UTF-8") : "");
+        String billingDate = (request.getParameter("billingDate") != null && !"".equalsIgnoreCase(request.getParameter("billingDate")) ? new String(request.getParameter("billingDate").getBytes("ISO8859_1"),"UTF-8") : "");
         String billingFrom = (request.getParameter("billingFrom") != null && !"".equalsIgnoreCase(request.getParameter("billingFrom")) ? new String(request.getParameter("billingFrom").getBytes("ISO8859_1"),"UTF-8") : "");
 
         //Bill Air Agent
